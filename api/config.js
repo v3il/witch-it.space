@@ -23,8 +23,8 @@ const config = {
 
     // GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
 
-    AVAILABLE_LOCALES: ['ua', 'ru'],
-    DEFAULT_LOCALE: 'ua'
+    AVAILABLE_LOCALES: ['en', 'ru'],
+    DEFAULT_LOCALE: 'en'
 
     // CHERKASY_CENTER: { lat: 49.4257529, lng: 32.0580019 },
     // CHERKASY_BOUNDS_RADIUS: 6 // km

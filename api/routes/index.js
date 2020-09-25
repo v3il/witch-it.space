@@ -5,7 +5,7 @@ const { errorsHandler } = require('./errorsHandler')
 const rootRouter = Router()
 
 rootRouter.get('/', async (req, res) => {
-    console.log(User)
+    // console.log(await User.create({}))
 
     const u = await User.findAll()
 
