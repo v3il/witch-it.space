@@ -950,6 +950,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@curveball/http-errors@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@curveball/http-errors/-/http-errors-0.4.0.tgz#2ab15cafc3d07e649fa8fc870af4c55081c2a8de"
+  integrity sha512-lhOjdu2P4YEl9Ab/gD/Ikf9Fi6/kGU1slne5v401o3Y7fZl8pWUc/kya3wc3OxzzJlwHgRGySgDEdPPZLJaCWg==
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
