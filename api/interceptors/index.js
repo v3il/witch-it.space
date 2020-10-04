@@ -1,5 +1,2 @@
-module.exports = {
-    i18n (req, res, next) {
-        next()
-    }
-}
+export { i18n } from './i18n'
+export { authorized } from './authorized'
