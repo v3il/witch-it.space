@@ -8,26 +8,16 @@ const config = {
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_USER: process.env.DB_USER || 'postgres',
     DB_PASSWORD: process.env.DB_PASSWORD || 'root',
-    DB_NAME: NODE_ENV === 'test' ? 'ma_project_test' : (process.env.DB_NAME || 'witch-trade'),
-
-    // MAIL_HOST: process.env.MAIL_HOST || 'localhost',
-    // MAIL_PORT: parseInt(process.env.MAIL_PORT, 10) || 465,
-    // MAIL_USER: process.env.MAIL_USER || 'root',
-    // MAIL_PASSWORD: process.env.MAIL_PASSWORD || 'root',
-
-    // SERVER_URL: process.env.SERVER_URL || `http://localhost:${PORT}`,
-    // FRONT_END_URL: process.env.FRONT_END_URL || 'http://3.250.170.88/',
+    DB_NAME: process.env.DB_NAME || 'witch-trade',
 
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
     PASSWORD_HASH_SECRET: process.env.PASSWORD_HASH_SECRET || 'secret',
 
-    // GOOGLE_PLACES_API_KEY: process.env.GOOGLE_PLACES_API_KEY,
+    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || 'client_id',
+    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || 'client_secret',
 
     AVAILABLE_LOCALES: ['en', 'ru'],
     DEFAULT_LOCALE: 'en'
-
-    // CHERKASY_CENTER: { lat: 49.4257529, lng: 32.0580019 },
-    // CHERKASY_BOUNDS_RADIUS: 6 // km
 }
 
 module.exports = { config }
