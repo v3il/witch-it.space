@@ -1,7 +1,12 @@
+import { axiosInstance } from '../../axios'
 
 const redirect = String('http://localhost:3000/api/auth/discord/callback')
 
 const qs = require('qs')
+
+async function authUsingDiscord (request, response) {
+
+}
 
 app.get('/auth/discord', (req, res) => {
     res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirect}&response_type=code&scope=identify`)
