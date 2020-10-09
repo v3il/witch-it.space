@@ -1,1 +1,1 @@
-export { authUsingDiscord, authUsingDiscordCallback } from './discord'
+export { discordAuthController } from './discord'

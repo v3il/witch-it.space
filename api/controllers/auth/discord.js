@@ -3,18 +3,15 @@ import { axiosInstance } from '../../axios'
 import { config } from '../../config'
 import { translateText } from '@/api/util'
 
-const redirect = String('http://localhost:3000/api/auth/discord/callback')
+const redirectURL = 'http://localhost:3000/api/auth/discord/callback'
 
 const qs = require('qs')
 
-export const authUsingDiscord = (request, response) => {
-    const clientId = config.DISCORD_CLIENT_ID
-    const redirectURL = '/api/auth/discord/callback'
-
-    response.redirect(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectURL}&response_type=code&scope=identify`)
+const authUsingDiscord = (request, response) => {
+    response.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.DISCORD_CLIENT_ID}&redirect_uri=${redirectURL}&response_type=code&scope=identify`)
 }
 
-export const authUsingDiscordCallback = async (request, response) => {
+const authUsingDiscordCallback = async (request, response) => {
     const { code } = request.query
 
     console.log(request.locale, request.host)
@@ -28,7 +25,7 @@ export const authUsingDiscordCallback = async (request, response) => {
         qs.stringify({
             grant_type: 'authorization_code',
             code,
-            redirect_uri: redirect,
+            redirect_uri: redirectURL,
             client_id: config.DISCORD_CLIENT_ID,
             client_secret: config.DISCORD_CLIENT_SECRET,
             scope: 'identify'
@@ -53,8 +50,15 @@ export const authUsingDiscordCallback = async (request, response) => {
 
     // res.redirect(`/?token=${json.access_token}`);
 
-    response.redirect('/app') // Successful auth
+    response.sendStatus(200) // Successful auth
 }
+
+const discordAuthController = {
+    authUsingDiscord,
+    authUsingDiscordCallback
+}
+
+export { discordAuthController }
 
 // app.get('/auth/discord', (req, res) => {
 //     res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirect}&response_type=code&scope=identify`)

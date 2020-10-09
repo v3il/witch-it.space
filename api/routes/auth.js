@@ -1,3 +1,13 @@
+import express from 'express'
+import { discordAuthController } from '../controllers'
+
+const authRouter = express.Router()
+
+authRouter.get('/discord', discordAuthController.authUsingDiscord)
+authRouter.get('/discord/callback', discordAuthController.authUsingDiscordCallback)
+
+export { authRouter }
+
 // // const express = require('express')
 // // // const db = require('./db')
 // //
