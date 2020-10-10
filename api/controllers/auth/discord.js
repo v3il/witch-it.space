@@ -1,11 +1,10 @@
+import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
 import { config } from '../../config'
-import { translateText } from '@/api/util'
+import { translateText } from '../../util'
 
 const redirectURL = 'http://localhost:3000/api/auth/discord/callback'
-
-const qs = require('qs')
 
 const authUsingDiscord = (request, response) => {
     response.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.DISCORD_CLIENT_ID}&redirect_uri=${redirectURL}&response_type=code&scope=identify`)

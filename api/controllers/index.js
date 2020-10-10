@@ -1,1 +1,1 @@
-export * from './auth'
+export { discordAuthController } from './auth'
