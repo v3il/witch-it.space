@@ -7,6 +7,7 @@ const initUserModel = (sequelize, DataTypes) => {
             nickname: DataTypes.STRING,
             password: DataTypes.STRING,
             steamId: DataTypes.STRING,
+            steamTradeLink: DataTypes.STRING,
             discordId: DataTypes.STRING,
             discordTag: DataTypes.STRING,
             googleId: DataTypes.STRING,

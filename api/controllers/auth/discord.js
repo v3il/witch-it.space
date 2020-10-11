@@ -2,18 +2,19 @@ import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
 import { config } from '../../config'
-import { translateText } from '../../util'
+import { translateText, generateTokenData } from '../../util'
+import { User } from '../../models'
 
-const redirectURL = 'http://localhost:3000/api/auth/discord/callback'
+const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/discord/callback`
+
+console.log(REDIRECT_URL)
 
 const authUsingDiscord = (request, response) => {
-    response.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.DISCORD_CLIENT_ID}&redirect_uri=${redirectURL}&response_type=code&scope=identify`)
+    response.redirect(`https://discord.com/api/oauth2/authorize?client_id=${config.DISCORD_CLIENT_ID}&redirect_uri=${REDIRECT_URL}&response_type=code&scope=identify`)
 }
 
 const authUsingDiscordCallback = async (request, response) => {
     const { code } = request.query
-
-    console.log(request.locale, request.host)
 
     if (!code) {
         throw new BadRequest(translateText('errors.wrongGoogleToken', request.locale))
@@ -24,7 +25,7 @@ const authUsingDiscordCallback = async (request, response) => {
         qs.stringify({
             grant_type: 'authorization_code',
             code,
-            redirect_uri: redirectURL,
+            redirect_uri: REDIRECT_URL,
             client_id: config.DISCORD_CLIENT_ID,
             client_secret: config.DISCORD_CLIENT_SECRET,
             scope: 'identify'
@@ -41,6 +42,35 @@ const authUsingDiscordCallback = async (request, response) => {
         }
     })
 
+    const { id: discordId, username, discriminator } = userData
+
+    let user = await User.findOne({ where: { discordId } })
+
+    if (!user) {
+        user = await User.create({
+            discordId,
+            nickname: username,
+            discordTag: `${username}#${discriminator}`
+        })
+    }
+
+    const userPublicData = {
+        id: user.id,
+        discordTag: user.discordTag,
+        nickname: user.nickname,
+        steamTradeLink: user.steamTradeLink,
+        isGuardProtected: user.isGuardProtected,
+        isActive: user.isActive,
+        avatarId: user.avatarId,
+        locale: user.locale,
+        inventorySyncTime: user.inventorySyncTime,
+        authType: 'discord'
+    }
+
+    const token = generateTokenData(userPublicData)
+
+    response.json({ token })
+
     console.log(userData)
 
     // if (!response.ok) { throw new Error(`Error status code: ${response.status}`) }
@@ -49,7 +79,7 @@ const authUsingDiscordCallback = async (request, response) => {
 
     // res.redirect(`/?token=${json.access_token}`);
 
-    response.sendStatus(200) // Successful auth
+    response.redirect('/auth/discord/success') // Successful auth
 }
 
 const discordAuthController = {

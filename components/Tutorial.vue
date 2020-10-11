@@ -25,23 +25,41 @@ export default {
         article: 'article'
     }),
 
-    async created () {
-        // console.log(this.$store)
-
-        this.$store.commit('add', 'Test')
-
-        try {
-            const { data } = await this.$axios.get('/api/')
-
-            this.article = data
-        } catch (e) {
-            console.log(e)
-        }
-    },
+    // async created () {
+    //     // console.log(this.$store)
+    //
+    //     this.$store.commit('add', 'Test')
+    //
+    //     try {
+    //         const { data } = await this.$axios.get('/api/')
+    //
+    //         this.article = data
+    //     } catch (e) {
+    //         console.log(e)
+    //     }
+    // },
 
     methods: {
         authDiscord () {
-            window.open('/api/auth/discord' /* 'auth', 'width=600,height=600' */)
+            // console.log(this.$nuxt.context.redirect('/api/auth/discord'))
+
+            // this.$router.replace('/api/auth/discord')
+
+            // this.$axios.get('/api/auth/discord')
+
+            // this.location = '/api/auth/discord'
+
+            window.open('/api/auth/discord', 'auth', 'width=600,height=600')
+
+            window.test = () => {
+                console.error('Test')
+            }
+
+            // console.log(wnd)
+            //
+            // wnd.onbeforeunload = () => {
+            //     console.log('Unload')
+            // }
 
             // const { data } = await this.$axios.get('/api/')
             //

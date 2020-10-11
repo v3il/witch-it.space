@@ -1,9 +1,13 @@
-const PORT = process.env.SERVER_PORT || 3000
+const PORT = process.env.SERVER_ORIGIN || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
+
+const isProduction = NODE_ENV === 'production'
 
 const config = {
     PORT,
     NODE_ENV,
+
+    SERVER_ORIGIN: isProduction ? '' : 'http://localhost:3000',
 
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_USER: process.env.DB_USER || 'postgres',
