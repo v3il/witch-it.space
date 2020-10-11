@@ -5,11 +5,16 @@ export const state = () => ({
 
 export const actions = {
     async fetchUser ({ commit }) {
-        const { data } = await this.$axios.get('/api/user')
+        try {
+            const { data } = await this.$axios.get('/api/user')
 
-        console.error('User2', data.user)
+            console.error('User succ')
 
-        commit('setUser', data.user)
+            commit('setUser', data.user)
+        } catch (e) {
+            console.error('User error')
+            commit('setUser', null)
+        }
     }
 }
 

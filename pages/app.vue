@@ -26,9 +26,9 @@ export default {
 
             // console.log('Created')
 
-            // const { data } = await this.$axios.get('/api/user')
-            //
-            // this.user = data
+            const { data } = await this.$axios.get('/api/user')
+
+            this.user = data
         }
     }
 }

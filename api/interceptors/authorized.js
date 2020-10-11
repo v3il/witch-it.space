@@ -25,13 +25,13 @@ export const authorized = async (request, response, next) => {
     } catch (error) {
         const { name } = error
 
-        if (name === 'TokenExpiredError') {
-            throw new Unauthorized(translateText('errors.wrongAuthToken', request.locale))
-        }
-
-        if (name === 'JsonWebTokenError') {
-            throw new Forbidden(translateText('errors.wrongAuthToken', request.locale))
-        }
+        // if (name === 'TokenExpiredError') {
+        //     throw new Unauthorized(translateText('errors.wrongAuthToken', request.locale))
+        // }
+        //
+        // if (name === 'JsonWebTokenError') {
+        throw new Forbidden(translateText('errors.wrongAuthToken', request.locale))
+        // }
 
         throw error
     }
