@@ -1,6 +1,7 @@
 <template>
   <div>
-    Login
+    Auth
+    <a href="/api/auth/discord">Discord</a>
   </div>
 </template>
 
