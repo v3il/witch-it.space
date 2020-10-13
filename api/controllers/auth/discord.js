@@ -1,8 +1,8 @@
 import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
-import { config } from '../../config'
-import { translateText, generateTokenData } from '../../util'
+import { config } from '../../../shared/config'
+import { translateText, generateToken } from '../../util'
 import { User } from '../../models'
 
 const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/discord/callback`
@@ -65,29 +65,15 @@ const authUsingDiscordCallback = async (request, response) => {
         authType: 'discord'
     }
 
-    const token = generateTokenData(userPublicData)
+    const token = generateToken(userPublicData)
 
     response.cookie('token', token.token, {
-        maxAge: 86400 * 1000, // 24 hours
-        httpOnly: true, // http only, prevents JavaScript cookie access
-        secure: true // cookie must be sent over https / ssl
+        maxAge: config.JWT_TOKEN_DURATION * 1000,
+        httpOnly: true,
+        secure: true
     })
 
-    console.log(token, response.cookie)
-
-    // response.cookies.userToken = token.token
-
-    // response.json({ token })
-    //
-    // console.log(userData)
-    //
-    // // if (!response.ok) { throw new Error(`Error status code: ${response.status}`) }
-    // // return JSON.parse(await response.json())
-    // // }
-    //
-    // // res.redirect(`/?token=${json.access_token}`);
-
-    response.redirect('/app') // Successful auth
+    response.redirect('/app')
 }
 
 const discordAuthController = {

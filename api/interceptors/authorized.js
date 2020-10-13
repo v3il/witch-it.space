@@ -1,7 +1,7 @@
 import { verify } from 'jsonwebtoken'
 import { Forbidden, Unauthorized } from '@curveball/http-errors'
 import { translateText } from '../util'
-import { config } from '../config'
+import { config } from '../../shared/config'
 
 export const authorized = async (request, response, next) => {
     // todo: check cookies

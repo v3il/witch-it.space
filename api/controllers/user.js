@@ -1,7 +1,7 @@
 // import qs from 'qs'
 // import { BadRequest } from '@curveball/http-errors'
 // import { axiosInstance } from '../../axios'
-import { config } from '../config'
+import { config } from '../../shared/config'
 // import { translateText, generateTokenData } from '../../util'
 // import { User } from '../../models'
 

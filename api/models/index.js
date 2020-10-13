@@ -1,6 +1,6 @@
 import { initUserModel } from './User'
 const { Sequelize, DataTypes } = require('sequelize')
-const { config } = require('../config')
+const { config } = require('../../shared/config')
 const { logger } = require('../logger')
 
 const db = {}

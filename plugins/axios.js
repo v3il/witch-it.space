@@ -1,4 +1,4 @@
-import { Routes } from '@/consts'
+import { Routes } from '@/shared'
 
 export default function ({ $axios, redirect/*, store */ }) {
     $axios.onError((error) => {

@@ -15,6 +15,7 @@ const config = {
     DB_NAME: process.env.DB_NAME || 'witch-trade',
 
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
+    JWT_TOKEN_DURATION: 60 * 60 * 24 * 7, // 7 days
     PASSWORD_HASH_SECRET: process.env.PASSWORD_HASH_SECRET || 'secret',
 
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || 'client_id',

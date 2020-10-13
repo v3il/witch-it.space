@@ -1,4 +1,4 @@
-import { Routes } from '@/consts'
+import { Routes } from '@/shared'
 
 export default async function ({ store, redirect }) {
     console.error(1, store.state.user)

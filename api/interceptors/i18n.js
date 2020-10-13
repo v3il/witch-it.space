@@ -1,4 +1,4 @@
-import { config } from '../config'
+import { config } from '../../shared/config'
 
 export const i18n = (request, response, next) => {
     // todo: check cookie
