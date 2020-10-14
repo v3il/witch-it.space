@@ -1,8 +1,9 @@
 import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
-import { config } from '../../../shared/config'
+import { config, Routes } from '../../../shared'
 import { translateText, generateToken } from '../../util'
+// eslint-disable-next-line
 import { User } from '../../models'
 
 const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/discord/callback`
@@ -67,13 +68,13 @@ const authUsingDiscordCallback = async (request, response) => {
 
     const token = generateToken(userPublicData)
 
-    response.cookie('token', token.token, {
+    response.cookie('token', token, {
         maxAge: config.JWT_TOKEN_DURATION * 1000,
         httpOnly: true,
         secure: true
     })
 
-    response.redirect('/app')
+    response.redirect(Routes.MAIN)
 }
 
 const discordAuthController = {
