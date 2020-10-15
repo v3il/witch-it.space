@@ -1,2 +1,2 @@
-export { discordAuthController } from './auth'
+export { discordAuthController, googleAuthController } from './auth'
 export { userController } from './user'

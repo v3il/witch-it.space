@@ -1,10 +1,13 @@
 import express from 'express'
-import { discordAuthController } from '../controllers'
+import { discordAuthController, googleAuthController } from '../controllers'
 
 const authRouter = express.Router()
 
 authRouter.get('/discord', discordAuthController.authUsingDiscord)
 authRouter.get('/discord/callback', discordAuthController.authUsingDiscordCallback)
+
+authRouter.get('/google', googleAuthController.authUsingGoogle)
+authRouter.get('/google/callback', googleAuthController.authUsingGoogleCallback)
 
 export { authRouter }
 

@@ -21,6 +21,9 @@ const config = {
     DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || 'client_id',
     DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || 'client_secret',
 
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || 'client_id',
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || 'client_secret',
+
     AVAILABLE_LOCALES: ['en', 'ru'],
     DEFAULT_LOCALE: 'en'
 }

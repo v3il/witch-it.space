@@ -2,7 +2,7 @@ import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { translateText, generateToken } from '../../util'
+import { translateText, generateToken, extractUserPublicData } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
 
@@ -54,16 +54,8 @@ const authUsingDiscordCallback = async (request, response) => {
     }
 
     const userPublicData = {
-        id: user.id,
-        discordTag: user.discordTag,
-        nickname: user.nickname,
-        steamTradeLink: user.steamTradeLink,
-        isGuardProtected: user.isGuardProtected,
-        isActive: user.isActive,
-        avatarId: user.avatarId,
-        locale: user.locale,
-        inventorySyncTime: user.inventorySyncTime,
-        authType: 'discord'
+        authType: 'discord',
+        ...extractUserPublicData(user)
     }
 
     const token = generateToken(userPublicData)
