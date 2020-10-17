@@ -1,3 +1,4 @@
 export { discordAuthController } from './discord'
 export { googleAuthController } from './google'
 export { steamAuthController } from './steam'
+export { localAuthController } from './local'

@@ -24,6 +24,8 @@ const config = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || 'client_id',
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET || 'client_secret',
 
+    STEAM_CLIENT_ID: process.env.STEAM_CLIENT_ID || 'client_id',
+
     AVAILABLE_LOCALES: ['en', 'ru'],
     DEFAULT_LOCALE: 'en'
 }
