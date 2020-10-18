@@ -21,37 +21,32 @@ const authUsingSteam = async (request, response) => {
 }
 
 const authUsingSteamCallback = async (request, response) => {
-    const user = await steam.authenticate(req)
+    const steamUser = await steam.authenticate(request)
+    const { steamid: steamId, username } = steamUser
 
-    console.log(user)
+    let user = await User.findOne({ where: { steamId } })
 
-    // const { id: googleId, name, locale } = googleUser
-    //
-    // let user = await User.findOne({ where: { googleId } })
-    //
-    // if (!user) {
-    //     user = await User.create({
-    //         googleId,
-    //         nickname: name,
-    //         locale: config.AVAILABLE_LOCALES.includes(locale) ? locale : config.DEFAULT_LOCALE
-    //     })
-    // }
-    //
-    // const userPublicData = {
-    //     authType: 'google',
-    //     ...extractUserPublicData(user)
-    // }
-    //
-    // const token = generateToken(userPublicData)
-    //
-    // response.cookie('token', token, {
-    //     maxAge: config.JWT_TOKEN_DURATION * 1000,
-    //     httpOnly: true,
-    //     secure: true
-    // })
+    if (!user) {
+        user = await User.create({
+            steamId,
+            nickname: username
+        })
+    }
 
-    response.sendStatus(200)
-    // response.redirect(Routes.MAIN)
+    const userPublicData = {
+        authType: 'steam',
+        ...extractUserPublicData(user)
+    }
+
+    const token = generateToken(userPublicData)
+
+    response.cookie('token', token, {
+        maxAge: config.JWT_TOKEN_DURATION * 1000,
+        httpOnly: true,
+        secure: true
+    })
+
+    response.redirect(Routes.MAIN)
 }
 
 const steamAuthController = {
