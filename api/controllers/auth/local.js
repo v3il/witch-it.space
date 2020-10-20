@@ -1,63 +1,76 @@
-import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
-import { axiosInstance } from '../../axios'
+import { compare, genSalt, hash } from 'bcrypt'
 import { config, Routes } from '../../../shared'
-import { translateText, generateToken, extractUserPublicData } from '../../util'
+import { extractUserPublicData, generateToken, translateText } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
 
-const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/google/callback`
+const login = async (request, response) => {
+    const requestBody = { login: '', password: '', ...request.body }
 
-const login = (request, response) => {
-    response.redirect(`https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&access_type=offline&include_granted_scopes=true&response_type=code&redirect_uri=${REDIRECT_URL}&client_id=${config.GOOGLE_CLIENT_ID}`)
-}
+    const login = requestBody.login.toString().trim()
+    const password = requestBody.password.toString().trim()
 
-const register = async (request, response) => {
-    const { code } = request.query
+    const savedUser = await User.findOne({ where: { login } })
 
-    if (!code) {
-        throw new BadRequest(translateText('errors.wrongGoogleToken', request.locale))
+    if (!savedUser) {
+        throw new BadRequest(translateText('errors.noUserWithEmail', request.locale))
     }
 
-    const { data: tokenData } = await axiosInstance.post(
-        'https://oauth2.googleapis.com/token',
-        qs.stringify({
-            code,
-            client_id: config.GOOGLE_CLIENT_ID,
-            client_secret: config.GOOGLE_CLIENT_SECRET,
-            redirect_uri: REDIRECT_URL,
-            grant_type: 'authorization_code'
-        }),
-        {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
+    const isCorrectPassword = await compare(password, savedUser.password)
 
-    const { data: googleUser } = await axiosInstance
-        .get(
-            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokenData.access_token}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${tokenData.id_token}`
-                }
-            }
-        )
-
-    const { id: googleId, name, locale } = googleUser
-
-    let user = await User.findOne({ where: { googleId } })
-
-    if (!user) {
-        user = await User.create({
-            googleId,
-            nickname: name,
-            locale: config.AVAILABLE_LOCALES.includes(locale) ? locale : config.DEFAULT_LOCALE
-        })
+    if (!isCorrectPassword) {
+        throw new BadRequest(translateText('errors.wrongPassword', request.locale))
     }
 
     const userPublicData = {
-        authType: 'google',
+        authType: 'local',
+        ...extractUserPublicData(savedUser)
+    }
+
+    const token = generateToken(userPublicData)
+
+    response.cookie('token', token, {
+        maxAge: config.JWT_TOKEN_DURATION * 1000,
+        httpOnly: true,
+        secure: true
+    })
+
+    response.redirect(Routes.MAIN)
+}
+
+const register = async (request, response) => {
+    const requestBody = { login: '', password: '', ...request.body }
+
+    const login = requestBody.login.toString().trim()
+    const password = requestBody.password.toString().trim()
+
+    if (!login.length) {
+        throw new BadRequest(translateText('errors.wrongEmail', request.locale))
+    }
+
+    if (password.length < 8) {
+        throw new BadRequest(translateText('errors.wrongPassword', request.locale))
+    }
+
+    const usersWithSameMail = await User.findAll({ where: { login } })
+
+    if (usersWithSameMail.length) {
+        throw new BadRequest(translateText('errors.notUniqueEmail', request.locale))
+    }
+
+    const salt = await genSalt(3)
+    const encryptedPassword = await hash(password, salt)
+
+    const user = await User.create({
+        login,
+        displayName: login,
+        password: encryptedPassword,
+        locale: request.locale
+    })
+
+    const userPublicData = {
+        authType: 'local',
         ...extractUserPublicData(user)
     }
 

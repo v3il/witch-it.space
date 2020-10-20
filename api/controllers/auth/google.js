@@ -51,7 +51,7 @@ const authUsingGoogleCallback = async (request, response) => {
     if (!user) {
         user = await User.create({
             googleId,
-            nickname: name,
+            displayName: name,
             locale: config.AVAILABLE_LOCALES.includes(locale) ? locale : config.DEFAULT_LOCALE
         })
     }

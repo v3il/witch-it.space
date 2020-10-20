@@ -1,7 +1,7 @@
 export const extractUserPublicData = user => ({
     id: user.id,
     discordTag: user.discordTag,
-    nickname: user.nickname,
+    displayName: user.displayName,
     steamTradeLink: user.steamTradeLink,
     isGuardProtected: user.isGuardProtected,
     isActive: user.isActive,

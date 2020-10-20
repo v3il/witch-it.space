@@ -48,7 +48,7 @@ const authUsingDiscordCallback = async (request, response) => {
     if (!user) {
         user = await User.create({
             discordId,
-            nickname: username,
+            displayName: username,
             discordTag: `${username}#${discriminator}`
         })
     }

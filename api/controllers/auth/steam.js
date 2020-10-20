@@ -29,7 +29,7 @@ const authUsingSteamCallback = async (request, response) => {
     if (!user) {
         user = await User.create({
             steamId,
-            nickname: username
+            displayName: username
         })
     }
 

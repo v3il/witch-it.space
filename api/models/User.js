@@ -4,7 +4,8 @@ const initUserModel = (sequelize, DataTypes) => {
     return sequelize.define(
         'User',
         {
-            nickname: DataTypes.STRING,
+            login: DataTypes.STRING,
+            displayName: DataTypes.STRING,
             password: DataTypes.STRING,
             steamId: DataTypes.STRING,
             steamTradeLink: DataTypes.STRING,
@@ -31,8 +32,6 @@ const initUserModel = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 defaultValue: config.DEFAULT_LOCALE
             },
-
-            userHash: DataTypes.STRING,
 
             inventorySyncTime: {
                 type: DataTypes.DATE,
