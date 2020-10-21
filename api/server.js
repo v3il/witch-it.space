@@ -16,8 +16,8 @@ const initServer = () => {
     app.use(cookieParser())
     app.use(bodyParser.json())
 
-    app.use('', i18n, rootRouter)
     app.use(errorsHandler)
+    app.use('', i18n, rootRouter)
 
     return app
 }

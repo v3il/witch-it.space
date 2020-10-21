@@ -10,7 +10,8 @@ export const authorized = async (request, response, next) => {
     console.log(1111, tokenC)
 
     if (!tokenC) {
-        throw new Forbidden(translateText('errors.actionIsForbidden', request.locale))
+        return response.sendStatus(403)
+        // throw new Forbidden(translateText('errors.actionIsForbidden', request.locale))
     }
 
     // const [type, token] = tokenC.split(' ')
