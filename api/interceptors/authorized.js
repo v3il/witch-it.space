@@ -1,21 +1,13 @@
-import { verify } from 'jsonwebtoken'
 import { Forbidden } from '@curveball/http-errors'
-import { translateText } from '../util'
-import { config } from '../../shared/config'
+import { getUserFromCookies, translateText } from '../util'
 
 export const authorized = async (request, response, next) => {
-    const { token } = request.cookies
+    const user = await getUserFromCookies(request)
 
-    console.log(token)
-
-    if (!token) {
-        throw new Forbidden(translateText('errors.actionIsForbidden', request.locale))
-    }
-
-    try {
-        request.user = await verify(token, config.JWT_SECRET)
-        next()
-    } catch (error) {
+    if (!user) {
         throw new Forbidden(translateText('errors.wrongAuthToken', request.locale))
     }
+
+    request.user = user
+    next()
 }

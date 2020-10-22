@@ -22,13 +22,16 @@ const authUsingSteam = async (request, response) => {
 
 const authUsingSteamCallback = async (request, response) => {
     const steamUser = await steam.authenticate(request)
-    const { steamid: steamId, username } = steamUser
+    const { steamid: steamId, username, profile } = steamUser
 
     let user = await User.findOne({ where: { steamId } })
+
+    console.log(user)
 
     if (!user) {
         user = await User.create({
             steamId,
+            steamProfileURL: profile,
             displayName: username
         })
     }
