@@ -2,7 +2,7 @@ import qs from 'qs'
 import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { translateText, generateToken, extractUserPublicData } from '../../util'
+import { translateText, generateToken, extractUserPublicData, getUserFromCookies } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
 
@@ -45,8 +45,23 @@ const authUsingGoogleCallback = async (request, response) => {
         )
 
     const { id: googleId, name, locale } = googleUser
+    const userFromCookies = await getUserFromCookies(request)
 
-    let user = await User.findOne({ where: { googleId } })
+    let user
+
+    if (userFromCookies) {
+        user = await User.findOne({ where: { id: userFromCookies.id } })
+
+        if (!user) {
+            return response.redirect(Routes.AUTH)
+        }
+
+        await user.update({ googleId })
+    }
+
+    if (!user) {
+        user = await User.findOne({ where: { googleId } })
+    }
 
     if (!user) {
         user = await User.create({

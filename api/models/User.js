@@ -8,7 +8,7 @@ const initUserModel = (sequelize, DataTypes) => {
             displayName: DataTypes.STRING,
             password: DataTypes.STRING,
             steamId: DataTypes.STRING,
-            steamProfileURL: DataTypes.STRING,
+            steamProfileUrl: DataTypes.STRING,
             steamTradeLink: DataTypes.STRING,
             discordId: DataTypes.STRING,
             discordTag: DataTypes.STRING,

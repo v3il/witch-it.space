@@ -1,6 +1,6 @@
 import SteamAuth from 'node-steam-openid'
 import { config, Routes } from '../../../shared'
-import { extractUserPublicData, generateToken } from '../../util'
+import { extractUserPublicData, generateToken, getUserFromCookies } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
 
@@ -23,15 +23,31 @@ const authUsingSteam = async (request, response) => {
 const authUsingSteamCallback = async (request, response) => {
     const steamUser = await steam.authenticate(request)
     const { steamid: steamId, username, profile } = steamUser
+    const userFromCookies = await getUserFromCookies(request)
 
-    let user = await User.findOne({ where: { steamId } })
+    let user
 
-    console.log(user)
+    if (userFromCookies) {
+        user = await User.findOne({ where: { id: userFromCookies.id } })
+
+        if (!user) {
+            return response.redirect(Routes.AUTH)
+        }
+
+        await user.update({
+            steamId,
+            steamProfileUrl: profile
+        })
+    }
+
+    if (!user) {
+        user = await User.findOne({ where: { steamId } })
+    }
 
     if (!user) {
         user = await User.create({
             steamId,
-            steamProfileURL: profile,
+            steamProfileUrl: profile,
             displayName: username
         })
     }
