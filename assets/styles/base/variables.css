@@ -1,3 +1,5 @@
+/* stylelint-disable */
+
 :root {
     --bs-blue: #626ed4;
     --bs-red: #ec4561;
@@ -23,14 +25,19 @@
     --bs-pink: #e83e8c;
     --bs-light: #e9ecef;
     --bs-dark: #343a40;
+    --default-text-color: #5b626b;
+    --default-bg-color: #f8f8fa;
+
     --bs-font-sans-serif: "Roboto", sans-serif;
-    /* stylelint-disable-next-line */
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
-    --default-color: #5b626b;
+
     --offset-xxs: 4px;
     --offset-xs: 8px;
     --offset-sm: 16px;
     --offset-md: 24px;
     --offset-lg: 32px;
+
+    --default-text-size: 14px;
+    --default-line-height: 1.14;
 }

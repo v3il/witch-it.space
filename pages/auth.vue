@@ -11,18 +11,22 @@
     <!--    </div>-->
 
     <div class="auth">
-      <div class="auth__form-container">
-        <header class="auth__header">
-          <h1>Welcome Back!</h1>
-          <h3>Sign in to continue to Veltrix</h3>
+      <div class="auth__form-container wit-background--white">
+        <header class="auth__header wit-background--primary">
+          <h1 class="wit-color--white">
+            Welcome Back!
+          </h1>
+          <h3 class="wit-color--white">
+            Sign in to continue to Veltrix
+          </h3>
         </header>
 
-        <div class="auth__form-container">
+        <div class="auth__form-container2">
           <form action="" class="auth__form" @submit.prevent="">
-            <Label for="">Username</Label>
-            <Input type="text" />
+            <Label for="" class="wit-offset-bottom--xs">Username</Label>
+            <Input type="text" class="wit-offset-bottom--sm" />
 
-            <Label for="">Password</Label>
+            <Label for="" class="wit-offset-bottom--xs">Password</Label>
             <Input type="text" />
 
             <Button>Log In</Button>
@@ -57,5 +61,18 @@ export default {
 
 .auth {
     max-width: 450px;
+    width: 100%;
+}
+
+.auth__header {
+    padding: 24px 40px 40px;
+    box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
+    border-radius: 4px 4px 0 0;
+}
+
+.auth__form-container2 {
+    padding: 64px 40px 40px;
+    box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
+    border-radius: 0 0 4px 4px;
 }
 </style>

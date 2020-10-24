@@ -9,10 +9,10 @@
 @import "./helpers/other.css";
 
 body {
-    font-size: 14px;
-    line-height: 1.14;
-    font-weight: normal;
-    font-style: normal;
+    font-size: var(--default-text-size);
+    line-height: var(--default-line-height);
     min-height: 100vh;
-    color: var(--default-color);
+    color: var(--default-text-color);
+    background-color: var(--default-bg-color);
+    font-family: Roboto, sans-serif;
 }
