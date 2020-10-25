@@ -1,3 +1,11 @@
 .wit-overflow--hidden {
     overflow: hidden;
 }
+
+.wit-position--relative {
+    position: relative;
+}
+
+.wit-position--absolute {
+    position: absolute;
+}

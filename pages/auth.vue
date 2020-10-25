@@ -12,13 +12,15 @@
 
     <div class="auth">
       <div class="auth__form-container wit-background--white">
-        <header class="auth__header wit-background--primary">
-          <h1 class="wit-color--white">
+        <header class="auth__header wit-background--primary wit-position--relative">
+          <h1 class="wit-color--white wit-text--center">
             Welcome Back!
           </h1>
-          <h3 class="wit-color--white">
+          <h3 class="wit-color--white wit-text--center ">
             Sign in to continue to Veltrix
           </h3>
+
+          <div class="auth__header-image wit-position--absolute wit-background--white" />
         </header>
 
         <div class="auth__form-container2">
@@ -68,6 +70,17 @@ export default {
     padding: 24px 40px 40px;
     box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
     border-radius: 4px 4px 0 0;
+}
+
+.auth__header-image {
+    position: absolute;
+    border-radius: 50%;
+    width: 72px;
+    height: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100px;
+    border-bottom: 2px solid var(--bs-success);
 }
 
 .auth__form-container2 {
