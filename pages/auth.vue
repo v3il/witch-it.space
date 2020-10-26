@@ -24,14 +24,16 @@
         </header>
 
         <div class="auth__form-container2">
-          <form action="" class="auth__form" @submit.prevent="">
+          <form class="auth__form" @submit.prevent="onSubmit">
             <Label for="login" class="wit-offset-bottom--xs">Username</Label>
             <Input id="login" v-model="login" type="text" placeholder="Enter Username" class="wit-offset-bottom--sm" />
 
             <Label for="password" class="wit-offset-bottom--xs">Password</Label>
             <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--sm" />
 
-            <Button>Log In</Button>
+            <Button type="submit" class="wit-offset-left--auto">
+              Log In
+            </Button>
           </form>
         </div>
       </div>
@@ -57,7 +59,13 @@ export default {
     data: () => ({
         login: '',
         password: ''
-    })
+    }),
+
+    methods: {
+        onSubmit () {
+
+        }
+    }
 }
 </script>
 

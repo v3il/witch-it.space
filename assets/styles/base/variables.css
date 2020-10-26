@@ -10,6 +10,7 @@
     --bs-gray: #6c757d;
     --bs-gray-dark: #343a40;
     --bs-primary: #626ed4;
+    --bs-primary-hover: #535eb4;
     --bs-secondary: #e9ecef;
     --bs-success: #02a499;
     --bs-info: #38a4f8;
@@ -28,6 +29,7 @@
     --default-text-color: #5b626b;
     --default-bg-color: #f8f8fa;
     --default-border-color: #ced4da;
+    --default-border-color-hover: #4e58aa;
     --default-input-color: #495057;
 
     --bs-font-sans-serif: "Roboto", sans-serif;

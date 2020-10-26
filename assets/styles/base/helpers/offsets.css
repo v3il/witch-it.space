@@ -17,3 +17,11 @@
 .wit-offset-bottom--lg {
     margin-bottom: var(--offset-lg);
 }
+
+.wit-offset-left--auto {
+    margin-left: auto;
+}
+
+.wit-offset-right--auto {
+    margin-right: auto;
+}
