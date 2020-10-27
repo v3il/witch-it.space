@@ -1,3 +1,4 @@
+@import "~/node_modules/@mdi/font/css/materialdesignicons.css";
 @import "./reboot.css";
 @import "./variables.css";
 @import "./helpers/colors.css";

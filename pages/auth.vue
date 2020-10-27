@@ -11,7 +11,7 @@
     <!--    </div>-->
 
     <div class="auth">
-      <div class="auth__form-container wit-background--white">
+      <div class="auth__form-container wit-background--white wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--sarabun">
             Welcome Back!
@@ -31,15 +31,30 @@
             <Label for="password" class="wit-offset-bottom--xs">Password</Label>
             <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--sm" />
 
-            <Button type="submit" class="wit-offset-left--auto">
-              Log In
-            </Button>
+            <div class="wit-flex wit-flex--center">
+              <div>
+                <a href="/api/auth/steam"><span class="mdi mdi-steam wit-color--danger" /></a>
+                <a href="/api/auth/discord"><span class="mdi mdi-discord wit-color--danger" /></a>
+                <a href="/api/auth/google"><span class="mdi mdi-google wit-color--danger" /></a>
+              </div>
+
+              <Button type="submit" class="wit-offset-left--auto">
+                Log In
+              </Button>
+            </div>
           </form>
         </div>
       </div>
 
-      <p>Don't have an account? Signup now</p>
-      <p>© 2020 Veltrix- Crafted with ♥ by Themesbrand.</p>
+      <p class="wit-text--center">
+        Don't have an account? <Link class="wit-color--primary wit-font-weight--500" to="/">
+          Signup Now
+        </Link>
+      </p>
+
+      <p class="wit-text--center">
+        ©{{ $options.year }}. Crafted with <span class="mdi mdi-heart wit-color--danger" /> by !D.
+      </p>
     </div>
   </div>
 </template>
@@ -48,12 +63,16 @@
 import Label from '@/components/base/Label'
 import Input from '@/components/base/Input'
 import Button from '@/components/base/Button'
+import Link from '@/components/base/Link'
 
 export default {
+    year: new Date().getFullYear(),
+
     components: {
         Label,
         Input,
-        Button
+        Button,
+        Link
     },
 
     data: () => ({

@@ -18,6 +18,14 @@
     margin-bottom: var(--offset-lg);
 }
 
+.wit-offset-bottom--xlg {
+    margin-bottom: var(--offset-xlg);
+}
+
+.wit-offset-bottom--xxlg {
+    margin-bottom: var(--offset-xxlg);
+}
+
 .wit-offset-left--auto {
     margin-left: auto;
 }

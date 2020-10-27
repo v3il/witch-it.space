@@ -12,6 +12,14 @@
     color: var(--bs-white);
 }
 
+.wit-color--primary {
+    color: var(--bs-primary);
+}
+
+.wit-color--danger {
+    color: var(--bs-danger);
+}
+
 .wit-color--white-half {
     color: rgba(255, 255, 255, 0.5);
 }
