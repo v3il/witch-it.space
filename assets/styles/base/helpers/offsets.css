@@ -33,3 +33,31 @@
 .wit-offset-right--auto {
     margin-right: auto;
 }
+
+.wit-offset-right--xxs {
+    margin-right: var(--offset-xxs);
+}
+
+.wit-offset-right--xs {
+    margin-right: var(--offset-xs);
+}
+
+.wit-offset-right--sm {
+    margin-right: var(--offset-sm);
+}
+
+.wit-offset-right--md {
+    margin-right: var(--offset-md);
+}
+
+.wit-offset-right--lg {
+    margin-right: var(--offset-lg);
+}
+
+.wit-offset-right--xlg {
+    margin-right: var(--offset-xlg);
+}
+
+.wit-offset-right--xxlg {
+    margin-right: var(--offset-xxlg);
+}

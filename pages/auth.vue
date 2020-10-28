@@ -1,15 +1,5 @@
 <template>
   <div class="wit-flex wit-flex--center page">
-    <!--    Auth-->
-    <!--    <a href="/api/auth/discord">Discord</a> |-->
-    <!--    <a href="/api/auth/google">Google</a> |-->
-    <!--    <a href="/api/auth/steam">Steam</a> |-->
-
-    <!--    <div class="wit-flex">-->
-    <!--      <p>1</p>-->
-    <!--      <p>2</p>-->
-    <!--    </div>-->
-
     <div class="auth">
       <div class="auth__form-container wit-background--white wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
@@ -32,10 +22,10 @@
             <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--sm" />
 
             <div class="wit-flex wit-flex--center">
-              <div>
-                <a href="/api/auth/steam"><span class="mdi mdi-steam wit-color--danger" /></a>
-                <a href="/api/auth/discord"><span class="mdi mdi-discord wit-color--danger" /></a>
-                <a href="/api/auth/google"><span class="mdi mdi-google wit-color--danger" /></a>
+              <div class="wit-flex wit-flex--center">
+                <a href="/api/auth/steam" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-steam" /></a>
+                <a href="/api/auth/discord" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-discord" /></a>
+                <a href="/api/auth/google" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-google" /></a>
               </div>
 
               <Button type="submit" class="wit-offset-left--auto">
@@ -117,5 +107,18 @@ export default {
     padding: 64px var(--offset-xlg) var(--offset-xlg);
     box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
     border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
+}
+
+.auth__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 39px;
+    font-size: 20px;
+    margin-right: 8px;
+    background: #626ed4;
+    color: white;
+    border-radius: 4px;
 }
 </style>
