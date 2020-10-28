@@ -46,8 +46,6 @@
         ©{{ $options.year }}. Crafted with <span class="mdi mdi-heart wit-color--danger" /> by !D.
       </p>
     </div>
-
-    <input type="checkbox" :checked="bc" @change="onC">Theme
   </div>
 </template>
 
@@ -69,37 +67,18 @@ export default {
 
     data: () => ({
         login: '',
-        password: '',
-
-        bc: true
+        password: ''
     }),
-
-    mounted () {
-        const cls = this.bc ? 'light' : 'dark'
-        window.document.body.classList.toggle('body--light', cls === 'light')
-        window.document.body.classList.toggle('body--dark', cls === 'dark')
-    },
 
     methods: {
         onSubmit () {
 
-        },
-
-        onC ({ target }) {
-            this.bc = target.checked
-            const cls = this.bc ? 'light' : 'dark'
-            window.document.body.classList.toggle('body--light', cls === 'light')
-            window.document.body.classList.toggle('body--dark', cls === 'dark')
         }
     }
 }
 </script>
 
 <style>
-.page {
-    /*min-height: 100vh;*/
-}
-
 .auth {
     max-width: 450px;
     width: 100%;

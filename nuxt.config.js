@@ -30,7 +30,6 @@ export default {
     ],
 
     modules: [
-        // 'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources'
