@@ -1,9 +1,12 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <span class="mdi mdi-white-balance-sunny wit-color--warning wit-offset-right--xs" />
-    <Switcher :values="['light', 'dark']" :value="theme" @change="onThemeChange" />
-    <span class="mdi mdi-moon-waning-crescent wit-color--primary wit-offset-left--xs" />
-    {{ theme }}
+    <Switcher
+      :value="theme"
+      :values="['light', 'dark']"
+      icon-left="mdi-white-balance-sunny"
+      icon-right="mdi-moon-waxing-crescent"
+      @change="onThemeChange"
+    />
   </div>
 </template>
 

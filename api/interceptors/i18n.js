@@ -1,7 +1,7 @@
-import { config } from '../../shared/config'
+import { Cookies, config } from '../../shared'
 
 export const i18n = (request, response, next) => {
-    const { [config.LOCALE_COOKIE_NAME]: locale } = request.cookies
+    const { [Cookies.LOCALE]: locale } = request.cookies
     request.locale = config.AVAILABLE_LOCALES.includes(locale) ? locale : config.DEFAULT_LOCALE
 
     next()

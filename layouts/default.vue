@@ -17,16 +17,16 @@ const { mapState } = createNamespacedHelpers('theme')
 export default {
     name: 'Default',
 
-    computed: {
-        ...mapState(['theme'])
-    },
-
     head () {
         return {
             bodyAttrs: {
                 class: `body--${this.theme}`
             }
         }
+    },
+
+    computed: {
+        ...mapState(['theme'])
     },
 
     methods: {

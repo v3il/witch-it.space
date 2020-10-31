@@ -1,3 +1,5 @@
+import { Cookies } from '~/shared'
+
 export const state = () => ({
     list: [],
     user: null
@@ -8,18 +10,17 @@ export const actions = {
         try {
             const { data } = await this.$axios.get('/api/user')
 
-            console.error('User succ')
+            // console.error('User succ')
 
             commit('setUser', data.user)
         } catch (e) {
-            console.error('User error')
+            // console.error('User error')
             commit('setUser', null)
         }
     },
 
     async nuxtServerInit ({ commit }, { app }) {
-        await console.log(app.$cookies.get('wit.theme'))
-        commit('theme/setTheme', app.$cookies.get('wit.theme'))
+        await app.store.dispatch('theme/setTheme', app.$cookies.get(Cookies.THEME))
     }
 }
 

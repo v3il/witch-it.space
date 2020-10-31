@@ -1,7 +1,9 @@
 <template>
-  <label class="switcher" :class="labelClass">
+  <label class="switcher wit-flex wit-flex--justify-between" :class="labelClass">
     <input type="checkbox" class="wit-none switcher__input" :value="isFirstValueSelected" @change="onChange">
-    <div class="switcher__ball" />
+    <span class="switcher__ball wit-block" />
+    <span v-if="iconLeft" class="mdi wit-offset-right--xxs switcher__icon" :class="iconLeft" />
+    <span v-if="iconRight" class="mdi wit-offset-left--xxs switcher__icon" :class="iconRight" />
   </label>
 </template>
 
@@ -24,6 +26,18 @@ export default {
             type: String,
             required: false,
             default: 'primary'
+        },
+
+        iconLeft: {
+            type: String,
+            required: false,
+            default: null
+        },
+
+        iconRight: {
+            type: String,
+            required: false,
+            default: null
         }
     },
 
@@ -58,6 +72,7 @@ export default {
         align-items: center;
         position: relative;
         margin-bottom: 0;
+        padding: 4px;
 
         &--primary {
             background-color: var(--primary);
@@ -74,10 +89,20 @@ export default {
     }
 
     .switcher--left .switcher__ball {
-        left: 3px;
+        left: 2px;
     }
 
     .switcher--right .switcher__ball {
-        left: 33px;
+        left: 34px;
+    }
+
+    .switcher__icon {
+        width: 50%;
+        line-height: 24px;
+        display: block;
+        height: 24px;
+        text-align: center;
+        font-size: 16px;
+        color: var(--warning);
     }
 </style>

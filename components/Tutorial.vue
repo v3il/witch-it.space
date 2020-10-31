@@ -54,7 +54,7 @@ export default {
             window.open('/api/auth/discord' /* 'auth', 'width=600,height=600' */)
 
             window.test = () => {
-                console.error('Test')
+                // console.error('Test')
             }
 
             // console.log(wnd)
