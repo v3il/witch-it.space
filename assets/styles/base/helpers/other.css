@@ -18,6 +18,18 @@
     font-family: var(--font-family-secondary);
 }
 
-.wit-transition {
-    transition: all var(--default-transition);
+.wit-transition--color {
+    transition: color var(--default-transition);
+}
+
+.wit-transition--background {
+    transition: background-color var(--default-transition);
+}
+
+.wit-transition--border {
+    transition: border-color var(--default-transition);
+}
+
+.wit-transition--box-shadow {
+    transition: box-shadow var(--default-transition);
 }

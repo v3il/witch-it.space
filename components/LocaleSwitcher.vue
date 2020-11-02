@@ -1,5 +1,5 @@
 <template>
-  <Dropdown :value="locale" :variants="$options.values" @change="onLocaleChange" />
+  <Dropdown :value="locale" :variants="$options.values" class="wit-block--full-height" @change="onLocaleChange" />
 </template>
 
 <script>
