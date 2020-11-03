@@ -5,7 +5,7 @@ export default function ({ $axios, redirect/*, store */ }) {
         if (error.response.status === 403) {
             // store.dispatch('logout')
             // todo: dispatch logout
-            redirect(Routes.AUTH)
+            redirect(Routes.LOGIN)
         }
     })
 }

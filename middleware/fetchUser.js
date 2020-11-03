@@ -4,6 +4,6 @@ export default async function ({ store, redirect }) {
     await store.dispatch('fetchUser')
 
     if (!store.state.user) {
-        redirect(Routes.AUTH)
+        redirect(Routes.LOGIN)
     }
 }

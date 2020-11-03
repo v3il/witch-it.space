@@ -32,7 +32,7 @@ const authUsingSteamCallback = async (request, response) => {
         user = await User.findOne({ where: { id: userFromCookies.id } })
 
         if (!user) {
-            return response.redirect(Routes.AUTH)
+            return response.redirect(Routes.LOGIN)
         }
 
         await user.update({
@@ -66,7 +66,7 @@ const steamAuthController = {
         try {
             await authUsingSteamCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.AUTH}?error=errors.authFailed`)
+            response.redirect(`${Routes.LOGIN}?error=errors.authFailed`)
         }
     }
 }

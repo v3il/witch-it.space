@@ -1,4 +1,5 @@
 export const Routes = Object.freeze({
-    AUTH: '/auth',
+    LOGIN: '/login',
+    REGISTER: '/register',
     MAIN: '/'
 })

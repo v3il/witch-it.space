@@ -22,11 +22,7 @@
             <Input id="password" v-model="password" :placeholder="$t('enter_password')" type="password" class="wit-offset-bottom--md" />
 
             <div class="wit-flex wit-flex--center">
-              <div class="wit-flex wit-flex--center">
-                <a href="/api/auth/steam" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-steam" /></a>
-                <a href="/api/auth/discord" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-discord" /></a>
-                <a href="/api/auth/google" class="auth__social-link wit-offset-right--xs"><span class="mdi mdi-google" /></a>
-              </div>
+              <Socials />
 
               <Button type="submit" class="wit-offset-left--auto">
                 {{ $t('login_in') }}
@@ -37,7 +33,7 @@
       </div>
 
       <p class="wit-text--center">
-        {{ $t('dont_have_account') }} <Link class="wit-color--primary wit-font-weight--500" to="/">
+        {{ $t('dont_have_account') }} <Link class="wit-color--primary wit-font-weight--500" to="/register">
           {{ $t('sign_up') }}
         </Link>
       </p>
@@ -54,6 +50,7 @@ import Label from '@/components/base/Label'
 import Input from '@/components/base/Input'
 import Button from '@/components/base/Button'
 import Link from '@/components/base/Link'
+import Socials from '@/components/auth/Socials'
 
 export default {
     year: new Date().getFullYear(),
@@ -62,7 +59,8 @@ export default {
         Label,
         Input,
         Button,
-        Link
+        Link,
+        Socials
     },
 
     data: () => ({
@@ -80,10 +78,10 @@ export default {
 
 <style scoped lang="scss">
 .page {
-    margin-top: var(--offset-xxlg);
+    margin-top: calc(var(--offset-xxlg) * 2);
 
     @media screen and (max-width: 768px) {
-        margin-top: var(--offset-sm);
+        margin-top: var(--offset-xxlg);
     }
 }
 

@@ -16,7 +16,7 @@ const authUsingDiscordCallback = async (request, response) => {
     const { code } = request.query
 
     if (!code) {
-        return response.redirect(`${Routes.AUTH}`)
+        return response.redirect(`${Routes.LOGIN}`)
     }
 
     const { data: tokenData } = await axiosInstance.post(
@@ -50,7 +50,7 @@ const authUsingDiscordCallback = async (request, response) => {
         user = await User.findOne({ where: { id: userFromCookies.id } })
 
         if (!user) {
-            return response.redirect(Routes.AUTH)
+            return response.redirect(Routes.LOGIN)
         }
 
         await user.update({
@@ -84,7 +84,7 @@ const discordAuthController = {
         try {
             await authUsingDiscordCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.AUTH}?error=errors.authFailed`)
+            response.redirect(`${Routes.LOGIN}?error=errors.authFailed`)
         }
     }
 }
