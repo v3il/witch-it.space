@@ -1,28 +1,35 @@
 <template>
   <div class="wit-flex wit-flex--center social-links">
-    <a href="/api/auth/steam" class="social-links__link wit-offset-right--xs"><span class="mdi mdi-steam" /></a>
-    <a href="/api/auth/discord" class="social-links__link wit-offset-right--xs"><span class="mdi mdi-discord" /></a>
-    <a href="/api/auth/google" class="social-links__link wit-offset-right--xs"><span class="mdi mdi-google" /></a>
+    <a
+      v-for="social in $options.socials"
+      :key="social"
+      :href="`/api/auth/${social}`"
+      class="wit-flex wit-flex--center social-links__link wit-offset-right--xs"
+    >
+      <span class="mdi" :class="`mdi-${social}`" />
+    </a>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'Socials'
+    name: 'Socials',
+
+    socials: [
+        'steam',
+        'discord',
+        'google'
+    ]
 }
 </script>
 
 <style scoped>
 .social-links__link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 39px;
-    height: 39px;
-    font-size: 20px;
-    margin-right: 8px;
-    background: #626ed4;
-    color: white;
-    border-radius: 4px;
+    width: var(--offset-xlg);
+    height: var(--offset-xlg);
+    font-size: var(--text-size-sm);
+    background: var(--primary);
+    color: var(--white);
+    border-radius: var(--offset-xxs);
 }
 </style>
