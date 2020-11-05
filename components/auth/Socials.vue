@@ -1,10 +1,10 @@
 <template>
-  <div class="wit-flex wit-flex--center social-links">
+  <div class="wit-flex wit-flex--center">
     <a
       v-for="social in $options.socials"
       :key="social"
       :href="`/api/auth/${social}`"
-      class="wit-flex wit-flex--center social-links__link wit-offset-right--xs"
+      class="wit-flex wit-flex--center social-links__link wit-offset-right--xs wit-background--primary wit-color--white wit--font-size--sm"
     >
       <span class="mdi" :class="`mdi-${social}`" />
     </a>
@@ -27,9 +27,6 @@ export default {
 .social-links__link {
     width: var(--offset-xlg);
     height: var(--offset-xlg);
-    font-size: var(--text-size-sm);
-    background: var(--primary);
-    color: var(--white);
     border-radius: var(--offset-xxs);
 }
 </style>
