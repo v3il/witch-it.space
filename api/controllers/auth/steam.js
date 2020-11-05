@@ -49,7 +49,9 @@ const authUsingSteamCallback = async (request, response) => {
         user = await User.create({
             steamId,
             steamProfileUrl: profile,
-            displayName: username
+            displayName: username,
+            locale: request.locale,
+            theme: request.theme
         })
     }
 

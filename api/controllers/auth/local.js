@@ -57,7 +57,8 @@ const register = async (request, response) => {
         login,
         displayName: login,
         password: encryptedPassword,
-        locale: request.locale
+        locale: request.locale,
+        theme: request.theme
     })
 
     signInUser({

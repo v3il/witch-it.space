@@ -8,5 +8,6 @@ export const extractUserPublicData = user => ({
     isActive: user.isActive,
     avatarId: user.avatarId,
     locale: user.locale,
+    theme: user.theme,
     inventorySyncTime: user.inventorySyncTime
 })

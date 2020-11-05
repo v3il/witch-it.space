@@ -44,7 +44,7 @@ const authUsingGoogleCallback = async (request, response) => {
             }
         )
 
-    const { id: googleId, name, locale } = googleUser
+    const { id: googleId, name } = googleUser
     const userFromCookies = await getUserFromCookies(request)
 
     let user
@@ -67,7 +67,8 @@ const authUsingGoogleCallback = async (request, response) => {
         user = await User.create({
             googleId,
             displayName: name,
-            locale: config.AVAILABLE_LOCALES.includes(locale) ? locale : config.DEFAULT_LOCALE
+            locale: request.locale,
+            theme: request.theme
         })
     }
 
