@@ -1,9 +1,7 @@
-import { Cookies } from '~/shared'
-
-const DEFAULT_THEME = 'dark'
+import { Cookies, config } from '~/shared'
 
 export const state = () => ({
-    theme: DEFAULT_THEME
+    theme: config.DEFAULT_THEME
 })
 
 export const actions = {
@@ -11,9 +9,10 @@ export const actions = {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
-        this.$cookies.set(Cookies.THEME, theme ?? DEFAULT_THEME, { expires })
+        const validTheme = theme ?? config.DEFAULT_THEME
 
-        commit('setTheme', theme ?? DEFAULT_THEME)
+        this.$cookies.set(Cookies.THEME, validTheme, { expires })
+        commit('setTheme', validTheme)
     }
 }
 

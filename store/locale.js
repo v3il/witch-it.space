@@ -9,9 +9,10 @@ export const actions = {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
-        this.$cookies.set(Cookies.LOCALE, locale ?? config.DEFAULT_LOCALE, { expires })
+        const validLocale = locale ?? config.DEFAULT_LOCALE
 
-        commit('setLocale', locale ?? config.DEFAULT_LOCALE)
+        this.$cookies.set(Cookies.LOCALE, validLocale, { expires })
+        commit('setLocale', validLocale)
     }
 }
 

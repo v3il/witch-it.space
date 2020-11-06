@@ -1,5 +1,5 @@
 import { extractUserPublicData, generateToken } from '../../util'
-import { config, Routes } from '../../../shared'
+import { config, Routes, Cookies } from '../../../shared'
 
 export const signInUser = ({ user, authType, response }) => {
     const userPublicData = {
@@ -9,14 +9,8 @@ export const signInUser = ({ user, authType, response }) => {
 
     const token = generateToken(userPublicData)
 
-    response.cookie(config.TOKEN_COOKIE_NAME, token, {
+    response.cookie(Cookies.TOKEN, token, {
         maxAge: config.TOKEN_COOKIE_DURATION * 1000,
-        httpOnly: true,
-        secure: true
-    })
-
-    response.cookie(config.LOCALE_COOKIE_NAME, userPublicData.locale, {
-        maxAge: config.LOCALE_COOKIE_DURATION * 1000,
         httpOnly: true,
         secure: true
     })

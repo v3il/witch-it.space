@@ -27,6 +27,7 @@ const config = {
     AVAILABLE_LOCALES: ['en', 'ru'],
     DEFAULT_LOCALE: 'en',
 
+    AVAILABLE_THEMES: ['light', 'dark'],
     DEFAULT_THEME: 'dark',
 
     TOKEN_COOKIE_NAME: 'wit.token',
