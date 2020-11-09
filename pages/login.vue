@@ -20,7 +20,7 @@
             </b-field>
 
             <b-field :label="$t('password')" class="wit-offset-bottom--md wit-font-weight--500">
-              <b-input v-model="password" type="password" :placeholder="$t('enter_password')" custom-class="wit-transition--border" password-reveal />
+              <b-input v-model="password" type="password" :placeholder="$t('enter_password')" custom-class="wit-transition--border" />
             </b-field>
 
             <div class="wit-flex wit-flex--center wit-flex--justify-between">

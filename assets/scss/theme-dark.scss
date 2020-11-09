@@ -26,14 +26,24 @@
 
     --content-bg: #2a3042;
 
-    --input-bg: var(--gray-300);
     --input-background-color: var(--gray-300);
     --input-color: var(--gray-500);
-    --input-border: #363e54;
+    --input-placeholder-color: var(--gray-500);
     --input-border-color: #363e54;
-    --input-bg-active: #30384a;
-    --input-color-active: var(--gray-500);
-    --input-border-active: #3a4158;
+    --input-hover-color: #30384a;
+    --input-focus-color: #30384a;
+    --input-hover-border-color: #3a4158;
+    --input-focus-border-color: #3a4158;
+    --input-focus-box-shadow-color: var(--primary);
+
+    //--input-bg: var(--gray-300);
+    //--input-background-color: var(--gray-300);
+    //--input-color: var(--gray-500);
+    //--input-border: #363e54;
+    //--input-border-color: #363e54;
+    //--input-bg-active: #30384a;
+    //--input-color-active: var(--gray-500);
+    //--input-border-active: #3a4158;
 
     --switcher-ball-bg: var(--gray-200);
 
