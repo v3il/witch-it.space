@@ -28,7 +28,7 @@
             <div class="wit-flex wit-flex--center wit-flex--justify-between">
               <Socials />
 
-              <b-button type="is-primary" class="wit-transition--background">
+              <b-button type="is-primary" native-type="submit" class="wit-transition--background">
                 {{ $t('login_in') }}
               </b-button>
             </div>
@@ -51,7 +51,10 @@
 </template>
 
 <script>
+// import { mapGetters } from 'vuex'
 import Socials from '@/components/auth/Socials'
+
+// const { mapGetters } = createNamespacedHelpers('')
 
 export default {
     year: new Date().getFullYear(),
@@ -65,9 +68,21 @@ export default {
         password: ''
     }),
 
+    computed: {
+        // ...mapGetters(['hasErrors', 'firstError'])
+    },
+
     methods: {
         onSubmit () {
-
+            try {
+                this.$store.dispatch('user/login', {
+                    login: this.login,
+                    password: this.password
+                })
+            } catch (e) {
+                // console.log(1)
+                // console.log(e)
+            }
         }
     }
 }
