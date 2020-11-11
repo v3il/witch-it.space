@@ -51,10 +51,8 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import Socials from '@/components/auth/Socials'
-
-// const { mapGetters } = createNamespacedHelpers('')
+import { User } from '@/store'
 
 export default {
     year: new Date().getFullYear(),
@@ -68,21 +66,12 @@ export default {
         password: ''
     }),
 
-    computed: {
-        // ...mapGetters(['hasErrors', 'firstError'])
-    },
-
     methods: {
         onSubmit () {
-            try {
-                this.$store.dispatch('user/login', {
-                    login: this.login,
-                    password: this.password
-                })
-            } catch (e) {
-                // console.log(1)
-                // console.log(e)
-            }
+            this.$store.dispatch(User.Actions.LOGIN, {
+                login: this.login,
+                password: this.password
+            })
         }
     }
 }

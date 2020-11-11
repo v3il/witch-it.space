@@ -1,3 +1,4 @@
+import { Theme, User, Root, Locale } from '@/store/Types'
 import { Cookies } from '~/shared'
 
 export const state = () => ({
@@ -11,8 +12,8 @@ export const getters = {
 
 export const actions = {
     async nuxtServerInit ({ commit }, { app }) {
-        await app.store.dispatch('theme/setTheme', app.$cookies.get(Cookies.THEME))
-        await app.store.dispatch('locale/setLocale', app.$cookies.get(Cookies.LOCALE))
+        await app.store.dispatch(Theme.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
+        await app.store.dispatch(Locale.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
     }
 }
 
@@ -25,3 +26,5 @@ export const mutations = {
         state.errors = []
     }
 }
+
+export { Theme, User, Locale, Root }
