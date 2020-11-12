@@ -4,10 +4,10 @@
       <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
         <header class="login-page__form-header wit-background--primary wit-position--relative">
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
-            {{ $t('welcome_back') }}
+            {{ $t('Login_WelcomeBack') }}
           </h1>
           <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
-            {{ $t('sign_in_to_continue') }}
+            {{ $t('Login_SignInToContinue') }}
           </p>
 
           <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">

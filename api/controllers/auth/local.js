@@ -1,5 +1,6 @@
 import { BadRequest } from '@curveball/http-errors'
 import { compare, genSalt, hash } from 'bcrypt'
+import { ne } from 'sequelize/types/lib/operators'
 import { translateText } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
@@ -11,7 +12,14 @@ const login = async (request, response) => {
     const login = requestBody.login.toString().trim()
     const password = requestBody.password.toString().trim()
 
-    const savedUser = await User.findOne({ where: { login } })
+    const savedUser = await User.findOne({
+        where: {
+            login,
+            password: {
+                [ne]: null
+            }
+        }
+    })
 
     if (!savedUser) {
         throw new BadRequest(translateText('errors.wrongLogin', request.locale))
