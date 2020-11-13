@@ -10,19 +10,19 @@ export const ru = {
         notUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе'
     },
 
-    // Login_WelcomeBack: 'Добро пожаловать!'
-
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш WitchIt.Zone аккаунт',
-    login: 'Логин',
-    enter_login: 'Введите логин',
-    password: 'Пароль',
-    enter_password: 'Введите пароль',
-    login_in: 'Войти',
-    dont_have_account: 'Нет аккаунта?',
-    sign_up: 'Зарегистрироваться',
-    crafted_by: 'Сделано для комьюнити Witch It от !D',
-    register: 'Зарегистрироваться',
-    loginInputHelp: 'Минимальная длина - ',
-    passwordInputHelp: 'Минимальная длина - 8 символов'
+    Login_LoginInputTitle: 'Логин',
+    Login_LoginInputPlaceholder: 'Введите логин',
+    Login_PasswordInputTitle: 'Пароль',
+    Login_PasswordInputPlaceholder: 'Введите пароль',
+    Login_LoginButtonTitle: 'Войти',
+    Login_DontHaveAccount: 'Нет аккаунта?',
+    Login_SignUpLinkTitle: 'Зарегистрироваться',
+
+    // loginInputHelp: 'Минимальная длина - ',
+    // passwordInputHelp: 'Минимальная длина - 8 символов',
+
+    RegisterPrompt: 'Зарегистрироваться',
+    CraftedBy: 'Сделано для комьюнити Witch It от !D'
 }

@@ -48,4 +48,4 @@ const initUserModel = (sequelize, DataTypes) => {
     )
 }
 
-module.exports = { initUserModel }
+export { initUserModel }

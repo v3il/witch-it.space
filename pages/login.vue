@@ -17,19 +17,19 @@
 
         <div class="login-page__form-content">
           <form @submit.prevent="onSubmit">
-            <b-field :label="$t('login')" class="wit-offset-bottom--md">
-              <b-input v-model="login" type="text" :placeholder="$t('enter_login')" custom-class="wit-transition--border" />
+            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md">
+              <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition--border" />
             </b-field>
 
-            <b-field :label="$t('password')" class="wit-offset-bottom--md">
-              <b-input v-model="password" type="password" :placeholder="$t('enter_password')" custom-class="wit-transition--border" />
+            <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
+              <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition--border" />
             </b-field>
 
             <div class="wit-flex wit-flex--center wit-flex--justify-between">
               <Socials />
 
               <b-button type="is-primary" native-type="submit" class="wit-transition--background">
-                {{ $t('login_in') }}
+                {{ $t('Login_LoginButtonTitle') }}
               </b-button>
             </div>
           </form>
@@ -37,14 +37,14 @@
       </div>
 
       <p class="wit-text--center wit-offset-bottom--sm">
-        {{ $t('dont_have_account') }}
+        {{ $t('Login_DontHaveAccount') }}
         <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight--500">
-          {{ $t('sign_up') }}
+          {{ $t('Login_SignUpLinkTitle') }}
         </b-button>
       </p>
 
       <p class="wit-text--center">
-        ©{{ $options.year }}. {{ $t('crafted_by') }}
+        ©{{ $options.year }}. {{ $t('CraftedBy') }}
       </p>
     </div>
   </div>
