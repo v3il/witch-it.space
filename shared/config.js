@@ -3,6 +3,9 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const isProduction = NODE_ENV === 'production'
 
+const Themes = { LIGHT: 'light', DARK: 'dark' }
+const Locales = { EN: 'en', RU: 'ru' }
+
 const config = {
     PORT,
     NODE_ENV,
@@ -24,11 +27,11 @@ const config = {
 
     STEAM_CLIENT_ID: process.env.STEAM_CLIENT_ID || 'client_id',
 
-    AVAILABLE_LOCALES: ['en', 'ru'],
-    DEFAULT_LOCALE: 'en',
+    AVAILABLE_LOCALES: [Locales.EN, Locales.RU],
+    DEFAULT_LOCALE: Locales.EN,
 
-    AVAILABLE_THEMES: ['light', 'dark'],
-    DEFAULT_THEME: 'dark',
+    AVAILABLE_THEMES: [Themes.LIGHT, Themes.DARK],
+    DEFAULT_THEME: Themes.DARK,
 
     TOKEN_COOKIE_NAME: 'wit.token',
     TOKEN_COOKIE_DURATION: 60 * 60 * 24 * 30, // 30 days
@@ -36,4 +39,4 @@ const config = {
     LOCALE_COOKIE_DURATION: 60 * 60 * 24 * 365 // 365 days
 }
 
-module.exports = { config }
+module.exports = { config, Themes, Locales }

@@ -1,6 +1,6 @@
 import { BadRequest } from '@curveball/http-errors'
 import { compare, genSalt, hash } from 'bcrypt'
-import { ne } from 'sequelize/types/lib/operators'
+import { Op } from 'sequelize'
 import { translateText } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
@@ -16,7 +16,7 @@ const login = async (request, response) => {
         where: {
             login,
             password: {
-                [ne]: null
+                [Op.ne]: null
             }
         }
     })

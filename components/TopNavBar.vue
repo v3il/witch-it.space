@@ -1,11 +1,11 @@
 <template>
   <header class="wit-transition wit-header">
     <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
-      <ThemeSwitcher class="wit-offset-right--sm" />
+      <ThemeSwitcher class="wit-offset-right--sm1" />
       <LocaleSwitcher class="wit-offset-right--sm" />
 
       <b-button type="is-primary" class="wit-transition--background">
-        {{ $t('register') }}
+        {{ $t('RegisterPrompt') }}
       </b-button>
     </div>
   </header>

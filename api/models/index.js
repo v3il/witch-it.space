@@ -14,7 +14,7 @@ try {
         host: config.DB_HOST,
         database: config.DB_NAME,
         username: config.DB_USER,
-        Login_PasswordInputTitle: config.DB_PASSWORD,
+        password: config.DB_PASSWORD,
         dialect: 'postgres',
         logging: false,
         define: {
