@@ -49,19 +49,27 @@
 
     --header-bg: #36394c;
 
-    --dropdown-btn-color: var(--gray-400);
-    --dropdown-background: var(--gray-300);
-    --dropdown-hover-background: rgba(239, 242, 247, 0.05);
-    --dropdown-border: #3a425a;
-    --dropdown-item-color: var(--gray-500);
-    --dropdown-item-hover-color: var(--gray-400);
-
-    --locale-dropdown-btn-color: var(--gray-400);
-    --locale-dropdown-background: var(--gray-300);
-    --locale-dropdown-hover-background: rgba(239, 242, 247, 0.05);
-    --locale-dropdown-border: #3a425a;
-    --locale-dropdown-item-color: var(--gray-500);
-    --locale-dropdown-item-hover-color: var(--gray-400);
+    //--dropdown-btn-color: var(--gray-400);
+    //--dropdown-background: var(--gray-300);
+    //--dropdown-hover-background: rgba(239, 242, 247, 0.05);
+    //--dropdown-border: #3a425a;
+    //--dropdown-item-color: var(--gray-500);
+    //--dropdown-item-hover-color: var(--gray-400);
+    //
+    //--locale-dropdown-btn-color: var(--gray-400);
+    //--locale-dropdown-background: var(--gray-300);
+    //--locale-dropdown-hover-background: rgba(239, 242, 247, 0.05);
+    //--locale-dropdown-border: #3a425a;
+    ////--locale-dropdown-item-color: var(--gray-500);
+    //--locale-dropdown-item-hover-color: var(--gray-400);
 
     --theme-switcher-hover-background: rgba(239, 242, 247, 0.05);
+
+    --locale-switcher-hover-background: rgba(239, 242, 247, 0.05);
+    --dropdown-content-background-color: var(--gray-300);
+    --dropdown-item-color: var(--gray-500);
+    --dropdown-item-hover-background-color: rgba(239, 242, 247, 0.05);
+    --dropdown-item-hover-color: var(--gray-400);
+
+
 }

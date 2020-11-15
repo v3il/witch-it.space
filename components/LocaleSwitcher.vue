@@ -1,63 +1,89 @@
 <template>
-  <Dropdown :value="locale" :variants="$options.values" class="wit-block--full-height wit-dropdown--locale-switcher" @change="onLocaleChange" />
+  <b-dropdown animation="fade150" class="wit-block--full-height wit-locale-switcher wit-transition--background" :class="dropdownClasses" position="is-bottom-left" @active-change="updateStatus">
+    <template #trigger>
+      <div class="wit-flex wit-flex--align-center wit-block--full-height">
+        <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">
+        <span class="wit-inline-block">{{ selectedLocale.label }}</span>
+        <b-icon size="is-small" class="is-size-5 wit-offset-left--xs" icon="menu-down" />
+      </div>
+    </template>
+
+    <b-dropdown-item v-for="locale in $options.locales" :key="locale.value" :value="true" @click="onLocaleChange(locale.value)">
+      <div class="wit-flex wit-flex--align-center">
+        <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
+        <span class="wit-inline-block">{{ locale.label }}</span>
+      </div>
+    </b-dropdown-item>
+  </b-dropdown>
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-import Dropdown from '@/components/base/Dropdown'
-
-const { mapState, mapActions } = createNamespacedHelpers('locale')
+import { mapState } from 'vuex'
+import { Locale } from '@/store'
 
 export default {
     name: 'LocaleSwitcher',
 
-    values: [
+    locales: [
         { value: 'en', label: 'English', img: 'flags/us.svg' },
         { value: 'ua', label: 'Українська', img: 'flags/ua.svg' },
         { value: 'ru', label: 'Русский', img: 'flags/ru.svg' }
     ],
 
-    components: {
-        Dropdown
-    },
+    data: () => ({
+        isOpen: false
+    }),
 
     computed: {
-        ...mapState(['locale'])
+        ...mapState(Locale.PATH, [
+            'locale'
+        ]),
+
+        selectedLocale () {
+            return this.$options.locales.find(({ value }) => value === this.locale)
+        },
+
+        dropdownClasses () {
+            return {
+                open: this.isOpen
+            }
+        }
     },
 
     methods: {
-        ...mapActions(['setLocale']),
+        updateStatus (isOpen) {
+            this.isOpen = isOpen
+        },
 
-        async onLocaleChange (locale) {
-            console.log(locale)
-
-            // this.switchLocalePath(locale)
-            // this.$i18n.setLocale(locale)
-            // this.$i18n.setLocaleCookie(locale)
-            // this.$router.replace(this.switchLocalePath(locale))
-
+        onLocaleChange (locale) {
             if (this.locale === locale) {
                 return
             }
 
-            await this.setLocale(locale)
-            // // this.$router.go(0)
-            //
-            // this.$i18n.setLocaleCookie(locale)
-            // this.$i18n.setLocale(locale)
-
-            // if (this.locale === locale) {
-            //     return
-            // }
-            //
-            // await this.setLocale(locale)
+            this.$store.dispatch(Locale.Actions.SET_LOCALE, locale)
             this.$router.go(0)
-            // this.$forceUpdate()
         }
     }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    .wit-locale-switcher {
+        color: white;
+        padding: var(--offset-sm);
+        cursor: pointer;
 
+        &.open,
+        &:active,
+        &:focus,
+        &:hover {
+            color: white;
+            text-decoration: none;
+            background-color: var(--locale-switcher-hover-background);
+        }
+    }
+
+    .wit-locale-switcher__img {
+        height: 16px;
+    }
 </style>

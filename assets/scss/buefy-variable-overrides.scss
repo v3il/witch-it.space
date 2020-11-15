@@ -8,7 +8,21 @@
             --focus-box-shadow-color: var(--blue-600);
             --active-background-color: #535eb4;
         }
+
+        &:active,
+        &:focus,
+        &:hover {
+            box-shadow: none;
+        }
     }
 
     --input-focus-box-shadow-size: 0 0 0 0.05em;
+
+    .dropdown-menu {
+        --speed: 20ms;
+    }
+
+    --dropdown-content-offset: 0;
+    --dropdown-content-radius: 2px;
+    --dropdown-item-active-background-color: transparent;
 }

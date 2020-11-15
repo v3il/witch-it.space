@@ -1,0 +1,9 @@
+.fade150-enter-active,
+.fade150-leave-active {
+    transition: opacity 0.15s;
+}
+
+.fade150-enter,
+.fade150-leave-to {
+    opacity: 0;
+}
