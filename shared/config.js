@@ -4,7 +4,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 const isProduction = NODE_ENV === 'production'
 
 const Themes = { LIGHT: 'light', DARK: 'dark' }
-const Locales = { EN: 'en', RU: 'ru' }
+const Locales = { EN: 'en', RU: 'ru', UA: 'ua' }
 
 const config = {
     PORT,
@@ -27,7 +27,7 @@ const config = {
 
     STEAM_CLIENT_ID: process.env.STEAM_CLIENT_ID || 'client_id',
 
-    AVAILABLE_LOCALES: [Locales.EN, Locales.RU],
+    AVAILABLE_LOCALES: [Locales.EN, Locales.RU, Locales.UA],
     DEFAULT_LOCALE: Locales.EN,
 
     AVAILABLE_THEMES: [Themes.LIGHT, Themes.DARK],

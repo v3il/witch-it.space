@@ -20,14 +20,15 @@
 <script>
 import { mapState } from 'vuex'
 import { Locale } from '@/store'
+import { Locales } from '@/shared'
 
 export default {
     name: 'LocaleSwitcher',
 
     locales: [
-        { value: 'en', label: 'English', img: 'flags/us.svg' },
-        { value: 'ua', label: 'Українська', img: 'flags/ua.svg' },
-        { value: 'ru', label: 'Русский', img: 'flags/ru.svg' }
+        { value: Locales.EN, label: 'English', img: 'flags/us.svg' },
+        { value: Locales.UA, label: 'Українська', img: 'flags/ua.svg' },
+        { value: Locales.RU, label: 'Русский', img: 'flags/ru.svg' }
     ],
 
     data: () => ({
