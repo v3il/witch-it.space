@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import Socials from '@/components/auth/Socials'
 import { Root, User } from '@/store'
 
@@ -70,12 +71,24 @@ export default {
         const error = this.$route.query.error
 
         if (error) {
-            this.$store.commit(Root.Mutations.SET_ERRORS, [this.$t(error)])
+            this.setErrors([this.$t(error)])
         }
     },
 
     methods: {
+        ...mapMutations([
+            Root.Mutations.SET_ERRORS
+        ]),
+
         onSubmit () {
+            if (!this.login) {
+                return this.setErrors([this.$t('Error_LoginCantBeEmpty')])
+            }
+
+            if (this.password.length < 6) {
+                return this.setErrors([this.$t('Error_InvalidPassword')])
+            }
+
             this.$store.dispatch(User.F.Actions.LOGIN, {
                 login: this.login,
                 password: this.password

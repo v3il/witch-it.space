@@ -48,7 +48,7 @@ const register = async (request, response) => {
         throw new BadRequest(translateText('Error_InvalidLogin', request.locale))
     }
 
-    if (password.length < 8) {
+    if (password.length < 6) {
         throw new BadRequest(translateText('Error_InvalidPassword', request.locale))
     }
 

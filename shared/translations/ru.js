@@ -5,8 +5,11 @@ export const ru = {
     Error_NoUserWithLogin: 'Пользователя с таким логином не существует',
     Error_WrongPassword: 'Неправильный пароль',
     Error_InvalidLogin: 'Некорректный логин',
-    Error_InvalidPassword: 'Некорректный пароль (минимум 8 символов)',
+    Error_LoginIsTooShort: 'Минимальная длина логина - 3 символа',
+    Error_PasswordIsTooShort: 'Минимальная длина пароля - 6 символов',
+    Error_InvalidPassword: 'Некорректный пароль (минимум 6 символов)',
     Error_NotUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе',
+    Error_LoginCantBeEmpty: 'Логин не может быть пустым',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',
