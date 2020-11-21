@@ -17,7 +17,7 @@
 
         <div class="login-page__form-content">
           <form @submit.prevent="onSubmit">
-            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md">
+            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
               <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 
@@ -54,6 +54,7 @@
 import { mapMutations } from 'vuex'
 import Socials from '@/components/auth/Socials'
 import { Root, User } from '@/store'
+import { Routes } from '@/shared'
 
 export default {
     year: new Date().getFullYear(),
@@ -81,8 +82,8 @@ export default {
         ]),
 
         onSubmit () {
-            if (!this.login) {
-                return this.setErrors([this.$t('Error_LoginCantBeEmpty')])
+            if (this.login.length < 4) {
+                return this.setErrors([this.$t('Error_LoginIsTooShort')])
             }
 
             if (this.password.length < 6) {
@@ -92,7 +93,7 @@ export default {
             this.$store.dispatch(User.F.Actions.LOGIN, {
                 login: this.login,
                 password: this.password
-            })
+            }).then(() => this.$router.replace(Routes.MAIN))
         }
     }
 }

@@ -44,7 +44,7 @@ const register = async (request, response) => {
     const login = requestBody.login.toString().trim()
     const password = requestBody.password.toString().trim()
 
-    if (!login.length) {
+    if (login.length < 4) {
         throw new BadRequest(translateText('Error_InvalidLogin', request.locale))
     }
 

@@ -4,12 +4,13 @@ export const ru = {
     Error_ActionForbidden: 'Действие запрещено',
     Error_NoUserWithLogin: 'Пользователя с таким логином не существует',
     Error_WrongPassword: 'Неправильный пароль',
-    Error_InvalidLogin: 'Некорректный логин',
-    Error_LoginIsTooShort: 'Минимальная длина логина - 3 символа',
+    Error_InvalidLogin: 'Некорректный логин (минимум 4 символа)',
+    Error_LoginIsTooShort: 'Минимальная длина логина - 4 символа',
     Error_PasswordIsTooShort: 'Минимальная длина пароля - 6 символов',
     Error_InvalidPassword: 'Некорректный пароль (минимум 6 символов)',
     Error_NotUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе',
     Error_LoginCantBeEmpty: 'Логин не может быть пустым',
+    Error_PasswordsAreNotIdentical: 'Пароли не совпадают',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',
@@ -27,9 +28,8 @@ export const ru = {
     Register_AlreadyHaveAccount: 'Уже есть аккаунт?',
     Register_SignInLinkTitle: 'Войти',
     Register_RegisterButtonTitle: 'Создать',
-
-    // loginInputHelp: 'Минимальная длина - ',
-    // passwordInputHelp: 'Минимальная длина - 8 символов',
+    Register_LoginInputHelp: 'Минимальная длина - 4 символа',
+    Register_PasswordInputHelp: 'Минимальная длина - 6 символов',
 
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D'

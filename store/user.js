@@ -12,8 +12,8 @@ export const actions = {
 
             commit(User.Mutations.SET_USER, user)
 
-            await dispatch(Theme.F.Actions.SET_THEME, user.theme)
-            await dispatch(Locale.F.Actions.SET_LOCALE, user.locale)
+            await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
+            await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
         } catch (e) {
             // console.error('User error')
             commit(User.Mutations.SET_USER, null)
@@ -23,6 +23,10 @@ export const actions = {
 
     [User.Actions.LOGIN] ({ commit, dispatch }, credentials) {
         return this.$axios.post('/api/auth/login', credentials)
+    },
+
+    [User.Actions.REGISTER] ({ commit, dispatch }, credentials) {
+        return this.$axios.post('/api/auth/register', credentials)
     }
 }
 

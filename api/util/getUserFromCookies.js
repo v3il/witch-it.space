@@ -1,8 +1,8 @@
 import { verify } from 'jsonwebtoken'
-import { config } from '../../shared'
+import { config, Cookies } from '../../shared'
 
 export const getUserFromCookies = (request) => {
-    const { [config.TOKEN_COOKIE_NAME]: token } = request.cookies
+    const { [Cookies.TOKEN]: token } = request.cookies
 
     if (!token) {
         return null

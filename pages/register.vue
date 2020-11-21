@@ -17,11 +17,11 @@
 
         <div class="register-page__form-content">
           <form @submit.prevent="onSubmit">
-            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md">
+            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm" :message="$t('Register_LoginInputHelp')">
               <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 
-            <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
+            <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--sm" :message="$t('Register_PasswordInputHelp')">
               <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 
@@ -55,8 +55,10 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import Socials from '@/components/auth/Socials'
 import { Root, User } from '@/store'
+import { Routes } from '@/shared'
 
 export default {
     year: new Date().getFullYear(),
@@ -75,16 +77,32 @@ export default {
         const error = this.$route.query.error
 
         if (error) {
-            this.$store.commit(Root.Mutations.SET_ERRORS, [this.$t(error)])
+            this.setErrors([this.$t(error)])
         }
     },
 
     methods: {
+        ...mapMutations([
+            Root.Mutations.SET_ERRORS
+        ]),
+
         onSubmit () {
-            this.$store.dispatch(User.F.Actions.LOGIN, {
+            if (this.login.length < 4) {
+                return this.setErrors([this.$t('Error_LoginIsTooShort')])
+            }
+
+            if (this.password.length < 6) {
+                return this.setErrors([this.$t('Error_PasswordIsTooShort')])
+            }
+
+            if (this.password !== this.confirmPassword) {
+                return this.setErrors([this.$t('Error_PasswordsAreNotIdentical')])
+            }
+
+            this.$store.dispatch(User.F.Actions.REGISTER, {
                 login: this.login,
                 password: this.password
-            })
+            }).then(() => this.$router.replace(Routes.MAIN))
         }
     }
 }
