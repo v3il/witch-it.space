@@ -2,11 +2,7 @@
   <header class="wit-transition wit-header">
     <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
       <ThemeSwitcher />
-      <LocaleSwitcher class="wit-offset-right--xs" />
-
-      <b-button type="is-primary" class="wit-transition--background">
-        {{ $t('RegisterPrompt') }}
-      </b-button>
+      <LocaleSwitcher />
     </div>
   </header>
 </template>
@@ -31,5 +27,6 @@ export default {
         height: 70px;
         position: sticky;
         padding: 0 var(--offset-sm);
+        z-index: 50;
     }
 </style>

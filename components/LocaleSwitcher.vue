@@ -1,5 +1,12 @@
 <template>
-  <b-dropdown animation="fade150" class="wit-block--full-height wit-locale-switcher wit-transition--background" :class="dropdownClasses" position="is-bottom-left" @active-change="updateStatus">
+  <b-dropdown
+    animation="fade150"
+    :mobile-modal="false"
+    class="wit-block--full-height wit-locale-switcher wit-transition--background"
+    :class="dropdownClasses"
+    position="is-bottom-left"
+    @active-change="updateStatus"
+  >
     <template #trigger>
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
         <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">

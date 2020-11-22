@@ -1,12 +1,8 @@
 <template>
   <div>
-    App
+    Settings
 
     <p>{{ user }}</p>
-
-    <nuxt-link to="/settings">
-      Settings
-    </nuxt-link>
 
     <!--    <button @click="c">-->
     <!--      c-->
