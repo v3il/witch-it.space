@@ -42,7 +42,7 @@ export const Theme = StoreWrap.wrap('theme', {
 
 export const User = StoreWrap.wrap('user', {
     State: {
-        THEME: 'user'
+        USER: 'user'
     },
 
     Actions: {

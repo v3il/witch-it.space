@@ -32,5 +32,7 @@ export const ru = {
     Register_PasswordInputHelp: 'Минимальная длина - 6 символов',
 
     RegisterPrompt: 'Зарегистрироваться',
-    CraftedBy: 'Сделано для комьюнити Witch It от !D'
+    CraftedBy: 'Сделано для комьюнити Witch It от !D',
+    Logout: 'Выйти',
+    Settings: 'Настройки'
 }

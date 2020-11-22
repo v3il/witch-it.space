@@ -11,7 +11,7 @@
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
         <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">
         <span class="wit-inline-block">{{ selectedLocale.label }}</span>
-        <b-icon size="is-small" class="is-size-5 wit-offset-left--xs" icon="menu-down" />
+        <!--        <b-icon size="is-small" class="is-size-5 wit-offset-left&#45;&#45;xs" icon="menu-down" />-->
       </div>
     </template>
 

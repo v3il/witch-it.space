@@ -1,6 +1,7 @@
 /* stylelint-disable */
 :root {
     --link: var(--blue);
+    --link-hover: currentColor;
 
     .button {
         &.is-link,

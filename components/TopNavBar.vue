@@ -3,20 +3,31 @@
     <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
       <ThemeSwitcher />
       <LocaleSwitcher />
+      <UserDropdown v-if="user" class="wit-offset-left--none" />
     </div>
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import { User } from '@/store'
+import UserDropdown from '@/components/UserDropdown'
 
 export default {
     name: 'TopNavBar',
 
     components: {
         ThemeSwitcher,
-        LocaleSwitcher
+        LocaleSwitcher,
+        UserDropdown
+    },
+
+    computed: {
+        ...mapState(User.PATH, [
+            User.State.USER
+        ])
     }
 }
 </script>

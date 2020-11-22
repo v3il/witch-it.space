@@ -2,16 +2,18 @@
   <div>
     Settings
 
-    <p>{{ user }}</p>
-
-    <!--    <button @click="c">-->
-    <!--      c-->
-    <!--    </button>-->
+    <UserView />
   </div>
 </template>
 
 <script>
+import UserView from '@/components/UserView'
+
 export default {
+
+    components: {
+        UserView
+    },
     middleware: ['fetchUser'],
 
     data: () => ({
