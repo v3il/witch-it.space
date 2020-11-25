@@ -31,6 +31,12 @@ export const ru = {
     Register_LoginInputHelp: 'Минимальная длина - 4 символа',
     Register_PasswordInputHelp: 'Минимальная длина - 6 символов',
 
+    MainMenu_MyMarket: 'Мой маркет',
+    MainMenu_MyWishlist: 'Список желаний',
+    MainMenu_Profiles: 'Профили',
+    MainMenu_Items: 'Предметы',
+    MainMenu_Quests: 'Квесты',
+
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D',
     Logout: 'Выйти',
