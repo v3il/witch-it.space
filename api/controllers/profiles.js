@@ -1,9 +1,13 @@
-import { User } from '../../models'
+import { User } from '../models'
+import { extractUserPublicData } from '../util'
 
-const getProfiles = (request, response) => {
-    const users = User.find()
+const getProfiles = async (request, response) => {
+    const users = await User.findAll()
+    const mappedUsers = users.map(extractUserPublicData)
 
-    response.send({ users })
+    console.log(mappedUsers)
+
+    response.send({ users: mappedUsers })
 }
 
 const profilesController = {

@@ -27,6 +27,11 @@ export const actions = {
 
     [User.Actions.REGISTER] ({ commit, dispatch }, credentials) {
         return this.$axios.post('/api/auth/register', credentials)
+    },
+
+    [User.Actions.LOGOUT] ({ commit }) {
+        return this.$axios.post('/api/auth/logout')
+            .then(() => commit(User.Mutations.SET_USER, null))
     }
 }
 

@@ -48,7 +48,8 @@ export const User = StoreWrap.wrap('user', {
     Actions: {
         FETCH_USER: 'fetchUser',
         LOGIN: 'login',
-        REGISTER: 'register'
+        REGISTER: 'register',
+        LOGOUT: 'logout'
     },
 
     Mutations: {

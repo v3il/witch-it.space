@@ -1,4 +1,4 @@
-import { discordAuthController, googleAuthController, steamAuthController, localAuthController } from '../controllers'
+import { discordAuthController, googleAuthController, steamAuthController, localAuthController, logoutController } from '../controllers'
 import { createAsyncRouter } from '../util'
 
 const authRouter = createAsyncRouter()
@@ -14,5 +14,7 @@ authRouter.get('/steam/callback', steamAuthController.authUsingSteamCallback)
 
 authRouter.post('/login', localAuthController.login)
 authRouter.post('/register', localAuthController.register)
+
+authRouter.post('/logout', logoutController.logout)
 
 export { authRouter }

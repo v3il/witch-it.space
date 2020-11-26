@@ -1,27 +1,22 @@
 <template>
   <div>
-    Settings
+    Profiles
 
-    <UserView />
+    {{ users }}
   </div>
 </template>
 
 <script>
-import UserView from '@/components/UserView'
-
 export default {
-
-    components: {
-        UserView
-    },
     middleware: ['fetchUser'],
 
     data: () => ({
-        user: null
+        users: []
     }),
 
-    created () {
-        this.user = this.$store.state.user
+    async created () {
+        this.users = (await this.$axios.get('/api/profiles')).data
+
         // console.log(this.$store)
 
         // this.$store.commit('add', 'Test')

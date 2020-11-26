@@ -40,7 +40,7 @@
       </nuxt-link>
     </b-dropdown-item>
 
-    <b-dropdown-item class="wit-transition--background">
+    <b-dropdown-item class="wit-transition--background" @click="logout">
       <div class="wit-flex wit-flex--align-center wit-color--danger">
         <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="logout-variant" />
         <span class="wit-inline-block">{{ $t('Logout') }}</span>
@@ -52,6 +52,7 @@
 <script>
 import { mapState } from 'vuex'
 import { User } from '@/store'
+import { Routes } from '@/shared'
 
 export default {
     name: 'UserDropdown',
@@ -75,6 +76,11 @@ export default {
     methods: {
         updateStatus (isOpen) {
             this.isOpen = isOpen
+        },
+
+        logout () {
+            this.$store.dispatch(User.F.Actions.LOGOUT)
+                .then(() => this.$router.replace(Routes.LOGIN))
         }
     }
 }
