@@ -33,9 +33,7 @@ const config = {
     AVAILABLE_THEMES: [Themes.LIGHT, Themes.DARK],
     DEFAULT_THEME: Themes.DARK,
 
-    TOKEN_COOKIE_NAME: 'wit.token',
     TOKEN_COOKIE_DURATION: 60 * 60 * 24 * 30, // 30 days
-    LOCALE_COOKIE_NAME: 'wit.locale',
     LOCALE_COOKIE_DURATION: 60 * 60 * 24 * 365 // 365 days
 }
 
