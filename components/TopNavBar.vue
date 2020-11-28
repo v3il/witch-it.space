@@ -2,7 +2,7 @@
   <header class="wit-transition wit-header wit-flex wit-flex--justify-between">
     <img class="login-page__image" src="images/hey.png" alt="Hey!">
 
-    <ul class="wit-flex wit-flex--align-center wit-header__menu">
+    <ul v-if="user" class="wit-flex wit-flex--align-center wit-header__menu">
       <li v-for="link in $options.links" :key="link.to" class="wit-header__menu-item" :class="getLinkClasses(link)">
         <nuxt-link :to="link.to" class="wit-flex wit-flex--center wit-color--white wit-header__menu-link wit-block--full-height">
           <!--          <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="cog-sync" />-->
