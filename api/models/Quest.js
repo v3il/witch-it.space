@@ -1,10 +1,8 @@
-// import { config } from '../../shared'
-
 const initQuestModel = (sequelize, DataTypes) => {
     return sequelize.define(
         'Quest',
         {
-            questTask: DataTypes.INTEGER,
+            questTask: DataTypes.STRING,
             questType: DataTypes.STRING,
             globalId: DataTypes.INTEGER,
             localId: DataTypes.INTEGER,
