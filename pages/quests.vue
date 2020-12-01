@@ -2,37 +2,39 @@
   <div>
     Settings
 
-    <UserView />
+    {{ weeklyQuests }}
+    <br>
+    {{ dailyQuests }}
+
+    <button @click="l">
+      Load
+    </button>
   </div>
 </template>
 
 <script>
-import UserView from '@/components/UserView'
-
 export default {
-
-    components: {
-        UserView
-    },
     middleware: ['fetchUser'],
 
     data: () => ({
-        user: null
+        weeklyQuests: [],
+        dailyQuests: []
     }),
 
-    created () {
-        this.user = this.$store.state.user
-        // console.log(this.$store)
+    async created () {
+        const { weeklyQuests, dailyQuests } = (await this.$axios.get('/api/quests')).data
 
-        // this.$store.commit('add', 'Test')
-
-        // console.log('Created')
-
-        // console.log()
+        this.weeklyQuests = weeklyQuests
+        this.dailyQuests = dailyQuests
     },
 
     methods: {
+        async l () {
+            const { weeklyQuests, dailyQuests } = (await this.$axios.get('/api/quests')).data
 
+            this.weeklyQuests = weeklyQuests
+            this.dailyQuests = dailyQuests
+        }
     }
 }
 </script>
