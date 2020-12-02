@@ -37,7 +37,7 @@ export default {
 
     methods: {
         async l () {
-            const { weeklyQuests, dailyQuests } = (await this.$axios.get('/api/quests')).data
+            const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/update')).data
 
             this.weeklyQuests = weeklyQuests
             this.dailyQuests = dailyQuests
