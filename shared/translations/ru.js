@@ -12,6 +12,8 @@ export const ru = {
     Error_LoginCantBeEmpty: 'Логин не может быть пустым',
     Error_PasswordsAreNotIdentical: 'Пароли не совпадают',
     Error_BadRequest: 'Неправильный запрос',
+    Error_QuestsReplacingFailed: 'При обновлении квестов произошла ошибка',
+    Error_QuestsFetchingFailed: 'При загрузке квестов произошла ошибка',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',

@@ -81,6 +81,22 @@ export class WitchItApiService {
         return data.success
     }
 
+    async loadUserData (steamId) {
+        const authToken = await this.auth(steamId)
+        const accessToken = await this.getAccessToken(authToken)
+        const { weeklyQuests, dailyQuests } = await this.getQuests(accessToken)
+        const canReplaceWeeklyQuests = await this.canReplaceWeeklyQuests(accessToken)
+        const canReplaceDailyQuests = await this.canReplaceDailyQuests(accessToken)
+
+        const quests = [...weeklyQuests, ...dailyQuests]
+
+        return {
+            quests,
+            canReplaceWeeklyQuests,
+            canReplaceDailyQuests
+        }
+    }
+
     // async finalizeQuest({ userId, localQuestId, globalQuestId }) {
     //     const authToken = await this.auth(userId);
     //     const accessToken = await this.getAccessToken(authToken);

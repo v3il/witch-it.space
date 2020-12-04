@@ -29,18 +29,26 @@ export default {
     }),
 
     async created () {
-        const { weeklyQuests, dailyQuests } = (await this.$axios.get('/api/quests')).data
+        try {
+            const { weeklyQuests, dailyQuests } = (await this.$axios.get('/api/quests')).data
 
-        this.weeklyQuests = weeklyQuests
-        this.dailyQuests = dailyQuests
+            this.weeklyQuests = weeklyQuests
+            this.dailyQuests = dailyQuests
+        } catch (e) {
+            console.log(e)
+        }
     },
 
     methods: {
         async l () {
-            const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/update')).data
+            try {
+                const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/update')).data
 
-            this.weeklyQuests = weeklyQuests
-            this.dailyQuests = dailyQuests
+                this.weeklyQuests = weeklyQuests
+                this.dailyQuests = dailyQuests
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 }
