@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td style="padding: 0 8px;">
-      <div style="display: flex; align-items: center;">
+      <div style="display: flex; align-items: center;" class="wit-color--white">
         {{ $t(`Quests_${quest.questTask}`) }}
         <button style="margin-left: 8px;" @click="$emit('replace')">
           R

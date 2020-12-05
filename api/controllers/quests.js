@@ -63,10 +63,14 @@ const replaceUserQuest = async (request, response) => {
     }
 
     try {
-        await witchItApiService.replaceQuest({ user, quest })
+        const isReplaced = await witchItApiService.replaceQuest({ user, quest })
 
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.saveUserQuests(user, newQuestsData)
+        console.log(isReplaced)
+
+        if (isReplaced) {
+            const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+            await questsService.saveUserQuests(user, newQuestsData)
+        }
 
         const questsData = await questsService.getUserQuestsData(user)
         response.send(questsData)
