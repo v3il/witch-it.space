@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/named
 import { Quest, sequelize } from '../models'
+import { getCurrentTimestamp } from '../util'
 
 export class QuestsService {
     constructor (items) {
@@ -14,12 +15,14 @@ export class QuestsService {
         const dailyQuests = mappedQuests.filter(quest => quest.questType === 'Daily')
         const canReplaceWeeklyQuests = user.canReplaceWeeklyQuests
         const canReplaceDailyQuests = user.canReplaceDailyQuests
+        const questsUpdateTimestamp = user.questsUpdateTimestamp
 
         return {
             weeklyQuests,
             dailyQuests,
             canReplaceWeeklyQuests,
-            canReplaceDailyQuests
+            canReplaceDailyQuests,
+            questsUpdateTimestamp
         }
     }
 
@@ -53,7 +56,8 @@ export class QuestsService {
 
             await user.update({
                 canReplaceWeeklyQuests,
-                canReplaceDailyQuests
+                canReplaceDailyQuests,
+                questsUpdateTimestamp: getCurrentTimestamp()
             }, { transaction })
 
             await transaction.commit()

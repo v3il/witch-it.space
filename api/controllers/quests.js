@@ -2,7 +2,8 @@ import { BadRequest, UnprocessableEntity } from '@curveball/http-errors'
 // eslint-disable-next-line import/named
 import { User, Quest } from '../models'
 import { witchItApiService, questsService } from '../services'
-import { translateText } from '../util'
+import { getCurrentTimestamp, translateText } from '../util'
+import { config } from '../../shared'
 
 const getUserQuests = async (request, response, next) => {
     const { id } = request.user
@@ -23,6 +24,12 @@ const updateUserQuests = async (request, response) => {
 
     if (!(user && user.steamId)) {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    const ts = getCurrentTimestamp()
+
+    if (user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT > ts) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
     }
 
     try {

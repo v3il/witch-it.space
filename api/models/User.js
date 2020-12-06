@@ -13,6 +13,7 @@ const initUserModel = (sequelize, DataTypes) => {
             discordId: DataTypes.STRING,
             discordTag: DataTypes.STRING,
             googleId: DataTypes.STRING,
+            questsUpdateTimestamp: DataTypes.INTEGER,
 
             theme: {
                 type: DataTypes.STRING,
