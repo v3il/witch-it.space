@@ -1,29 +1,17 @@
 import { Routes } from '@/shared'
+import { User, Root } from '@/store'
 
-export default function ({ $axios, redirect, error: nuxtError, store }) {
-    $axios.onError((error) => {
-        if (error.response.status === 403) {
-            // store.dispatch('logout')
-            // todo: dispatch logout
+export default function ({ $axios, redirect, store }) {
+    $axios.onError(async (error) => {
+        const { logout, error: errorText } = error.response.data
+
+        if (logout) {
+            await store.dispatch(User.F.Actions.LOGOUT)
             return redirect(Routes.LOGIN)
         }
 
-        store.commit('setErrors', [error.response.data.error])
+        store.commit(Root.Mutations.SET_ERRORS, [errorText])
 
-        // console.log(error.response.data.error)
-
-        // nuxtError({
-        //     statusCode: error.response.status,
-        //     message: error.message
-        // })
-
-        return Promise.reject(new Error(error.response.data.error))
-
-        // throw new Error()
-
-        // return Promise.resolve({
-        //     statusCode: error.response.status,
-        //     message: error.message
-        // })
+        return Promise.reject(new Error(errorText))
     })
 }

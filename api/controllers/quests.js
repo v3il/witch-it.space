@@ -5,7 +5,7 @@ import { witchItApiService, questsService } from '../services'
 import { getCurrentTimestamp, translateText } from '../util'
 import { config } from '../../shared'
 
-const getUserQuests = async (request, response, next) => {
+const getUserQuests = async (request, response) => {
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
 
@@ -13,9 +13,8 @@ const getUserQuests = async (request, response, next) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    questsService.getUserQuestsData(user)
-        .then(questsData => response.send(questsData))
-        .catch(() => next(new UnprocessableEntity(translateText('Error_QuestsFetchingFailed', request.locale))))
+    const questsData = await questsService.getUserQuestsData(user)
+    response.send(questsData)
 }
 
 const updateUserQuests = async (request, response) => {
@@ -26,21 +25,17 @@ const updateUserQuests = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    const ts = getCurrentTimestamp()
+    const nowTimestamp = getCurrentTimestamp()
 
-    if (user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT > ts) {
+    if (user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT > nowTimestamp) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
     }
 
-    try {
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.saveUserQuests(user, newQuestsData)
+    const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+    await questsService.saveUserQuests(user, newQuestsData)
 
-        const questsData = await questsService.getUserQuestsData(user)
-        response.send(questsData)
-    } catch (e) {
-        throw new UnprocessableEntity(translateText('Error_QuestsReplacingFailed', request.locale))
-    }
+    const questsData = await questsService.getUserQuestsData(user)
+    response.send(questsData)
 }
 
 const replaceUserQuest = async (request, response) => {

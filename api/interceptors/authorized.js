@@ -5,7 +5,9 @@ export const authorized = async (request, response, next) => {
     const user = await getUserFromCookies(request)
 
     if (!user) {
-        throw new Forbidden(translateText('Error_ActionForbidden', request.locale))
+        const error = new Forbidden(translateText('Error_ActionForbidden', request.locale))
+        error.logout = true
+        throw error
     }
 
     request.user = user
