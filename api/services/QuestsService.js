@@ -26,33 +26,48 @@ export class QuestsService {
         }
     }
 
-    async saveUserQuests (user, questsData) {
-        let transaction
+    async mergeUserQuests (user, questsData) {
+        const transaction = await sequelize.transaction()
 
         try {
             const { quests, canReplaceDailyQuests, canReplaceWeeklyQuests } = questsData
+            const userQuests = await user.getQuests()
 
-            // todo: optimize it
-            const questModels = quests.map((quest) => {
-                const [rewardId, rewardCount] = quest.rewardVal.split('x')
+            const questsToRemove = userQuests.filter(userQuest => !quests.some(quest => quest.id === userQuest.globalId))
+            const questsToRemoveIds = questsToRemove.map(quest => quest.id)
 
-                return {
-                    rewardId,
-                    rewardCount,
-                    questTask: quest.name,
-                    questType: quest.type,
-                    globalId: quest.id,
-                    localId: quest.questId,
-                    objective: quest.objective1Max,
-                    progress: quest.objective1Val,
-                    userId: user.id
+            // Remove replaced quests from DB
+            if (questsToRemoveIds.length) {
+                await Quest.destroy({ where: { id: questsToRemoveIds } }, { transaction })
+            }
+
+            for (const quest of quests) {
+                const userQuest = userQuests.find(userQuest => quest.id === userQuest.globalId)
+
+                // Add new quest
+                if (!userQuest) {
+                    const [rewardId, rewardCount] = quest.rewardVal.split('x')
+
+                    await Quest.create({
+                        rewardId,
+                        rewardCount,
+                        questTask: quest.name,
+                        questType: quest.type,
+                        globalId: quest.id,
+                        localId: quest.questId,
+                        objective: quest.objective1Max,
+                        progress: quest.objective1Val,
+                        userId: user.id
+                    }, { transaction })
+
+                    continue
                 }
-            })
 
-            transaction = await sequelize.transaction()
-
-            await Quest.destroy({ where: { userId: user.id } }, { transaction })
-            await Quest.bulkCreate(questModels, { transaction })
+                // Update existing quest
+                if (userQuest.progress !== +quest.objective1Val) {
+                    await userQuest.update({ progress: quest.objective1Val }, { transaction })
+                }
+            }
 
             await user.update({
                 canReplaceWeeklyQuests,
@@ -62,14 +77,14 @@ export class QuestsService {
 
             await transaction.commit()
         } catch (error) {
-            await transaction?.rollback()
+            await transaction.rollback()
             throw error
         }
     }
 
     mapQuests (quests) {
         return quests.map((quest) => {
-            const rewardItem = this.items.find(item => item.id === quest.rewardId) ?? null
+            const rewardItem = this.items.find(item => item.id === quest.rewardId) ?? {}
 
             return {
                 id: quest.id,
