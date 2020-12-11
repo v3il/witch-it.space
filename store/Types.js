@@ -56,3 +56,16 @@ export const User = StoreWrap.wrap('user', {
         SET_USER: 'setUser'
     }
 })
+
+export const Quest = StoreWrap.wrap('quest', {
+    Actions: {
+        FETCH_QUESTS: 'fetchQuests',
+        UPDATE_QUESTS: 'updateQuests',
+        REPLACE_QUEST: 'replaceQuest',
+        FINALIZE_QUEST: 'finalizeQuest'
+    },
+
+    Mutations: {
+        SET_DATA: 'setData'
+    }
+})

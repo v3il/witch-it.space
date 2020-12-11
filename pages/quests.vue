@@ -15,8 +15,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Quests from '@/components/quests/Quests'
 import { config } from '@/shared'
+import { Quest } from '@/store/Types'
 
 export default {
 
@@ -27,27 +29,28 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        weeklyQuests: [],
-        dailyQuests: [],
-        canReplaceDailyQuests: false,
-        canReplaceWeeklyQuests: false,
-        questsUpdateTimestamp: 0,
+        // weeklyQuests: [],
+        // dailyQuests: [],
+        // canReplaceDailyQuests: false,
+        // canReplaceWeeklyQuests: false,
+        // questsUpdateTimestamp: 0,
         formattedTime: '',
         tsId: 0
     }),
 
-    async created () {
-        try {
-            const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.get('/api/quests')).data
+    computed: {
+        ...mapState(Quest.PATH, [
+            'weeklyQuests',
+            'dailyQuests',
+            'isLoaded',
+            'canReplaceDailyQuests',
+            'canReplaceWeeklyQuests',
+            'questsUpdateTimestamp'
+        ])
+    },
 
-            this.weeklyQuests = weeklyQuests
-            this.dailyQuests = dailyQuests
-            this.canReplaceDailyQuests = canReplaceDailyQuests
-            this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
-            this.questsUpdateTimestamp = questsUpdateTimestamp
-        } catch (e) {
-            console.log(e)
-        }
+    async created () {
+        await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
 
         this.tsId = setInterval(this.recalcTimer, 1000)
         this.recalcTimer()
@@ -58,57 +61,19 @@ export default {
     },
 
     methods: {
-        async l () {
-            try {
-                const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.post('/api/quests/update')).data
-
-                this.weeklyQuests = weeklyQuests
-                this.dailyQuests = dailyQuests
-                this.canReplaceDailyQuests = canReplaceDailyQuests
-                this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
-                this.questsUpdateTimestamp = questsUpdateTimestamp
-            } catch (e) {
-                console.log(e)
-            }
+        l () {
+            this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
 
             this.tsId = setInterval(this.recalcTimer, 1000)
             this.recalcTimer()
         },
 
-        async r (quest) {
-            console.log(quest)
-
-            try {
-                const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.post('/api/quests/replace', {
-                    questId: quest.id
-                })).data
-
-                this.weeklyQuests = weeklyQuests
-                this.dailyQuests = dailyQuests
-                this.canReplaceDailyQuests = canReplaceDailyQuests
-                this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
-                this.questsUpdateTimestamp = questsUpdateTimestamp
-            } catch (e) {
-                console.log(e)
-            }
+        r (quest) {
+            this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
         },
 
-        async f (quest) {
-            // console.log(quest)
-
-            try {
-                const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.post('/api/quests/finalize', {
-                    questId: quest.id
-                })).data
-
-                this.weeklyQuests = weeklyQuests
-                this.dailyQuests = dailyQuests
-                this.canReplaceDailyQuests = canReplaceDailyQuests
-                this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
-                this.questsUpdateTimestamp = questsUpdateTimestamp
-            } catch (e) {
-                console.log(e)
-            }
+        f (quest) {
+            this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
         },
 
         recalcTimer () {
