@@ -2,11 +2,11 @@
   <div>
     Settings
 
-    <Quests :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="r" @finalize="f" />
+    <Quests :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
     <hr>
-    <Quests :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="r" @finalize="f" />
+    <Quests :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
 
-    <button @click="l">
+    <button @click="updateQuests">
       Load
     </button>
 
@@ -29,13 +29,8 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        // weeklyQuests: [],
-        // dailyQuests: [],
-        // canReplaceDailyQuests: false,
-        // canReplaceWeeklyQuests: false,
-        // questsUpdateTimestamp: 0,
         formattedTime: '',
-        tsId: 0
+        intervalId: 0
     }),
 
     computed: {
@@ -49,48 +44,55 @@ export default {
         ])
     },
 
-    async created () {
-        await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-
-        this.tsId = setInterval(this.recalcTimer, 1000)
-        this.recalcTimer()
+    created () {
+        this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
+            .then(() => this.setTimer())
+            .catch(console.error)
     },
 
     destroyed () {
-        return clearInterval(this.tsId)
+        this.stopTimer()
     },
 
     methods: {
-        l () {
+        updateQuests () {
             this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
-
-            this.tsId = setInterval(this.recalcTimer, 1000)
-            this.recalcTimer()
+                .then(() => this.setTimer())
+                .catch(console.error)
         },
 
-        r (quest) {
+        replaceQuest (quest) {
             this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+                .catch(console.error)
         },
 
-        f (quest) {
+        finalizeQuest (quest) {
             this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+                .catch(console.error)
         },
 
-        recalcTimer () {
+        setTimer () {
+            this.intervalId = setInterval(this.updateTimer, 1000)
+            this.updateTimer()
+        },
+
+        stopTimer () {
+            clearInterval(this.intervalId)
+        },
+
+        updateTimer () {
             const nextUpdate = this.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT
             const diff = nextUpdate - Math.floor(Date.now() / 1000)
 
-            console.log(diff)
-
             if (diff <= 0) {
                 this.formattedTime = '00:00'
-                return clearInterval(this.tsId)
+                return this.stopTimer()
             }
 
-            const secs = diff % 60
-            const mins = Math.floor((diff - secs) / 60)
+            const seconds = diff % 60
+            const minutes = Math.floor((diff - seconds) / 60)
 
-            this.formattedTime = `${mins}:${secs}`
+            this.formattedTime = `${minutes}:${seconds}`
         }
     }
 }

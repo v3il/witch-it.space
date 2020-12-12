@@ -12,6 +12,6 @@ export default function ({ $axios, redirect, store }) {
 
         store.commit(Root.Mutations.SET_ERRORS, [errorText])
 
-        return Promise.reject(new Error(errorText))
+        return false
     })
 }
