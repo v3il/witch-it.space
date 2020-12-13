@@ -1,6 +1,14 @@
 <template>
-  <div>
-    Settings
+  <div class="quests">
+    <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm">
+      <p v-if="!isUpdateAvailable" class="wit-color--Y400">
+        {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
+      </p>
+
+      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
+        {{ $t('Quests_UpdateQuests') }}
+      </b-button>
+    </div>
 
     <Quests :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
     <hr>
@@ -29,7 +37,8 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        formattedTime: '',
+        isUpdateAvailable: true,
+        timeToNextUpdate: '00:00',
         intervalId: 0
     }),
 
@@ -46,7 +55,7 @@ export default {
 
     created () {
         this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-            .then(() => this.setTimer())
+            .then(this.setTimer)
             .catch(console.error)
     },
 
@@ -57,7 +66,7 @@ export default {
     methods: {
         updateQuests () {
             this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
-                .then(() => this.setTimer())
+                .then(this.setTimer)
                 .catch(console.error)
         },
 
@@ -84,16 +93,34 @@ export default {
             const nextUpdate = this.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT
             const diff = nextUpdate - Math.floor(Date.now() / 1000)
 
-            if (diff <= 0) {
-                this.formattedTime = '00:00'
+            this.isUpdateAvailable = diff <= 0
+
+            if (this.isUpdateAvailable) {
+                this.timeToNextUpdate = '00:00'
                 return this.stopTimer()
             }
 
             const seconds = diff % 60
             const minutes = Math.floor((diff - seconds) / 60)
 
-            this.formattedTime = `${minutes}:${seconds}`
+            this.timeToNextUpdate = `${this.formatNumber(minutes)}:${this.formatNumber(seconds)}`
+        },
+
+        formatNumber (number) {
+            return number < 10 ? `0${number}` : number
         }
     }
 }
 </script>
+
+<style scoped lang="scss">
+.quests {
+    padding: var(--offset-xxlg) 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quests__header {
+    //padding: var(--offset-sm) 0;
+}
+</style>

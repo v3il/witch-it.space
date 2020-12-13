@@ -66,5 +66,8 @@ export const ru = {
     Quests_Play40Rounds_A: 'Play 40 hide and seek',
     Quests_Play8Rounds_A: 'Play 8 hide and seek',
     Quests_Win3Rounds_A: 'Win 3 hide and seek',
-    Quests_Win15Rounds_A: 'Win 15 hide and seek'
+    Quests_Win15Rounds_A: 'Win 15 hide and seek',
+
+    Quests_UpdateQuests: 'Обновить данные квестов',
+    Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s'
 }
