@@ -1,7 +1,7 @@
 <template>
   <div class="quests">
-    <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm">
-      <p v-if="!isUpdateAvailable" class="wit-color--Y400">
+    <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
+      <p v-if="!isUpdateAvailable" class="wit-color--Y400 wit-offset-bottom--xxs wit-offset-top--xs">
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
       </p>
 
@@ -17,8 +17,6 @@
     <button @click="updateQuests">
       Load
     </button>
-
-    <p>{{ formattedTime }}</p>
   </div>
 </template>
 
@@ -121,6 +119,6 @@ export default {
 }
 
 .quests__header {
-    //padding: var(--offset-sm) 0;
+    margin: var(--offset-xs) 0;
 }
 </style>

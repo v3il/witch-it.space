@@ -55,6 +55,14 @@
     flex-shrink: 0;
 }
 
+.wit-flex--wrap {
+    flex-wrap: wrap;
+}
+
+.wit-flex--wrap-reverse {
+    flex-wrap: wrap-reverse;
+}
+
 .wit-none {
     display: none;
 }

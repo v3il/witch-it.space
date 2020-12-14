@@ -1,3 +1,16 @@
+/* Top */
+.wit-offset-top--xxs {
+    margin-top: var(--offset-xxs) !important;
+}
+
+.wit-offset-top--xs {
+    margin-top: var(--offset-xs) !important;
+}
+
+.wit-offset-top--sm {
+    margin-top: var(--offset-sm) !important;
+}
+
 /* Bottom */
 .wit-offset-bottom--xxs {
     margin-bottom: var(--offset-xxs) !important;
