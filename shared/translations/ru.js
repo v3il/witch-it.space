@@ -69,5 +69,7 @@ export const ru = {
     Quests_Win15Rounds_A: 'Win 15 hide and seek',
 
     Quests_UpdateQuests: 'Обновить данные квестов',
-    Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s'
+    Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s',
+    Quests_WeeklyQuestsTitle: 'Еженедельные квесты',
+    Quests_DailyQuestsTitle: 'Ежедневные квесты'
 }

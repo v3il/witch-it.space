@@ -10,13 +10,17 @@
       </b-button>
     </div>
 
-    <Quests :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
-    <hr>
-    <Quests :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
+    <div class="quests__body">
+      <h3 class="wit--font-size--sm wit-offset-bottom--xs">
+        {{ $t('Quests_WeeklyQuestsTitle') }}
+      </h3>
+      <Quests class="wit-offset-bottom--md" :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
 
-    <button @click="updateQuests">
-      Load
-    </button>
+      <h3 class="wit--font-size--sm wit-offset-bottom--xs">
+        {{ $t('Quests_DailyQuestsTitle') }}
+      </h3>
+      <Quests class="wit-offset-bottom--md" :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
+    </div>
   </div>
 </template>
 
