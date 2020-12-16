@@ -71,5 +71,6 @@ export const ru = {
     Quests_UpdateQuests: 'Обновить данные квестов',
     Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s',
     Quests_WeeklyQuestsTitle: 'Еженедельные квесты',
-    Quests_DailyQuestsTitle: 'Ежедневные квесты'
+    Quests_DailyQuestsTitle: 'Ежедневные квесты',
+    Quests_UpdateQuest: 'Обновить'
 }

@@ -9,6 +9,7 @@ module.exports = {
         'block-no-empty': null,
         'comment-empty-line-before': null,
         'comment-whitespace-inside': null,
-        'no-empty-source': null
+        'no-empty-source': null,
+        'at-rule-no-unknown': null
     }
 }

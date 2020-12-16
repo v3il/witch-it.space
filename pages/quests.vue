@@ -11,29 +11,36 @@
     </div>
 
     <div class="quests__body">
-      <h3 class="wit--font-size--sm wit-offset-bottom--xs">
+      <h3 class="wit--font-size--sm wit-offset-bottom--sm">
         {{ $t('Quests_WeeklyQuestsTitle') }}
       </h3>
-      <Quests class="wit-offset-bottom--md" :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
 
-      <h3 class="wit--font-size--sm wit-offset-bottom--xs">
+      <QuestView v-for="quest in weeklyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" />
+
+      <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
+
+      <h3 class="wit--font-size--sm wit-offset-bottom--sm">
         {{ $t('Quests_DailyQuestsTitle') }}
       </h3>
-      <Quests class="wit-offset-bottom--md" :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />
+
+      <QuestView v-for="quest in dailyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" />
+      <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Quests from '@/components/quests/Quests'
+// import Quests from '@/components/quests/Quests'
+import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
 
 export default {
 
     components: {
-        Quests
+        // Quests,
+        QuestView
     },
 
     middleware: ['fetchUser'],

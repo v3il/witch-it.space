@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Quest from './Quest'
+import Quest from './QuestView'
 
 export default {
     name: 'Quests',
