@@ -79,6 +79,9 @@
 }
 
 /* Right */
+.wit-offset-right--none {
+    margin-right: 0 !important;
+}
 
 .wit-offset-right--auto {
     margin-right: auto !important;

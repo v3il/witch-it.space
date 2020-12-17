@@ -1,44 +1,64 @@
 <template>
-  <div class="quest-item wit-flex wit-offset-bottom--md">
+  <div class="quest-item wit-flex wit-offset-bottom--md1 wit-flex--align-start">
     <div class="wit-offset-right--sm wit-position--relative">
-      <img :src="quest.rewardItem.iconUrl" :alt="quest.rewardItem.iconUrl" :title="quest.rewardItem.name" width="50" height="50">
+      <img
+        :src="quest.rewardItem.iconUrl"
+        :class="itemImageClass"
+        :alt="quest.rewardItem.name"
+        :title="quest.rewardItem.name"
+        width="70"
+        height="70"
+      >
       <div class="counter">
         x{{ quest.rewardCount }}
       </div>
     </div>
 
-    <div class="wit-flex__item--grow">
-      <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
-        <b-icon icon="bullseye-arrow" size="is-small" class="is-size-5 wit-offset-right--xs" />
+    <div class="wit-flex__item--grow wit-offset-right--sm">
+      <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs" style="font-size: 20px;">
+        <b-icon icon="bullseye-arrow" size="is-small" class="is-size-4 wit-offset-right--xs" />
         <p>{{ $t(`Quests_${quest.questTask}`) }}</p>
       </div>
 
-      <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
+      <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm" style="color: #9ca8b3 !important;">
         <b-icon icon="gift" size="is-small" class="is-size-5 wit-offset-right--xs" />
-        <p><span class="wit-color--danger">{{ quest.rewardCount }} x </span>{{ quest.rewardItem.name }}</p>
+        <p>{{ quest.rewardCount }} x <span :class="itemNameClass">{{ quest.rewardItem.name }}</span></p>
       </div>
 
-      <b-progress type="is-success" :value="progress" class="wit-color--primary" show-value>
-        <span style="color: black; font-weight: bold;">{{ quest.progress }} / {{ quest.objective }}</span>
-      </b-progress>
+      <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="!isCompleted" @click="onQuestFinalize">
+        <div class="wit-flex wit-flex--center">
+          <b-icon icon="gift" size="is-small" class="is-size-6 wit-offset-right--none" />
+          {{ $t('Quests_GetReward') }}
+        </div>
+      </b-button>
+
+      <b-button type="is-danger is-light" size="is-small" class="wit-transition" :disabled="!canBeReplaced" @click="onQuestReplace">
+        <div class="wit-flex wit-flex--center">
+          <b-icon icon="refresh-circle" size="is-small" class="is-size-5 wit-offset-right--none" />
+          {{ $t('Quests_UpdateQuest') }}
+        </div>
+      </b-button>
     </div>
 
-    <b-button type="is-danger is-light" class="wit-transition wit-offset-left--sm">
-      {{ $t('Quests_UpdateQuest') }}
-    </b-button>
+    <CircleProgressBar :radius="45" :stroke-width="7" :value="progress">
+      <p class="wit-offset-bottom--xxs">
+        {{ quest.progress }} / {{ quest.objective }}
+      </p>
+      <p class="wit-color--white-half wit-font-size--xxs">
+        ({{ progress.toFixed() }}%)
+      </p>
+    </CircleProgressBar>
 
-    <CircleProgressBar />
-
-    <div class="pie-wrapper progress-60" :style="{'--progress': progress}">
-      <span class="label wit-flex wit-flex--center">
-        <p>{{ quest.progress }} / {{ quest.objective }}</p>
-        <p>{{ progress }}%</p>
-      </span>
-      <div class="pie">
-        <div class="left-side half-circle" />
-        <div class="right-side half-circle" />
-      </div>
-    </div>
+    <!--    <div class="pie-wrapper progress-60" :style="{'&#45;&#45;progress': progress}">-->
+    <!--      <span class="label wit-flex wit-flex&#45;&#45;center">-->
+    <!--        <p>{{ quest.progress }} / {{ quest.objective }}</p>-->
+    <!--        <p>{{ progress }}%</p>-->
+    <!--      </span>-->
+    <!--      <div class="pie">-->
+    <!--        <div class="left-side half-circle" />-->
+    <!--        <div class="right-side half-circle" />-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 
 <!--  <tr>-->
@@ -81,17 +101,54 @@ export default {
     },
 
     props: {
-        quest: Object,
-        canReplace: Boolean,
-        allow: Boolean
+        quest: {
+            type: Object,
+            required: true
+        },
+
+        canReplace: {
+            type: Boolean,
+            required: true
+        }
     },
 
     computed: {
         progress () {
             return Math.min(100, this.quest.progress / this.quest.objective * 100)
+        },
+
+        canBeReplaced () {
+            return !this.isCompleted && this.canReplace
+        },
+
+        isCompleted () {
+            return this.quest.progress >= this.quest.objective
+        },
+
+        itemNameClass () {
+            return {
+                veryrare: 'wit-color--very-rare',
+                whimsical: 'wit-color--whimsical'
+            }[this.quest.rewardItem.tagRarity]
+        },
+
+        itemImageClass () {
+            return {
+                veryrare: 'wit-border--very-rare',
+                whimsical: 'wit-border--whimsical'
+            }[this.quest.rewardItem.tagRarity]
+        }
+    },
+
+    methods: {
+        onQuestReplace () {
+            this.$emit('replace', this.quest)
+        },
+
+        onQuestFinalize () {
+            this.$emit('finalize', this.quest)
         }
     }
-
 }
 </script>
 

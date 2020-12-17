@@ -59,6 +59,10 @@
     text-align: center;
 }
 
+.wit-font-size--xxs {
+    font-size: var(--text-size-xxs);
+}
+
 .wit-font-size--xs {
     font-size: var(--text-size-xs);
 }

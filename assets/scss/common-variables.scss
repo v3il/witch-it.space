@@ -125,6 +125,7 @@
     --offset-xlg: 40px;
     --offset-xxlg: 48px;
 
+    --text-size-xxs: 12px;
     --text-size-xs: 14px;
     --text-size-sm: 20px;
 
@@ -150,4 +151,7 @@
     --zindex-tooltip: 1080;
 
     --default-transition: 0.15s ease-in-out;
+
+    --item-very-rare: rgb(20, 114, 255);
+    --item-whimsical: rgb(255, 0, 234);
 }

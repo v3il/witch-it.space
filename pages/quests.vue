@@ -11,19 +11,51 @@
     </div>
 
     <div class="quests__body">
-      <h3 class="wit--font-size--sm wit-offset-bottom--sm">
-        {{ $t('Quests_WeeklyQuestsTitle') }}
-      </h3>
+      <Card>
+        <template #title>
+          {{ $t('Quests_WeeklyQuestsTitle') }}
+        </template>
 
-      <QuestView v-for="quest in weeklyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" />
+        <QuestView
+          v-for="quest in weeklyQuests"
+          :key="quest.id"
+          :quest="quest"
+          class="qv"
+          :can-replace="canReplaceWeeklyQuests"
+          @replace="replaceQuest"
+          @finalize="finalizeQuest"
+        />
+      </Card>
+
+      <Card>
+        <template #title>
+          {{ $t('Quests_DailyQuestsTitle') }}
+        </template>
+
+        <QuestView
+          v-for="quest in dailyQuests"
+          :key="quest.id"
+          class="qv"
+          :quest="quest"
+          :can-replace="canReplaceDailyQuests"
+          @replace="replaceQuest"
+          @finalize="finalizeQuest"
+        />
+      </Card>
+
+      <!--      <h3 class="wit&#45;&#45;font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;sm">-->
+      <!--        {{ $t('Quests_WeeklyQuestsTitle') }}-->
+      <!--      </h3>-->
+
+      <!--      <QuestView v-for="quest in weeklyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" />-->
 
       <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
 
-      <h3 class="wit--font-size--sm wit-offset-bottom--sm">
-        {{ $t('Quests_DailyQuestsTitle') }}
-      </h3>
+      <!--      <h3 class="wit&#45;&#45;font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;sm">-->
+      <!--        {{ $t('Quests_DailyQuestsTitle') }}-->
+      <!--      </h3>-->
 
-      <QuestView v-for="quest in dailyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" />
+      <!--      <QuestView v-for="quest in dailyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" />-->
       <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
     </div>
   </div>
@@ -35,12 +67,14 @@ import { mapState } from 'vuex'
 import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
+import Card from '@/components/Card'
 
 export default {
 
     components: {
         // Quests,
-        QuestView
+        QuestView,
+        Card
     },
 
     middleware: ['fetchUser'],
@@ -127,6 +161,15 @@ export default {
     padding: var(--offset-xxlg) 0;
     max-width: 800px;
     margin: 0 auto;
+}
+
+.qv {
+    padding: 16px 0;
+
+    &:not(:last-child) {
+        //margin-bottom: 16px;
+        border-bottom: 1px solid #32394e;
+    }
 }
 
 .quests__header {
