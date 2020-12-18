@@ -1,18 +1,19 @@
 <template>
   <div class="quest-item wit-flex wit-offset-bottom--md1 wit-flex--align-start">
-    <div class="wit-offset-right--sm wit-position--relative">
-      <img
-        :src="quest.rewardItem.iconUrl"
-        :class="itemImageClass"
-        :alt="quest.rewardItem.name"
-        :title="quest.rewardItem.name"
-        width="70"
-        height="70"
-      >
-      <div class="counter">
-        x{{ quest.rewardCount }}
-      </div>
-    </div>
+    <ItemImage :item="quest.rewardItem" :size="70" :item-count="quest.rewardCount" class="wit-offset-right--sm" />
+    <!--    <div class="wit-offset-right&#45;&#45;sm wit-position&#45;&#45;relative">-->
+    <!--      <img-->
+    <!--        :src="quest.rewardItem.iconUrl"-->
+    <!--        :class="itemImageClass"-->
+    <!--        :alt="quest.rewardItem.name"-->
+    <!--        :title="quest.rewardItem.name"-->
+    <!--        width="70"-->
+    <!--        height="70"-->
+    <!--      >-->
+    <!--      <div class="counter">-->
+    <!--        x{{ quest.rewardCount }}-->
+    <!--      </div>-->
+    <!--    </div>-->
 
     <div class="wit-flex__item--grow wit-offset-right--sm">
       <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs" style="font-size: 20px;">
@@ -22,7 +23,7 @@
 
       <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm" style="color: #9ca8b3 !important;">
         <b-icon icon="gift" size="is-small" class="is-size-5 wit-offset-right--xs" />
-        <p>{{ quest.rewardCount }} x <span :class="itemNameClass">{{ quest.rewardItem.name }}</span></p>
+        <p>{{ quest.rewardCount }} x <ItemName :item="quest.rewardItem" /></p>
       </div>
 
       <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="!isCompleted" @click="onQuestFinalize">
@@ -92,12 +93,16 @@
 
 <script>
 import CircleProgressBar from '@/components/quests/CircleProgressBar'
+import ItemName from '@/components/ItemName'
+import ItemImage from '@/components/ItemImage'
 
 export default {
     name: 'QuestView',
 
     components: {
-        CircleProgressBar
+        CircleProgressBar,
+        ItemName,
+        ItemImage
     },
 
     props: {

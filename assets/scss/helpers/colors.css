@@ -36,22 +36,6 @@
     color: rgba(255, 255, 255, 0.5);
 }
 
-.wit-color--very-rare {
-    color: var(--item-very-rare)
-}
-
-.wit-border--very-rare {
-    border: 1px solid var(--item-very-rare)
-}
-
-.wit-color--whimsical {
-    color: var(--item-whimsical)
-}
-
-.wit-border--whimsical {
-    border: 1px solid var(--item-whimsical)
-}
-
 /*.wit-text--N600 {*/
 /*    color: $N600;*/
 /*}*/
