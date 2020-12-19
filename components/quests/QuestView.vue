@@ -1,6 +1,6 @@
 <template>
-  <div class="quest-item wit-flex wit-offset-bottom--md1 wit-flex--align-start">
-    <ItemImage :item="quest.rewardItem" :size="70" :item-count="quest.rewardCount" class="wit-offset-right--sm" />
+  <div class="wit-quest-item wit-flex wit-flex--align-start">
+    <ItemImage :item="quest.rewardItem" :item-count="quest.rewardCount" class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm" />
     <!--    <div class="wit-offset-right&#45;&#45;sm wit-position&#45;&#45;relative">-->
     <!--      <img-->
     <!--        :src="quest.rewardItem.iconUrl"-->
@@ -26,22 +26,30 @@
         <p>{{ quest.rewardCount }} x <ItemName :item="quest.rewardItem" /></p>
       </div>
 
-      <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="!isCompleted" @click="onQuestFinalize">
-        <div class="wit-flex wit-flex--center">
-          <b-icon icon="gift" size="is-small" class="is-size-6 wit-offset-right--none" />
-          {{ $t('Quests_GetReward') }}
-        </div>
-      </b-button>
+      <b-progress :value="progress" show-value format="percent" class="wit-quest-item__mobile-progressbar wit-offset-bottom--md wit-none--desktop">
+        <p class="wit-color--dark wit-font-weight--700">
+          {{ quest.progress }} / {{ quest.objective }} ({{ progress.toFixed() }}%)
+        </p>
+      </b-progress>
 
-      <b-button type="is-danger is-light" size="is-small" class="wit-transition" :disabled="!canBeReplaced" @click="onQuestReplace">
-        <div class="wit-flex wit-flex--center">
-          <b-icon icon="refresh-circle" size="is-small" class="is-size-5 wit-offset-right--none" />
-          {{ $t('Quests_UpdateQuest') }}
-        </div>
-      </b-button>
+      <div class="wit-flex wit-flex--align-center">
+        <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="!isCompleted" @click="onQuestFinalize">
+          <div class="wit-flex wit-flex--center">
+            <b-icon icon="gift" size="is-small" class="is-size-6 wit-offset-right--none" />
+            {{ $t('Quests_GetReward') }}
+          </div>
+        </b-button>
+
+        <b-button type="is-danger is-light" size="is-small" class="wit-transition" :disabled="!canBeReplaced" @click="onQuestReplace">
+          <div class="wit-flex wit-flex--center">
+            <b-icon icon="refresh-circle" size="is-small" class="is-size-5 wit-offset-right--none" />
+            {{ $t('Quests_UpdateQuest') }}
+          </div>
+        </b-button>
+      </div>
     </div>
 
-    <CircleProgressBar :radius="45" :stroke-width="7" :value="progress">
+    <CircleProgressBar :radius="45" :stroke-width="7" :value="progress" class="wit-none--mobile">
       <p class="wit-offset-bottom--xxs">
         {{ quest.progress }} / {{ quest.objective }}
       </p>
@@ -158,6 +166,22 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wit-quest-item__mobile-progressbar {
+    --progress-border-radius: var(--offset-xxs);
+    --progress-value-background-color: rgb(2, 164, 153);
+    --progress-bar-background-color: rgb(242, 242, 242);
+}
+
+.wit-quest-item__reward-img {
+    width: 70px;
+
+    @media screen and (max-width: 768px) {
+        & {
+            width: 35px;
+        }
+    }
+}
+
 .progress-cell {
     position: relative;
     width: 50px;

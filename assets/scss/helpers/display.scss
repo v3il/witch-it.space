@@ -66,3 +66,19 @@
 .wit-none {
     display: none;
 }
+
+.wit-none--mobile {
+    @media screen and (max-width: 768px) {
+        & {
+            display: none;
+        }
+    }
+}
+
+.wit-none--desktop {
+    @media screen and (min-width: 768px) {
+        & {
+            display: none;
+        }
+    }
+}

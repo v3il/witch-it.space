@@ -6,7 +6,7 @@
       :title="item.name"
       class="wit-item-image__image"
     >
-    <div v-if="itemCount" class="wit-item-image__counter wit-font-size--xxs">
+    <div v-if="itemCount" class="wit-item-image__counter wit-font-size--xxs wit-none--mobile">
       x{{ itemCount }}
     </div>
   </div>
