@@ -25,6 +25,18 @@ export default {
         value: {
             required: true,
             type: Number
+        },
+
+        filledPartColor: {
+            required: false,
+            type: String,
+            default: 'rgb(2, 164, 153)'
+        },
+
+        emptyPartColor: {
+            required: false,
+            type: String,
+            default: 'rgb(242, 242, 242)'
         }
     },
 
@@ -34,33 +46,45 @@ export default {
         }
     },
 
+    watch: {
+        value () {
+            this.animateArc()
+        }
+    },
+
     mounted () {
-        const canvasEl = this.$el.querySelector('#canvas')
-        const ctx = canvasEl.getContext('2d')
+        this.animateArc()
+    },
 
-        const centerX = canvasEl.width / 2
-        const centerY = canvasEl.height / 2
-        const fps = 100 / 60
-        const percent = 360 / 100
-        const result = percent * this.value
-        const circleRadius = this.radius - this.strokeWidth / 2
+    methods: {
+        animateArc () {
+            const canvasEl = this.$el.querySelector('#canvas')
+            const ctx = canvasEl.getContext('2d')
 
-        const arcMove = () => {
+            const centerX = canvasEl.width / 2
+            const centerY = canvasEl.height / 2
+            const fps = 100 / 60
+            const percent = 360 / 100
+            const result = percent * this.value
+            const circleRadius = this.radius - this.strokeWidth / 2
+
             let frame = 0
 
             const acrInterval = setInterval(() => {
                 frame++
                 const degrees = this.value / 50 * frame
+
+                // todo: animate only value diff
                 ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
 
                 ctx.beginPath()
                 ctx.arc(centerX, centerY, circleRadius, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + 360))
-                ctx.strokeStyle = 'rgb(242, 242, 242)'
+                ctx.strokeStyle = this.emptyPartColor
                 ctx.lineWidth = this.strokeWidth
                 ctx.stroke()
 
                 ctx.beginPath()
-                ctx.strokeStyle = 'rgb(2, 164, 153)'
+                ctx.strokeStyle = this.filledPartColor
                 ctx.arc(centerX, centerY, circleRadius, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + degrees))
                 ctx.stroke()
 
@@ -69,8 +93,6 @@ export default {
                 }
             }, fps)
         }
-
-        arcMove()
     }
 }
 </script>
