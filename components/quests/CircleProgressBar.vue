@@ -40,24 +40,22 @@ export default {
 
         const centerX = canvasEl.width / 2
         const centerY = canvasEl.height / 2
-        const fps = 200 / 60
+        const fps = 100 / 60
         const percent = 360 / 100
         const result = percent * this.value
-
         const circleRadius = this.radius - this.strokeWidth / 2
-        const strokeWidth = this.strokeWidth
 
         const arcMove = () => {
             let degrees = 0
 
-            const acrInterval = setInterval(function () {
+            const acrInterval = setInterval(() => {
                 degrees += 1
                 ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
 
                 ctx.beginPath()
                 ctx.arc(centerX, centerY, circleRadius, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + 360))
                 ctx.strokeStyle = 'rgb(242, 242, 242)'
-                ctx.lineWidth = strokeWidth
+                ctx.lineWidth = this.strokeWidth
                 ctx.stroke()
 
                 ctx.beginPath()
