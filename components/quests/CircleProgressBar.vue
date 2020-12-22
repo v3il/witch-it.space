@@ -46,10 +46,11 @@ export default {
         const circleRadius = this.radius - this.strokeWidth / 2
 
         const arcMove = () => {
-            let degrees = 0
+            let frame = 0
 
             const acrInterval = setInterval(() => {
-                degrees += 1
+                frame++
+                const degrees = this.value / 50 * frame
                 ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
 
                 ctx.beginPath()
