@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-position--relative" :style="style" :class="itemClass">
+  <div class="wit-position--relative" :class="itemClass">
     <img
       :src="item.iconUrl"
       :alt="item.name"
@@ -22,11 +22,6 @@ export default {
             type: Object
         },
 
-        size: {
-            required: true,
-            type: Number
-        },
-
         itemCount: {
             required: false,
             default: null,
@@ -40,13 +35,6 @@ export default {
                 veryrare: 'wit-item-image--very-rare',
                 whimsical: 'wit-item-image--whimsical'
             }[this.item.tagRarity]
-        },
-
-        style () {
-            return {
-                width: `${this.size}px`,
-                height: `${this.size}px`
-            }
         }
     }
 }
