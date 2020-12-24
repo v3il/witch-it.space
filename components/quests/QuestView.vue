@@ -8,7 +8,7 @@
         <p>{{ $t(`Quests_${quest.questTask}`) }}</p>
       </div>
 
-      <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm" style="color: #9ca8b3 !important;">
+      <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm wit-color--muted">
         <b-icon icon="gift" size="is-small" class="is-size-5 wit-offset-right--xs" />
         <p>{{ quest.rewardCount }} x <ItemName :item="quest.rewardItem" /></p>
       </div>
@@ -40,7 +40,7 @@
       <p class="wit-offset-bottom--xxs">
         {{ quest.progress }} / {{ quest.objective }}
       </p>
-      <p class="wit-color--white-half wit-font-size--xxs">
+      <p class="wit-font-size--xxs wit-color--muted">
         ({{ progress.toFixed() }}%)
       </p>
     </CircleProgressBar>
