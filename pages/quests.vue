@@ -11,7 +11,7 @@
     </div>
 
     <div class="quests__body">
-      <Card>
+      <Card class="wit-offset-bottom--md">
         <template #title>
           {{ $t('Quests_WeeklyQuestsTitle') }}
         </template>
@@ -168,7 +168,7 @@ export default {
 
     &:not(:last-child) {
         //margin-bottom: 16px;
-        border-bottom: 1px solid #32394e;
+        border-bottom: 1px solid var(--quest-divider-color);
     }
 }
 

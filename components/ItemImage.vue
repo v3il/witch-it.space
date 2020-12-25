@@ -54,7 +54,7 @@ export default {
     max-width: 100%;
     max-height: 100%;
     border-radius: var(--offset-xxs);
-    border: 1px solid transparent;
+    border: 2px solid transparent;
 }
 
 .wit-item-image--very-rare {
