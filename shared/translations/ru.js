@@ -73,5 +73,6 @@ export const ru = {
     Quests_WeeklyQuestsTitle: 'Еженедельные квесты',
     Quests_DailyQuestsTitle: 'Ежедневные квесты',
     Quests_UpdateQuest: 'Обновить',
-    Quests_GetReward: 'Получить награду'
+    Quests_GetReward: 'Получить награду',
+    Quests_LastUpdate: 'Последнее обновление: %s'
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="quests">
     <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
-      <p v-if="!isUpdateAvailable" class="wit-color--Y400 wit-offset-bottom--xxs wit-offset-top--xs">
+      <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xxs wit-offset-top--xxs">
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
       </p>
 
@@ -9,6 +9,10 @@
         {{ $t('Quests_UpdateQuests') }}
       </b-button>
     </div>
+
+    <p class="wit-offset-bottom--sm wit-text--right">
+      {{ $t('Quests_LastUpdate', [questsUpdateTimestamp]) }}
+    </p>
 
     <div class="quests__body">
       <Card class="wit-offset-bottom--md">
@@ -173,6 +177,6 @@ export default {
 }
 
 .quests__header {
-    margin: var(--offset-xs) 0;
+    //margin: var(--offset-xs) 0;
 }
 </style>
