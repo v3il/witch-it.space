@@ -13,7 +13,12 @@ const getUserQuests = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
+    console.log(user)
+
     const questsData = await questsService.getUserQuestsData(user)
+
+    console.log(questsData)
+
     response.send(questsData)
 }
 
@@ -104,6 +109,9 @@ const finalizeUserQuest = async (request, response) => {
     const isFinalized = await witchItApiService.finalizeQuest({ user, quest })
 
     if (isFinalized) {
+        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+        await questsService.mergeUserQuests(user, newQuestsData)
+
         const questsData = await questsService.getUserQuestsData(user)
         return response.send(questsData)
     }

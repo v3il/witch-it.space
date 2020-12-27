@@ -71,7 +71,7 @@ export default {
     position: sticky;
     padding: 0 var(--offset-sm);
     z-index: 50;
-    overflow: hidden;
+    //overflow-x: hidden;
 }
 
 .wit-header__menu-item {

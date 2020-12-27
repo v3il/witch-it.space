@@ -8,7 +8,11 @@ export class QuestsService {
     }
 
     async getUserQuestsData (user) {
-        const userQuests = await user.getQuests()
+        const userQuests = await Quest.findAll({
+            where: { userId: user.id },
+            order: [['id', 'ASC']]
+        })
+
         const mappedQuests = this.mapQuests(userQuests)
 
         const weeklyQuests = mappedQuests.filter(quest => quest.questType === 'Weekly')

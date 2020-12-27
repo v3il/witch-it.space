@@ -27,13 +27,6 @@
     </template>
 
     <b-dropdown-item class="wit-transition--background">
-      <nuxt-link to="/" class="wit-flex wit-flex--align-center wit-color--white">
-        <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="cog-sync" />
-        <span class="wit-inline-block">Main</span>
-      </nuxt-link>
-    </b-dropdown-item>
-
-    <b-dropdown-item class="wit-transition--background">
       <nuxt-link to="/settings" class="wit-flex wit-flex--align-center wit-color--white">
         <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="cog-sync" />
         <span class="wit-inline-block">{{ $t('Settings') }}</span>
