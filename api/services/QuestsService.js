@@ -10,7 +10,7 @@ export class QuestsService {
     async getUserQuestsData (user) {
         const userQuests = await Quest.findAll({
             where: { userId: user.id },
-            order: [['id', 'ASC']]
+            order: [['createdAt', 'ASC']]
         })
 
         const mappedQuests = this.mapQuests(userQuests)

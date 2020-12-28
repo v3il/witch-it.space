@@ -11,7 +11,7 @@ const initQuestModel = (sequelize, DataTypes) => {
             objective: DataTypes.INTEGER,
             progress: DataTypes.INTEGER
         },
-        {}
+        { timestamps: true }
     )
 }
 
