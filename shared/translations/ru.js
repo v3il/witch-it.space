@@ -82,7 +82,7 @@ export const ru = {
 
         if (minutes >= 10 && minutes <= 19) {
             word = 'минут'
-        } else if (minutes === 1) {
+        } else if (mod === 1) {
             word = 'минуту'
         } else if (mod >= 2 && mod <= 4) {
             word = 'минуты'
