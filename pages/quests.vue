@@ -20,15 +20,19 @@
           {{ $t('Quests_WeeklyQuestsTitle') }}
         </template>
 
-        <QuestView
-          v-for="quest in weeklyQuests"
-          :key="quest.id"
-          :quest="quest"
-          class="qv"
-          :can-replace="canReplaceWeeklyQuests"
-          @replace="replaceQuest"
-          @finalize="finalizeQuest"
-        />
+        <template v-if="weeklyQuests.length">
+          <QuestView
+            v-for="quest in weeklyQuests"
+            :key="quest.id"
+            :quest="quest"
+            class="qv"
+            :can-replace="canReplaceWeeklyQuests"
+            @replace="replaceQuest"
+            @finalize="finalizeQuest"
+          />
+        </template>
+
+        <EmptyState v-else />
       </Card>
 
       <Card>
@@ -36,15 +40,19 @@
           {{ $t('Quests_DailyQuestsTitle') }}
         </template>
 
-        <QuestView
-          v-for="quest in dailyQuests"
-          :key="quest.id"
-          class="qv"
-          :quest="quest"
-          :can-replace="canReplaceDailyQuests"
-          @replace="replaceQuest"
-          @finalize="finalizeQuest"
-        />
+        <template v-if="dailyQuests.length">
+          <QuestView
+            v-for="quest in dailyQuests"
+            :key="quest.id"
+            class="qv"
+            :quest="quest"
+            :can-replace="canReplaceDailyQuests"
+            @replace="replaceQuest"
+            @finalize="finalizeQuest"
+          />
+        </template>
+
+        <EmptyState v-else />
       </Card>
     </div>
   </div>
@@ -56,12 +64,14 @@ import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
 import Card from '@/components/Card'
+import EmptyState from '@/components/quests/EmptyState'
 
 export default {
 
     components: {
         QuestView,
-        Card
+        Card,
+        EmptyState
     },
 
     middleware: ['fetchUser'],

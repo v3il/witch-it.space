@@ -17,6 +17,7 @@ module.exports = {
     // add your custom rules here
     rules: {
         indent: ['error', 4],
-        'no-return-assign': 'off'
+        'no-return-assign': 'off',
+        'no-unused-vars': 'off'
     }
 }

@@ -75,6 +75,7 @@ export const ru = {
     Quests_UpdateQuest: 'Обновить',
     Quests_GetReward: 'Получить награду',
     Quests_LastUpdate: 'Последнее обновление: %s',
+    Quests_NoQuests: 'Нет активных квестов',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
