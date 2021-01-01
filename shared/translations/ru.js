@@ -72,10 +72,19 @@ export const ru = {
     Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s',
     Quests_WeeklyQuestsTitle: 'Еженедельные квесты',
     Quests_DailyQuestsTitle: 'Ежедневные квесты',
-    Quests_UpdateQuest: 'Обновить',
+    Quests_UpdateQuest: 'Заменить',
     Quests_GetReward: 'Получить награду',
     Quests_LastUpdate: 'Последнее обновление: %s',
     Quests_NoQuests: 'Нет активных квестов',
+    Quests_WannaReplaceQuest: 'Вы действительно хотите заменить этот квест?',
+    Quests_UndoneAction: 'Это действие нельзя отменить!',
+    Quests_ReplaceQuestTitle: 'Замена квеста',
+    Quests_ReplaceQuestConfirmButtonTitle: 'Заменить',
+    Quests_CancelButtonTitle: 'Отмена',
+    Quests_FinalizeQuestTitle: 'Получение награды за квест',
+    Quests_FinalizeQuestConfirmButtonTitle: 'Получить',
+    Quests_FinalizeQuestNote: '<b>Примечание:</b> эта функция работает только при запущенной игре! :c',
+    Quests_WannaFinalizeQuest: 'Вы действительно хотите получить награду за этот квест?',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

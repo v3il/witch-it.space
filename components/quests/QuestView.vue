@@ -20,7 +20,7 @@
       </b-progress>
 
       <div class="wit-flex wit-flex--align-center">
-        <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="!isCompleted" @click="onQuestFinalize">
+        <b-button type="is-success" size="is-small" class="wit-transition wit-offset-right--xxs" :disabled="false && !isCompleted" @click="onQuestFinalize">
           <div class="wit-flex wit-flex--center">
             <b-icon icon="gift" size="is-small" class="is-size-6 wit-offset-right--none" />
             {{ $t('Quests_GetReward') }}

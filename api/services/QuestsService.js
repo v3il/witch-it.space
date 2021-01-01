@@ -30,7 +30,7 @@ export class QuestsService {
         }
     }
 
-    async mergeUserQuests (user, questsData) {
+    async mergeUserQuests (user, questsData, updateTime = true) {
         const transaction = await sequelize.transaction()
 
         try {
@@ -73,11 +73,16 @@ export class QuestsService {
                 }
             }
 
-            await user.update({
+            const userData = {
                 canReplaceWeeklyQuests,
-                canReplaceDailyQuests,
-                questsUpdateTimestamp: getCurrentTimestamp()
-            }, { transaction })
+                canReplaceDailyQuests
+            }
+
+            if (updateTime) {
+                userData.questsUpdateTimestamp = getCurrentTimestamp()
+            }
+
+            await user.update(userData, { transaction })
 
             await transaction.commit()
         } catch (error) {

@@ -11,6 +11,8 @@
             --active-background-color: #535eb4;
         }
 
+        --button-hover-color: var(--button-color);
+
         &:active,
         &:focus,
         &:hover {
@@ -23,4 +25,8 @@
     --dropdown-content-offset: 0;
     --dropdown-content-radius: 2px;
     --dropdown-item-active-background-color: transparent;
+
+    --modal-card-title-size: 16px; //var(--text-size-sm);
+    --modal-card-head-padding: 16px;
+    --modal-card-body-padding: 16px;
 }

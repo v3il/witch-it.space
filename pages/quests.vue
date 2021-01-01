@@ -120,24 +120,44 @@ export default {
                 .catch(console.error)
         },
 
-        async replaceQuest (quest) {
-            try {
-                const isSuccess = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+        replaceQuest (quest) {
+            const questTask = this.$t(`Quests_${quest.questTask}`)
 
-                console.log(isSuccess)
-            } catch (e) {
-                console.error(e)
-            }
+            this.$buefy.dialog.confirm({
+                title: this.$t('Quests_ReplaceQuestTitle'),
+                message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p><p class="wit-color--Y400">${this.$t('Quests_UndoneAction')}</p>`,
+                confirmText: this.$t('Quests_ReplaceQuestConfirmButtonTitle'),
+                cancelText: this.$t('Quests_CancelButtonTitle'),
+                onConfirm: async () => {
+                    try {
+                        const isSuccess = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+
+                        console.log(isSuccess)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }
+            })
         },
 
-        async finalizeQuest (quest) {
-            try {
-                const isSuccess = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+        finalizeQuest (quest) {
+            const questTask = this.$t(`Quests_${quest.questTask}`)
 
-                console.log(isSuccess)
-            } catch (e) {
-                console.error(e)
-            }
+            this.$buefy.dialog.confirm({
+                title: this.$t('Quests_FinalizeQuestTitle'),
+                message: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p><p class="wit-color--Y400">${this.$t('Quests_FinalizeQuestNote')}</p>`,
+                confirmText: this.$t('Quests_FinalizeQuestConfirmButtonTitle'),
+                cancelText: this.$t('Quests_CancelButtonTitle'),
+                onConfirm: async () => {
+                    try {
+                        const isSuccess = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+
+                        console.log(isSuccess)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }
+            })
         },
 
         setTimer () {

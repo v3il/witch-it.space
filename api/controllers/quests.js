@@ -66,7 +66,7 @@ const replaceUserQuest = async (request, response) => {
 
     if (isReplaced) {
         const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData)
+        await questsService.mergeUserQuests(user, newQuestsData, false)
 
         const questsData = await questsService.getUserQuestsData(user)
         return response.send({
@@ -108,7 +108,7 @@ const finalizeUserQuest = async (request, response) => {
 
     if (isFinalized) {
         const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData)
+        await questsService.mergeUserQuests(user, newQuestsData, false)
 
         const questsData = await questsService.getUserQuestsData(user)
         return response.send({
