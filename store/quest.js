@@ -4,6 +4,7 @@ export const state = () => ({
     weeklyQuests: [],
     dailyQuests: [],
     isLoaded: false,
+    isLoading: false,
     canReplaceDailyQuests: true,
     canReplaceWeeklyQuests: true,
     questsUpdateTimestamp: 0
@@ -15,13 +16,18 @@ export const actions = {
             return
         }
 
+        commit(Quest.Mutations.SET_LOADING, true)
+
         const response = await this.$axios.get('/api/quests')
         commit(Quest.Mutations.SET_DATA, response.data)
+        commit(Quest.Mutations.SET_LOADING, false)
     },
 
     async [Quest.Actions.UPDATE_QUESTS] ({ commit }) {
+        commit(Quest.Mutations.SET_LOADING, true)
         const response = await this.$axios.post('/api/quests/update')
         commit(Quest.Mutations.SET_DATA, response.data)
+        commit(Quest.Mutations.SET_LOADING, false)
     },
 
     async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
@@ -55,5 +61,9 @@ export const mutations = {
         state.canReplaceDailyQuests = canReplaceDailyQuests
         state.questsUpdateTimestamp = questsUpdateTimestamp
         state.isLoaded = true
+    },
+
+    [Quest.Mutations.SET_LOADING] (state, isLoading) {
+        state.isLoading = isLoading
     }
 }

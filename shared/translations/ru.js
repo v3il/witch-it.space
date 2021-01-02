@@ -83,10 +83,11 @@ export const ru = {
     Quests_CancelButtonTitle: 'Отмена',
     Quests_FinalizeQuestTitle: 'Получение награды за квест',
     Quests_FinalizeQuestConfirmButtonTitle: 'Получить',
-    Quests_FinalizeQuestNote: '<b>Примечание:</b> эта функция работает только при запущенной игре! :c',
+    Quests_FinalizeQuestNote: '<b>Действуют ограничения Steam/Witch It:</b> эта функция работает только при запущенной игре!',
     Quests_WannaFinalizeQuest: 'Вы действительно хотите получить награду за этот квест?',
     Quests_Note: 'Отслеживайте ваши ежедневные и еженедельные квесты, заменяйте их, контролируйте прогресс, получайте награду прямиком через сайт',
-    Quests_FinalizationLimit: 'Действуют ограничения Steam/Witch It: получение награды возможно только при запущенной игре :c',
+    Quests_FinalizationLimit: 'Действуют ограничения Steam/Witch It: получение награды возможно только при запущенной игре',
+    Quests_Loading: 'Загрузка...',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

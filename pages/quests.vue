@@ -1,12 +1,12 @@
 <template>
   <div class="quests">
     <div class="wit-offset-bottom--sm wit-line-height--md">
-      <p class="wit-block">
+      <p class="wit-block wit-text--center">
         {{ $t('Quests_Note') }}
 
-        <b-tooltip :label="$t('Quests_FinalizationLimit')" square>
-          <b-icon icon="help-box" size="is-small" />
-        </b-tooltip>
+        <!--        <b-tooltip :label="$t('Quests_FinalizationLimit')" square>-->
+        <!--        <b-icon icon="help-box" size="is-small" />-->
+        <!--        </b-tooltip>-->
       </p>
     </div>
 
@@ -30,7 +30,9 @@
           {{ $t('Quests_WeeklyQuestsTitle') }}
         </template>
 
-        <template v-if="weeklyQuests.length">
+        <Loader v-if="isLoading" />
+
+        <template v-else-if="weeklyQuests.length">
           <QuestView
             v-for="quest in weeklyQuests"
             :key="quest.id"
@@ -50,7 +52,9 @@
           {{ $t('Quests_DailyQuestsTitle') }}
         </template>
 
-        <template v-if="dailyQuests.length">
+        <Loader v-if="isLoading" />
+
+        <template v-else-if="dailyQuests.length">
           <QuestView
             v-for="quest in dailyQuests"
             :key="quest.id"
@@ -75,13 +79,15 @@ import { config } from '@/shared'
 import { Quest } from '@/store/Types'
 import Card from '@/components/Card'
 import EmptyState from '@/components/quests/EmptyState'
+import Loader from '@/components/quests/Loader'
 
 export default {
 
     components: {
         QuestView,
         Card,
-        EmptyState
+        EmptyState,
+        Loader
     },
 
     middleware: ['fetchUser'],
@@ -98,7 +104,7 @@ export default {
         ...mapState(Quest.PATH, [
             'weeklyQuests',
             'dailyQuests',
-            'isLoaded',
+            'isLoading',
             'canReplaceDailyQuests',
             'canReplaceWeeklyQuests',
             'questsUpdateTimestamp'

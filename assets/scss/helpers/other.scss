@@ -37,3 +37,17 @@
 .wit-transition--box-shadow {
     transition: box-shadow var(--default-transition);
 }
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.wit-animation--spin {
+    animation: spin 2s infinite linear;
+}

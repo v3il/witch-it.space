@@ -66,6 +66,7 @@ export const Quest = StoreWrap.wrap('quest', {
     },
 
     Mutations: {
-        SET_DATA: 'setData'
+        SET_DATA: 'setData',
+        SET_LOADING: 'setLoading'
     }
 })
