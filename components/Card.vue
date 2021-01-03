@@ -1,7 +1,7 @@
 <template>
   <div class="wit-card wit-flex">
     <div class="wit-card-body">
-      <h4 class="wit-card-title wit-font-family--secondary wit-font-weight--600 wit-offset-bottom--sm">
+      <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600 wit-offset-bottom--sm">
         <slot name="title" />
       </h4>
       <slot />

@@ -1,74 +1,74 @@
 <template>
   <div class="quests">
-    <div class="wit-offset-bottom--sm wit-line-height--md">
+    <div class="wit-offset-bottom--lg wit-line-height--md">
       <p class="wit-block wit-text--center">
         {{ $t('Quests_Note') }}
-
-        <!--        <b-tooltip :label="$t('Quests_FinalizationLimit')" square>-->
-        <!--        <b-icon icon="help-box" size="is-small" />-->
-        <!--        </b-tooltip>-->
       </p>
     </div>
 
-    <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
-      <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xxs wit-offset-top--xxs">
-        {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
+    <ConnectSteam v-if="!user.isSteamConnected" />
+
+    <template v-else>
+      <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
+        <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xxs wit-offset-top--xxs">
+          {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
+        </p>
+
+        <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
+          {{ $t('Quests_UpdateQuests') }}
+        </b-button>
+      </div>
+
+      <p class="wit-offset-bottom--sm wit-text--right">
+        {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
       </p>
 
-      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
-        {{ $t('Quests_UpdateQuests') }}
-      </b-button>
-    </div>
+      <div class="quests__body">
+        <Card class="wit-offset-bottom--md">
+          <template #title>
+            {{ $t('Quests_WeeklyQuestsTitle') }}
+          </template>
 
-    <p class="wit-offset-bottom--sm wit-text--right">
-      {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
-    </p>
+          <Loader v-if="isLoading" />
 
-    <div class="quests__body">
-      <Card class="wit-offset-bottom--md">
-        <template #title>
-          {{ $t('Quests_WeeklyQuestsTitle') }}
-        </template>
+          <template v-else-if="weeklyQuests.length">
+            <QuestView
+              v-for="quest in weeklyQuests"
+              :key="quest.id"
+              :quest="quest"
+              class="qv"
+              :can-replace="canReplaceWeeklyQuests"
+              @replace="replaceQuest"
+              @finalize="finalizeQuest"
+            />
+          </template>
 
-        <Loader v-if="isLoading" />
+          <EmptyState v-else />
+        </Card>
 
-        <template v-else-if="weeklyQuests.length">
-          <QuestView
-            v-for="quest in weeklyQuests"
-            :key="quest.id"
-            :quest="quest"
-            class="qv"
-            :can-replace="canReplaceWeeklyQuests"
-            @replace="replaceQuest"
-            @finalize="finalizeQuest"
-          />
-        </template>
+        <Card>
+          <template #title>
+            {{ $t('Quests_DailyQuestsTitle') }}
+          </template>
 
-        <EmptyState v-else />
-      </Card>
+          <Loader v-if="isLoading" />
 
-      <Card>
-        <template #title>
-          {{ $t('Quests_DailyQuestsTitle') }}
-        </template>
+          <template v-else-if="dailyQuests.length">
+            <QuestView
+              v-for="quest in dailyQuests"
+              :key="quest.id"
+              class="qv"
+              :quest="quest"
+              :can-replace="canReplaceDailyQuests"
+              @replace="replaceQuest"
+              @finalize="finalizeQuest"
+            />
+          </template>
 
-        <Loader v-if="isLoading" />
-
-        <template v-else-if="dailyQuests.length">
-          <QuestView
-            v-for="quest in dailyQuests"
-            :key="quest.id"
-            class="qv"
-            :quest="quest"
-            :can-replace="canReplaceDailyQuests"
-            @replace="replaceQuest"
-            @finalize="finalizeQuest"
-          />
-        </template>
-
-        <EmptyState v-else />
-      </Card>
-    </div>
+          <EmptyState v-else />
+        </Card>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -80,6 +80,8 @@ import { Quest } from '@/store/Types'
 import Card from '@/components/Card'
 import EmptyState from '@/components/quests/EmptyState'
 import Loader from '@/components/quests/Loader'
+import ConnectSteam from '@/components/quests/ConnectSteam'
+import { User } from '@/store'
 
 export default {
 
@@ -87,7 +89,8 @@ export default {
         QuestView,
         Card,
         EmptyState,
-        Loader
+        Loader,
+        ConnectSteam
     },
 
     middleware: ['fetchUser'],
@@ -108,10 +111,18 @@ export default {
             'canReplaceDailyQuests',
             'canReplaceWeeklyQuests',
             'questsUpdateTimestamp'
+        ]),
+
+        ...mapState(User.PATH, [
+            'user'
         ])
     },
 
     created () {
+        if (!this.user.isSteamConnected) {
+            return
+        }
+
         this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
             .then(() => {
                 this.setTimer()

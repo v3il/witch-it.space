@@ -88,6 +88,9 @@ export const ru = {
     Quests_Note: 'Отслеживайте ваши ежедневные и еженедельные квесты, заменяйте их, контролируйте прогресс, получайте награду прямиком через сайт',
     Quests_FinalizationLimit: 'Действуют ограничения Steam/Witch It: получение награды возможно только при запущенной игре',
     Quests_Loading: 'Загрузка...',
+    // Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam. Также это позволит вам входить в ваш Witch It.Zone аккаунт используя авторизацию через Steam',
+    Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam',
+    Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
