@@ -1,5 +1,5 @@
 <template>
-  <div class="quests">
+  <div class="wit-quests">
     <div class="wit-offset-bottom--lg wit-line-height--md">
       <p class="wit-block wit-text--center">
         {{ $t('Quests_Note') }}
@@ -36,7 +36,7 @@
               v-for="quest in weeklyQuests"
               :key="quest.id"
               :quest="quest"
-              class="qv"
+              class="wit-quest-view"
               :can-replace="canReplaceWeeklyQuests"
               @replace="replaceQuest"
               @finalize="finalizeQuest"
@@ -57,7 +57,7 @@
             <QuestView
               v-for="quest in dailyQuests"
               :key="quest.id"
-              class="qv"
+              class="wit-quest-view"
               :quest="quest"
               :can-replace="canReplaceDailyQuests"
               @replace="replaceQuest"
@@ -227,22 +227,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.quests {
+.wit-quests {
     padding: var(--offset-xxlg) 0;
     max-width: 800px;
     margin: 0 auto;
 }
 
-.qv {
+.wit-quest-view {
     padding: 16px 0;
 
     &:not(:last-child) {
-        //margin-bottom: 16px;
         border-bottom: 1px solid var(--quest-divider-color);
     }
-}
-
-.quests__header {
-    //margin: var(--offset-xs) 0;
 }
 </style>
