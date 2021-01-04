@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center">
+  <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center wit-offset-bottom--xs">
     <b-icon
       icon="microsoft-xbox-controller-battery-empty"
       size="is-large"
