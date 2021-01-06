@@ -6,19 +6,17 @@
       <Nuxt />
 
       <b-notification
-        v-if="hasErrors"
-        type="is-danger is-light is-bottom-right"
+        v-if="isNotificationVisible"
+        :type="notificationClass"
         aria-close-label="Close notification"
         role="alert"
+        animation="fade150"
         style="    max-width: 400px;
     position: absolute;
     right: 20px;
     bottom: 20px;"
-        auto-close
-        :duration="5000"
-        @close="resetErrors"
       >
-        {{ firstError }}
+        {{ notificationMessage }}
       </b-notification>
     </main>
   </div>
@@ -32,6 +30,13 @@ const { mapState } = createNamespacedHelpers('theme')
 export default {
     name: 'Default',
 
+    data: () => ({
+        isNotificationVisible: false,
+        notificationType: '',
+        notificationMessage: '',
+        notificationTimeoutId: 0
+    }),
+
     head () {
         return {
             bodyAttrs: {
@@ -42,11 +47,32 @@ export default {
 
     computed: {
         ...mapGetters(['hasErrors', 'firstError']),
-        ...mapState(['theme'])
+        ...mapState(['theme']),
+
+        notificationClass () {
+            return {
+                success: 'is-success',
+                error: 'is-danger'
+            }[this.notificationType] ?? ''
+        }
+    },
+
+    created () {
+        this.$eventBus.$on('showNotification', ({ type, message }) => {
+            clearTimeout(this.notificationTimeoutId)
+            this.isNotificationVisible = true
+            this.notificationType = type
+            this.notificationMessage = message
+            this.notificationTimeoutId = setTimeout(this.closeActiveNotification, 5000)
+        })
     },
 
     methods: {
-        ...mapMutations(['resetErrors'])
+        ...mapMutations(['resetErrors']),
+
+        closeActiveNotification () {
+            this.isNotificationVisible = false
+        }
     }
 }
 </script>
