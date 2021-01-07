@@ -5,7 +5,7 @@
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
       </p>
 
-      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="false && !isUpdateAvailable" @click="updateQuests">
+      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
         {{ $t('Quests_UpdateQuests') }}
       </b-button>
     </div>
@@ -161,13 +161,13 @@ export default {
                 confirmText: this.$t('Quests_FinalizeQuestConfirmButtonTitle'),
                 cancelText: this.$t('Quests_CancelButtonTitle'),
                 onConfirm: async () => {
-                    try {
-                        const isSuccess = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+                    const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
 
-                        console.log(isSuccess)
-                    } catch (e) {
-                        console.error(e)
+                    if (error || !isSuccess) {
+                        return this.$showError({ message: this.$t('Error_QuestFinalizationFailed') })
                     }
+
+                    return this.$showSuccess({ message: this.$t('Success_QuestFinalization') })
                 }
             })
         },

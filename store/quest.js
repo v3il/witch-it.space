@@ -55,24 +55,20 @@ export const actions = {
         } catch (e) {
             return { error: e.message }
         }
-
-        // const response = await this.$axios.post('/api/quests/replace', { questId })
-        //
-        // if (response.data.success) {
-        //     commit(Quest.Mutations.SET_DATA, response.data)
-        // }
-        //
-        // return response.data.success
     },
 
     async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
-        const response = await this.$axios.post('/api/quests/finalize', { questId })
+        try {
+            const response = await this.$axios.post('/api/quests/finalize', { questId })
 
-        if (response.data.success) {
-            commit(Quest.Mutations.SET_DATA, response.data)
+            if (response.data.isSuccess) {
+                commit(Quest.Mutations.SET_DATA, response.data)
+            }
+
+            return { isSuccess: response.data.isSuccess }
+        } catch (e) {
+            return { error: e.message }
         }
-
-        return response.data.success
     }
 }
 
