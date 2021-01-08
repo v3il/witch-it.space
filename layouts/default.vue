@@ -11,10 +11,7 @@
         aria-close-label="Close notification"
         role="alert"
         animation="fade150"
-        style="    max-width: 400px;
-    position: fixed;
-    right: 20px;
-    bottom: 20px;"
+        class="layout__notification"
       >
         {{ notificationMessage }}
       </b-notification>
@@ -84,5 +81,12 @@ export default {
         @media screen and (max-width: 768px) {
             padding: 0 var(--offset-sm) var(--offset-sm);
         }
+    }
+
+    .layout__notification {
+        max-width: 400px;
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
     }
 </style>
