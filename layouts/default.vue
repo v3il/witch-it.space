@@ -43,7 +43,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters(['hasErrors', 'firstError']),
         ...mapState(['theme']),
 
         notificationClass () {
@@ -60,13 +59,11 @@ export default {
             this.isNotificationVisible = true
             this.notificationType = type
             this.notificationMessage = message
-            this.notificationTimeoutId = setTimeout(this.closeActiveNotification, 5000)
+            this.notificationTimeoutId = setTimeout(this.closeActiveNotification, 7000)
         })
     },
 
     methods: {
-        ...mapMutations(['resetErrors']),
-
         closeActiveNotification () {
             this.isNotificationVisible = false
         }
@@ -86,7 +83,7 @@ export default {
     .layout__notification {
         max-width: 400px;
         position: fixed;
-        right: 20px;
-        bottom: 20px;
+        right: var(--offset-sm);
+        bottom: var(--offset-sm);
     }
 </style>
