@@ -1,14 +1,7 @@
 import { Theme, User, Root, Locale } from '@/store/Types'
 import { Cookies } from '~/shared'
 
-export const state = () => ({
-    errors: []
-})
-
-export const getters = {
-    hasErrors: state => state.errors.length > 0,
-    firstError: state => state.errors[0]
-}
+export const state = () => ({})
 
 export const actions = {
     async nuxtServerInit ({ commit }, { app }) {
@@ -17,14 +10,6 @@ export const actions = {
     }
 }
 
-export const mutations = {
-    setErrors (state, errors) {
-        state.errors = errors
-    },
-
-    resetErrors (state) {
-        state.errors = []
-    }
-}
+export const mutations = {}
 
 export { Theme, User, Locale, Root }

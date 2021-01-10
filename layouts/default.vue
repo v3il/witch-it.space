@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers, mapGetters, mapMutations } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 const { mapState } = createNamespacedHelpers('theme')
 
