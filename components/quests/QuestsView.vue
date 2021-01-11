@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
-      <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xxs wit-offset-top--xxs">
+      <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs">
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
       </p>
 
@@ -203,6 +203,10 @@ export default {
         },
 
         formatLastUpdate () {
+            if (!this.questsUpdateTimestamp) {
+                return this.formattedLastUpdate = this.$t('Time_Never')
+            }
+
             clearTimeout(this.lastUpdateTimeoutId)
             this.lastUpdateTimeoutId = setTimeout(this.formatLastUpdate, 10 * 1000)
             this.formattedLastUpdate = Date.fromTimestamp(this.questsUpdateTimestamp).humanizeTimeDiff()

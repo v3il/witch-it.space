@@ -113,5 +113,6 @@ export const ru = {
 
         return `${minutes} ${word} назад`
     },
-    Time_LessThanAMinuteAgo: 'менее минуты назад'
+    Time_LessThanAMinuteAgo: 'менее минуты назад',
+    Time_Never: 'никогда'
 }
