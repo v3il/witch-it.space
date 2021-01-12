@@ -1,4 +1,5 @@
 import { Locale, Theme, User } from '@/store/Types'
+import { openWindow } from '@/utils'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -29,42 +30,21 @@ export const actions = {
 
     [User.Actions.AUTH] ({ commit, dispatch, state }, socialNetworkName) {
         return new Promise((resolve, reject) => {
-            const authWindow = window.open(`/api/auth/${socialNetworkName}`, AUTH_WINDOW_TARGET, 'width=600, height=600')
+            const authWindow = openWindow(`/api/auth/${socialNetworkName}`, {
+                tagName: AUTH_WINDOW_TARGET
+            })
 
             const intervalId = setInterval(() => {
                 if (authWindow.closed) {
-                    console.log('Close')
                     clearInterval(intervalId)
                     reject(null)
                 }
             }, 1000)
 
             window.$setAuthResult = function ({ isSuccess, error }) {
-                console.log(isSuccess, error)
-
                 authWindow?.close()
                 isSuccess ? resolve() : reject(error)
             }
-
-            // console.log(authWindow)
-            //
-            // authWindow.onload = function () { // wait til load to add onunload event
-            //     authWindow.onbeforeunload = function () {
-            //         console.log('Close')
-            //     }
-            // }
-
-            // authWindow.onbeforeunload = function () {
-            //     console.log('test')
-            //     return null
-            // }
-
-            // authWindow.window.addEventListener('beforeunload', () => {
-            //     // eslint-disable-next-line prefer-promise-reject-errors
-            //     reject(null)
-            //     console.log('Close')
-            //     return false
-            // }, { once: true })
         })
     },
 

@@ -97,15 +97,14 @@ export default {
         },
 
         authUsingSocials (socialName) {
-            console.log(socialName)
-            this.$store.dispatch(User.F.Actions.AUTH, socialName)
-                .then(() => {
-                    console.log('Success')
-                    this.$router.replace(Routes.MAIN)
-                })
-                .catch((e) => {
-                    console.error(e?.message)
-                })
+            try {
+                this.$store.dispatch(User.F.Actions.AUTH, socialName)
+                this.$router.replace(Routes.MAIN)
+            } catch (error) {
+                if (error) {
+                    this.$showError({ message: error.message })
+                }
+            }
         }
     }
 }
