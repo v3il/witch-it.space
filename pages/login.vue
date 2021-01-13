@@ -96,10 +96,10 @@ export default {
             }).then(() => this.$router.replace(Routes.MAIN))
         },
 
-        authUsingSocials (socialName) {
+        async authUsingSocials (socialName) {
             try {
-                this.$store.dispatch(User.F.Actions.AUTH, socialName)
-                this.$router.replace(Routes.MAIN)
+                await this.$store.dispatch(User.F.Actions.AUTH, socialName)
+                await this.$router.replace(Routes.MAIN)
             } catch (error) {
                 if (error) {
                     this.$showError({ message: error.message })
