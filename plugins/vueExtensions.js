@@ -17,14 +17,18 @@ export default function ({ store }) {
                 this.$eventBus.$emit('showNotification', options)
             },
 
-            $showError ({ message }) {
+            $showError (options) {
+                const message = typeof options === 'string' ? options : options.message
+
                 this.$showNotification({
                     type: 'error',
                     message
                 })
             },
 
-            $showSuccess ({ message }) {
+            $showSuccess (options) {
+                const message = typeof options === 'string' ? options : options.message
+
                 this.$showNotification({
                     type: 'success',
                     message
