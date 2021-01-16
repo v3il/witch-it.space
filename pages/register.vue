@@ -30,7 +30,7 @@
             </b-field>
 
             <div class="wit-flex wit-flex--center wit-flex--justify-between">
-              <Socials />
+              <Socials @socialClicked="authUsingSocials" />
 
               <b-button type="is-primary" native-type="submit" class="wit-transition">
                 {{ $t('Register_RegisterButtonTitle') }}
@@ -55,9 +55,8 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
 import Socials from '@/components/auth/Socials'
-import { Root, User } from '@/store'
+import { User } from '@/store'
 import { Routes } from '@/shared'
 
 export default {
@@ -73,36 +72,41 @@ export default {
         confirmPassword: ''
     }),
 
-    mounted () {
-        const error = this.$route.query.error
-
-        if (error) {
-            this.setErrors([this.$t(error)])
-        }
-    },
-
     methods: {
-        ...mapMutations([
-            Root.Mutations.SET_ERRORS
-        ]),
-
-        onSubmit () {
+        async onSubmit () {
             if (this.login.length < 4) {
-                return this.setErrors([this.$t('Error_LoginIsTooShort')])
+                return this.$showError(this.$t('Error_LoginIsTooShort'))
             }
 
             if (this.password.length < 6) {
-                return this.setErrors([this.$t('Error_PasswordIsTooShort')])
+                return this.$showError(this.$t('Error_PasswordIsTooShort'))
             }
 
             if (this.password !== this.confirmPassword) {
-                return this.setErrors([this.$t('Error_PasswordsAreNotIdentical')])
+                return this.$showError(this.$t('Error_PasswordsAreNotIdentical'))
             }
 
-            this.$store.dispatch(User.F.Actions.REGISTER, {
-                login: this.login,
-                password: this.password
-            }).then(() => this.$router.replace(Routes.MAIN))
+            try {
+                await this.$store.dispatch(User.F.Actions.REGISTER, {
+                    login: this.login,
+                    password: this.password
+                })
+
+                await this.$router.replace(Routes.MAIN)
+            } catch (error) {
+                this.$showError(error.message)
+            }
+        },
+
+        async authUsingSocials (socialName) {
+            try {
+                await this.$store.dispatch(User.F.Actions.AUTH, socialName)
+                await this.$router.replace(Routes.MAIN)
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
         }
     }
 }
