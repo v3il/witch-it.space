@@ -28,7 +28,7 @@ export const actions = {
         return this.$axios.post('/api/auth/login', credentials)
     },
 
-    [User.Actions.AUTH] ({ commit, dispatch, state }, socialNetworkName) {
+    [User.Actions.AUTH_USING_SOCIALS] ({ commit, dispatch, state }, socialNetworkName) {
         return new Promise((resolve, reject) => {
             const authWindow = openWindow(`/api/auth/${socialNetworkName}`, {
                 tagName: AUTH_WINDOW_TARGET
@@ -61,5 +61,9 @@ export const actions = {
 export const mutations = {
     [User.Mutations.SET_USER] (state, user) {
         state.user = user
+    },
+
+    [User.Mutations.SET_STEAM_CONNECTED] (state) {
+        state.user.isSteamConnected = true
     }
 }

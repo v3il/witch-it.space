@@ -39,12 +39,13 @@ export const User = StoreWrap.wrap('user', {
         FETCH_USER: 'fetchUser',
         LOGIN: 'login',
         REGISTER: 'register',
-        AUTH: 'auth',
+        AUTH_USING_SOCIALS: 'auth',
         LOGOUT: 'logout'
     },
 
     Mutations: {
-        SET_USER: 'setUser'
+        SET_USER: 'setUser',
+        SET_STEAM_CONNECTED: 'setSteamConnected'
     }
 })
 

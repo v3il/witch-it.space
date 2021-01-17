@@ -91,7 +91,7 @@ export default {
 
         async authUsingSocials (socialName) {
             try {
-                await this.$store.dispatch(User.F.Actions.AUTH, socialName)
+                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
                 await this.$router.replace(Routes.MAIN)
             } catch (error) {
                 if (error) {
