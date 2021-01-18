@@ -94,6 +94,7 @@ export default {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
                 await this.$router.replace(Routes.MAIN)
             } catch (error) {
+                console.log(error)
                 if (error) {
                     this.$showError(error.message)
                 }

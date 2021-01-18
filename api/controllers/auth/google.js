@@ -85,7 +85,7 @@ const googleAuthController = {
         try {
             await authUsingGoogleCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.LOGIN}?error=Error_AuthFailed`)
+            response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }
 }

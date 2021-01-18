@@ -13,7 +13,7 @@ export const signInUser = ({ user, authType, response }) => {
         maxAge: config.TOKEN_COOKIE_DURATION * 1000,
         httpOnly: true,
         secure: true,
-        sameSite: 'Lax' // todo: find a solution for the 'Strict' option
+        sameSite: true // todo: find a solution for the 'Strict' option
     })
 
     response.redirect(`${Routes.AUTH_RESULT}`)

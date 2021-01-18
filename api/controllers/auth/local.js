@@ -52,9 +52,9 @@ const register = async (request, response) => {
         throw new BadRequest(translateText('Error_InvalidPassword', request.locale))
     }
 
-    const usersWithSameMail = await User.findAll({ where: { login } })
+    const usersWithSameLogin = await User.findAll({ where: { login } })
 
-    if (usersWithSameMail.length) {
+    if (usersWithSameLogin.length) {
         throw new BadRequest(translateText('Error_NotUniqueLogin', request.locale))
     }
 

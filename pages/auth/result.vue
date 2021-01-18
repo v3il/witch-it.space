@@ -8,7 +8,7 @@ export default {
     layout: 'blank',
 
     mounted () {
-        const errorTextCode = this.$route.params.error
+        const errorTextCode = this.$route.query.error
         this.setAuthResult(errorTextCode)
     },
 

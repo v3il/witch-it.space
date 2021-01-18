@@ -28,7 +28,7 @@ export const actions = {
         return this.$axios.post('/api/auth/login', credentials)
     },
 
-    [User.Actions.AUTH_USING_SOCIALS] ({ commit, dispatch, state }, socialNetworkName) {
+    [User.Actions.AUTH_USING_SOCIALS] ({ commit, dispatch }, socialNetworkName) {
         return new Promise((resolve, reject) => {
             const authWindow = openWindow(`/api/auth/${socialNetworkName}`, {
                 tagName: AUTH_WINDOW_TARGET
@@ -42,8 +42,10 @@ export const actions = {
             }, 1000)
 
             window.$setAuthResult = function ({ isSuccess, error }) {
+                console.log(isSuccess, error)
+
                 authWindow?.close()
-                isSuccess ? resolve() : reject(error)
+                isSuccess ? resolve() : reject(new Error(error))
             }
         })
     },
