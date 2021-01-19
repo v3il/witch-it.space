@@ -5,5 +5,7 @@ import { createAsyncRouter } from '../util'
 const userRouter = createAsyncRouter()
 
 userRouter.get('/', authorized, userController.getCurrentUser)
+userRouter.post('/locale', authorized, userController.changeUserLocale)
+userRouter.post('/theme', authorized, userController.changeUserTheme)
 
 export { userRouter }

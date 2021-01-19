@@ -16,6 +16,8 @@ export const ru = {
     Error_QuestsFetchingFailed: 'При загрузке квестов произошла ошибка',
     Error_QuestReplacingFailed: 'Не удалось заменить квест',
     Error_QuestFinalizationFailed: 'Не удалось получить награду. Проверьте, запущена ли игра',
+    Error_LocaleIsNotSupported: 'Не поддерживаемый язык',
+    Error_ThemeIsNotSupported: 'Не поддерживаемая тема',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',
