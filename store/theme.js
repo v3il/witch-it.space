@@ -6,7 +6,7 @@ export const state = () => ({
 })
 
 export const actions = {
-    [Theme.Actions.SET_THEME] ({ commit }, theme) {
+    [Theme.Actions.SET_THEME] ({ commit, rootState }, theme) {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
@@ -14,6 +14,10 @@ export const actions = {
 
         this.$cookies.set(Cookies.THEME, validTheme, { expires })
         commit(Theme.Mutations.SET_THEME, validTheme)
+
+        if (rootState.user.user) {
+            this.$axios.post('/api/user/theme', { theme }).catch(console.error)
+        }
     }
 }
 

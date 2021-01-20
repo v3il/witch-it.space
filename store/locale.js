@@ -1,5 +1,5 @@
 import { Cookies, config, Locales, en, ua, ru } from '~/shared'
-import { Locale } from '@/store/Types'
+import { Locale, User } from '@/store/Types'
 
 export const state = () => ({
     locale: config.DEFAULT_LOCALE
@@ -16,7 +16,7 @@ export const getters = {
 }
 
 export const actions = {
-    [Locale.Actions.SET_LOCALE] ({ commit }, locale) {
+    [Locale.Actions.SET_LOCALE] ({ commit, rootState }, locale) {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
@@ -24,6 +24,10 @@ export const actions = {
 
         this.$cookies.set(Cookies.LOCALE, validLocale, { expires })
         commit(Locale.Mutations.SET_LOCALE, validLocale)
+
+        if (rootState.user.user) {
+            this.$axios.post('/api/user/locale', { locale }).catch(console.error)
+        }
     }
 }
 
