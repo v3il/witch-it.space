@@ -15,7 +15,9 @@ export const actions = {
         this.$cookies.set(Cookies.THEME, validTheme, { expires })
         commit(Theme.Mutations.SET_THEME, validTheme)
 
-        if (rootState.user.user) {
+        const user = rootState.user.user
+
+        if (user && user.theme !== theme) {
             this.$axios.post('/api/user/theme', { theme }).catch(console.error)
         }
     }

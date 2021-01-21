@@ -25,7 +25,9 @@ export const actions = {
         this.$cookies.set(Cookies.LOCALE, validLocale, { expires })
         commit(Locale.Mutations.SET_LOCALE, validLocale)
 
-        if (rootState.user.user) {
+        const user = rootState.user.user
+
+        if (user && user.locale !== locale) {
             this.$axios.post('/api/user/locale', { locale }).catch(console.error)
         }
     }
