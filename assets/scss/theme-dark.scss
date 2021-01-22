@@ -36,6 +36,8 @@
     --input-focus-border-color: #3a4158;
     --input-focus-box-shadow-color: var(--primary);
 
+    --default-border: 1px solid #3a445b;
+
     --header-bg: #36394c;
     --navbar-background-color: #36394c;
 
@@ -57,8 +59,8 @@
 
     --modal-card-head-background-color: var(--gray-200);
     --modal-card-body-background-color: var(--gray-200);
-    --modal-card-head-border-bottom: 1px solid #3a445b;
-    --modal-card-foot-border-top: 1px solid #3a445b;
+    --modal-card-head-border-bottom: var(--default-border);
+    --modal-card-foot-border-top: var(--default-border);
     --modal-card-title-color: var(--body-color);
 
     --tooltip-bg: var(--primary);
@@ -67,5 +69,6 @@
     --navbar-item-color: var(--white);
     --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
     --navbar-item-hover-color: var(--white);
+    --navbar-mobile-footer-border: 1px solid #212635;
 
 }

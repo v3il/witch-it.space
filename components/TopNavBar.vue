@@ -1,28 +1,35 @@
 <template>
-  <b-navbar>
+  <b-navbar class="wiz-header">
     <template #brand>
-      <b-navbar-item tag="router-link" :to="{ path: '/' }">
-        <img class="login-page__image" src="images/hey.png" alt="Hey!">
+      <b-navbar-item tag="router-link" :to="{ path: '/' }" class="wit-paddings--none">
+        <img class="wiz-header__logo" src="images/hey.png" alt="Hey!">
       </b-navbar-item>
     </template>
-    <template v-if="user" #start>
+
+    <template v-if="user" #start class="wiz-header__start">
       <b-navbar-item
         v-for="link in $options.links"
         :key="link.to"
         :to="link.to"
         tag="nuxt-link"
         :class="getLinkClasses(link)"
-        class="wit-transition"
+        class="wit-transition wiz-header__link"
       >
         {{ $t(link.textId) }}
       </b-navbar-item>
     </template>
 
-    <template #end>
-      <b-navbar-item tag="div">
+    <template #end class="wiz-header__end">
+      <b-navbar-item tag="div" class="wit-header__theme-switcher wit-paddings--none wiz-background--transparent">
         <ThemeSwitcher />
+      </b-navbar-item>
+
+      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
         <LocaleSwitcher />
-        <UserDropdown v-if="user" class="wit-offset-left--none" />
+      </b-navbar-item>
+
+      <b-navbar-item v-if="user" tag="div" class="wit-header__user-dropdown wit-paddings--none wiz-background--transparent">
+        <UserDropdown class="wit-offset-left--none" />
       </b-navbar-item>
     </template>
   </b-navbar>
@@ -74,16 +81,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-header {
+.wiz-header {
     background-color: var(--header-bg);
     height: 70px;
-    position: sticky;
     padding: 0 var(--offset-sm);
-    z-index: 50;
-    //overflow-x: hidden;
+
+    @media screen and (max-width: 1024px) {
+        padding: 0;
+    }
 }
 
-.navbar-item {
+.wiz-header__link {
+    padding: 0 var(--offset-sm);
+
     &.active,
     &:active,
     &:focus,
@@ -92,15 +102,32 @@ export default {
         text-decoration: none;
         background-color: var(--locale-switcher-hover-background);
     }
+
+    @media screen and (max-width: 1024px) {
+        padding: var(--offset-xs) var(--offset-sm);
+    }
 }
 
-.wit-header__menu-item {
-    height: 100%;
-    padding: 0 var(--offset-sm);
+.wit-header__theme-switcher {
+    @media screen and (max-width: 1024px) {
+        border-right: var(--default-border);
+    }
 }
 
-.wit-header__menu-link {
-    //display: block;
-    //height: 100%;
+.wit-header__locale-switcher {
+    @media screen and (max-width: 1024px) {
+        border-right: var(--default-border);
+    }
+}
+
+.wit-header__user-dropdown {
+    @media screen and (max-width: 1024px) {
+        margin-left: auto;
+        border-left: var(--default-border);
+    }
+}
+
+.wiz-header__logo {
+    max-height: none;
 }
 </style>

@@ -36,6 +36,8 @@
     --input-focus-border-color: var(--blue);
     --input-focus-box-shadow-color: var(--primary);
 
+    --default-border: 1px solid var(--gray-200);
+
     --header-bg: #343A40;
     --navbar-background-color: #343A40;
 
@@ -57,8 +59,8 @@
 
     --modal-card-head-background-color: var(--white);
     --modal-card-body-background-color: var(--white);
-    --modal-card-head-border-bottom: 1px solid var(--gray-200);
-    --modal-card-foot-border-top: 1px solid var(--gray-200);
+    --modal-card-head-border-bottom: var(--default-border);
+    --modal-card-foot-border-top: var(--default-border);
     --modal-card-title-color: var(--body-color);
 
     --tooltip-bg: var(--primary);
@@ -67,4 +69,5 @@
     --navbar-item-color: var(--white);
     --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
     --navbar-item-hover-color: var(--white);
+    --navbar-mobile-footer-border: var(--default-border);
 }

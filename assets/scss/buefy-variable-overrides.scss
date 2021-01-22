@@ -26,12 +26,10 @@
     --dropdown-content-radius: 2px;
     --dropdown-item-active-background-color: transparent;
 
-    --modal-card-title-size: 16px; //var(--text-size-sm);
+    --modal-card-title-size: 16px;
     --modal-card-head-padding: 16px;
     --modal-card-body-padding: 16px;
 
     --navbar-height: 70px;
-    --navbar-item-color: var(--white);
-    --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
-    --navbar-item-img-max-height: 100%;
+    --navbar-burger-color: var(--white);
 }

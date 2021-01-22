@@ -12,6 +12,10 @@
     background-color: var(--content-bg);
 }
 
+.wiz-background--transparent {
+    background-color: transparent;
+}
+
 .wit-color--white {
     color: var(--white);
 }
@@ -91,3 +95,19 @@
 /*.wit-text--G300 {*/
 /*    color: $G300;*/
 /*}*/
+
+.wiz-border--top {
+    border-top: var(--default-border);
+}
+
+.wiz-border--left {
+    border-left: var(--default-border);
+}
+
+.wiz-border--right {
+    border-right: var(--default-border);
+}
+
+.wiz-border--bottom {
+    border-bottom: var(--default-border);
+}

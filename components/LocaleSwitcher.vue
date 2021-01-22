@@ -1,7 +1,6 @@
 <template>
   <b-dropdown
     animation="fade150"
-    :mobile-modal="false"
     class="wit-block--full-height wit-locale-switcher wit-transition--background"
     :class="dropdownClasses"
     position="is-bottom-left"

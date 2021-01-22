@@ -1,7 +1,6 @@
 <template>
   <b-dropdown
     animation="fade150"
-    :mobile-modal="false"
     class="wit-block--full-height wit-user-dropdown wit-transition--background"
     :class="dropdownClasses"
     position="is-bottom-left"
@@ -9,9 +8,9 @@
   >
     <template #trigger>
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
-        <div class="login-page__image-block wit-offset-right--xs wit-background--content1 wit-transition">
+        <div class="login-page__image-block wit-offset-right--xs wit-flex wit-flex--center">
           <img
-            class="login-page__image"
+            class="wit-user-dropdown__image"
             src="images/hey.png"
             alt="Hey!"
             width="36px"
@@ -97,7 +96,9 @@ export default {
     }
 }
 
-.wit-locale-switcher__img {
-    height: 16px;
+.wit-user-dropdown__image {
+    height: 28px;
+    width: 28px;
+    max-height: none;
 }
 </style>

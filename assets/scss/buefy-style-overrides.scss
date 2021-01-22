@@ -68,14 +68,37 @@ h6 {
     }
 }
 
-.navbar {
-    height: 70px;
-    min-height: 0;
+.navbar-menu {
+    @media screen and (max-width: 1024px) {
+        padding: 0;
+    }
 }
 
-.navbar-item:not(.navbar-start .navbar-item) {
-    //@media screen and (min-width: 1006px) {
-    padding-top: 0;
-    padding-bottom: 0;
-    //}
+.navbar-burger {
+    &,
+    &:hover,
+    &:active {
+        color: var(--white);
+    }
+}
+
+.navbar-brand {
+    margin-right: var(--offset-lg);
+
+    @media screen and (max-width: 1024px) {
+        margin-right: 0;
+    }
+}
+
+.navbar-start:not(:empty) {
+    @media screen and (max-width: 1024px) {
+        padding-top: var(--offset-xs);
+        border-bottom: var(--navbar-mobile-footer-border);
+    }
+}
+
+.navbar-end {
+    @media screen and (max-width: 1024px) {
+        display: flex;
+    }
 }
