@@ -85,10 +85,6 @@ export default {
     background-color: var(--header-bg);
     height: 70px;
     padding: 0 var(--offset-sm);
-
-    @media screen and (max-width: 1024px) {
-        padding: 0;
-    }
 }
 
 .wiz-header__link {
@@ -102,32 +98,29 @@ export default {
         text-decoration: none;
         background-color: var(--locale-switcher-hover-background);
     }
-
-    @media screen and (max-width: 1024px) {
-        padding: var(--offset-xs) var(--offset-sm);
-    }
-}
-
-.wit-header__theme-switcher {
-    @media screen and (max-width: 1024px) {
-        border-right: var(--default-border);
-    }
-}
-
-.wit-header__locale-switcher {
-    @media screen and (max-width: 1024px) {
-        border-right: var(--default-border);
-    }
-}
-
-.wit-header__user-dropdown {
-    @media screen and (max-width: 1024px) {
-        margin-left: auto;
-        border-left: var(--default-border);
-    }
 }
 
 .wiz-header__logo {
     max-height: none;
+}
+
+@media screen and (max-width: 1024px) {
+    .wiz-header {
+        padding: 0;
+    }
+
+    .wiz-header__link {
+        padding: var(--offset-xs) var(--offset-sm);
+    }
+
+    .wit-header__locale-switcher,
+    .wit-header__theme-switcher {
+        border-right: var(--default-border);
+    }
+
+    .wit-header__user-dropdown {
+        margin-left: auto;
+        border-left: var(--default-border);
+    }
 }
 </style>
