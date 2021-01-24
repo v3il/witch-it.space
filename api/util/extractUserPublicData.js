@@ -10,5 +10,7 @@ export const extractUserPublicData = user => ({
     locale: user.locale,
     theme: user.theme,
     inventorySyncTime: user.inventorySyncTime,
-    isSteamConnected: !!user.steamId
+    isSteamConnected: !!user.steamId,
+    isGoogleConnected: !!user.googleId,
+    isDiscordConnected: !!user.discordId
 })

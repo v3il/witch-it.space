@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-card wit-flex">
+  <div class="wit-card wit-flex" :class="cardClass">
     <div class="wit-card-body">
       <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600 wit-offset-bottom--sm">
         <slot name="title" />
@@ -11,7 +11,21 @@
 
 <script>
 export default {
-    name: 'Card'
+    name: 'Card',
+
+    props: {
+        type: {
+            required: false,
+            default: '',
+            type: String
+        }
+    },
+
+    computed: {
+        cardClass () {
+            return this.type
+        }
+    }
 }
 </script>
 
@@ -21,6 +35,10 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: var(--offset-xxs);
     box-shadow: 0 0.75rem 1.5rem var(--card-box-shadow-color);
+
+    &.error {
+        border: 1px solid var(--danger);
+    }
 }
 
 .wit-card-body {

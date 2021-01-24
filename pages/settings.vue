@@ -1,5 +1,13 @@
 <template>
   <div class="wit-settings">
+    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
+      <b-field>
+        <b-button type="is-primary" class="wit-offset-left--auto wit-block">
+          Save changes
+        </b-button>
+      </b-field>
+    </div>
+
     <Card class="wit-offset-bottom--sm">
       <template #title>
         Profile Settings and Appearance
@@ -41,12 +49,63 @@
           </b-button>
         </b-field>
 
-        <b-field class="wit-paddings--xs wiz-border--top">
-          <b-button type="is-primary" class="wit-offset-left--auto wit-block">
-            Save changes
-          </b-button>
-        </b-field>
+        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
+        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
+        <!--            Save changes-->
+        <!--          </b-button>-->
+        <!--        </b-field>-->
       </form>
+    </Card>
+
+    <Card class="wit-offset-bottom--sm">
+      <template #title>
+        Social Networks
+      </template>
+
+      <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+        <div class="wit-flex__item--grow">
+          <strong class="wit-block wit-offset-bottom--xs">Steam</strong>
+          <p>Hide profile</p>
+        </div>
+
+        <b-button v-if="user.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700">
+          Disconnect
+        </b-button>
+
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+          Connect
+        </b-button>
+      </div>
+
+      <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+        <div class="wit-flex__item--grow">
+          <strong class="wit-block wit-offset-bottom--xs">Discord</strong>
+          <p>Hide profile</p>
+        </div>
+
+        <b-button v-if="user.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700">
+          Disconnect
+        </b-button>
+
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+          Connect
+        </b-button>
+      </div>
+
+      <div class="wit-flex wit-flex--align-center">
+        <div class="wit-flex__item--grow">
+          <strong class="wit-block wit-offset-bottom--xs">Google</strong>
+          <p>Hide profile</p>
+        </div>
+
+        <b-button v-if="user.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700">
+          Disconnect
+        </b-button>
+
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+          Connect
+        </b-button>
+      </div>
     </Card>
 
     <Card class="wit-offset-bottom--sm">
@@ -63,21 +122,17 @@
           <b-input v-model="steamTradeLink" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
         </b-field>
 
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
-          <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
-        </b-field>
-
         <b-field class="wit-paddings--xs" :label="$t('Login_PasswordInputTitle1')">
           <b-switch v-model="isGuardProtected">
             {{ isGuardProtected ? 'Yes' : 'No' }}
           </b-switch>
         </b-field>
 
-        <b-field class="wit-paddings--xs wiz-border--top">
-          <b-button type="is-primary" class="wit-offset-left--auto wit-block">
-            Save changes
-          </b-button>
-        </b-field>
+        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
+        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
+        <!--            Save changes-->
+        <!--          </b-button>-->
+        <!--        </b-field>-->
       </form>
     </Card>
 
@@ -91,26 +146,52 @@
           <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
         </b-field>
 
-        <b-field class="wit-paddings--xs wiz-border--top">
-          <b-button type="is-primary" class="wit-offset-left--auto wit-block">
-            Save changes
-          </b-button>
-        </b-field>
+        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
+        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
+        <!--            Save changes-->
+        <!--          </b-button>-->
+        <!--        </b-field>-->
       </form>
     </Card>
 
-    <Card class="wit-offset-bottom--sm">
+    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--lg">
+      <b-field>
+        <b-button type="is-primary" class="wit-offset-left--auto wit-block">
+          Save changes
+        </b-button>
+      </b-field>
+    </div>
+
+    <Card class="wit-offset-bottom--sm" type="error">
       <template #title>
-        Profile Deactivation
+        Danger Zone
       </template>
 
-      <b-button v-if="user.isActive" type="is-danger">
-        Deactivate my profile
-      </b-button>
+      <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+        <div class="wit-flex__item--grow">
+          <strong class="wit-block wit-offset-bottom--xs">Hide profile</strong>
+          <p>Hide profile</p>
+        </div>
 
-      <b-button v-else type="is-success">
-        Activate my profile
-      </b-button>
+        <b-button v-if="user.isActive" type="is-warning" class="wit-font-weight--700">
+          Hide
+        </b-button>
+
+        <b-button v-else type="is-success" class="wit-font-weight--700">
+          Unhide
+        </b-button>
+      </div>
+
+      <div class="wit-flex wit-flex--align-center">
+        <div class="wit-flex__item--grow">
+          <strong class="wit-block wit-offset-bottom--xs">Delete profile</strong>
+          <p>Hide profile</p>
+        </div>
+
+        <b-button type="is-danger" class="wit-font-weight--700">
+          Delete
+        </b-button>
+      </div>
     </Card>
 
     <pre>
