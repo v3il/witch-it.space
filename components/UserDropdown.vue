@@ -11,7 +11,7 @@
         <div class="login-page__image-block wit-offset-right--xs wit-flex wit-flex--center">
           <img
             class="wit-user-dropdown__image"
-            src="images/hey.png"
+            :src="`images/${user.avatarId}.png`"
             alt="Hey!"
             width="36px"
             height="36px"

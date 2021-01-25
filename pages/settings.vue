@@ -37,15 +37,23 @@
 
         <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
           <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/hey.png" alt="" height="60px" width="60px" style="border-radius: 50%;">
+            <img src="images/1.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
           </b-button>
 
           <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/hey.png" alt="" height="60px" width="60px" style="border-radius: 50%;">
+            <img src="images/2.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
           </b-button>
 
           <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/hey.png" alt="" height="60px" width="60px" style="border-radius: 50%;">
+            <img src="images/3.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
+          </b-button>
+
+          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
+            <img src="images/4.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
+          </b-button>
+
+          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
+            <img src="images/5.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
           </b-button>
         </b-field>
 
