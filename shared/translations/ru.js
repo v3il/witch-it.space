@@ -99,6 +99,9 @@ export const ru = {
     Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam',
     Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
+    Settings_NotSetWhenOauth: 'Не установлен: авторизация через социальные сети',
+    Settings_NotAvailableWhenOauth: 'Невозможно изменить при авторизации через социальные сети',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10

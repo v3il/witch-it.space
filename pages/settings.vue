@@ -13,28 +13,42 @@
         Profile Settings and Appearance
       </template>
 
-      <div class="wit-flex wit-offset-bottom--xs">
-        <b-field :label="$t('Login_LoginInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
-          <b-input
-            v-model="login"
-            :disabled="!canEditLogin"
-            autocomplete="off"
-            type="text"
-            :placeholder="$t('Login_LoginInputPlaceholder')"
-            custom-class="wit-transition"
-          />
-        </b-field>
+      <b-field class="wit-offset-bottom--sm">
+        <template #label>
+          <p class="wit-offset-bottom--xs">
+            {{ $t('Login_LoginInputTitle') }}
+          </p>
+          <p v-if="!user.hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+            {{ $t('Settings_NotSetWhenOauth') }}
+          </p>
+        </template>
+        <b-input
+          v-model="login"
+          disabled
+          autocomplete="off"
+          type="text"
+          :placeholder="$t('Login_LoginInputPlaceholder')"
+          custom-class="wit-transition"
+        />
+      </b-field>
 
-        <b-field :label="$t('Login_PasswordInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
-          <b-input v-model="password" :disabled="!canEditLogin" type="password" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
-        </b-field>
-      </div>
+      <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--sm">
+        <template #label>
+          <p class="wit-offset-bottom--xs">
+            {{ $t('Login_PasswordInputTitle') }}
+          </p>
+          <p v-if="!user.hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+            {{ $t('Settings_NotAvailableWhenOauth') }}
+          </p>
+        </template>
+        <b-input v-model="password" :disabled="!canEditPassword" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+      </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
         <b-input v-model="displayName" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--none">
         <AvatarPicker v-model="avatarId" />
       </b-field>
     </Card>
@@ -95,15 +109,15 @@
         Steam Settings
       </template>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
         <b-input v-model="steamProfileUrl" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
         <b-input v-model="steamTradeLink" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field class="wit-paddings--xs" :label="$t('Login_PasswordInputTitle1')">
+      <b-field class="wit-offset-bottom--none" :label="$t('Login_PasswordInputTitle1')">
         <b-switch v-model="isGuardProtected">
           {{ isGuardProtected ? 'Yes' : 'No' }}
         </b-switch>
@@ -115,7 +129,7 @@
         Discord Settings
       </template>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+      <b-field :label="$t('Login_PasswordInputTitle1')">
         <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
       </b-field>
     </Card>
@@ -186,8 +200,8 @@ export default {
             User.State.USER
         ]),
 
-        canEditLogin () {
-            return !!this.user.login
+        canEditPassword () {
+            return this.user.hasLocalProfile
         }
     },
 
@@ -215,7 +229,11 @@ export default {
         this.isGuardProtected = this.user.isGuardProtected
         this.avatarId = this.user.avatarId
 
-        console.log(this.user.login)
+        // if (!this.user.isPasswordSet) {
+        //     this.password = this.$t('Settings_NotAvailableInOauth')
+        // }
+        //
+        // console.log(this.user.login)
 
         // console.log(this.$store)
 
