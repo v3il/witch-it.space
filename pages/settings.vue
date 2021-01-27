@@ -3,14 +3,14 @@
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block">
-          Save changes
+          {{ $t('Settings_Save') }}
         </b-button>
       </b-field>
     </div>
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        Profile Settings and Appearance
+        {{ $t('Settings_ProfileSettingsAndAppearance') }}
       </template>
 
       <b-field class="wit-offset-bottom--sm">
@@ -18,7 +18,7 @@
           <p class="wit-offset-bottom--xs">
             {{ $t('Login_LoginInputTitle') }}
           </p>
-          <p v-if="!user.hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+          <p v-if="!hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
             {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
@@ -37,25 +37,25 @@
           <p class="wit-offset-bottom--xs">
             {{ $t('Login_PasswordInputTitle') }}
           </p>
-          <p v-if="!user.hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
-            {{ $t('Settings_NotAvailableWhenOauth') }}
+          <p v-if="!hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+            {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
-        <b-input v-model="password" :disabled="!canEditPassword" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+        <b-input v-model="password" :disabled="!hasLocalProfile" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
+      <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm">
         <b-input v-model="displayName" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--none">
+      <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
         <AvatarPicker v-model="avatarId" />
       </b-field>
     </Card>
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        Social Networks
+        {{ $t('Settings_SocialNetworks') }}
       </template>
 
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
@@ -65,11 +65,11 @@
         </div>
 
         <b-button v-if="user.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700">
-          Disconnect
+          {{ $t('Settings_Disconnect') }}
         </b-button>
 
         <b-button v-else type="is-success is-light" class="wit-font-weight--700">
-          Connect
+          {{ $t('Settings_Connect') }}
         </b-button>
       </div>
 
@@ -80,11 +80,11 @@
         </div>
 
         <b-button v-if="user.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700">
-          Disconnect
+          {{ $t('Settings_Disconnect') }}
         </b-button>
 
         <b-button v-else type="is-success is-light" class="wit-font-weight--700">
-          Connect
+          {{ $t('Settings_Connect') }}
         </b-button>
       </div>
 
@@ -95,11 +95,11 @@
         </div>
 
         <b-button v-if="user.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700">
-          Disconnect
+          {{ $t('Settings_Disconnect') }}
         </b-button>
 
         <b-button v-else type="is-success is-light" class="wit-font-weight--700">
-          Connect
+          {{ $t('Settings_Connect') }}
         </b-button>
       </div>
     </Card>
@@ -200,7 +200,7 @@ export default {
             User.State.USER
         ]),
 
-        canEditPassword () {
+        hasLocalProfile () {
             return this.user.hasLocalProfile
         }
     },

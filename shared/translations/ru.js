@@ -100,7 +100,13 @@ export const ru = {
     Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
     Settings_NotSetWhenOauth: 'Не установлен: авторизация через социальные сети',
-    Settings_NotAvailableWhenOauth: 'Невозможно изменить при авторизации через социальные сети',
+    Settings_ProfileSettingsAndAppearance: 'Настройки профиля и внешний вид',
+    Settings_DisplayName: 'Отображаемое имя',
+    Settings_ProfileAvatar: 'Аватар профиля',
+    Settings_Save: 'Сохранить',
+    Settings_SocialNetworks: 'Социальные сети',
+    Settings_Connect: 'Подключить',
+    Settings_Disconnect: 'Отключить',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
