@@ -107,6 +107,8 @@ export const ru = {
     Settings_SocialNetworks: 'Социальные сети',
     Settings_Connect: 'Подключить',
     Settings_Disconnect: 'Отключить',
+    Settings_ProfileIsConnected: 'Профиль подключен',
+    Settings_ProfileIsNotConnected: 'Профиль не подключен',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

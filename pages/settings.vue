@@ -61,7 +61,12 @@
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">Steam</strong>
-          <p>Hide profile</p>
+          <p v-if="user.isSteamConnected" class="wit-color--success">
+            {{ $t('Settings_ProfileIsConnected') }}
+          </p>
+          <p v-else class="wit-color--warning">
+            {{ $t('Settings_ProfileIsNotConnected') }}
+          </p>
         </div>
 
         <b-button v-if="user.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700">
@@ -76,7 +81,12 @@
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">Discord</strong>
-          <p>Hide profile</p>
+          <p v-if="user.isDiscordConnected" class="wit-color--success">
+            {{ $t('Settings_ProfileIsConnected') }}
+          </p>
+          <p v-else class="wit-color--warning">
+            {{ $t('Settings_ProfileIsNotConnected') }}
+          </p>
         </div>
 
         <b-button v-if="user.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700">
@@ -91,7 +101,12 @@
       <div class="wit-flex wit-flex--align-center">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">Google</strong>
-          <p>Hide profile</p>
+          <p v-if="user.isGoogleConnected" class="wit-color--success">
+            {{ $t('Settings_ProfileIsConnected') }}
+          </p>
+          <p v-else class="wit-color--warning">
+            {{ $t('Settings_ProfileIsNotConnected') }}
+          </p>
         </div>
 
         <b-button v-if="user.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700">
@@ -137,7 +152,7 @@
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--lg">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block">
-          Save changes
+          {{ $t('Settings_Save') }}
         </b-button>
       </b-field>
     </div>
