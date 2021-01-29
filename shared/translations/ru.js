@@ -53,6 +53,9 @@ export const ru = {
     Settings: 'Настройки',
     Yes: 'Да',
     No: 'Нет',
+    Hide: 'Скрыть',
+    Unhide: 'Показать',
+    Delete: 'Удалить',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -103,6 +106,7 @@ export const ru = {
     Settings_NotSetWhenOauth: 'Не установлен: авторизация через социальные сети',
     Settings_ProfileSettingsAndAppearance: 'Настройки профиля и внешний вид',
     Settings_DisplayName: 'Отображаемое имя',
+    Settings_DisplayNamePlaceholder: 'Введите отображаемое имя профиля',
     Settings_ProfileAvatar: 'Аватар профиля',
     Settings_Save: 'Сохранить',
     Settings_SocialNetworks: 'Социальные сети',
@@ -119,6 +123,12 @@ export const ru = {
     Settings_DiscordSettings: 'Данные профиля Discord',
     Settings_DiscordName: 'Имя профиля Discord',
     Settings_DiscordNamePlaceholder: 'XXXX#1234',
+    Settings_DangerZone: 'Опасная зона',
+    Settings_HideProfile: 'Скрытие профиля',
+    Settings_ProfileIsHidden: 'Профиль скрыт',
+    Settings_ProfileIsVisible: 'Профиль видимый',
+    Settings_DeleteProfile: 'Удаление профиля',
+    Settings_DeleteProfileHint: 'Это действие невозможно отменить',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

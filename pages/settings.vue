@@ -45,7 +45,7 @@
       </b-field>
 
       <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm">
-        <b-input v-model="displayName" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+        <b-input v-model="displayName" :placeholder="$t('Settings_DisplayNamePlaceholder')" custom-class="wit-transition" />
       </b-field>
 
       <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
@@ -159,39 +159,42 @@
 
     <Card class="wit-offset-bottom--sm" type="error">
       <template #title>
-        Danger Zone
+        {{ $t('Settings_DangerZone') }}
       </template>
 
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
-          <strong class="wit-block wit-offset-bottom--xs">Hide profile</strong>
-          <p>Hide profile</p>
+          <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</strong>
+          <p v-if="user.isActive" class="wit-color--success">
+            {{ $t('Settings_ProfileIsVisible') }}
+          </p>
+          <p v-else class="wit-color--warning">
+            {{ $t('Settings_ProfileIsHidden') }}
+          </p>
         </div>
 
         <b-button v-if="user.isActive" type="is-warning" class="wit-font-weight--700">
-          Hide
+          {{ $t('Hide') }}
         </b-button>
 
         <b-button v-else type="is-success" class="wit-font-weight--700">
-          Unhide
+          {{ $t('Unhide') }}
         </b-button>
       </div>
 
       <div class="wit-flex wit-flex--align-center">
         <div class="wit-flex__item--grow">
-          <strong class="wit-block wit-offset-bottom--xs">Delete profile</strong>
-          <p>Hide profile</p>
+          <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_DeleteProfile') }}</strong>
+          <p class="wit-color--danger">
+            {{ $t('Settings_DeleteProfileHint') }}
+          </p>
         </div>
 
         <b-button type="is-danger" class="wit-font-weight--700">
-          Delete
+          {{ $t('Delete') }}
         </b-button>
       </div>
     </Card>
-
-    <pre>
-        {{ user }}
-    </pre>
   </div>
 </template>
 
