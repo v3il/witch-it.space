@@ -121,31 +121,31 @@
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        Steam Settings
+        {{ $t('Settings_SteamSettings') }}
       </template>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamProfileUrl" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      <b-field :label="$t('Settings_SteamAccountURL')" class="wit-offset-bottom--sm">
+        <b-input v-model="steamProfileUrl" :placeholder="$t('Settings_SteamAccountURLPlaceholder')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamTradeLink" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
+        <b-input v-model="steamTradeLink" :placeholder="$t('Settings_SteamTradeURLPlaceholder')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field class="wit-offset-bottom--none" :label="$t('Login_PasswordInputTitle1')">
+      <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
         <b-switch v-model="isGuardProtected">
-          {{ isGuardProtected ? 'Yes' : 'No' }}
+          {{ isGuardProtected ? $t('Yes') : $t('No') }}
         </b-switch>
       </b-field>
     </Card>
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        Discord Settings
+        {{ $t('Settings_DiscordSettings') }}
       </template>
 
-      <b-field :label="$t('Login_PasswordInputTitle1')">
-        <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+      <b-field :label="$t('Settings_DiscordName')">
+        <b-input v-model="discordTag" :placeholder="$t('Settings_DiscordNamePlaceholder')" custom-class="wit-transition" />
       </b-field>
     </Card>
 

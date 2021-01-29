@@ -51,6 +51,8 @@ export const ru = {
     CraftedBy: 'Сделано для комьюнити Witch It от !D',
     Logout: 'Выйти',
     Settings: 'Настройки',
+    Yes: 'Да',
+    No: 'Нет',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -95,7 +97,6 @@ export const ru = {
     Quests_Note: 'Отслеживайте ваши ежедневные и еженедельные квесты, заменяйте их, контролируйте прогресс, получайте награду прямиком через сайт',
     Quests_FinalizationLimit: 'Действуют ограничения Steam/Witch It: получение награды возможно только при запущенной игре',
     Quests_Loading: 'Загрузка...',
-    // Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam. Также это позволит вам входить в ваш Witch It.Zone аккаунт используя авторизацию через Steam',
     Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam',
     Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
@@ -109,6 +110,15 @@ export const ru = {
     Settings_Disconnect: 'Отключить',
     Settings_ProfileIsConnected: 'Профиль подключен',
     Settings_ProfileIsNotConnected: 'Профиль не подключен',
+    Settings_SteamSettings: 'Данные профиля Steam',
+    Settings_SteamAccountURL: 'Ссылка на профиль Steam',
+    Settings_SteamAccountURLPlaceholder: 'https://steamcommunity.com/id/XXXXX',
+    Settings_SteamTradeURL: 'Ссылка на обмен Steam',
+    Settings_SteamTradeURLPlaceholder: 'https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX',
+    Settings_IsGuardProtected: 'Профиль защищен Steam Guard',
+    Settings_DiscordSettings: 'Данные профиля Discord',
+    Settings_DiscordName: 'Имя профиля Discord',
+    Settings_DiscordNamePlaceholder: 'XXXX#1234',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
