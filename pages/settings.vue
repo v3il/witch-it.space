@@ -223,22 +223,18 @@ export default {
         }
     },
 
-    data () {
-        return {
-            login: '',
-            password: '',
-            discordTag: '',
-            displayName: '',
-            steamProfileUrl: '',
-            steamTradeLink: '',
-            isGuardProtected: true,
-            avatarId: 1
-        }
-    },
+    data: () => ({
+        login: '',
+        password: '',
+        discordTag: '',
+        displayName: '',
+        steamProfileUrl: '',
+        steamTradeLink: '',
+        isGuardProtected: true,
+        avatarId: 1
+    }),
 
     created () {
-        // this.user = this.$store.state.user
-
         this.login = this.user.login
         this.discordTag = this.user.discordTag
         this.displayName = this.user.displayName
@@ -246,20 +242,6 @@ export default {
         this.steamTradeLink = this.user.steamTradeLink
         this.isGuardProtected = this.user.isGuardProtected
         this.avatarId = this.user.avatarId
-
-        // if (!this.user.isPasswordSet) {
-        //     this.password = this.$t('Settings_NotAvailableInOauth')
-        // }
-        //
-        // console.log(this.user.login)
-
-        // console.log(this.$store)
-
-        // this.$store.commit('add', 'Test')
-
-        // console.log('Created')
-
-        // console.log()
     },
 
     methods: {
