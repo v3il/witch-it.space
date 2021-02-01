@@ -3,6 +3,7 @@ import { BadRequest } from '@curveball/http-errors'
 import { User } from '../models'
 import { extractUserPublicData, translateText } from '../util'
 import { config } from '../../shared'
+import { updateUserToken } from '../controllers/auth/signInUser'
 
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
@@ -56,10 +57,40 @@ const changeUserTheme = async (request, response) => {
     response.sendStatus(200)
 }
 
+const disconnectSocial = async (request, response) => {
+    const { social } = request.body
+    const { id } = request.user
+    const user = await User.findOne({ where: { id } })
+
+    if (!user) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    }
+
+    const prop = {
+        steam: 'steamId',
+        discord: 'discordId',
+        google: 'googleId'
+    }[social]
+
+    if (!prop) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    await user.update({
+        [prop]: ''
+    })
+
+    updateUserToken({
+        response,
+        user
+    })
+}
+
 const userController = {
     getCurrentUser,
     changeUserLocale,
-    changeUserTheme
+    changeUserTheme,
+    disconnectSocial
 }
 
 export { userController }

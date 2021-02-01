@@ -74,8 +74,7 @@ const authUsingGoogleCallback = async (request, response) => {
 
     signInUser({
         user,
-        response,
-        authType: 'google'
+        response
     })
 }
 
@@ -85,6 +84,7 @@ const googleAuthController = {
         try {
             await authUsingGoogleCallback(request, response)
         } catch (e) {
+            console.log(e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

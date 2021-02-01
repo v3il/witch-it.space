@@ -7,5 +7,6 @@ const userRouter = createAsyncRouter()
 userRouter.get('/', authorized, userController.getCurrentUser)
 userRouter.post('/locale', authorized, userController.changeUserLocale)
 userRouter.post('/theme', authorized, userController.changeUserTheme)
+userRouter.post('/disconnect', authorized, userController.disconnectSocial)
 
 export { userRouter }

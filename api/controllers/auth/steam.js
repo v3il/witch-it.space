@@ -57,8 +57,7 @@ const authUsingSteamCallback = async (request, response) => {
 
     signInUser({
         user,
-        response,
-        authType: 'steam'
+        response
     })
 }
 
@@ -68,7 +67,6 @@ const steamAuthController = {
         try {
             await authUsingSteamCallback(request, response)
         } catch (e) {
-            console.log(e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

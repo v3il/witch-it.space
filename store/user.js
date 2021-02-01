@@ -41,9 +41,13 @@ export const actions = {
                 }
             }, 1000)
 
-            window.$setAuthResult = function ({ isSuccess, error }) {
+            window.$setAuthResult = function ({ isSuccess, error, user }) {
                 authWindow?.close()
                 isSuccess ? resolve() : reject(new Error(error))
+
+                if (user) {
+                    commit(User.Mutations.SET_USER, user)
+                }
             }
         })
     },
@@ -55,6 +59,11 @@ export const actions = {
     [User.Actions.LOGOUT] ({ commit }) {
         return this.$axios.post('/api/auth/logout')
             .then(() => commit(User.Mutations.SET_USER, null))
+    },
+
+    [User.Actions.DISCONNECT_SOCIAL] ({ commit }, social) {
+        return this.$axios.post('/api/user/disconnect', { social })
+            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
     }
 }
 

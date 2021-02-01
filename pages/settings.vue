@@ -1,6 +1,8 @@
 <template>
   <div class="wit-settings">
-    {{ user }}
+    <pre>
+        {{ user }}
+    </pre>
 
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
       <b-field>
@@ -256,15 +258,15 @@ export default {
         },
 
         async connectSocial (socialName) {
-            const propName = {
-                steam: 'isSteamConnected',
-                discord: 'isDiscordConnected',
-                google: 'isGoogleConnected'
-            }[socialName]
+            // const propName = {
+            //     steam: 'isSteamConnected',
+            //     discord: 'isDiscordConnected',
+            //     google: 'isGoogleConnected'
+            // }[socialName]
 
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-                this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
+                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)
@@ -273,9 +275,15 @@ export default {
         },
 
         async disconnectSocial (socialName) {
+            // const propName = {
+            //     steam: 'isSteamConnected',
+            //     discord: 'isDiscordConnected',
+            //     google: 'isGoogleConnected'
+            // }[socialName]
+
             try {
-                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, 'steam')
-                // await this.$store.commit(User.F.Mutations.SET_STEAM_CONNECTED)
+                await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
+                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: false })
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)

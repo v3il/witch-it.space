@@ -33,8 +33,7 @@ const login = async (request, response) => {
 
     signInUser({
         response,
-        user: savedUser,
-        authType: 'local'
+        user: savedUser
     })
 }
 
@@ -71,8 +70,7 @@ const register = async (request, response) => {
 
     signInUser({
         user,
-        response,
-        authType: 'local'
+        response
     })
 }
 

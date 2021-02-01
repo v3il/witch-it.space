@@ -75,8 +75,7 @@ const authUsingDiscordCallback = async (request, response) => {
 
     signInUser({
         user,
-        response,
-        authType: 'discord'
+        response
     })
 }
 
