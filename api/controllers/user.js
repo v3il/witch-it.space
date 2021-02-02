@@ -80,10 +80,7 @@ const disconnectSocial = async (request, response) => {
         [prop]: ''
     })
 
-    updateUserToken({
-        response,
-        user
-    })
+    updateUserToken({ response, user })
 }
 
 const userController = {
