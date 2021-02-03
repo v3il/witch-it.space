@@ -1,12 +1,12 @@
 <template>
   <div class="wit-settings">
     <pre>
-        {{ user }}
+        {{ JSON.stringify(user, null, 4) }}
     </pre>
 
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
       <b-field>
-        <b-button type="is-primary" class="wit-offset-left--auto wit-block">
+        <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
           {{ $t('Settings_Save') }}
         </b-button>
       </b-field>
@@ -155,7 +155,7 @@
 
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--xlg">
       <b-field>
-        <b-button type="is-primary" class="wit-offset-left--auto wit-block">
+        <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
           {{ $t('Settings_Save') }}
         </b-button>
       </b-field>
@@ -253,8 +253,22 @@ export default {
     },
 
     methods: {
-        onSubmit () {
-
+        async updateSettings () {
+            try {
+                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, {
+                    discordTag: this.discordTag,
+                    displayName: this.displayName,
+                    steamProfileUrl: this.steamProfileUrl,
+                    steamTradeLink: this.steamTradeLink,
+                    isGuardProtected: this.isGuardProtected,
+                    avatarId: this.avatarId
+                })
+                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
         },
 
         async connectSocial (socialName) {

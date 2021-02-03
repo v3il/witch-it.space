@@ -64,6 +64,11 @@ export const actions = {
     [User.Actions.DISCONNECT_SOCIAL] ({ commit }, social) {
         return this.$axios.post('/api/user/disconnect', { social })
             .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
+    },
+
+    [User.Actions.UPDATE_SETTINGS] ({ commit }, settings) {
+        return this.$axios.post('/api/user/settings', settings)
+            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
     }
 }
 

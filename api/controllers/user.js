@@ -83,11 +83,42 @@ const disconnectSocial = async (request, response) => {
     updateUserToken({ response, user })
 }
 
+const updateSettings = async (request, response) => {
+    const {
+        password,
+        discordTag,
+        displayName,
+        steamProfileUrl,
+        steamTradeLink,
+        isGuardProtected,
+        avatarId
+    } = request.body
+
+    const { id } = request.user
+    const user = await User.findOne({ where: { id } })
+
+    if (!user) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    }
+
+    await user.update({
+        discordTag,
+        displayName,
+        steamProfileUrl,
+        steamTradeLink,
+        isGuardProtected,
+        avatarId
+    })
+
+    updateUserToken({ response, user })
+}
+
 const userController = {
     getCurrentUser,
     changeUserLocale,
     changeUserTheme,
-    disconnectSocial
+    disconnectSocial,
+    updateSettings
 }
 
 export { userController }
