@@ -255,15 +255,21 @@ export default {
     methods: {
         async updateSettings () {
             try {
-                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, {
+                const data = {
                     discordTag: this.discordTag,
                     displayName: this.displayName,
                     steamProfileUrl: this.steamProfileUrl,
                     steamTradeLink: this.steamTradeLink,
                     isGuardProtected: this.isGuardProtected,
                     avatarId: this.avatarId
-                })
-                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
+                }
+
+                if (this.password.trim().length) {
+                    data.password = this.password
+                }
+
+                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
+                this.$showSuccess(this.$t('Settings_SettingsUpdated'))
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)

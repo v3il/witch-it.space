@@ -18,6 +18,7 @@ export const ru = {
     Error_QuestFinalizationFailed: 'Не удалось получить награду. Проверьте, запущена ли игра',
     Error_LocaleIsNotSupported: 'Не поддерживаемый язык',
     Error_ThemeIsNotSupported: 'Не поддерживаемая тема',
+    Error_WrongDiscordTag: 'Не корректный Discord тег',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',
@@ -131,6 +132,7 @@ export const ru = {
     Settings_DeleteProfileHint: 'Это действие невозможно отменить',
     Settings_AccountConnected: 'Аккаунт подключен',
     Settings_AccountDisconnected: 'Аккаунт отключен',
+    Settings_SettingsUpdated: 'Настройки обновлены',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

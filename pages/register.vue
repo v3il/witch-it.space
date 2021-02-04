@@ -58,6 +58,7 @@
 import Socials from '@/components/auth/Socials'
 import { User } from '@/store'
 import { Routes } from '@/shared'
+import { validateLogin, validatePassword } from '@/shared/validators'
 
 export default {
     year: new Date().getFullYear(),
@@ -74,12 +75,16 @@ export default {
 
     methods: {
         async onSubmit () {
-            if (this.login.length < 4) {
-                return this.$showError(this.$t('Error_LoginIsTooShort'))
+            const loginError = validateLogin(this.login)
+
+            if (loginError) {
+                return this.$showError(this.$t(loginError))
             }
 
-            if (this.password.length < 6) {
-                return this.$showError(this.$t('Error_PasswordIsTooShort'))
+            const passwordError = validatePassword(this.password)
+
+            if (passwordError) {
+                return this.$showError(this.$t(passwordError))
             }
 
             if (this.password !== this.confirmPassword) {
