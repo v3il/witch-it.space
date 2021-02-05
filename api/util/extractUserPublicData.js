@@ -6,6 +6,7 @@ export const extractUserPublicData = (user) => {
 
     return {
         id: user.id,
+        login: user.login,
         discordTag: user.discordTag,
         displayName: user.displayName,
         steamTradeLink: user.steamTradeLink,

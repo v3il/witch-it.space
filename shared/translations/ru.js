@@ -19,6 +19,8 @@ export const ru = {
     Error_LocaleIsNotSupported: 'Не поддерживаемый язык',
     Error_ThemeIsNotSupported: 'Не поддерживаемая тема',
     Error_WrongDiscordTag: 'Не корректный Discord тег',
+    Error_WrongDisplayName: 'Не корректное отображаемое имя',
+    Error_WrongSteamAccountURL: 'Не корректная ссылка профиля Steam',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',
@@ -133,6 +135,8 @@ export const ru = {
     Settings_AccountConnected: 'Аккаунт подключен',
     Settings_AccountDisconnected: 'Аккаунт отключен',
     Settings_SettingsUpdated: 'Настройки обновлены',
+    Settings_PasswordFieldHint: 'Оставьте поле пустым, если не хотите изменять пароль',
+    Settings_DisplayNameFieldHint: 'От 2 до 20 символов',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

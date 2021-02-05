@@ -27,7 +27,7 @@
           </p>
         </template>
         <b-input
-          v-model="login"
+          :value="login"
           disabled
           autocomplete="off"
           type="text"
@@ -36,19 +36,22 @@
         />
       </b-field>
 
-      <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--sm">
+      <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--sm" :message="$t('Register_PasswordInputHelp')">
         <template #label>
           <p class="wit-offset-bottom--xs">
             {{ $t('Login_PasswordInputTitle') }}
           </p>
-          <p v-if="!hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+          <p v-if="hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
+            {{ $t('Settings_PasswordFieldHint') }}
+          </p>
+          <p v-else class="wit-color--warning wit-font-size--xxs">
             {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
         <b-input v-model="password" :disabled="!hasLocalProfile" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
       </b-field>
 
-      <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm">
+      <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm" :message="$t('Settings_DisplayNameFieldHint')">
         <b-input v-model="displayName" :placeholder="$t('Settings_DisplayNamePlaceholder')" custom-class="wit-transition" />
       </b-field>
 
@@ -207,6 +210,8 @@ import { mapState } from 'vuex'
 import Card from '@/components/Card'
 import { User } from '@/store'
 import AvatarPicker from '@/components/settings/AvatarPicker'
+import { validateDiscordTag, validateDisplayName, validatePassword } from '@/shared/validators'
+import { validateSteamAccountURL } from '@/shared/validators/validateSteamAccountURL'
 
 export default {
 
@@ -243,6 +248,8 @@ export default {
     }),
 
     created () {
+        console.log(this.user.login)
+
         this.login = this.user.login
         this.discordTag = this.user.discordTag
         this.displayName = this.user.displayName
@@ -254,6 +261,24 @@ export default {
 
     methods: {
         async updateSettings () {
+            const errors = []
+
+            if (this.password) {
+                errors.push(validatePassword(this.password))
+            }
+
+            errors.push(
+                validateDiscordTag(this.discordTag),
+                validateDisplayName(this.displayName),
+                validateSteamAccountURL(this.steamProfileUrl)
+            )
+
+            const firstError = errors.find(error => error !== null)
+
+            if (firstError) {
+                return this.$showError(this.$t(firstError))
+            }
+
             try {
                 const data = {
                     discordTag: this.discordTag,
@@ -264,7 +289,7 @@ export default {
                     avatarId: this.avatarId
                 }
 
-                if (this.password.trim().length) {
+                if (this.password) {
                     data.password = this.password
                 }
 
