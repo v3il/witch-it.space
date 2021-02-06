@@ -66,11 +66,11 @@
       </template>
 
       <b-field :label="$t('Settings_SteamAccountURL')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamProfileUrl" :placeholder="$t('Settings_SteamAccountURLPlaceholder')" custom-class="wit-transition" />
+        <b-input v-model="steamProfileUrl" placeholder="https://steamcommunity.com/id/XXXXX" custom-class="wit-transition" />
       </b-field>
 
       <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamTradeLink" :placeholder="$t('Settings_SteamTradeURLPlaceholder')" custom-class="wit-transition" />
+        <b-input v-model="steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" />
       </b-field>
 
       <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
@@ -86,7 +86,7 @@
       </template>
 
       <b-field :label="$t('Settings_DiscordName')">
-        <b-input v-model="discordTag" :placeholder="$t('Settings_DiscordNamePlaceholder')" custom-class="wit-transition" />
+        <b-input v-model="discordTag" placeholder="XXXX#1234" custom-class="wit-transition" />
       </b-field>
     </Card>
 
@@ -210,7 +210,7 @@ import { mapState } from 'vuex'
 import Card from '@/components/Card'
 import { User } from '@/store'
 import AvatarPicker from '@/components/settings/AvatarPicker'
-import { validateDiscordTag, validateDisplayName, validatePassword } from '@/shared/validators'
+import { validateDiscordTag, validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import { validateSteamAccountURL } from '@/shared/validators/validateSteamAccountURL'
 
 export default {
@@ -250,11 +250,11 @@ export default {
     created () {
         console.log(this.user.login)
 
-        this.login = this.user.login
-        this.discordTag = this.user.discordTag
-        this.displayName = this.user.displayName
-        this.steamProfileUrl = this.user.steamProfileUrl
-        this.steamTradeLink = this.user.steamTradeLink
+        this.login = this.user.login ?? ''
+        this.discordTag = this.user.discordTag ?? ''
+        this.displayName = this.user.displayName ?? ''
+        this.steamProfileUrl = this.user.steamProfileUrl ?? ''
+        this.steamTradeLink = this.user.steamTradeLink ?? ''
         this.isGuardProtected = this.user.isGuardProtected
         this.avatarId = this.user.avatarId
     },
@@ -270,8 +270,11 @@ export default {
             errors.push(
                 validateDiscordTag(this.discordTag),
                 validateDisplayName(this.displayName),
-                validateSteamAccountURL(this.steamProfileUrl)
+                validateSteamAccountURL(this.steamProfileUrl),
+                validateSteamTradeURL(this.steamTradeLink)
             )
+
+            console.log(errors)
 
             const firstError = errors.find(error => error !== null)
 

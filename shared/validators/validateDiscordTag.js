@@ -1,7 +1,7 @@
 export const validateDiscordTag = (discordTag) => {
     const trimmedTag = discordTag.trim()
 
-    if (!trimmedTag.test(/^.{2,32}#[0-9]{4}$/)) {
+    if (!/^.{2,32}#[0-9]{4}$/.test(trimmedTag)) {
         return 'Error_WrongDiscordTag'
     }
 
