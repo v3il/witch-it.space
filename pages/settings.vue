@@ -4,7 +4,7 @@
         {{ JSON.stringify(user, null, 4) }}
     </pre>
 
-    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
+    <div class="wit-flex wit-flex--justify-end wit-settings__sticky-panel">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
           {{ $t('Settings_Save') }}
@@ -90,7 +90,7 @@
       </b-field>
     </Card>
 
-    <Card class="wit-offset-bottom--sm">
+    <Card class="wit-offset-bottom--xlg">
       <template #title>
         {{ $t('Settings_SocialNetworks') }}
       </template>
@@ -155,14 +155,6 @@
         </b-button>
       </div>
     </Card>
-
-    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--xlg">
-      <b-field>
-        <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
-          {{ $t('Settings_Save') }}
-        </b-button>
-      </b-field>
-    </div>
 
     <Card type="error">
       <template #title>
@@ -335,5 +327,13 @@ export default {
     padding: var(--offset-xxlg) 0;
     max-width: 800px;
     margin: 0 auto;
+}
+
+.wit-settings__sticky-panel {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 2;
+    background: var(--body-bg);
+    padding: var(--offset-sm) 0;
 }
 </style>
