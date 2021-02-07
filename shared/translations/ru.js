@@ -22,6 +22,7 @@ export const ru = {
     Error_WrongDisplayName: 'Не корректное отображаемое имя',
     Error_WrongSteamAccountURL: 'Не корректная ссылка профиля Steam',
     Error_WrongSteamTradeURL: 'Не корректная ссылка обмена Steam',
+    Error_WrongAvatarId: 'Не корректный аватар',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',

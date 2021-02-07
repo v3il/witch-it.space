@@ -1,8 +1,17 @@
 import { BadRequest } from '@curveball/http-errors'
+import { genSalt, hash } from 'bcrypt'
 // eslint-disable-next-line import/named
 import { User } from '../models'
 import { extractUserPublicData, translateText } from '../util'
-import { config } from '../../shared'
+import {
+    config,
+    validateAvatarId,
+    validateDiscordTag,
+    validateDisplayName,
+    validatePassword,
+    validateSteamAccountURL,
+    validateSteamTradeURL
+} from '../../shared'
 import { updateUserToken } from '../controllers/auth/signInUser'
 
 const getCurrentUser = async (request, response) => {
@@ -94,6 +103,26 @@ const updateSettings = async (request, response) => {
         avatarId
     } = request.body
 
+    const errors = []
+
+    if (password) {
+        errors.push(validatePassword(password))
+    }
+
+    errors.push(
+        validateDiscordTag(discordTag),
+        validateDisplayName(displayName),
+        validateSteamAccountURL(steamProfileUrl),
+        validateSteamTradeURL(steamTradeLink),
+        validateAvatarId(avatarId)
+    )
+
+    const firstError = errors.find(error => error !== null)
+
+    if (firstError) {
+        throw new BadRequest(translateText(firstError, request.locale))
+    }
+
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
 
@@ -101,14 +130,21 @@ const updateSettings = async (request, response) => {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
     }
 
-    await user.update({
+    const updateData = {
         discordTag,
         displayName,
         steamProfileUrl,
         steamTradeLink,
-        isGuardProtected,
-        avatarId
-    })
+        avatarId,
+        isGuardProtected: !!isGuardProtected
+    }
+
+    if (password) {
+        const salt = await genSalt(3)
+        updateData.password = await hash(password, salt)
+    }
+
+    await user.update(updateData)
 
     updateUserToken({ response, user })
 }
