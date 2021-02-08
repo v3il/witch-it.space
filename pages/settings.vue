@@ -48,11 +48,18 @@
             {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
-        <b-input v-model="password" :disabled="!hasLocalProfile" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+        <b-input
+          v-model="password"
+          type="password"
+          autocomplete="new-password"
+          :disabled="!hasLocalProfile"
+          :placeholder="$t('Login_PasswordInputPlaceholder')"
+          custom-class="wit-transition"
+        />
       </b-field>
 
       <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm" :message="$t('Settings_DisplayNameFieldHint')">
-        <b-input v-model="displayName" :placeholder="$t('Settings_DisplayNamePlaceholder')" custom-class="wit-transition" />
+        <b-input v-model="displayName" maxlength="20" has-counter :placeholder="$t('Settings_DisplayNamePlaceholder')" custom-class="wit-transition" />
       </b-field>
 
       <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
@@ -204,6 +211,7 @@ import { User } from '@/store'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 import { validateDiscordTag, validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import { validateSteamAccountURL } from '@/shared/validators/validateSteamAccountURL'
+import { Quest } from '@/store/Types'
 
 export default {
 
@@ -286,6 +294,8 @@ export default {
 
                 await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
                 this.$showSuccess(this.$t('Settings_SettingsUpdated'))
+
+                this.password = ''
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)
@@ -304,15 +314,23 @@ export default {
             }
         },
 
-        async disconnectSocial (socialName) {
-            try {
-                await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-                this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-            } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
+        disconnectSocial (socialName) {
+            this.$buefy.dialog.confirm({
+                title: this.$t('Settings_DisconnectSocialTitle'),
+                message: this.$t('Settings_WannaDisconnectSocial'),
+                confirmText: this.$t('Settings_DisconnectSocialConfirmButtonTitle'),
+                cancelText: this.$t('Quests_CancelButtonTitle'),
+                onConfirm: async () => {
+                    try {
+                        await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
+                        this.$showSuccess(this.$t('Settings_AccountDisconnected'))
+                    } catch (error) {
+                        if (error) {
+                            this.$showError(error.message)
+                        }
+                    }
                 }
-            }
+            })
         }
     }
 }

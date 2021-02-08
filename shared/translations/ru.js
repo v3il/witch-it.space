@@ -116,7 +116,7 @@ export const ru = {
     Settings_Save: 'Сохранить',
     Settings_SocialNetworks: 'Социальные сети',
     Settings_Connect: 'Подключить',
-    Settings_Disconnect: 'Отключить',
+    Settings_Disconnect: 'Отвязать',
     Settings_ProfileIsConnected: 'Профиль подключен',
     Settings_ProfileIsNotConnected: 'Профиль не подключен',
     Settings_SteamSettings: 'Данные профиля Steam',
@@ -136,6 +136,9 @@ export const ru = {
     Settings_SettingsUpdated: 'Настройки обновлены',
     Settings_PasswordFieldHint: 'Оставьте поле пустым, если не хотите изменять пароль',
     Settings_DisplayNameFieldHint: 'От 2 до 20 символов',
+    Settings_DisconnectSocialTitle: 'Отвязать социальную сеть',
+    Settings_WannaDisconnectSocial: 'Вы действительно хотите отвязать социальную сеть от своего аккаунта?<br>Вы больше не сможете войти в свой профиль используя эту сеть',
+    Settings_DisconnectSocialConfirmButtonTitle: 'Отвязать',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
