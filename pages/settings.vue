@@ -102,6 +102,10 @@
         {{ $t('Settings_SocialNetworks') }}
       </template>
 
+      <template #description>
+        <p>{{ $t('Settings_ConnectSocialDescription') }}</p>
+      </template>
+
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">Steam</strong>

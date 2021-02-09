@@ -108,13 +108,13 @@ export const ru = {
     Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam',
     Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
-    Settings_NotSetWhenOauth: 'Невозможно изменить: авторизация через социальные сети',
+    Settings_NotSetWhenOauth: 'Невозможно изменить: авторизация через сторонний сервис',
     Settings_ProfileSettingsAndAppearance: 'Настройки профиля и внешний вид',
     Settings_DisplayName: 'Отображаемое имя',
     Settings_DisplayNamePlaceholder: 'Введите отображаемое имя профиля',
     Settings_ProfileAvatar: 'Аватар профиля',
     Settings_Save: 'Сохранить',
-    Settings_SocialNetworks: 'Социальные сети',
+    Settings_SocialNetworks: 'Сторонние сервисы',
     Settings_Connect: 'Подключить',
     Settings_Disconnect: 'Отвязать',
     Settings_ProfileIsConnected: 'Профиль подключен',
@@ -136,8 +136,9 @@ export const ru = {
     Settings_SettingsUpdated: 'Настройки обновлены',
     Settings_PasswordFieldHint: 'Оставьте поле пустым, если не хотите изменять пароль',
     Settings_DisplayNameFieldHint: 'От 2 до 20 символов',
-    Settings_DisconnectSocialTitle: 'Отвязать социальную сеть',
-    Settings_WannaDisconnectSocial: 'Вы действительно хотите отвязать социальную сеть от своего аккаунта?<br>Вы больше не сможете войти в свой профиль используя эту сеть',
+    Settings_DisconnectSocialTitle: 'Отвязать сервис',
+    Settings_WannaDisconnectSocial: 'Вы действительно хотите отвязать сторонний сервис от своего аккаунта Witch It.Zone?<br>Вы больше не сможете войти в свой профиль используя этот сервис. Также некоторые функции сайта могут стать недоступными',
+    Settings_ConnectSocialDescription: 'Привязка аккаунта стороннего сервиса к аккаунту Witch It.Zone позволит вам входить на сайт с любого устройства используя аккаунт стороннего сервиса',
     Settings_DisconnectSocialConfirmButtonTitle: 'Отвязать',
 
     Time_NMinutesAgo: (minutes) => {

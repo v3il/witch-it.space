@@ -1,9 +1,12 @@
 <template>
   <div class="wit-card wit-flex" :class="cardClass">
     <div class="wit-card-body">
-      <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600 wit-offset-bottom--sm">
+      <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600" :class="titleOffsetClass">
         <slot name="title" />
       </h4>
+      <div v-if="$slots.description" class="wit-offset-bottom--sm wit-color--muted wit-line-height--sm">
+        <slot name="description" />
+      </div>
       <slot />
     </div>
   </div>
@@ -24,6 +27,13 @@ export default {
     computed: {
         cardClass () {
             return this.type
+        },
+
+        titleOffsetClass () {
+            return {
+                'wit-offset-bottom--xs': this.$slots.description,
+                'wit-offset-bottom--sm': !this.$slots.description
+            }
         }
     }
 }
