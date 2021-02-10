@@ -183,11 +183,11 @@
           </p>
         </div>
 
-        <b-button v-if="isProfileActive" type="is-warning" class="wit-font-weight--700">
+        <b-button v-if="isProfileActive" type="is-warning" class="wit-font-weight--700" @click="toggleProfile">
           {{ $t('Hide') }}
         </b-button>
 
-        <b-button v-else type="is-success" class="wit-font-weight--700">
+        <b-button v-else type="is-success" class="wit-font-weight--700" @click="toggleProfile">
           {{ $t('Unhide') }}
         </b-button>
       </div>
@@ -335,6 +335,49 @@ export default {
                     }
                 }
             })
+        },
+
+        toggleProfile () {
+            this.isProfileActive ? this.makeProfilePrivate() : this.makeProfilePublic()
+        },
+
+        async makeProfilePublic () {
+            try {
+                await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
+                this.$showSuccess(this.$t('Settings_ProfileIsPublic'))
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
+        },
+
+        async makeProfilePrivate () {
+            try {
+                await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
+                this.$showSuccess(this.$t('Settings_ProfileIsPrivate'))
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
+
+            // this.$buefy.dialog.confirm({
+            //     title: this.$t('Settings_DisconnectSocialTitle'),
+            //     message: this.$t('Settings_WannaDisconnectSocial'),
+            //     confirmText: this.$t('Settings_DisconnectSocialConfirmButtonTitle'),
+            //     cancelText: this.$t('Quests_CancelButtonTitle'),
+            //     onConfirm: async () => {
+            //         try {
+            //             await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
+            //             this.$showSuccess(this.$t('Settings_AccountDisconnected'))
+            //         } catch (error) {
+            //             if (error) {
+            //                 this.$showError(error.message)
+            //             }
+            //         }
+            //     }
+            // })
         }
     }
 }

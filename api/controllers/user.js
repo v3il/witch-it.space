@@ -149,12 +149,29 @@ const updateSettings = async (request, response) => {
     updateUserToken({ response, user })
 }
 
+const toggleProfile = async (request, response) => {
+    const { isActive } = request.body
+    const { id } = request.user
+    const user = await User.findOne({ where: { id } })
+
+    if (!user) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    }
+
+    await user.update({
+        isActive: !!isActive
+    })
+
+    updateUserToken({ response, user })
+}
+
 const userController = {
     getCurrentUser,
     changeUserLocale,
     changeUserTheme,
     disconnectSocial,
-    updateSettings
+    updateSettings,
+    toggleProfile
 }
 
 export { userController }
