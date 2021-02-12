@@ -61,6 +61,8 @@ export const ru = {
     Hide: 'Скрыть',
     Unhide: 'Показать',
     Delete: 'Удалить',
+    Confirm: 'Подтвердить',
+    Cancel: 'Отменить',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -127,8 +129,8 @@ export const ru = {
     Settings_DiscordName: 'Имя профиля Discord',
     Settings_DangerZone: 'Опасная зона',
     Settings_HideProfile: 'Скрытие профиля',
-    Settings_ProfileIsHidden: 'Профиль скрыт',
-    Settings_ProfileIsVisible: 'Профиль видимый',
+    Settings_ProfileIsHidden: 'Профиль приватный',
+    Settings_ProfileIsVisible: 'Профиль публичный',
     Settings_DeleteProfile: 'Удаление профиля',
     Settings_DeleteProfileHint: 'Это действие невозможно отменить',
     Settings_AccountConnected: 'Аккаунт подключен',
@@ -144,6 +146,9 @@ export const ru = {
     Settings_ProfileIsPrivate: 'Профиль скрыт',
     Settings_MakePrivate: 'Сделать приватным',
     Settings_MakePublic: 'Сделать публичным',
+    Settings_MakePrivatePopupTitle: 'Сделать профиль приватным',
+    Settings_WannaMakePrivate: 'Вы действительно хотите сделать ваш профиль приватным?<br>Ваш маркет и список желаний не будут доступными для других пользователей',
+    Settings_MakePrivateConfirmButtonTitle: 'Подтвердить',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

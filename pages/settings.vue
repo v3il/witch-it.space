@@ -352,32 +352,23 @@ export default {
             }
         },
 
-        async makeProfilePrivate () {
-            try {
-                await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
-                this.$showSuccess(this.$t('Settings_ProfileIsPrivate'))
-            } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
+        makeProfilePrivate () {
+            this.$buefy.dialog.confirm({
+                title: this.$t('Settings_MakePrivatePopupTitle'),
+                message: this.$t('Settings_WannaMakePrivate'),
+                confirmText: this.$t('Confirm'),
+                cancelText: this.$t('Cancel'),
+                onConfirm: async () => {
+                    try {
+                        await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
+                        this.$showSuccess(this.$t('Settings_ProfileIsPrivate'))
+                    } catch (error) {
+                        if (error) {
+                            this.$showError(error.message)
+                        }
+                    }
                 }
-            }
-
-            // this.$buefy.dialog.confirm({
-            //     title: this.$t('Settings_DisconnectSocialTitle'),
-            //     message: this.$t('Settings_WannaDisconnectSocial'),
-            //     confirmText: this.$t('Settings_DisconnectSocialConfirmButtonTitle'),
-            //     cancelText: this.$t('Quests_CancelButtonTitle'),
-            //     onConfirm: async () => {
-            //         try {
-            //             await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-            //             this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-            //         } catch (error) {
-            //             if (error) {
-            //                 this.$showError(error.message)
-            //             }
-            //         }
-            //     }
-            // })
+            })
         }
     }
 }
