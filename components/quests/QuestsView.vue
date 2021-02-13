@@ -138,8 +138,8 @@ export default {
             this.$buefy.dialog.confirm({
                 title: this.$t('Quests_ReplaceQuestTitle'),
                 message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
-                confirmText: this.$t('Quests_ReplaceQuestConfirmButtonTitle'),
-                cancelText: this.$t('Quests_CancelButtonTitle'),
+                confirmText: this.$t('Confirm'),
+                cancelText: this.$t('Cancel'),
                 onConfirm: async () => {
                     const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
 

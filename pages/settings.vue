@@ -184,11 +184,11 @@
         </div>
 
         <b-button v-if="isProfilePublic" type="is-warning" class="wit-font-weight--700" @click="toggleProfile">
-          {{ $t('Settings_MakePrivate') }}
+          {{ $t('Change') }}
         </b-button>
 
         <b-button v-else type="is-success" class="wit-font-weight--700" @click="toggleProfile">
-          {{ $t('Settings_MakePublic') }}
+          {{ $t('Change') }}
         </b-button>
       </div>
 
@@ -322,8 +322,8 @@ export default {
             this.$buefy.dialog.confirm({
                 title: this.$t('Settings_DisconnectSocialTitle'),
                 message: this.$t('Settings_WannaDisconnectSocial'),
-                confirmText: this.$t('Settings_DisconnectSocialConfirmButtonTitle'),
-                cancelText: this.$t('Quests_CancelButtonTitle'),
+                confirmText: this.$t('Confirm'),
+                cancelText: this.$t('Cancel'),
                 onConfirm: async () => {
                     try {
                         await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
@@ -344,7 +344,7 @@ export default {
         async makeProfilePublic () {
             try {
                 await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
-                this.$showSuccess(this.$t('Settings_ProfileIsPublic'))
+                this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)
@@ -361,7 +361,7 @@ export default {
                 onConfirm: async () => {
                     try {
                         await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
-                        this.$showSuccess(this.$t('Settings_ProfileIsPrivate'))
+                        this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
                     } catch (error) {
                         if (error) {
                             this.$showError(error.message)

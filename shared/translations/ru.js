@@ -63,6 +63,7 @@ export const ru = {
     Delete: 'Удалить',
     Confirm: 'Подтвердить',
     Cancel: 'Отменить',
+    Change: 'Изменить',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -149,6 +150,7 @@ export const ru = {
     Settings_MakePrivatePopupTitle: 'Сделать профиль приватным',
     Settings_WannaMakePrivate: 'Вы действительно хотите сделать ваш профиль приватным?<br>Ваш маркет и список желаний не будут доступными для других пользователей',
     Settings_MakePrivateConfirmButtonTitle: 'Подтвердить',
+    Settings_ProfileVisibilityChanged: 'Видимость профиля изменена',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
