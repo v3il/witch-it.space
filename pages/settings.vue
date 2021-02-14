@@ -216,6 +216,7 @@ import AvatarPicker from '@/components/settings/AvatarPicker'
 import { validateDiscordTag, validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import { validateSteamAccountURL } from '@/shared/validators/validateSteamAccountURL'
 import { Quest } from '@/store/Types'
+import { showPopup } from '@/utils'
 
 export default {
 
@@ -319,7 +320,7 @@ export default {
         },
 
         disconnectSocial (socialName) {
-            this.$buefy.dialog.confirm({
+            showPopup(this, {
                 title: this.$t('Settings_DisconnectSocialTitle'),
                 message: this.$t('Settings_WannaDisconnectSocial'),
                 confirmText: this.$t('Confirm'),
@@ -353,7 +354,7 @@ export default {
         },
 
         makeProfilePrivate () {
-            this.$buefy.dialog.confirm({
+            showPopup(this, {
                 title: this.$t('Settings_MakePrivatePopupTitle'),
                 message: this.$t('Settings_WannaMakePrivate'),
                 confirmText: this.$t('Confirm'),

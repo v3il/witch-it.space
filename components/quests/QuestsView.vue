@@ -70,6 +70,7 @@ import { Quest } from '@/store/Types'
 import Card from '@/components/Card'
 import EmptyState from '@/components/quests/EmptyState'
 import Loader from '@/components/quests/Loader'
+import { showPopup } from '@/utils'
 
 export default {
     name: 'QuestsView',
@@ -135,7 +136,7 @@ export default {
         replaceQuest (quest) {
             const questTask = this.$t(`Quests_${quest.questTask}`)
 
-            this.$buefy.dialog.confirm({
+            showPopup(this, {
                 title: this.$t('Quests_ReplaceQuestTitle'),
                 message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
                 confirmText: this.$t('Confirm'),
@@ -155,7 +156,7 @@ export default {
         finalizeQuest (quest) {
             const questTask = this.$t(`Quests_${quest.questTask}`)
 
-            this.$buefy.dialog.confirm({
+            showPopup(this, {
                 title: this.$t('Quests_FinalizeQuestTitle'),
                 message: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_FinalizeQuestNote')}`,
                 confirmText: this.$t('Quests_FinalizeQuestConfirmButtonTitle'),
