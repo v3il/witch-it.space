@@ -1,9 +1,5 @@
 <template>
   <div class="wit-settings">
-    <pre>
-        {{ JSON.stringify(user, null, 4) }}
-    </pre>
-
     <div class="wit-flex wit-flex--justify-end wit-settings__sticky-panel">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
@@ -311,6 +307,9 @@ export default {
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
                 this.$showSuccess(this.$t('Settings_AccountConnected'))
+
+                this.discordTag = this.user.discordTag ?? ''
+                this.steamProfileUrl = this.user.steamProfileUrl ?? ''
             } catch (error) {
                 this.$showError(error)
             }
