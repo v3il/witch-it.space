@@ -1,3 +1,7 @@
+import { config } from '../config'
+
+const APP_NAME = config.APP_NAME
+
 export const ru = {
     Error_WrongOAuth2Token: 'Неправильный OAuth2 код',
     Error_AuthFailed: 'При авторизации возникла ошибка',
@@ -28,7 +32,7 @@ export const ru = {
     Success_QuestFinalization: 'Награда за квест получена',
 
     Login_WelcomeBack: 'Добро пожаловать!',
-    Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',
+    Login_SignInToContinue: `Войдите в Ваш ${APP_NAME} аккаунт`,
     Login_LoginInputTitle: 'Логин',
     Login_LoginInputPlaceholder: 'Введите логин',
     Login_PasswordInputTitle: 'Пароль',
@@ -38,7 +42,7 @@ export const ru = {
     Login_SignUpLinkTitle: 'Зарегистрироваться',
 
     Register_FreeRegister: 'Регистрация профиля',
-    Register_GetFreeAccount: 'Создайте аккаунт Witch It.Zone прямо сейчас',
+    Register_GetFreeAccount: `Создайте аккаунт ${APP_NAME} прямо сейчас`,
     Register_RepeatPassword: 'Повторите пароль',
     Register_AlreadyHaveAccount: 'Уже есть аккаунт?',
     Register_SignInLinkTitle: 'Войти',
@@ -140,8 +144,8 @@ export const ru = {
     Settings_PasswordFieldHint: 'Оставьте поле пустым, если не хотите изменять пароль',
     Settings_DisplayNameFieldHint: 'От 2 до 20 символов',
     Settings_DisconnectSocialTitle: 'Отвязать сервис',
-    Settings_WannaDisconnectSocial: 'Вы действительно хотите отвязать сторонний сервис от своего аккаунта Witch It.Zone?<br>Вы больше не сможете войти в свой профиль используя этот сервис. Также некоторые функции сайта могут стать недоступными',
-    Settings_ConnectSocialDescription: 'Привязка аккаунта стороннего сервиса к аккаунту Witch It.Zone позволит вам входить на сайт с любого устройства используя аккаунт стороннего сервиса',
+    Settings_WannaDisconnectSocial: `Вы действительно хотите отвязать сторонний сервис от своего аккаунта ${APP_NAME}?<br>Вы больше не сможете войти в свой профиль используя этот сервис. Также некоторые функции сайта могут стать недоступными`,
+    Settings_ConnectSocialDescription: `Привязка аккаунта стороннего сервиса к аккаунту ${APP_NAME} позволит вам входить на сайт с любого устройства используя аккаунт стороннего сервиса`,
     Settings_DisconnectSocialConfirmButtonTitle: 'Отвязать',
     Settings_ProfileIsPublic: 'Профиль активен',
     Settings_ProfileIsPrivate: 'Профиль скрыт',

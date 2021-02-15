@@ -1,6 +1,8 @@
+import { config } from './shared/config'
+
 export default {
     head: {
-        title: 'WitchTrade',
+        title: config.APP_NAME,
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -25,7 +25,6 @@
         <b-input
           :value="login"
           disabled
-          autocomplete="off"
           type="text"
           :placeholder="$t('Login_LoginInputPlaceholder')"
           custom-class="wit-transition"
@@ -47,7 +46,7 @@
         <b-input
           v-model="password"
           type="password"
-          autocomplete="new-password"
+          autocomplete="off"
           :disabled="!hasLocalProfile"
           :placeholder="$t('Login_PasswordInputPlaceholder')"
           custom-class="wit-transition"

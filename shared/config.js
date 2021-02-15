@@ -10,6 +10,8 @@ const config = {
     PORT,
     NODE_ENV,
 
+    APP_NAME: 'Witch It.Space',
+
     SERVER_ORIGIN: isProduction ? '' : 'http://localhost:3000',
 
     DB_HOST: process.env.DB_HOST || 'localhost',
