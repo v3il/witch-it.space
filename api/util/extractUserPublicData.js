@@ -24,3 +24,11 @@ export const extractUserPublicData = (user) => {
         hasLocalProfile: !!user.password
     }
 }
+
+export const extractOtherUsersPublicData = (user) => {
+    return {
+        id: user.id,
+        displayName: user.displayName,
+        avatarId: user.avatarId
+    }
+}

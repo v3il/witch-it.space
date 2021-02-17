@@ -1,11 +1,13 @@
 import { User } from '../models'
-import { extractUserPublicData } from '../util'
+import { extractOtherUsersPublicData } from '../util'
 
 const getProfiles = async (request, response) => {
-    const users = await User.findAll()
-    const mappedUsers = users.map(extractUserPublicData)
-
-    console.log(mappedUsers)
+    const users = await User.findAll({
+        where: {
+            isPublic: true
+        }
+    })
+    const mappedUsers = users.map(extractOtherUsersPublicData)
 
     response.send({ users: mappedUsers })
 }

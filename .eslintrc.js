@@ -19,6 +19,7 @@ module.exports = {
         indent: ['error', 4],
         'no-return-assign': 'off',
         'no-unused-vars': 'off',
-        'prefer-promise-reject-errors': 'off'
+        'prefer-promise-reject-errors': 'off',
+        'import/named': 'off'
     }
 }

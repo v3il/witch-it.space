@@ -1,6 +1,6 @@
 export { generateToken } from './generateToken'
 export { translateText } from './translateText'
-export { extractUserPublicData } from './extractUserPublicData'
+export { extractUserPublicData, extractOtherUsersPublicData } from './extractUserPublicData'
 export { createAsyncRouter } from './createAsyncRouter'
 export { getUserFromCookies } from './getUserFromCookies'
 export { getCurrentTimestamp } from './getCurrentTimestamp'
