@@ -4,7 +4,7 @@
 
 <script>
 export default {
-    name: 'Market',
+    name: 'Index',
 
     created () {
         const path = this.$route.fullPath

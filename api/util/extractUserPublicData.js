@@ -29,6 +29,7 @@ export const extractOtherUsersPublicData = (user) => {
     return {
         id: user.id,
         displayName: user.displayName,
-        avatarId: user.avatarId
+        avatarId: user.avatarId,
+        isGuardProtected: user.isGuardProtected
     }
 }
