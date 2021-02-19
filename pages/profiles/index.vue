@@ -1,8 +1,8 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter />
+    <ProfilesFilter class="wit-offset-bottom--sm" />
 
-    {{ users }}
+    {{ profiles }}
   </div>
 </template>
 
@@ -17,11 +17,11 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        users: []
+        profiles: []
     }),
 
     async created () {
-        this.users = (await this.$axios.get('/api/profiles')).data
+        this.profiles = (await this.$axios.get('/api/profiles')).data.profiles
 
         // console.log(this.$store)
 

@@ -7,9 +7,9 @@ const getProfiles = async (request, response) => {
             isPublic: true
         }
     })
-    const mappedUsers = users.map(extractOtherUsersPublicData)
+    const profiles = users.map(extractOtherUsersPublicData)
 
-    response.send({ users: mappedUsers })
+    response.send({ profiles })
 }
 
 const profilesController = {
