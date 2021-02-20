@@ -2,16 +2,20 @@
   <div class="wis-profiles">
     <ProfilesFilter class="wit-offset-bottom--sm" />
 
-    {{ profiles }}
+    <div>
+      <ProfileView v-for="profile in profiles" :key="profile.id" :profile="profile" />
+    </div>
   </div>
 </template>
 
 <script>
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
+import ProfileView from '@/components/profiles/ProfileView'
 
 export default {
     components: {
-        ProfilesFilter
+        ProfilesFilter,
+        ProfileView
     },
 
     middleware: ['fetchUser'],
