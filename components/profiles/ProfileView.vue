@@ -1,5 +1,17 @@
 <template>
-  <div>{{ profile }}</div>
+  <div class="wit-flex">
+    <img
+      :src="`images/${profile.avatarId}.png`"
+      alt="Hey!"
+      width="60px"
+      height="60px"
+      style="border-radius: 50%;"
+    >
+
+    <div>
+      <p>{{ profile.displayName }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
