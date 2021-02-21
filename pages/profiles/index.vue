@@ -2,8 +2,8 @@
   <div class="wis-profiles">
     <ProfilesFilter class="wit-offset-bottom--sm" />
 
-    <div>
-      <ProfileView v-for="profile in profiles" :key="profile.id" :profile="profile" />
+    <div class="wis-profiles__grid">
+      <ProfileView v-for="profile in profiles" :key="profile.id" :profile="profile" class="wis-profiles__profile" />
     </div>
   </div>
 </template>
@@ -45,7 +45,19 @@ export default {
 <style scoped lang="scss">
 .wis-profiles {
     padding: var(--offset-lg) 0 var(--offset-sm);
-    max-width: 1200px;
+    max-width: 1350px;
     margin: 0 auto;
+}
+
+.wis-profiles__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    column-gap: 16px;
+    row-gap: 16px;
+    justify-items: center;
+}
+
+.wis-profiles__profile {
+    width: 250px;
 }
 </style>
