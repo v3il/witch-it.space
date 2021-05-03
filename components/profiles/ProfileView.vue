@@ -1,32 +1,51 @@
 <template>
-  <div data-v-4b953864="" data-v-e20ef6b4="" class="wis-profile-view wit-paddings--xs wit-background--content wit-position--relative wis-profiles__profile">
-    <div data-v-4b953864="" class="wit-flex">
+  <Card class="wis-profile-view wit-background--content wit-position--relative wis-profiles__profile">
+    <div class="wit-flex">
       <img
         :src="`images/${profile.avatarId}.png`"
         alt="Hey!"
-        width="48px"
-        height="48px"
-        class="wit-offset-right--xs wit-flex--align-self-start im"
-        style=""
-      > <div data-v-4b953864="">
-        <h5 class="text-primary font-size-18 mb-1">
+        class="wit-offset-right--sm wit-flex--align-self-start im"
+      >
+      <div class="wit-offset-right--xs wit-flex__item--grow wit-overflow--hidden">
+        <h5 class="wit-color--primary wit-offset-bottom--xs wit-font-size--xs1 hh">
           {{ profile.displayName }}
         </h5>
-        <p data-v-4b953864="" class="wit-color--muted wit-offset-bottom--xxs">
+        <p class="wit-color--muted1 wit-offset-bottom--xs">
           0 offers
-        </p> <div data-v-4b953864="" class="wit-flex">
-          <div data-v-4b953864="" class="wit-item-image--very-rare co">
-            0
-          </div> <div data-v-4b953864="" class="wit-item-image--whimsical co">
-            0
-          </div>
-        </div>
+        </p>
+        <p class="">
+          Steam Guard
+        </p>
+        <!--        <div class="wit-flex">-->
+        <!--          <b-button-->
+        <!--            type="is-link"-->
+        <!--            class="wit-offset-right&#45;&#45;xs wit-transition&#45;&#45;background wit-flex wit-flex&#45;&#45;center"-->
+        <!--          >-->
+        <!--            <b-icon size="is-small" class="is-size-5" icon="steam" />-->
+        <!--          </b-button>-->
+        <!--        </div>-->
+      </div>
+
+      <div class="wit-flex wit-flex--column">
+        <b-button
+          type="is-link"
+          class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center bb"
+        >
+          <b-icon size="is-small" class="is-size-6" icon="steam" />
+        </b-button>
+
+        <b-button
+          type="is-link"
+          class="wit-transition--background wit-flex wit-flex--center bb"
+        >
+          <b-icon size="is-small" class="is-size-6" icon="discord" />
+        </b-button>
       </div>
     </div>
     <!--      <div data-v-4b953864="" class="wit-background&#45;&#45;primary wit-position&#45;&#45;absolute lock">-->
     <!--      <span data-v-4b953864="" class="icon is-size-6 is-small"><i class="mdi mdi-lock" /></span>-->
     <!--    </div>-->
-  </div>
+  </Card>
 
 <!--  <div class="wis-profile-view wit-paddings&#45;&#45;xs wit-background&#45;&#45;content wit-position&#45;&#45;relative">-->
 <!--    <div class="wit-flex">-->
@@ -64,14 +83,14 @@
 </template>
 
 <script>
-// import Card from '@/components/Card'
+import Card from '@/components/Card'
 
 export default {
     name: 'ProfileView',
 
-    // components: {
-    //     Card
-    // },
+    components: {
+        Card
+    },
 
     props: {
         profile: {
@@ -107,14 +126,27 @@ export default {
 
 .im {
     border-radius: 50%;
-    padding: 0.25rem;
+    padding: 4px;
     background-color: #32394e;
     border: 1px solid #2e3648;
-    box-sizing: content-box;
+    width: 60px;
+    height: 60px;
 }
 
 .mb-1 {
     font-size: 18px !important;
     color: #626ed4 !important;
+}
+
+.bb {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.hh {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

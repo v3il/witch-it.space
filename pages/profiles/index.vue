@@ -49,6 +49,11 @@ export default {
     padding: var(--offset-lg) var(--offset-md) var(--offset-sm);
     //max-width: 1350px;
     //margin: 0 auto;
+
+    @media screen and (max-width: 1024px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .wis-profiles__grid {
@@ -80,6 +85,10 @@ export default {
 
     @media (min-width: 1920px) {
         width: 25%;
+    }
+
+    @media (min-width: 2500px) {
+        width: 20%;
     }
 
     //flex-basis: 350px;
