@@ -3,7 +3,7 @@
     <div class="login-page__container">
       <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
         <header class="login-page__form-header wit-background--primary wit-position--relative">
-          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
+          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit-font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
             {{ $t('Login_WelcomeBack') }}
           </h1>
           <p class="wit-text--center wit-offset-bottom--md wit-color--white-half">
