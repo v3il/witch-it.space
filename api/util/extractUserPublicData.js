@@ -30,6 +30,8 @@ export const extractOtherUsersPublicData = (user) => {
         id: user.id,
         displayName: user.displayName,
         avatarId: user.avatarId,
-        isGuardProtected: user.isGuardProtected
+        isGuardProtected: user.isGuardProtected,
+        steamProfileUrl: user.steamProfileUrl,
+        discordProfileUrl: `https://discord.com/channels/@me/${user.discordId}`
     }
 }

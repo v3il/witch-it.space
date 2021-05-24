@@ -1,5 +1,5 @@
 <template>
-  <Card class="wis-profile-view wit-background--content wit-position--relative wis-profiles__profile">
+  <Card class="wis-profile-view wit-background--content wit-position--relative wis-profiles__profile" @click.native="onClick">
     <div class="wit-flex">
       <img
         :src="`images/${profile.avatarId}.png`"
@@ -21,14 +21,22 @@
       <div class="wit-flex wit-flex--column">
         <b-button
           type="is-link"
+          tag="a"
+          :href="profile.steamProfileUrl"
+          target="_blank"
           class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center bb"
+          data-social-link
         >
           <b-icon size="is-small" class="is-size-6" icon="steam" />
         </b-button>
 
         <b-button
           type="is-link"
+          tag="a"
+          :href="profile.discordProfileUrl"
+          target="_blank"
           class="wit-transition--background wit-flex wit-flex--center bb"
+          data-social-link
         >
           <b-icon size="is-small" class="is-size-6" icon="discord" />
         </b-button>
@@ -52,6 +60,16 @@ export default {
             required: true,
             type: Object
         }
+    },
+
+    methods: {
+        onClick ({ target }) {
+            if (target.closest('[data-social-link]')) {
+                return
+            }
+
+            this.$router.push(`/profiles/${this.profile.id}/market`)
+        }
     }
 }
 </script>
@@ -60,6 +78,7 @@ export default {
 .wis-profile-view {
     border-radius: 8px;
     background-color: #2a3042;
+    cursor: pointer;
 }
 
 .co {
