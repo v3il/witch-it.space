@@ -87,6 +87,12 @@
     line-height: var(--line-height-md);
 }
 
+.wit-text--overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* stylelint-disable */
 
 /*.wit-text--xxlg {*/

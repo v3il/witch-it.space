@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-card wit-flex" :class="cardClass">
+  <div class="wit-card wit-flex" :class="cardClass" @click="onClick">
     <div class="wit-card-body">
       <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600" :class="titleOffsetClass">
         <slot name="title" />
@@ -34,6 +34,12 @@ export default {
                 'wit-offset-bottom--xs': this.$slots.description,
                 'wit-offset-bottom--sm': !this.$slots.description
             }
+        }
+    },
+
+    methods: {
+        onClick ({ target }) {
+            this.$emit('click', target)
         }
     }
 }
