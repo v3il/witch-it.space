@@ -2,7 +2,7 @@
   <Card class="wis-profile-view wit-background--content wit-position--relative wit-cursor--pointer" @click="onProfileClick">
     <div class="wit-flex">
       <img
-        :src="`images/${profile.avatarId}.png`"
+        :src="avatarUrl"
         alt="Avatar"
         class="wit-offset-right--sm wit-flex--align-self-start wis-profile-view__avatar"
       >
@@ -49,6 +49,7 @@
 
 <script>
 import Card from '@/components/Card'
+import { buildAvatarUrl, buildUserMarketUrl } from '@/utils'
 
 export default {
     name: 'ProfileView',
@@ -64,9 +65,15 @@ export default {
         }
     },
 
+    computed: {
+        avatarUrl () {
+            return buildAvatarUrl(this.profile.avatarId)
+        }
+    },
+
     methods: {
         onProfileClick () {
-            this.$router.push(`/profiles/${this.profile.id}/market`)
+            this.$router.push(buildUserMarketUrl(this.profile.id))
         }
     }
 }

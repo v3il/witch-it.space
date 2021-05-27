@@ -11,11 +11,8 @@
         <div class="login-page__image-block wit-offset-right--xs wit-flex wit-flex--center">
           <img
             class="wit-user-dropdown__image"
-            :src="`images/${user.avatarId}.png`"
-            alt="Hey!"
-            width="36px"
-            height="36px"
-            style="border-radius: 50%;"
+            :src="avatarUrl"
+            alt="Avatar"
           >
         </div>
 
@@ -47,6 +44,7 @@
 import { mapState } from 'vuex'
 import { User } from '@/store'
 import { Routes } from '@/shared'
+import { buildAvatarUrl } from '@/utils'
 
 export default {
     name: 'UserDropdown',
@@ -60,6 +58,10 @@ export default {
             return {
                 open: this.isOpen
             }
+        },
+
+        avatarUrl () {
+            return buildAvatarUrl(this.user.avatarId)
         }
     },
 
@@ -101,6 +103,7 @@ export default {
     height: 28px;
     width: 28px;
     max-height: none;
+    border-radius: 50%;
 }
 
 .username {
