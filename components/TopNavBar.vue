@@ -8,7 +8,7 @@
 
     <template v-if="user" #start class="wiz-header__start">
       <b-navbar-item
-        v-for="link in $options.links"
+        v-for="link in links"
         :key="link.to"
         :to="link.to"
         tag="nuxt-link"
@@ -46,18 +46,19 @@ import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { User } from '@/store'
 import UserDropdown from '@/components/UserDropdown'
 import { Routes } from '@/shared'
+import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 // import SettingsLink from '@/components/SettingsLink'
 
 export default {
     name: 'TopNavBar',
 
-    links: [
-        { to: Routes.MAIN, textId: 'MainMenu_MyMarket', icon: '' },
-        { to: Routes.WISHLIST, textId: 'MainMenu_MyWishlist', icon: '' },
-        { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
-        { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
-        { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
-    ],
+    // links: [
+    //     { to: this.um, textId: 'MainMenu_MyMarket', icon: '' },
+    //     { to: buildUserWishlistUrl(this.user.id), textId: 'MainMenu_MyWishlist', icon: '' },
+    //     { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
+    //     { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
+    //     { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
+    // ],
 
     components: {
         ThemeSwitcher,
@@ -72,8 +73,18 @@ export default {
         ]),
 
         activeLink () {
-            return this.$options.links.find(({ to }) => to === this.$route.path)
+            return this.links.find(({ to }) => to === this.$route.path)
         }
+    },
+
+    created () {
+        this.links = [
+            { to: buildUserMarketUrl(this.user.id), textId: 'MainMenu_MyMarket', icon: '' },
+            { to: buildUserWishlistUrl(this.user.id), textId: 'MainMenu_MyWishlist', icon: '' },
+            { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
+            { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
+            { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
+        ]
     },
 
     methods: {
