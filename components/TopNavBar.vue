@@ -28,10 +28,6 @@
         <ThemeSwitcher />
       </b-navbar-item>
 
-      <!--      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings&#45;&#45;none wiz-background&#45;&#45;transparent">-->
-      <!--        <SettingsLink />-->
-      <!--      </b-navbar-item>-->
-
       <b-navbar-item v-if="user" tag="div" class="wit-header__user-dropdown wit-paddings--none wiz-background--transparent">
         <UserDropdown class="wit-offset-left--none" />
       </b-navbar-item>
@@ -47,24 +43,14 @@ import { User } from '@/store'
 import UserDropdown from '@/components/UserDropdown'
 import { Routes } from '@/shared'
 import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-// import SettingsLink from '@/components/SettingsLink'
 
 export default {
     name: 'TopNavBar',
-
-    // links: [
-    //     { to: this.um, textId: 'MainMenu_MyMarket', icon: '' },
-    //     { to: buildUserWishlistUrl(this.user.id), textId: 'MainMenu_MyWishlist', icon: '' },
-    //     { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
-    //     { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
-    //     { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
-    // ],
 
     components: {
         ThemeSwitcher,
         LocaleSwitcher,
         UserDropdown
-        // SettingsLink
     },
 
     computed: {
