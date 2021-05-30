@@ -13,8 +13,10 @@
         <p class="wit-offset-bottom--xs">
           0 offers
         </p>
-        <p>
-          Steam Guard enabled
+        <p class="wit-flex wit-flex--align-center">
+          Steam Guard:
+          <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color--success wit-offset-left--xxs" icon="shield-check" />
+          <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
         </p>
       </div>
 
