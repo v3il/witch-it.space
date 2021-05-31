@@ -175,5 +175,22 @@ export const ru = {
         return `${minutes} ${word} назад`
     },
     Time_LessThanAMinuteAgo: 'менее минуты назад',
-    Time_Never: 'никогда'
+    Time_Never: 'никогда',
+
+    OffersAvailable: (offersCount) => {
+        let word = ''
+        const mod = offersCount % 10
+
+        if (offersCount >= 10 && offersCount <= 19) {
+            word = 'предложений'
+        } else if (mod === 1) {
+            word = 'предложение'
+        } else if (mod >= 2 && mod <= 4) {
+            word = 'предложения'
+        } else {
+            word = 'предложений'
+        }
+
+        return `${offersCount} ${word}`
+    }
 }

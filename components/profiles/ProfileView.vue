@@ -11,7 +11,7 @@
           {{ profile.displayName }}
         </h5>
         <p class="wit-offset-bottom--xs">
-          0 offers
+          {{ $t('OffersAvailable', [profile.offersCount]) }}
         </p>
         <p class="wit-flex wit-flex--align-center">
           Steam Guard:
