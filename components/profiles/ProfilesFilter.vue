@@ -1,10 +1,17 @@
 <template>
-  <div>filters</div>
+  <div>{{ filtersData }}</div>
 </template>
 
 <script>
 export default {
-    name: 'ProfilesFilter'
+    name: 'ProfilesFilter',
+
+    props: {
+        filtersData: {
+            required: true,
+            type: Object
+        }
+    }
 }
 </script>
 

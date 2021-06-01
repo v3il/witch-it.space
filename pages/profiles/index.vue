@@ -1,12 +1,16 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter class="wit-offset-bottom--sm" />
+    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm" />
 
-    <div class="wis-profiles__grid">
-      <div v-for="profile in profiles" :key="profile.id" class="wit-paddings--xs wr">
-        <ProfileView :profile="profile" class="wis-profiles__profile wit-block--full-height" />
+    <Loader v-if="isLoading" />
+
+    <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
+      <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+        <ProfileView :profile="profile" class="wit-block--full-height" />
       </div>
     </div>
+
+    <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
   </div>
 </template>
 
@@ -23,23 +27,38 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        profiles: []
+        profiles: [],
+        isLoading: false,
+
+        filtersData: {
+            query: '',
+            isSteamGuarded: false
+        }
     }),
 
+    computed: {
+        filteredProfiles () {
+            return this.profiles
+        }
+    },
+
     async created () {
-        this.profiles = (await this.$axios.get('/api/profiles')).data.profiles
-
-        // console.log(this.$store)
-
-        // this.$store.commit('add', 'Test')
-
-        // console.log('Created')
-
-        // console.log()
+        await this.loadProfiles()
     },
 
     methods: {
+        async loadProfiles () {
+            this.isLoading = true
 
+            try {
+                const { data } = await this.$axios.get('/api/profiles')
+                this.profiles = data.profiles
+            } catch (e) {
+                this.$showError(e)
+            }
+
+            this.isLoading = false
+        }
     }
 }
 </script>
@@ -47,8 +66,6 @@ export default {
 <style scoped lang="scss">
 .wis-profiles {
     padding: var(--offset-lg) var(--offset-md) var(--offset-sm);
-    //max-width: 1350px;
-    //margin: 0 auto;
 
     @media screen and (max-width: 1024px) {
         padding-left: 0;
@@ -59,17 +76,11 @@ export default {
 .wis-profiles__grid {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -8px;
-    margin-right: -8px;
-    align-items: stretch;
+    margin-left: calc(-1 * var(--offset-xs));
+    margin-right: calc(-1 * var(--offset-xs));
 }
 
-.wis-profiles__profile {
-    //flex-basis: 350px;
-    //margin: 16px;
-}
-
-.wr {
+.wis-profiles__profile-container {
     flex: 0 0 auto;
 
     @media screen and (max-width: 767px) {
@@ -91,7 +102,5 @@ export default {
     @media (min-width: 2500px) {
         width: 20%;
     }
-
-    //flex-basis: 350px;
 }
 </style>

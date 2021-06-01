@@ -30,7 +30,7 @@
           class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
           @click.stop
         >
-          <b-icon size="is-small" class="is-size-6" icon="steam" />
+          <b-icon size="is-small" class="is-size-5" icon="steam" />
         </b-button>
 
         <b-button
@@ -42,7 +42,7 @@
           class="wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
           @click.stop
         >
-          <b-icon size="is-small" class="is-size-6" icon="discord" />
+          <b-icon size="is-small" class="is-size-5" icon="discord" />
         </b-button>
       </div>
     </div>

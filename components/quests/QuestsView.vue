@@ -34,7 +34,7 @@
           />
         </template>
 
-        <EmptyState v-else />
+        <EmptyState v-else :text="$t('Quests_NoQuests')" />
       </Card>
 
       <Card>
@@ -68,8 +68,8 @@ import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
 import Card from '@/components/Card'
-import EmptyState from '@/components/quests/EmptyState'
-import Loader from '@/components/quests/Loader'
+import EmptyState from '@/components/EmptyState'
+import Loader from '@/components/Loader'
 import { showPopup } from '@/utils'
 
 export default {

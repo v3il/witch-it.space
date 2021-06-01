@@ -158,6 +158,8 @@ export const ru = {
     Settings_RemoveProfileTitle: 'Удаление профиля',
     Settings_WannaRemoveProfile: 'Вы действительно хотите удалить ваш профиль?<br>Ваш маркет и список желаний будут безвозвратно удалены',
 
+    Profiles_NoProfiles: 'Нет профилей',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10

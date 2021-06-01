@@ -5,12 +5,19 @@
       size="is-large"
       class="wit-offset-bottom--sm"
     />
-    {{ $t('Quests_NoQuests') }}
+    {{ text }}
   </div>
 </template>
 
 <script>
 export default {
-    name: 'EmptyState'
+    name: 'EmptyState',
+
+    props: {
+        text: {
+            required: true,
+            type: String
+        }
+    }
 }
 </script>
