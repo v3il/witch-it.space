@@ -159,6 +159,8 @@ export const ru = {
     Settings_WannaRemoveProfile: 'Вы действительно хотите удалить ваш профиль?<br>Ваш маркет и список желаний будут безвозвратно удалены',
 
     Profiles_NoProfiles: 'Нет профилей',
+    Profiles_SearchByUsername: 'Поиск пользователя по имени',
+    Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

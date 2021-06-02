@@ -1,6 +1,6 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm" />
+    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm wit-offset-left--auto wit-offset-right--auto" />
 
     <Loader v-if="isLoading" />
 
@@ -65,7 +65,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-profiles {
-    padding: var(--offset-lg) var(--offset-md) var(--offset-sm);
+    padding: var(--offset-md) var(--offset-md) var(--offset-sm);
 
     @media screen and (max-width: 1024px) {
         padding-left: 0;

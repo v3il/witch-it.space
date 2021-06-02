@@ -9,7 +9,7 @@ const getProfiles = async (request, response) => {
         }
     })
 
-    const profiles = [] || users.map(extractOtherUsersPublicData)
+    const profiles = users.map(extractOtherUsersPublicData)
     response.send({ profiles })
 }
 
