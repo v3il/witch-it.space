@@ -1,6 +1,6 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm wit-offset-left--auto wit-offset-right--auto" />
+    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
     <Loader v-if="isLoading" />
 
@@ -38,7 +38,13 @@ export default {
 
     computed: {
         filteredProfiles () {
-            return this.profiles
+            const lowerCasedQuery = this.filtersData.query.toLowerCase()
+            return this.profiles.filter((profile) => {
+                const isFilteredByName = profile.displayName.toLowerCase().includes(lowerCasedQuery)
+                const isFilteredBySteamGuard = this.filtersData.isSteamGuarded ? profile.isGuardProtected : true
+
+                return isFilteredByName && isFilteredBySteamGuard
+            })
         }
     },
 
@@ -58,6 +64,10 @@ export default {
             }
 
             this.isLoading = false
+        },
+
+        onFiltersChange (filtersData) {
+            this.filtersData = filtersData
         }
     }
 }

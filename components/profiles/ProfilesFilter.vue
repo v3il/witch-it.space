@@ -7,13 +7,15 @@
           maxlength="20"
           :placeholder="$t('Profiles_SearchByUsername')"
           custom-class="wit-transition wit-block--full-width"
-          lazy
           :has-counter="false"
+          icon-right="close"
+          icon-right-clickable
           @input="onQueryChange"
+          @icon-right-click="clearQuery"
         />
       </div>
 
-      <b-switch :value="filtersData.query">
+      <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
         {{ $t('Profiles_SteamGuardedOnly') }}
       </b-switch>
     </div>
@@ -32,8 +34,23 @@ export default {
     },
 
     methods: {
-        onQueryChange (value) {
-            console.log(value)
+        onQueryChange (query) {
+            this.updateFilters({ query })
+        },
+
+        onIsSteamGuardedChange (isSteamGuarded) {
+            this.updateFilters({ isSteamGuarded })
+        },
+
+        clearQuery () {
+            this.updateFilters({ query: '' })
+        },
+
+        updateFilters (updatedFilters) {
+            this.$emit('change', {
+                ...this.filtersData,
+                ...updatedFilters
+            })
         }
     }
 }
