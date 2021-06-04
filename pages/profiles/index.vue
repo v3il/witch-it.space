@@ -2,15 +2,17 @@
   <div class="wis-profiles">
     <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
-    <Loader v-if="isLoading" />
+    <div class="wit-padding-top--sm wit-padding-bottom--sm">
+      <Loader v-if="isLoading" />
 
-    <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-      <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-        <ProfileView :profile="profile" class="wit-block--full-height" />
+      <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
+        <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+          <ProfileView :profile="profile" class="wit-block--full-height" />
+        </div>
       </div>
-    </div>
 
-    <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
+      <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
+    </div>
   </div>
 </template>
 
