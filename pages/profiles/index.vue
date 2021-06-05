@@ -1,6 +1,6 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter :filters-data="filtersData" class="wit-offset-bottom--sm wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
+    <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
     <div class="wit-padding-top--sm wit-padding-bottom--sm">
       <Loader v-if="isLoading" />
