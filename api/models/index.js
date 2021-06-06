@@ -1,5 +1,6 @@
 import { initUserModel } from './User'
 import { initQuestModel } from './Quest'
+import { initItemModel } from './Item'
 const { Sequelize, DataTypes } = require('sequelize')
 const { config } = require('../../shared/config')
 const { logger } = require('../logger')
@@ -30,6 +31,7 @@ try {
 
     db.User = initUserModel(sequelize, DataTypes)
     db.Quest = initQuestModel(sequelize, DataTypes)
+    db.Item = initItemModel(sequelize, DataTypes)
 
     db.User.hasMany(db.Quest)
     db.Quest.belongsTo(db.User, { foreignKey: 'userId' })
