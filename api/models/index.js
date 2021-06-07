@@ -51,6 +51,7 @@ try {
 module.exports = {
     User: db.User,
     Quest: db.Quest,
+    Item: db.Item,
     sequelize: db.sequelize,
     Sequelize: db.Sequelize
 }
