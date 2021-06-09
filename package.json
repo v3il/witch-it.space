@@ -12,7 +12,8 @@
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "prepare": "husky install",
     "lint": "yarn lint:js && yarn lint:style",
-    "test": "jest"
+    "test": "jest",
+    "updateItems": "node --experimental-modules --es-module-specifier-resolution=node --inspect .\\api\\scripts\\items\\index.js"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -59,7 +60,6 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^27.0.5",
     "eslint": "^7.32.0",
-    "eslint-config-google": "^0.14.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^8.0.3",
     "husky": "^6.0.0",

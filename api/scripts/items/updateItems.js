@@ -1,4 +1,4 @@
-import { Item } from '../../models/index'
+import { Item, sequelize } from '../../models/index'
 import { capitalizePhrase } from '../../util/capitalizePhrase'
 import { items } from './items'
 
@@ -11,6 +11,8 @@ export const updateItems = async () => {
             console.log(`Item "${item.name}" processing failed: `, e.message)
         }
     }
+
+    await sequelize.close()
 }
 
 async function processItem (item) {
