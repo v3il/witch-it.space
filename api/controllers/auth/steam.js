@@ -1,7 +1,6 @@
 import SteamAuth from 'node-steam-openid'
 import { config, Routes } from '../../../shared'
 import { getUserFromCookies } from '../../util'
-// eslint-disable-next-line
 import { User } from '../../models'
 import { signInUser } from './signInUser'
 

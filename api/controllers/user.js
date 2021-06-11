@@ -1,6 +1,5 @@
 import { BadRequest } from '@curveball/http-errors'
 import { genSalt, hash } from 'bcrypt'
-// eslint-disable-next-line import/named
 import { User } from '../models'
 import { extractUserPublicData, translateText } from '../util'
 import {

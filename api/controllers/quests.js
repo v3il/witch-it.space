@@ -1,5 +1,4 @@
 import { BadRequest, Forbidden } from '@curveball/http-errors'
-// eslint-disable-next-line import/named
 import { User, Quest } from '../models'
 import { witchItApiService, questsService } from '../services'
 import { getCurrentTimestamp, translateText } from '../util'

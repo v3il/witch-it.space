@@ -2,7 +2,6 @@ import { BadRequest } from '@curveball/http-errors'
 import { compare, genSalt, hash } from 'bcrypt'
 import { Op } from 'sequelize'
 import { translateText } from '../../util'
-// eslint-disable-next-line
 import { User } from '../../models'
 import { signInUser } from './signInUser'
 

@@ -8,7 +8,7 @@ export const updateItems = async () => {
             await processItem(item)
             console.log(`Item "${item.name}" successfully processed`)
         } catch (e) {
-            console.log(`Item "${item.name}" processing failed: `, e.message)
+            console.error(`Item "${item.name}" processing failed: `, e.message)
         }
     }
 

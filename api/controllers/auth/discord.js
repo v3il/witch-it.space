@@ -2,7 +2,6 @@ import qs from 'qs'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
 import { getUserFromCookies } from '../../util'
-// eslint-disable-next-line
 import { User } from '../../models'
 import { signInUser } from './signInUser'
 
