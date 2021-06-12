@@ -1,4 +1,5 @@
 export { userController } from './user'
 export { profilesController } from './profiles'
 export { questsController } from './quests'
+export { itemsController } from './items'
 export { discordAuthController, googleAuthController, steamAuthController, localAuthController, logoutController } from './auth'
