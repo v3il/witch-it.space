@@ -66,3 +66,14 @@ export const Quest = StoreWrap.wrap('quest', {
         SET_LOADING: 'setLoading'
     }
 })
+
+export const Items = StoreWrap.wrap('items', {
+    Actions: {
+        FETCH_ITEMS: 'fetchItems'
+    },
+
+    Mutations: {
+        SET_ITEMS: 'setItems',
+        SET_LOADING: 'setLoading'
+    }
+})

@@ -1,20 +1,16 @@
 <template>
   <div>
-    Settings
-
-    <UserView />
+    {{ $store.state.items.items }}
   </div>
 </template>
 
 <script>
-import UserView from '@/components/UserView'
 
 export default {
-
     components: {
-        UserView
     },
-    middleware: ['fetchUser'],
+
+    middleware: ['fetchUser', 'fetchItems'],
 
     data: () => ({
         user: null

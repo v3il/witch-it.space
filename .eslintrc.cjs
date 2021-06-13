@@ -20,6 +20,7 @@ module.exports = {
         'no-return-assign': 'off',
         'no-unused-vars': 'off',
         'prefer-promise-reject-errors': 'off',
-        'import/named': 'off'
+        'import/named': 'off',
+        'vue/multi-word-component-names': 'off',
     }
 }
