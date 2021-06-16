@@ -1,7 +1,7 @@
 <template>
   <div class="wit-position--relative" :class="itemClass">
     <img
-      :src="item.iconUrl || item.previewUrl"
+      :src="item.iconUrl"
       :alt="item.name"
       :title="item.name"
       class="wit-item-image__image"

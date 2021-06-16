@@ -1,21 +1,26 @@
 <template>
-  <div class="wit-flex wit-flex--wrap">
-    <ItemImage
-      v-for="item in $store.state.items.items"
-      :key="item.id"
-      :item="item"
-      :item-count="0"
-      style="margin: 24px; width: 72px; height: 72px;"
-    />
+  <div class="wit-items">
+    <ItemFilters :filters-data="{}" class="wit-offset-bottom--sm" />
+
+    <div class="wit-flex wit-flex--wrap wit-flex--justify-center aaa">
+      <ItemView
+        v-for="item in $store.state.items.items"
+        :key="item.id"
+        :item="item"
+        :item-count="0"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import ItemImage from '@/components/ItemImage'
+import ItemView from '@/components/items/ItemView'
+import ItemFilters from '@/components/items/ItemFilters'
 
 export default {
     components: {
-        ItemImage
+        ItemView,
+        ItemFilters
     },
 
     middleware: ['fetchUser', 'fetchItems'],
@@ -29,14 +34,7 @@ export default {
     },
 
     created () {
-        this.user = this.$store.state.user
-        // console.log(this.$store)
 
-        // this.$store.commit('add', 'Test')
-
-        // console.log('Created')
-
-        // console.log()
     },
 
     methods: {
@@ -44,3 +42,20 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wit-items {
+    padding: var(--offset-md) var(--offset-md) var(--offset-sm);
+
+    @media screen and (max-width: 1024px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.aaa {
+    margin-left: -8px;
+    margin-right: -8px;
+    align-items: stretch;
+}
+</style>

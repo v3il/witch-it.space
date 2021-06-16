@@ -7432,6 +7432,13 @@ launch-editor@^2.2.1:
     chalk "^2.3.0"
     shell-quote "^1.6.1"
 
+lazyload-vue@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/lazyload-vue/-/lazyload-vue-0.1.20.tgz#0553eeb3bae4acf336540ec3bc21a14e1d0019f8"
+  integrity sha512-uFs2EMteNcCQZPUrGYh+RB4kEkabD666eJtfa8xotJebNtz2T8H0K24+XqrF9e+6W4qMesJ7MIU8HvSfIweF6A==
+  dependencies:
+    vanilla-lazyload "^12.0.0"
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/leven/-/leven-3.1.0.tgz"
@@ -12005,6 +12012,16 @@ validator@^13.6.0:
   version "13.6.0"
   resolved "https://registry.npmjs.org/validator/-/validator-13.6.0.tgz"
   integrity sha512-gVgKbdbHgtxpRyR8K0O6oFZPhhB5tT1jeEHZR0Znr9Svg03U0+r9DXWMrnRAB+HtCStDQKlaIZm42tVsVjqtjg==
+
+vanilla-lazyload@^12.0.0:
+  version "12.5.1"
+  resolved "https://registry.yarnpkg.com/vanilla-lazyload/-/vanilla-lazyload-12.5.1.tgz#daba44bd856c9f550909e73f7219577c96b28ec7"
+  integrity sha512-gB986dXslHqkbYMDnwfIlKHl++lLADAEZhI6FNZy7gtVddR+1N69xkOI2vRAJssr6QzmKPCfZu4btEHWjG0pNA==
+
+vanilla-lazyload@^17.5.0:
+  version "17.5.0"
+  resolved "https://registry.yarnpkg.com/vanilla-lazyload/-/vanilla-lazyload-17.5.0.tgz#ca2690fcf0627af3ad13e7fe41e7d0fac58d2a7e"
+  integrity sha512-1d2kjFT2BTrA2ynBBbJ58kIZqtB6TxocAvUFwmzjJ34RqLDlVPy4VmBDuAi6xgv+3LSmP6coKstU2eeRdI+ixw==
 
 vary@^1, vary@^1.1.2, vary@~1.1.2:
   version "1.1.2"
