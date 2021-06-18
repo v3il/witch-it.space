@@ -12,8 +12,6 @@
         />
       </div>
     </div>
-
-    {{ page }}
   </div>
 </template>
 
@@ -92,9 +90,9 @@ export default {
 
     methods: {
         getFiltersFromRoute () {
-            // const { query: params } = this.$route
-            //
-            // this.filtersData.query = params.query ?? ''
+            const { query: params } = this.$route
+
+            this.filters.query = params.query ?? ''
             // this.filtersData.isSteamGuarded = params.isSteamGuarded === 'true'
         },
 
@@ -122,9 +120,13 @@ export default {
     //align-items: stretch;
 
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     grid-column-gap: 8px;
     justify-items: center;
     grid-row-gap: 16px;
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
 }
 </style>

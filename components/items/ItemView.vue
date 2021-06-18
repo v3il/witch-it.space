@@ -5,13 +5,13 @@
         :src="item.previewUrl"
         :alt="item.name"
         :title="item.name"
-        class="wit-item-image__image wit-offset-bottom--xs"
+        class="wit-item-image__image wit-offset-bottom--xxs"
       >
-      <div class="wit-item-image__counter wit-font-size--xxs wit-none--mobile">
+      <div class="wit-item-image__counter wit-font-size--xxs1 wit-none--mobile1">
         x{{ itemCount }}
       </div>
 
-      <p class="wit-text--center wit-offset-bottom--xs wit-paddings--xxs wit-line-height--sm">
+      <p class="wit-text--center wit-offset-bottom--xs ccc wit-line-height--sm">
         {{ item.name }}
       </p>
     </div>
@@ -38,9 +38,9 @@ export default {
     computed: {
         itemClass () {
             return {
-                veryrare: 'wit-item-image--very-rare',
-                whimsical: 'wit-item-image--whimsical'
-            }[this.item.tagRarity]
+                veryrare: 'wit-item--very-rare',
+                whimsical: 'wit-item--whimsical'
+            }[this.item.rarity]
         }
     }
 }
@@ -48,12 +48,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-item-view {
-    max-width: 150px;
-}
-
-.bbbb {
-    border: 2px solid var(--item-whimsical);
-    border-radius: 8px;
+    //max-width: 150px;
 }
 
 .wit-item-image__counter {
@@ -63,33 +58,58 @@ export default {
     color: var(--white);
     padding: var(--offset-xxs);
     border-bottom-left-radius: var(--offset-xxs);
-    background-color: var(--item-whimsical);
+}
+
+.bbbb {
+    border: 2px solid transparent;
+    border-radius: 8px;
+
+    &.wit-item--very-rare {
+        border-color: var(--item-very-rare);
+
+        .wit-item-image__counter {
+            background-color: var(--item-very-rare);
+        }
+    }
+
+    &.wit-item--whimsical {
+        border-color: var(--item-whimsical);
+
+        .wit-item-image__counter {
+            background-color: var(--item-whimsical);
+        }
+    }
+}
+
+.ccc {
+    padding: 0 8px;
 }
 
 .wit-item-image__image {
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
-    border-radius: var(--offset-xxs);
-    border: 2px solid transparent;
+    border-radius: var(--offset-xs);
+    //border: 2px solid transparent;
 }
 
-.wit-item-image--very-rare {
-    .wit-item-image__image {
-        border-color: var(--item-very-rare);
-    }
-
-    .wit-item-image__counter {
-        background-color: var(--item-very-rare);
-    }
-}
-
-.wit-item-image--whimsical {
-    .wit-item-image__image {
-        border-color: var(--item-whimsical);
-    }
-
-    .wit-item-image__counter {
-        background-color: var(--item-whimsical);
-    }
-}
+//.wit-item-image--very-rare {
+//    .wit-item-image__image {
+//        border-color: var(--item-very-rare);
+//    }
+//
+//    .wit-item-image__counter {
+//        background-color: var(--item-very-rare);
+//    }
+//}
+//
+//.wit-item-image--whimsical {
+//    .wit-item-image__image {
+//        border-color: var(--item-whimsical);
+//    }
+//
+//    .wit-item-image__counter {
+//        background-color: var(--item-whimsical);
+//    }
+//}
 </style>
