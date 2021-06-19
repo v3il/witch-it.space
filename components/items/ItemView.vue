@@ -7,7 +7,7 @@
         :title="item.name"
         class="wit-item-image__image wit-offset-bottom--xxs"
       >
-      <div class="wit-item-image__counter wit-font-size--xxs1 wit-none--mobile1">
+      <div v-if="itemCount > 0" class="wit-item-image__counter wit-font-size--xxs1 wit-none--mobile1">
         x{{ itemCount }}
       </div>
 
@@ -39,7 +39,13 @@ export default {
         itemClass () {
             return {
                 veryrare: 'wit-item--very-rare',
-                whimsical: 'wit-item--whimsical'
+                whimsical: 'wit-item--whimsical',
+                rare: 'wit-item--rare',
+                common: 'wit-item--common',
+                uncommon: 'wit-item--uncommon',
+                unlock: 'wit-item--unlock',
+                promo: 'wit-item--promo',
+                eventrarity: 'wit-item--eventrarity'
             }[this.item.rarity]
         }
     }
@@ -58,11 +64,66 @@ export default {
     color: var(--white);
     padding: var(--offset-xxs);
     border-bottom-left-radius: var(--offset-xxs);
+    font-weight: bold;
 }
 
 .bbbb {
     border: 2px solid transparent;
     border-radius: 8px;
+
+    &.wit-item--common {
+        border-color: var(--item-common);
+
+        .wit-item-image__counter {
+            background-color: var(--item-common);
+            color: var(--black);
+        }
+    }
+
+    &.wit-item--uncommon {
+        border-color: var(--item-uncommon);
+
+        .wit-item-image__counter {
+            background-color: var(--item-uncommon);
+            color: var(--black);
+        }
+    }
+
+    &.wit-item--promo {
+        border-color: var(--item-promo);
+
+        .wit-item-image__counter {
+            background-color: var(--item-promo);
+            color: var(--black);
+        }
+    }
+
+    &.wit-item--eventrarity {
+        border-color: var(--item-event);
+
+        .wit-item-image__counter {
+            background-color: var(--item-event);
+            color: var(--black);
+        }
+    }
+
+    &.wit-item--unlock {
+        border-color: var(--item-unlock);
+
+        .wit-item-image__counter {
+            background-color: var(--item-unlock);
+            color: var(--black);
+        }
+    }
+
+    &.wit-item--rare {
+        border-color: var(--item-rare);
+
+        .wit-item-image__counter {
+            background-color: var(--item-rare);
+            color: var(--black);
+        }
+    }
 
     &.wit-item--very-rare {
         border-color: var(--item-very-rare);

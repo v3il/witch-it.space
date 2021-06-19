@@ -8,7 +8,7 @@
           v-for="item in slicedItems"
           :key="item.id"
           :item="item"
-          :item-count="0"
+          :item-count="Math.floor(Math.random() * 10)"
         />
       </div>
     </div>
