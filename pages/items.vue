@@ -17,16 +17,10 @@
 
     <div v-if="selectedItem" style="flex-basis: 450px;" class="sp">
       <div class="iv wit-text--center1 wit-offset-bottom--sm wit-flex">
-        <img
-          :src="itemPreviewURL"
-          :alt="selectedItem.name"
-          :title="selectedItem.name"
-          class="wit-item-image__image wit-offset-right--sm"
-          style="max-width: 100px;"
-        >
+        <ItemView :item="selectedItem" style="max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm" />
 
         <div>
-          <h4 class="wit-offset-bottom--sm">
+          <h4 class="wit-offset-bottom--sm wit-font-size--sm">
             {{ selectedItem.name }}
           </h4>
 

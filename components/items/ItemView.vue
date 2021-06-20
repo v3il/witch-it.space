@@ -5,13 +5,13 @@
         :src="itemPreviewURL"
         :alt="item.name"
         :title="item.name"
-        class="wit-item-image__image wit-offset-bottom--xxs"
+        class="wit-item-image__image wit-block"
       >
       <div v-if="itemCount > 0" class="wit-item-image__counter wit-font-size--xxs1 wit-none--mobile1">
         x{{ itemCount }}
       </div>
 
-      <p class="wit-text--center wit-offset-bottom--xs ccc wit-line-height--sm">
+      <p v-if="isItemShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs ccc wit-line-height--sm">
         {{ item.name }}
       </p>
     </div>
@@ -34,6 +34,11 @@ export default {
             required: false,
             default: Math.floor(Math.random() * 10),
             type: Number
+        },
+
+        isItemShown: {
+            required: false,
+            default: true
         }
     },
 
