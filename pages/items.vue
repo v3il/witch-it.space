@@ -184,6 +184,15 @@ export default {
     position: sticky;
     top: 86px;
     max-height: calc(100vh - 70px);
+
+    //position: absolute;
+    //right: -1000px;
+    //transform: translateX(-1000px);
+    //max-width: calc(100vw - 16px);
+    //height: 100%;
+    //background: #222736;
+    //z-index: 222;
+    //transition: transform 0.3s ease;
 }
 
 .wit-item-image__image {
