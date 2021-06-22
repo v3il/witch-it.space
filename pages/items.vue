@@ -17,35 +17,14 @@
 
     <div v-if="selectedItem" style="flex-basis: 450px;" class="sp">
       <div class="iv wit-text--center1 wit-offset-bottom--sm wit-flex">
-        <ItemView :item="selectedItem" style="max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm" />
+        <ItemView :item="selectedItem" style="max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink" />
 
         <div>
           <h4 class="wit-offset-bottom--sm wit-font-size--sm">
             {{ selectedItem.name }}
           </h4>
 
-          <b-taglist>
-            <b-tag type="is-primary">
-              Primary
-            </b-tag>
-            <b-tag type="is-primary is-light">
-              Light primary
-            </b-tag>
-
-            <b-tag type="is-success">
-              Success
-            </b-tag>
-            <b-tag type="is-success is-light">
-              Light success
-            </b-tag>
-
-            <b-tag type="is-danger">
-              Danger
-            </b-tag>
-            <b-tag type="is-danger is-light">
-              Light danger
-            </b-tag>
-          </b-taglist>
+          <ItemTags :item="selectedItem" />
         </div>
 
         <!--        <p v-else>-->
@@ -60,11 +39,13 @@
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildItemUrl } from '@/utils'
+import ItemTags from '@/components/items/ItemTags'
 
 export default {
     components: {
         ItemView,
-        ItemFilters
+        ItemFilters,
+        ItemTags
     },
 
     middleware: ['fetchUser', 'fetchItems'],
@@ -179,7 +160,7 @@ export default {
 }
 
 .sp {
-    padding: 0 16px;
+    padding: 0 24px;
     flex-basis: 300px;
     position: sticky;
     top: 86px;
