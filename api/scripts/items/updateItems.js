@@ -33,7 +33,6 @@ async function processItem (item) {
         name: item.name,
         description: item.description ? capitalizePhrase(item.description) : null,
         createdTimestamp: Math.floor(Date.parse(item.dateCreated) / 1000),
-        previewUrl: item.iconUrl,
         quality: item.itemQuality,
         rarity: item.tagRarity,
         character: item.tagCharacter,

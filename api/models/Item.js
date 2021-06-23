@@ -10,7 +10,6 @@ const initItemModel = (sequelize, DataTypes) => {
             name: DataTypes.STRING,
             description: DataTypes.STRING,
             createdTimestamp: DataTypes.INTEGER,
-            previewUrl: DataTypes.STRING,
             quality: DataTypes.INTEGER,
             rarity: DataTypes.STRING,
             character: DataTypes.STRING,
