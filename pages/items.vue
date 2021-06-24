@@ -163,8 +163,8 @@ export default {
     padding: 0 24px;
     flex-basis: 300px;
     position: sticky;
-    top: 86px;
-    max-height: calc(100vh - 70px);
+    top: 94px;
+    max-height: calc(100vh - 94px);
 
     //position: absolute;
     //right: -1000px;
