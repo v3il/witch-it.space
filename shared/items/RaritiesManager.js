@@ -1,13 +1,13 @@
 export class RaritiesManager {
     #rarities = [
-        { value: 'veryrare', label: 'Very rare' },
         { value: 'whimsical', label: 'Whimsical' },
+        { value: 'veryrare', label: 'Very rare' },
         { value: 'rare', label: 'Rare' },
-        { value: 'common', label: 'Common' },
         { value: 'uncommon', label: 'Uncommon' },
+        { value: 'common', label: 'Common' },
         { value: 'unlock', label: 'Unlock' },
-        { value: 'promo', label: 'Promo' },
-        { value: 'eventrarity', label: 'Event' }
+        { value: 'eventrarity', label: 'Event' },
+        { value: 'promo', label: 'Promo' }
     ]
 
     find (value) {

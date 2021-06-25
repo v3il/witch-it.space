@@ -19,8 +19,6 @@
         :value="filtersData.rarities"
         multiple
         aria-role="list"
-        scrollable
-        :max-height="250"
         @input="onRaritiesChange"
       >
         <template #trigger>
@@ -28,12 +26,21 @@
             type="is-primary"
             icon-right="menu-down"
           >
-            {{ filtersData.rarities }}
+            <div v-if="filtersData.rarities.length" class="wit-flex">
+              <div v-for="rarity in filtersData.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right--xxs" :class="`wit-rarity-indicator--${rarity}`" />
+            </div>
+
+            <span v-else>
+              All rarities
+            </span>
           </b-button>
         </template>
 
         <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">
-          <span>{{ rarity.label }}</span>
+          <div class="wit-flex wit-flex--align-center">
+            <div class="wit-rarity-indicator wit-offset-right--xs" :class="`wit-rarity-indicator--${rarity.value}`" />
+            <span>{{ rarity.label }}</span>
+          </div>
         </b-dropdown-item>
       </b-dropdown>
 
@@ -151,6 +158,22 @@ export default {
 <style scoped lang="scss">
 .wit-profiles-filter {
     //max-width: 800px;
+}
+
+.wit-rarity-indicator {
+    display: block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+
+    &--whimsical { background-color: var(--item-whimsical); }
+    &--veryrare { background-color: var(--item-very-rare); }
+    &--rare { background-color: var(--item-rare); }
+    &--uncommon { background-color: var(--item-uncommon); }
+    &--common { background-color: var(--item-common); }
+    &--unlock { background-color: var(--item-unlock); }
+    &--promo { background-color: var(--item-promo); }
+    &--eventrarity { background-color: var(--item-event); }
 }
 
 .wit-profiles-filter__input-container {
