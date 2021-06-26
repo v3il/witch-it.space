@@ -31,7 +31,7 @@ export default {
             ]
 
             if (eventTag) {
-                tags.push(eventTag)
+                tags.push(eventTag.label)
             }
 
             if (characterTag) {
@@ -56,7 +56,7 @@ export default {
         },
 
         getEventTag () {
-            return eventsManager.find(this.item.event).label
+            return eventsManager.find(this.item.event)
         },
 
         getCharacterTag () {
