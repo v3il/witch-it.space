@@ -147,10 +147,14 @@ export default {
             const { query: params } = this.$route
             const filters = {}
 
+            const slots = Array.isArray(params.slots) ? params.slots : params.slots ? [params.slots] : DEFAULT_FILTERS.slots
+            const rarities = Array.isArray(params.rarities) ? params.rarities : params.rarities ? [params.rarities] : DEFAULT_FILTERS.rarities
+            const events = Array.isArray(params.events) ? params.events : params.events ? [params.events] : DEFAULT_FILTERS.events
+
             filters.query = params.query ?? DEFAULT_FILTERS.query
-            filters.rarities = params.rarities ?? DEFAULT_FILTERS.rarities
-            filters.slots = params.slots ?? DEFAULT_FILTERS.slots
-            filters.events = params.events ?? DEFAULT_FILTERS.events
+            filters.rarities = rarities
+            filters.slots = slots
+            filters.events = events
             filters.isOnlyTradeable = params.isOnlyTradeable === 'true' ?? DEFAULT_FILTERS.isOnlyTradeable
             filters.isOnlyOwned = params.isOnlyOwned === 'true' ?? DEFAULT_FILTERS.isOnlyOwned
 

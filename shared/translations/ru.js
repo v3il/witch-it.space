@@ -162,6 +162,16 @@ export const ru = {
     Profiles_SearchByUsername: 'Поиск пользователя по имени',
     Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
 
+    Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
+    Items_Filters_AnyRarity: 'Любая редкость',
+    Items_Filters_Rarity: 'Редкость',
+    Items_Filters_EventsSelected: 'Событий выбрано: %s',
+    Items_Filters_AnyEvent: 'Любое событие',
+    Items_Filters_SlotsSelected: 'Слотов выбрано: %s',
+    Items_Filters_AnySlot: 'Любой слот',
+    Items_Filters_OnlyTradeable: 'Только обмениваемые',
+    Items_Filters_OnlyOwned: 'Только имеющиеся',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10

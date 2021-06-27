@@ -5,7 +5,7 @@
         <b-input
           :value="filtersData.query"
           maxlength="20"
-          :placeholder="$t('Profiles_SearchByUsername')"
+          :placeholder="$t('Items_Filters_SearchPlaceholder')"
           custom-class="wit-transition wit-block--full-width"
           :has-counter="false"
           icon-right="close"
@@ -31,13 +31,13 @@
               >
                 <div v-if="filtersData.rarities.length" class="wit-flex wit-flex--align-center">
                   <p class="wit-offset-right--xs wit-font-size--xxs">
-                    Rarity:
+                    {{ $t('Items_Filters_Rarity') }}:
                   </p>
                   <div v-for="rarity in filtersData.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right--xxs" :class="`wit-rarity-indicator--${rarity}`" />
                 </div>
 
                 <span v-else>
-                  Any rarity
+                  {{ $t('Items_Filters_AnyRarity') }}
                 </span>
               </b-button>
             </template>
@@ -72,12 +72,12 @@
               >
                 <div v-if="filtersData.events.length" class="wit-flex wit-flex--align-center">
                   <p class="wit-offset-right--xs wit-font-size--xxs">
-                    Event:
+                    {{ $t('Items_Filters_EventsSelected', [filtersData.events.length]) }}
                   </p>
                 </div>
 
                 <span v-else>
-                  Any event
+                  {{ $t('Items_Filters_AnyEvent') }}
                 </span>
               </b-button>
             </template>
@@ -109,12 +109,12 @@
               >
                 <div v-if="filtersData.slots.length" class="wit-flex wit-flex--align-center">
                   <p class="wit-offset-right--xs wit-font-size--xxs">
-                    Slot:
+                    {{ $t('Items_Filters_SlotsSelected', [filtersData.slots.length]) }}
                   </p>
                 </div>
 
                 <span v-else>
-                  Any slot
+                  {{ $t('Items_Filters_AnySlot') }}
                 </span>
               </b-button>
             </template>
@@ -132,11 +132,11 @@
 
       <div class="wit-flex wit-flex--wrap">
         <b-switch :value="filtersData.isOnlyTradeable" class="wit-offset-right--sm wit-offset-bottom--xs" @input="onIsOnlyTradeableChange">
-          Only tradeable
+          {{ $t('Items_Filters_OnlyTradeable') }}
         </b-switch>
 
         <b-switch :value="filtersData.isOnlyOwned" class=" wit-offset-bottom--xs" @input="onIsOnlyOwnedChange">
-          Only owned
+          {{ $t('Items_Filters_OnlyOwned') }}
         </b-switch>
       </div>
     </div>
