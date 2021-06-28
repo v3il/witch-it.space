@@ -1,19 +1,25 @@
 <template>
   <div class="wit-item-view wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-position--relative wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
-      <img
-        :src="itemPreviewURL"
-        :alt="item.name"
-        :title="item.name"
-        class="wit-item-view__image wit-block"
-      >
-      <div v-if="itemCount > 0" class="wit-item-view__counter">
-        x{{ itemCount }}
+    <div class="wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
+      <div class="wit-flex wit-position--relative" :style="colWidth">
+        <img
+          :src="itemPreviewURL"
+          :alt="item.name"
+          :title="item.name"
+          class="wit-item-view__image wit-block"
+        >
+        <div v-if="itemCount > 0" class="wit-item-view__counter">
+          x{{ itemCount }}
+        </div>
+
+        <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
+          {{ item.name }}
+        </p>
       </div>
 
-      <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
-        {{ item.name }}
-      </p>
+      <div v-if="$slots.sidebar">
+        <slot name="sidebar" />
+      </div>
     </div>
   </div>
 </template>
@@ -32,7 +38,7 @@ export default {
 
         itemCount: {
             required: false,
-            default: () => Math.floor(Math.random() * 10),
+            default: 0,
             type: Number
         },
 
@@ -40,6 +46,12 @@ export default {
             required: false,
             type: Boolean,
             default: true
+        },
+
+        itemMaxWidth: {
+            required: false,
+            type: Number,
+            default: 100
         }
     },
 
@@ -61,6 +73,12 @@ export default {
 
         itemPreviewURL () {
             return buildItemUrl(this.item.name)
+        },
+
+        colWidth () {
+            return {
+                maxWidth: `${this.itemMaxWidth}px`
+            }
         }
     },
 
@@ -172,6 +190,6 @@ export default {
     max-height: 100%;
     border-radius: var(--offset-xs);
     aspect-ratio: 1;
-    min-height: 50px;
+    min-height: 30px;
 }
 </style>
