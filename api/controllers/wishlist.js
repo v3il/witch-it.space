@@ -1,9 +1,20 @@
+import { BadRequest } from '@curveball/http-errors'
 import { Price, User, Wish } from '../models'
-import { extractUserPublicData } from '../util'
+import { extractUserPublicData, translateText } from '../util'
 
 const getUserWishlist = async (request, response) => {
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const { userId } = request.query
+    const numericUserId = Number.parseInt(userId)
+
+    if (!Number.isFinite(numericUserId) || numericUserId <= 0) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    const user = await User.findOne({ where: { id: numericUserId } })
+
+    if (!user) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
 
     const wishlist = await user.getWishes({ include: { model: Price, as: 'prices' } })
 

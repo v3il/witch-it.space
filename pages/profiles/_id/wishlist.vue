@@ -73,14 +73,17 @@ export default {
         // filters: { ...DEFAULT_FILTERS }
     }),
 
-    async fetch ({ app: { $itemsService } }) {
-        await $itemsService.fetch()
-        return { items: $itemsService.toList() }
-    },
+    // async fetch ({ app: { $itemsService } }) {
+    //     await $itemsService.fetch()
+    //     return { items: $itemsService.toList() }
+    // },
 
     async created () {
+        console.log(this.$route.params.id)
+
         await this.$itemsService.fetch()
-        this.wishlist = await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST)
+        this.wishlist = await this.$wishlistService.fetch(this.$route.params.id)
+        // this.wishlist = await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST)
         // console.error(222, this.$itemsService.getById(1000))
 
         // setTimeout(() => {
