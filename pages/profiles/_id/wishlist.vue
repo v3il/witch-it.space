@@ -79,16 +79,14 @@ export default {
     // },
 
     async created () {
-        console.log(this.$route.params.id)
-
         await this.$itemsService.fetch()
-        this.wishlist = await this.$wishlistService.fetch(this.$route.params.id)
-        // this.wishlist = await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST)
-        // console.error(222, this.$itemsService.getById(1000))
+        const { error, wishlist } = await this.$wishlistService.fetch(this.$route.params.id)
 
-        // setTimeout(() => {
-        //     console.log(222222222222222, itemsService.toList().length)
-        // }, 2000)
+        if (error) {
+            return this.$showError(error)
+        }
+
+        this.wishlist = wishlist
     },
 
     methods: {
