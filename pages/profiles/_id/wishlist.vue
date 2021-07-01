@@ -1,7 +1,7 @@
 <template>
   <div class="wit-items wit-flex">
     <div class="wit-flex__item--grow">
-      <!--      <ItemFilters :filters-data="filters" class="wit-offset-bottom&#45;&#45;sm" @change="onFiltersChange" @reset="resetFilter" />-->
+      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" @reset="() => {}" />
 
       <div>
         <div class="wit-flex wit-flex--wrap wit-items__item-grid">
@@ -56,12 +56,22 @@ import { buildItemUrl, getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
 
+const DEFAULT_FILTERS = {
+    query: '',
+    rarities: [],
+    isOnlyTradeable: false,
+    isOnlyOwned: false,
+    slots: [],
+    events: []
+}
+
 export default {
 
     components: {
         ItemView,
         WishlistItemView,
-        ItemTags
+        ItemTags,
+        ItemFilters
     },
 
     middleware: ['fetchUser'],
@@ -69,8 +79,8 @@ export default {
     data: () => ({
         wishlist: [],
         page: 1,
-        selectedItem: null
-        // filters: { ...DEFAULT_FILTERS }
+        selectedItem: null,
+        filters: { ...DEFAULT_FILTERS }
     }),
 
     // async fetch ({ app: { $itemsService } }) {
