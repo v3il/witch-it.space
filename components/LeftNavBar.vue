@@ -17,7 +17,7 @@
     </div>
 
     <b-button type="is-ghost" class="is-large">
-      <b-icon class="is-size-5 wit-color--Y400" icon="dots-grid" />
+      <!--      <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="dots-grid" />-->
     </b-button>
   </div>
 </template>
