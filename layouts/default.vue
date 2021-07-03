@@ -1,9 +1,9 @@
 <template>
   <div class="layout">
-    <LeftNavBar v-if="user" class="layout__left" />
+    <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
 
     <div class="layout__right">
-      <TopNavBar class="layout__header" />
+      <TopNavBar :links="navbarLinks" class="layout__header" />
 
       <main class="layout__main">
         <Nuxt />
@@ -27,6 +27,7 @@
 <script>
 import { mapState } from 'vuex'
 import { User, Theme } from '@/store'
+import { getNavbarLinks } from '@/shared'
 
 export default {
     name: 'Default',
@@ -59,7 +60,12 @@ export default {
     },
 
     created () {
-        this.$eventBus.$on('showNotification', ({ type, message }) => {
+        this.navbarLinks = getNavbarLinks(this.user)
+
+        this.$eventBus.$on('showNotification', ({
+            type,
+            message
+        }) => {
             clearTimeout(this.notificationTimeoutId)
             this.isNotificationVisible = true
             this.notificationType = type

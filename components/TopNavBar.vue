@@ -1,23 +1,40 @@
 <template>
   <b-navbar class="wiz-header">
     <template #brand>
-      <b-navbar-item tag="router-link" :to="{ path: '/' }" class="wit-paddings--none">
-        <img class="wiz-header__logo" src="/images/hey.png" alt="Hey!">
+      <b-navbar-item class="wit-paddings--none wit-font-size--sm">
+        <p class="wit-offset-right--sm">
+          {{ activeLink ? $t(activeLink.textId) : '' }}
+        </p>
+
+        <b-dropdown
+          v-if="0"
+          animation="fade150"
+          class="wit-block--full-height wiz-background--transparent"
+          position="is-bottom-right"
+        >
+          <template #trigger>
+            <b-icon class="is-size-5 wit-color--muted wit-flex wit-block--full-height" icon="help-box" />
+          </template>
+
+          <div class="wit-paddings--xs">
+            Test
+          </div>
+        </b-dropdown>
       </b-navbar-item>
     </template>
 
-    <template v-if="user" #start>
-      <b-navbar-item
-        v-for="link in links"
-        :key="link.to"
-        :to="link.to"
-        tag="nuxt-link"
-        :class="getLinkClasses(link)"
-        class="wit-transition wiz-header__link"
-      >
-        {{ $t(link.textId) }}
-      </b-navbar-item>
-    </template>
+    <!--    <template v-if="user" #start>-->
+    <!--      <b-navbar-item-->
+    <!--        v-for="link in links"-->
+    <!--        :key="link.to"-->
+    <!--        :to="link.to"-->
+    <!--        tag="nuxt-link"-->
+    <!--        :class="getLinkClasses(link)"-->
+    <!--        class="wit-transition wiz-header__link"-->
+    <!--      >-->
+    <!--        {{ $t(link.textId) }}-->
+    <!--      </b-navbar-item>-->
+    <!--    </template>-->
 
     <template #end>
       <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
@@ -53,6 +70,13 @@ export default {
         UserDropdown
     },
 
+    props: {
+        links: {
+            type: Array,
+            required: true
+        }
+    },
+
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
@@ -64,13 +88,13 @@ export default {
     },
 
     created () {
-        this.links = [
-            { to: buildUserMarketUrl(this.user?.id), textId: 'MainMenu_MyMarket', icon: '' },
-            { to: buildUserWishlistUrl(this.user?.id), textId: 'MainMenu_MyWishlist', icon: '' },
-            { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
-            { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
-            { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
-        ]
+        // this.links = [
+        //     { to: buildUserMarketUrl(this.user?.id), textId: 'MainMenu_MyMarket', icon: '' },
+        //     { to: buildUserWishlistUrl(this.user?.id), textId: 'MainMenu_MyWishlist', icon: '' },
+        //     { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
+        //     { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
+        //     { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
+        // ]
     },
 
     methods: {
@@ -88,7 +112,7 @@ export default {
     background-color: var(--header-bg);
     min-height: var(--header-height);
     height: var(--header-height);
-    padding: 0 var(--offset-sm);
+    padding: 0 var(--offset-md);
     position: sticky;
     top: 0;
 }

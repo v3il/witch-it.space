@@ -3,6 +3,7 @@ export { Routes } from './Routes'
 export { Cookies } from './Cookies'
 export { config, Themes, Locales } from './config'
 export { ru, ua, en } from './translations'
+export { getNavbarLinks } from './getNavbarLinks'
 export { validateSteamTradeURL, validateLogin, validatePassword, validateDiscordTag, validateDisplayName, validateAvatarId, validateSteamAccountURL } from './validators'
 
 export const getTranslation = (lngSet, textId, replacements = []) => {
