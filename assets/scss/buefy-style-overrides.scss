@@ -112,3 +112,7 @@ h6 {
 strong {
     color: var(--body-color);
 }
+
+.wit-dropdown--offset-xs .dropdown-content {
+    margin-top: var(--offset-xs);
+}

@@ -14,12 +14,35 @@
     />
 
     <div>
-      <b-button
-        type="is-ghost1"
-        style="background-color: #2e3648; border: 1px solid #36394c;"
+      <b-dropdown
+        animation="fade150"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs"
+        style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer;"
+        position="is-bottom-left"
+        @active-change="() => {}"
       >
-        <b-icon class="is-size-5 wit-color--muted" icon="filter" style="color: #dbdbdb;" />
-      </b-button>
+        <template #trigger>
+          <b-icon icon="filter" style="color: #dbdbdb; height: 100%; width: 36px;" />
+        </template>
+
+        <div style="width: 600px; height: 600px;">
+          Filters
+        </div>
+
+        <!--            <b-dropdown-item class="wit-transition&#45;&#45;background">-->
+        <!--                <nuxt-link to="/settings" class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
+        <!--                    <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="cog-sync" />-->
+        <!--                    <span class="wit-inline-block username">{{ $t('Settings') }}</span>-->
+        <!--                </nuxt-link>-->
+        <!--            </b-dropdown-item>-->
+
+        <!--            <b-dropdown-item class="wit-transition&#45;&#45;background" @click="logout">-->
+        <!--                <div class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;danger">-->
+        <!--                    <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="logout-variant" />-->
+        <!--                    <span class="wit-inline-block">{{ $t('Logout') }}</span>-->
+        <!--                </div>-->
+        <!--            </b-dropdown-item>-->
+      </b-dropdown>
 
       <!--      <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">-->
       <!--        {{ $t('Profiles_SteamGuardedOnly') }}-->
