@@ -3,23 +3,21 @@
     <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
 
     <div class="layout__right">
-      <TopNavBar :links="navbarLinks" class="layout__header" />
+      <Nuxt />
 
-      <main class="layout__main">
-        <Nuxt />
+      <!--      <main class="layout__main" />-->
 
-        <b-notification
-          v-if="isNotificationVisible"
-          :type="notificationClass"
-          aria-close-label="Close notification"
-          role="alert"
-          animation="fade150"
-          class="layout__notification"
-          :closable="false"
-        >
-          {{ notificationMessage }}
-        </b-notification>
-      </main>
+      <b-notification
+        v-if="isNotificationVisible"
+        :type="notificationClass"
+        aria-close-label="Close notification"
+        role="alert"
+        animation="fade150"
+        class="layout__notification"
+        :closable="false"
+      >
+        {{ notificationMessage }}
+      </b-notification>
     </div>
   </div>
 </template>

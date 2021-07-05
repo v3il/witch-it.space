@@ -73,7 +73,7 @@ export default {
     props: {
         links: {
             type: Array,
-            required: true
+            required: !true
         }
     },
 
@@ -83,24 +83,18 @@ export default {
         ]),
 
         activeLink () {
-            return this.links.find(({ to }) => to === this.$route.path)
+            return null // this.links.find(({ to }) => to === this.$route.path)
         }
     },
 
     created () {
-        // this.links = [
-        //     { to: buildUserMarketUrl(this.user?.id), textId: 'MainMenu_MyMarket', icon: '' },
-        //     { to: buildUserWishlistUrl(this.user?.id), textId: 'MainMenu_MyWishlist', icon: '' },
-        //     { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
-        //     { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
-        //     { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }
-        // ]
+        // this.links = get
     },
 
     methods: {
         getLinkClasses (link) {
             return {
-                active: link === this.activeLink
+                // active: link === this.activeLink
             }
         }
     }

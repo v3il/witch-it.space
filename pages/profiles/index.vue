@@ -1,20 +1,24 @@
 <template>
-  <div class="wis-profiles">
-    <Card>
-      <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
+  <div>
+    <TopNavBar class="layout__header" />
 
-      <div class="wit-padding-top--sm wit-padding-bottom--sm">
-        <Loader v-if="isLoading" />
+    <main class="wis-profiles">
+      <Card>
+        <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
-        <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-          <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-            <ProfileView :profile="profile" class="wit-block--full-height" />
+        <div class="wit-padding-top--sm wit-padding-bottom--sm">
+          <Loader v-if="isLoading" />
+
+          <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
+            <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+              <ProfileView :profile="profile" class="wit-block--full-height" />
+            </div>
           </div>
-        </div>
 
-        <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
-      </div>
-    </Card>
+          <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
+        </div>
+      </Card>
+    </main>
   </div>
 </template>
 
@@ -23,12 +27,14 @@ import { isEqual } from 'lodash'
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
 import ProfileView from '@/components/profiles/ProfileView'
 import Card from '@/components/Card'
+import TopNavBar from '@/components/TopNavBar'
 
 export default {
     components: {
         ProfilesFilter,
         ProfileView,
-        Card
+        Card,
+        TopNavBar
     },
 
     middleware: ['fetchUser'],
@@ -109,7 +115,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-profiles {
-    padding: var(--offset-md) 0;
+    padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {
         padding-left: 0;
