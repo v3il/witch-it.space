@@ -9,8 +9,9 @@
         <ul class="wit-flex wit-flex--center wit-top-tabs">
           <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass('all')">
             <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'all'">
-              All Profiles
-              <span class="wit-top-tabs__counter">{{ guardedProfilesCount }}</span>
+              {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
+              <span v-if="hasFilteredProfiles" class="wit-top-tabs__counter">{{ filteredProfiles.length }}</span>
+              <span v-else class="wit-top-tabs__counter">{{ profiles.length }}</span>
             </b-button>
           </li>
 
@@ -29,6 +30,12 @@
 
         <div class="wit-padding-top--sm wit-padding-bottom--sm">
           <Loader v-if="isLoading" />
+
+          <div v-else-if="mode === 'me'" class="wit-flex wit-flex--wrap wis-profiles__grid">
+            <div class="wit-paddings--xs wis-profiles__profile-container">
+              <ProfileView :profile="me" class="wit-block--full-height" />
+            </div>
+          </div>
 
           <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
             <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
@@ -78,15 +85,15 @@ export default {
             User.State.USER
         ]),
 
-        guardedProfilesCount () {
-            return this.profiles.filter(profile => profile.isGuardProtected).length
+        hasFilteredProfiles () {
+            return this.profiles.length !== this.filteredProfiles.length
+        },
+
+        me () {
+            return this.profiles.find(profile => profile.id === this.user.id)
         },
 
         filteredProfiles () {
-            if (this.mode === 'me') {
-                return this.profiles.filter(profile => profile.id === this.user.id)
-            }
-
             const lowerCasedQuery = this.filtersData.query.toLowerCase()
             return this.profiles.filter((profile) => {
                 const isFilteredByName = lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
