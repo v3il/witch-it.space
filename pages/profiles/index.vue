@@ -10,8 +10,7 @@
           <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass('all')">
             <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'all'">
               {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
-              <span v-if="hasFilteredProfiles" class="wit-top-tabs__counter">{{ filteredProfiles.length }}</span>
-              <span v-else class="wit-top-tabs__counter">{{ profiles.length }}</span>
+              <span class="wit-top-tabs__counter">{{ profilesCount }}</span>
             </b-button>
           </li>
 
@@ -101,6 +100,10 @@ export default {
 
                 return isFilteredByName && isFilteredBySteamGuard
             })
+        },
+
+        profilesCount () {
+            return this.hasFilteredProfiles ? this.filteredProfiles.length : this.profiles.length
         }
     },
 
