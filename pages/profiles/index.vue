@@ -6,20 +6,16 @@
       </template>
 
       <template #topMenu>
-        <ul class="wit-flex wit-flex--center wit-top-tabs">
-          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass($options.modes.ALL)">
-            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleAllProfilesMode">
-              {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
-              <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profilesCount }}</span>
-            </b-button>
-          </li>
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">
+          <template #tab0>
+            {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profilesCount }}</span>
+          </template>
 
-          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center" :class="getTopNavLinkClass($options.modes.ME)">
-            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleMyProfileMode">
-              My Profile
-            </b-button>
-          </li>
-        </ul>
+          <template #tab1>
+            My Profile
+          </template>
+        </TopTabs>
       </template>
     </TopNavBar>
 
@@ -57,6 +53,7 @@ import ProfileView from '@/components/profiles/ProfileView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
+import TopTabs from '@/components/TopTabs'
 
 const modes = {
     ALL: 'all',
@@ -64,13 +61,14 @@ const modes = {
 }
 
 export default {
-    modes,
+    modes: Object.values(modes),
 
     components: {
         ProfilesFilter,
         ProfileView,
         Card,
-        TopNavBar
+        TopNavBar,
+        TopTabs
     },
 
     middleware: ['fetchUser'],
@@ -92,7 +90,7 @@ export default {
         ]),
 
         isMyProfileMode () {
-            return this.mode === this.$options.modes.ME
+            return this.mode === modes.ME
         },
 
         hasFilteredProfiles () {
@@ -167,6 +165,10 @@ export default {
             this.filtersData = filtersData
         },
 
+        switchMode (mode) {
+            this.mode = mode
+        },
+
         getTopNavLinkClass (linkTag) {
             return {
                 active: linkTag === this.mode
@@ -174,11 +176,11 @@ export default {
         },
 
         toggleAllProfilesMode () {
-            this.mode = this.$options.modes.ALL
+            this.mode = modes.ALL
         },
 
         toggleMyProfileMode () {
-            this.mode = this.$options.modes.ME
+            this.mode = modes.ME
         }
     }
 }

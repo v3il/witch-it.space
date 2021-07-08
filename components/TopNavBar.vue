@@ -8,20 +8,20 @@
         <!--          {{ activeLink ? $t(activeLink.textId) : '' }}-->
         <!--        </p>-->
 
-        <!--        <b-dropdown-->
-        <!--          v-if="0"-->
-        <!--          animation="fade150"-->
-        <!--          class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent"-->
-        <!--          position="is-bottom-right"-->
-        <!--        >-->
-        <!--          <template #trigger>-->
-        <!--            <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
-        <!--          </template>-->
+        <!--                <b-dropdown-->
+        <!--                  v-if="0"-->
+        <!--                  animation="fade150"-->
+        <!--                  class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent"-->
+        <!--                  position="is-bottom-right"-->
+        <!--                >-->
+        <!--                  <template #trigger>-->
+        <!--                    <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
+        <!--                  </template>-->
 
-        <!--          <div class="wit-paddings&#45;&#45;xs">-->
-        <!--            Test-->
-        <!--          </div>-->
-        <!--        </b-dropdown>-->
+        <!--                  <div class="wit-paddings&#45;&#45;xs">-->
+        <!--                    Test-->
+        <!--                  </div>-->
+        <!--                </b-dropdown>-->
       </b-navbar-item>
     </template>
 

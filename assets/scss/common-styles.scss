@@ -7,6 +7,20 @@
 }
 
 .wit-top-tabs {
+    .wit-top-tabs__tab {
+        border-bottom: 2px solid transparent;
+        height: 100%;
+        transition: border-color var(--default-transition);
+
+        &.active {
+            border-color: var(--warning);
+        }
+
+        &:not(:last-child) {
+            margin-right: var(--offset-md);
+        }
+    }
+
     .wit-top-tabs__button {
         &,
         &:active,
@@ -18,23 +32,13 @@
         }
     }
 
-    .wit-top-tabs__tab {
-        border-bottom: 2px solid transparent;
-        height: 100%;
-        transition: border-color var(--default-transition);
-
-        &.active {
-            border-color: var(--warning);
-        }
-    }
-
     .wit-top-tabs__counter {
         display: inline-block;
         padding: 0 var(--offset-xs);
         background-color: #dbdbdb;
         border-radius: 50px;
         font-size: var(--text-size-xxs);
-        line-height: var(--line-height-sm);
+        line-height: 1.4;
         color: var(--body-bg);
         font-weight: 700;
     }
