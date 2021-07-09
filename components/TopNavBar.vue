@@ -3,32 +3,11 @@
     <template #brand>
       <b-navbar-item class="wit-paddings--none wit-font-size--sm">
         <slot name="brand" />
-
-        <!--        <p class="wit-offset-right&#45;&#45;sm">-->
-        <!--          {{ activeLink ? $t(activeLink.textId) : '' }}-->
-        <!--        </p>-->
-
-        <!--                <b-dropdown-->
-        <!--                  v-if="0"-->
-        <!--                  animation="fade150"-->
-        <!--                  class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent"-->
-        <!--                  position="is-bottom-right"-->
-        <!--                >-->
-        <!--                  <template #trigger>-->
-        <!--                    <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
-        <!--                  </template>-->
-
-        <!--                  <div class="wit-paddings&#45;&#45;xs">-->
-        <!--                    Test-->
-        <!--                  </div>-->
-        <!--                </b-dropdown>-->
       </b-navbar-item>
     </template>
 
     <template #start>
-      <!--      <div class="wit-paddings&#45;&#45;none">-->
       <slot name="topMenu" />
-      <!--      </div>-->
     </template>
 
     <template #end>
@@ -53,8 +32,6 @@ import ThemeSwitcher from '@/components/ThemeSwitcher'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { User } from '@/store'
 import UserDropdown from '@/components/UserDropdown'
-import { Routes } from '@/shared'
-import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 
 export default {
     name: 'TopNavBar',
@@ -65,33 +42,10 @@ export default {
         UserDropdown
     },
 
-    props: {
-        links: {
-            type: Array,
-            required: !true
-        }
-    },
-
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ]),
-
-        activeLink () {
-            return null // this.links.find(({ to }) => to === this.$route.path)
-        }
-    },
-
-    created () {
-        // this.links = get
-    },
-
-    methods: {
-        getLinkClasses (link) {
-            return {
-                // active: link === this.activeLink
-            }
-        }
+        ])
     }
 }
 </script>
@@ -106,31 +60,9 @@ export default {
     top: 0;
 }
 
-.wiz-header__link {
-    padding: 0 var(--offset-sm);
-
-    &.active,
-    &:active,
-    &:focus,
-    &:hover {
-        color: white;
-        text-decoration: none;
-        background-color: var(--locale-switcher-hover-background);
-    }
-}
-
-.wiz-header__logo {
-    max-height: var(--header-height);
-    height: 100%;
-}
-
 @media screen and (max-width: 1024px) {
     .wiz-header {
         padding: 0;
-    }
-
-    .wiz-header__link {
-        padding: var(--offset-xs) var(--offset-sm);
     }
 
     .wit-header__locale-switcher,
