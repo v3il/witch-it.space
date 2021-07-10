@@ -78,7 +78,7 @@ export default {
     },
 
     data: () => ({
-        page: 1,
+        page: 2,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS }
     }),
@@ -105,10 +105,6 @@ export default {
 
         slicedItems () {
             return this.filteredItems.slice(0, this.page * 50)
-        },
-
-        itemPreviewURL () {
-            return buildItemUrl(this.selectedItem?.name)
         }
     },
 

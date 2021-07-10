@@ -21,7 +21,7 @@
 
     <main class="wis-profiles">
       <Card>
-        <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
+        <ProfilesFilter :filters-data="filters" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
         <div class="wit-padding-top--sm wit-padding-bottom--sm">
           <Loader v-if="isLoading" />
@@ -54,10 +54,16 @@ import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
 import TopTabs from '@/components/TopTabs'
+import { getObjectsDiff } from '@/utils'
 
 const modes = {
-    ALL: 'all',
-    ME: 'me'
+    ALL: 'allProfiles',
+    ME: 'myProfile'
+}
+
+const DEFAULT_FILTERS = {
+    query: '',
+    isSteamGuarded: false
 }
 
 export default {
@@ -77,11 +83,7 @@ export default {
         mode: modes.ALL,
         profiles: [],
         isLoading: false,
-
-        filtersData: {
-            query: '',
-            isSteamGuarded: false
-        }
+        filters: { ...DEFAULT_FILTERS }
     }),
 
     computed: {
@@ -102,10 +104,10 @@ export default {
         },
 
         filteredProfiles () {
-            const lowerCasedQuery = this.filtersData.query.toLowerCase()
+            const lowerCasedQuery = this.filters.query.toLowerCase()
             return this.profiles.filter((profile) => {
                 const isFilteredByName = lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
-                const isFilteredBySteamGuard = this.filtersData.isSteamGuarded ? profile.isGuardProtected : true
+                const isFilteredBySteamGuard = this.filters.isSteamGuarded ? profile.isGuardProtected : true
 
                 return isFilteredByName && isFilteredBySteamGuard
             })
@@ -117,35 +119,51 @@ export default {
     },
 
     watch: {
-        filtersData: {
-            handler (filtersData) {
-                if (isEqual(this.filtersData, this.$route.query)) {
+        filters: {
+            deep: true,
+            handler (filters) {
+                const routeFilters = this.getFiltersFromRoute()
+
+                if (isEqual(filters, routeFilters)) {
                     return
                 }
 
-                this.$router.replace({ path: this.$route.path, query: filtersData })
+                const changedFilters = getObjectsDiff(DEFAULT_FILTERS, filters)
+                this.$router.replace({ path: this.$route.path, query: changedFilters })
             }
         },
 
         $route: {
             deep: true,
             handler () {
-                this.getFiltersFromRoute()
+                this.filters = this.getFiltersFromRoute()
             }
         }
     },
 
     async created () {
-        this.getFiltersFromRoute()
         await this.loadProfiles()
+        this.filters = this.getFiltersFromRoute()
     },
 
     methods: {
         getFiltersFromRoute () {
             const { query: params } = this.$route
 
-            this.filtersData.query = params.query ?? ''
-            this.filtersData.isSteamGuarded = params.isSteamGuarded === 'true'
+            return {
+                query: params.query ?? DEFAULT_FILTERS.query,
+                isSteamGuarded: params.isSteamGuarded === 'true' ?? DEFAULT_FILTERS.isSteamGuarded
+            }
+        },
+
+        onFiltersChange (filters) {
+            this.filters = filters
+            this.page = 1
+        },
+
+        resetFilter (filterProp) {
+            this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
+            this.page = 1
         },
 
         async loadProfiles () {
@@ -161,26 +179,8 @@ export default {
             this.isLoading = false
         },
 
-        onFiltersChange (filtersData) {
-            this.filtersData = filtersData
-        },
-
         switchMode (mode) {
             this.mode = mode
-        },
-
-        getTopNavLinkClass (linkTag) {
-            return {
-                active: linkTag === this.mode
-            }
-        },
-
-        toggleAllProfilesMode () {
-            this.mode = modes.ALL
-        },
-
-        toggleMyProfileMode () {
-            this.mode = modes.ME
         }
     }
 }
