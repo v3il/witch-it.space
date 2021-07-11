@@ -55,6 +55,7 @@ export const ru = {
     MainMenu_Profiles: 'Профили',
     MainMenu_Items: 'Предметы',
     MainMenu_Quests: 'Квесты',
+    MainMenu_Settings: 'Настройки',
 
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D',
@@ -115,7 +116,6 @@ export const ru = {
     Quests_ConnectSteamWarning: 'Для использования этой функции необходимо подключить аккаунт Steam',
     Quests_ConnectSteamButtonTitle: 'Подключить аккаунт',
 
-    Settings_Title: 'Настройки',
     Settings_NotSetWhenOauth: 'Невозможно изменить: авторизация через сторонний сервис',
     Settings_ProfileSettingsAndAppearance: 'Настройки профиля и внешний вид',
     Settings_DisplayName: 'Отображаемое имя',

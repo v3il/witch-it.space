@@ -62,12 +62,14 @@ import ConnectSteam from '@/components/quests/ConnectSteam'
 import { User } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
 import TopTabs from '@/components/TopTabs'
+import TopNavBar from '@/components/TopNavBar'
 
 export default {
     components: {
         ConnectSteam,
         QuestsView,
-        TopTabs
+        TopTabs,
+        TopNavBar
     },
 
     middleware: ['fetchUser'],
