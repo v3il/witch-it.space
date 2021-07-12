@@ -1,48 +1,56 @@
 <template>
-  <div class="wit-items wit-flex">
-    <div class="wit-flex__item--grow">
-      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" @reset="resetFilter" />
+  <div>
+    <TopNavBar class="layout__header">
+      <template #brand>
+        {{ $t('MainMenu_Items') }}
+      </template>
+    </TopNavBar>
 
-      <div>
-        <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-          <ItemView
-            v-for="item in slicedItems"
-            :key="item.id"
-            :item="item"
-            @clicked="onItemSelected"
-          />
-        </div>
-      </div>
-    </div>
-
-    <div v-if="selectedItem" class="wit-items__sidebar">
-      <div class="wit-offset-bottom--sm wit-flex">
-        <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink wit-items__selected-item-view" />
+    <div class="wit-items wit-flex">
+      <div class="wit-flex__item--grow">
+        <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" @reset="resetFilter" />
 
         <div>
-          <h4 class="wit-offset-bottom--sm wit-font-size--sm">
-            {{ selectedItem.name }}
-          </h4>
-
-          <ItemTags :item="selectedItem" />
+          <div class="wit-flex wit-flex--wrap wit-items__item-grid">
+            <ItemView
+              v-for="item in slicedItems"
+              :key="item.id"
+              :item="item"
+              @clicked="onItemSelected"
+            />
+          </div>
         </div>
       </div>
 
-      <p class="wit-offset-bottom--sm">
-        In stock: 10
-      </p>
+      <div v-if="selectedItem" class="wit-items__sidebar">
+        <div class="wit-offset-bottom--sm wit-flex">
+          <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink wit-items__selected-item-view" />
 
-      <b-button type="is-primary" class="wit-transition">
-        Create offer
-      </b-button>
+          <div>
+            <h4 class="wit-offset-bottom--sm wit-font-size--sm">
+              {{ selectedItem.name }}
+            </h4>
 
-      <b-button type="is-primary" class="wit-transition">
-        Wishlist item
-      </b-button>
+            <ItemTags :item="selectedItem" />
+          </div>
+        </div>
 
-      <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">
-        Close
-      </b-button>
+        <p class="wit-offset-bottom--sm">
+          In stock: 10
+        </p>
+
+        <b-button type="is-primary" class="wit-transition">
+          Create offer
+        </b-button>
+
+        <b-button type="is-primary" class="wit-transition">
+          Wishlist item
+        </b-button>
+
+        <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">
+          Close
+        </b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -51,8 +59,9 @@
 import { isEqual } from 'lodash'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
-import { buildItemUrl, getObjectsDiff } from '@/utils'
+import { getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
+import TopNavBar from '@/components/TopNavBar'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -67,7 +76,8 @@ export default {
     components: {
         ItemView,
         ItemFilters,
-        ItemTags
+        ItemTags,
+        TopNavBar
     },
 
     middleware: ['fetchUser'],
@@ -182,7 +192,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-items {
-    padding: var(--offset-md) 0 var(--offset-sm);
+    padding: var(--offset-md) var(--offset-md) var(--offset-sm);
 
     @media screen and (max-width: 1024px) {
         padding-left: 0;

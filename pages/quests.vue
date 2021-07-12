@@ -19,28 +19,28 @@
         </b-dropdown>
       </template>
 
-      <template #topMenu>
-        <TopTabs :modes="[]" selected-mode="">
-          <template #slot0>
-            0
-          </template>
-        </TopTabs>
+      <!--      <template #topMenu>-->
+      <!--        <TopTabs :modes="[]" selected-mode="">-->
+      <!--          <template #slot0>-->
+      <!--            0-->
+      <!--          </template>-->
+      <!--        </TopTabs>-->
 
-        <!--        <ul class="wit-flex wit-flex&#45;&#45;center wit-top-tabs">-->
-        <!--          <li class="wit-top-tabs__tab wit-flex wit-flex&#45;&#45;align-center wit-offset-right&#45;&#45;md" :class="">-->
-        <!--            <b-button type="is-ghost" class="wit-top-tabs__button" @click="">-->
-        <!--              {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}-->
-        <!--              <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profilesCount }}</span>-->
-        <!--            </b-button>-->
-        <!--          </li>-->
+      <!--        &lt;!&ndash;        <ul class="wit-flex wit-flex&#45;&#45;center wit-top-tabs">&ndash;&gt;-->
+      <!--        &lt;!&ndash;          <li class="wit-top-tabs__tab wit-flex wit-flex&#45;&#45;align-center wit-offset-right&#45;&#45;md" :class="">&ndash;&gt;-->
+      <!--        &lt;!&ndash;            <b-button type="is-ghost" class="wit-top-tabs__button" @click="">&ndash;&gt;-->
+      <!--        &lt;!&ndash;              {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}&ndash;&gt;-->
+      <!--        &lt;!&ndash;              <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profilesCount }}</span>&ndash;&gt;-->
+      <!--        &lt;!&ndash;            </b-button>&ndash;&gt;-->
+      <!--        &lt;!&ndash;          </li>&ndash;&gt;-->
 
-        <!--          <li class="wit-top-tabs__tab wit-flex wit-flex&#45;&#45;align-center" :class="getTopNavLinkClass($options.modes.ME)">-->
-        <!--            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleMyProfileMode">-->
-        <!--              My Profile-->
-        <!--            </b-button>-->
-        <!--          </li>-->
-        <!--        </ul>-->
-      </template>
+      <!--        &lt;!&ndash;          <li class="wit-top-tabs__tab wit-flex wit-flex&#45;&#45;align-center" :class="getTopNavLinkClass($options.modes.ME)">&ndash;&gt;-->
+      <!--        &lt;!&ndash;            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleMyProfileMode">&ndash;&gt;-->
+      <!--        &lt;!&ndash;              My Profile&ndash;&gt;-->
+      <!--        &lt;!&ndash;            </b-button>&ndash;&gt;-->
+      <!--        &lt;!&ndash;          </li>&ndash;&gt;-->
+      <!--        &lt;!&ndash;        </ul>&ndash;&gt;-->
+      <!--      </template>-->
     </TopNavBar>
 
     <div class="wit-quests">
@@ -61,14 +61,14 @@ import { mapState } from 'vuex'
 import ConnectSteam from '@/components/quests/ConnectSteam'
 import { User } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
-import TopTabs from '@/components/TopTabs'
+// import TopTabs from '@/components/TopTabs'
 import TopNavBar from '@/components/TopNavBar'
 
 export default {
     components: {
         ConnectSteam,
         QuestsView,
-        TopTabs,
+        // TopTabs,
         TopNavBar
     },
 
