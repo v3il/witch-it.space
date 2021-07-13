@@ -50,6 +50,7 @@ export const ru = {
     Register_LoginInputHelp: 'Минимальная длина - 4 символа',
     Register_PasswordInputHelp: 'Минимальная длина - 6 символов',
 
+    MainMenu_Login: 'Вход',
     MainMenu_MyMarket: 'Мой маркет',
     MainMenu_MyWishlist: 'Список желаний',
     MainMenu_Profiles: 'Профили',

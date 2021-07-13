@@ -1,51 +1,72 @@
 <template>
-  <div class="wit-flex wit-flex--center login-page">
-    <div class="login-page__container">
-      <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
-        <header class="login-page__form-header wit-background--primary wit-position--relative">
-          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit-font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
-            {{ $t('Login_WelcomeBack') }}
-          </h1>
-          <p class="wit-text--center wit-offset-bottom--md wit-color--white-half">
-            {{ $t('Login_SignInToContinue') }}
-          </p>
+  <div>
+    <TopNavBar class="layout__header">
+      <template #brand>
+        {{ $t('MainMenu_Login') }}
+      </template>
 
-          <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">
-            <img class="login-page__image" src="images/hey.png" alt="Hey!">
-          </div>
-        </header>
+      <!--          <template #topMenu>-->
+      <!--              <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">-->
+      <!--                  <template #tab0>-->
+      <!--                      {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}-->
+      <!--                      <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profilesCount }}</span>-->
+      <!--                  </template>-->
 
-        <div class="login-page__form-content">
-          <form @submit.prevent="onSubmit">
-            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
-              <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
-            </b-field>
+      <!--                  <template #tab1>-->
+      <!--                      My Profile-->
+      <!--                  </template>-->
+      <!--              </TopTabs>-->
+      <!--          </template>-->
+    </TopNavBar>
 
-            <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
-              <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
-            </b-field>
+    <div class="wit-flex wit-flex--center login-page">
+      <div class="login-page__container">
+        <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
+          <header class="login-page__form-header wit-background--primary wit-position--relative">
+            <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit-font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
+              {{ $t('Login_WelcomeBack') }}
+            </h1>
+            <p class="wit-text--center wit-offset-bottom--md wit-color--white-half">
+              {{ $t('Login_SignInToContinue') }}
+            </p>
 
-            <div class="wit-flex wit-flex--center wit-flex--justify-between">
-              <Socials @socialClicked="authUsingSocials" />
-
-              <b-button type="is-primary" native-type="submit" class="wit-transition">
-                {{ $t('Login_LoginButtonTitle') }}
-              </b-button>
+            <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">
+              <img class="login-page__image" src="images/hey.png" alt="Hey!">
             </div>
-          </form>
+          </header>
+
+          <div class="login-page__form-content">
+            <form @submit.prevent="onSubmit">
+              <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
+                <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
+              </b-field>
+
+              <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
+                <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+              </b-field>
+
+              <div class="wit-flex wit-flex--center wit-flex--justify-between">
+                <Socials @socialClicked="authUsingSocials" />
+
+                <b-button type="is-primary" native-type="submit" class="wit-transition">
+                  {{ $t('Login_LoginButtonTitle') }}
+                </b-button>
+              </div>
+            </form>
+          </div>
         </div>
+
+        <p class="wit-text--center wit-offset-bottom--sm">
+          {{ $t('Login_DontHaveAccount') }}
+          <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight--500">
+            {{ $t('Login_SignUpLinkTitle') }}
+          </b-button>
+        </p>
+
+        <p class="wit-text--center">
+          ©{{ $options.year }}. {{ $t('CraftedBy') }}
+        </p>
       </div>
-
-      <p class="wit-text--center wit-offset-bottom--sm">
-        {{ $t('Login_DontHaveAccount') }}
-        <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight--500">
-          {{ $t('Login_SignUpLinkTitle') }}
-        </b-button>
-      </p>
-
-      <p class="wit-text--center">
-        ©{{ $options.year }}. {{ $t('CraftedBy') }}
-      </p>
     </div>
   </div>
 </template>
@@ -55,12 +76,14 @@ import Socials from '@/components/auth/Socials'
 import { User } from '@/store'
 import { Routes } from '@/shared'
 import { validateLogin, validatePassword } from '@/shared/validators'
+import TopNavBar from '@/components/TopNavBar'
 
 export default {
     year: new Date().getFullYear(),
 
     components: {
-        Socials
+        Socials,
+        TopNavBar
     },
 
     data: () => ({

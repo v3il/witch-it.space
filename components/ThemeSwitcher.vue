@@ -42,8 +42,8 @@ export default {
     .wit-theme-switcher {
         box-shadow: none;
         box-sizing: content-box;
-        width: 70px;
-        height: 70px;
+        width: var(--header-height);
+        height: var(--header-height);
         padding: 0;
 
         &:focus,
