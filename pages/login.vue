@@ -4,19 +4,6 @@
       <template #brand>
         {{ $t('MainMenu_Login') }}
       </template>
-
-      <!--          <template #topMenu>-->
-      <!--              <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">-->
-      <!--                  <template #tab0>-->
-      <!--                      {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}-->
-      <!--                      <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profilesCount }}</span>-->
-      <!--                  </template>-->
-
-      <!--                  <template #tab1>-->
-      <!--                      My Profile-->
-      <!--                  </template>-->
-      <!--              </TopTabs>-->
-      <!--          </template>-->
     </TopNavBar>
 
     <div class="wit-flex wit-flex--center login-page">
