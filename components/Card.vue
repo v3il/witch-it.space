@@ -59,7 +59,7 @@ export default {
 
 .wit-card-body {
     flex: 1 1 auto;
-    padding: 1.25rem 1.25rem;
+    padding: var(--offset-md);
 }
 
 .wit-card-title {

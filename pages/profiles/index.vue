@@ -8,12 +8,12 @@
       <template #topMenu>
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">
           <template #tab0>
-            {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
+            {{ firstTabLabel }}
             <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profilesCount }}</span>
           </template>
 
           <template #tab1>
-            My Profile
+            {{ $t('Profiles_MyProfile') }}
           </template>
         </TopTabs>
       </template>
@@ -115,6 +115,11 @@ export default {
 
         profilesCount () {
             return this.hasFilteredProfiles ? this.filteredProfiles.length : this.profiles.length
+        },
+
+        firstTabLabel () {
+            const key = this.hasFilteredProfiles ? 'Profiles_FilteredProfiles' : 'Profiles_AllProfiles'
+            return this.$t(key)
         }
     },
 

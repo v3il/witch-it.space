@@ -161,8 +161,11 @@ export const ru = {
     Settings_RemoveProfileTitle: 'Удаление профиля',
     Settings_WannaRemoveProfile: 'Вы действительно хотите удалить ваш профиль?<br>Ваш маркет и список желаний будут безвозвратно удалены',
 
+    Profiles_AllProfiles: 'Все профили',
+    Profiles_FilteredProfiles: 'Выбранные профили',
+    Profiles_MyProfile: 'Мой профиль',
     Profiles_NoProfiles: 'Нет профилей',
-    Profiles_SearchByUsername: 'Поиск пользователя по имени',
+    Profiles_SearchByUsername: 'Поиск пользователя',
     Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
