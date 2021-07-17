@@ -12,47 +12,67 @@
       <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
     </h5>
 
-    <div>
+    <div class="wit-flex">
       <b-button
-        v-if="profile.steamProfileUrl"
         type="is-link"
         tag="a"
         :href="profile.steamProfileUrl"
         target="_blank"
-        class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
+        class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center"
         @click.stop
       >
-        <b-icon size="is-small" class="is-size-5" icon="steam" />
+        <div class="wit-flex wit-flex--column">
+          <span>{{ profile.ordersCount }}</span>
+          Orders
+        </div>
       </b-button>
 
       <b-button
-        v-if="profile.discordDMUrl"
         type="is-link"
         tag="a"
         :href="profile.discordDMUrl"
         target="_blank"
-        class="wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
+        class="wit-transition--background wit-flex wit-flex--center"
         @click.stop
       >
-        <b-icon size="is-small" class="is-size-5" icon="discord" />
+        <div class="wit-flex wit-flex--column">
+          <span>{{ profile.wishlistCount }}</span>
+          Wishlisted
+        </div>
       </b-button>
     </div>
 
     <ProfileScale :profile="profile" />
 
-    <div>
+    <div class="wit-flex">
       <b-button
         v-if="profile.steamProfileUrl"
         type="is-link"
         tag="a"
+        size="is-small"
         :href="profile.steamProfileUrl"
         target="_blank"
-        class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
+        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
         @click.stop
       >
-        <div class="wit-flex wit-flex--column">
-          {{ profile.ordersCount }}
-          Orders
+        <div class="wit-flex wit-flex--align-center">
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="steam" />
+          Steam
+        </div>
+      </b-button>
+
+      <b-button
+        type="is-link"
+        tag="a"
+        size="is-small"
+        :href="profile.discordDMUrl"
+        target="_blank"
+        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
+        @click.stop
+      >
+        <div class="wit-flex wit-flex--align-center">
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="offer" />
+          Send offer
         </div>
       </b-button>
 
@@ -60,14 +80,15 @@
         v-if="profile.discordDMUrl"
         type="is-link"
         tag="a"
+        size="is-small"
         :href="profile.discordDMUrl"
         target="_blank"
-        class="wit-transition--background wit-flex wit-flex--center wis-profile-view__social-btn"
+        class="wit-transition--background wit-flex wit-flex--center"
         @click.stop
       >
-        <div class="wit-flex wit-flex--column">
-          {{ profile.wishlistCount }}
-          Wishlisted
+        <div class="wit-flex wit-flex--align-center">
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="discord" />
+          Discord
         </div>
       </b-button>
     </div>
