@@ -210,25 +210,26 @@ export default {
 
 .wis-profiles__profile-container {
     flex: 0 0 auto;
+    width: 20%;
 
-    @media screen and (max-width: 767px) {
-        width: 100%;
-    }
-
-    @media screen and (min-width: 768px) {
-        width: 50%;
-    }
-
-    @media (min-width: 1200px) {
-        width: 33.33333%;
-    }
-
-    @media (min-width: 1920px) {
-        width: 25%;
-    }
-
-    @media (min-width: 2500px) {
-        width: 20%;
-    }
+    //@media screen and (max-width: 767px) {
+    //    width: 100%;
+    //}
+    //
+    //@media screen and (min-width: 768px) {
+    //    width: 50%;
+    //}
+    //
+    //@media (min-width: 1200px) {
+    //    width: 15%;
+    //}
+    //
+    //@media (min-width: 1920px) {
+    //    width: 15%;
+    //}
+    //
+    //@media (min-width: 2500px) {
+    //    width: 20%;
+    //}
 }
 </style>

@@ -12,18 +12,19 @@
       <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
     </h5>
 
-    <div class="wit-flex">
+    <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
       <b-button
         type="is-link"
         tag="a"
         :href="profile.steamProfileUrl"
         target="_blank"
-        class="wit-offset-bottom--xs wit-transition--background wit-flex wit-flex--center"
+        class="wit-offset-bottom--xs1 wit-transition--background wit-flex wit-flex--center"
+        style="padding: 8px; height: auto; background: transparent; border-right: 1px solid #2e3648; flex: 1 0 50%;"
         @click.stop
       >
         <div class="wit-flex wit-flex--column">
-          <span>{{ profile.ordersCount }}</span>
-          Orders
+          <span class="wit-font-weight--700">{{ profile.ordersCount }}</span>
+          <span class="wit-color--muted">Orders</span>
         </div>
       </b-button>
 
@@ -33,16 +34,17 @@
         :href="profile.discordDMUrl"
         target="_blank"
         class="wit-transition--background wit-flex wit-flex--center"
+        style="padding: 8px; height: auto; background: transparent; flex: 1 0 50%;"
         @click.stop
       >
         <div class="wit-flex wit-flex--column">
-          <span>{{ profile.wishlistCount }}</span>
-          Wishlisted
+          <span class="wit-font-weight--700">{{ profile.wishlistCount }}</span>
+          <span class="wit-color--muted">Wishlisted</span>
         </div>
       </b-button>
     </div>
 
-    <ProfileScale :profile="profile" />
+    <ProfileScale :profile="profile" class="wit-offset-bottom--sm" />
 
     <div class="wit-flex">
       <b-button
@@ -71,7 +73,7 @@
         @click.stop
       >
         <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="offer" />
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="arrow-decision" />
           Send offer
         </div>
       </b-button>

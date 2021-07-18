@@ -1,10 +1,10 @@
 <template>
   <div class="wit-profile-scale wit-flex">
-    <div class="wit-profile-scale__item-scale wit-profile-scale__whimsical" :style="{ width: whimsicalWidth + '%' }" />
-    <div class="wit-profile-scale__item-scale wit-profile-scale__veryrare" :style="{ width: veryRaresWidth + '%' }" />
-    <div class="wit-profile-scale__item-scale wit-profile-scale__rare" :style="{ width: raresWidth + '%' }" />
-    <div class="wit-profile-scale__item-scale wit-profile-scale__uncommon" :style="{ width: uncommonsWidth + '%' }" />
-    <div class="wit-profile-scale__item-scale wit-profile-scale__common" :style="{ width: commonsWidth + '%' }" />
+    <div v-if="whimsicalWidth" class="wit-profile-scale__item-scale wit-profile-scale__whimsical" :style="{ width: whimsicalWidth + '%' }" />
+    <div v-if="veryRaresWidth" class="wit-profile-scale__item-scale wit-profile-scale__veryrare" :style="{ width: veryRaresWidth + '%' }" />
+    <div v-if="raresWidth" class="wit-profile-scale__item-scale wit-profile-scale__rare" :style="{ width: raresWidth + '%' }" />
+    <div v-if="uncommonsWidth" class="wit-profile-scale__item-scale wit-profile-scale__uncommon" :style="{ width: uncommonsWidth + '%' }" />
+    <div v-if="commonsWidth" class="wit-profile-scale__item-scale wit-profile-scale__common" :style="{ width: commonsWidth + '%' }" />
   </div>
 </template>
 
@@ -48,17 +48,25 @@ $borderRadius: 4px;
 
 .wit-profile-scale {
     width: 100%;
-    height: 8px;
+    height: 5px;
 }
 
 .wit-profile-scale__item-scale {
     height: inherit;
+
+    &:first-child {
+        border-top-left-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
+    }
+
+    &:last-child {
+        border-top-right-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
+    }
 }
 
 .wit-profile-scale__whimsical {
     background-color: var(--item-whimsical);
-    border-top-left-radius: $borderRadius;
-    border-bottom-left-radius: $borderRadius;
 }
 
 .wit-profile-scale__veryrare {
@@ -75,7 +83,5 @@ $borderRadius: 4px;
 
 .wit-profile-scale__common {
     background-color: var(--item-common);
-    border-top-right-radius: $borderRadius;
-    border-bottom-right-radius: $borderRadius;
 }
 </style>
