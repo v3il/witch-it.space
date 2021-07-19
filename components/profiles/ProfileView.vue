@@ -1,5 +1,5 @@
 <template>
-  <div class=" wit-overflow--hidden wis-profile-view wit-background--content wit-position--relative wit-cursor--pointer wit-flex wit-flex--column wit-flex--align-center">
+  <div class=" wit-overflow--hidden wis-profile-view wit-flex wit-flex--column wit-flex--align-center">
     <img
       :src="avatarUrl"
       alt="Avatar"
@@ -40,7 +40,7 @@
       </b-button>
     </div>
 
-    <ProfileScale :profile="profile" class="wit-offset-bottom--sm" />
+    <ProfileScale :profile="profile" class="wit-offset-bottom--sm" @click="onScaleClick" />
 
     <div class="wit-flex">
       <b-button
@@ -87,62 +87,19 @@
         </div>
       </b-button>
     </div>
-
-    <!--    <div class="wit-flex">-->
-    <!--      <div class="wit-offset-right&#45;&#45;xs wit-flex__item&#45;&#45;grow wit-overflow&#45;&#45;hidden">-->
-    <!--        <h5 class="wit-color&#45;&#45;primary wit-offset-bottom&#45;&#45;xs wit-font-size&#45;&#45;sm wit-text&#45;&#45;overflow">-->
-    <!--          {{ profile.displayName }}-->
-    <!--        </h5>-->
-    <!--        <p class="wit-offset-bottom&#45;&#45;xs">-->
-    <!--          {{ $t('OffersAvailable', [profile.offersCount]) }}-->
-    <!--        </p>-->
-    <!--        <p class="wit-flex wit-flex&#45;&#45;align-center">-->
-    <!--          Steam Guard:-->
-    <!--          <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color&#45;&#45;success wit-offset-left&#45;&#45;xxs" icon="shield-check" />-->
-    <!--          <b-icon v-else size="is-small" class="is-size-6 wit-color&#45;&#45;danger wit-offset-left&#45;&#45;xxs" icon="shield-remove" />-->
-    <!--        </p>-->
-    <!--      </div>-->
-
-    <!--      <div class="wit-flex wit-flex&#45;&#45;column">-->
-    <!--        <b-button-->
-    <!--          v-if="profile.steamProfileUrl"-->
-    <!--          type="is-link"-->
-    <!--          tag="a"-->
-    <!--          :href="profile.steamProfileUrl"-->
-    <!--          target="_blank"-->
-    <!--          class="wit-offset-bottom&#45;&#45;xs wit-transition&#45;&#45;background wit-flex wit-flex&#45;&#45;center wis-profile-view__social-btn"-->
-    <!--          @click.stop-->
-    <!--        >-->
-    <!--          <b-icon size="is-small" class="is-size-5" icon="steam" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button-->
-    <!--          v-if="profile.discordDMUrl"-->
-    <!--          type="is-link"-->
-    <!--          tag="a"-->
-    <!--          :href="profile.discordDMUrl"-->
-    <!--          target="_blank"-->
-    <!--          class="wit-transition&#45;&#45;background wit-flex wit-flex&#45;&#45;center wis-profile-view__social-btn"-->
-    <!--          @click.stop-->
-    <!--        >-->
-    <!--          <b-icon size="is-small" class="is-size-5" icon="discord" />-->
-    <!--        </b-button>-->
-    <!--      </div>-->
-    <!--    </div>-->
   </div>
 </template>
 
 <script>
-// import Card from '@/components/Card'
 import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 import ProfileScale from '@/components/profiles/ProfileScale'
+import { buildRarityFilterUrl } from '@/utils/buildUrls'
 
 export default {
     name: 'ProfileView',
 
     components: {
         ProfileScale
-        // Card
     },
 
     props: {
@@ -167,8 +124,8 @@ export default {
     },
 
     methods: {
-        onProfileClick () {
-            this.$router.push(buildUserMarketUrl(this.profile.id))
+        onScaleClick (rarity) {
+            this.$router.push(buildRarityFilterUrl(this.profile.id, rarity))
         }
     }
 }

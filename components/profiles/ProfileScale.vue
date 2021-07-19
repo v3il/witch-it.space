@@ -1,14 +1,16 @@
 <template>
   <div class="wit-profile-scale wit-flex">
-    <div v-if="whimsicalWidth" class="wit-profile-scale__item-scale wit-profile-scale__whimsical" :style="{ width: whimsicalWidth + '%' }" />
-    <div v-if="veryRaresWidth" class="wit-profile-scale__item-scale wit-profile-scale__veryrare" :style="{ width: veryRaresWidth + '%' }" />
-    <div v-if="raresWidth" class="wit-profile-scale__item-scale wit-profile-scale__rare" :style="{ width: raresWidth + '%' }" />
-    <div v-if="uncommonsWidth" class="wit-profile-scale__item-scale wit-profile-scale__uncommon" :style="{ width: uncommonsWidth + '%' }" />
-    <div v-if="commonsWidth" class="wit-profile-scale__item-scale wit-profile-scale__common" :style="{ width: commonsWidth + '%' }" />
+    <div v-if="whimsicalScaleWidth" role="button" class="wit-profile-scale__item-scale wit-profile-scale__whimsical" :style="{ width: whimsicalScaleWidth + '%' }" @click="onWhimsicalClick" />
+    <div v-if="veryRareScaleWidth" role="button" class="wit-profile-scale__item-scale wit-profile-scale__veryrare" :style="{ width: veryRareScaleWidth + '%' }" @click="onVeryRareClick" />
+    <div v-if="rareScaleWidth" role="button" class="wit-profile-scale__item-scale wit-profile-scale__rare" :style="{ width: rareScaleWidth + '%' }" @click="onRareClick" />
+    <div v-if="uncommonScaleWidth" role="button" class="wit-profile-scale__item-scale wit-profile-scale__uncommon" :style="{ width: uncommonScaleWidth + '%' }" @click="onUncommonClick" />
+    <div v-if="commonScaleWidth" role="button" class="wit-profile-scale__item-scale wit-profile-scale__common" :style="{ width: commonScaleWidth + '%' }" @click="onCommonClick" />
   </div>
 </template>
 
 <script>
+import { Rarity } from '@/shared/items'
+
 export default {
     name: 'ProfileScale',
 
@@ -20,24 +22,46 @@ export default {
     },
 
     computed: {
-        whimsicalWidth () {
+        whimsicalScaleWidth () {
             return Math.floor(this.profile.whimsicals / this.profile.ordersCount * 100)
         },
 
-        veryRaresWidth () {
+        veryRareScaleWidth () {
             return Math.floor(this.profile.veryRares / this.profile.ordersCount * 100)
         },
 
-        raresWidth () {
+        rareScaleWidth () {
             return Math.floor(this.profile.rares / this.profile.ordersCount * 100)
         },
 
-        uncommonsWidth () {
+        uncommonScaleWidth () {
             return Math.floor(this.profile.uncommons / this.profile.ordersCount * 100)
         },
 
-        commonsWidth () {
-            return 100 - (this.whimsicalWidth + this.veryRaresWidth + this.raresWidth + this.uncommonsWidth)
+        commonScaleWidth () {
+            return 100 - (this.whimsicalScaleWidth + this.veryRareScaleWidth + this.rareScaleWidth + this.uncommonScaleWidth)
+        }
+    },
+
+    methods: {
+        onWhimsicalClick () {
+            this.$emit('click', Rarity.WHIMSICAL)
+        },
+
+        onVeryRareClick () {
+            this.$emit('click', Rarity.VERY_RARE)
+        },
+
+        onRareClick () {
+            this.$emit('click', Rarity.RARE)
+        },
+
+        onUncommonClick () {
+            this.$emit('click', Rarity.UNCOMMON)
+        },
+
+        onCommonClick () {
+            this.$emit('click', Rarity.COMMON)
         }
     }
 }
@@ -48,11 +72,18 @@ $borderRadius: 4px;
 
 .wit-profile-scale {
     width: 100%;
-    height: 5px;
+    height: 6px;
 }
 
 .wit-profile-scale__item-scale {
     height: inherit;
+    transition: transform var(--default-transition);
+    transform-origin: center;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 
     &:first-child {
         border-top-left-radius: $borderRadius;
