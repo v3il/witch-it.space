@@ -1,5 +1,5 @@
 <template>
-  <div class=" wit-overflow--hidden wis-profile-view wit-flex wit-flex--column wit-flex--align-center">
+  <div class="wit-overflow--hidden wis-profile-view wit-flex wit-flex--column wit-flex--align-center">
     <img
       :src="avatarUrl"
       alt="Avatar"
@@ -17,7 +17,7 @@
         type="is-link"
         tag="router-link"
         :to="marketUrl"
-        class="wit-transition--background"
+        class="wis-profile-view__stat-button"
         style="padding: 8px; height: auto; background: transparent; border-right: 1px solid #2e3648; flex: 1 0 50%;"
       >
         <div class="wit-flex wit-flex--column">
@@ -59,10 +59,11 @@
       </b-button>
 
       <b-button
+        v-if="profile.steamTradeLink"
         type="is-link"
         tag="a"
         size="is-small"
-        :href="profile.discordDMUrl"
+        :href="profile.steamTradeLink"
         target="_blank"
         class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
       >
@@ -134,7 +135,6 @@ export default {
 <style scoped lang="scss">
 .wis-profile-view {
     border-radius: var(--offset-xs);
-    min-height: 110px;
     border: 1px solid #36394c;
     padding: var(--offset-xs) var(--offset-sm);
 }
@@ -142,10 +142,7 @@ export default {
 .wis-profile-view__avatar {
     $avatar-size: 50px;
 
-    border-radius: 16px;
-    //padding: var(--offset-xxs);
-    //background-color: var(--gray-200);
-    //border: 1px solid var(--gray-300);
+    border-radius: var(--offset-sm);
     width: $avatar-size;
     height: $avatar-size;
 }
@@ -156,5 +153,13 @@ export default {
     width: $button-size;
     height: $button-size;
     border-radius: 50%;
+}
+
+.wis-profile-view__stat-button {
+    padding: var(--offset-xs);
+    height: auto;
+    background: transparent;
+    border-right: 1px solid #2e3648;
+    flex: 1 0 50%;
 }
 </style>

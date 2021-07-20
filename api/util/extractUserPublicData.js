@@ -36,6 +36,7 @@ export const extractOtherUsersPublicData = (user) => {
         avatarId: user.avatarId,
         isGuardProtected: user.isGuardProtected,
         steamProfileUrl: user.steamProfileUrl,
+        steamTradeLink: user.steamTradeLink,
         discordDMUrl,
         offersCount: Math.floor(Math.random() * 10)
     }
