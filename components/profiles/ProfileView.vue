@@ -6,7 +6,7 @@
       class="wit-offset-bottom--xs wit-flex--align-self-start1 wis-profile-view__avatar"
     >
 
-    <h5 class="wit-color--primary wit-offset-bottom--xs wit-font-size--sm wit-text--overflow">
+    <h5 class="wit-offset-bottom--xs wit-font-size--sm wit-text--overflow">
       {{ profile.displayName }}
       <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color--success wit-offset-left--xxs" icon="shield-check" />
       <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
@@ -18,11 +18,10 @@
         tag="router-link"
         :to="marketUrl"
         class="wis-profile-view__stat-button"
-        style="padding: 8px; height: auto; background: transparent; border-right: 1px solid #2e3648; flex: 1 0 50%;"
       >
         <div class="wit-flex wit-flex--column">
           <span class="wit-font-weight--700">{{ profile.ordersCount }}</span>
-          <span class="wit-color--muted">Orders</span>
+          <span class="wit-color--muted">{{ $t('Profiles_StatButtonOrders') }}</span>
         </div>
       </b-button>
 
@@ -30,12 +29,11 @@
         type="is-link"
         tag="router-link"
         :to="wishlistUrl"
-        class="wit-transition--background wit-flex wit-flex--center"
-        style="padding: 8px; height: auto; background: transparent; flex: 1 0 50%;"
+        class="wis-profile-view__stat-button"
       >
         <div class="wit-flex wit-flex--column">
           <span class="wit-font-weight--700">{{ profile.wishlistCount }}</span>
-          <span class="wit-color--muted">Wishlisted</span>
+          <span class="wit-color--muted">{{ $t('Profiles_StatButtonWishlist') }}</span>
         </div>
       </b-button>
     </div>
@@ -69,7 +67,7 @@
       >
         <div class="wit-flex wit-flex--align-center">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="arrow-decision" />
-          Send offer
+          {{ $t('Profiles_Trade') }}
         </div>
       </b-button>
 
@@ -158,8 +156,16 @@ export default {
 .wis-profile-view__stat-button {
     padding: var(--offset-xs);
     height: auto;
-    background: transparent;
-    border-right: 1px solid #2e3648;
+    background-color: transparent;
+    transition: background-color var(--default-transition);
     flex: 1 0 50%;
+
+    &:hover {
+        background-color: var(--dropdown-item-hover-background-color);
+    }
+
+    &:not(:last-child) {
+        border-right: 1px solid #2e3648;
+    }
 }
 </style>

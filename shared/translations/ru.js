@@ -167,6 +167,9 @@ export const ru = {
     Profiles_NoProfiles: 'Нет профилей',
     Profiles_SearchByUsername: 'Поиск пользователя',
     Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
+    Profiles_StatButtonOrders: 'Предложений',
+    Profiles_StatButtonWishlist: 'В желаемом',
+    Profiles_Trade: 'Обмен',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
     Items_Filters_AnyRarity: 'Любая редкость',
