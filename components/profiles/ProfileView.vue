@@ -51,8 +51,8 @@
         class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
       >
         <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="steam" />
-          Steam
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="steam" />
+          <!--          Steam-->
         </div>
       </b-button>
 
@@ -81,8 +81,8 @@
         class="wit-transition--background wit-flex wit-flex--center"
       >
         <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="discord" />
-          Discord
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="discord" />
+          <!--          Discord-->
         </div>
       </b-button>
     </div>

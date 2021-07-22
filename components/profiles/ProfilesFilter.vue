@@ -1,11 +1,12 @@
 <template>
   <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
     <b-input
+      class="wit-offset-right--xs"
       :value="filtersData.query"
       maxlength="20"
       :placeholder="$t('Profiles_SearchByUsername')"
-      custom-class="wit-transition wit-block--full-width1"
-      style="flex: 0 0 300px;"
+      custom-class="wit-transition"
+      style="flex: 1 1 300px;"
       :has-counter="false"
       icon-right="close"
       icon-right-clickable

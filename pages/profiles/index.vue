@@ -196,8 +196,7 @@ export default {
     padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {
-        padding-left: 0;
-        padding-right: 0;
+        padding: var(--offset-xs);
     }
 }
 
@@ -210,26 +209,25 @@ export default {
 
 .wis-profiles__profile-container {
     flex: 0 0 auto;
-    width: 20%;
 
-    //@media screen and (max-width: 767px) {
-    //    width: 100%;
-    //}
-    //
-    //@media screen and (min-width: 768px) {
-    //    width: 50%;
-    //}
-    //
-    //@media (min-width: 1200px) {
-    //    width: 15%;
-    //}
-    //
-    //@media (min-width: 1920px) {
-    //    width: 15%;
-    //}
-    //
-    //@media (min-width: 2500px) {
-    //    width: 20%;
-    //}
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
+
+    @media screen and (min-width: 601px) {
+        width: 50%;
+    }
+
+    @media (min-width: 900px) {
+        width: 33.3333%;
+    }
+
+    @media (min-width: 1450px) {
+        width: 20%;
+    }
+
+    @media (min-width: 2500px) {
+        width: 15%;
+    }
 }
 </style>
