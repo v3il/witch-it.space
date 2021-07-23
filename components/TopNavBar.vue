@@ -1,7 +1,7 @@
 <template>
   <b-navbar class="wiz-header">
     <template #brand>
-      <b-navbar-item class="wit-paddings--none wit-font-size--sm">
+      <b-navbar-item class="wit-font-size--sm">
         <slot name="brand" />
       </b-navbar-item>
     </template>

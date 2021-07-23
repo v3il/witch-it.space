@@ -116,10 +116,6 @@ export default {
 
     .layout__main {
         padding: 0 var(--offset-md) var(--offset-md);
-
-        @media screen and (max-width: 768px) {
-            padding: 0 var(--offset-sm) var(--offset-sm);
-        }
     }
 
     .layout__notification {
@@ -127,5 +123,19 @@ export default {
         position: fixed;
         right: var(--offset-sm);
         bottom: var(--offset-sm);
+    }
+
+    @media screen and (max-width: 768px) {
+        .layout__main {
+            padding: 0 var(--offset-sm) var(--offset-sm);
+        }
+
+        .layout__left {
+            display: none;
+        }
+
+        .layout__right {
+            margin-left: 0 !important;
+        }
     }
 </style>

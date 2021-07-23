@@ -6,7 +6,7 @@
       maxlength="20"
       :placeholder="$t('Profiles_SearchByUsername')"
       custom-class="wit-transition"
-      style="flex: 1 1 300px;"
+      style="flex: 0 1 300px;"
       :has-counter="false"
       icon-right="close"
       icon-right-clickable

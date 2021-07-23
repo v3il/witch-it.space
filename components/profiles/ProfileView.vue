@@ -1,16 +1,19 @@
 <template>
-  <div class="wit-overflow--hidden wis-profile-view wit-flex wit-flex--column wit-flex--align-center">
+  <div class="wit-overflow--hidden wis-profile-view wit-flex--align-center">
     <img
       :src="avatarUrl"
       alt="Avatar"
-      class="wit-offset-bottom--xs wit-flex--align-self-start1 wis-profile-view__avatar"
+      class="wit-offset-bottom--xs wis-profile-view__avatar wit-block wit-offset-left--auto wit-offset-right--auto"
     >
 
-    <h5 class="wit-offset-bottom--xs wit-font-size--sm wit-text--overflow">
-      {{ profile.displayName }}
-      <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color--success wit-offset-left--xxs" icon="shield-check" />
-      <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
-    </h5>
+    <div class="wit-flex wit-flex--center wit-offset-bottom--xs">
+      <h5 class="wit-font-size--sm wit-text--overflow">
+        {{ profile.displayName }}
+      </h5>
+
+      <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success wit-offset-left--xxs wit-flex__item--no-shrink" icon="shield-check" />
+      <b-icon v-else size="is-small" class="is-size-61 wit-color--danger wit-offset-left--xxs wit-flex__item--no-shrink wit-offset-top--xxs" icon="shield-remove" />
+    </div>
 
     <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
       <b-button
@@ -40,7 +43,7 @@
 
     <ProfileScale :profile="profile" class="wit-offset-bottom--sm" @click="onScaleClick" />
 
-    <div class="wit-flex">
+    <div class="wit-flex wit-flex--justify-center">
       <b-button
         v-if="profile.steamProfileUrl"
         type="is-link"
@@ -57,6 +60,21 @@
       </b-button>
 
       <b-button
+        v-if="profile.discordDMUrl"
+        type="is-link"
+        tag="a"
+        size="is-small"
+        :href="profile.discordDMUrl"
+        target="_blank"
+        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
+      >
+        <div class="wit-flex wit-flex--align-center">
+          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="discord" />
+          <!--          Discord-->
+        </div>
+      </b-button>
+
+      <b-button
         v-if="profile.steamTradeLink"
         type="is-link"
         tag="a"
@@ -68,21 +86,6 @@
         <div class="wit-flex wit-flex--align-center">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="arrow-decision" />
           {{ $t('Profiles_Trade') }}
-        </div>
-      </b-button>
-
-      <b-button
-        v-if="profile.discordDMUrl"
-        type="is-link"
-        tag="a"
-        size="is-small"
-        :href="profile.discordDMUrl"
-        target="_blank"
-        class="wit-transition--background wit-flex wit-flex--center"
-      >
-        <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="discord" />
-          <!--          Discord-->
         </div>
       </b-button>
     </div>
