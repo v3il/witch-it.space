@@ -8,6 +8,21 @@
 
     <template #start>
       <slot name="topMenu" />
+
+      <div v-if="user" class="wit-flex wit-flex--column bbbb">
+        <b-button
+          v-for="link in links"
+          :key="link.to"
+          type="is-ghost"
+          class="is-large wit-transition wit-link"
+          :to="link.to"
+          tag="nuxt-link"
+          :class="getLinkClasses(link)"
+        >
+          <b-icon class="is-size-5 wit-color--Y400" :icon="link.icon" />
+          {{ $t(link.textId) }}
+        </b-button>
+      </div>
     </template>
 
     <template #end>
@@ -32,6 +47,7 @@ import ThemeSwitcher from '@/components/ThemeSwitcher'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { User } from '@/store'
 import UserDropdown from '@/components/UserDropdown'
+import { getNavbarLinks } from '@/shared'
 
 export default {
     name: 'TopNavBar',
@@ -45,7 +61,23 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ])
+        ]),
+
+        activeLink () {
+            return this.links.find(({ to }) => to === this.$route.path)
+        }
+    },
+
+    created () {
+        this.links = getNavbarLinks(this.user)
+    },
+
+    methods: {
+        getLinkClasses (link) {
+            return {
+                active: link === this.activeLink
+            }
+        }
     }
 }
 </script>
@@ -58,6 +90,12 @@ export default {
     padding: 0 var(--offset-md);
     position: sticky;
     top: 0;
+}
+
+.bbbb {
+    border-top: 1px solid rgb(58 68 91);
+    border-bottom: 1px solid rgb(58 68 91);
+    margin-top: 16px;
 }
 
 @media screen and (max-width: 1024px) {
