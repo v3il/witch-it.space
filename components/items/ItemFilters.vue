@@ -35,6 +35,26 @@
         </b-dropdown-item>
       </b-dropdown>
 
+      <b-dropdown
+        :value="filtersData.events"
+        multiple
+        aria-role="list"
+        @input="onEventsChange"
+      >
+        <template #trigger>
+          <b-button
+            type="is-primary"
+            icon-right="menu-down"
+          >
+            {{ filtersData.events }}
+          </b-button>
+        </template>
+
+        <b-dropdown-item v-for="event in $options.events" :key="event.value" :value="event.value">
+          <span>{{ event.label }}</span>
+        </b-dropdown-item>
+      </b-dropdown>
+
       <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
         {{ $t('Profiles_SteamGuardedOnly') }}
       </b-switch>
@@ -43,12 +63,13 @@
 </template>
 
 <script>
-import { raritiesManager } from '@/shared'
+import { eventsManager, raritiesManager } from '@/shared'
 
 export default {
     name: 'ProfilesFilter',
 
     rarities: raritiesManager.getAll(),
+    events: eventsManager.getAll(),
 
     props: {
         filtersData: {
@@ -64,6 +85,10 @@ export default {
 
         onRaritiesChange (rarities) {
             this.updateFilters({ rarities })
+        },
+
+        onEventsChange (events) {
+            this.updateFilters({ events })
         },
 
         onIsSteamGuardedChange (isSteamGuarded) {

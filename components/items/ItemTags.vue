@@ -7,9 +7,7 @@
 </template>
 
 <script>
-import { raritiesManager } from '@/shared'
-
-console.log(raritiesManager)
+import { eventsManager, raritiesManager } from '@/shared'
 
 export default {
     name: 'ItemTags',
@@ -46,18 +44,7 @@ export default {
 
     methods: {
         getRarityTag () {
-            return raritiesManager.findByValue(this.item.rarity).label
-
-            // return {
-            //     veryrare: 'Very rare',
-            //     whimsical: 'Whimsical',
-            //     rare: 'Rare',
-            //     common: 'Common',
-            //     uncommon: 'Uncommon',
-            //     unlock: 'Unlock',
-            //     promo: 'Promo',
-            //     eventrarity: 'Event'
-            // }[this.item.rarity]
+            return raritiesManager.find(this.item.rarity).label
         },
 
         getIsTradeableTag () {
@@ -81,24 +68,7 @@ export default {
         },
 
         getEventTag () {
-            return {
-                'mystic sands': 'Mystic Sands',
-                'winterdream witch': 'Winter Dream Witch',
-                'chinese newyear': 'Chinese New Year',
-                summerevent: 'Summer Event',
-                halloween: 'Halloween',
-                winterdream: 'Winter Dream',
-                winterdream2018: 'Winter Dream 2018',
-                winterdream2019: 'Winter Dream 2019',
-                winterdream2020: 'Winter Dream 2020',
-                theater: 'Theater',
-                springfever: 'Spring Fever',
-                plunderparty: 'Plunder Party',
-                halloween2018: 'Halloween 2018',
-                halloween2019: 'Halloween 2019',
-                halloween2020: 'Halloween 2020',
-                witchforest: 'Witch Forest'
-            }[this.item.event]
+            return eventsManager.find(this.item.event)
         },
 
         getCharacterTag () {

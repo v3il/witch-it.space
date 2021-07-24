@@ -1,5 +1,5 @@
-export class RaritiesManager {
-    #rarities = [
+export class ItemTypesManager {
+    #itemTypes = [
         { value: 'veryrare', label: 'Very rare' },
         { value: 'whimsical', label: 'Whimsical' },
         { value: 'rare', label: 'Rare' },
@@ -11,10 +11,10 @@ export class RaritiesManager {
     ]
 
     find (value) {
-        return this.#rarities.find(rarity => rarity.value === value)
+        return this.#itemTypes.find(rarity => rarity.value === value)
     }
 
     getAll () {
-        return this.#rarities
+        return this.#itemTypes
     }
 }

@@ -1,7 +1,5 @@
 import { RaritiesManager } from './RaritiesManager'
+import { EventsManager } from './EventsManager'
 
-console.error(RaritiesManager)
-
+export const eventsManager = new EventsManager()
 export const raritiesManager = new RaritiesManager()
-
-console.log(raritiesManager)
