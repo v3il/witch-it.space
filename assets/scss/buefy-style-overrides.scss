@@ -99,10 +99,10 @@ h6 {
 .navbar-start:not(:empty) {
     margin-left: auto;
 
-    //@media screen and (max-width: 1024px) {
-    //    padding-top: var(--offset-xs);
-    //    border-bottom: var(--navbar-mobile-footer-border);
-    //}
+    @media screen and (max-width: 1024px) {
+        border-top: 1px solid #3a445b;
+        border-bottom: 1px solid #3a445b;
+    }
 }
 
 .navbar-end {

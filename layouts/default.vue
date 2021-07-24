@@ -125,7 +125,7 @@ export default {
         bottom: var(--offset-sm);
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
         .layout__main {
             padding: 0 var(--offset-sm) var(--offset-sm);
         }

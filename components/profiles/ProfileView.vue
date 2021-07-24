@@ -11,8 +11,8 @@
         {{ profile.displayName }}
       </h5>
 
-      <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success wit-offset-left--xxs wit-flex__item--no-shrink" icon="shield-check" />
-      <b-icon v-else size="is-small" class="is-size-61 wit-color--danger wit-offset-left--xxs wit-flex__item--no-shrink wit-offset-top--xxs" icon="shield-remove" />
+      <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success wit-offset-left--xs wit-flex__item--no-shrink" icon="shield-check" />
+      <b-icon v-else size="is-small" class="is-size-61 wit-color--danger wit-offset-left--xxs wit-flex__item--no-shrink wit-offset-top--xs" icon="shield-remove" />
     </div>
 
     <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
@@ -41,9 +41,9 @@
       </b-button>
     </div>
 
-    <ProfileScale :profile="profile" class="wit-offset-bottom--sm" @click="onScaleClick" />
+    <ProfileScale :profile="profile" class="wit-offset-bottom--sm1" @click="onScaleClick" />
 
-    <div class="wit-flex wit-flex--justify-center">
+    <div v-if="0" class="wit-flex wit-flex--justify-center">
       <b-button
         v-if="profile.steamProfileUrl"
         type="is-link"
@@ -137,7 +137,7 @@ export default {
 .wis-profile-view {
     border-radius: var(--offset-xs);
     border: 1px solid #36394c;
-    padding: var(--offset-xs) var(--offset-sm);
+    padding: /*var(--offset-xs) */var(--offset-sm);
 }
 
 .wis-profile-view__avatar {
