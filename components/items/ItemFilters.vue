@@ -19,6 +19,8 @@
         :value="filtersData.rarities"
         multiple
         aria-role="list"
+        scrollable
+        :max-height="250"
         @input="onRaritiesChange"
       >
         <template #trigger>
@@ -39,6 +41,8 @@
         :value="filtersData.events"
         multiple
         aria-role="list"
+        scrollable
+        :max-height="250"
         @input="onEventsChange"
       >
         <template #trigger>
@@ -55,21 +59,48 @@
         </b-dropdown-item>
       </b-dropdown>
 
-      <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
-        {{ $t('Profiles_SteamGuardedOnly') }}
+      <b-dropdown
+        :value="filtersData.slots"
+        multiple
+        aria-role="list"
+        scrollable
+        :max-height="250"
+        @input="onSlotsChange"
+      >
+        <template #trigger>
+          <b-button
+            type="is-primary"
+            icon-right="menu-down"
+          >
+            {{ filtersData.slots }}
+          </b-button>
+        </template>
+
+        <b-dropdown-item v-for="slot in $options.slots" :key="slot.value" :value="slot.value">
+          <span>{{ slot.label }}</span>
+        </b-dropdown-item>
+      </b-dropdown>
+
+      <b-switch :value="filtersData.isOnlyTradeable" @input="onIsOnlyTradeableChange">
+        Only tradeable
+      </b-switch>
+
+      <b-switch :value="filtersData.isOnlyOwned" @input="onIsOnlyOwnedChange">
+        Only owned
       </b-switch>
     </div>
   </Card>
 </template>
 
 <script>
-import { eventsManager, raritiesManager } from '@/shared'
+import { eventsManager, raritiesManager, slotsManager } from '@/shared'
 
 export default {
     name: 'ProfilesFilter',
 
     rarities: raritiesManager.getAll(),
     events: eventsManager.getAll(),
+    slots: slotsManager.getAll(),
 
     props: {
         filtersData: {
@@ -91,8 +122,16 @@ export default {
             this.updateFilters({ events })
         },
 
-        onIsSteamGuardedChange (isSteamGuarded) {
-            this.updateFilters({ isSteamGuarded })
+        onSlotsChange (slots) {
+            this.updateFilters({ slots })
+        },
+
+        onIsOnlyTradeableChange (isOnlyTradeable) {
+            this.updateFilters({ isOnlyTradeable })
+        },
+
+        onIsOnlyOwnedChange (isOnlyOwned) {
+            this.updateFilters({ isOnlyOwned })
         },
 
         clearQuery () {

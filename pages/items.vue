@@ -76,7 +76,7 @@ export default {
             rarities: [],
             isOnlyTradeable: false,
             isOnlyOwned: false,
-            parts: [],
+            slots: [],
             events: []
         }
     }),

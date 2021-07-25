@@ -1,4 +1,4 @@
-export { raritiesManager, eventsManager } from './items'
+export { raritiesManager, eventsManager, slotsManager } from './items'
 export { Routes } from './Routes'
 export { Cookies } from './Cookies'
 export { config, Themes, Locales } from './config'

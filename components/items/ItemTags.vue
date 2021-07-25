@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { eventsManager, raritiesManager } from '@/shared'
+import { eventsManager, raritiesManager, slotsManager } from '@/shared'
 
 export default {
     name: 'ItemTags',
@@ -52,23 +52,11 @@ export default {
         },
 
         getPartTag () {
-            return {
-                'upper body': 'Upper Body',
-                'lower body': 'Lower Body',
-                'melee weapon': 'Melee Weapon',
-                'skin color': 'Skin Color',
-                'player icon': 'Player Icon',
-                ingredient: 'Ingredient',
-                hat: 'Hat',
-                head: 'Head',
-                body: 'Body',
-                projectile: 'Projectile',
-                broom: 'Broom'
-            }[this.item.slot]
+            return slotsManager.find(this.item.slot).label
         },
 
         getEventTag () {
-            return eventsManager.find(this.item.event)
+            return eventsManager.find(this.item.event).label
         },
 
         getCharacterTag () {
