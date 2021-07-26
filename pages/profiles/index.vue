@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { isEqual } from 'lodash'
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
 import ProfileView from '@/components/profiles/ProfileView'
 
@@ -53,11 +54,7 @@ export default {
     watch: {
         filtersData: {
             handler (filtersData) {
-                const { query: params } = this.$route
-                const isQuerySame = params.query === filtersData.query
-                const isSteamGuardedSame = params.isSteamGuarded === filtersData.isSteamGuarded
-
-                if (isQuerySame && isSteamGuardedSame) {
+                if (isEqual(this.filtersData, this.$route.query)) {
                     return
                 }
 

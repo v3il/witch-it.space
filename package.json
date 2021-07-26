@@ -40,6 +40,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "lazyload-vue": "^0.1.20",
+    "lodash": "^4.17.21",
     "log4js": "^6.3.0",
     "node-steam-openid": "^1.0.0",
     "nuxt": "^2.15.7",

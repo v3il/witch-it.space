@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { isEqual } from 'lodash'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildItemUrl } from '@/utils'
@@ -106,11 +107,7 @@ export default {
     watch: {
         filters: {
             handler (filters) {
-                const { query: params } = this.$route
-                const isQuerySame = params.query === filters.query
-                const isSteamGuardedSame = true // params.isSteamGuarded === filters.isSteamGuarded
-
-                if (isQuerySame && isSteamGuardedSame) {
+                if (isEqual(this.filters, this.$route.query)) {
                     return
                 }
 
@@ -143,7 +140,12 @@ export default {
             const { query: params } = this.$route
 
             this.filters.query = params.query ?? ''
-            // this.filtersData.isSteamGuarded = params.isSteamGuarded === 'true'
+            this.filters.rarities = params.rarities ?? []
+            this.filters.slots = params.slots ?? []
+            this.filters.events = params.events ?? []
+            this.filters.isOnlyTradeable = params.isOnlyTradeable ?? false
+            this.filters.isOnlyOwned = params.isOnlyOwned ?? false
+            this.filters.isOnlyOwned = params.isOnlyOwned ?? false
         },
 
         onFiltersChange (filters) {
