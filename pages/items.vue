@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { differenceWith, isEqual } from 'lodash'
+import { isEqual } from 'lodash'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildItemUrl, getObjectsDiff } from '@/utils'
@@ -99,7 +99,7 @@ export default {
         },
 
         slicedItems () {
-            return this.filteredItems.slice(0, this.page * 100)
+            return this.filteredItems.slice(0, this.page * 50)
         },
 
         itemPreviewURL () {

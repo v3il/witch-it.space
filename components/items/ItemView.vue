@@ -1,17 +1,17 @@
 <template>
-  <div class="wit-item-view wit-paddings--xs1 wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-position--relative bbbb wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
+  <div class="wit-item-view wit-cursor--pointer" @click="onItemClicked">
+    <div class="wit-position--relative wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
       <img
         :src="itemPreviewURL"
         :alt="item.name"
         :title="item.name"
         class="wit-item-image__image wit-block"
       >
-      <div v-if="itemCount > 0" class="wit-item-image__counter wit-font-size--xxs1 wit-none--mobile1">
+      <div v-if="itemCount > 0" class="wit-item-image__counter">
         x{{ itemCount }}
       </div>
 
-      <p v-if="isItemShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs ccc wit-line-height--sm">
+      <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs ccc wit-line-height--sm">
         {{ item.name }}
       </p>
     </div>
@@ -45,16 +45,18 @@ export default {
 
     computed: {
         itemClass () {
-            return {
-                veryrare: 'wit-item--very-rare',
-                whimsical: 'wit-item--whimsical',
-                rare: 'wit-item--rare',
-                common: 'wit-item--common',
-                uncommon: 'wit-item--uncommon',
-                unlock: 'wit-item--unlock',
-                promo: 'wit-item--promo',
-                eventrarity: 'wit-item--eventrarity'
+            const rarity = {
+                veryrare: 'very-rare',
+                whimsical: 'whimsical',
+                rare: 'rare',
+                common: 'common',
+                uncommon: 'uncommon',
+                unlock: 'unlock',
+                promo: 'promo',
+                eventrarity: 'eventrarity'
             }[this.item.rarity]
+
+            return `wit-item-view--${rarity}`
         },
 
         itemPreviewURL () {
@@ -73,7 +75,6 @@ export default {
 <style scoped lang="scss">
 .wit-item-view {
     width: 100%;
-    //max-width: 150px;
 }
 
 .wit-item-image__counter {
@@ -86,11 +87,11 @@ export default {
     font-weight: bold;
 }
 
-.bbbb {
+.wit-item-view__container {
     border: 2px solid transparent;
     border-radius: 8px;
 
-    &.wit-item--common {
+    &.wit-item-view--common {
         border-color: var(--item-common);
 
         .wit-item-image__counter {
@@ -99,7 +100,7 @@ export default {
         }
     }
 
-    &.wit-item--uncommon {
+    &.wit-item-view--uncommon {
         border-color: var(--item-uncommon);
 
         .wit-item-image__counter {
@@ -108,7 +109,7 @@ export default {
         }
     }
 
-    &.wit-item--promo {
+    &.wit-item-view--promo {
         border-color: var(--item-promo);
 
         .wit-item-image__counter {
@@ -117,7 +118,7 @@ export default {
         }
     }
 
-    &.wit-item--eventrarity {
+    &.wit-item-view--eventrarity {
         border-color: var(--item-event);
 
         .wit-item-image__counter {
@@ -126,7 +127,7 @@ export default {
         }
     }
 
-    &.wit-item--unlock {
+    &.wit-item-view--unlock {
         border-color: var(--item-unlock);
 
         .wit-item-image__counter {
@@ -135,7 +136,7 @@ export default {
         }
     }
 
-    &.wit-item--rare {
+    &.wit-item-view--rare {
         border-color: var(--item-rare);
 
         .wit-item-image__counter {
@@ -144,7 +145,7 @@ export default {
         }
     }
 
-    &.wit-item--very-rare {
+    &.wit-item-view--very-rare {
         border-color: var(--item-very-rare);
 
         .wit-item-image__counter {
@@ -152,7 +153,7 @@ export default {
         }
     }
 
-    &.wit-item--whimsical {
+    &.wit-item-view--whimsical {
         border-color: var(--item-whimsical);
 
         .wit-item-image__counter {
