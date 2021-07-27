@@ -89,9 +89,16 @@ export default {
 
             return items.filter((item) => {
                 const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-                // const isFilteredBySteamGuard = this.filtersData.isSteamGuarded ? item.isGuardProtected : true
+                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
 
-                return isFilteredByName // && isFilteredBySteamGuard
+                return isFilteredByRarity &&
+                    isFilteredBySlot &&
+                    isFilteredByName &&
+                    isFilteredByTradeable &&
+                    isFilteredByEvent
             })
         },
 
@@ -143,9 +150,8 @@ export default {
             this.filters.rarities = params.rarities ?? []
             this.filters.slots = params.slots ?? []
             this.filters.events = params.events ?? []
-            this.filters.isOnlyTradeable = params.isOnlyTradeable ?? false
-            this.filters.isOnlyOwned = params.isOnlyOwned ?? false
-            this.filters.isOnlyOwned = params.isOnlyOwned ?? false
+            this.filters.isOnlyTradeable = params.isOnlyTradeable === 'true' ?? false
+            this.filters.isOnlyOwned = params.isOnlyOwned === 'true' ?? false
         },
 
         onFiltersChange (filters) {
