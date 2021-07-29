@@ -3,7 +3,7 @@ export const buildItemUrl = (itemName) => {
 }
 
 export const buildAvatarUrl = (avatarId) => {
-    return `/images/${avatarId}.png`
+    return `/images/avatars/${avatarId}.webp`
 }
 
 export const buildUserMarketUrl = (userId) => {

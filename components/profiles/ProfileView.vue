@@ -143,7 +143,7 @@ export default {
 .wis-profile-view__avatar {
     $avatar-size: 50px;
 
-    border-radius: var(--offset-sm);
+    border-radius: var(--offset-xxs);
     width: $avatar-size;
     height: $avatar-size;
 }

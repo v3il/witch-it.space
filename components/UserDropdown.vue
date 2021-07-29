@@ -100,10 +100,10 @@ export default {
 }
 
 .wit-user-dropdown__image {
-    height: 28px;
-    width: 28px;
+    height: 32px;
+    width: 32px;
     max-height: none;
-    border-radius: 50%;
+    border-radius: 4px;
 }
 
 .username {
