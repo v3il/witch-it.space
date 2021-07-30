@@ -18,7 +18,7 @@
             </p>
 
             <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">
-              <img class="login-page__image" src="images/hey.png" alt="Hey!">
+              <img class="login-page__image" src="images/hey.webp" alt="Hey!">
             </div>
           </header>
 
@@ -139,18 +139,19 @@ export default {
 }
 
 .login-page__image-block {
-    border-radius: 50%;
+    border-radius: var(--offset-xs);
     width: 72px;
     height: 72px;
     left: 50%;
     transform: translateX(-50%);
-    border: 2px solid var(--primary);
+    border: 3px solid var(--primary);
+    top: 82px;
 }
 
 .login-page__image {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: inherit;
 }
 
 .login-page__form-content {
