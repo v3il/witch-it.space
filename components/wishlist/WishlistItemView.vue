@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: rgb(34 39 54);" class="aaa wit-paddings--sm wit-flex wit-flex--column" :class="itemClass">
+  <div style="border: 1px solid #36394c; /*background-color: rgb(34 39 54);*/" class="aaa wit-paddings--sm wit-flex wit-flex--column" :class="itemClass">
     <p class="wit-offset-bottom--xs wit-line-height--sm">
       {{ item.name }}
     </p>

@@ -183,7 +183,7 @@ export const ru = {
     Items_Filters_OnlyOwned: 'Только имеющиеся',
 
     Wishlist_TopTabs_Orders: 'Заказы',
-    Wishlist_TopTabs_Wishlist: 'Желаемое',
+    Wishlist_TopTabs_Wishlist: 'Список желаемого',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

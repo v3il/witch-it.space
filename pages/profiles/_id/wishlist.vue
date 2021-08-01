@@ -27,25 +27,25 @@
       </div>
 
       <div class="wit-flex__item--grow">
-        <div class="wit-flex wit-offset-bottom--md wit-flex--justify-center">
-          <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">
-            <div class="wit-offset-bottom--xs">
-              <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
-                Add items
-              </b-button>
+        <!--        <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">-->
+        <!--          <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">-->
+        <!--            <div class="wit-offset-bottom&#45;&#45;xs">-->
+        <!--              <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
+        <!--                Add items-->
+        <!--              </b-button>-->
 
-              <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
-                Manage
-              </b-button>
-            </div>
+        <!--              <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
+        <!--                Manage-->
+        <!--              </b-button>-->
+        <!--            </div>-->
 
-            <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="areFiltersVisible = !areFiltersVisible">
-              Filters
-            </b-button>
-          </div>
-        </div>
+        <!--            <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="areFiltersVisible = !areFiltersVisible">-->
+        <!--              Filters-->
+        <!--            </b-button>-->
+        <!--          </div>-->
+        <!--        </div>-->
 
-        <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item--grow wit-offset-bottom--md" @change="() => {}" @reset="() => {}" />
+        <!--        <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />-->
 
         <Card>
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
@@ -95,7 +95,7 @@
 <script>
 import UserView from '@/components/UserView'
 import ItemView from '@/components/items/ItemView'
-import ItemFilters from '@/components/items/ItemFilters'
+// import ItemFilters from '@/components/items/ItemFilters'
 import { buildUserMarketUrl } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
@@ -123,7 +123,7 @@ export default {
         ItemView,
         WishlistItemView,
         ItemTags,
-        ItemFilters,
+        // ItemFilters,
         UserView,
         Card,
         TopNavBar

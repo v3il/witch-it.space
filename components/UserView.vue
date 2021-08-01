@@ -29,7 +29,8 @@
           class="wis-profile-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <b-icon size="is-small1" class="is-size-41 wit-offset-right--none wit-offset-bottom--xxs" icon="steam" />
+            <i class="mdi mdi-steam mdi-24px" />
+            <!--            <b-icon size="is-small1" class="is-size-41 wit-offset-right&#45;&#45;none wit-offset-bottom&#45;&#45;xxs" icon="steam" />-->
             <span class="wit-color--muted">Steam</span>
           </div>
         </b-button>
@@ -41,7 +42,8 @@
           class="wis-profile-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <b-icon size="is-small1" class="is-size-41 wit-offset-right--none wit-offset-bottom--xxs" icon="discord" />
+            <i class="mdi mdi-discord mdi-24px" />
+            <!--            <b-icon size="is-small1" class="is-size-41 wit-offset-right&#45;&#45;none wit-offset-bottom&#45;&#45;xxs" icon="discord" />-->
             <span class="wit-color--muted">Discord</span>
           </div>
         </b-button>
@@ -49,21 +51,22 @@
     </div>
 
     <div v-if="profile.wishlistNote" style="padding: 24px;">
-      <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--sm">
+      <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
         Wishlist note
       </h5>
+
       <p class="wit-line-height--md wit-color--muted">
         {{ profile.wishlistNote }}
       </p>
     </div>
 
     <div class="tttttt">
-      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs1">
+      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs1" square>
         <b-icon v-if="profile.isGuardProtected" custom-size="mdi-24px" size="is-small1" class="is-size-61 wit-color--success" icon="shield-check" />
         <b-icon v-else size="is-small1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="shield-remove" />
       </b-tooltip>
 
-      <b-tooltip label="Items exchange" class="ttt">
+      <b-tooltip label="Items exchange" class="ttt" square>
         <b-icon size="is-medium1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="swap-horizontal-circle-outline" />
       </b-tooltip>
     </div>
