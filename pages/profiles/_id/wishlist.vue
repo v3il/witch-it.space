@@ -23,7 +23,7 @@
 
     <div class="wit-items wit-flex">
       <div style="flex-basis: 350px;" class="wit-offset-right--md">
-        <UserView v-if="user" :profile="user" />
+        <UserView v-if="profile" :profile="profile" />
       </div>
 
       <div class="wit-flex__item--grow">
@@ -47,7 +47,43 @@
 
         <!--        <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />-->
 
+        <Card v-if="isMyProfile" class="wit-offset-bottom--md">
+          <div class="wit-flex wit-flex--justify-end wit-flex--wrap">
+            <b-button type="is-primary" class="wit-transition wit-offset-right--xs">
+              Create offer
+            </b-button>
+
+            <b-button type="is-primary" class="wit-transition wit-offset-right--xs">
+              Wishlist item
+            </b-button>
+
+            <b-dropdown
+              animation="fade150"
+              class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs"
+              style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer; height: 35px; width: 35px;"
+              position="is-bottom-left"
+              @active-change="() => {}"
+            >
+              <template #trigger>
+                <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 36px;">
+                  <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />
+                </div>
+              </template>
+
+              <div style="width: 600px; height: 600px;">
+                Filters
+              </div>
+            </b-dropdown>
+
+            <!--            <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
+            <!--              <i class="mdi mdi-dots-grid mdi-24px" />-->
+            <!--            </b-button>-->
+          </div>
+        </Card>
+
         <Card>
+          <WishlistFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" />
+
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
             <WishlistItemView
               v-for="item in wishlist"
@@ -93,14 +129,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserView from '@/components/UserView'
 import ItemView from '@/components/items/ItemView'
-// import ItemFilters from '@/components/items/ItemFilters'
+import ItemFilters from '@/components/items/ItemFilters'
 import { buildUserMarketUrl } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
+import WishlistFilter from '@/components/wishlist/WishlistFilter'
+import { User } from '@/store'
 
 const modes = {
     MARKET: 'market',
@@ -123,7 +162,7 @@ export default {
         ItemView,
         WishlistItemView,
         ItemTags,
-        // ItemFilters,
+        WishlistFilter,
         UserView,
         Card,
         TopNavBar
@@ -133,7 +172,7 @@ export default {
 
     data: () => ({
         wishlist: [],
-        user: null,
+        profile: null,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
@@ -141,10 +180,15 @@ export default {
         mode: modes.WISHLIST
     }),
 
-    // async fetch ({ app: { $itemsService } }) {
-    //     await $itemsService.fetch()
-    //     return { items: $itemsService.toList() }
-    // },
+    computed: {
+        ...mapState(User.PATH, [
+            User.State.USER
+        ]),
+
+        isMyProfile () {
+            return this.user.id === this.profile?.id
+        }
+    },
 
     async created () {
         await this.$itemsService.fetch()
@@ -155,12 +199,12 @@ export default {
         }
 
         this.wishlist = wishlist
-        this.user = user
+        this.profile = user
     },
 
     methods: {
         redirectToOrders () {
-            this.$router.push(buildUserMarketUrl(this.user.id))
+            this.$router.push(buildUserMarketUrl(this.profile.id))
         }
     }
 }

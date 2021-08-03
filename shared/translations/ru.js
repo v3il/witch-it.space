@@ -185,6 +185,11 @@ export const ru = {
     Wishlist_TopTabs_Orders: 'Заказы',
     Wishlist_TopTabs_Wishlist: 'Список желаемого',
 
+    UserView_SteamGuardEnabled: 'Steam Guard активирован',
+    UserView_SteamGuardDisabled: 'Steam Guard не активирован',
+    UserView_MaterialsReplacementEnabled: 'Разрешено заменять ингредиенты другими типами',
+    UserView_MaterialsReplacementDisabled: 'Запрещено заменять ингредиенты другими типами',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10

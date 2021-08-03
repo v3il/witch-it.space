@@ -79,9 +79,9 @@ export default {
 <style scoped>
     .aaa {
         width: 275px;
-        padding: 8px 16px;
+        padding: 8px 16px 16px;
         border-radius: 8px;
-        min-height: 220px;
+        /*min-height: 220px;*/
     }
 
     .pv:not(:last-child) {

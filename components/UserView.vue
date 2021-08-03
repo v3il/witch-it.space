@@ -61,13 +61,12 @@
     </div>
 
     <div class="tttttt">
-      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs1" square>
-        <b-icon v-if="profile.isGuardProtected" custom-size="mdi-24px" size="is-small1" class="is-size-61 wit-color--success" icon="shield-check" />
-        <b-icon v-else size="is-small1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="shield-remove" />
+      <b-tooltip :label="steamGuardStatusTooltipText" class="ttt" square>
+        <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
       </b-tooltip>
 
-      <b-tooltip label="Items exchange" class="ttt" square>
-        <b-icon size="is-medium1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="swap-horizontal-circle-outline" />
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="ttt" square>
+        <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
       </b-tooltip>
     </div>
   </div>
@@ -105,6 +104,28 @@ export default {
 
         wishlistUrl () {
             return buildUserWishlistUrl(this.profile.id)
+        },
+
+        steamGuardStatusIcon () {
+            return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
+        },
+
+        steamGuardStatusClass () {
+            return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
+        },
+
+        steamGuardStatusTooltipText () {
+            const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
+            return this.$t(id)
+        },
+
+        allowMaterialsReplacementClass () {
+            return this.profile.allowMaterialsReplacement ? 'wit-color--success' : 'wit-color--danger'
+        },
+
+        allowMaterialsReplacementTooltipText () {
+            const id = this.profile.allowMaterialsReplacement ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
+            return this.$t(id)
         }
     },
 
@@ -118,7 +139,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-profile-view {
-    border-radius: var(--offset-xs);
+    border-radius: var(--offset-xxs);
     min-height: 110px;
 }
 
@@ -142,7 +163,7 @@ export default {
 }
 
 .wis-profile-view__stat-button {
-    padding: var(--offset-xs);
+    padding: 0;
     height: auto;
     background-color: transparent;
     transition: background-color var(--default-transition);
