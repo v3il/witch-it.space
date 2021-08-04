@@ -16,9 +16,24 @@
       </b-button>
     </div>
 
-    <b-button type="is-ghost" class="is-large">
-      <!--      <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="dots-grid" />-->
-    </b-button>
+    <b-dropdown
+      animation="fade150"
+      :class="'wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-offset-bottom--sm'"
+      style="display: flex; justify-content: center; border-radius: 4px; cursor: pointer; height: 35px; width: 100%;"
+      position="is-top-right"
+      append-to-body
+      @active-change="() => {}"
+    >
+      <template #trigger>
+        <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 32px;">
+          <i class="mdi mdi-dots-grid mdi-24px wit-color--Y400" />
+        </div>
+      </template>
+
+      <div style="width: 600px; height: 600px;">
+        Filters
+      </div>
+    </b-dropdown>
   </div>
 </template>
 

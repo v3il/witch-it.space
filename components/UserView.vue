@@ -1,10 +1,10 @@
 <template>
-  <div class="wis-profile-view wit-background--content wit-position--relative">
-    <div style="border-bottom: 1px solid #36394c; padding: 24px;">
+  <div class="wis-user-view wit-position--relative">
+    <div class="wis-user-view__section">
       <img
         :src="avatarUrl"
         alt="Avatar"
-        class="wis-profile-view__avatar wit-offset-bottom--sm"
+        class="wis-user-view__avatar wit-offset-bottom--sm"
       >
 
       <h5 class="wit-offset-bottom--sm wit-font-size--sm wit-text--overflow wit-text--center">
@@ -14,23 +14,29 @@
       <ProfileScale :profile="profile" @click="onScaleClick" />
     </div>
 
-    <div style="border-bottom: 1px solid #36394c; padding: 24px;">
-      <b-button type="is-primary" class="wit-transition wit-offset-bottom--sm1" expanded @click="() => {}">
+    <div class="wis-user-view__section">
+      <b-button
+        type="is-primary"
+        tag="a"
+        target="_blank"
+        :href="profile.steamTradeLink"
+        class="wit-transition"
+        expanded
+      >
         Send trade offer
       </b-button>
     </div>
 
-    <div style="border-bottom: 1px solid #36394c; padding: 4px;">
-      <div class="wit-flex wit-block--full-width wit-offset-bottom--xs1">
+    <div class="wis-user-view__section wis-user-view__section--xs">
+      <div class="wit-flex wit-block--full-width">
         <b-button
           type="is-link"
           tag="router-link"
           :to="marketUrl"
-          class="wis-profile-view__stat-button"
+          class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
             <i class="mdi mdi-steam mdi-24px" />
-            <!--            <b-icon size="is-small1" class="is-size-41 wit-offset-right&#45;&#45;none wit-offset-bottom&#45;&#45;xxs" icon="steam" />-->
             <span class="wit-color--muted">Steam</span>
           </div>
         </b-button>
@@ -39,18 +45,17 @@
           type="is-link"
           tag="router-link"
           :to="wishlistUrl"
-          class="wis-profile-view__stat-button"
+          class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
             <i class="mdi mdi-discord mdi-24px" />
-            <!--            <b-icon size="is-small1" class="is-size-41 wit-offset-right&#45;&#45;none wit-offset-bottom&#45;&#45;xxs" icon="discord" />-->
             <span class="wit-color--muted">Discord</span>
           </div>
         </b-button>
       </div>
     </div>
 
-    <div v-if="profile.wishlistNote" style="padding: 24px;">
+    <div v-if="profile.wishlistNote" class="wis-user-view__section">
       <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
         Wishlist note
       </h5>
@@ -60,12 +65,12 @@
       </p>
     </div>
 
-    <div class="tttttt">
-      <b-tooltip :label="steamGuardStatusTooltipText" class="ttt" square>
+    <div class="wis-user-view__icons">
+      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
         <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
       </b-tooltip>
 
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="ttt" square>
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
         <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
       </b-tooltip>
     </div>
@@ -73,7 +78,6 @@
 </template>
 
 <script>
-// import Card from '@/components/Card'
 import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 import ProfileScale from '@/components/profiles/ProfileScale'
 import { buildRarityFilterUrl } from '@/utils/buildUrls'
@@ -82,7 +86,6 @@ export default {
     name: 'UserView',
 
     components: {
-        // Card
         ProfileScale
     },
 
@@ -138,12 +141,24 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-profile-view {
+.wis-user-view {
+    padding: 0 var(--offset-md);
     border-radius: var(--offset-xxs);
-    min-height: 110px;
 }
 
-.wis-profile-view__avatar {
+.wis-user-view__section {
+    padding: var(--offset-md) 0;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--user-view-border);
+    }
+}
+
+.wis-user-view__section--xs {
+    padding: 4px 0;
+}
+
+.wis-user-view__avatar {
     $avatar-size: 75px;
 
     border-radius: var(--offset-xs);
@@ -154,7 +169,7 @@ export default {
     display: block;
 }
 
-.wis-profile-view__social-btn {
+.wis-user-view__social-btn {
     $button-size: var(--offset-lg);
 
     width: $button-size;
@@ -162,7 +177,7 @@ export default {
     border-radius: 50%;
 }
 
-.wis-profile-view__stat-button {
+.wis-user-view__stat-button {
     padding: 0;
     height: auto;
     background-color: transparent;
@@ -174,28 +189,28 @@ export default {
     }
 
     &:not(:last-child) {
-        border-right: 1px solid #36394c;
+        border-right: 1px solid var(--user-view-border);
     }
 }
 
-.ttt {
-    border: 1px solid #36394c;
+.wis-user-view__icon {
+    border: 1px solid var(--user-view-border);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: var(--offset-xlg);
+    height: var(--offset-xlg);
 }
 
-.tttttt {
+.wis-user-view__icons {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    border-radius: 24px;
+    top: var(--offset-xs);
+    right: var(--offset-xs);
+    border-radius: var(--offset-md);
 }
 
 </style>
 
 <style>
-.ttt .tooltip-trigger {
+.wis-user-view__icon .tooltip-trigger {
     display: flex;
     align-items: center;
     justify-content: center;

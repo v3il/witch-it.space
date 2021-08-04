@@ -22,7 +22,7 @@
     </TopNavBar>
 
     <div class="wit-items wit-flex">
-      <div style="flex-basis: 350px;" class="wit-offset-right--md">
+      <div style="flex-basis: 350px;" class="wit-offset-right--md wit-background--content ">
         <UserView v-if="profile" :profile="profile" />
       </div>
 
@@ -65,7 +65,7 @@
               @active-change="() => {}"
             >
               <template #trigger>
-                <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 36px;">
+                <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 32px;">
                   <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />
                 </div>
               </template>

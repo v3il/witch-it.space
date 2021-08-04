@@ -12,10 +12,6 @@
         height: 100%;
         transition: border-color var(--default-transition);
 
-        &.active {
-            border-color: var(--warning);
-        }
-
         &:not(:last-child) {
             margin-right: var(--offset-md);
         }
@@ -41,5 +37,13 @@
         line-height: 1.4;
         color: var(--body-bg);
         font-weight: 700;
+    }
+
+    .wit-top-tabs__tab.active {
+        border-color: var(--yellow-400);
+
+        .wit-top-tabs__counter {
+            background-color: var(--yellow-400);
+        }
     }
 }
