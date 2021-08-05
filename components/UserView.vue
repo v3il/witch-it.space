@@ -23,7 +23,7 @@
         class="wit-transition"
         expanded
       >
-        Send trade offer
+        {{ $t('UserView_SendTradeOffer') }}
       </b-button>
     </div>
 
@@ -57,7 +57,7 @@
 
     <div v-if="profile.wishlistNote" class="wis-user-view__section">
       <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
-        Wishlist note
+        {{ $t('UserView_NoteTitle') }}
       </h5>
 
       <p class="wit-line-height--md wit-color--muted">
@@ -67,11 +67,15 @@
 
     <div class="wis-user-view__icons">
       <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
-        <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+        </div>
       </b-tooltip>
 
       <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
       </b-tooltip>
     </div>
   </div>
@@ -207,12 +211,4 @@ export default {
     border-radius: var(--offset-md);
 }
 
-</style>
-
-<style>
-.wis-user-view__icon .tooltip-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 </style>

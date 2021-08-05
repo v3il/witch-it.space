@@ -189,6 +189,8 @@ export const ru = {
     UserView_SteamGuardDisabled: 'Steam Guard не активирован',
     UserView_MaterialsReplacementEnabled: 'Разрешено заменять ингредиенты другими типами',
     UserView_MaterialsReplacementDisabled: 'Запрещено заменять ингредиенты другими типами',
+    UserView_SendTradeOffer: 'Предложение обмена',
+    UserView_NoteTitle: 'Описание',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
