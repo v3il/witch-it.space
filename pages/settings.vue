@@ -97,10 +97,6 @@
           {{ $t('Settings_SteamSettings') }}
         </template>
 
-        <b-field :label="$t('Settings_SteamAccountURL')" class="wit-offset-bottom--sm">
-          <b-input v-model="steamProfileUrl" placeholder="https://steamcommunity.com/id/XXXXX" custom-class="wit-transition" />
-        </b-field>
-
         <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
           <b-input v-model="steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" />
         </b-field>
@@ -109,16 +105,6 @@
           <b-switch v-model="isGuardProtected">
             {{ isGuardProtected ? $t('Yes') : $t('No') }}
           </b-switch>
-        </b-field>
-      </Card>
-
-      <Card class="wit-offset-bottom--sm">
-        <template #title>
-          {{ $t('Settings_DiscordSettings') }}
-        </template>
-
-        <b-field :label="$t('Settings_DiscordName')">
-          <b-input v-model="discordTag" placeholder="XXXX#1234" custom-class="wit-transition" />
         </b-field>
       </Card>
 
@@ -239,11 +225,8 @@ import { mapState } from 'vuex'
 import Card from '@/components/Card'
 import { User } from '@/store'
 import AvatarPicker from '@/components/settings/AvatarPicker'
-import { validateDiscordTag, validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
-import { validateSteamAccountURL } from '@/shared/validators/validateSteamAccountURL'
-import { Quest } from '@/store/Types'
+import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import { showPopup } from '@/utils'
-import { Routes } from '@/shared'
 
 export default {
 
@@ -275,9 +258,7 @@ export default {
     data: () => ({
         login: '',
         password: '',
-        discordTag: '',
         displayName: '',
-        steamProfileUrl: '',
         steamTradeLink: '',
         isGuardProtected: true,
         avatarId: 1
@@ -285,9 +266,7 @@ export default {
 
     created () {
         this.login = this.user.login ?? ''
-        this.discordTag = this.user.discordTag ?? ''
         this.displayName = this.user.displayName ?? ''
-        this.steamProfileUrl = this.user.steamProfileUrl ?? ''
         this.steamTradeLink = this.user.steamTradeLink ?? ''
         this.isGuardProtected = this.user.isGuardProtected
         this.avatarId = this.user.avatarId
@@ -302,9 +281,7 @@ export default {
             }
 
             errors.push(
-                validateDiscordTag(this.discordTag),
                 validateDisplayName(this.displayName),
-                validateSteamAccountURL(this.steamProfileUrl),
                 validateSteamTradeURL(this.steamTradeLink)
             )
 
@@ -316,9 +293,7 @@ export default {
 
             try {
                 const data = {
-                    discordTag: this.discordTag,
                     displayName: this.displayName,
-                    steamProfileUrl: this.steamProfileUrl,
                     steamTradeLink: this.steamTradeLink,
                     isGuardProtected: this.isGuardProtected,
                     avatarId: this.avatarId
@@ -341,9 +316,6 @@ export default {
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
                 this.$showSuccess(this.$t('Settings_AccountConnected'))
-
-                this.discordTag = this.user.discordTag ?? ''
-                this.steamProfileUrl = this.user.steamProfileUrl ?? ''
             } catch (error) {
                 this.$showError(error)
             }
