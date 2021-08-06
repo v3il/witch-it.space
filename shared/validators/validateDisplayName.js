@@ -1,5 +1,9 @@
 export const validateDisplayName = (displayName) => {
-    const trimmedDisplayName = displayName.trim()
+    if (!displayName) {
+        return 'Error_WrongDisplayName'
+    }
+
+    const trimmedDisplayName = String(displayName).trim()
 
     if (trimmedDisplayName.length < 2 || trimmedDisplayName.length > 20) {
         return 'Error_WrongDisplayName'

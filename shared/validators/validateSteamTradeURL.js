@@ -1,5 +1,9 @@
 export const validateSteamTradeURL = (tradeURL) => {
-    const trimmedURL = tradeURL.trim()
+    if (!tradeURL) {
+        return 'Error_WrongSteamTradeURL'
+    }
+
+    const trimmedURL = String(tradeURL).trim()
 
     if (!trimmedURL.startsWith('https://steamcommunity.com/tradeoffer/new')) {
         return 'Error_WrongSteamTradeURL'

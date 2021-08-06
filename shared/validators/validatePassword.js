@@ -1,5 +1,9 @@
 export const validatePassword = (password) => {
-    const trimmedPassword = password.trim()
+    if (!password) {
+        return 'Error_InvalidPassword'
+    }
+
+    const trimmedPassword = String(password).trim()
 
     if (trimmedPassword.length < 6) {
         return 'Error_InvalidPassword'

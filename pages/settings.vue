@@ -97,7 +97,7 @@
           {{ $t('Settings_SteamSettings') }}
         </template>
 
-        <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
+        <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm" :type="hasTradeLink ? '' : 'is-danger'">
           <b-input v-model="steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" />
         </b-field>
 
@@ -385,7 +385,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-settings {
-    padding: var(--offset-lg) 0 var(--offset-sm);
+    padding: var(--offset-md) var(--offset-sm);
     max-width: 800px;
     margin: 0 auto;
 }

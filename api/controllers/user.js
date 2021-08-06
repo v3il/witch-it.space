@@ -5,10 +5,8 @@ import { extractUserPublicData, translateText } from '../util'
 import {
     config, Cookies,
     validateAvatarId,
-    validateDiscordTag,
     validateDisplayName,
     validatePassword,
-    validateSteamAccountURL,
     validateSteamTradeURL
 } from '../../shared'
 import { updateUserToken } from '../controllers/auth/signInUser'
@@ -94,9 +92,7 @@ const disconnectSocial = async (request, response) => {
 const updateSettings = async (request, response) => {
     const {
         password,
-        discordTag,
         displayName,
-        steamProfileUrl,
         steamTradeLink,
         isGuardProtected,
         avatarId
@@ -109,9 +105,7 @@ const updateSettings = async (request, response) => {
     }
 
     errors.push(
-        validateDiscordTag(discordTag),
         validateDisplayName(displayName),
-        validateSteamAccountURL(steamProfileUrl),
         validateSteamTradeURL(steamTradeLink),
         validateAvatarId(avatarId)
     )
@@ -130,9 +124,7 @@ const updateSettings = async (request, response) => {
     }
 
     const updateData = {
-        discordTag,
         displayName,
-        steamProfileUrl,
         steamTradeLink,
         avatarId,
         isGuardProtected: !!isGuardProtected

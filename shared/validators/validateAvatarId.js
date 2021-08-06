@@ -1,5 +1,5 @@
 export const validateAvatarId = (avatarId) => {
-    if (avatarId < 1 && avatarId > 11) {
+    if (!Number.isInteger(avatarId) || avatarId < 1 || avatarId > 11) {
         return 'Error_WrongAvatarId'
     }
 
