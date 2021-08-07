@@ -22,7 +22,7 @@ const authUsingSteam = async (request, response) => {
 
 const authUsingSteamCallback = async (request, response) => {
     const steamUser = await steam.authenticate(request)
-    const { steamid: steamId, username, profile } = steamUser
+    const { steamid: steamId, username } = steamUser
     const userFromCookies = await getUserFromCookies(request)
 
     let user
@@ -34,10 +34,7 @@ const authUsingSteamCallback = async (request, response) => {
             return response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
 
-        await user.update({
-            steamId,
-            steamProfileUrl: profile
-        })
+        await user.update({ steamId })
     }
 
     if (!user) {
@@ -47,7 +44,6 @@ const authUsingSteamCallback = async (request, response) => {
     if (!user) {
         user = await User.create({
             steamId,
-            steamProfileUrl: profile,
             displayName: username,
             locale: request.locale,
             theme: request.theme

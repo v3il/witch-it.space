@@ -40,7 +40,7 @@ const authUsingDiscordCallback = async (request, response) => {
         }
     })
 
-    const { id: discordId, username, discriminator } = userData
+    const { id: discordId, username } = userData
     const userFromCookies = await getUserFromCookies(request)
 
     let user
@@ -53,8 +53,7 @@ const authUsingDiscordCallback = async (request, response) => {
         }
 
         await user.update({
-            discordId,
-            discordTag: `${username}#${discriminator}`
+            discordId
         })
     }
 
@@ -66,7 +65,6 @@ const authUsingDiscordCallback = async (request, response) => {
         user = await User.create({
             discordId,
             displayName: username,
-            discordTag: `${username}#${discriminator}`,
             locale: request.locale,
             theme: request.theme
         })
