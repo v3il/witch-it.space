@@ -4,15 +4,14 @@ export const extractUserPublicData = (user) => {
     const isDiscordConnected = !!user.discordId
     const isAnySocialConnected = isSteamConnected || isDiscordConnected || isGoogleConnected
     const discordDMUrl = user.discordId ? `discord:///channels/@me/${user.discordId}` : null
+    const steamProfileUrl = user.steamId ? `https://steamcommunity.com/profiles/${user.steamId}` : null
     const isVerified = isSteamConnected && isDiscordConnected && user.steamTradeLink
 
     return {
         id: user.id,
         login: user.login,
-        discordTag: user.discordTag,
         displayName: user.displayName,
         steamTradeLink: user.steamTradeLink,
-        steamProfileUrl: user.steamProfileUrl,
         isGuardProtected: user.isGuardProtected,
         isPublic: user.isPublic,
         avatarId: user.avatarId,
@@ -24,6 +23,7 @@ export const extractUserPublicData = (user) => {
         isDiscordConnected,
         isAnySocialConnected,
         discordDMUrl,
+        steamProfileUrl,
         hasLocalProfile: !!user.password,
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
@@ -36,6 +36,7 @@ export const extractOtherUsersPublicData = (user) => {
     const isSteamConnected = !!user.steamId
     const isDiscordConnected = !!user.discordId
     const discordDMUrl = user.discordId ? `discord:///channels/@me/${user.discordId}` : null
+    const steamProfileUrl = user.steamId ? `https://steamcommunity.com/profiles/${user.steamId}` : null
     const isVerified = isSteamConnected && isDiscordConnected && user.steamTradeLink
 
     return {
@@ -43,9 +44,9 @@ export const extractOtherUsersPublicData = (user) => {
         displayName: user.displayName,
         avatarId: user.avatarId,
         isGuardProtected: user.isGuardProtected,
-        steamProfileUrl: user.steamProfileUrl,
         steamTradeLink: user.steamTradeLink,
         discordDMUrl,
+        steamProfileUrl,
         offersCount: Math.floor(Math.random() * 10),
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
