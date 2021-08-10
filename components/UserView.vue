@@ -1,5 +1,19 @@
 <template>
   <div class="wis-user-view wit-position--relative">
+    <div class="wis-user-view__icons">
+      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
+    </div>
+
     <div class="wis-user-view__section">
       <img
         :src="avatarUrl"
@@ -21,6 +35,7 @@
         target="_blank"
         :href="profile.steamTradeLink"
         class="wit-transition"
+        :disabled="!profile.steamTradeLink"
         expanded
       >
         {{ $t('UserView_SendTradeOffer') }}
@@ -30,9 +45,11 @@
     <div class="wis-user-view__section wis-user-view__section--xs">
       <div class="wit-flex wit-block--full-width">
         <b-button
+          :disabled="!profile.steamProfileUrl"
           type="is-link"
-          tag="router-link"
-          :to="marketUrl"
+          tag="a"
+          :href="profile.steamProfileUrl"
+          target="_blank"
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
@@ -42,9 +59,11 @@
         </b-button>
 
         <b-button
+          :disabled="!profile.discordDMUrl"
           type="is-link"
-          tag="router-link"
-          :to="wishlistUrl"
+          tag="a"
+          :href="profile.discordDMUrl"
+          target="_blank"
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
@@ -63,20 +82,6 @@
       <p class="wit-line-height--md wit-color--muted">
         {{ profile.wishlistNote }}
       </p>
-    </div>
-
-    <div class="wis-user-view__icons">
-      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
     </div>
   </div>
 </template>
@@ -184,9 +189,13 @@ export default {
 .wis-user-view__stat-button {
     padding: 0;
     height: auto;
-    background-color: transparent;
     transition: background-color var(--default-transition);
     flex: 1 0 50%;
+
+    &,
+    &:disabled {
+        background-color: transparent;
+    }
 
     &:hover {
         background-color: var(--dropdown-item-hover-background-color);
