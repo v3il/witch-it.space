@@ -1,7 +1,5 @@
 export { validatePassword } from './validatePassword'
 export { validateLogin } from './validateLogin'
-export { validateDiscordTag } from './validateDiscordTag'
 export { validateDisplayName } from './validateDisplayName'
 export { validateSteamTradeURL } from './validateSteamTradeURL'
-export { validateSteamAccountURL } from './validateSteamAccountURL'
 export { validateAvatarId } from './validateAvatarId'
