@@ -1,19 +1,28 @@
 <template>
-  <div class="wit-overflow--hidden wis-profile-view wit-flex--align-center">
+  <div class="wis-profile-view wit-flex--align-center wit-position--relative">
+    <div class="wis-profile-view__icons">
+      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-profile-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-18px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-profile-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-swap-horizontal-circle-outline mdi-18px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
+    </div>
+
     <img
       :src="avatarUrl"
       alt="Avatar"
       class="wit-offset-bottom--xs wis-profile-view__avatar wit-block wit-offset-left--auto wit-offset-right--auto"
     >
 
-    <div class="wit-flex wit-flex--center wit-offset-bottom--xs">
-      <h5 class="wit-font-size--sm wit-text--overflow">
-        {{ profile.displayName }}
-      </h5>
-
-      <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success wit-offset-left--xs wit-flex__item--no-shrink" icon="shield-check" />
-      <b-icon v-else size="is-small" class="is-size-61 wit-color--danger wit-offset-left--xxs wit-flex__item--no-shrink wit-offset-top--xs" icon="shield-remove" />
-    </div>
+    <h5 class="wit-font-size--sm wit-text--overflow wit-text--center">
+      {{ profile.displayName }}
+    </h5>
 
     <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
       <b-button
@@ -41,54 +50,7 @@
       </b-button>
     </div>
 
-    <ProfileScale :profile="profile" class="wit-offset-bottom--sm1" @click="onScaleClick" />
-
-    <div v-if="0" class="wit-flex wit-flex--justify-center">
-      <b-button
-        v-if="profile.steamProfileUrl"
-        type="is-link"
-        tag="a"
-        size="is-small"
-        :href="profile.steamProfileUrl"
-        target="_blank"
-        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-      >
-        <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="steam" />
-          <!--          Steam-->
-        </div>
-      </b-button>
-
-      <b-button
-        v-if="profile.discordDMUrl"
-        type="is-link"
-        tag="a"
-        size="is-small"
-        :href="profile.discordDMUrl"
-        target="_blank"
-        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-      >
-        <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs1" icon="discord" />
-          <!--          Discord-->
-        </div>
-      </b-button>
-
-      <b-button
-        v-if="profile.steamTradeLink"
-        type="is-link"
-        tag="a"
-        size="is-small"
-        :href="profile.steamTradeLink"
-        target="_blank"
-        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-      >
-        <div class="wit-flex wit-flex--align-center">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="arrow-decision" />
-          {{ $t('Profiles_Trade') }}
-        </div>
-      </b-button>
-    </div>
+    <ProfileScale :profile="profile" @click="onScaleClick" />
   </div>
 </template>
 
@@ -122,6 +84,28 @@ export default {
 
         avatarUrl () {
             return buildAvatarUrl(this.profile.avatarId)
+        },
+
+        steamGuardStatusIcon () {
+            return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
+        },
+
+        steamGuardStatusClass () {
+            return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
+        },
+
+        steamGuardStatusTooltipText () {
+            const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
+            return this.$t(id)
+        },
+
+        allowMaterialsReplacementClass () {
+            return this.profile.allowMaterialsReplacement ? 'wit-color--success' : 'wit-color--danger'
+        },
+
+        allowMaterialsReplacementTooltipText () {
+            const id = this.profile.allowMaterialsReplacement ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
+            return this.$t(id)
         }
     },
 
@@ -137,7 +121,7 @@ export default {
 .wis-profile-view {
     border-radius: var(--offset-xs);
     border: 1px solid #36394c;
-    padding: /*var(--offset-xs) */var(--offset-sm);
+    padding: var(--offset-sm);
 }
 
 .wis-profile-view__avatar {
@@ -170,5 +154,19 @@ export default {
     &:not(:last-child) {
         border-right: 1px solid #2e3648;
     }
+}
+
+.wis-profile-view__icon {
+    border: 1px solid var(--user-view-border);
+    border-radius: 50%;
+    width: var(--offset-lg);
+    height: var(--offset-lg);
+}
+
+.wis-profile-view__icons {
+    position: absolute;
+    top: var(--offset-xs);
+    right: var(--offset-xs);
+    border-radius: var(--offset-md);
 }
 </style>
