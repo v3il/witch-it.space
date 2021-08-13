@@ -28,6 +28,7 @@ export const actions = {
         const user = rootState.user.user
 
         if (user && user.locale !== locale) {
+            // eslint-disable-next-line no-console
             this.$axios.post('/api/user/locale', { locale }).catch(console.error)
         }
     }

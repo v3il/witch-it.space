@@ -18,6 +18,7 @@ export const actions = {
         const user = rootState.user.user
 
         if (user && user.theme !== theme) {
+            // eslint-disable-next-line no-console
             this.$axios.post('/api/user/theme', { theme }).catch(console.error)
         }
     }

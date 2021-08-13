@@ -52,7 +52,6 @@ export default {
         },
 
         getSlotTag () {
-            console.log(this.item.slot)
             return slotsManager.find(this.item.slot).label
         },
 

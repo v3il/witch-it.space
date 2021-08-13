@@ -11,9 +11,6 @@ export const actions = {
 
         try {
             const response = await this.$axios.get('/api/wishlist')
-
-            console.log(response.data)
-
             return response.data.wishlist
         } catch (e) {
             return { error: e.message }

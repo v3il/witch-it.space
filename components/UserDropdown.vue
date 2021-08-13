@@ -8,7 +8,7 @@
   >
     <template #trigger>
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
-        <div class="login-page__image-block wit-offset-right--xs wit-flex wit-flex--center">
+        <div class="wit-user-dropdown__image-block wit-offset-right--xs wit-flex wit-flex--center" :class="{ 'with-error': !user.isVerified }">
           <img
             class="wit-user-dropdown__image"
             :src="avatarUrl"
@@ -49,6 +49,10 @@ import { buildAvatarUrl } from '@/utils'
 export default {
     name: 'UserDropdown',
 
+    data: () => ({
+        isOpen: false
+    }),
+
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
@@ -64,10 +68,6 @@ export default {
             return buildAvatarUrl(this.user.avatarId)
         }
     },
-
-    data: () => ({
-        isOpen: false
-    }),
 
     methods: {
         updateStatus (isOpen) {
@@ -99,27 +99,29 @@ export default {
     }
 }
 
-.wit-user-dropdown__image {
-    height: 32px;
-    width: 32px;
-    max-height: none;
-    border-radius: 4px;
-}
-
-.username {
+.wit-user-dropdown__image-block.with-error {
     position: relative;
 
     &::before {
         content: "";
         position: absolute;
-        width: 6px;
-        height: 6px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        top: -2px;
-        right: -6px;
+        top: -5px;
+        right: -5px;
         background-color: var(--danger);
         animation: pulse 5s infinite linear;
         will-change: opacify;
+        border: 3px solid #36394c;
+        box-sizing: content-box;
     }
+}
+
+.wit-user-dropdown__image {
+    height: 32px;
+    width: 32px;
+    max-height: none;
+    border-radius: 4px;
 }
 </style>

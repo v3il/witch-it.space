@@ -20,7 +20,7 @@
       class="wit-offset-bottom--xs wis-profile-view__avatar wit-block wit-offset-left--auto wit-offset-right--auto"
     >
 
-    <h5 class="wit-font-size--sm wit-text--overflow wit-text--center">
+    <h5 class="wit-font-size--sm wit-text--overflow wit-text--center wit-offset-bottom--xs">
       {{ profile.displayName }}
     </h5>
 

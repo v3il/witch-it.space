@@ -70,8 +70,6 @@ export default {
 
     created () {
         this.item = this.$itemsService.getById(this.wishlistItem.itemId)
-
-        console.log(this.item)
     }
 }
 </script>

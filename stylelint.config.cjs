@@ -2,6 +2,11 @@ module.exports = {
     extends: [
         'stylelint-config-standard'
     ],
+
+    ignoreFiles: [
+        'node_modules'
+    ],
+
     rules: {
         indentation: 4,
         'block-no-empty': null,

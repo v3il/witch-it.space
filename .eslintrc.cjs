@@ -22,5 +22,6 @@ module.exports = {
         'prefer-promise-reject-errors': 'off',
         'import/named': 'off',
         'vue/multi-word-component-names': 'off',
+        'vue/no-v-html': 'off',
     }
 }

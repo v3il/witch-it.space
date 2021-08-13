@@ -237,6 +237,15 @@ export default {
 
     middleware: ['fetchUser'],
 
+    data: () => ({
+        login: '',
+        password: '',
+        displayName: '',
+        steamTradeLink: '',
+        isGuardProtected: true,
+        avatarId: 1
+    }),
+
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
@@ -254,15 +263,6 @@ export default {
             return !!this.user.steamTradeLink
         }
     },
-
-    data: () => ({
-        login: '',
-        password: '',
-        displayName: '',
-        steamTradeLink: '',
-        isGuardProtected: true,
-        avatarId: 1
-    }),
 
     created () {
         this.login = this.user.login ?? ''
