@@ -6,14 +6,13 @@
       </template>
 
       <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="() => {}">
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">
           <template #tab0>
-            {{ $t('Wishlist_TopTabs_Orders') }}
+            {{ $t('Wishlist_TopTabs_Account') }}
           </template>
 
           <template #tab1>
-            {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
+            {{ $t('Wishlist_TopTabs_Market') }}
           </template>
         </TopTabs>
       </template>
@@ -240,12 +239,20 @@ import { User } from '@/store'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import { showPopup } from '@/utils'
+import TopTabs from '@/components/TopTabs'
+
+const Modes = {
+    ACCOUNT: 'account',
+    MARKET: 'market'
+}
 
 export default {
+    modes: Object.values(Modes),
 
     components: {
         Card,
-        AvatarPicker
+        AvatarPicker,
+        TopTabs
     },
 
     middleware: ['fetchUser'],
@@ -256,7 +263,8 @@ export default {
         displayName: '',
         steamTradeLink: '',
         isGuardProtected: true,
-        avatarId: 1
+        avatarId: 1,
+        mode: Modes.ACCOUNT
     }),
 
     computed: {

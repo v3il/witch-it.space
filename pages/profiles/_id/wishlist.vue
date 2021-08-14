@@ -141,7 +141,7 @@ import TopNavBar from '@/components/TopNavBar'
 import WishlistFilter from '@/components/wishlist/WishlistFilter'
 import { User } from '@/store'
 
-const modes = {
+const Modes = {
     MARKET: 'market',
     WISHLIST: 'wishlist'
 }
@@ -156,7 +156,7 @@ const DEFAULT_FILTERS = {
 }
 
 export default {
-    modes: Object.values(modes),
+    modes: Object.values(Modes),
 
     components: {
         ItemView,
@@ -177,7 +177,7 @@ export default {
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
         areFiltersVisible: false,
-        mode: modes.WISHLIST
+        mode: Modes.WISHLIST
     }),
 
     computed: {
