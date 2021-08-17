@@ -23,7 +23,7 @@
       <StickyPanel @update="updateSettings" />
 
       <template v-if="isAccountMode">
-        <AccountSettings :profile="user" :account-settings="accountSettings" />
+        <AccountSettings :profile="user" :account-settings="accountSettings" @change="accountSettings = $event" />
         <SocialNetworks :profile="user" />
         <DangerZone :profile="user" />
       </template>
@@ -37,8 +37,11 @@
 
 <script>
 import { mapState } from 'vuex'
+import Card from '@/components/Card'
 import { User } from '@/store'
+import AvatarPicker from '@/components/settings/AvatarPicker'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
+import { showPopup } from '@/utils'
 import TopTabs from '@/components/TopTabs'
 import AccountSettings from '@/components/settings/AccountSettings'
 import SocialNetworks from '@/components/settings/SocialNetworks'
@@ -96,30 +99,42 @@ export default {
             User.State.USER
         ]),
 
+        // hasLocalProfile () {
+        //     return this.user.hasLocalProfile
+        // },
+
+        // isProfilePublic () {
+        //     return this.user.isPublic
+        // },
+
+        hasTradeLink () {
+            return !!this.user.steamTradeLink
+        },
+
         isAccountMode () {
             return this.mode === Modes.ACCOUNT
         }
     },
 
     created () {
-        this.login = this.user.login ?? ''
-        this.displayName = this.user.displayName ?? ''
-        this.steamTradeLink = this.user.steamTradeLink ?? ''
-        this.isGuardProtected = this.user.isGuardProtected
-        this.avatarId = this.user.avatarId
+        this.accountSettings.login = this.user.login ?? ''
+        this.accountSettings.displayName = this.user.displayName ?? ''
+        this.accountSettings.steamTradeLink = this.user.steamTradeLink ?? ''
+        this.accountSettings.isGuardProtected = this.user.isGuardProtected
+        this.accountSettings.avatarId = this.user.avatarId
     },
 
     methods: {
         async updateSettings () {
             const errors = []
 
-            if (this.password) {
-                errors.push(validatePassword(this.password))
+            if (this.accountSettings.password) {
+                errors.push(validatePassword(this.accountSettings.password))
             }
 
             errors.push(
-                validateDisplayName(this.displayName),
-                validateSteamTradeURL(this.steamTradeLink)
+                validateDisplayName(this.accountSettings.displayName),
+                validateSteamTradeURL(this.accountSettings.steamTradeLink)
             )
 
             const firstError = errors.find(error => error !== null)
@@ -130,24 +145,92 @@ export default {
 
             try {
                 const data = {
-                    displayName: this.displayName,
-                    steamTradeLink: this.steamTradeLink,
-                    isGuardProtected: this.isGuardProtected,
-                    avatarId: this.avatarId
+                    displayName: this.accountSettings.displayName,
+                    steamTradeLink: this.accountSettings.steamTradeLink,
+                    isGuardProtected: this.accountSettings.isGuardProtected,
+                    avatarId: this.accountSettings.avatarId
                 }
 
-                if (this.password) {
-                    data.password = this.password
+                if (this.accountSettings.password) {
+                    data.password = this.accountSettings.password
                 }
 
                 await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
                 this.$showSuccess(this.$t('Settings_SettingsUpdated'))
 
-                this.password = ''
+                this.accountSettings.password = ''
             } catch (error) {
                 this.$showError(error)
             }
         }
+
+        // async connectSocial (socialName) {
+        //     try {
+        //         await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
+        //         this.$showSuccess(this.$t('Settings_AccountConnected'))
+        //     } catch (error) {
+        //         this.$showError(error)
+        //     }
+        // },
+        //
+        // disconnectSocial (socialName) {
+        //     showPopup(this, {
+        //         title: this.$t('Settings_DisconnectSocialTitle'),
+        //         message: this.$t('Settings_WannaDisconnectSocial'),
+        //         confirmText: this.$t('Confirm'),
+        //         cancelText: this.$t('Cancel'),
+        //         onConfirm: async () => {
+        //             try {
+        //                 await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
+        //                 this.$showSuccess(this.$t('Settings_AccountDisconnected'))
+        //             } catch (error) {
+        //                 this.$showError(error)
+        //             }
+        //         }
+        //     })
+        // },
+
+        // toggleProfile () {
+        //     this.isProfilePublic ? this.makeProfilePrivate() : this.makeProfilePublic()
+        // },
+        //
+        // async makeProfilePublic () {
+        //     try {
+        //         await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
+        //         this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
+        //     } catch (error) {
+        //         this.$showError(error)
+        //     }
+        // },
+        //
+        // makeProfilePrivate () {
+        //     showPopup(this, {
+        //         title: this.$t('Settings_MakePrivatePopupTitle'),
+        //         message: this.$t('Settings_WannaMakePrivate'),
+        //         confirmText: this.$t('Confirm'),
+        //         cancelText: this.$t('Cancel'),
+        //         onConfirm: async () => {
+        //             try {
+        //                 await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
+        //                 this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
+        //             } catch (error) {
+        //                 this.$showError(error)
+        //             }
+        //         }
+        //     })
+        // },
+        //
+        // deleteProfile () {
+        //     showPopup(this, {
+        //         title: this.$t('Settings_RemoveProfileTitle'),
+        //         message: this.$t('Settings_WannaRemoveProfile'),
+        //         confirmText: this.$t('Confirm'),
+        //         cancelText: this.$t('Cancel'),
+        //         onConfirm: () => {
+        //             this.$store.dispatch(User.F.Actions.REMOVE_PROFILE).catch(this.$showError)
+        //         }
+        //     })
+        // }
     }
 }
 </script>

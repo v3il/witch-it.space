@@ -66,7 +66,7 @@ export default {
 
     methods: {
         toggleProfile () {
-            this.isProfilePublic ? this.makeProfilePrivate() : this.makeProfilePublic()
+            this.isPublicProfile ? this.makeProfilePrivate() : this.makeProfilePublic()
         },
 
         async makeProfilePublic () {
