@@ -81,13 +81,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import Card from '@/components/Card'
 import AvatarPicker from '@/components/settings/AvatarPicker'
-import TopTabs from '@/components/TopTabs'
-import { User } from '@/store'
-import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared'
-import { showPopup } from '@/utils'
 
 export default {
     name: 'AccountSettings',
@@ -111,40 +106,15 @@ export default {
         }
     },
 
-    // data: () => ({
-    //     login: '',
-    //     password: '',
-    //     displayName: '',
-    //     steamTradeLink: '',
-    //     isGuardProtected: true,
-    //     avatarId: 1
-    // }),
-
     computed: {
         hasLocalProfile () {
             return this.profile.hasLocalProfile
         },
 
-        // isProfilePublic () {
-        //     return this.profile.isPublic
-        // },
-
-        // hasTradeLink () {
-        //     return !!this.profile.steamTradeLink
-        // },
-
         tradeUrlFieldType () {
             return this.profile.steamTradeLink ? '' : 'is-danger'
         }
     },
-
-    // created () {
-    //     this.login = this.profile.login ?? ''
-    //     this.displayName = this.profile.displayName ?? ''
-    //     this.steamTradeLink = this.profile.steamTradeLink ?? ''
-    //     this.isGuardProtected = this.profile.isGuardProtected
-    //     this.avatarId = this.profile.avatarId
-    // },
 
     methods: {
         onPasswordChange (password) {
@@ -173,113 +143,6 @@ export default {
                 ...changedSettings
             })
         }
-
-        // async updateSettings () {
-        //     const errors = []
-        //
-        //     if (this.password) {
-        //         errors.push(validatePassword(this.password))
-        //     }
-        //
-        //     errors.push(
-        //         validateDisplayName(this.displayName),
-        //         validateSteamTradeURL(this.steamTradeLink)
-        //     )
-        //
-        //     const firstError = errors.find(error => error !== null)
-        //
-        //     if (firstError) {
-        //         return this.$showError(this.$t(firstError))
-        //     }
-        //
-        //     try {
-        //         const data = {
-        //             displayName: this.displayName,
-        //             steamTradeLink: this.steamTradeLink,
-        //             isGuardProtected: this.isGuardProtected,
-        //             avatarId: this.avatarId
-        //         }
-        //
-        //         if (this.password) {
-        //             data.password = this.password
-        //         }
-        //
-        //         await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
-        //         this.$showSuccess(this.$t('Settings_SettingsUpdated'))
-        //
-        //         this.password = ''
-        //     } catch (error) {
-        //         this.$showError(error)
-        //     }
-        // },
-        //
-        // async connectSocial (socialName) {
-        //     try {
-        //         await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-        //         this.$showSuccess(this.$t('Settings_AccountConnected'))
-        //     } catch (error) {
-        //         this.$showError(error)
-        //     }
-        // },
-        //
-        // disconnectSocial (socialName) {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_DisconnectSocialTitle'),
-        //         message: this.$t('Settings_WannaDisconnectSocial'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: async () => {
-        //             try {
-        //                 await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-        //                 this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-        //             } catch (error) {
-        //                 this.$showError(error)
-        //             }
-        //         }
-        //     })
-        // },
-        //
-        // toggleProfile () {
-        //     this.isProfilePublic ? this.makeProfilePrivate() : this.makeProfilePublic()
-        // },
-        //
-        // async makeProfilePublic () {
-        //     try {
-        //         await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
-        //         this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-        //     } catch (error) {
-        //         this.$showError(error)
-        //     }
-        // },
-        //
-        // makeProfilePrivate () {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_MakePrivatePopupTitle'),
-        //         message: this.$t('Settings_WannaMakePrivate'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: async () => {
-        //             try {
-        //                 await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
-        //                 this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-        //             } catch (error) {
-        //                 this.$showError(error)
-        //             }
-        //         }
-        //     })
-        // },
-        //
-        // deleteProfile () {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_RemoveProfileTitle'),
-        //         message: this.$t('Settings_WannaRemoveProfile'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: () => {
-        //             this.$store.dispatch(User.F.Actions.REMOVE_PROFILE).catch(this.$showError)
-        //         }
-        //     })
-        // }
     }
 }
 </script>
