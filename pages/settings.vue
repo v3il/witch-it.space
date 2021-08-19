@@ -29,7 +29,7 @@
       </template>
 
       <template v-else>
-        <MarketSettings />
+        <MarketSettings :market-settings="marketSettings" @change="marketSettings = $event" />
       </template>
     </div>
   </div>
@@ -37,11 +37,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import Card from '@/components/Card'
 import { User } from '@/store'
-import AvatarPicker from '@/components/settings/AvatarPicker'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
-import { showPopup } from '@/utils'
 import TopTabs from '@/components/TopTabs'
 import AccountSettings from '@/components/settings/AccountSettings'
 import SocialNetworks from '@/components/settings/SocialNetworks'
@@ -90,7 +87,7 @@ export default {
         },
 
         marketSettings: {
-
+            allowMaterialsReplacement: false
         }
     }),
 
@@ -98,18 +95,6 @@ export default {
         ...mapState(User.PATH, [
             User.State.USER
         ]),
-
-        // hasLocalProfile () {
-        //     return this.user.hasLocalProfile
-        // },
-
-        // isProfilePublic () {
-        //     return this.user.isPublic
-        // },
-
-        hasTradeLink () {
-            return !!this.user.steamTradeLink
-        },
 
         isAccountMode () {
             return this.mode === Modes.ACCOUNT
@@ -122,6 +107,8 @@ export default {
         this.accountSettings.steamTradeLink = this.user.steamTradeLink ?? ''
         this.accountSettings.isGuardProtected = this.user.isGuardProtected
         this.accountSettings.avatarId = this.user.avatarId
+
+        this.marketSettings.allowMaterialsReplacement = this.user.allowMaterialsReplacement
     },
 
     methods: {

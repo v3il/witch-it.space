@@ -92,8 +92,6 @@ export default {
         AvatarPicker
     },
 
-    middleware: ['fetchUser'],
-
     props: {
         accountSettings: {
             required: true,

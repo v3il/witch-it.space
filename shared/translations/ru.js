@@ -165,6 +165,8 @@ export const ru = {
     Settings_NotVerifiedAccountTask3: 'Добавить ссылку на обмен Steam',
     Wishlist_TopTabs_Account: 'Профиль',
     Wishlist_TopTabs_Market: 'Маркет',
+    Settings_MarketSettings: 'Настройки маркета',
+    Settings_IsAllowedReplaceMaterials: 'Разрешено заменять ингредиенты другими типами',
 
     Profiles_AllProfiles: 'Все профили',
     Profiles_FilteredProfiles: 'Выбранные профили',
