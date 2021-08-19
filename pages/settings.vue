@@ -68,13 +68,6 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        login: '',
-        password: '',
-        displayName: '',
-        steamTradeLink: '',
-        isGuardProtected: true,
-        avatarId: 1,
-
         mode: Modes.ACCOUNT,
 
         accountSettings: {
@@ -135,7 +128,8 @@ export default {
                     displayName: this.accountSettings.displayName,
                     steamTradeLink: this.accountSettings.steamTradeLink,
                     isGuardProtected: this.accountSettings.isGuardProtected,
-                    avatarId: this.accountSettings.avatarId
+                    avatarId: this.accountSettings.avatarId,
+                    allowMaterialsReplacement: this.marketSettings.allowMaterialsReplacement
                 }
 
                 if (this.accountSettings.password) {
@@ -150,74 +144,6 @@ export default {
                 this.$showError(error)
             }
         }
-
-        // async connectSocial (socialName) {
-        //     try {
-        //         await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-        //         this.$showSuccess(this.$t('Settings_AccountConnected'))
-        //     } catch (error) {
-        //         this.$showError(error)
-        //     }
-        // },
-        //
-        // disconnectSocial (socialName) {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_DisconnectSocialTitle'),
-        //         message: this.$t('Settings_WannaDisconnectSocial'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: async () => {
-        //             try {
-        //                 await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-        //                 this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-        //             } catch (error) {
-        //                 this.$showError(error)
-        //             }
-        //         }
-        //     })
-        // },
-
-        // toggleProfile () {
-        //     this.isProfilePublic ? this.makeProfilePrivate() : this.makeProfilePublic()
-        // },
-        //
-        // async makeProfilePublic () {
-        //     try {
-        //         await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
-        //         this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-        //     } catch (error) {
-        //         this.$showError(error)
-        //     }
-        // },
-        //
-        // makeProfilePrivate () {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_MakePrivatePopupTitle'),
-        //         message: this.$t('Settings_WannaMakePrivate'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: async () => {
-        //             try {
-        //                 await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
-        //                 this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-        //             } catch (error) {
-        //                 this.$showError(error)
-        //             }
-        //         }
-        //     })
-        // },
-        //
-        // deleteProfile () {
-        //     showPopup(this, {
-        //         title: this.$t('Settings_RemoveProfileTitle'),
-        //         message: this.$t('Settings_WannaRemoveProfile'),
-        //         confirmText: this.$t('Confirm'),
-        //         cancelText: this.$t('Cancel'),
-        //         onConfirm: () => {
-        //             this.$store.dispatch(User.F.Actions.REMOVE_PROFILE).catch(this.$showError)
-        //         }
-        //     })
-        // }
     }
 }
 </script>

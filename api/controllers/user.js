@@ -95,7 +95,8 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         isGuardProtected,
-        avatarId
+        avatarId,
+        allowMaterialsReplacement
     } = request.body
 
     const errors = []
@@ -127,7 +128,8 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         avatarId,
-        isGuardProtected: !!isGuardProtected
+        isGuardProtected: !!isGuardProtected,
+        allowMaterialsReplacement: !!allowMaterialsReplacement
     }
 
     if (password) {
