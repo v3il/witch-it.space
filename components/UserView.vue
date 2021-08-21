@@ -1,19 +1,5 @@
 <template>
   <div class="wis-user-view wit-background--content wit-position--relative">
-    <div class="wis-user-view__icons">
-      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-18px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-swap-horizontal-circle-outline mdi-18px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
-    </div>
-
     <div class="wis-user-view__section">
       <img
         :src="avatarUrl"
@@ -82,6 +68,38 @@
       <p class="wit-line-height--md wit-color--muted">
         {{ profile.wishlistNote }}
       </p>
+    </div>
+
+    <div class="wis-user-view__section wis-user-view__icons wit-flex wit-flex--center">
+      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-shield-alert mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-database-arrow-down mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
+
+      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
+        <div class="wit-flex wit-flex--center wit-block--full-height">
+          <i class="mdi mdi-content-duplicate mdi-24px" :class="allowMaterialsReplacementClass" />
+        </div>
+      </b-tooltip>
     </div>
   </div>
 </template>
@@ -209,15 +227,19 @@ export default {
 .wis-user-view__icon {
     border: 1px solid var(--user-view-border);
     border-radius: 50%;
-    width: var(--offset-lg);
-    height: var(--offset-lg);
+    width: 48px;
+    height: 48px;
+
+    &:not(:last-child) {
+        margin-right: 16px;
+    }
 }
 
 .wis-user-view__icons {
-    position: absolute;
-    top: var(--offset-xs);
-    right: var(--offset-xs);
-    border-radius: var(--offset-md);
+    //position: absolute;
+    //top: var(--offset-xs);
+    //right: var(--offset-xs);
+    //border-radius: var(--offset-md);
 }
 
 </style>
