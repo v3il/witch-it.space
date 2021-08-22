@@ -96,7 +96,7 @@ const updateSettings = async (request, response) => {
         steamTradeLink,
         isGuardProtected,
         avatarId,
-        isStrictPrice
+        isStrictRarity
     } = request.body
 
     const errors = []
@@ -129,7 +129,7 @@ const updateSettings = async (request, response) => {
         steamTradeLink,
         avatarId,
         isGuardProtected: !!isGuardProtected,
-        isStrictPrice: !!isStrictPrice
+        isStrictRarity: !!isStrictRarity
     }
 
     if (password) {

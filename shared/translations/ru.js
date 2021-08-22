@@ -200,6 +200,12 @@ export const ru = {
     UserView_MaterialsReplacementDisabled: 'Запрещено заменять ингредиенты другими типами',
     UserView_SendTradeOffer: 'Предложение обмена',
     UserView_NoteTitle: 'Описание',
+    UserView_TradingOnlyGuarded: 'Пользователь обменивается только с пользователями со Steam Guard',
+    UserView_TradingAnyUser: 'Пользователь обменивается вне зависимости от статуса Steam Guard',
+    UserView_BargainAvailable: 'Торг разрешен',
+    UserView_BargainNotAvailable: 'Торг запрещен',
+    UserView_TradingOnlyDupes: 'Пользователь обменивает только предметы-дубликаты',
+    UserView_TradingAnyItem: 'Пользователь обменивает предметы, доступные в единичном экземпляре',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

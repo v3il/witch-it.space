@@ -70,36 +70,8 @@
       </p>
     </div>
 
-    <div class="wis-user-view__section wis-user-view__icons wit-flex wit-flex--center">
-      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-shield-alert mdi-24px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-database-arrow-down mdi-24px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
-
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-content-duplicate mdi-24px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
+    <div class="wis-user-view__section">
+      <UserIcons :profile="profile" />
     </div>
   </div>
 </template>
@@ -108,12 +80,14 @@
 import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 import ProfileScale from '@/components/profiles/ProfileScale'
 import { buildRarityFilterUrl } from '@/utils/buildUrls'
+import UserIcons from '@/components/UserIcons'
 
 export default {
     name: 'UserView',
 
     components: {
-        ProfileScale
+        ProfileScale,
+        UserIcons
     },
 
     props: {
@@ -224,16 +198,16 @@ export default {
     }
 }
 
-.wis-user-view__icon {
-    border: 1px solid var(--user-view-border);
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-
-    &:not(:last-child) {
-        margin-right: 16px;
-    }
-}
+//.wis-user-view__icon {
+//    border: 1px solid var(--user-view-border);
+//    border-radius: 50%;
+//    width: 48px;
+//    height: 48px;
+//
+//    &:not(:last-child) {
+//        margin-right: 16px;
+//    }
+//}
 
 .wis-user-view__icons {
     //position: absolute;

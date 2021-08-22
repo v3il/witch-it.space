@@ -5,8 +5,8 @@
     </template>
 
     <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsStrictPrice')">
-      <b-switch :value="marketSettings.isStrictPrice" @input="onStatusChange">
-        {{ marketSettings.isStrictPrice ? $t('Yes') : $t('No') }}
+      <b-switch :value="marketSettings.isStrictRarity" @input="onStatusChange">
+        {{ marketSettings.isStrictRarity ? $t('Yes') : $t('No') }}
       </b-switch>
     </b-field>
 

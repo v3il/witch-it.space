@@ -51,6 +51,8 @@
     </div>
 
     <ProfileScale :profile="profile" @click="onScaleClick" />
+
+    <UserIcons :profile="profile" class="wis-profile-view__icons" />
   </div>
 </template>
 
@@ -58,12 +60,14 @@
 import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 import ProfileScale from '@/components/profiles/ProfileScale'
 import { buildRarityFilterUrl } from '@/utils/buildUrls'
+import UserIcons from '@/components/UserIcons'
 
 export default {
     name: 'ProfileView',
 
     components: {
-        ProfileScale
+        ProfileScale,
+        UserIcons
     },
 
     props: {

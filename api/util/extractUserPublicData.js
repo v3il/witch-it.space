@@ -27,8 +27,8 @@ export const extractUserPublicData = (user) => {
         hasLocalProfile: !!user.password,
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
-        isStrictPrice: user.isStrictPrice,
-        isWorkingWithSteamGuardedOnly: user.isWorkingWithSteamGuardedOnly,
+        isStrictRarity: user.isStrictRarity,
+        onlyGuarded: user.onlyGuarded,
         isBargainAvailable: user.isBargainAvailable,
         isTradingOnlyDups: user.isTradingOnlyDups,
         isVerified

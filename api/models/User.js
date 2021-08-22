@@ -35,12 +35,12 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: false
             },
 
-            isStrictPrice: {
+            isStrictRarity: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
             },
 
-            isWorkingWithSteamGuardedOnly: {
+            onlyGuarded: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
             },
