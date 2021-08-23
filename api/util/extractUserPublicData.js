@@ -53,8 +53,8 @@ export const extractOtherUsersPublicData = (user) => {
         offersCount: Math.floor(Math.random() * 10),
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
-        isStrictPrice: user.isStrictPrice,
-        isWorkingWithSteamGuardedOnly: user.isWorkingWithSteamGuardedOnly,
+        isStrictRarity: user.isStrictRarity,
+        onlyGuarded: user.onlyGuarded,
         isBargainAvailable: user.isBargainAvailable,
         isTradingOnlyDups: user.isTradingOnlyDups,
         isVerified

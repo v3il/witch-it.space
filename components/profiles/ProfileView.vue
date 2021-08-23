@@ -1,18 +1,18 @@
 <template>
   <div class="wis-profile-view wit-flex--align-center wit-position--relative">
-    <div class="wis-profile-view__icons">
-      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-profile-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-18px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
-        </div>
-      </b-tooltip>
+    <!--    <div class="wis-profile-view__icons">-->
+    <!--      <b-tooltip :label="steamGuardStatusTooltipText" class="wis-profile-view__icon" square>-->
+    <!--        <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
+    <!--          <i class="mdi mdi-18px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />-->
+    <!--        </div>-->
+    <!--      </b-tooltip>-->
 
-      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-profile-view__icon" square>
-        <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-swap-horizontal-circle-outline mdi-18px" :class="allowMaterialsReplacementClass" />
-        </div>
-      </b-tooltip>
-    </div>
+    <!--      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-profile-view__icon" square>-->
+    <!--        <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
+    <!--          <i class="mdi mdi-swap-horizontal-circle-outline mdi-18px" :class="allowMaterialsReplacementClass" />-->
+    <!--        </div>-->
+    <!--      </b-tooltip>-->
+    <!--    </div>-->
 
     <img
       :src="avatarUrl"
@@ -52,7 +52,7 @@
 
     <ProfileScale :profile="profile" @click="onScaleClick" />
 
-    <UserIcons :profile="profile" class="wis-profile-view__icons" />
+    <UserIcons :profile="profile" class="wis-profile-view__icons" :icon-size="18" show-main-only1 />
   </div>
 </template>
 

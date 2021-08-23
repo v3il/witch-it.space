@@ -5,6 +5,7 @@
       :key="icon.id"
       :label="$t(icon.tooltipText)"
       class="wis-user-icon"
+      :class="[`wis-user-icon--${iconSize}`]"
       square
     >
       <div class="wit-flex wit-flex--center wit-block--full-height">
@@ -109,7 +110,7 @@ export default {
 
             return {
                 id: 1,
-                iconClass: isGuarded ? 'mdi-shield-check' : 'mdi-shield-remove',
+                iconClass: isGuarded ? 'mdi-shield-check' : 'mdi-shield-off',
                 iconColorClass: isGuarded ? 'wit-color--success' : 'wit-color--danger',
                 tooltipText: isGuarded ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled',
                 isVisible: true
@@ -133,7 +134,7 @@ export default {
 
             return {
                 id: 3,
-                iconClass: 'mdi-shield-alert',
+                iconClass: onlyGuarded ? 'mdi-lock-alert' : 'mdi-lock-minus',
                 iconColorClass: onlyGuarded ? 'wit-color--success' : 'wit-color--danger',
                 tooltipText: onlyGuarded ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
                 isVisible: !this.showMainOnly
@@ -171,8 +172,16 @@ export default {
 .wis-user-icon {
     border: 1px solid var(--user-view-border);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+
+    &.wis-user-icon--24 {
+        width: 40px;
+        height: 40px;
+    }
+
+    &.wis-user-icon--18 {
+        width: 32px;
+        height: 32px;
+    }
 
     &:not(:last-child) {
         margin-right: var(--offset-sm);
