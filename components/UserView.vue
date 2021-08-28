@@ -71,7 +71,7 @@
     </div>
 
     <div class="wis-user-view__section">
-      <UserIcons :profile="profile" :icon-size="18" />
+      <UserIcons :profile="profile" />
     </div>
   </div>
 </template>
@@ -148,7 +148,7 @@ export default {
 }
 
 .wis-user-view__section {
-    padding: var(--offset-md) 0;
+    padding: var(--offset-sm) 0;
 
     &:not(:last-child) {
         border-bottom: 1px solid var(--user-view-border);

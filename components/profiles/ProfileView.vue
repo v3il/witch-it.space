@@ -52,7 +52,7 @@
 
     <ProfileScale :profile="profile" @click="onScaleClick" />
 
-    <UserIcons :profile="profile" class="wis-profile-view__icons" :icon-size="18" show-main-only1 />
+    <UserIcons :profile="profile" class="wis-profile-view__icons" show-main-only1 />
   </div>
 </template>
 

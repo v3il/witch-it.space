@@ -194,18 +194,18 @@ export const ru = {
     Wishlist_TopTabs_Orders: 'Заказы',
     Wishlist_TopTabs_Wishlist: 'Список желаемого',
 
-    UserView_SteamGuardEnabled: 'Steam Guard активирован',
-    UserView_SteamGuardDisabled: 'Steam Guard не активирован',
-    UserView_MaterialsReplacementEnabled: 'Разрешено заменять ингредиенты другими типами',
-    UserView_MaterialsReplacementDisabled: 'Запрещено заменять ингредиенты другими типами',
+    UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
+    UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',
+    UserView_MaterialsReplacementEnabled: 'Принимаю материалы других типов',
+    UserView_MaterialsReplacementDisabled: 'Принимаю материалы только указанного типа',
     UserView_SendTradeOffer: 'Предложение обмена',
     UserView_NoteTitle: 'Описание',
-    UserView_TradingOnlyGuarded: 'Пользователь обменивается только с пользователями со Steam Guard',
-    UserView_TradingAnyUser: 'Пользователь обменивается вне зависимости от статуса Steam Guard',
-    UserView_BargainAvailable: 'Торг разрешен',
-    UserView_BargainNotAvailable: 'Торг запрещен',
-    UserView_TradingOnlyDupes: 'Пользователь обменивает только предметы-дубликаты',
-    UserView_TradingAnyItem: 'Пользователь обменивает предметы, доступные в единичном экземпляре',
+    UserView_TradingAnyUser: 'Обмениваюсь с пользователями без Steam Guard',
+    UserView_TradingOnlyGuarded: 'Не обмениваюсь с пользователями без Steam Guard',
+    UserView_BargainAvailable: 'Готов предоставить скидку',
+    UserView_BargainNotAvailable: 'Не предоставляю скидки, цена окончательная',
+    UserView_TradingOnlyDupes: 'Обмениваю только предметы-дубликаты',
+    UserView_TradingAnyItem: 'Обмениваю все предметы из списка, даже в единичном экземпляре',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

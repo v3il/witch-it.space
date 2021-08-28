@@ -28,7 +28,7 @@ export default {
         iconSize: {
             required: false,
             type: Number,
-            default: 24
+            default: 18
         },
 
         showMainOnly: {
@@ -110,9 +110,9 @@ export default {
 
             return {
                 id: 3,
-                iconClass: 'mdi-shield-remove',
+                iconClass: 'mdi-shield-off',
                 iconColorClass: onlyGuarded ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: onlyGuarded ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
+                tooltipText: onlyGuarded ? 'UserView_TradingAnyUser' : 'UserView_TradingOnlyGuarded',
                 isVisible: !this.showMainOnly
             }
         },
@@ -134,9 +134,9 @@ export default {
 
             return {
                 id: 5,
-                iconClass: 'mdi-numeric-2-box-multiple',
+                iconClass: 'mdi-numeric-1-box-multiple',
                 iconColorClass: isTradingOnlyDups ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: isTradingOnlyDups ? 'UserView_TradingOnlyDupes' : 'UserView_TradingAnyItem',
+                tooltipText: isTradingOnlyDups ? 'UserView_TradingAnyItem' : 'UserView_TradingOnlyDupes',
                 isVisible: !this.showMainOnly
             }
         }
@@ -151,27 +151,6 @@ $icon-size: 12px;
     border: 2px solid var(--user-view-border);
     border-radius: 50%;
 
-    &::after {
-        display: flex;
-        position: absolute;
-        width: $icon-size;
-        height: $icon-size;
-        top: -4px;
-        right: -2px;
-        border-radius: 50%;
-        align-items: center;
-        justify-content: center;
-        font-size: $icon-size;
-        line-height: $icon-size;
-        color: #2a3042;
-        font-weight: bold;
-    }
-
-    &.wis-user-icon--24 {
-        width: 40px;
-        height: 40px;
-    }
-
     &.wis-user-icon--18 {
         width: 36px;
         height: 36px;
@@ -180,11 +159,11 @@ $icon-size: 12px;
     &.wis-user-icon--success {
         border-color: var(--success);
 
-        &::after {
-            background: var(--success);
-            content: "\F012C";
-            font-family: "Material Design Icons", serif;
-        }
+        //&::after {
+        //    background: var(--success);
+        //    content: "\F012C";
+        //    font-family: "Material Design Icons", serif;
+        //}
 
         .mdi {
             color: var(--success);
@@ -192,15 +171,28 @@ $icon-size: 12px;
     }
 
     &.wis-user-icon--danger {
-        border-color: var(--danger);
+        border-color: var(--red-400);
 
         &::after {
-            background: var(--danger);
-            content: "×";
+            background: var(--red-400);
+            content: "!";
+            display: flex;
+            position: absolute;
+            width: $icon-size;
+            height: $icon-size;
+            top: -4px;
+            right: -2px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: $icon-size;
+            line-height: $icon-size;
+            color: #2a3042;
+            font-weight: bold;
         }
 
         .mdi {
-            color: var(--danger);
+            color: var(--red-400);
         }
     }
 
