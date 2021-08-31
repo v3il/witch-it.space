@@ -9,7 +9,7 @@
       @click="onAvatarSelected(avatarId)"
     >
       <img
-        :src="`images/avatars/${avatarId}.webp`"
+        :src="`/images/avatars/${avatarId}.webp`"
         :alt="avatarId"
         class="wit-avatar-picker__img"
       >

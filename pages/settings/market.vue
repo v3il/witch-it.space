@@ -6,7 +6,7 @@
       </template>
 
       <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>
             {{ $t('Wishlist_TopTabs_Account') }}
           </template>
@@ -22,16 +22,16 @@
       <NotVerifiedProfileMessage v-if="!user.isVerified" :profile="user" />
       <StickyPanel @update="updateSettings" />
 
-      <template v-if="isAccountMode">
-        <AccountSettings :profile="user" :account-settings="accountSettings" @change="accountSettings = $event" />
-        <SocialNetworks :profile="user" class="wit-offset-bottom--xlg" />
-      </template>
+      <!--      <template v-if="isAccountMode">-->
+      <!--        <AccountSettings :profile="user" :account-settings="accountSettings" @change="accountSettings = $event" />-->
+      <!--        <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;xlg" />-->
+      <!--      </template>-->
 
-      <template v-else>
-        <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--sm" @change="marketSettings = $event" />
-        <NoteEditor :content="marketSettings.marketNote" label="Market" class="wit-offset-bottom--sm" @input="marketSettings.marketNote = $event" />
-        <NoteEditor :content="marketSettings.wishlistNote" label="Wishlist" class="wit-offset-bottom--xlg" @input="marketSettings.wishlistNote = $event" />
-      </template>
+      <!--      <template v-else>-->
+      <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--sm" @change="marketSettings = $event" />
+      <NoteEditor :content="marketSettings.marketNote" label="Market" class="wit-offset-bottom--sm" @input="marketSettings.marketNote = $event" />
+      <NoteEditor :content="marketSettings.wishlistNote" label="Wishlist" class="wit-offset-bottom--xlg" @input="marketSettings.wishlistNote = $event" />
+      <!--      </template>-->
 
       <DangerZone :profile="user" />
     </div>
@@ -50,6 +50,7 @@ import MarketSettings from '@/components/settings/MarketSettings'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'
 import NoteEditor from '@/components/settings/NoteEditor'
+import { Routes } from '@/shared'
 
 const Modes = {
     ACCOUNT: 'account',
@@ -61,8 +62,6 @@ export default {
 
     components: {
         TopTabs,
-        AccountSettings,
-        SocialNetworks,
         DangerZone,
         MarketSettings,
         NotVerifiedProfileMessage,
@@ -73,7 +72,7 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        mode: Modes.ACCOUNT,
+        mode: Modes.MARKET,
 
         accountSettings: {
             login: '',
@@ -98,11 +97,7 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ]),
-
-        isAccountMode () {
-            return this.mode === Modes.ACCOUNT
-        }
+        ])
     },
 
     created () {
@@ -159,13 +154,17 @@ export default {
                     data.password = this.accountSettings.password
                 }
 
-                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
+                await this.$store.dispatch(User.F.Actions.UPDATE_MARKET_SETTINGS, data)
                 this.$showSuccess(this.$t('Settings_SettingsUpdated'))
 
                 this.accountSettings.password = ''
             } catch (error) {
                 this.$showError(error)
             }
+        },
+
+        onModeChange () {
+            this.$router.replace(Routes.SETTINGS)
         }
     }
 }

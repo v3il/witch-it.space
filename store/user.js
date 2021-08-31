@@ -78,6 +78,11 @@ export const actions = {
             .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
     },
 
+    [User.Actions.UPDATE_MARKET_SETTINGS] ({ commit }, settings) {
+        return this.$axios.post('/api/user/settings/market', settings)
+            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
+    },
+
     [User.Actions.TOGGLE_PROFILE] ({ commit }, isPublic) {
         return this.$axios.post('/api/user/toggle', { isPublic })
             .then(({ data }) => commit(User.Mutations.SET_USER, data.user))

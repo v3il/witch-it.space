@@ -43,6 +43,7 @@ export const User = StoreWrap.wrap('user', {
         LOGOUT: 'logout',
         DISCONNECT_SOCIAL: 'disconnectSocial',
         UPDATE_SETTINGS: 'updateSettings',
+        UPDATE_MARKET_SETTINGS: 'updateMarketSettings',
         TOGGLE_PROFILE: 'toggleProfile',
         REMOVE_PROFILE: 'removeProfile'
     },
