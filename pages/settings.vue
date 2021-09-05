@@ -1,0 +1,183 @@
+<template>
+  <div>
+    <TopNavBar class="layout__header">
+      <template #brand>
+        {{ $t('MainMenu_Settings') }}
+      </template>
+
+      <template #topMenu>
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
+          <template #tab0>
+            {{ $t('Wishlist_TopTabs_Account') }}
+          </template>
+
+          <template #tab1>
+            {{ $t('Wishlist_TopTabs_Market') }}
+          </template>
+        </TopTabs>
+      </template>
+    </TopNavBar>
+
+    <div class="wit-settings">
+      <NotVerifiedProfileMessage v-if="!user.isVerified" :profile="user" />
+      <StickyPanel @update="updateSettings" />
+
+      <div class="wit-offset-bottom--xlg">
+        <nuxt-child :user="user" :settings="settings" @settingsChange="onSettingsChange" />
+      </div>
+
+      <DangerZone :profile="user" />
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapState } from 'vuex'
+import { User } from '@/store'
+import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
+import TopTabs from '@/components/TopTabs'
+import DangerZone from '@/components/settings/DangerZone'
+import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
+import StickyPanel from '@/components/settings/StickyPanel'
+import { Routes } from '@/shared'
+
+const Modes = {
+    ACCOUNT: 'account',
+    MARKET: 'market'
+}
+
+export default {
+    modes: Object.values(Modes),
+
+    components: {
+        TopTabs,
+        DangerZone,
+        NotVerifiedProfileMessage,
+        StickyPanel
+    },
+
+    middleware: ['fetchUser'],
+
+    data: () => ({
+        mode: Modes.ACCOUNT,
+
+        settings: {
+            login: '',
+            password: '',
+            displayName: '',
+            steamTradeLink: '',
+            isGuardProtected: true,
+            avatarId: 1,
+
+            isStrictRarity: false,
+            onlyGuarded: false,
+            isBargainAvailable: false,
+            isTradingOnlyDups: false,
+            areRecipesHidden: false,
+            marketNote: '',
+            wishlistNote: ''
+        }
+    }),
+
+    computed: {
+        ...mapState(User.PATH, [
+            User.State.USER
+        ])
+    },
+
+    watch: {
+        $route: {
+            immediate: true,
+
+            handler (route) {
+                this.mode = route.fullPath === Routes.SETTINGS ? Modes.ACCOUNT : Modes.MARKET
+            }
+        }
+    },
+
+    created () {
+        this.settings.login = this.user.login ?? ''
+        this.settings.displayName = this.user.displayName ?? ''
+        this.settings.steamTradeLink = this.user.steamTradeLink ?? ''
+        this.settings.isGuardProtected = this.user.isGuardProtected
+        this.settings.avatarId = this.user.avatarId
+        this.settings.isStrictRarity = this.user.isStrictRarity
+        this.settings.onlyGuarded = this.user.onlyGuarded
+        this.settings.isBargainAvailable = this.user.isBargainAvailable
+        this.settings.isTradingOnlyDups = this.user.isTradingOnlyDups
+        this.settings.areRecipesHidden = this.user.areRecipesHidden
+        this.settings.marketNote = this.user.marketNote
+        this.settings.wishlistNote = this.user.wishlistNote
+    },
+
+    methods: {
+        onSettingsChange (settings) {
+            this.settings = settings
+        },
+
+        onMarketSettingsChange (marketSettings) {
+            this.marketSettings = marketSettings
+        },
+
+        async updateSettings () {
+            const errors = []
+
+            if (this.settings.password) {
+                errors.push(validatePassword(this.settings.password))
+            }
+
+            errors.push(
+                validateDisplayName(this.settings.displayName),
+                validateSteamTradeURL(this.settings.steamTradeLink)
+            )
+
+            const firstError = errors.find(error => error !== null)
+
+            if (firstError) {
+                return this.$showError(this.$t(firstError))
+            }
+
+            try {
+                const data = {
+                    displayName: this.settings.displayName,
+                    steamTradeLink: this.settings.steamTradeLink,
+                    isGuardProtected: this.settings.isGuardProtected,
+                    avatarId: this.settings.avatarId,
+                    isStrictRarity: this.settings.isStrictRarity,
+                    onlyGuarded: this.settings.onlyGuarded,
+                    isBargainAvailable: this.settings.isBargainAvailable,
+                    isTradingOnlyDups: this.settings.isTradingOnlyDups,
+                    areRecipesHidden: this.settings.areRecipesHidden,
+                    marketNote: this.settings.marketNote,
+                    wishlistNote: this.settings.wishlistNote
+                }
+
+                if (this.settings.password) {
+                    data.password = this.settings.password
+                }
+
+                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
+                this.$showSuccess(this.$t('Settings_SettingsUpdated'))
+
+                this.settings.password = ''
+            } catch (error) {
+                this.$showError(error)
+            }
+        },
+
+        onModeChange (mode) {
+            const route = mode === Modes.ACCOUNT ? Routes.SETTINGS : Routes.SETTINGS_MARKET
+            this.$router.push(route)
+        }
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.wit-settings {
+    padding: var(--offset-md) var(--offset-sm);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+</style>

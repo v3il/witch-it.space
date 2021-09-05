@@ -95,14 +95,14 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         isGuardProtected,
-        avatarId
-        // isStrictRarity,
-        // onlyGuarded,
-        // isBargainAvailable,
-        // isTradingOnlyDups,
-        // areRecipesHidden,
-        // wishlistNote,
-        // marketNote
+        avatarId,
+        isStrictRarity,
+        onlyGuarded,
+        isBargainAvailable,
+        isTradingOnlyDups,
+        areRecipesHidden,
+        wishlistNote,
+        marketNote
     } = request.body
 
     const errors = []
@@ -134,72 +134,7 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         avatarId,
-        isGuardProtected: !!isGuardProtected
-        // isStrictRarity: !!isStrictRarity,
-        // onlyGuarded: !!onlyGuarded,
-        // isBargainAvailable: !!isBargainAvailable,
-        // isTradingOnlyDups: !!isTradingOnlyDups,
-        // areRecipesHidden: !!areRecipesHidden,
-        // wishlistNote,
-        // marketNote
-    }
-
-    if (password) {
-        const salt = await genSalt(3)
-        updateData.password = await hash(password, salt)
-    }
-
-    await user.update(updateData)
-
-    updateUserToken({ response, user })
-}
-
-const updateMarketSettings = async (request, response) => {
-    const {
-        // password,
-        // displayName,
-        // steamTradeLink,
-        // isGuardProtected,
-        // avatarId,
-        isStrictRarity,
-        onlyGuarded,
-        isBargainAvailable,
-        isTradingOnlyDups,
-        areRecipesHidden,
-        wishlistNote,
-        marketNote
-    } = request.body
-
-    // const errors = []
-
-    // if (password) {
-    //     errors.push(validatePassword(password))
-    // }
-
-    // errors.push(
-    //     validateDisplayName(displayName),
-    //     validateSteamTradeURL(steamTradeLink),
-    //     validateAvatarId(avatarId)
-    // )
-
-    // const firstError = errors.find(error => error !== null)
-    //
-    // if (firstError) {
-    //     throw new BadRequest(translateText(firstError, request.locale))
-    // }
-
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
-
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
-    }
-
-    const updateData = {
-        // displayName,
-        // steamTradeLink,
-        // avatarId,
-        // isGuardProtected: !!isGuardProtected,
+        isGuardProtected: !!isGuardProtected,
         isStrictRarity: !!isStrictRarity,
         onlyGuarded: !!onlyGuarded,
         isBargainAvailable: !!isBargainAvailable,
@@ -209,10 +144,10 @@ const updateMarketSettings = async (request, response) => {
         marketNote
     }
 
-    // if (password) {
-    //     const salt = await genSalt(3)
-    //     updateData.password = await hash(password, salt)
-    // }
+    if (password) {
+        const salt = await genSalt(3)
+        updateData.password = await hash(password, salt)
+    }
 
     await user.update(updateData)
 
@@ -255,7 +190,6 @@ const userController = {
     changeUserTheme,
     disconnectSocial,
     updateSettings,
-    updateMarketSettings,
     toggleProfile,
     removeProfile
 }
