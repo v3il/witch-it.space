@@ -7,7 +7,7 @@ export const buildAvatarUrl = (avatarId) => {
 }
 
 export const buildUserMarketUrl = (userId) => {
-    return `/profiles/${userId}/market`
+    return `/profiles/${userId}`
 }
 
 export const buildUserWishlistUrl = (userId) => {

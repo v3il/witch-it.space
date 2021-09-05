@@ -106,8 +106,8 @@ export default {
         this.settings.isBargainAvailable = this.user.isBargainAvailable
         this.settings.isTradingOnlyDups = this.user.isTradingOnlyDups
         this.settings.areRecipesHidden = this.user.areRecipesHidden
-        this.settings.marketNote = this.user.marketNote
-        this.settings.wishlistNote = this.user.wishlistNote
+        this.settings.marketNote = this.user.marketNote ?? ''
+        this.settings.wishlistNote = this.user.wishlistNote ?? ''
     },
 
     methods: {

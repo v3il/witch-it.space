@@ -163,7 +163,7 @@ export const ru = {
     Settings_NotVerifiedAccountTask1: 'Подключить аккаунт Steam',
     Settings_NotVerifiedAccountTask2: 'Подключить аккаунт Discord',
     Settings_NotVerifiedAccountTask3: 'Добавить ссылку на обмен Steam',
-    Wishlist_TopTabs_Account: 'Профиль',
+    Wishlist_TopTabs_Account: 'Аккаунт',
     Wishlist_TopTabs_Market: 'Маркет',
     Settings_MarketSettings: 'Настройки маркета',
     Settings_IsStrictPrice: 'Принимаю материалы других типов',

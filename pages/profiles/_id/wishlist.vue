@@ -1,40 +1,42 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <nuxt-link to="/profiles">
-          Profiles
-        </nuxt-link>
-      </template>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <nuxt-link to="/profiles">-->
+    <!--          Profiles-->
+    <!--        </nuxt-link>-->
+    <!--      </template>-->
 
-      <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="redirectToOrders">
-          <template #tab0>
-            {{ $t('Wishlist_TopTabs_Orders') }}
-          </template>
+    <!--      <template #topMenu>-->
+    <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="redirectToOrders">-->
+    <!--          <template #tab0>-->
+    <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
+    <!--          </template>-->
 
-          <template #tab1>
-            {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
-          </template>
-        </TopTabs>
-      </template>
-    </TopNavBar>
+    <!--          <template #tab1>-->
+    <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
+    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlist.length }}</span>-->
+    <!--          </template>-->
+    <!--        </TopTabs>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <div class="wit-items wit-flex">
-      <div style="flex-basis: 350px;" class="wit-offset-right--md">
-        <UserView v-if="profile" :profile="profile">
-          <template #note>
-            <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
-              {{ $t('UserView_NoteTitle') }}111
-            </h5>
+      wishlist
 
-            <p class="wit-line-height--md wit-color--muted">
-              {{ profile.wishlistNote }}
-            </p>
-          </template>
-        </UserView>
-      </div>
+      <!--      <div style="flex-basis: 350px;" class="wit-offset-right&#45;&#45;md">-->
+      <!--        <UserView v-if="profile" :profile="profile">-->
+      <!--          <template #note>-->
+      <!--            <h5 class="wit-font-weight&#45;&#45;700 wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
+      <!--              {{ $t('UserView_NoteTitle') }}111-->
+      <!--            </h5>-->
+
+      <!--            <p class="wit-line-height&#45;&#45;md wit-color&#45;&#45;muted">-->
+      <!--              {{ profile.wishlistNote }}-->
+      <!--            </p>-->
+      <!--          </template>-->
+      <!--        </UserView>-->
+      <!--      </div>-->
 
       <div class="wit-flex__item--grow">
         <!--        <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">-->
@@ -173,9 +175,9 @@ export default {
         WishlistItemView,
         ItemTags,
         WishlistFilter,
-        UserView,
-        Card,
-        TopNavBar
+        // UserView,
+        Card
+        // TopNavBar
     },
 
     middleware: ['fetchUser'],
@@ -188,35 +190,35 @@ export default {
         filters: { ...DEFAULT_FILTERS },
         areFiltersVisible: false,
         mode: Modes.WISHLIST
-    }),
+    })
 
-    computed: {
-        ...mapState(User.PATH, [
-            User.State.USER
-        ]),
-
-        isMyProfile () {
-            return this.user.id === this.profile?.id
-        }
-    },
-
-    async created () {
-        await this.$itemsService.fetch()
-        const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
-
-        if (error) {
-            return this.$showError(error)
-        }
-
-        this.wishlist = wishlist
-        this.profile = user
-    },
-
-    methods: {
-        redirectToOrders () {
-            this.$router.push(buildUserMarketUrl(this.profile.id))
-        }
-    }
+    // computed: {
+    //     ...mapState(User.PATH, [
+    //         User.State.USER
+    //     ]),
+    //
+    //     isMyProfile () {
+    //         return this.user.id === this.profile?.id
+    //     }
+    // },
+    //
+    // async created () {
+    //     await this.$itemsService.fetch()
+    //     const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
+    //
+    //     if (error) {
+    //         return this.$showError(error)
+    //     }
+    //
+    //     this.wishlist = wishlist
+    //     this.profile = user
+    // },
+    //
+    // methods: {
+    //     redirectToOrders () {
+    //         this.$router.push(buildUserMarketUrl(this.profile.id))
+    //     }
+    // }
 }
 </script>
 
