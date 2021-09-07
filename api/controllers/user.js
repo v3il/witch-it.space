@@ -10,6 +10,7 @@ import {
     validateSteamTradeURL
 } from '../../shared'
 import { updateUserToken } from '../controllers/auth/signInUser'
+import { userService } from '../services'
 
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
@@ -191,13 +192,13 @@ const getById = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new NotFound(translateText('Error_UserNotFound', request.locale))
     }
 
-    response.send({ user: extractUserPublicData(user) })
+    response.send({ user: extractUserPublicData(user), marketSize: 100, wishlistSize: 50 })
 }
 
 const userController = {

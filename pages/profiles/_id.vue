@@ -11,11 +11,12 @@
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>
             {{ $t('Wishlist_TopTabs_Orders') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ marketSize }}</span>
           </template>
 
           <template #tab1>
             {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlistSize }}</span>
           </template>
         </TopTabs>
       </template>
@@ -159,6 +160,8 @@ export default {
         wishlist: [],
         profile: null,
         error: null,
+        marketSize: 0,
+        wishlistSize: 0,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
@@ -201,14 +204,19 @@ export default {
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, user: profile } = await this.$userService.fetch(this.$route.params.id + 1)
+        const { error, user: profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
+
+        this.error = error
+
+        console.log(marketSize, wishlistSize)
 
         if (error) {
             this.$showError(error)
+        } else {
+            this.profile = profile
+            this.marketSize = marketSize
+            this.wishlistSize = wishlistSize
         }
-
-        this.error = error
-        this.profile = profile
     },
 
     methods: {

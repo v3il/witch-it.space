@@ -193,7 +193,7 @@ export const ru = {
     Items_Filters_OnlyTradeable: 'Только обмениваемые',
     Items_Filters_OnlyOwned: 'Только имеющиеся',
 
-    Wishlist_TopTabs_Orders: 'Заказы',
+    Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Список желаемого',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',

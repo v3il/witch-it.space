@@ -2,6 +2,7 @@ import axios from 'axios'
 import items from '../../shared/items111.json'
 import { WitchItApiService } from './WitchItApiService'
 import { QuestsService } from './QuestsService'
+import { UserService } from './UserService'
 
 const axiosInstance = axios.create({
     baseURL: 'https://master.witchit.com/api/v1',
@@ -18,3 +19,4 @@ const axiosInstance = axios.create({
 
 export const witchItApiService = new WitchItApiService({ axiosInstance })
 export const questsService = new QuestsService(items)
+export const userService = new UserService()
