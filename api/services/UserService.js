@@ -10,12 +10,21 @@ export class UserService {
             params = {
                 ...params,
                 attributes: {
-                    include: [[Sequelize.fn('COUNT', Sequelize.col('Wishes.id')), 'wishlistSize']]
+                    include: [
+                        [Sequelize.fn('COUNT', Sequelize.col('Wishes.id')), 'wishlistSize'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM wishes WHERE item_rarity = \'whimsical\')'), 'wishlistSizeWhimsical'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM wishes WHERE item_rarity = \'veryrare\')'), 'wishlistSizeVeryRare'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM wishes WHERE item_rarity = \'rare\')'), 'wishlistSizeRare'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM wishes WHERE item_rarity = \'uncommon\')'), 'wishlistSizeUncommon'],
+                        [sequelize.literal('(SELECT COUNT(*) FROM wishes WHERE item_rarity = \'common\')'), 'wishlistSizeCommon']
+                    ]
                 },
                 include: [{
                     model: Wish, attributes: []
                 }],
-                group: ['User.id']
+                group: ['User.id'],
+                logging: console.log,
+                benchmark: true
             }
 
             // attributes: [
@@ -43,7 +52,7 @@ export class UserService {
             //     group: ['companies.id'] // <---- You might require this one also
         }
 
-        console.log(params)
+        // console.log(params)
 
         return User.findOne(params)
     }

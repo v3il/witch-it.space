@@ -21,7 +21,7 @@ try {
         username: config.DB_USER,
         password: config.DB_PASSWORD,
         dialect: 'postgres',
-        logging: false /* && console.log */,
+        logging: false,
         define: {
             freezeTableName: false,
             timestamps: false,

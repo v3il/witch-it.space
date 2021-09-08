@@ -194,11 +194,20 @@ const getById = async (request, response) => {
 
     const user = await userService.getById(id)
 
-    console.log(user)
+    // console.log(user)
 
     if (!user) {
         throw new NotFound(translateText('Error_UserNotFound', request.locale))
     }
+
+    console.error(user.settings.host)
+
+    await user.update({
+        settings: {
+            ...user.settings,
+            host: 'test'
+        }
+    })
 
     response.send({ user: extractUserPublicData(user), marketSize: 100, wishlistSize: 50 })
 }
