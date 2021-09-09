@@ -125,7 +125,7 @@ const updateSettings = async (request, response) => {
     }
 
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -146,8 +146,7 @@ const updateSettings = async (request, response) => {
     }
 
     if (password) {
-        const salt = await genSalt(3)
-        updateData.password = await hash(password, salt)
+        updateData.password = await userService.encryptPassword(password)
     }
 
     await user.update(updateData)
@@ -158,7 +157,7 @@ const updateSettings = async (request, response) => {
 const toggleProfile = async (request, response) => {
     const { isPublic } = request.body
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -173,7 +172,7 @@ const toggleProfile = async (request, response) => {
 
 const removeProfile = async (request, response) => {
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -194,22 +193,11 @@ const getById = async (request, response) => {
 
     const user = await userService.getById(id)
 
-    // console.log(user)
-
     if (!user) {
         throw new NotFound(translateText('Error_UserNotFound', request.locale))
     }
 
-    console.error(user.settings.host)
-
-    await user.update({
-        settings: {
-            ...user.settings,
-            host: 'test'
-        }
-    })
-
-    response.send({ user: extractUserPublicData(user), marketSize: 100, wishlistSize: 50 })
+    response.send({ profile: user.get() })
 }
 
 const userController = {

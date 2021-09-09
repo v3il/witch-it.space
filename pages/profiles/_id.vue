@@ -204,7 +204,9 @@ export default {
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, user: profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
+        const { error, profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
+
+        console.log(profile)
 
         this.error = error
 

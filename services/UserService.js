@@ -10,9 +10,7 @@ export class UserService {
             const { data } = await this.#axiosInstance.get(`/api/user/${userId}`)
             return {
                 error: null,
-                user: data.user,
-                marketSize: data.marketSize,
-                wishlistSize: data.wishlistSize
+                profile: data.profile
             }
         } catch (e) {
             return {
