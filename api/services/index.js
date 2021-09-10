@@ -10,8 +10,6 @@ const axiosInstance = axios.create({
     headers: {
         'User-Agent': 'WitchIt/++UE4+Release-4.27-CL-0 Windows/10.0.19041.1.256.64bit',
         'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Content-Length': 0,
-        // 'Accept-Encoding': 'deflate, gzip',
         Host: 'master.witchit.com',
         Accept: '*/*'
     }

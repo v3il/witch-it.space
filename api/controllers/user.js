@@ -14,8 +14,8 @@ import { userService } from '../services'
 
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
-    const parsedUser = user ? extractUserPublicData(user) : null
+    const user = await userService.getById(id)
+    const parsedUser = user ? user.get() : null
 
     response.send({ user: parsedUser })
 }
@@ -29,7 +29,7 @@ const changeUserLocale = async (request, response) => {
     }
 
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -51,7 +51,7 @@ const changeUserTheme = async (request, response) => {
     }
 
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -67,7 +67,7 @@ const changeUserTheme = async (request, response) => {
 const disconnectSocial = async (request, response) => {
     const { social } = request.body
     const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const user = await userService.getById(id)
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
