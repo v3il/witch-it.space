@@ -1,8 +1,8 @@
-import { extractUserPublicData, generateToken } from '../../util'
+import { generateToken } from '../../util'
 import { config, Routes, Cookies } from '../../../shared'
 
 const getUserData = (user) => {
-    const userPublicData = extractUserPublicData(user)
+    const userPublicData = user.get()
     const token = generateToken(userPublicData)
 
     return { userPublicData, token }

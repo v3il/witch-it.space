@@ -1,8 +1,9 @@
 import { BadRequest } from '@curveball/http-errors'
-import { compare, genSalt, hash } from 'bcrypt'
+import { compare } from 'bcrypt'
 import { Op } from 'sequelize'
 import { translateText } from '../../util'
 import { User } from '../../models'
+import { userService } from '../../services'
 import { signInUser } from './signInUser'
 
 const login = async (request, response) => {
@@ -56,8 +57,7 @@ const register = async (request, response) => {
         throw new BadRequest(translateText('Error_NotUniqueLogin', request.locale))
     }
 
-    const salt = await genSalt(3)
-    const encryptedPassword = await hash(password, salt)
+    const encryptedPassword = await userService.encryptPassword(password)
 
     const user = await User.create({
         login,

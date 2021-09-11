@@ -1,5 +1,5 @@
 import { genSalt, hash } from 'bcrypt'
-import { User } from '../models'
+import { User, sequelize } from '../models'
 
 const EXCLUDED_ATTRIBUTES = ['password', 'googleId']
 
@@ -13,6 +13,17 @@ export class UserService {
         }
 
         return User.findOne(params)
+    }
+
+    getPublicProfiles () {
+        const params = {
+            where: { isPublic: true },
+            attributes: {
+                exclude: EXCLUDED_ATTRIBUTES
+            }
+        }
+
+        return User.findAll(params)
     }
 
     async encryptPassword (password) {

@@ -176,7 +176,7 @@ export default {
 
             try {
                 const { data } = await this.$axios.get('/api/profiles')
-                this.profiles = data.profiles
+                this.profiles = data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
             } catch (e) {
                 this.$showError(e)
             }

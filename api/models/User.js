@@ -54,7 +54,7 @@ const initUserModel = (sequelize, DataTypes) => {
             },
 
             settings: {
-                type: DataTypes.JSON,
+                type: DataTypes.JSONB,
 
                 get () {
                     return JSON.parse(this.getDataValue('settings'))
@@ -76,7 +76,7 @@ const initUserModel = (sequelize, DataTypes) => {
             },
 
             userStat: {
-                type: DataTypes.JSON,
+                type: DataTypes.JSONB,
 
                 get () {
                     return JSON.parse(this.getDataValue('userStat'))

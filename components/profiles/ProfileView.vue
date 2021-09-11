@@ -50,6 +50,9 @@
       </b-button>
     </div>
 
+    {{ profile.id }} |
+    {{ profile.userStat.marketSize }}
+
     <ProfileScale :profile="profile" @click="onScaleClick" />
 
     <UserIcons :profile="profile" class="wis-profile-view__icons" show-main-only />
