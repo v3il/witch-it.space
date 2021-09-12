@@ -11,7 +11,7 @@
         {{ profile.displayName }}
       </h5>
 
-      <ProfileScale :profile="profile" @click="onScaleClick" />
+      <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />
     </div>
 
     <div class="wis-user-view__section">
@@ -55,6 +55,34 @@
           <div class="wit-flex wit-flex--column wit-flex--align-center">
             <i class="mdi mdi-discord mdi-24px" />
             <span class="wit-color--muted">Discord</span>
+          </div>
+        </b-button>
+      </div>
+    </div>
+
+    <div class="wis-user-view__section wis-user-view__section--xs">
+      <div class="wit-flex wit-block--full-width">
+        <b-button
+          type="is-link"
+          tag="router-link"
+          :to="marketUrl"
+          class="wis-user-view__stat-button wit-paddings--xs"
+        >
+          <div class="wit-flex wit-flex--column">
+            <span class="wit-font-weight--700">{{ profile.userStat.marketSize }}</span>
+            <span class="wit-color--muted">{{ $t('Profiles_StatButtonOrders') }}</span>
+          </div>
+        </b-button>
+
+        <b-button
+          type="is-link"
+          tag="router-link"
+          :to="wishlistUrl"
+          class="wis-user-view__stat-button wit-paddings--xs"
+        >
+          <div class="wit-flex wit-flex--column">
+            <span class="wit-font-weight--700">{{ profile.userStat.wishlistSize }}</span>
+            <span class="wit-color--muted">{{ $t('Profiles_StatButtonWishlist') }}</span>
           </div>
         </b-button>
       </div>
@@ -104,26 +132,39 @@ export default {
             return buildUserWishlistUrl(this.profile.id)
         },
 
-        steamGuardStatusIcon () {
-            return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
-        },
+        // steamGuardStatusIcon () {
+        //     return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
+        // },
+        //
+        // steamGuardStatusClass () {
+        //     return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
+        // },
+        //
+        // steamGuardStatusTooltipText () {
+        //     const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
+        //     return this.$t(id)
+        // },
 
-        steamGuardStatusClass () {
-            return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
-        },
+        // allowMaterialsReplacementClass () {
+        //     return this.profile.allowMaterialsReplacement ? 'wit-color--success' : 'wit-color--danger'
+        // },
+        //
+        // allowMaterialsReplacementTooltipText () {
+        //     const id = this.profile.allowMaterialsReplacement ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
+        //     return this.$t(id)
+        // },
 
-        steamGuardStatusTooltipText () {
-            const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
-            return this.$t(id)
-        },
+        profileScaleData () {
+            const stat = this.profile.userStat
 
-        allowMaterialsReplacementClass () {
-            return this.profile.allowMaterialsReplacement ? 'wit-color--success' : 'wit-color--danger'
-        },
-
-        allowMaterialsReplacementTooltipText () {
-            const id = this.profile.allowMaterialsReplacement ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
-            return this.$t(id)
+            return {
+                total: stat.marketSize,
+                common: stat.marketSizeCommon,
+                uncommon: stat.marketSizeUncommon,
+                rare: stat.marketSizeRare,
+                veryRare: stat.marketSizeVeryRare,
+                whimsical: stat.marketSizeWhimsical
+            }
         }
     },
 

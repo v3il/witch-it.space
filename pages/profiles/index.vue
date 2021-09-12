@@ -34,7 +34,9 @@
 
           <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
             <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-              <ProfileView :profile="profile" class="wit-block--full-height" />
+              <UserView :profile="profile" class="wit-block--full-height wit-profile-view" />
+
+              <!--              <ProfileView :profile="profile" class="wit-block&#45;&#45;full-height" />-->
             </div>
           </div>
 
@@ -55,6 +57,7 @@ import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
 import TopTabs from '@/components/TopTabs'
 import { getObjectsDiff } from '@/utils'
+import UserView from '@/components/UserView'
 
 const modes = {
     ALL: 'allProfiles',
@@ -74,7 +77,8 @@ export default {
         ProfileView,
         Card,
         TopNavBar,
-        TopTabs
+        TopTabs,
+        UserView
     },
 
     middleware: ['fetchUser'],
@@ -198,6 +202,12 @@ export default {
     @media screen and (max-width: 1024px) {
         padding: var(--offset-xs);
     }
+}
+
+.wit-profile-view {
+    border-radius: var(--offset-xs);
+    border: 1px solid #36394c;
+    padding: 0 var(--offset-md);
 }
 
 .wis-profiles__grid {

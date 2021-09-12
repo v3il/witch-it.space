@@ -15,27 +15,31 @@ export default {
     name: 'ProfileScale',
 
     props: {
-        profile: {
+        scaleData: {
             type: Object,
             required: true
         }
     },
 
     computed: {
+        stat () {
+            return this.profile.userStat
+        },
+
         whimsicalScaleWidth () {
-            return Math.floor(this.profile.whimsicals / this.profile.ordersCount * 100)
+            return Math.floor(this.scaleData.whimsical / this.scaleData.total * 100)
         },
 
         veryRareScaleWidth () {
-            return Math.floor(this.profile.veryRares / this.profile.ordersCount * 100)
+            return Math.floor(this.scaleData.veryRare / this.scaleData.total * 100)
         },
 
         rareScaleWidth () {
-            return Math.floor(this.profile.rares / this.profile.ordersCount * 100)
+            return Math.floor(this.scaleData.rare / this.scaleData.total * 100)
         },
 
         uncommonScaleWidth () {
-            return Math.floor(this.profile.uncommons / this.profile.ordersCount * 100)
+            return Math.floor(this.scaleData.uncommon / this.scaleData.total * 100)
         },
 
         commonScaleWidth () {

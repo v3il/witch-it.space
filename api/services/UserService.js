@@ -1,5 +1,5 @@
 import { genSalt, hash } from 'bcrypt'
-import { User, sequelize } from '../models'
+import { User } from '../models'
 
 const EXCLUDED_ATTRIBUTES = ['password', 'googleId']
 
