@@ -14,7 +14,7 @@
       <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />
     </div>
 
-    <div class="wis-user-view__section">
+    <div v-if="!hideTradeButton" class="wis-user-view__section">
       <b-button
         type="is-primary"
         tag="a"
@@ -28,7 +28,7 @@
       </b-button>
     </div>
 
-    <div class="wis-user-view__section wis-user-view__section--xs">
+    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs">
       <div class="wit-flex wit-block--full-width">
         <b-button
           :disabled="!profile.steamProfileUrl"
@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div class="wis-user-view__section wis-user-view__section--xs">
+    <div v-if="!hideStatButtons" class="wis-user-view__section wis-user-view__section--xs">
       <div class="wit-flex wit-block--full-width">
         <b-button
           type="is-link"
@@ -88,11 +88,11 @@
       </div>
     </div>
 
-    <div v-if="$slots.note" class="wis-user-view__section">
+    <div v-if="$slots.note && !hideNote" class="wis-user-view__section">
       <slot name="note" />
     </div>
 
-    <div class="wis-user-view__section">
+    <div v-if="!hideIcons" class="wis-user-view__section">
       <UserIcons :profile="profile" />
     </div>
   </div>
@@ -116,6 +116,36 @@ export default {
         profile: {
             required: true,
             type: Object
+        },
+
+        hideTradeButton: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        hideSocialButtons: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        hideIcons: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        hideStatButtons: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        hideNote: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
 
