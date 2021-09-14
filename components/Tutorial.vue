@@ -30,9 +30,13 @@ export default {
 
         this.$store.commit('add', 'Test')
 
-        const { data } = await this.$axios.get('/api/')
+        try {
+            const { data } = await this.$axios.get('/api/')
 
-        this.article = data
+            this.article = data
+        } catch (e) {
+            console.log(e)
+        }
     },
 
     methods: {

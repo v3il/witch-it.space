@@ -23,20 +23,28 @@ const { errorsHandler, rootRouter } = require('./routes')
 
 const { initSequelize } = require('./sequilize')
 
-require('express-async-errors')
+initSequelize()
 
-const initServer = async () => {
-    const sequelize = await initSequelize()
+// require('express-async-errors')
+
+const initServer = () => {
+    const sequelize = {} // await initSequelize()
     const app = express()
 
     app.use(cors())
     app.use(cookieParser())
     app.use(bodyParser.json())
 
-    app.set('view engine', 'ejs')
+    // app.set('view engine', 'ejs')
 
-    app.use('/', i18n, rootRouter)
+    app.use('', i18n, rootRouter)
     app.use(errorsHandler)
+
+    // app.get('/', (req, res) => {
+    //     res.send({
+    //         test: 1
+    //     })
+    // })
 
     // const server = app.listen(config.PORT, () => {
     //     logger.info(`Server successfully started at ${config.PORT}.`)

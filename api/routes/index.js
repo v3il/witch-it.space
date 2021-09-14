@@ -15,11 +15,14 @@ const rootRouter = Router()
 
 // Get User
 // rootRouter.get('/users/user', user.user)
-rootRouter.get('/api/', async (req, res) => {
+// eslint-disable-next-line require-await
+rootRouter.get('/', async (req, res) => {
+    console.log(User.model)
+
     const u = await User.model.findAll()
 
     console.log(u)
-    res.send(u)
+    res.send({ u })
 })
 
 module.exports = { rootRouter, errorsHandler }

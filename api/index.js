@@ -256,12 +256,7 @@ const { initServer } = require('./server')
 
 // await initServer()
 
-const { app } = (async () => {
-    const server = await initServer()
-    return server
-})()
-
-console.log(111, app)
+const { app } = initServer()
 
 // Export the server middleware
 module.exports = {
