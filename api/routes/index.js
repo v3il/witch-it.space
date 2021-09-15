@@ -4,22 +4,10 @@ const { errorsHandler } = require('./errorsHandler')
 
 const rootRouter = Router()
 
-// Initialize Controller
-// const { user } = require('../controllers/')
-
-// Register
-// router.post('/users/register', usersController.register)
-//
-// // Login
-// router.post('/users/login', usersController.login)
-
-// Get User
-// rootRouter.get('/users/user', user.user)
-// eslint-disable-next-line require-await
 rootRouter.get('/', async (req, res) => {
-    console.log(User.model)
+    console.log(User)
 
-    const u = await User.model.findAll()
+    const u = await User.findAll()
 
     console.log(u)
     res.send({ u })
