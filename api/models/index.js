@@ -40,4 +40,8 @@ try {
     process.exit(1)
 }
 
-module.exports = db
+module.exports = {
+    User: db.User,
+    sequelize: db.sequelize,
+    Sequelize: db.Sequelize
+}

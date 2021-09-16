@@ -49,7 +49,7 @@ export default {
 
             // this.location = '/api/auth/discord'
 
-            window.open('/api/auth/discord', 'auth', 'width=600,height=600')
+            window.open('/api/auth/discord' /* 'auth', 'width=600,height=600' */)
 
             window.test = () => {
                 console.error('Test')
