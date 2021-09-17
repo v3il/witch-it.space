@@ -5,20 +5,22 @@ import { config } from '../config'
 
 export const authorized = async (request, response, next) => {
     // todo: check cookies
-    const { authorization } = request.headers
+    const { token: tokenC } = request.cookies
 
-    if (!authorization) {
+    console.log(1111, tokenC)
+
+    if (!tokenC) {
         throw new Forbidden(translateText('errors.actionIsForbidden', request.locale))
     }
 
-    const [type, token] = authorization.split(' ')
-
-    if (!(token && type === 'Bearer')) {
-        throw new Forbidden(translateText('errors.wrongAuthHeader', request.locale))
-    }
+    // const [type, token] = tokenC.split(' ')
+    //
+    // if (!(token && type === 'Bearer')) {
+    //     throw new Forbidden(translateText('errors.wrongAuthHeader', request.locale))
+    // }
 
     try {
-        request.user = await verify(token, config.JWT_SECRET)
+        request.user = await verify(tokenC, config.JWT_SECRET)
         next()
     } catch (error) {
         const { name } = error

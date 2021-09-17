@@ -67,6 +67,16 @@ const authUsingDiscordCallback = async (request, response) => {
 
     const token = generateTokenData(userPublicData)
 
+    response.cookie('token', token.token, {
+        maxAge: 86400 * 1000, // 24 hours
+        httpOnly: true, // http only, prevents JavaScript cookie access
+        secure: true // cookie must be sent over https / ssl
+    })
+
+    console.log(token, response.cookie)
+
+    // response.cookies.userToken = token.token
+
     // response.json({ token })
     //
     // console.log(userData)
