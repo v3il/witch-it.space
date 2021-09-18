@@ -87,7 +87,7 @@ const authUsingDiscordCallback = async (request, response) => {
     //
     // // res.redirect(`/?token=${json.access_token}`);
 
-    response.redirect(`/app?token=${token.token}`) // Successful auth
+    response.redirect('/app') // Successful auth
 }
 
 const discordAuthController = {

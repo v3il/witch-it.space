@@ -13,6 +13,8 @@
 
     <p>{{ $store.state.list }}</p>
 
+    <a href="/api/auth/discord">Discord</a>
+
     <NuxtLink to="/app">
       Home page
     </NuxtLink>

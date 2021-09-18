@@ -12,6 +12,8 @@
 
 <script>
 export default {
+    middleware: ['fetchUser'],
+
     data: () => ({
         user: null
     }),
@@ -22,11 +24,11 @@ export default {
 
             // this.$store.commit('add', 'Test')
 
-            console.log('Created')
+            // console.log('Created')
 
-            const { data } = await this.$axios.get('/api/user')
-
-            this.user = data
+            // const { data } = await this.$axios.get('/api/user')
+            //
+            // this.user = data
         }
     }
 }
