@@ -1,5 +1,5 @@
 import express from 'express'
-import { discordAuthController, googleAuthController } from '../controllers'
+import { discordAuthController, googleAuthController, steamAuthController } from '../controllers'
 
 const authRouter = express.Router()
 
@@ -8,6 +8,9 @@ authRouter.get('/discord/callback', discordAuthController.authUsingDiscordCallba
 
 authRouter.get('/google', googleAuthController.authUsingGoogle)
 authRouter.get('/google/callback', googleAuthController.authUsingGoogleCallback)
+
+authRouter.get('/steam', steamAuthController.authUsingSteam)
+authRouter.get('/steam/callback', steamAuthController.authUsingSteamCallback)
 
 export { authRouter }
 
