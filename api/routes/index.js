@@ -1,10 +1,9 @@
-import { Router } from 'express'
-
+import { createAsyncRouter } from '../util'
 import { authRouter } from './auth'
 import { userRouter } from './user'
 import { errorsHandler } from './errorsHandler'
 
-const rootRouter = Router()
+const rootRouter = createAsyncRouter()
 
 rootRouter.use('/auth', authRouter)
 rootRouter.use('/user', userRouter)

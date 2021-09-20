@@ -1,8 +1,8 @@
-import express from 'express'
 import { userController } from '../controllers'
 import { authorized } from '../interceptors'
+import { createAsyncRouter } from '../util'
 
-const userRouter = express.Router()
+const userRouter = createAsyncRouter()
 
 userRouter.get('/', authorized, userController.getCurrentUser)
 

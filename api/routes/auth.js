@@ -1,7 +1,7 @@
-import express from 'express'
 import { discordAuthController, googleAuthController, steamAuthController, localAuthController } from '../controllers'
+import { createAsyncRouter } from '../util'
 
-const authRouter = express.Router()
+const authRouter = createAsyncRouter()
 
 authRouter.get('/discord', discordAuthController.authUsingDiscord)
 authRouter.get('/discord/callback', discordAuthController.authUsingDiscordCallback)

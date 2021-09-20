@@ -7,7 +7,6 @@ const { i18n } = require('./interceptors')
 const { errorsHandler, rootRouter } = require('./routes')
 
 require('./models')
-require('express-async-errors')
 
 const initServer = () => {
     const app = express()
@@ -16,8 +15,8 @@ const initServer = () => {
     app.use(cookieParser())
     app.use(bodyParser.json())
 
-    app.use(errorsHandler)
     app.use('', i18n, rootRouter)
+    app.use(errorsHandler)
 
     return app
 }
