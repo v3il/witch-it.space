@@ -1,7 +1,6 @@
-const ru = require('../translations/ru.json')
-const en = require('../translations/en.json')
+import { ru, en } from '../../shared/translations'
 
-export const translateText = (textId, locale = 'ua', replacements = []) => {
+export const translateText = (textId, locale = 'en', replacements = []) => {
     const idsParts = textId.split('.')
     const lastIdPart = idsParts.pop()
 

@@ -1,8 +1,7 @@
 import qs from 'qs'
-import { BadRequest } from '@curveball/http-errors'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { translateText, generateToken, extractUserPublicData, getUserFromCookies } from '../../util'
+import { generateToken, extractUserPublicData, getUserFromCookies } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
 
@@ -16,7 +15,7 @@ const authUsingGoogleCallback = async (request, response) => {
     const { code } = request.query
 
     if (!code) {
-        throw new BadRequest(translateText('errors.wrongGoogleToken', request.locale))
+        return response.redirect(`${Routes.AUTH}?error=errors.wrongOauth2Token`)
     }
 
     const { data: tokenData } = await axiosInstance.post(
@@ -93,7 +92,7 @@ const googleAuthController = {
         try {
             await authUsingGoogleCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.AUTH}?error=test`)
+            response.redirect(`${Routes.AUTH}?error=errors.authFailed`)
         }
     }
 }

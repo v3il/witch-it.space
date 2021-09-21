@@ -5,7 +5,7 @@ export const authorized = async (request, response, next) => {
     const user = await getUserFromCookies(request)
 
     if (!user) {
-        throw new Forbidden(translateText('errors.wrongAuthToken', request.locale))
+        throw new Forbidden(translateText('errors.actionForbidden', request.locale))
     }
 
     request.user = user
