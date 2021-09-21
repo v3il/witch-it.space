@@ -89,7 +89,13 @@ const authUsingDiscordCallback = async (request, response) => {
 
 const discordAuthController = {
     authUsingDiscord,
-    authUsingDiscordCallback
+    async authUsingDiscordCallback (request, response) {
+        try {
+            await authUsingDiscordCallback(request, response)
+        } catch (e) {
+            response.redirect(`${Routes.AUTH}?error=test`)
+        }
+    }
 }
 
 export { discordAuthController }

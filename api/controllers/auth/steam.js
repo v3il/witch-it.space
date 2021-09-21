@@ -70,7 +70,13 @@ const authUsingSteamCallback = async (request, response) => {
 
 const steamAuthController = {
     authUsingSteam,
-    authUsingSteamCallback
+    async authUsingSteamCallback (request, response) {
+        try {
+            await authUsingSteamCallback(request, response)
+        } catch (e) {
+            response.redirect(`${Routes.AUTH}?error=test`)
+        }
+    }
 }
 
 export { steamAuthController }

@@ -89,7 +89,13 @@ const authUsingGoogleCallback = async (request, response) => {
 
 const googleAuthController = {
     authUsingGoogle,
-    authUsingGoogleCallback
+    async authUsingGoogleCallback (request, response) {
+        try {
+            await authUsingGoogleCallback(request, response)
+        } catch (e) {
+            response.redirect(`${Routes.AUTH}?error=test`)
+        }
+    }
 }
 
 export { googleAuthController }
