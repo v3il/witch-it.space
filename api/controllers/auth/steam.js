@@ -1,8 +1,9 @@
 import SteamAuth from 'node-steam-openid'
 import { config, Routes } from '../../../shared'
-import { extractUserPublicData, generateToken, getUserFromCookies } from '../../util'
+import { getUserFromCookies } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
+import { signInUser } from './signInUser'
 
 const steam = new SteamAuth({
     returnUrl: `${config.SERVER_ORIGIN}/api/auth/steam/callback`,
@@ -52,20 +53,11 @@ const authUsingSteamCallback = async (request, response) => {
         })
     }
 
-    const userPublicData = {
-        authType: 'steam',
-        ...extractUserPublicData(user)
-    }
-
-    const token = generateToken(userPublicData)
-
-    response.cookie('token', token, {
-        maxAge: config.JWT_TOKEN_DURATION * 1000,
-        httpOnly: true,
-        secure: true
+    signInUser({
+        user,
+        response,
+        authType: 'steam'
     })
-
-    response.redirect(Routes.MAIN)
 }
 
 const steamAuthController = {

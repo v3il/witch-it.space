@@ -1,9 +1,10 @@
 import qs from 'qs'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { generateToken, extractUserPublicData, getUserFromCookies } from '../../util'
+import { getUserFromCookies } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
+import { signInUser } from './signInUser'
 
 const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/discord/callback`
 
@@ -70,20 +71,11 @@ const authUsingDiscordCallback = async (request, response) => {
         })
     }
 
-    const userPublicData = {
-        authType: 'discord',
-        ...extractUserPublicData(user)
-    }
-
-    const token = generateToken(userPublicData)
-
-    response.cookie('token', token, {
-        maxAge: config.JWT_TOKEN_DURATION * 1000,
-        httpOnly: true,
-        secure: true
+    signInUser({
+        user,
+        response,
+        authType: 'discord'
     })
-
-    response.redirect(Routes.MAIN)
 }
 
 const discordAuthController = {

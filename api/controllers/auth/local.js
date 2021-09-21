@@ -1,9 +1,9 @@
 import { BadRequest } from '@curveball/http-errors'
 import { compare, genSalt, hash } from 'bcrypt'
-import { config, Routes } from '../../../shared'
-import { extractUserPublicData, generateToken, translateText } from '../../util'
+import { translateText } from '../../util'
 // eslint-disable-next-line
 import { User } from '../../models'
+import { signInUser } from './signInUser'
 
 const login = async (request, response) => {
     const requestBody = { login: '', password: '', ...request.body }
@@ -23,20 +23,11 @@ const login = async (request, response) => {
         throw new BadRequest(translateText('errors.wrongPassword', request.locale))
     }
 
-    const userPublicData = {
-        authType: 'local',
-        ...extractUserPublicData(savedUser)
-    }
-
-    const token = generateToken(userPublicData)
-
-    response.cookie('token', token, {
-        maxAge: config.JWT_TOKEN_DURATION * 1000,
-        httpOnly: true,
-        secure: true
+    signInUser({
+        response,
+        user: savedUser,
+        authType: 'local'
     })
-
-    response.redirect(Routes.MAIN)
 }
 
 const register = async (request, response) => {
@@ -69,20 +60,11 @@ const register = async (request, response) => {
         locale: request.locale
     })
 
-    const userPublicData = {
-        authType: 'local',
-        ...extractUserPublicData(user)
-    }
-
-    const token = generateToken(userPublicData)
-
-    response.cookie('token', token, {
-        maxAge: config.JWT_TOKEN_DURATION * 1000,
-        httpOnly: true,
-        secure: true
+    signInUser({
+        user,
+        response,
+        authType: 'local'
     })
-
-    response.redirect(Routes.MAIN)
 }
 
 const localAuthController = {
