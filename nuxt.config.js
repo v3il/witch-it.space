@@ -8,11 +8,15 @@ export default {
             { name: 'format-detection', content: 'telephone=no' }
         ],
         link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+            { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,500|Sarabun:400,600,700&display=swap' }
         ]
     },
 
     css: [
+        './assets/styles/base/reboot.css',
+        './assets/styles/base/variables.css',
+        './assets/styles/base/helpers.css'
     ],
 
     plugins: [
@@ -28,9 +32,10 @@ export default {
     ],
 
     modules: [
-        'bootstrap-vue/nuxt',
+        // 'bootstrap-vue/nuxt',
         '@nuxtjs/axios',
-        '@nuxtjs/pwa'
+        '@nuxtjs/pwa',
+        '@nuxtjs/style-resources'
     ],
 
     axios: {},

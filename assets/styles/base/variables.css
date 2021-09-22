@@ -1,0 +1,30 @@
+:root {
+    --bs-blue: #626ed4;
+    --bs-red: #ec4561;
+    --bs-yellow: #f8b425;
+    --bs-green: #02a499;
+    --bs-cyan: #38a4f8;
+    --bs-white: #fff;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-primary: #626ed4;
+    --bs-secondary: #e9ecef;
+    --bs-success: #02a499;
+    --bs-info: #38a4f8;
+    --bs-warning: #f8b425;
+    --bs-indigo: #6610f2;
+    --bs-danger: #ec4561;
+    --bs-brown: #8d6e63;
+    --bs-teal: #050505;
+    --bs-lime: #afb42b;
+    --bs-orange: #f1734f;
+    --bs-blue-grey: #90a4ae;
+    --bs-purple: #6f42c1;
+    --bs-pink: #e83e8c;
+    --bs-light: #e9ecef;
+    --bs-dark: #343a40;
+    --bs-font-sans-serif: "Roboto", sans-serif;
+    /* stylelint-disable-next-line */
+    --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
