@@ -59,6 +59,22 @@
     text-align: center;
 }
 
+.wit-font-size--xs {
+    font-size: var(--text-size-xs);
+}
+
+.wit--font-size--sm {
+    font-size: var(--text-size-sm);
+}
+
+.wit-line-height--xs {
+    line-height: var(--line-height-xs);
+}
+
+.wit-line-height--sm {
+    line-height: var(--line-height-sm);
+}
+
 /* stylelint-disable */
 
 /*.wit-text--xxlg {*/

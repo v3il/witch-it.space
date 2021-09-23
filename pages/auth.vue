@@ -13,12 +13,12 @@
     <div class="auth">
       <div class="auth__form-container wit-background--white">
         <header class="auth__header wit-background--primary wit-position--relative">
-          <h1 class="wit-color--white wit-text--center">
+          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--sarabun">
             Welcome Back!
           </h1>
-          <h3 class="wit-color--white wit-text--center ">
+          <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
             Sign in to continue to Veltrix
-          </h3>
+          </p>
 
           <div class="auth__header-image wit-position--absolute wit-background--white" />
         </header>
@@ -67,25 +67,23 @@ export default {
 }
 
 .auth__header {
-    padding: 24px 40px 40px;
+    padding: var(--offset-md) var(--offset-xlg);
     box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
-    border-radius: 4px 4px 0 0;
+    border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
 }
 
 .auth__header-image {
-    position: absolute;
     border-radius: 50%;
     width: 72px;
     height: 72px;
     left: 50%;
     transform: translateX(-50%);
-    top: 100px;
     border-bottom: 2px solid var(--bs-success);
 }
 
 .auth__form-container2 {
-    padding: 64px 40px 40px;
+    padding: 64px var(--offset-xlg) var(--offset-xlg);
     box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
 }
 </style>

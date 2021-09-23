@@ -9,3 +9,11 @@
 .wit-position--absolute {
     position: absolute;
 }
+
+.wit-font-family--roboto {
+    font-family: var(--font-family-roboto);
+}
+
+.wit-font-family--sarabun {
+    font-family: var(--font-family-sarabun);
+}
