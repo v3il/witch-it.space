@@ -1,0 +1,19 @@
+.wit-offset-bottom--xxs {
+    margin-bottom: var(--offset-xxs);
+}
+
+.wit-offset-bottom--xs {
+    margin-bottom: var(--offset-xs);
+}
+
+.wit-offset-bottom--sm {
+    margin-bottom: var(--offset-sm);
+}
+
+.wit-offset-bottom--md {
+    margin-bottom: var(--offset-md);
+}
+
+.wit-offset-bottom--lg {
+    margin-bottom: var(--offset-lg);
+}

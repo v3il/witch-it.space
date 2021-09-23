@@ -1,0 +1,18 @@
+@import "./reboot.css";
+@import "./variables.css";
+@import "./helpers/colors.css";
+@import "./helpers/display.css";
+@import "./helpers/text.css";
+@import "./helpers/size.css";
+@import "./helpers/cursor.css";
+@import "./helpers/offsets.css";
+@import "./helpers/other.css";
+
+body {
+    font-size: 14px;
+    line-height: 1.14;
+    font-weight: normal;
+    font-style: normal;
+    min-height: 100vh;
+    color: var(--default-color);
+}

@@ -14,9 +14,7 @@ export default {
     },
 
     css: [
-        './assets/styles/base/reboot.css',
-        './assets/styles/base/variables.css',
-        './assets/styles/base/helpers.css'
+        './assets/styles/base/global.css'
     ],
 
     plugins: [
