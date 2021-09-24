@@ -25,11 +25,11 @@
 
         <div class="auth__form-container2">
           <form action="" class="auth__form" @submit.prevent="">
-            <Label for="" class="wit-offset-bottom--xs">Username</Label>
-            <Input type="text" class="wit-offset-bottom--sm" />
+            <Label for="login" class="wit-offset-bottom--xs">Username</Label>
+            <Input id="login" v-model="login" type="text" placeholder="Enter Username" class="wit-offset-bottom--sm" />
 
-            <Label for="" class="wit-offset-bottom--xs">Password</Label>
-            <Input type="text" />
+            <Label for="password" class="wit-offset-bottom--xs">Password</Label>
+            <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--sm" />
 
             <Button>Log In</Button>
           </form>
@@ -52,7 +52,12 @@ export default {
         Label,
         Input,
         Button
-    }
+    },
+
+    data: () => ({
+        login: '',
+        password: ''
+    })
 }
 </script>
 

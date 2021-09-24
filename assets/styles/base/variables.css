@@ -27,6 +27,8 @@
     --bs-dark: #343a40;
     --default-text-color: #5b626b;
     --default-bg-color: #f8f8fa;
+    --default-border-color: #ced4da;
+    --default-input-color: #495057;
 
     --bs-font-sans-serif: "Roboto", sans-serif;
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -44,6 +46,7 @@
 
     --line-height-xs: 1.14;
     --line-height-sm: 1.3;
+    --line-height-md: 1.5;
 
     --font-family-roboto: Roboto, sans-serif;
     --font-family-sarabun: Sarabun, sans-serif;
