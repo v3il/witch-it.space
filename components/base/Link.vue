@@ -19,6 +19,6 @@ export default {
 
 <style scoped>
 .wit-link {
-    color: var(--bs-primary);
+    color: var(--primary);
 }
 </style>

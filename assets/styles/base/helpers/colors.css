@@ -1,23 +1,27 @@
 /* stylelint-disable */
 
 .wit-background--primary {
-    background-color: var(--bs-primary);
+    background-color: var(--primary);
 }
 
 .wit-background--white {
-    background-color: var(--bs-white);
+    background-color: var(--white);
+}
+
+.wit-background--content {
+    background-color: var(--card-bg);
 }
 
 .wit-color--white {
-    color: var(--bs-white);
+    color: var(--white);
 }
 
 .wit-color--primary {
-    color: var(--bs-primary);
+    color: var(--primary);
 }
 
 .wit-color--danger {
-    color: var(--bs-danger);
+    color: var(--danger);
 }
 
 .wit-color--white-half {

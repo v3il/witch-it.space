@@ -23,9 +23,9 @@ export default {
 
 <style scoped lang="scss">
 .wit-input {
-    color: var(--default-input-color);
-    background: var(--bs-white);
-    border: 1px solid var(--default-border-color);
+    color: var(--gray-700);
+    background: var(--white);
+    border: 1px solid var(--gray-400);
     box-sizing: border-box;
     border-radius: var(--offset-xxs);
     padding: var(--offset-xs) var(--offset-sm);
@@ -36,7 +36,7 @@ export default {
 
     &:hover,
     &:focus {
-        border-color: var(--bs-primary);
+        border-color: var(--primary);
         outline: 0;
         box-shadow: none;
     }

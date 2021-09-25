@@ -1,7 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--center page">
     <div class="auth">
-      <div class="auth__form-container wit-background--white wit-offset-bottom--xxlg">
+      <div class="auth__form-container wit-background--content wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--sarabun">
             Welcome Back!
@@ -10,7 +10,7 @@
             Sign in to continue to Veltrix
           </p>
 
-          <div class="auth__header-image wit-position--absolute wit-background--white" />
+          <div class="auth__header-image wit-position--absolute wit-background--content" />
         </header>
 
         <div class="auth__form-container2">
@@ -90,7 +90,7 @@ export default {
 
 .auth__header {
     padding: var(--offset-md) var(--offset-xlg);
-    box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
+    /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
     border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
 }
 
@@ -100,12 +100,12 @@ export default {
     height: 72px;
     left: 50%;
     transform: translateX(-50%);
-    border-bottom: 2px solid var(--bs-success);
+    border-bottom: 2px solid var(--success);
 }
 
 .auth__form-container2 {
     padding: 64px var(--offset-xlg) var(--offset-xlg);
-    box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216);
+    /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
     border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
 }
 

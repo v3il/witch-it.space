@@ -1,19 +1,13 @@
 @import "~/node_modules/@mdi/font/css/materialdesignicons.css";
 @import "./reboot.css";
-@import "./variables.css";
-@import "./helpers/colors.css";
-@import "./helpers/display.css";
-@import "./helpers/text.css";
-@import "./helpers/size.css";
-@import "./helpers/cursor.css";
-@import "./helpers/offsets.css";
-@import "./helpers/other.css";
+@import "./variables/variables.css";
+@import "./helpers/helpers.css";
 
 body {
     font-size: var(--text-size-xs);
     line-height: var(--line-height-xs);
     min-height: 100vh;
-    color: var(--default-text-color);
-    background-color: var(--default-bg-color);
-    font-family: var(--font-family-roboto);
+    color: var(--body-color);
+    background-color: var(--body-bg);
+    font-family: var(--font-family-primary);
 }

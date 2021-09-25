@@ -34,7 +34,7 @@ export default {
 .wit-button {
     display: block;
     line-height: var(--line-height-md);
-    color: var(--default-text-color);
+    color: var(--body-color);
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
@@ -46,9 +46,9 @@ export default {
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
     &--primary {
-        color: var(--bs-white);
-        background-color: var(--bs-primary);
-        border-color: var(--bs-primary);
+        color: var(--white);
+        background-color: var(--primary);
+        border-color: var(--primary);
 
         &:hover,
         &:active {
