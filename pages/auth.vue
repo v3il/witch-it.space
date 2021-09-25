@@ -1,16 +1,16 @@
 <template>
   <div class="wit-flex wit-flex--center page">
     <div class="auth">
-      <div class="auth__form-container wit-background--content wit-offset-bottom--xxlg">
+      <div class="auth__form-container wit-background--content wit-transition wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
-          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--sarabun">
+          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary">
             Welcome Back!
           </h1>
           <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
-            Sign in to continue to Veltrix
+            Sign in to continue to WitchIt-Market
           </p>
 
-          <div class="auth__header-image wit-position--absolute wit-background--content" />
+          <div class="auth__header-image wit-position--absolute wit-background--content wit-transition" />
         </header>
 
         <div class="auth__form-container2">
@@ -19,7 +19,7 @@
             <Input id="login" v-model="login" type="text" placeholder="Enter Username" class="wit-offset-bottom--sm" />
 
             <Label for="password" class="wit-offset-bottom--xs">Password</Label>
-            <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--sm" />
+            <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--md" />
 
             <div class="wit-flex wit-flex--center">
               <div class="wit-flex wit-flex--center">
@@ -46,6 +46,8 @@
         ©{{ $options.year }}. Crafted with <span class="mdi mdi-heart wit-color--danger" /> by !D.
       </p>
     </div>
+
+    <input type="checkbox" :checked="bc" @change="onC">Theme
   </div>
 </template>
 
@@ -67,12 +69,27 @@ export default {
 
     data: () => ({
         login: '',
-        password: ''
+        password: '',
+
+        bc: true
     }),
+
+    mounted () {
+        const cls = this.bc ? 'light' : 'dark'
+        window.document.body.classList.toggle('body--light', cls === 'light')
+        window.document.body.classList.toggle('body--dark', cls === 'dark')
+    },
 
     methods: {
         onSubmit () {
 
+        },
+
+        onC ({ target }) {
+            this.bc = target.checked
+            const cls = this.bc ? 'light' : 'dark'
+            window.document.body.classList.toggle('body--light', cls === 'light')
+            window.document.body.classList.toggle('body--dark', cls === 'dark')
         }
     }
 }
@@ -91,7 +108,12 @@ export default {
 .auth__header {
     padding: var(--offset-md) var(--offset-xlg);
     /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
-    border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
+    /*border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;*/
+}
+
+.auth__form-container {
+    border-radius: var(--offset-xxs);
+    overflow: hidden;
 }
 
 .auth__header-image {
@@ -106,7 +128,7 @@ export default {
 .auth__form-container2 {
     padding: 64px var(--offset-xlg) var(--offset-xlg);
     /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
-    border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
+    /*border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);*/
 }
 
 .auth__social-link {

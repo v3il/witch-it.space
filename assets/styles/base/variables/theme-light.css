@@ -139,7 +139,14 @@
     --body-bg: #f8f8fa;
     --body-color: #5b626b;
 
-    --card-bg: var(--white);
+    --content-bg: var(--white);
+
+    --input-bg: var(--white);
+    --input-color: var(--gray-700);
+    --input-border: var(--gray-400);
+    --input-bg-active: var(--white);
+    --input-color-active: var(--gray-700);
+    --input-border-active: var(--blue);
 
     /*!* Vertical Sidebar - Dark *!*/
     /*--sidebar-dark-bg: #333547;*/

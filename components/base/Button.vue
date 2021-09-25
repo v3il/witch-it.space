@@ -43,7 +43,7 @@ export default {
     border: 1px solid transparent;
     padding: var(--offset-xs) var(--offset-md);
     border-radius: var(--offset-xxs);
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: color var(--default-transition), background-color var(--default-transition), border-color var(--default-transition), box-shadow var(--default-transition);
 
     &--primary {
         color: var(--white);

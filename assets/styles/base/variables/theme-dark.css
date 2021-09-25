@@ -139,7 +139,20 @@
     --body-bg: #222736;
     --body-color: var(--gray-400);
 
-    --card-bg: #2a3042;
+    --content-bg: #2a3042;
+
+    --input-bg: var(--gray-300);
+    --input-color: var(--gray-500);
+    --input-border: #363e54;
+    --input-bg-active: #30384a;
+    --input-color-active: var(--gray-500);
+    --input-border-active: #3a4158;
+/*var(--primary);*/
+
+    /*color: #9ca8b3;*/
+    /*background-color: #2e3648;*/
+    /*background-clip: padding-box;*/
+    /*border: 1px solid #363e54;*/
 
     /*!* Vertical Sidebar - Dark *!*/
     /*--sidebar-dark-bg: #2a3142;*/

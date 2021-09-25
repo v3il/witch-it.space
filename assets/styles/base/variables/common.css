@@ -17,7 +17,7 @@
     --line-height-md: 1.5;
 
     --font-family-primary: Roboto, sans-serif;
-    --font-family-secondatu: Sarabun, sans-serif;
+    --font-family-secondary: Sarabun, sans-serif;
 
     --box-shadow-sm: 0 .125rem .25rem rgba(var(--black), .075);
     --box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, .03);
@@ -32,4 +32,6 @@
     --zindex-modal: 1060;
     --zindex-popover: 1070;
     --zindex-tooltip: 1080;
+
+    --default-transition: 0.15s ease-in-out;
 }

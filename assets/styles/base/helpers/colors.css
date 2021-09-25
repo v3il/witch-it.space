@@ -9,7 +9,7 @@
 }
 
 .wit-background--content {
-    background-color: var(--card-bg);
+    background-color: var(--content-bg);
 }
 
 .wit-color--white {

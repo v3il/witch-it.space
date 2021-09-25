@@ -10,10 +10,14 @@
     position: absolute;
 }
 
-.wit-font-family--roboto {
-    font-family: var(--font-family-roboto);
+.wit-font-family--primary {
+    font-family: var(--font-family-primary);
 }
 
-.wit-font-family--sarabun {
-    font-family: var(--font-family-sarabun);
+.wit-font-family--secondary {
+    font-family: var(--font-family-secondary);
+}
+
+.wit-transition {
+    transition: all var(--default-transition);
 }

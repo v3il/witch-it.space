@@ -6,7 +6,8 @@ module.exports = {
     // https://stylelint.io/user-guide/configuration
     rules: {
         indentation: 4,
-        'block-no-empty': false,
-        'comment-empty-line-before': false
+        'block-no-empty': null,
+        'comment-empty-line-before': null,
+        'comment-whitespace-inside': null
     }
 }

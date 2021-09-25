@@ -23,20 +23,26 @@ export default {
 
 <style scoped lang="scss">
 .wit-input {
-    color: var(--gray-700);
-    background: var(--white);
-    border: 1px solid var(--gray-400);
+    color: var(--input-color);
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
     box-sizing: border-box;
     border-radius: var(--offset-xxs);
     padding: var(--offset-xs) var(--offset-sm);
     line-height: var(--line-height-md);
     background-clip: padding-box;
     appearance: none;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color var(--default-transition), box-shadow var(--default-transition), background-color var(--default-transition), color var(--default-transition);
+
+    &::placeholder {
+        color: var(--input-color);
+    }
 
     &:hover,
     &:focus {
-        border-color: var(--primary);
+        color: var(--input-color-active);
+        background-color: var(--input-bg-active);
+        border-color: var(--input-border-active);
         outline: 0;
         box-shadow: none;
     }
