@@ -97,7 +97,7 @@ export default {
 
 <style>
 .page {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
 }
 
 .auth {
