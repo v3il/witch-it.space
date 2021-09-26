@@ -15,6 +15,11 @@ export const actions = {
             console.error('User error')
             commit('setUser', null)
         }
+    },
+
+    async nuxtServerInit ({ commit }, { app }) {
+        await console.log(app.$cookies.get('wit.theme'))
+        commit('theme/setTheme', app.$cookies.get('wit.theme'))
     }
 }
 

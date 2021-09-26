@@ -20,6 +20,10 @@
     color: var(--primary);
 }
 
+.wit-color--warning {
+    color: var(--warning);
+}
+
 .wit-color--danger {
     color: var(--danger);
 }

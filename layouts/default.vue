@@ -1,8 +1,9 @@
 <template>
   <div class="layout">
-    <TopNavBar :theme="theme" @changeTheme="onC" />
+    <TopNavBar />
 
     <main>
+      {{ theme }}
       <Nuxt />
     </main>
   </div>
@@ -11,12 +12,10 @@
 <script>
 import { createNamespacedHelpers } from 'vuex'
 
-const { mapState, mapMutations } = createNamespacedHelpers('theme')
+const { mapState } = createNamespacedHelpers('theme')
 
 export default {
     name: 'Default',
-
-    // middleware: ['getTheme'],
 
     computed: {
         ...mapState(['theme'])
@@ -31,16 +30,11 @@ export default {
     },
 
     methods: {
-        ...mapMutations(['setTheme']),
-
-        onC (theme) {
-            // const theme = target.checked ? 'dark' : 'light'
-
-            // window.document.body.classList.toggle('body--light', theme === 'light')
-            // window.document.body.classList.toggle('body--dark', theme === 'dark')
-
-            this.setTheme(theme)
-        }
+        // ...mapMutations(['setTheme']),
+        //
+        // onThemeChange (theme) {
+        //     this.setTheme(theme)
+        // }
     }
 }
 </script>

@@ -1,3 +1,4 @@
+/* Bottom */
 .wit-offset-bottom--xxs {
     margin-bottom: var(--offset-xxs);
 }
@@ -26,9 +27,41 @@
     margin-bottom: var(--offset-xxlg);
 }
 
+/* Left */
+
 .wit-offset-left--auto {
     margin-left: auto;
 }
+
+.wit-offset-left--xxs {
+    margin-left: var(--offset-xxs);
+}
+
+.wit-offset-left--xs {
+    margin-left: var(--offset-xs);
+}
+
+.wit-offset-left--sm {
+    margin-left: var(--offset-sm);
+}
+
+.wit-offset-left--md {
+    margin-left: var(--offset-md);
+}
+
+.wit-offset-left--lg {
+    margin-left: var(--offset-lg);
+}
+
+.wit-offset-left--xlg {
+    margin-left: var(--offset-xlg);
+}
+
+.wit-offset-left--xxlg {
+    margin-left: var(--offset-xxlg);
+}
+
+/* Right */
 
 .wit-offset-right--auto {
     margin-right: auto;

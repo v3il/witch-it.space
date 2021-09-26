@@ -147,6 +147,10 @@
     --input-bg-active: #30384a;
     --input-color-active: var(--gray-500);
     --input-border-active: #3a4158;
+
+    --switcher-ball-bg: var(--gray-200)
+
+
 /*var(--primary);*/
 
     /*color: #9ca8b3;*/

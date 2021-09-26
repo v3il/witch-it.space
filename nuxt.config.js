@@ -32,7 +32,8 @@ export default {
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
-        '@nuxtjs/style-resources'
+        '@nuxtjs/style-resources',
+        'cookie-universal-nuxt'
     ],
 
     axios: {},

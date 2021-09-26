@@ -54,3 +54,7 @@
 .wit-flex__item--no-shrink {
     flex-shrink: 0;
 }
+
+.wit-none {
+    display: none;
+}

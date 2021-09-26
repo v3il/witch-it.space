@@ -8,15 +8,32 @@ export const state = () => ({
 })
 
 export const actions = {
-    getThemeFromCookie ({ commit }) {
-        const theme = Cookies.get(COOKIE_NAME) ?? DEFAULT_THEME
+    async getThemeFromCookie (d1, d) {
+        const theme = await Cookies.get(COOKIE_NAME) ?? DEFAULT_THEME
+
+        console.error(this)
+
+        d1.commit('setTheme', theme)
+    },
+
+    setTheme ({ commit }, theme) {
+        // const theme = await Cookies.get(COOKIE_NAME) ?? DEFAULT_THEME
+
+        console.error(this)
+
+        const d = new Date()
+        d.setFullYear(d.getFullYear() + 1)
+
+        this.$cookies.set(COOKIE_NAME, theme, { expires: d })
+
         commit('setTheme', theme)
     }
 }
 
 export const mutations = {
     setTheme (state, theme) {
+        // console.error(d)
         state.theme = theme
-        Cookies.set(COOKIE_NAME, theme, { expires: 365 })
+        // Cookies.set(COOKIE_NAME, theme, { expires: 365 })
     }
 }
