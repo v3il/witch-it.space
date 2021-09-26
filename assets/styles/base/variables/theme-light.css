@@ -148,7 +148,9 @@
     --input-color-active: var(--gray-700);
     --input-border-active: var(--blue);
 
-    --switcher-ball-bg: var(--gray-200)
+    --switcher-ball-bg: var(--gray-200);
+
+    --header-bg: #ECECF1;
 
     /*!* Vertical Sidebar - Dark *!*/
     /*--sidebar-dark-bg: #333547;*/

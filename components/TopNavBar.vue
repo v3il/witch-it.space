@@ -1,5 +1,5 @@
 <template>
-  <header style="height: 70px; position: sticky;" class="wit-background--content wit-transition">
+  <header class="wit-transition">
     Header
 
     <!--    <input type="checkbox" :checked="theme === 'dark'" @change="onC">Theme {{ theme }}-->
@@ -46,3 +46,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    header {
+        background-color: var(--header-bg);
+        height: 70px;
+        position: sticky;
+    }
+</style>

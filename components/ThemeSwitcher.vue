@@ -1,13 +1,11 @@
 <template>
-  <div class="wit-flex wit-flex--center">
-    <Switcher
-      :value="theme"
-      :values="['light', 'dark']"
-      icon-left="mdi-white-balance-sunny"
-      icon-right="mdi-moon-waxing-crescent"
-      @change="onThemeChange"
-    />
-  </div>
+  <Switcher
+    :value="theme"
+    :values="['light', 'dark']"
+    icon-left="mdi-white-balance-sunny"
+    icon-right="mdi-moon-waxing-crescent"
+    @change="onThemeChange"
+  />
 </template>
 
 <script>

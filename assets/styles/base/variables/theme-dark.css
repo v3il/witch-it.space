@@ -148,7 +148,9 @@
     --input-color-active: var(--gray-500);
     --input-border-active: #3a4158;
 
-    --switcher-ball-bg: var(--gray-200)
+    --switcher-ball-bg: var(--gray-200);
+
+    --header-bg: #36394c;
 
 
 /*var(--primary);*/
