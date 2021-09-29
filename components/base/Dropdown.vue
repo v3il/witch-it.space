@@ -1,11 +1,9 @@
 <template>
-  <div class="dropdown d-none d-md-block ms-2">
-    <button
-      type="button"
-      class="btn header-item waves-effect show"
-      @click="toggle"
-    >
-      <img v-if="selectedVariant.img" :src="selectedVariant.img" :alt="selectedVariant.label" class="wit-offset-right--xs" height="16"> <span class="align-middle"> {{ selectedVariant.label }} </span> <span class="mdi mdi-chevron-down" />
+  <div class="wit-dropdown" :class="dropdownClasses">
+    <button type="button" class="wit-flex wit-flex--align-center wit-dropdown__trigger" @click="toggle">
+      <img v-if="selectedVariant.img" :src="selectedVariant.img" :alt="selectedVariant.label" class="wit-offset-right--xs" height="16">
+      <span class="wit-inline-block wit-offset-right--xs">{{ selectedVariant.label }}</span>
+      <span class="mdi mdi-chevron-down" />
     </button>
     <div v-show="isOpen" class="dropdown-menu dropdown-menu-end show">
       <button v-for="variant in variants" :key="variant.value" class="dropdown-item" @click="onVariantSelected(variant)">
@@ -15,7 +13,7 @@
           :alt="variant.label"
           height="16"
           class="wit-offset-right--xs"
-        > <span class="align-middle"> {{ variant.label }} </span>
+        > <span class="wit-inline-block"> {{ variant.label }} </span>
       </button>
     </div>
   </div>
@@ -44,6 +42,13 @@ export default {
     computed: {
         selectedVariant () {
             return this.variants.find(({ value }) => value === this.value)
+        },
+
+        dropdownClasses () {
+            return {
+                'wit-dropdown--open': this.isOpen,
+                'wit-dropdown--closed': !this.isOpen
+            }
         }
     },
 
@@ -53,14 +58,14 @@ export default {
         },
 
         onVariantSelected (variant) {
-
+            this.$emit('change', variant.value)
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.dropdown {
+.wit-dropdown {
     display: inline-block;
     height: 100%;
     position: relative;
@@ -69,30 +74,35 @@ export default {
     background: transparent;
     font-weight: 400;
     line-height: 1.5;
-    color: #e9ecef;
+    //color: var(--dropdown-color);
     text-align: center;
     vertical-align: middle;
     cursor: pointer;
     user-select: none;
     border: 1px solid transparent;
 
-    button {
+    &--open .wit-dropdown__trigger {
+        background: var(--dropdown-hover-background);
+    }
+
+    .wit-dropdown__trigger {
         height: 100%;
-        background-color: transparent;
+        //background-color: transparent;
         border: none;
         outline: none;
         cursor: pointer;
-        color: #dee2e6;
+        color: var(--dropdown-btn-color);
         padding: 0.375rem 0.75rem;
 
         &:hover,
         &:active {
-            background: rgba(239, 242, 247, 0.05);
+            background: var(--dropdown-hover-background);
         }
     }
 
     .dropdown-menu {
         position: absolute;
+        min-width: 10rem;
         top: 100%;
         display: flex;
         flex-direction: column;
@@ -100,9 +110,9 @@ export default {
         color: #e9ecef;
         text-align: left;
         list-style: none;
-        background-color: #2e3648;
+        background-color: var(--dropdown-background);
         background-clip: padding-box;
-        border: 1px solid #3a425a;
+        border: 1px solid var(--dropdown-border);
         border-radius: 0.25rem;
         padding: 8px 0;
     }
@@ -113,16 +123,16 @@ export default {
         padding: 0.35rem 1.5rem;
         clear: both;
         font-weight: 400;
-        color: #9ca8b3;
+        color: var(--dropdown-item-color);
         text-align: inherit;
         white-space: nowrap;
         background-color: transparent;
         border: 0;
 
         &:hover {
-            color: #e9ecef;
+            color: var(--dropdown-item-hover-color);
             text-decoration: none;
-            background-color: #323a4e;
+            background-color: var(--dropdown-hover-background);
         }
     }
 }

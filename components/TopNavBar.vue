@@ -1,13 +1,13 @@
 <template>
-  <header class="wit-transition">
-    Header
+  <header class="wit-transition wit-header">
+    <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
+      <ThemeSwitcher class="wit-offset-right--sm" />
+      <LocaleSwitcher />
+    </div>
 
     {{ $store.state.locale.locale }}
 
     <!--    <input type="checkbox" :checked="theme === 'dark'" @change="onC">Theme {{ theme }}-->
-
-    <ThemeSwitcher />
-    <Dropdown :value="'en'" :variants="$options.values" />
   </header>
 </template>
 
@@ -17,20 +17,14 @@
 // const { mapState, mapMutations } = createNamespacedHelpers('theme')
 
 import ThemeSwitcher from '@/components/ThemeSwitcher'
-import Dropdown from '@/components/base/Dropdown'
+import LocaleSwitcher from '@/components/LocaleSwitcher'
 
 export default {
     name: 'TopNavBar',
 
-    values: [
-        { value: 'en', label: 'English', img: 'flags/us.svg' },
-        { value: 'ua', label: 'Ukrainian', img: 'flags/ua.svg' },
-        { value: 'ru', label: 'Russian', img: 'flags/ru.svg' }
-    ],
-
     components: {
         ThemeSwitcher,
-        Dropdown
+        LocaleSwitcher
     },
 
     // computed: {
@@ -59,9 +53,10 @@ export default {
 </script>
 
 <style scoped>
-    header {
+    .wit-header {
         background-color: var(--header-bg);
         height: 70px;
         position: sticky;
+        padding: 0 var(--offset-xs);
     }
 </style>
