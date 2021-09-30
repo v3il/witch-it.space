@@ -13,8 +13,8 @@ export default {
 
     values: [
         { value: 'en', label: 'English', img: 'flags/us.svg' },
-        { value: 'ua', label: 'Ukrainian', img: 'flags/ua.svg' },
-        { value: 'ru', label: 'Russian', img: 'flags/ru.svg' }
+        { value: 'ua', label: 'Українська', img: 'flags/ua.svg' },
+        { value: 'ru', label: 'Русский', img: 'flags/ru.svg' }
     ],
 
     components: {
@@ -28,8 +28,13 @@ export default {
     methods: {
         ...mapActions(['setLocale']),
 
-        onLocaleChange (locale) {
-            this.setLocale(locale)
+        async onLocaleChange (locale) {
+            if (this.locale === locale) {
+                return
+            }
+
+            await this.setLocale(locale)
+            this.$router.go(0)
         }
     }
 }

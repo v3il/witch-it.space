@@ -4,10 +4,10 @@
       <div class="auth__form-container wit-background--content wit-transition wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary">
-            Welcome Back!
+            {{ $t('welcome_back') }}
           </h1>
           <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
-            Sign in to continue to WitchIt-Market
+            {{ $t('sign_in_to_continue') }}
           </p>
 
           <div class="auth__header-image wit-position--absolute wit-background--content wit-transition" />
@@ -15,11 +15,11 @@
 
         <div class="auth__form-container2">
           <form class="auth__form" @submit.prevent="onSubmit">
-            <Label for="login" class="wit-offset-bottom--xs">Username</Label>
-            <Input id="login" v-model="login" type="text" placeholder="Enter Username" class="wit-offset-bottom--sm" />
+            <Label for="login" class="wit-offset-bottom--xs">{{ $t('login') }}</Label>
+            <Input id="login" v-model="login" type="text" :placeholder="$t('enter_login')" class="wit-offset-bottom--sm" />
 
-            <Label for="password" class="wit-offset-bottom--xs">Password</Label>
-            <Input id="password" v-model="password" placeholder="Enter Password" type="password" class="wit-offset-bottom--md" />
+            <Label for="password" class="wit-offset-bottom--xs">{{ $t('password') }}</Label>
+            <Input id="password" v-model="password" :placeholder="$t('enter_password')" type="password" class="wit-offset-bottom--md" />
 
             <div class="wit-flex wit-flex--center">
               <div class="wit-flex wit-flex--center">
@@ -29,7 +29,7 @@
               </div>
 
               <Button type="submit" class="wit-offset-left--auto">
-                Log In
+                {{ $t('login_in') }}
               </Button>
             </div>
           </form>
@@ -37,13 +37,13 @@
       </div>
 
       <p class="wit-text--center">
-        Don't have an account? <Link class="wit-color--primary wit-font-weight--500" to="/">
-          Signup Now
+        {{ $t('dont_have_account') }} <Link class="wit-color--primary wit-font-weight--500" to="/">
+          {{ $t('sign_up') }}
         </Link>
       </p>
 
       <p class="wit-text--center">
-        ©{{ $options.year }}. Crafted with <span class="mdi mdi-heart wit-color--danger" /> by !D.
+        ©{{ $options.year }}. {{ $t('crafted_by') }}
       </p>
     </div>
   </div>

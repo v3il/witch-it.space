@@ -1,4 +1,4 @@
-export const ru = {
+export const ua = {
     errors: {
         wrongOauth2Token: 'Неправильный OAuth2 код',
         authFailed: 'При авторизации возникла ошибка',
@@ -10,14 +10,14 @@ export const ru = {
         notUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе'
     },
 
-    welcome_back: 'Добро пожаловать!',
-    sign_in_to_continue: 'Войдите в Ваш WitchIt Zone аккаунт',
-    login: 'Логин',
-    enter_login: 'Введите логин',
+    welcome_back: 'З поверненням!',
+    sign_in_to_continue: 'Увійдіть у Ваш WitchIt Zone акаунт',
+    login: 'Логін',
+    enter_login: 'Введіть логін',
     password: 'Пароль',
-    enter_password: 'Введите пароль',
-    login_in: 'Войти',
-    dont_have_account: 'Нет аккаунта?',
-    sign_up: 'Зарегистрироваться',
-    crafted_by: 'Сделано для комьюнити Witch It от !D'
+    enter_password: 'Введіть пароль',
+    login_in: 'Увійти',
+    dont_have_account: 'Немає аккаунту?',
+    sign_up: 'Зареєструватись',
+    crafted_by: 'Зроблено для ком\'юніті Witch It від !D'
 }

@@ -1,10 +1,10 @@
-import { ru, en } from '../../shared/translations'
+import { ru, ua } from '../../shared/translations'
 
 export const translateText = (textId, locale = 'en', replacements = []) => {
     const idsParts = textId.split('.')
     const lastIdPart = idsParts.pop()
 
-    let storage = locale === 'ru' ? ru : en
+    let storage = locale === 'ru' ? ru : ua
 
     // eslint-disable-next-line no-restricted-syntax
     for (const idPart of idsParts) {
