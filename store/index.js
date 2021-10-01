@@ -20,8 +20,19 @@ export const actions = {
     },
 
     async nuxtServerInit ({ commit }, { app }) {
+        // console.log(store.state)
+
         await app.store.dispatch('theme/setTheme', app.$cookies.get(Cookies.THEME))
         await app.store.dispatch('locale/setLocale', app.$cookies.get(Cookies.LOCALE))
+
+        // app.i18n.locale = app.store.state.locale
+
+        // await app.store.dispatch('i18n/setLocale', store.state.locale.locale)
+
+        // console.log(store.state.locale.locale)
+
+        // app.i18n.locale = (store.state.locale.locale)
+        // await app.i18n.setLocale(store.state.locale.locale)
     }
 }
 

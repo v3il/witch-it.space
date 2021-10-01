@@ -29,12 +29,30 @@ export default {
         ...mapActions(['setLocale']),
 
         async onLocaleChange (locale) {
+            console.log(locale)
+
+            // this.switchLocalePath(locale)
+            // this.$i18n.setLocale(locale)
+            // this.$i18n.setLocaleCookie(locale)
+            // this.$router.replace(this.switchLocalePath(locale))
+
             if (this.locale === locale) {
                 return
             }
 
             await this.setLocale(locale)
-            this.$router.go(0)
+            // // this.$router.go(0)
+            //
+            // this.$i18n.setLocaleCookie(locale)
+            // this.$i18n.setLocale(locale)
+
+            // if (this.locale === locale) {
+            //     return
+            // }
+            //
+            // await this.setLocale(locale)
+            // this.$router.go(0)
+            this.$forceUpdate()
         }
     }
 }

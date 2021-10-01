@@ -1,4 +1,4 @@
-import { config } from '../../shared/config'
+import { config } from '../../shared'
 
 const initUserModel = (sequelize, DataTypes) => {
     return sequelize.define(
@@ -13,6 +13,11 @@ const initUserModel = (sequelize, DataTypes) => {
             discordId: DataTypes.STRING,
             discordTag: DataTypes.STRING,
             googleId: DataTypes.STRING,
+
+            theme: {
+                type: DataTypes.STRING,
+                defaultValue: config.DEFAULT_THEME
+            },
 
             isGuardProtected: {
                 type: DataTypes.BOOLEAN,
