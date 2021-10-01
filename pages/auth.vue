@@ -78,7 +78,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
+.page {
+    margin-top: var(--offset-xxlg);
+
+    @media screen and (max-width: 768px) {
+        margin-top: var(--offset-sm);
+    }
+}
+
 .auth {
     max-width: 450px;
     width: 100%;

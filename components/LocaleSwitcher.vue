@@ -51,8 +51,8 @@ export default {
             // }
             //
             // await this.setLocale(locale)
-            // this.$router.go(0)
-            this.$forceUpdate()
+            this.$router.go(0)
+            // this.$forceUpdate()
         }
     }
 }

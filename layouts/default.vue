@@ -1,9 +1,8 @@
 <template>
   <div class="layout">
-    <TopNavBar />
+    <TopNavBar class="layout__header" />
 
-    <main>
-      {{ theme }}
+    <main class="layout__main">
       <Nuxt />
     </main>
   </div>
@@ -27,14 +26,16 @@ export default {
 
     computed: {
         ...mapState(['theme'])
-    },
-
-    methods: {
-        // ...mapMutations(['setTheme']),
-        //
-        // onThemeChange (theme) {
-        //     this.setTheme(theme)
-        // }
     }
 }
 </script>
+
+<style scoped lang="scss">
+    .layout__main {
+        padding: 0 var(--offset-md);
+
+        @media screen and (max-width: 768px) {
+            padding: 0 var(--offset-sm);
+        }
+    }
+</style>

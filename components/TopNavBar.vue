@@ -4,10 +4,6 @@
       <ThemeSwitcher class="wit-offset-right--sm" />
       <LocaleSwitcher />
     </div>
-
-    {{ $store.state.locale.locale }}
-
-    <!--    <input type="checkbox" :checked="theme === 'dark'" @change="onC">Theme {{ theme }}-->
   </header>
 </template>
 
