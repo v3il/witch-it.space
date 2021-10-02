@@ -52,8 +52,20 @@ export default {
 
         &:hover,
         &:active {
-            background-color: var(--bs-primary-hover);
-            border-color: var(--default-border-color-hover);
+            background-color: #535eb4;
+            border-color: #4e58aa;
+        }
+    }
+
+    &--success {
+        color: var(--white);
+        background-color: var(--green);
+        border-color: var(--green);
+
+        &:hover,
+        &:active {
+            background-color: #028b82;
+            border-color: #02837a;
         }
     }
 }

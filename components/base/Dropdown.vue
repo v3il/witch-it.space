@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .wit-dropdown {
     display: inline-block;
     //height: 100%;
@@ -85,6 +85,7 @@ export default {
     cursor: pointer;
     user-select: none;
     border: 1px solid transparent;
+    outline: none;
 }
 
 .wit-dropdown__trigger {
@@ -97,6 +98,7 @@ export default {
     padding: 0.375rem 0.75rem;
 
     &:hover,
+    &:focus,
     &:active {
         background-color: var(--dropdown-hover-background);
     }
@@ -109,7 +111,7 @@ export default {
 .wit-dropdown-menu {
     position: absolute;
     min-width: 10rem;
-    top: 100%;
+    top: calc(100% + 1px);
     display: flex;
     flex-direction: column;
     right: 0;
@@ -119,14 +121,15 @@ export default {
     background-color: var(--dropdown-background);
     background-clip: padding-box;
     border: 1px solid var(--dropdown-border);
-    border-radius: 0.25rem;
-    padding: 8px 0;
+    border-radius: var(--offset-xxs);
+    border-top-right-radius: 0;
+    padding: var(--offset-xs) 0;
 }
 
 .dropdown-item {
     display: block;
     width: 100%;
-    padding: 0.35rem 1.5rem;
+    padding: var(--offset-xs) var(--offset-md);
     clear: both;
     font-weight: 400;
     color: var(--dropdown-item-color);
@@ -136,10 +139,21 @@ export default {
     border: 0;
     cursor: pointer;
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         color: var(--dropdown-item-hover-color);
         text-decoration: none;
         background-color: var(--dropdown-hover-background);
     }
+}
+
+.wit-dropdown--locale-switcher {
+    --dropdown-btn-color: var(--locale-dropdown-btn-color);
+    --dropdown-background: var(--locale-dropdown-background);
+    --dropdown-hover-background: var(--locale-dropdown-hover-background);
+    --dropdown-border: var(--locale-dropdown-border);
+    --dropdown-item-color: var(--locale-dropdown-item-color);
+    --dropdown-item-hover-color: var(--locale-dropdown-item-hover-color);
 }
 </style>

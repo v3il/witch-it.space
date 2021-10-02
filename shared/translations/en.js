@@ -17,7 +17,7 @@ export const en = {
     password: 'Password',
     enter_password: 'Enter Password',
     login_in: 'Sign In',
-    dont_have_account: 'Don\'t have account?',
+    dont_have_account: 'Don\'t have an account?',
     sign_up: 'Sign Up Now',
     crafted_by: 'Crafted for Witch It community by !D'
 }

@@ -33,7 +33,7 @@
       </div>
 
       <p class="wit-text--center">
-        {{ $t('dont_have_account') }} <Link class="wit-color--primary wit-font-weight--500" to="/register">
+        {{ $t('dont_have_account') }} <Link class="wit-button wit-color--primary wit-font-weight--500" to="/register">
           {{ $t('sign_up') }}
         </Link>
       </p>

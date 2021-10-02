@@ -2,7 +2,11 @@
   <header class="wit-transition wit-header">
     <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
       <ThemeSwitcher class="wit-offset-right--sm" />
-      <LocaleSwitcher />
+      <LocaleSwitcher class="wit-offset-right--sm" />
+
+      <Button class="wit-offset-left--auto1" btn-class="primary">
+        Sign Up
+      </Button>
     </div>
   </header>
 </template>
@@ -14,13 +18,15 @@
 
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
+import Button from '@/components/base/Button'
 
 export default {
     name: 'TopNavBar',
 
     components: {
         ThemeSwitcher,
-        LocaleSwitcher
+        LocaleSwitcher,
+        Button
     },
 
     // computed: {
@@ -53,6 +59,6 @@ export default {
         background-color: var(--header-bg);
         height: 70px;
         position: sticky;
-        padding: 0 var(--offset-xs);
+        padding: 0 var(--offset-sm);
     }
 </style>
