@@ -1,3 +1,41 @@
 @import './common.css';
 @import './theme-dark.css';
 @import './theme-light.css';
+
+:root {
+    --link: #626ed4;
+    --label-color: #5b626b;
+    --label-font-weight: 500;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    font-size: var(--text-size-xs);
+    line-height: var(--line-height-xs);
+    min-height: 100vh;
+    color: var(--body-color);
+    background-color: var(--body-bg);
+    font-family: var(--font-family-primary);
+    transition: background-color var(--default-transition), color var(--default-transition);
+}
+
+.field:not(:last-child) {
+    margin-bottom: var(--offset-sm);
+}
+
+.input {
+    padding: var(--offset-xs) var(--offset-sm);
+}
+
+.input::placeholder {
+    color: var(--input-color);
+}
+
+.text-link {
+    padding: 0;
+    height: auto;
+    line-height: 1;
+}

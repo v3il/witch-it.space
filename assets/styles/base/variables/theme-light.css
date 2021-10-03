@@ -138,12 +138,15 @@
 
     --body-bg: #f8f8fa;
     --body-color: #5b626b;
+    --label-color: #5b626b;
 
     --content-bg: var(--white);
 
     --input-bg: var(--white);
+    --input-background-color: var(--white);
     --input-color: var(--gray-700);
     --input-border: var(--gray-400);
+    --input-border-color: var(--gray-400);
     --input-bg-active: var(--white);
     --input-color-active: var(--gray-700);
     --input-border-active: var(--blue);

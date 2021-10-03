@@ -1,4 +1,9 @@
+@import '../../node_modules/buefy-css-variables/dist/buefy.css';
 //@import "../styles/base/variables/variables.css";
+
+:root {
+    --link: #626ed4;
+}
 
 // Set your colors
 $blue: #626ed4;
@@ -40,8 +45,8 @@ $label-weight: 500;
 //$link-hover: $primary;
 $family-sans-serif: roboto, sans-serif;
 
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+//@import "~bulma";
+//@import "~buefy/src/scss/buefy";
 
 html {
     font-size: 14px;

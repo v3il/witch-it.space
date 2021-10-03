@@ -1,5 +1,3 @@
-import { config, ru, ua, en, Cookies } from './shared'
-
 export default {
     head: {
         title: 'WitchTrade',
@@ -16,8 +14,8 @@ export default {
     },
 
     css: [
-        './assets/styles/base/global.css',
-        '@/assets/scss/main.scss'
+        '@/node_modules/buefy-css-variables/dist/buefy.css',
+        './assets/styles/base/global.css'
     ],
 
     plugins: [

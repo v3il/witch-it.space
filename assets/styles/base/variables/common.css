@@ -34,4 +34,6 @@
     --zindex-tooltip: 1080;
 
     --default-transition: 0.15s ease-in-out;
+
+    --link: var(--primary);
 }
