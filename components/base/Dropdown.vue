@@ -156,4 +156,8 @@ export default {
     --dropdown-item-color: var(--locale-dropdown-item-color);
     --dropdown-item-hover-color: var(--locale-dropdown-item-hover-color);
 }
+
+img {
+    height: 16px;
+}
 </style>

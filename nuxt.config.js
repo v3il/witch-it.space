@@ -16,7 +16,8 @@ export default {
     },
 
     css: [
-        './assets/styles/base/global.css'
+        './assets/styles/base/global.css',
+        '@/assets/scss/main.scss'
     ],
 
     plugins: [
@@ -36,7 +37,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources',
-        // '@nuxtjs/i18n',
+        'nuxt-buefy',
         'cookie-universal-nuxt'
     ],
 
@@ -49,6 +50,7 @@ export default {
     },
 
     build: {
+        vendor: ['keen-ui']
     },
 
     serverMiddleware: [

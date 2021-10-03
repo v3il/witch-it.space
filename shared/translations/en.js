@@ -11,7 +11,7 @@ export const en = {
     },
 
     welcome_back: 'Welcome Back!',
-    sign_in_to_continue: 'Sign in to continue to Witch It Zone',
+    sign_in_to_continue: 'Sign in to continue to Witch It.Zone',
     login: 'Login',
     enter_login: 'Enter Login',
     password: 'Password',

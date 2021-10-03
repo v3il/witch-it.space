@@ -1,13 +1,15 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <a
+    <b-button
       v-for="social in $options.socials"
       :key="social"
       :href="`/api/auth/${social}`"
-      class="wit-flex wit-flex--center social-links__link wit-offset-right--xs wit-background--primary wit-color--white wit--font-size--sm"
+      tag="a"
+      type="is-link"
+      class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
     >
-      <span class="mdi" :class="`mdi-${social}`" />
-    </a>
+      <b-icon size="is-small" class="is-size-5" :icon="social" />
+    </b-button>
   </div>
 </template>
 
@@ -18,15 +20,7 @@ export default {
     socials: [
         'steam',
         'discord',
-        'google'
+        'google-plus'
     ]
 }
 </script>
-
-<style scoped>
-.social-links__link {
-    width: var(--offset-xlg);
-    height: var(--offset-xlg);
-    border-radius: var(--offset-xxs);
-}
-</style>

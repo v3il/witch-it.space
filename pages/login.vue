@@ -3,7 +3,7 @@
     <div class="auth">
       <div class="auth__form-container wit-background--content wit-transition wit-offset-bottom--xxlg">
         <header class="auth__header wit-background--primary wit-position--relative">
-          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary">
+          <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
             {{ $t('welcome_back') }}
           </h1>
           <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
@@ -15,27 +15,30 @@
 
         <div class="auth__form-container2">
           <form class="auth__form" @submit.prevent="onSubmit">
-            <Label for="login" class="wit-offset-bottom--xs">{{ $t('login') }}</Label>
-            <Input id="login" v-model="login" type="text" :placeholder="$t('enter_login')" class="wit-offset-bottom--sm" />
+            <b-field :label="$t('login')" class="wit-offset-bottom--md wit-font-weight--500">
+              <b-input v-model="login" type="text" :placeholder="$t('enter_login')" custom-class="wit-transition--border" />
+            </b-field>
 
-            <Label for="password" class="wit-offset-bottom--xs">{{ $t('password') }}</Label>
-            <Input id="password" v-model="password" :placeholder="$t('enter_password')" type="password" class="wit-offset-bottom--md" />
+            <b-field :label="$t('password')" class="wit-offset-bottom--md wit-font-weight--500">
+              <b-input v-model="password" type="password" :placeholder="$t('enter_password')" custom-class="wit-transition--border" password-reveal />
+            </b-field>
 
-            <div class="wit-flex wit-flex--center">
+            <div class="wit-flex wit-flex--center wit-flex--justify-between">
               <Socials />
 
-              <Button type="submit" class="wit-offset-left--auto">
+              <b-button type="is-primary" class="wit-transition--background">
                 {{ $t('login_in') }}
-              </Button>
+              </b-button>
             </div>
           </form>
         </div>
       </div>
 
-      <p class="wit-text--center">
-        {{ $t('dont_have_account') }} <Link class="wit-button wit-color--primary wit-font-weight--500" to="/register">
+      <p class="wit-text--center wit-offset-bottom--sm">
+        {{ $t('dont_have_account') }}
+        <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight--500">
           {{ $t('sign_up') }}
-        </Link>
+        </b-button>
       </p>
 
       <p class="wit-text--center">
@@ -46,20 +49,12 @@
 </template>
 
 <script>
-import Label from '@/components/base/Label'
-import Input from '@/components/base/Input'
-import Button from '@/components/base/Button'
-import Link from '@/components/base/Link'
 import Socials from '@/components/auth/Socials'
 
 export default {
     year: new Date().getFullYear(),
 
     components: {
-        Label,
-        Input,
-        Button,
-        Link,
         Socials
     },
 
@@ -114,18 +109,5 @@ export default {
     padding: 64px var(--offset-xlg) var(--offset-xlg);
     /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
     /*border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);*/
-}
-
-.auth__social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 39px;
-    height: 39px;
-    font-size: 20px;
-    margin-right: 8px;
-    background: #626ed4;
-    color: white;
-    border-radius: 4px;
 }
 </style>
