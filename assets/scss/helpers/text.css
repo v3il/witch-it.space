@@ -1,0 +1,110 @@
+.wit-font-weight--400 {
+    font-weight: 400;
+}
+
+.wit-font-weight--500 {
+    font-weight: 500;
+}
+
+.wit-font-weight--600 {
+    font-weight: 600;
+}
+
+.wit-font-weight--700 {
+    font-weight: 700;
+}
+
+.wit-text--italic {
+    font-style: italic;
+}
+
+.wit-text--uppercase {
+    text-transform: uppercase;
+}
+
+.wit-text--capitalize {
+    text-transform: capitalize;
+}
+
+.wit-text--left {
+    text-align: left;
+}
+
+.wit-text--right {
+    text-align: right;
+}
+
+.wit-text--truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.wit-word-wrap {
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: initial;
+}
+
+.wit-text--nowrap {
+    white-space: nowrap;
+}
+
+.wit-text-decoration--none {
+    text-decoration: none !important;
+}
+
+.wit-text--center {
+    text-align: center;
+}
+
+.wit-font-size--xs {
+    font-size: var(--text-size-xs);
+}
+
+.wit--font-size--sm {
+    font-size: var(--text-size-sm);
+}
+
+.wit-line-height--xs {
+    line-height: var(--line-height-xs);
+}
+
+.wit-line-height--sm {
+    line-height: var(--line-height-sm);
+}
+
+/* stylelint-disable */
+
+/*.wit-text--xxlg {*/
+/*    font-size: $font-xxlg;*/
+/*}*/
+
+/*.wit-text--xlg {*/
+/*    font-size: $font-xlg;*/
+/*}*/
+
+/*.wit-text--lg {*/
+/*    font-size: $font-lg;*/
+/*}*/
+
+/*.wit-text--md {*/
+/*    font-size: $font-md !important;*/
+/*}*/
+
+/*.wit-text--sm {*/
+/*    font-size: $font-sm;*/
+/*}*/
+
+/*.wit-text--xs {*/
+/*    font-size: $font-xs!important;*/
+/*}*/
+
+/*.wit-text-height--sm {*/
+/*    line-height: $font-height-sm;*/
+/*}*/
+
+/*.wit-text-height--md {*/
+/*    line-height: $font-height-md;*/
+/*}*/

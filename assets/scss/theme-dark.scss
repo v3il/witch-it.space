@@ -1,0 +1,55 @@
+/* stylelint-disable */
+
+.body--dark {
+    --gray-100: #323a4e;
+    --gray-200: #32394e;
+    --gray-300: #2e3648;
+    --gray-400: #e9ecef;
+    --gray-500: #9ca8b3;
+    --gray-600: #3c445a;
+    --gray-700: #f6f6f6;
+    --gray-800: #eff2f7;
+    --gray-900: #f8f9fa;
+
+    --primary: var(--blue);
+    --secondary: var(--gray-600);
+    --success: var(--green);
+    --info: var(--cyan);
+    --warning: var(--yellow);
+    --danger: var(--red);
+    --light: var(--gray-200);
+    --dark: var(--gray-800);
+
+    --body-bg: #222736;
+    --body-color: var(--gray-400);
+    --label-color: var(--gray-400);
+
+    --content-bg: #2a3042;
+
+    --input-bg: var(--gray-300);
+    --input-background-color: var(--gray-300);
+    --input-color: var(--gray-500);
+    --input-border: #363e54;
+    --input-border-color: #363e54;
+    --input-bg-active: #30384a;
+    --input-color-active: var(--gray-500);
+    --input-border-active: #3a4158;
+
+    --switcher-ball-bg: var(--gray-200);
+
+    --header-bg: #36394c;
+
+    --dropdown-btn-color: var(--gray-400);
+    --dropdown-background: var(--gray-300);
+    --dropdown-hover-background: rgba(239, 242, 247, 0.05);
+    --dropdown-border: #3a425a;
+    --dropdown-item-color: var(--gray-500);
+    --dropdown-item-hover-color: var(--gray-400);
+
+    --locale-dropdown-btn-color: var(--gray-400);
+    --locale-dropdown-background: var(--gray-300);
+    --locale-dropdown-hover-background: rgba(239, 242, 247, 0.05);
+    --locale-dropdown-border: #3a425a;
+    --locale-dropdown-item-color: var(--gray-500);
+    --locale-dropdown-item-hover-color: var(--gray-400);
+}

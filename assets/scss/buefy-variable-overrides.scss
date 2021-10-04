@@ -1,0 +1,12 @@
+:root {
+    --link: var(--blue);
+
+    .button {
+        &.is-link,
+        &.is-primary {
+            --hover-background-color: #535eb4;
+            --focus-box-shadow-color: var(--blue-600);
+            --active-background-color: #535eb4;
+        }
+    }
+}

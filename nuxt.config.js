@@ -15,7 +15,7 @@ export default {
 
     css: [
         '@/node_modules/buefy-css-variables/dist/buefy.css',
-        './assets/styles/base/global.css'
+        './assets/scss/main.scss'
     ],
 
     plugins: [
