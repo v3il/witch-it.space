@@ -32,10 +32,10 @@ export default {
 
 <style scoped lang="scss">
     .layout__main {
-        padding: 0 var(--offset-md);
+        padding: 0 var(--offset-md) var(--offset-md);
 
         @media screen and (max-width: 768px) {
-            padding: 0 var(--offset-sm);
+            padding: 0 var(--offset-sm) var(--offset-sm);
         }
     }
 </style>

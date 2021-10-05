@@ -4,9 +4,9 @@
       <ThemeSwitcher class="wit-offset-right--sm" />
       <LocaleSwitcher class="wit-offset-right--sm" />
 
-      <Button class="wit-offset-left--auto1" btn-class="primary">
-        Sign Up
-      </Button>
+      <b-button type="is-primary" class="wit-transition--background">
+        {{ $t('register') }}
+      </b-button>
     </div>
   </header>
 </template>
@@ -18,15 +18,13 @@
 
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import LocaleSwitcher from '@/components/LocaleSwitcher'
-import Button from '@/components/base/Button'
 
 export default {
     name: 'TopNavBar',
 
     components: {
         ThemeSwitcher,
-        LocaleSwitcher,
-        Button
+        LocaleSwitcher
     },
 
     // computed: {

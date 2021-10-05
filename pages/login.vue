@@ -1,8 +1,8 @@
 <template>
-  <div class="wit-flex wit-flex--center page">
-    <div class="auth">
-      <div class="auth__form-container wit-background--content wit-transition wit-offset-bottom--xxlg">
-        <header class="auth__header wit-background--primary wit-position--relative">
+  <div class="wit-flex wit-flex--center login-page">
+    <div class="login-page__container">
+      <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
+        <header class="login-page__form-header wit-background--primary wit-position--relative">
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
             {{ $t('welcome_back') }}
           </h1>
@@ -10,16 +10,18 @@
             {{ $t('sign_in_to_continue') }}
           </p>
 
-          <div class="auth__header-image wit-position--absolute wit-background--content wit-transition" />
+          <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">
+            <img class="login-page__image" src="images/hey.png" alt="Hey!">
+          </div>
         </header>
 
-        <div class="auth__form-container2">
-          <form class="auth__form" @submit.prevent="onSubmit">
-            <b-field :label="$t('login')" class="wit-offset-bottom--md wit-font-weight--500">
+        <div class="login-page__form-content">
+          <form @submit.prevent="onSubmit">
+            <b-field :label="$t('login')" class="wit-offset-bottom--md">
               <b-input v-model="login" type="text" :placeholder="$t('enter_login')" custom-class="wit-transition--border" />
             </b-field>
 
-            <b-field :label="$t('password')" class="wit-offset-bottom--md wit-font-weight--500">
+            <b-field :label="$t('password')" class="wit-offset-bottom--md">
               <b-input v-model="password" type="password" :placeholder="$t('enter_password')" custom-class="wit-transition--border" />
             </b-field>
 
@@ -72,42 +74,53 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.page {
+.login-page {
     margin-top: calc(var(--offset-xxlg) * 2);
-
-    @media screen and (max-width: 768px) {
-        margin-top: var(--offset-xxlg);
-    }
 }
 
-.auth {
+.login-page__container {
     max-width: 450px;
     width: 100%;
 }
 
-.auth__header {
+.login-page__form-header {
     padding: var(--offset-md) var(--offset-xlg);
-    /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
-    /*border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;*/
 }
 
-.auth__form-container {
+.login-page__form {
     border-radius: var(--offset-xxs);
     overflow: hidden;
 }
 
-.auth__header-image {
+.login-page__image-block {
     border-radius: 50%;
     width: 72px;
     height: 72px;
     left: 50%;
     transform: translateX(-50%);
-    border-bottom: 2px solid var(--success);
+    border: 2px solid var(--primary);
 }
 
-.auth__form-container2 {
-    padding: 64px var(--offset-xlg) var(--offset-xlg);
-    /* box-shadow: 0 0 13px rgba(236, 236, 241, 0.439216); */
-    /*border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);*/
+.login-page__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.login-page__form-content {
+    padding: calc(var(--offset-xlg) * 2) var(--offset-xlg) var(--offset-xlg);
+}
+
+@media screen and (max-width: 768px) {
+    .login-page {
+        margin-top: var(--offset-xxlg);
+    }
+
+    .login-page__form-header,
+    .login-page__form-content {
+        padding-left: var(--offset-sm);
+        padding-right: var(--offset-sm);
+        padding-bottom: var(--offset-md);
+    }
 }
 </style>

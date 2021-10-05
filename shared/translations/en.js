@@ -19,5 +19,6 @@ export const en = {
     login_in: 'Sign In',
     dont_have_account: 'Don\'t have an account?',
     sign_up: 'Sign Up Now',
-    crafted_by: 'Crafted for Witch It community by !D'
+    crafted_by: 'Crafted for Witch It community by !D',
+    register: 'Sign up'
 }
