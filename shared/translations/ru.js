@@ -11,7 +11,7 @@ export const ru = {
     },
 
     Login_WelcomeBack: 'Добро пожаловать!',
-    Login_SignInToContinue: 'Войдите в Ваш WitchIt.Zone аккаунт',
+    Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',
     Login_LoginInputTitle: 'Логин',
     Login_LoginInputPlaceholder: 'Введите логин',
     Login_PasswordInputTitle: 'Пароль',
