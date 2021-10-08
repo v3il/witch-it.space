@@ -1,52 +1,33 @@
+import { Locale, Theme, User } from '@/store/Types'
+
 export const state = () => ({
     user: null
 })
 
 export const actions = {
-    async fetchUser ({ commit, dispatch }) {
+    async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
         try {
             const { data } = await this.$axios.get('/api/user')
             const { user } = data
 
-            // console.error('User succ')
+            commit(User.Mutations.SET_USER, user)
 
-            commit('setUser', user)
-
-            await dispatch('theme/setTheme', user.theme)
-            await dispatch('locale/setLocale', user.locale)
+            await dispatch(Theme.F.Actions.SET_THEME, user.theme)
+            await dispatch(Locale.F.Actions.SET_LOCALE, user.locale)
         } catch (e) {
             // console.error('User error')
-            commit('setUser', null)
+            commit(User.Mutations.SET_USER, null)
             throw e
         }
     },
 
-    login ({ commit, dispatch }, credentials) {
-        // try {
+    [User.Actions.LOGIN] ({ commit, dispatch }, credentials) {
         return this.$axios.post('/api/auth/login', credentials)
-        // } catch (e) {
-        //     console.log(111222, e.response ? e.response.data : e.data)
-        // }
-        // try {
-        //     const { data } = await this.$axios.post('/api/auth/login', credentials)
-        //     const { user } = data
-        //
-        //     // console.error('User succ')
-        //
-        //     commit('setUser', user)
-        //
-        //     await dispatch('theme/setTheme', user.theme)
-        //     await dispatch('locale/setLocale', user.locale)
-        // } catch (e) {
-        //     // console.error('User error')
-        //     commit('setUser', null)
-        //     throw e
-        // }
     }
 }
 
 export const mutations = {
-    setUser (state, user) {
+    [User.Mutations.SET_USER] (state, user) {
         state.user = user
     }
 }

@@ -12,8 +12,8 @@ export const getters = {
 
 export const actions = {
     async nuxtServerInit ({ commit }, { app }) {
-        await app.store.dispatch(Theme.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
-        await app.store.dispatch(Locale.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
+        await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
+        await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
     }
 }
 

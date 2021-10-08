@@ -37,7 +37,7 @@ export default {
 
     computed: {
         ...mapState(Locale.PATH, [
-            'locale'
+            Locale.State.LOCALE
         ]),
 
         selectedLocale () {
@@ -61,7 +61,7 @@ export default {
                 return
             }
 
-            this.$store.dispatch(Locale.Actions.SET_LOCALE, locale)
+            this.$store.dispatch(Locale.F.Actions.SET_LOCALE, locale)
         }
     }
 }

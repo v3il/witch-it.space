@@ -1,4 +1,5 @@
 import { Cookies, config, Locales, en, ua, ru } from '~/shared'
+import { Locale } from '@/store/Types'
 
 export const state = () => ({
     locale: config.DEFAULT_LOCALE
@@ -15,19 +16,19 @@ export const getters = {
 }
 
 export const actions = {
-    setLocale ({ commit }, locale) {
+    [Locale.Actions.SET_LOCALE] ({ commit }, locale) {
         const expires = new Date()
         expires.setFullYear(expires.getFullYear() + 1)
 
         const validLocale = locale ?? config.DEFAULT_LOCALE
 
-        this.$cookies.set(Cookies.LOCALE, validLocale, { expires, path: '*', sameSite: true })
-        commit('setLocale', validLocale)
+        this.$cookies.set(Cookies.LOCALE, validLocale, { expires })
+        commit(Locale.Mutations.SET_LOCALE, validLocale)
     }
 }
 
 export const mutations = {
-    setLocale (state, locale) {
+    [Locale.Mutations.SET_LOCALE] (state, locale) {
         state.locale = locale
     }
 }

@@ -18,7 +18,7 @@ export default {
 
     computed: {
         ...mapState(Theme.PATH, [
-            'theme'
+            Theme.State.THEME
         ]),
 
         isDarkTheme () {
@@ -32,7 +32,7 @@ export default {
 
     methods: {
         onThemeChange () {
-            this.$store.dispatch(Theme.Actions.SET_THEME, this.isDarkTheme ? Themes.LIGHT : Themes.DARK)
+            this.$store.dispatch(Theme.F.Actions.SET_THEME, this.isDarkTheme ? Themes.LIGHT : Themes.DARK)
         }
     }
 }

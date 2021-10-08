@@ -1,4 +1,6 @@
-export const Root = {
+import { StoreWrap } from '@/store/StoreTyper'
+
+export const Root = StoreWrap.wrap('', {
     Getters: {
         HAS_ERRORS: 'hasErrors',
         FIRST_ERROR: 'firstError'
@@ -8,53 +10,47 @@ export const Root = {
         SET_ERRORS: 'setErrors',
         RESET_ERRORS: 'resetErrors'
     }
-}
+})
 
-export const Locale = {
-    PATH: 'locale',
-
+export const Locale = StoreWrap.wrap('locale', {
     State: {
-        LOCALE: 'locale/locale'
+        LOCALE: 'locale'
     },
 
     Actions: {
-        SET_LOCALE: 'locale/setLocale'
+        SET_LOCALE: 'setLocale'
     },
 
     Mutations: {
-        SET_LOCALE: 'locale/setLocale'
+        SET_LOCALE: 'setLocale'
     }
-}
+})
 
-export const Theme = {
-    PATH: 'theme',
-
+export const Theme = StoreWrap.wrap('theme', {
     State: {
-        THEME: 'theme/theme'
+        THEME: 'theme'
     },
 
     Actions: {
-        SET_THEME: 'theme/setTheme'
+        SET_THEME: 'setTheme'
     },
 
     Mutations: {
-        SET_THEME: 'theme/setTheme'
+        SET_THEME: 'setTheme'
     }
-}
+})
 
-export const User = {
-    PATH: 'user',
-
+export const User = StoreWrap.wrap('user', {
     State: {
-        THEME: 'user/user'
+        THEME: 'user'
     },
 
     Actions: {
-        FETCH_USER: 'user/fetchUser',
-        LOGIN: 'user/login'
+        FETCH_USER: 'fetchUser',
+        LOGIN: 'login'
     },
 
     Mutations: {
-        SET_USER: 'user/setUser'
+        SET_USER: 'setUser'
     }
-}
+})

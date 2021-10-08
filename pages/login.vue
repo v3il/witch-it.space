@@ -68,7 +68,7 @@ export default {
 
     methods: {
         onSubmit () {
-            this.$store.dispatch(User.Actions.LOGIN, {
+            this.$store.dispatch(User.F.Actions.LOGIN, {
                 login: this.login,
                 password: this.password
             })
