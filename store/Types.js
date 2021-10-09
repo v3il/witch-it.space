@@ -1,4 +1,4 @@
-import { StoreWrap } from '@/store/StoreTyper'
+import { StoreWrap } from '@/store/StoreWrap'
 
 export const Root = StoreWrap.wrap('', {
     Getters: {
