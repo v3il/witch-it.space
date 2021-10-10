@@ -1,8 +1,18 @@
-import { Cookies, config } from '~/shared'
+import { Cookies, config, Locales, en, ua, ru } from '~/shared'
 
 export const state = () => ({
     locale: config.DEFAULT_LOCALE
 })
+
+export const getters = {
+    lngSet: (state) => {
+        return {
+            [Locales.UA]: ua,
+            [Locales.EN]: en,
+            [Locales.RU]: ru
+        }[state.locale] ?? {}
+    }
+}
 
 export const actions = {
     setLocale ({ commit }, locale) {

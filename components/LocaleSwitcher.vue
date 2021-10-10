@@ -62,7 +62,6 @@ export default {
             }
 
             this.$store.dispatch(Locale.Actions.SET_LOCALE, locale)
-            this.$router.go(0)
         }
     }
 }
