@@ -8,7 +8,7 @@
       </div>
     </template>
 
-    <b-dropdown-item v-for="locale in $options.locales" :key="locale.value" :value="true" @click="onLocaleChange(locale.value)">
+    <b-dropdown-item v-for="locale in $options.locales" :key="locale.value" :value="true" class="wit-transition--background" @click="onLocaleChange(locale.value)">
       <div class="wit-flex wit-flex--align-center">
         <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
         <span class="wit-inline-block">{{ locale.label }}</span>
@@ -70,6 +70,8 @@ export default {
 
 <style scoped lang="scss">
     .wit-locale-switcher {
+        --dropdown-item-padding: var(--offset-xs) var(--offset-md);
+
         color: white;
         padding: var(--offset-sm);
         cursor: pointer;
