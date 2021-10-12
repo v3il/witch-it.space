@@ -16,7 +16,7 @@ const authUsingGoogleCallback = async (request, response) => {
     const { code } = request.query
 
     if (!code) {
-        return response.redirect(`${Routes.LOGIN}?error=errors.wrongOauth2Token`)
+        return response.redirect(`${Routes.LOGIN}?error=Error_WrongOAuth2Token`)
     }
 
     const { data: tokenData } = await axiosInstance.post(
@@ -85,7 +85,7 @@ const googleAuthController = {
         try {
             await authUsingGoogleCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.LOGIN}?error=errors.authFailed`)
+            response.redirect(`${Routes.LOGIN}?error=Error_AuthFailed`)
         }
     }
 }

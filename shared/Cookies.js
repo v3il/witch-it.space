@@ -1,4 +1,4 @@
-const COOKIE_PREFIX = 'wit'
+const COOKIE_PREFIX = 'wiz'
 
 export const Cookies = Object.freeze({
     THEME: `${COOKIE_PREFIX}.theme`,

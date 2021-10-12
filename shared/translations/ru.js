@@ -1,14 +1,12 @@
 export const ru = {
-    errors: {
-        wrongOauth2Token: 'Неправильный OAuth2 код',
-        authFailed: 'При авторизации возникла ошибка',
-        actionForbidden: 'Действие запрещено',
-        wrongLogin: 'Пользователя с таким логином не существует',
-        wrongPassword: 'Неправильный пароль',
-        invalidLogin: 'Некорректный логин',
-        invalidPassword: 'Некорректный пароль (минимум 8 символов)',
-        notUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе'
-    },
+    Error_WrongOAuth2Token: 'Неправильный OAuth2 код',
+    Error_AuthFailed: 'При авторизации возникла ошибка',
+    Error_ActionForbidden: 'Действие запрещено',
+    Error_NoUserWithLogin: 'Пользователя с таким логином не существует',
+    Error_WrongPassword: 'Неправильный пароль',
+    Error_InvalidLogin: 'Некорректный логин',
+    Error_InvalidPassword: 'Некорректный пароль (минимум 8 символов)',
+    Error_NotUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',

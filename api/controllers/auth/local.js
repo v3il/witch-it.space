@@ -22,13 +22,13 @@ const login = async (request, response) => {
     })
 
     if (!savedUser) {
-        throw new BadRequest(translateText('errors.wrongLogin', request.locale))
+        throw new BadRequest(translateText('Error_NoUserWithLogin', request.locale))
     }
 
     const isCorrectPassword = await compare(password, savedUser.password)
 
     if (!isCorrectPassword) {
-        throw new BadRequest(translateText('errors.wrongPassword', request.locale))
+        throw new BadRequest(translateText('Error_WrongPassword', request.locale))
     }
 
     signInUser({
@@ -45,17 +45,17 @@ const register = async (request, response) => {
     const password = requestBody.password.toString().trim()
 
     if (!login.length) {
-        throw new BadRequest(translateText('errors.invalidLogin', request.locale))
+        throw new BadRequest(translateText('Error_InvalidLogin', request.locale))
     }
 
     if (password.length < 8) {
-        throw new BadRequest(translateText('errors.invalidPassword', request.locale))
+        throw new BadRequest(translateText('Error_InvalidPassword', request.locale))
     }
 
     const usersWithSameMail = await User.findAll({ where: { login } })
 
     if (usersWithSameMail.length) {
-        throw new BadRequest(translateText('errors.notUniqueLogin', request.locale))
+        throw new BadRequest(translateText('Error_NotUniqueLogin', request.locale))
     }
 
     const salt = await genSalt(3)

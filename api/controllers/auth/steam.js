@@ -68,7 +68,7 @@ const steamAuthController = {
         try {
             await authUsingSteamCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.LOGIN}?error=errors.authFailed`)
+            response.redirect(`${Routes.LOGIN}?error=Error_AuthFailed`)
         }
     }
 }

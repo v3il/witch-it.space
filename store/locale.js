@@ -21,7 +21,7 @@ export const actions = {
 
         const validLocale = locale ?? config.DEFAULT_LOCALE
 
-        this.$cookies.set(Cookies.LOCALE, validLocale, { expires })
+        this.$cookies.set(Cookies.LOCALE, validLocale, { expires, path: '*', sameSite: true })
         commit('setLocale', validLocale)
     }
 }

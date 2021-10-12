@@ -19,5 +19,7 @@ export const ua = {
     login_in: 'Увійти',
     dont_have_account: 'Немає аккаунту?',
     sign_up: 'Зареєструватись',
-    crafted_by: 'Зроблено для ком\'юніті Witch It від !D'
+    crafted_by: 'Зроблено для ком\'юніті Witch It від !D',
+
+    Error_NoUserWithLogin: 'Пользователя с таким логином не существует ua'
 }

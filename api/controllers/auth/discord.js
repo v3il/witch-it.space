@@ -16,7 +16,7 @@ const authUsingDiscordCallback = async (request, response) => {
     const { code } = request.query
 
     if (!code) {
-        return response.redirect(`${Routes.LOGIN}`)
+        return response.redirect(`${Routes.LOGIN}?error=Error_WrongOAuth2Token`)
     }
 
     const { data: tokenData } = await axiosInstance.post(
@@ -86,7 +86,7 @@ const discordAuthController = {
         try {
             await authUsingDiscordCallback(request, response)
         } catch (e) {
-            response.redirect(`${Routes.LOGIN}?error=errors.authFailed`)
+            response.redirect(`${Routes.LOGIN}?error=Error_AuthFailed`)
         }
     }
 }
