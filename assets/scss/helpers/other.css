@@ -18,6 +18,10 @@
     font-family: var(--font-family-secondary);
 }
 
+.wit-transition {
+    transition: color var(--default-transition), background-color var(--default-transition), border-color var(--default-transition);
+}
+
 .wit-transition--color {
     transition: color var(--default-transition);
 }

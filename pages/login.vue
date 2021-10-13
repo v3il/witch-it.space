@@ -6,7 +6,7 @@
           <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit--font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
             {{ $t('Login_WelcomeBack') }}
           </h1>
-          <p class="wit-color--white wit-text--center wit-offset-bottom--md wit-color--white-half">
+          <p class="wit-text--center wit-offset-bottom--md wit-color--white-half">
             {{ $t('Login_SignInToContinue') }}
           </p>
 
@@ -17,18 +17,18 @@
 
         <div class="login-page__form-content">
           <form @submit.prevent="onSubmit">
-            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md">
-              <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition--border" />
+            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
+              <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 
             <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
-              <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition--border" />
+              <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 
             <div class="wit-flex wit-flex--center wit-flex--justify-between">
               <Socials />
 
-              <b-button type="is-primary" native-type="submit" class="wit-transition--background">
+              <b-button type="is-primary" native-type="submit" class="wit-transition">
                 {{ $t('Login_LoginButtonTitle') }}
               </b-button>
             </div>
@@ -52,7 +52,7 @@
 
 <script>
 import Socials from '@/components/auth/Socials'
-import { User } from '@/store'
+import { Root, User } from '@/store'
 
 export default {
     year: new Date().getFullYear(),
@@ -65,6 +65,14 @@ export default {
         login: '',
         password: ''
     }),
+
+    mounted () {
+        const error = this.$route.query.error
+
+        if (error) {
+            this.$store.commit(Root.Mutations.SET_ERRORS, [this.$t(error)])
+        }
+    },
 
     methods: {
         onSubmit () {

@@ -3,7 +3,7 @@ export { Cookies } from './Cookies'
 export { config, Themes, Locales } from './config'
 export { ru, ua, en } from './translations'
 
-export const getTranslation = (lngSet, textId, replacements) => {
+export const getTranslation = (lngSet, textId, replacements = []) => {
     let text = lngSet[textId]
 
     if (!text) {

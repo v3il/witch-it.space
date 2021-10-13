@@ -1,96 +1,96 @@
 /* Bottom */
 .wit-offset-bottom--xxs {
-    margin-bottom: var(--offset-xxs);
+    margin-bottom: var(--offset-xxs) !important;
 }
 
 .wit-offset-bottom--xs {
-    margin-bottom: var(--offset-xs);
+    margin-bottom: var(--offset-xs) !important;
 }
 
 .wit-offset-bottom--sm {
-    margin-bottom: var(--offset-sm);
+    margin-bottom: var(--offset-sm) !important;
 }
 
 .wit-offset-bottom--md {
-    margin-bottom: var(--offset-md);
+    margin-bottom: var(--offset-md) !important;
 }
 
 .wit-offset-bottom--lg {
-    margin-bottom: var(--offset-lg);
+    margin-bottom: var(--offset-lg) !important;
 }
 
 .wit-offset-bottom--xlg {
-    margin-bottom: var(--offset-xlg);
+    margin-bottom: var(--offset-xlg) !important;
 }
 
 .wit-offset-bottom--xxlg {
-    margin-bottom: var(--offset-xxlg);
+    margin-bottom: var(--offset-xxlg) !important;
 }
 
 /* Left */
 
 .wit-offset-left--auto {
-    margin-left: auto;
+    margin-left: auto !important;
 }
 
 .wit-offset-left--xxs {
-    margin-left: var(--offset-xxs);
+    margin-left: var(--offset-xxs) !important;
 }
 
 .wit-offset-left--xs {
-    margin-left: var(--offset-xs);
+    margin-left: var(--offset-xs) !important;
 }
 
 .wit-offset-left--sm {
-    margin-left: var(--offset-sm);
+    margin-left: var(--offset-sm) !important;
 }
 
 .wit-offset-left--md {
-    margin-left: var(--offset-md);
+    margin-left: var(--offset-md) !important;
 }
 
 .wit-offset-left--lg {
-    margin-left: var(--offset-lg);
+    margin-left: var(--offset-lg) !important;
 }
 
 .wit-offset-left--xlg {
-    margin-left: var(--offset-xlg);
+    margin-left: var(--offset-xlg) !important;
 }
 
 .wit-offset-left--xxlg {
-    margin-left: var(--offset-xxlg);
+    margin-left: var(--offset-xxlg) !important;
 }
 
 /* Right */
 
 .wit-offset-right--auto {
-    margin-right: auto;
+    margin-right: auto !important;
 }
 
 .wit-offset-right--xxs {
-    margin-right: var(--offset-xxs);
+    margin-right: var(--offset-xxs) !important;
 }
 
 .wit-offset-right--xs {
-    margin-right: var(--offset-xs);
+    margin-right: var(--offset-xs) !important;
 }
 
 .wit-offset-right--sm {
-    margin-right: var(--offset-sm);
+    margin-right: var(--offset-sm) !important;
 }
 
 .wit-offset-right--md {
-    margin-right: var(--offset-md);
+    margin-right: var(--offset-md) !important;
 }
 
 .wit-offset-right--lg {
-    margin-right: var(--offset-lg);
+    margin-right: var(--offset-lg) !important;
 }
 
 .wit-offset-right--xlg {
-    margin-right: var(--offset-xlg);
+    margin-right: var(--offset-xlg) !important;
 }
 
 .wit-offset-right--xxlg {
-    margin-right: var(--offset-xxlg);
+    margin-right: var(--offset-xxlg) !important;
 }
