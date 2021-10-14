@@ -19,7 +19,7 @@
 }
 
 .wit-transition {
-    transition: color var(--default-transition), background-color var(--default-transition), border-color var(--default-transition);
+    transition: color var(--default-transition), background-color var(--default-transition), border-color var(--default-transition), box-shadow var(--default-transition);
 }
 
 .wit-transition--color {

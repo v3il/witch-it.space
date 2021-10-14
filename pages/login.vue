@@ -17,7 +17,7 @@
 
         <div class="login-page__form-content">
           <form @submit.prevent="onSubmit">
-            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
+            <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md">
               <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
             </b-field>
 

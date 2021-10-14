@@ -18,6 +18,13 @@ export const ru = {
     Login_DontHaveAccount: 'Нет аккаунта?',
     Login_SignUpLinkTitle: 'Зарегистрироваться',
 
+    Register_FreeRegister: 'Регистрация профиля',
+    Register_GetFreeAccount: 'Создайте аккаунт Witch It.Zone прямо сейчас',
+    Register_RepeatPassword: 'Повторите пароль',
+    Register_AlreadyHaveAccount: 'Уже есть аккаунт?',
+    Register_SignInLinkTitle: 'Войти',
+    Register_RegisterButtonTitle: 'Создать',
+
     // loginInputHelp: 'Минимальная длина - ',
     // passwordInputHelp: 'Минимальная длина - 8 символов',
 
