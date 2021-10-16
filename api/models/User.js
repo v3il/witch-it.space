@@ -19,6 +19,16 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: config.DEFAULT_THEME
             },
 
+            canReplaceDailyQuests: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
+            canReplaceWeeklyQuests: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
             isGuardProtected: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false

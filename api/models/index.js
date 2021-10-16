@@ -1,4 +1,5 @@
 import { initUserModel } from './User'
+import { initQuestModel } from './Quest'
 const { Sequelize, DataTypes } = require('sequelize')
 const { config } = require('../../shared/config')
 const { logger } = require('../logger')
@@ -28,6 +29,11 @@ try {
     })
 
     db.User = initUserModel(sequelize, DataTypes)
+    db.Quest = initQuestModel(sequelize, DataTypes)
+
+    db.User.hasMany(db.Quest)
+    db.Quest.belongsTo(db.User)
+
     db.sequelize = sequelize
     db.Sequelize = Sequelize
 
