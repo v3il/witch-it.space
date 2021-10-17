@@ -32,7 +32,7 @@ try {
     db.Quest = initQuestModel(sequelize, DataTypes)
 
     db.User.hasMany(db.Quest)
-    db.Quest.belongsTo(db.User)
+    db.Quest.belongsTo(db.User, { foreignKey: 'userId' })
 
     db.sequelize = sequelize
     db.Sequelize = Sequelize
@@ -48,6 +48,7 @@ try {
 
 module.exports = {
     User: db.User,
+    Quest: db.Quest,
     sequelize: db.sequelize,
     Sequelize: db.Sequelize
 }

@@ -11,6 +11,7 @@ export const ru = {
     Error_NotUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе',
     Error_LoginCantBeEmpty: 'Логин не может быть пустым',
     Error_PasswordsAreNotIdentical: 'Пароли не совпадают',
+    Error_BadRequest: 'Неправильный запрос',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',

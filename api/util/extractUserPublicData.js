@@ -11,6 +11,10 @@ export const extractUserPublicData = user => ({
     locale: user.locale,
     theme: user.theme,
     inventorySyncTime: user.inventorySyncTime,
-    canReplaceDailyQuests: user.canReplaceDailyQuests,
-    canReplaceWeeklyQuests: user.canReplaceWeeklyQuests
+
+    quests: {
+        canReplaceDailyQuests: user.canReplaceDailyQuests,
+        canReplaceWeeklyQuests: user.canReplaceWeeklyQuests
+    }
+
 })

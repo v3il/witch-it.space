@@ -2,9 +2,9 @@
   <div>
     Settings
 
-    {{ weeklyQuests }}
-    <br>
-    {{ dailyQuests }}
+    <Quests :quests="weeklyQuests" :can-replace="false" @replace="$emit('replace', $event)" />
+    <hr>
+    <Quests :quests="dailyQuests" :can-replace="false" @replace="$emit('replace', $event)" />
 
     <button @click="l">
       Load
@@ -13,7 +13,14 @@
 </template>
 
 <script>
+import Quests from '@/components/quests/Quests'
+
 export default {
+
+    components: {
+        Quests
+    },
+
     middleware: ['fetchUser'],
 
     data: () => ({
