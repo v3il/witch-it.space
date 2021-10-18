@@ -67,18 +67,29 @@ export class WitchItApiService {
         return data.success
     }
 
-    async replaceQuest ({ userId, globalQuestId }) {
-        const authToken = await this.auth(userId)
+    async replaceQuest ({ user, quest }) {
+        const authToken = await this.auth(user.steamId)
         const accessToken = await this.getAccessToken(authToken)
 
-        const { data } = await this.axiosInstance.get('/quest/replaceDailyQuest', {
-            params: {
-                authToken: accessToken,
-                dailyQuestId: globalQuestId
-            }
-        })
+        if (quest.questType === 'Weekly') {
+            const { data } = await this.axiosInstance.get('/quest/replaceWeeklyQuest', {
+                params: {
+                    authToken: accessToken,
+                    weeklyQuestId: quest.globalId
+                }
+            })
 
-        return data.success
+            return data.success
+        } else {
+            const { data } = await this.axiosInstance.get('/quest/replaceDailyQuest', {
+                params: {
+                    authToken: accessToken,
+                    dailyQuestId: quest.globalId
+                }
+            })
+
+            return data.success
+        }
     }
 
     async loadUserData (steamId) {

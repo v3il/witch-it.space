@@ -2,9 +2,9 @@
   <div>
     Settings
 
-    <Quests :quests="weeklyQuests" :can-replace="false" @replace="$emit('replace', $event)" />
+    <Quests :quests="weeklyQuests" :can-replace="false" @replace="r" />
     <hr>
-    <Quests :quests="dailyQuests" :can-replace="false" @replace="$emit('replace', $event)" />
+    <Quests :quests="dailyQuests" :can-replace="false" @replace="r" />
 
     <button @click="l">
       Load
@@ -43,6 +43,21 @@ export default {
         async l () {
             try {
                 const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/update')).data
+
+                this.weeklyQuests = weeklyQuests
+                this.dailyQuests = dailyQuests
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+        async r (quest) {
+            console.log(quest)
+
+            try {
+                const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/replace', {
+                    questId: quest.id
+                })).data
 
                 this.weeklyQuests = weeklyQuests
                 this.dailyQuests = dailyQuests

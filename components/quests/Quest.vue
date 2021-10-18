@@ -2,9 +2,9 @@
   <tr>
     <td style="padding: 0 8px;">
       <div style="display: flex; align-items: center;">
-        {{ quest.questName }}
-        <button v-if="allow" :disabled="!canReplace" style="margin-left: 8px;" @click="$emit('replace')">
-          <span class="material-icons">refresh</span>
+        {{ $t(`Quests_${quest.questTask}`) }}
+        <button style="margin-left: 8px;" @click="$emit('replace')">
+          R
         </button>
       </div>
     </td>

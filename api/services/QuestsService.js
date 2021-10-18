@@ -29,6 +29,7 @@ export class QuestsService {
         try {
             const { quests, canReplaceDailyQuests, canReplaceWeeklyQuests } = questsData
 
+            // todo: optimize it
             const questModels = quests.map((quest) => {
                 const [rewardId, rewardCount] = quest.rewardVal.split('x')
 
@@ -67,6 +68,7 @@ export class QuestsService {
             const rewardItem = this.items.find(item => item.id === quest.rewardId) ?? null
 
             return {
+                id: quest.id,
                 questTask: quest.questTask,
                 questType: quest.questType,
                 globalId: quest.globalId,
