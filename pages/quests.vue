@@ -2,9 +2,9 @@
   <div>
     Settings
 
-    <Quests :quests="weeklyQuests" :can-replace="false" @replace="r" />
+    <Quests :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="r" @finalize="f" />
     <hr>
-    <Quests :quests="dailyQuests" :can-replace="false" @replace="r" />
+    <Quests :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="r" @finalize="f" />
 
     <button @click="l">
       Load
@@ -79,12 +79,33 @@ export default {
             console.log(quest)
 
             try {
-                const { weeklyQuests, dailyQuests } = (await this.$axios.post('/api/quests/replace', {
+                const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.post('/api/quests/replace', {
                     questId: quest.id
                 })).data
 
                 this.weeklyQuests = weeklyQuests
                 this.dailyQuests = dailyQuests
+                this.canReplaceDailyQuests = canReplaceDailyQuests
+                this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
+                this.questsUpdateTimestamp = questsUpdateTimestamp
+            } catch (e) {
+                console.log(e)
+            }
+        },
+
+        async f (quest) {
+            // console.log(quest)
+
+            try {
+                const { weeklyQuests, dailyQuests, canReplaceWeeklyQuests, canReplaceDailyQuests, questsUpdateTimestamp } = (await this.$axios.post('/api/quests/finalize', {
+                    questId: quest.id
+                })).data
+
+                this.weeklyQuests = weeklyQuests
+                this.dailyQuests = dailyQuests
+                this.canReplaceDailyQuests = canReplaceDailyQuests
+                this.canReplaceWeeklyQuests = canReplaceWeeklyQuests
+                this.questsUpdateTimestamp = questsUpdateTimestamp
             } catch (e) {
                 console.log(e)
             }

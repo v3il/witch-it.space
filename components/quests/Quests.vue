@@ -8,6 +8,7 @@
         :can-replace="canReplace"
         :allow="allow"
         @replace="$emit('replace', quest)"
+        @finalize="$emit('finalize', quest)"
       />
     </table>
 

@@ -7,5 +7,6 @@ const questsRouter = createAsyncRouter()
 questsRouter.get('/', authorized, questsController.getUserQuests)
 questsRouter.post('/update', authorized, questsController.updateUserQuests)
 questsRouter.post('/replace', authorized, questsController.replaceUserQuest)
+questsRouter.post('/finalize', authorized, questsController.finalizeUserQuest)
 
 export { questsRouter }

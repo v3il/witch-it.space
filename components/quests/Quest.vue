@@ -3,8 +3,12 @@
     <td style="padding: 0 8px;">
       <div style="display: flex; align-items: center;" class="wit-color--white">
         {{ $t(`Quests_${quest.questTask}`) }}
-        <button style="margin-left: 8px;" @click="$emit('replace')">
+        <button style="margin-left: 8px;" :disabled="!canReplace" @click="$emit('replace')">
           R
+        </button>
+
+        <button style="margin-left: 8px;" @click="$emit('finalize')">
+          F
         </button>
       </div>
     </td>

@@ -108,6 +108,21 @@ export class WitchItApiService {
         }
     }
 
+    async finalizeQuest ({ user, quest }) {
+        const authToken = await this.auth(user.steamId)
+        const accessToken = await this.getAccessToken(authToken)
+
+        const r = await this.axiosInstance.get('/quest/finalizeQuest', {
+            params: {
+                authToken: accessToken,
+                accountQuestId: quest.globalId,
+                questId: quest.localId
+            }
+        })
+
+        return r.data.success
+    }
+
     // async finalizeQuest({ userId, localQuestId, globalQuestId }) {
     //     const authToken = await this.auth(userId);
     //     const accessToken = await this.getAccessToken(authToken);

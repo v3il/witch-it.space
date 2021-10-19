@@ -98,10 +98,66 @@ const replaceUserQuest = async (request, response) => {
     // }
 }
 
+const finalizeUserQuest = async (request, response) => {
+    const { questId } = request.body
+    const { id } = request.user
+
+    console.log(questId, id)
+
+    const user = await User.findOne({ where: { id } })
+
+    if (!(user && user.steamId)) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    const quest = await Quest.findOne({
+        where: { id: questId }
+    })
+
+    console.log(quest)
+
+    if (!quest) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    if (quest.userId !== user.id) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    }
+
+    try {
+        const isReplaced = await witchItApiService.finalizeQuest({ user, quest })
+
+        console.log(isReplaced)
+
+        // if (isReplaced) {
+        //     const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+        //     await questsService.saveUserQuests(user, newQuestsData)
+        // }
+
+        const questsData = await questsService.getUserQuestsData(user)
+        response.send(questsData)
+    } catch (e) {
+        throw new UnprocessableEntity(translateText('Error_QuestsReplacingFailed', request.locale))
+    }
+
+    // response.sendStatus(200)
+
+    // try {
+    //     const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+    //     await questsService.saveUserQuests(user, newQuestsData)
+    //
+    //     const questsData = await questsService.getUserQuestsData(user)
+    //     response.send(questsData)
+    // } catch (e) {
+    //     throw new UnprocessableEntity(translateText('Error_QuestsReplacingFailed', request.locale))
+    // }
+}
+
 const questsController = {
     getUserQuests,
     updateUserQuests,
-    replaceUserQuest
+    replaceUserQuest,
+    finalizeUserQuest
 }
 
 export { questsController }
