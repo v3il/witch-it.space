@@ -26,12 +26,18 @@ export const actions = {
 
     async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
         const response = await this.$axios.post('/api/quests/replace', { questId })
-        commit(Quest.Mutations.SET_DATA, response.data)
+
+        if (response.data) {
+            commit(Quest.Mutations.SET_DATA, response.data)
+        }
     },
 
     async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
         const response = await this.$axios.post('/api/quests/finalize', { questId })
-        commit(Quest.Mutations.SET_DATA, response.data)
+
+        if (response.data) {
+            commit(Quest.Mutations.SET_DATA, response.data)
+        }
     }
 }
 
