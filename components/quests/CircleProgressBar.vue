@@ -30,66 +30,53 @@ export default {
 
     computed: {
         canvasSize () {
-            return this.radius * 2// + this.strokeWidth
+            return this.radius * 2
         }
     },
 
     mounted () {
-        // window.onload = function() {
-        const can = this.$el.querySelector('#canvas')
-        // const spanProcent = this.$el.querySelector('#procent')
-        const c = can.getContext('2d')
+        const canvasEl = this.$el.querySelector('#canvas')
+        const ctx = canvasEl.getContext('2d')
 
-        const posX = can.width / 2
-        const posY = can.height / 2
-        const fps = 100 / 60
-        // let procent = 0
-        const oneProcent = 360 / 100
-        const result = oneProcent * this.value
+        const centerX = canvasEl.width / 2
+        const centerY = canvasEl.height / 2
+        const fps = 200 / 60
+        const percent = 360 / 100
+        const result = percent * this.value
 
-        // c.lineCap = 'round'
-
-        const r = this.radius - this.strokeWidth / 2
-        const sw = this.strokeWidth
-
-        console.log(this.strokeWidth, this.radius - this.strokeWidth)
+        const circleRadius = this.radius - this.strokeWidth / 2
+        const strokeWidth = this.strokeWidth
 
         const arcMove = () => {
-            let deegres = 0
+            let degrees = 0
+
             const acrInterval = setInterval(function () {
-                deegres += 1
-                c.clearRect(0, 0, can.width, can.height)
-                // procent = deegres / oneProcent
+                degrees += 1
+                ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)
 
-                // spanProcent.innerHTML = procent.toFixed()
+                ctx.beginPath()
+                ctx.arc(centerX, centerY, circleRadius, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + 360))
+                ctx.strokeStyle = 'rgb(242, 242, 242)'
+                ctx.lineWidth = strokeWidth
+                ctx.stroke()
 
-                c.beginPath()
-                c.arc(posX, posY, r, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + 360))
-                c.strokeStyle = 'rgb(242, 242, 242)'
-                c.lineWidth = sw
-                c.stroke()
+                ctx.beginPath()
+                ctx.strokeStyle = 'rgb(2, 164, 153)'
+                ctx.arc(centerX, centerY, circleRadius, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + degrees))
+                ctx.stroke()
 
-                c.beginPath()
-                c.strokeStyle = 'rgb(2, 164, 153)'
-                // c.lineWidth = this.strokeWidth
-                c.arc(posX, posY, r, (Math.PI / 180) * 270, (Math.PI / 180) * (270 + deegres))
-                c.stroke()
-                if (deegres >= result) { clearInterval(acrInterval) }
+                if (degrees >= result) {
+                    clearInterval(acrInterval)
+                }
             }, fps)
         }
 
         arcMove()
-
-        // }
     }
 }
 </script>
 
 <style scoped>
-#canvas {
-    /*border: 1px solid red;*/
-}
-
 .wit-circle-progressbar__data {
     top: 0;
     bottom: 0;
