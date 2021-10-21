@@ -13,12 +13,7 @@ const getUserQuests = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    console.log(user)
-
     const questsData = await questsService.getUserQuestsData(user)
-
-    console.log(questsData)
-
     response.send(questsData)
 }
 
@@ -74,10 +69,13 @@ const replaceUserQuest = async (request, response) => {
         await questsService.mergeUserQuests(user, newQuestsData)
 
         const questsData = await questsService.getUserQuestsData(user)
-        return response.send(questsData)
+        return response.send({
+            ...questsData,
+            success: true
+        })
     }
 
-    response.sendStatus(304)
+    response.send({ success: false })
 }
 
 const finalizeUserQuest = async (request, response) => {
@@ -113,10 +111,13 @@ const finalizeUserQuest = async (request, response) => {
         await questsService.mergeUserQuests(user, newQuestsData)
 
         const questsData = await questsService.getUserQuestsData(user)
-        return response.send(questsData)
+        return response.send({
+            ...questsData,
+            success: true
+        })
     }
 
-    response.sendStatus(304)
+    response.send({ success: false })
 }
 
 const questsController = {

@@ -117,14 +117,30 @@ export default {
                 .catch(console.error)
         },
 
-        replaceQuest (quest) {
-            this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
-                .catch(console.error)
+        async replaceQuest (quest) {
+            try {
+                const isSuccess = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+
+                console.log(isSuccess)
+            } catch (e) {
+                console.error(e)
+            }
+
+            // this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+            //     .catch(console.error)
         },
 
-        finalizeQuest (quest) {
-            this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
-                .catch(console.error)
+        async finalizeQuest (quest) {
+            try {
+                const isSuccess = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+
+                console.log(isSuccess)
+            } catch (e) {
+                console.error(e)
+            }
+
+            // this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
+            //     .catch(console.error)
         },
 
         setTimer () {
