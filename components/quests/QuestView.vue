@@ -27,6 +27,8 @@
       {{ $t('Quests_UpdateQuest') }}
     </b-button>
 
+    <CircleProgressBar />
+
     <div class="pie-wrapper progress-60" :style="{'--progress': progress}">
       <span class="label wit-flex wit-flex--center">
         <p>{{ quest.progress }} / {{ quest.objective }}</p>
@@ -69,8 +71,14 @@
 </template>
 
 <script>
+import CircleProgressBar from '@/components/quests/CircleProgressBar'
+
 export default {
     name: 'QuestView',
+
+    components: {
+        CircleProgressBar
+    },
 
     props: {
         quest: Object,
@@ -158,19 +166,19 @@ $label-font-size-redo: 20px;
             transform: rotate($progress * 3.6deg);
         }
 
-        @if $progress <= 50 {
-            .right-side {
-                display: none;
-            }
-        }
-
-        @else {
-            clip: rect(auto, auto, auto, auto);
-
-            .right-side {
-                transform: rotate(180deg);
-            }
-        }
+        //@if $progress <= 50 {
+        //    .right-side {
+        //        display: none;
+        //    }
+        //}
+        //
+        //@else {
+        //    clip: rect(auto, auto, auto, auto);
+        //
+        //    .right-side {
+        //        transform: rotate(180deg);
+        //    }
+        //}
     }
 }
 
@@ -205,7 +213,7 @@ $label-font-size-redo: 20px;
 
 .pie-wrapper {
     @include size($default-size, $default-size);
-    @include draw-progress(50, var(--primary));
+    @include draw-progress(70, var(--primary));
 
     float: left;
     margin: 15px;
