@@ -20,7 +20,8 @@ export default {
 
     plugins: [
         '~/plugins/axios.js',
-        '~/plugins/i18n.js'
+        '~/plugins/i18n.js',
+        '~/plugins/prototypeExtensions.js'
     ],
 
     components: true,

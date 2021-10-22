@@ -11,7 +11,7 @@
     </div>
 
     <p class="wit-offset-bottom--sm wit-text--right">
-      {{ $t('Quests_LastUpdate', [questsUpdateTimestamp]) }}
+      {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
     </p>
 
     <div class="quests__body">
@@ -46,28 +46,12 @@
           @finalize="finalizeQuest"
         />
       </Card>
-
-      <!--      <h3 class="wit&#45;&#45;font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;sm">-->
-      <!--        {{ $t('Quests_WeeklyQuestsTitle') }}-->
-      <!--      </h3>-->
-
-      <!--      <QuestView v-for="quest in weeklyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" />-->
-
-      <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="weeklyQuests" :can-replace="canReplaceWeeklyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
-
-      <!--      <h3 class="wit&#45;&#45;font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;sm">-->
-      <!--        {{ $t('Quests_DailyQuestsTitle') }}-->
-      <!--      </h3>-->
-
-      <!--      <QuestView v-for="quest in dailyQuests" :key="quest.id" :quest="quest" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" />-->
-      <!--      <Quests class="wit-offset-bottom&#45;&#45;md" :quests="dailyQuests" :can-replace="canReplaceDailyQuests" @replace="replaceQuest" @finalize="finalizeQuest" />-->
     </div>
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-// import Quests from '@/components/quests/Quests'
 import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
@@ -76,7 +60,6 @@ import Card from '@/components/Card'
 export default {
 
     components: {
-        // Quests,
         QuestView,
         Card
     },
@@ -86,7 +69,9 @@ export default {
     data: () => ({
         isUpdateAvailable: true,
         timeToNextUpdate: '00:00',
-        intervalId: 0
+        formattedLastUpdate: '',
+        intervalId: 0,
+        lastUpdateTimeoutId: 0
     }),
 
     computed: {
@@ -102,8 +87,13 @@ export default {
 
     created () {
         this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-            .then(this.setTimer)
+            .then(() => {
+                this.setTimer()
+                this.formatLastUpdate()
+            })
             .catch(console.error)
+
+        this.$eventBus.$on('localeChanged', this.formatLastUpdate)
     },
 
     destroyed () {
@@ -113,7 +103,10 @@ export default {
     methods: {
         updateQuests () {
             this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
-                .then(this.setTimer)
+                .then(() => {
+                    this.setTimer()
+                    this.formatLastUpdate()
+                })
                 .catch(console.error)
         },
 
@@ -125,9 +118,6 @@ export default {
             } catch (e) {
                 console.error(e)
             }
-
-            // this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
-            //     .catch(console.error)
         },
 
         async finalizeQuest (quest) {
@@ -138,9 +128,6 @@ export default {
             } catch (e) {
                 console.error(e)
             }
-
-            // this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
-            //     .catch(console.error)
         },
 
         setTimer () {
@@ -171,6 +158,12 @@ export default {
 
         formatNumber (number) {
             return number < 10 ? `0${number}` : number
+        },
+
+        formatLastUpdate () {
+            clearTimeout(this.lastUpdateTimeoutId)
+            this.lastUpdateTimeoutId = setTimeout(this.formatLastUpdate, 10 * 1000)
+            this.formattedLastUpdate = Date.fromTimestamp(this.questsUpdateTimestamp).humanizeTimeDiff()
         }
     }
 }

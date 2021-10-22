@@ -20,5 +20,13 @@ export const en = {
     dont_have_account: 'Don\'t have an account?',
     sign_up: 'Sign Up Now',
     crafted_by: 'Crafted for Witch It community by !D',
-    register: 'Sign up'
+    register: 'Sign up',
+
+    Quests_LastUpdate: 'Last update: %s',
+
+    Time_NMinutesAgo: (minutes) => {
+        const word = minutes === 1 ? 'minute' : 'minutes'
+        return `${minutes} ${word} ago`
+    },
+    Time_LessThanAMinuteAgo: 'less than a minute ago'
 }

@@ -3,7 +3,7 @@
     <ItemImage :item="quest.rewardItem" :item-count="quest.rewardCount" class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm" />
 
     <div class="wit-flex__item--grow wit-offset-right--sm">
-      <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs" style="font-size: 20px;">
+      <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs wit--font-size--sm">
         <b-icon icon="bullseye-arrow" size="is-small" class="is-size-4 wit-offset-right--xs" />
         <p>{{ $t(`Quests_${quest.questTask}`) }}</p>
       </div>

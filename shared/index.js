@@ -10,6 +10,10 @@ export const getTranslation = (lngSet, textId, replacements = []) => {
         return `No text with id: ${textId}`
     }
 
+    if (typeof text === 'function') {
+        return text.apply(null, replacements)
+    }
+
     replacements.forEach((replacement) => {
         text = text.replace('%s', replacement.toString())
     })

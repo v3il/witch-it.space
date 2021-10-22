@@ -7,6 +7,8 @@ export default function ({ store }) {
         return getTranslation(lngSet, textId, replacements)
     }
 
+    Vue.prototype.$eventBus = new Vue()
+
     Vue.mixin({
         methods: { $t }
     })

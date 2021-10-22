@@ -69,6 +69,7 @@ export default {
             }
 
             this.$store.dispatch(Locale.F.Actions.SET_LOCALE, locale)
+            this.$eventBus.$emit('localeChanged', locale)
         }
     }
 }

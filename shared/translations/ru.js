@@ -74,5 +74,23 @@ export const ru = {
     Quests_DailyQuestsTitle: 'Ежедневные квесты',
     Quests_UpdateQuest: 'Обновить',
     Quests_GetReward: 'Получить награду',
-    Quests_LastUpdate: 'Последнее обновление: %s'
+    Quests_LastUpdate: 'Последнее обновление: %s',
+
+    Time_NMinutesAgo: (minutes) => {
+        let word = ''
+        const mod = minutes % 10
+
+        if (minutes >= 10 && minutes <= 19) {
+            word = 'минут'
+        } else if (minutes === 1) {
+            word = 'минуту'
+        } else if (mod >= 2 && mod <= 4) {
+            word = 'минуты'
+        } else {
+            word = 'минут'
+        }
+
+        return `${minutes} ${word} назад`
+    },
+    Time_LessThanAMinuteAgo: 'менее минуты назад'
 }
