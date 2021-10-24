@@ -1,5 +1,15 @@
 <template>
   <div class="quests">
+    <div class="wit-offset-bottom--sm wit-line-height--md">
+      <p class="wit-block">
+        {{ $t('Quests_Note') }}
+
+        <b-tooltip :label="$t('Quests_FinalizationLimit')" square>
+          <b-icon icon="help-box" size="is-small" />
+        </b-tooltip>
+      </p>
+    </div>
+
     <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
       <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xxs wit-offset-top--xxs">
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
@@ -125,7 +135,7 @@ export default {
 
             this.$buefy.dialog.confirm({
                 title: this.$t('Quests_ReplaceQuestTitle'),
-                message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p><p class="wit-color--Y400">${this.$t('Quests_UndoneAction')}</p>`,
+                message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
                 confirmText: this.$t('Quests_ReplaceQuestConfirmButtonTitle'),
                 cancelText: this.$t('Quests_CancelButtonTitle'),
                 onConfirm: async () => {
@@ -145,7 +155,7 @@ export default {
 
             this.$buefy.dialog.confirm({
                 title: this.$t('Quests_FinalizeQuestTitle'),
-                message: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p><p class="wit-color--Y400">${this.$t('Quests_FinalizeQuestNote')}</p>`,
+                message: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_FinalizeQuestNote')}`,
                 confirmText: this.$t('Quests_FinalizeQuestConfirmButtonTitle'),
                 cancelText: this.$t('Quests_CancelButtonTitle'),
                 onConfirm: async () => {

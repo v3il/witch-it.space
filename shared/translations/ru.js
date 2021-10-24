@@ -85,6 +85,8 @@ export const ru = {
     Quests_FinalizeQuestConfirmButtonTitle: 'Получить',
     Quests_FinalizeQuestNote: '<b>Примечание:</b> эта функция работает только при запущенной игре! :c',
     Quests_WannaFinalizeQuest: 'Вы действительно хотите получить награду за этот квест?',
+    Quests_Note: 'Отслеживайте ваши ежедневные и еженедельные квесты, заменяйте их, контролируйте прогресс, получайте награду прямиком через сайт',
+    Quests_FinalizationLimit: 'Действуют ограничения Steam/Witch It: получение награды возможно только при запущенной игре :c',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

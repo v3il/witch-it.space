@@ -58,3 +58,12 @@ h6 {
     font-family: Sarabun, sans-serif;
     font-weight: 600;
 }
+
+.b-tooltip .tooltip-content {
+    color: var(--tooltip-color) !important;
+    background-color: var(--tooltip-bg) !important;
+
+    &::before {
+        border-top-color: var(--tooltip-bg) !important;
+    }
+}
