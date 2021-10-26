@@ -14,6 +14,9 @@ export const ru = {
     Error_BadRequest: 'Неправильный запрос',
     Error_QuestsReplacingFailed: 'При обновлении квестов произошла ошибка',
     Error_QuestsFetchingFailed: 'При загрузке квестов произошла ошибка',
+    Error_QuestReplacingFailed: 'Не удалось заменить квест',
+
+    Success_QuestReplacing: 'Квест заменён',
 
     Login_WelcomeBack: 'Добро пожаловать!',
     Login_SignInToContinue: 'Войдите в Ваш Witch It.Zone аккаунт',

@@ -71,7 +71,7 @@ const replaceUserQuest = async (request, response) => {
         const questsData = await questsService.getUserQuestsData(user)
         return response.send({
             ...questsData,
-            success: true
+            isSuccess: true
         })
     }
 
@@ -113,7 +113,7 @@ const finalizeUserQuest = async (request, response) => {
         const questsData = await questsService.getUserQuestsData(user)
         return response.send({
             ...questsData,
-            success: true
+            isSuccess: true
         })
     }
 

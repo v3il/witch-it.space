@@ -5,7 +5,7 @@
         {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
       </p>
 
-      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
+      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="false && !isUpdateAvailable" @click="updateQuests">
         {{ $t('Quests_UpdateQuests') }}
       </b-button>
     </div>
@@ -103,24 +103,14 @@ export default {
     },
 
     async created () {
-        const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-
-        // console.log(isSuccess, error)
+        const { error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
 
         if (error) {
-            return this.$showError({ message: error })
+            return this.$showError({ message: this.$t('Error_QuestsFetchingFailed') })
         }
 
-        // if (isSuccess) {
-        // this.$showSuccess({ message: 'Quests loaded' })
-        // }
-
-        // this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-        //     .then(() => {
         this.setTimer()
         this.formatLastUpdate()
-        // })
-        // .catch(errorMessage => this.$showError({ message: errorMessage }))
 
         this.$eventBus.$on('localeChanged', this.formatLastUpdate)
     },
@@ -131,13 +121,15 @@ export default {
     },
 
     methods: {
-        updateQuests () {
-            this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
-                .then(() => {
-                    this.setTimer()
-                    this.formatLastUpdate()
-                })
-                .catch(console.error)
+        async updateQuests () {
+            const { error } = await this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
+
+            if (error) {
+                return this.$showError({ message: error })
+            }
+
+            this.setTimer()
+            this.formatLastUpdate()
         },
 
         replaceQuest (quest) {
@@ -149,13 +141,13 @@ export default {
                 confirmText: this.$t('Quests_ReplaceQuestConfirmButtonTitle'),
                 cancelText: this.$t('Quests_CancelButtonTitle'),
                 onConfirm: async () => {
-                    try {
-                        const isSuccess = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+                    const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
 
-                        console.log(isSuccess)
-                    } catch (e) {
-                        console.error(e)
+                    if (error || !isSuccess) {
+                        return this.$showError({ message: this.$t('Error_QuestReplacingFailed') })
                     }
+
+                    return this.$showSuccess({ message: this.$t('Success_QuestReplacing') })
                 }
             })
         },

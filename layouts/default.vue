@@ -12,7 +12,7 @@
         role="alert"
         animation="fade150"
         style="    max-width: 400px;
-    position: absolute;
+    position: fixed;
     right: 20px;
     bottom: 20px;"
       >

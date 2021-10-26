@@ -41,20 +41,28 @@ export const actions = {
         } finally {
             commit(Quest.Mutations.SET_LOADING, false)
         }
-
-        // const response = await this.$axios.post('/api/quests/update')
-        // commit(Quest.Mutations.SET_DATA, response.data)
-        // commit(Quest.Mutations.SET_LOADING, false)
     },
 
     async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
-        const response = await this.$axios.post('/api/quests/replace', { questId })
+        try {
+            const response = await this.$axios.post('/api/quests/replace', { questId })
 
-        if (response.data.success) {
-            commit(Quest.Mutations.SET_DATA, response.data)
+            if (response.data.isSuccess) {
+                commit(Quest.Mutations.SET_DATA, response.data)
+            }
+
+            return { isSuccess: response.data.isSuccess }
+        } catch (e) {
+            return { error: e.message }
         }
 
-        return response.data.success
+        // const response = await this.$axios.post('/api/quests/replace', { questId })
+        //
+        // if (response.data.success) {
+        //     commit(Quest.Mutations.SET_DATA, response.data)
+        // }
+        //
+        // return response.data.success
     },
 
     async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
