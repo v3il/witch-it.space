@@ -10,10 +10,10 @@ export default function ({ $axios, redirect, store }) {
             return redirect(Routes.LOGIN)
         }
 
-        if (errorText) {
-            store.commit(Root.Mutations.SET_ERRORS, [errorText])
-        }
+        // if (errorText) {
+        //     store.commit(Root.Mutations.SET_ERRORS, [errorText])
+        // }
 
-        return false
+        throw new Error(errorText)
     })
 }

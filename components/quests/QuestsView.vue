@@ -102,13 +102,25 @@ export default {
         ])
     },
 
-    created () {
-        this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
-            .then(() => {
-                this.setTimer()
-                this.formatLastUpdate()
-            })
-            .catch(console.error)
+    async created () {
+        const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
+
+        // console.log(isSuccess, error)
+
+        if (error) {
+            return this.$showError({ message: error })
+        }
+
+        // if (isSuccess) {
+        // this.$showSuccess({ message: 'Quests loaded' })
+        // }
+
+        // this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
+        //     .then(() => {
+        this.setTimer()
+        this.formatLastUpdate()
+        // })
+        // .catch(errorMessage => this.$showError({ message: errorMessage }))
 
         this.$eventBus.$on('localeChanged', this.formatLastUpdate)
     },

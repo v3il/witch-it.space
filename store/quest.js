@@ -13,21 +13,38 @@ export const state = () => ({
 export const actions = {
     async [Quest.Actions.FETCH_QUESTS] ({ commit, state }) {
         if (state.isLoaded) {
-            return
+            return { error: null }
         }
 
         commit(Quest.Mutations.SET_LOADING, true)
 
-        const response = await this.$axios.get('/api/quests')
-        commit(Quest.Mutations.SET_DATA, response.data)
-        commit(Quest.Mutations.SET_LOADING, false)
+        try {
+            const response = await this.$axios.get('/api/quests')
+            commit(Quest.Mutations.SET_DATA, response.data)
+            return { isSuccess: true }
+        } catch (e) {
+            return { error: e.message }
+        } finally {
+            commit(Quest.Mutations.SET_LOADING, false)
+        }
     },
 
     async [Quest.Actions.UPDATE_QUESTS] ({ commit }) {
         commit(Quest.Mutations.SET_LOADING, true)
-        const response = await this.$axios.post('/api/quests/update')
-        commit(Quest.Mutations.SET_DATA, response.data)
-        commit(Quest.Mutations.SET_LOADING, false)
+
+        try {
+            const response = await this.$axios.post('/api/quests/update')
+            commit(Quest.Mutations.SET_DATA, response.data)
+            return { isSuccess: true }
+        } catch (e) {
+            return { error: e.message }
+        } finally {
+            commit(Quest.Mutations.SET_LOADING, false)
+        }
+
+        // const response = await this.$axios.post('/api/quests/update')
+        // commit(Quest.Mutations.SET_DATA, response.data)
+        // commit(Quest.Mutations.SET_LOADING, false)
     },
 
     async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
