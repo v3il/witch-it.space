@@ -1,5 +1,5 @@
 import { Routes } from '@/shared'
-import { User, Root } from '@/store'
+import { User } from '@/store'
 
 export default function ({ $axios, redirect, store }) {
     $axios.onError(async (error) => {

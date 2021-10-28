@@ -7,24 +7,6 @@ export default function ({ store }) {
         return getTranslation(lngSet, textId, replacements)
     }
 
-    // const showNotification = (options) => {
-    //     this.$eventBus.$emit('showNotification', options)
-    // }
-    //
-    // const $showSuccess = ({ message }) => {
-    //     showNotification({
-    //         type: 'success',
-    //         message
-    //     })
-    // }
-    //
-    // const $showError = ({ message }) => {
-    //     showNotification({
-    //         type: 'error',
-    //         message
-    //     })
-    // }
-
     Vue.prototype.$eventBus = new Vue()
 
     Vue.mixin({
