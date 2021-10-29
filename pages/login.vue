@@ -26,7 +26,7 @@
             </b-field>
 
             <div class="wit-flex wit-flex--center wit-flex--justify-between">
-              <Socials />
+              <Socials @socialClicked="authUsingSocials" />
 
               <b-button type="is-primary" native-type="submit" class="wit-transition">
                 {{ $t('Login_LoginButtonTitle') }}
@@ -69,31 +69,43 @@ export default {
     }),
 
     mounted () {
-        const error = this.$route.query.error
-
-        if (error) {
-            this.setErrors([this.$t(error)])
-        }
+        // const error = this.$route.query.error
+        //
+        // if (error) {
+        //     this.setErrors([this.$t(error)])
+        // }
     },
 
     methods: {
-        ...mapMutations([
-            Root.Mutations.SET_ERRORS
-        ]),
+        // ...mapMutations([
+        //     Root.Mutations.SET_ERRORS
+        // ]),
 
         onSubmit () {
-            if (this.login.length < 4) {
-                return this.setErrors([this.$t('Error_LoginIsTooShort')])
-            }
-
-            if (this.password.length < 6) {
-                return this.setErrors([this.$t('Error_InvalidPassword')])
-            }
+            // if (this.login.length < 4) {
+            //     return this.setErrors([this.$t('Error_LoginIsTooShort')])
+            // }
+            //
+            // if (this.password.length < 6) {
+            //     return this.setErrors([this.$t('Error_InvalidPassword')])
+            // }
 
             this.$store.dispatch(User.F.Actions.LOGIN, {
                 login: this.login,
                 password: this.password
             }).then(() => this.$router.replace(Routes.MAIN))
+        },
+
+        authUsingSocials (socialName) {
+            console.log(socialName)
+            this.$store.dispatch(User.F.Actions.AUTH, socialName)
+                .then(() => {
+                    console.log('Success')
+                    this.$router.replace(Routes.MAIN)
+                })
+                .catch((e) => {
+                    console.error(e?.message)
+                })
         }
     }
 }

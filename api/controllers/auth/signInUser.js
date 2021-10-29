@@ -16,5 +16,5 @@ export const signInUser = ({ user, authType, response }) => {
         sameSite: 'Lax' // todo: find a solution for the 'Strict' option
     })
 
-    response.redirect(Routes.MAIN)
+    response.redirect(`${Routes.AUTH_RESULT}`)
 }

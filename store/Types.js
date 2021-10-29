@@ -39,6 +39,7 @@ export const User = StoreWrap.wrap('user', {
         FETCH_USER: 'fetchUser',
         LOGIN: 'login',
         REGISTER: 'register',
+        AUTH: 'auth',
         LOGOUT: 'logout'
     },
 
