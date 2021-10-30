@@ -1,22 +1,31 @@
 <template>
-  <header class="wit-transition wit-header wit-flex wit-flex--justify-between">
-    <img class="login-page__image" src="images/hey.png" alt="Hey!">
+  <b-navbar>
+    <template #brand>
+      <b-navbar-item tag="router-link" :to="{ path: '/' }">
+        <img class="login-page__image" src="images/hey.png" alt="Hey!">
+      </b-navbar-item>
+    </template>
+    <template v-if="user" #start>
+      <b-navbar-item
+        v-for="link in $options.links"
+        :key="link.to"
+        :to="link.to"
+        tag="nuxt-link"
+        :class="getLinkClasses(link)"
+        class="wit-transition"
+      >
+        {{ $t(link.textId) }}
+      </b-navbar-item>
+    </template>
 
-    <ul v-if="user" class="wit-flex wit-flex--align-center wit-header__menu">
-      <li v-for="link in $options.links" :key="link.to" class="wit-header__menu-item" :class="getLinkClasses(link)">
-        <nuxt-link :to="link.to" class="wit-flex wit-flex--center wit-color--white wit-header__menu-link wit-block--full-height">
-          <!--          <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="cog-sync" />-->
-          <span class="wit-inline-block">{{ $t(link.textId) }}</span>
-        </nuxt-link>
-      </li>
-    </ul>
-
-    <div class="wit-flex wit-flex--justify-end wit-flex--align-center wit-block--full-height">
-      <ThemeSwitcher />
-      <LocaleSwitcher />
-      <UserDropdown v-if="user" class="wit-offset-left--none" />
-    </div>
-  </header>
+    <template #end>
+      <b-navbar-item tag="div">
+        <ThemeSwitcher />
+        <LocaleSwitcher />
+        <UserDropdown v-if="user" class="wit-offset-left--none" />
+      </b-navbar-item>
+    </template>
+  </b-navbar>
 </template>
 
 <script>
@@ -74,10 +83,7 @@ export default {
     //overflow-x: hidden;
 }
 
-.wit-header__menu-item {
-    height: 100%;
-    padding: 0 var(--offset-sm);
-
+.navbar-item {
     &.active,
     &:active,
     &:focus,
@@ -86,6 +92,11 @@ export default {
         text-decoration: none;
         background-color: var(--locale-switcher-hover-background);
     }
+}
+
+.wit-header__menu-item {
+    height: 100%;
+    padding: 0 var(--offset-sm);
 }
 
 .wit-header__menu-link {

@@ -36,24 +36,8 @@
     --input-focus-border-color: var(--blue);
     --input-focus-box-shadow-color: var(--primary);
 
-    --switcher-ball-bg: var(--gray-200);
-
-    /*--header-bg: #ECECF1;*/
     --header-bg: #343A40;
-
-    //--dropdown-btn-color: #525f80;
-    //--dropdown-background: var(--white);
-    //--dropdown-hover-background: rgba(52, 58, 64, 0.05);
-    //--dropdown-border: var(--gray-200);
-    //
-    //--dropdown-item-hover-color: #1e2125;
-    //
-    //--locale-dropdown-btn-color: var(--gray-200);
-    //--locale-dropdown-background: #343a40;
-    //--locale-dropdown-hover-background: rgba(239, 242, 247, 0.05);
-    //--locale-dropdown-border: #3a425a;
-    //--locale-dropdown-item-color: var(--white);
-    //--locale-dropdown-item-hover-color: var(--gray-400);
+    --navbar-background-color: #343A40;
 
     --theme-switcher-hover-background: rgba(239, 242, 247, 0.05);
 
@@ -79,4 +63,8 @@
 
     --tooltip-bg: var(--primary);
     --tooltip-color: var(--gray-200);
+
+    --navbar-item-color: var(--white);
+    --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
+    --navbar-item-hover-color: var(--white);
 }

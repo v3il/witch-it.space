@@ -24,6 +24,7 @@ export default {
         '~/plugins/prototypeExtensions.js'
     ],
 
+    loading: false,
     components: true,
 
     buildModules: [
