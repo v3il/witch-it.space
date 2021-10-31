@@ -40,6 +40,10 @@
     margin-bottom: var(--offset-xxlg) !important;
 }
 
+.wit-offset-bottom--none {
+    margin-bottom: 0 !important;
+}
+
 /* Left */
 
 .wit-offset-left--none {
@@ -119,4 +123,8 @@
 
 .wit-paddings--none {
     padding: 0;
+}
+
+.wit-paddings--xs {
+    padding: var(--offset-xs);
 }

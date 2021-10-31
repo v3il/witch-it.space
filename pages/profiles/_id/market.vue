@@ -1,12 +1,12 @@
 <template>
   <div>
-    User wishlist
+    User market
   </div>
 </template>
 
 <script>
 export default {
-    name: 'Wishlist',
+    name: 'Market',
     middleware: ['fetchUser']
 }
 </script>
