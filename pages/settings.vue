@@ -13,56 +13,30 @@
         Profile Settings and Appearance
       </template>
 
-      <form @submit.prevent="onSubmit">
-        <div class="wit-flex wit-offset-bottom--xs">
-          <b-field :label="$t('Login_LoginInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
-            <b-input
-              v-model="login"
-              :disabled="!canEditLogin"
-              autocomplete="off"
-              type="text"
-              :placeholder="$t('Login_LoginInputPlaceholder')"
-              custom-class="wit-transition"
-            />
-          </b-field>
-
-          <b-field :label="$t('Login_PasswordInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
-            <b-input v-model="password" :disabled="!canEditLogin" type="password" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
-          </b-field>
-        </div>
-
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
-          <b-input v-model="displayName" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      <div class="wit-flex wit-offset-bottom--xs">
+        <b-field :label="$t('Login_LoginInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
+          <b-input
+            v-model="login"
+            :disabled="!canEditLogin"
+            autocomplete="off"
+            type="text"
+            :placeholder="$t('Login_LoginInputPlaceholder')"
+            custom-class="wit-transition"
+          />
         </b-field>
 
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
-          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/1.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
-          </b-button>
-
-          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/2.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
-          </b-button>
-
-          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/3.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
-          </b-button>
-
-          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/4.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
-          </b-button>
-
-          <b-button type="is-ghost" class="wit-paddings--none wit-offset-right--xs" style="height: auto;">
-            <img src="images/5.png" alt="" height="36px" width="36px" style="border-radius: 50%;">
-          </b-button>
+        <b-field :label="$t('Login_PasswordInputTitle')" class="wit-flex--half wit-paddings--xs wit-offset-bottom--none">
+          <b-input v-model="password" :disabled="!canEditLogin" type="password" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
         </b-field>
+      </div>
 
-        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
-        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
-        <!--            Save changes-->
-        <!--          </b-button>-->
-        <!--        </b-field>-->
-      </form>
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
+        <b-input v-model="displayName" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      </b-field>
+
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs wit-offset-bottom--xs">
+        <AvatarPicker v-model="avatarId" />
+      </b-field>
     </Card>
 
     <Card class="wit-offset-bottom--sm">
@@ -121,27 +95,19 @@
         Steam Settings
       </template>
 
-      <form @submit.prevent="onSubmit">
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
-          <b-input v-model="steamProfileUrl" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
-        </b-field>
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+        <b-input v-model="steamProfileUrl" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      </b-field>
 
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
-          <b-input v-model="steamTradeLink" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
-        </b-field>
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+        <b-input v-model="steamTradeLink" :placeholder="$t('Login_PasswordInputPlaceholder1')" custom-class="wit-transition" />
+      </b-field>
 
-        <b-field class="wit-paddings--xs" :label="$t('Login_PasswordInputTitle1')">
-          <b-switch v-model="isGuardProtected">
-            {{ isGuardProtected ? 'Yes' : 'No' }}
-          </b-switch>
-        </b-field>
-
-        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
-        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
-        <!--            Save changes-->
-        <!--          </b-button>-->
-        <!--        </b-field>-->
-      </form>
+      <b-field class="wit-paddings--xs" :label="$t('Login_PasswordInputTitle1')">
+        <b-switch v-model="isGuardProtected">
+          {{ isGuardProtected ? 'Yes' : 'No' }}
+        </b-switch>
+      </b-field>
     </Card>
 
     <Card class="wit-offset-bottom--sm">
@@ -149,17 +115,9 @@
         Discord Settings
       </template>
 
-      <form @submit.prevent="onSubmit">
-        <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
-          <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
-        </b-field>
-
-        <!--        <b-field class="wit-paddings&#45;&#45;xs wiz-border&#45;&#45;top">-->
-        <!--          <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block">-->
-        <!--            Save changes-->
-        <!--          </b-button>-->
-        <!--        </b-field>-->
-      </form>
+      <b-field :label="$t('Login_PasswordInputTitle1')" class="wit-paddings--xs">
+        <b-input v-model="discordTag" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
+      </b-field>
     </Card>
 
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--lg">
@@ -212,11 +170,13 @@
 import { mapState } from 'vuex'
 import Card from '@/components/Card'
 import { User } from '@/store'
+import AvatarPicker from '@/components/settings/AvatarPicker'
 
 export default {
 
     components: {
-        Card
+        Card,
+        AvatarPicker
     },
 
     middleware: ['fetchUser'],
@@ -239,7 +199,8 @@ export default {
             displayName: '',
             steamProfileUrl: '',
             steamTradeLink: '',
-            isGuardProtected: true
+            isGuardProtected: true,
+            avatarId: 1
         }
     },
 
@@ -252,6 +213,7 @@ export default {
         this.steamProfileUrl = this.user.steamProfileUrl
         this.steamTradeLink = this.user.steamTradeLink
         this.isGuardProtected = this.user.isGuardProtected
+        this.avatarId = this.user.avatarId
 
         console.log(this.user.login)
 
