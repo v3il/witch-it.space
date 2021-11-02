@@ -55,6 +55,36 @@
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
+        {{ $t('Settings_SteamSettings') }}
+      </template>
+
+      <b-field :label="$t('Settings_SteamAccountURL')" class="wit-offset-bottom--sm">
+        <b-input v-model="steamProfileUrl" :placeholder="$t('Settings_SteamAccountURLPlaceholder')" custom-class="wit-transition" />
+      </b-field>
+
+      <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
+        <b-input v-model="steamTradeLink" :placeholder="$t('Settings_SteamTradeURLPlaceholder')" custom-class="wit-transition" />
+      </b-field>
+
+      <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
+        <b-switch v-model="isGuardProtected">
+          {{ isGuardProtected ? $t('Yes') : $t('No') }}
+        </b-switch>
+      </b-field>
+    </Card>
+
+    <Card class="wit-offset-bottom--sm">
+      <template #title>
+        {{ $t('Settings_DiscordSettings') }}
+      </template>
+
+      <b-field :label="$t('Settings_DiscordName')">
+        <b-input v-model="discordTag" :placeholder="$t('Settings_DiscordNamePlaceholder')" custom-class="wit-transition" />
+      </b-field>
+    </Card>
+
+    <Card class="wit-offset-bottom--sm">
+      <template #title>
         {{ $t('Settings_SocialNetworks') }}
       </template>
 
@@ -119,37 +149,7 @@
       </div>
     </Card>
 
-    <Card class="wit-offset-bottom--sm">
-      <template #title>
-        {{ $t('Settings_SteamSettings') }}
-      </template>
-
-      <b-field :label="$t('Settings_SteamAccountURL')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamProfileUrl" :placeholder="$t('Settings_SteamAccountURLPlaceholder')" custom-class="wit-transition" />
-      </b-field>
-
-      <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm">
-        <b-input v-model="steamTradeLink" :placeholder="$t('Settings_SteamTradeURLPlaceholder')" custom-class="wit-transition" />
-      </b-field>
-
-      <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
-        <b-switch v-model="isGuardProtected">
-          {{ isGuardProtected ? $t('Yes') : $t('No') }}
-        </b-switch>
-      </b-field>
-    </Card>
-
-    <Card class="wit-offset-bottom--sm">
-      <template #title>
-        {{ $t('Settings_DiscordSettings') }}
-      </template>
-
-      <b-field :label="$t('Settings_DiscordName')">
-        <b-input v-model="discordTag" :placeholder="$t('Settings_DiscordNamePlaceholder')" custom-class="wit-transition" />
-      </b-field>
-    </Card>
-
-    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--lg">
+    <div class="wit-flex wit-flex--justify-end wit-offset-bottom--xlg">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block">
           {{ $t('Settings_Save') }}
@@ -157,7 +157,7 @@
       </b-field>
     </div>
 
-    <Card class="wit-offset-bottom--sm" type="error">
+    <Card type="error">
       <template #title>
         {{ $t('Settings_DangerZone') }}
       </template>
@@ -165,7 +165,7 @@
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</strong>
-          <p v-if="user.isActive" class="wit-color--success">
+          <p v-if="isProfileActive" class="wit-color--success">
             {{ $t('Settings_ProfileIsVisible') }}
           </p>
           <p v-else class="wit-color--warning">
@@ -173,7 +173,7 @@
           </p>
         </div>
 
-        <b-button v-if="user.isActive" type="is-warning" class="wit-font-weight--700">
+        <b-button v-if="isProfileActive" type="is-warning" class="wit-font-weight--700">
           {{ $t('Hide') }}
         </b-button>
 
@@ -220,6 +220,10 @@ export default {
 
         hasLocalProfile () {
             return this.user.hasLocalProfile
+        },
+
+        isProfileActive () {
+            return this.user.isActive
         }
     },
 

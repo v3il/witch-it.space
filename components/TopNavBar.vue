@@ -20,13 +20,17 @@
     </template>
 
     <template #end class="wiz-header__end">
+      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
+        <LocaleSwitcher />
+      </b-navbar-item>
+
       <b-navbar-item tag="div" class="wit-header__theme-switcher wit-paddings--none wiz-background--transparent">
         <ThemeSwitcher />
       </b-navbar-item>
 
-      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
-        <LocaleSwitcher />
-      </b-navbar-item>
+      <!--      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings&#45;&#45;none wiz-background&#45;&#45;transparent">-->
+      <!--        <SettingsLink />-->
+      <!--      </b-navbar-item>-->
 
       <b-navbar-item v-if="user" tag="div" class="wit-header__user-dropdown wit-paddings--none wiz-background--transparent">
         <UserDropdown class="wit-offset-left--none" />
@@ -42,6 +46,7 @@ import LocaleSwitcher from '@/components/LocaleSwitcher'
 import { User } from '@/store'
 import UserDropdown from '@/components/UserDropdown'
 import { Routes } from '@/shared'
+// import SettingsLink from '@/components/SettingsLink'
 
 export default {
     name: 'TopNavBar',
@@ -58,6 +63,7 @@ export default {
         ThemeSwitcher,
         LocaleSwitcher,
         UserDropdown
+        // SettingsLink
     },
 
     computed: {

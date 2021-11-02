@@ -19,7 +19,9 @@
           >
         </div>
 
-        {{ user.displayName }}
+        <div class="username">
+          {{ user.displayName }}
+        </div>
 
         <!--        <b-icon size="is-small" class="is-size-5 wit-offset-left&#45;&#45;xs" icon="menu-down" />-->
       </div>
@@ -28,7 +30,7 @@
     <b-dropdown-item class="wit-transition--background">
       <nuxt-link to="/settings" class="wit-flex wit-flex--align-center wit-color--white">
         <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="cog-sync" />
-        <span class="wit-inline-block">{{ $t('Settings') }}</span>
+        <span class="wit-inline-block username">{{ $t('Settings') }}</span>
       </nuxt-link>
     </b-dropdown-item>
 
@@ -100,5 +102,22 @@ export default {
     height: 28px;
     width: 28px;
     max-height: none;
+}
+
+.username {
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        top: -2px;
+        right: -6px;
+        background-color: var(--danger);
+        animation: pulse 5s infinite linear;
+        will-change: opacify;
+    }
 }
 </style>
