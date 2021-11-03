@@ -45,7 +45,7 @@ export const User = StoreWrap.wrap('user', {
 
     Mutations: {
         SET_USER: 'setUser',
-        SET_STEAM_CONNECTED: 'setSteamConnected'
+        UPDATE_USER_DATA: 'updateUserData'
     }
 })
 

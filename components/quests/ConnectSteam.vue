@@ -26,7 +26,7 @@ export default {
         async connectSteam () {
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, 'steam')
-                await this.$store.commit(User.F.Mutations.SET_STEAM_CONNECTED)
+                await this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { isSteamConnected: true })
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)

@@ -42,8 +42,6 @@ export const actions = {
             }, 1000)
 
             window.$setAuthResult = function ({ isSuccess, error }) {
-                console.log(isSuccess, error)
-
                 authWindow?.close()
                 isSuccess ? resolve() : reject(new Error(error))
             }
@@ -65,7 +63,7 @@ export const mutations = {
         state.user = user
     },
 
-    [User.Mutations.SET_STEAM_CONNECTED] (state) {
-        state.user.isSteamConnected = true
+    [User.Mutations.UPDATE_USER_DATA] (state, data) {
+        state.user = { ...state.user, ...data }
     }
 }

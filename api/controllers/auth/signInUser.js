@@ -12,8 +12,8 @@ export const signInUser = ({ user, authType, response }) => {
     response.cookie(Cookies.TOKEN, token, {
         maxAge: config.TOKEN_COOKIE_DURATION * 1000,
         httpOnly: true,
-        secure: true,
-        sameSite: true
+        secure: true
+        // sameSite: true
     })
 
     response.redirect(`${Routes.AUTH_RESULT}`)

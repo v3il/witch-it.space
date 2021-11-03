@@ -1,5 +1,7 @@
 <template>
   <div class="wit-settings">
+    {{ user }}
+
     <div class="wit-flex wit-flex--justify-end wit-offset-bottom--sm">
       <b-field>
         <b-button type="is-primary" class="wit-offset-left--auto wit-block">
@@ -99,11 +101,11 @@
           </p>
         </div>
 
-        <b-button v-if="user.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700">
+        <b-button v-if="user.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('steam')">
           {{ $t('Settings_Disconnect') }}
         </b-button>
 
-        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700" @click="connectSocial('steam')">
           {{ $t('Settings_Connect') }}
         </b-button>
       </div>
@@ -119,11 +121,11 @@
           </p>
         </div>
 
-        <b-button v-if="user.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700">
+        <b-button v-if="user.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('discord')">
           {{ $t('Settings_Disconnect') }}
         </b-button>
 
-        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700" @click="connectSocial('discord')">
           {{ $t('Settings_Connect') }}
         </b-button>
       </div>
@@ -139,11 +141,11 @@
           </p>
         </div>
 
-        <b-button v-if="user.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700">
+        <b-button v-if="user.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('google')">
           {{ $t('Settings_Disconnect') }}
         </b-button>
 
-        <b-button v-else type="is-success is-light" class="wit-font-weight--700">
+        <b-button v-else type="is-success is-light" class="wit-font-weight--700" @click="connectSocial('google')">
           {{ $t('Settings_Connect') }}
         </b-button>
       </div>
@@ -219,11 +221,11 @@ export default {
         ]),
 
         hasLocalProfile () {
-            return this.user.hasLocalProfile
+            return this.user?.hasLocalProfile
         },
 
         isProfileActive () {
-            return this.user.isActive
+            return this.user?.isActive
         }
     },
 
@@ -251,6 +253,34 @@ export default {
     methods: {
         onSubmit () {
 
+        },
+
+        async connectSocial (socialName) {
+            const propName = {
+                steam: 'isSteamConnected',
+                discord: 'isDiscordConnected',
+                google: 'isGoogleConnected'
+            }[socialName]
+
+            try {
+                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
+                this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
+        },
+
+        async disconnectSocial (socialName) {
+            try {
+                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, 'steam')
+                // await this.$store.commit(User.F.Mutations.SET_STEAM_CONNECTED)
+            } catch (error) {
+                if (error) {
+                    this.$showError(error.message)
+                }
+            }
         }
     }
 }
