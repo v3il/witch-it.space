@@ -272,15 +272,9 @@ export default {
         },
 
         async connectSocial (socialName) {
-            // const propName = {
-            //     steam: 'isSteamConnected',
-            //     discord: 'isDiscordConnected',
-            //     google: 'isGoogleConnected'
-            // }[socialName]
-
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: true })
+                this.$showSuccess(this.$t('Settings_AccountConnected'))
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)
@@ -289,15 +283,9 @@ export default {
         },
 
         async disconnectSocial (socialName) {
-            // const propName = {
-            //     steam: 'isSteamConnected',
-            //     discord: 'isDiscordConnected',
-            //     google: 'isGoogleConnected'
-            // }[socialName]
-
             try {
                 await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-                // this.$store.commit(User.F.Mutations.UPDATE_USER_DATA, { [propName]: false })
+                this.$showSuccess(this.$t('Settings_AccountDisconnected'))
             } catch (error) {
                 if (error) {
                     this.$showError(error.message)

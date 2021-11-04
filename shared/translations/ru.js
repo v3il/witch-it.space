@@ -129,6 +129,8 @@ export const ru = {
     Settings_ProfileIsVisible: 'Профиль видимый',
     Settings_DeleteProfile: 'Удаление профиля',
     Settings_DeleteProfileHint: 'Это действие невозможно отменить',
+    Settings_AccountConnected: 'Аккаунт подключен',
+    Settings_AccountDisconnected: 'Аккаунт отключен',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
