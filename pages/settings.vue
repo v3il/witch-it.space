@@ -240,8 +240,6 @@ export default {
     }),
 
     created () {
-        console.log(this.user.login)
-
         this.login = this.user.login ?? ''
         this.discordTag = this.user.discordTag ?? ''
         this.displayName = this.user.displayName ?? ''
@@ -265,8 +263,6 @@ export default {
                 validateSteamAccountURL(this.steamProfileUrl),
                 validateSteamTradeURL(this.steamTradeLink)
             )
-
-            console.log(errors)
 
             const firstError = errors.find(error => error !== null)
 
@@ -324,7 +320,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-settings {
-    padding: var(--offset-xxlg) 0;
+    padding: var(--offset-lg) 0 var(--offset-sm);
     max-width: 800px;
     margin: 0 auto;
 }
