@@ -166,7 +166,6 @@ const toggleProfile = async (request, response) => {
 }
 
 const removeProfile = async (request, response) => {
-    const { isPublic } = request.body
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
 

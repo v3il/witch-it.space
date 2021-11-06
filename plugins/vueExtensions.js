@@ -18,6 +18,10 @@ export default function ({ store }) {
             },
 
             $showError (options) {
+                if (!options) {
+                    return
+                }
+
                 const message = typeof options === 'string' ? options : options.message
 
                 this.$showNotification({
@@ -27,6 +31,10 @@ export default function ({ store }) {
             },
 
             $showSuccess (options) {
+                if (!options) {
+                    return
+                }
+
                 const message = typeof options === 'string' ? options : options.message
 
                 this.$showNotification({

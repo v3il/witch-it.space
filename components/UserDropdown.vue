@@ -73,8 +73,7 @@ export default {
         },
 
         logout () {
-            this.$store.dispatch(User.F.Actions.LOGOUT)
-                .then(() => this.$router.replace(Routes.LOGIN))
+            this.$store.dispatch(User.F.Actions.LOGOUT).catch(this.$showError)
         }
     }
 }

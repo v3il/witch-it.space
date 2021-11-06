@@ -1,5 +1,6 @@
 import { Locale, Theme, User } from '@/store/Types'
 import { openWindow } from '@/utils'
+import { Routes } from '@/shared'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -11,6 +12,11 @@ export const actions = {
     async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
         try {
             const { data } = await this.$axios.get('/api/user')
+
+            if (!data) {
+                return
+            }
+
             const { user } = data
 
             commit(User.Mutations.SET_USER, user)
@@ -58,6 +64,7 @@ export const actions = {
 
     [User.Actions.LOGOUT] ({ commit }) {
         return this.$axios.post('/api/auth/logout')
+            .then(() => this.$router.replace(Routes.LOGIN))
             .then(() => commit(User.Mutations.SET_USER, null))
     },
 
@@ -78,7 +85,8 @@ export const actions = {
 
     [User.Actions.REMOVE_PROFILE] ({ commit }) {
         return this.$axios.post('/api/user/remove')
-            .then(({ data }) => commit(User.Mutations.SET_USER, null))
+            .then(() => this.$router.replace(Routes.LOGIN))
+            .then(() => commit(User.Mutations.SET_USER, null))
     }
 }
 

@@ -315,9 +315,7 @@ export default {
 
                 this.password = ''
             } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
-                }
+                this.$showError(error)
             }
         },
 
@@ -326,9 +324,7 @@ export default {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
                 this.$showSuccess(this.$t('Settings_AccountConnected'))
             } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
-                }
+                this.$showError(error)
             }
         },
 
@@ -343,9 +339,7 @@ export default {
                         await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
                         this.$showSuccess(this.$t('Settings_AccountDisconnected'))
                     } catch (error) {
-                        if (error) {
-                            this.$showError(error.message)
-                        }
+                        this.$showError(error)
                     }
                 }
             })
@@ -360,9 +354,7 @@ export default {
                 await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
                 this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
             } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
-                }
+                this.$showError(error)
             }
         },
 
@@ -377,9 +369,7 @@ export default {
                         await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
                         this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
                     } catch (error) {
-                        if (error) {
-                            this.$showError(error.message)
-                        }
+                        this.$showError(error)
                     }
                 }
             })
@@ -391,15 +381,8 @@ export default {
                 message: this.$t('Settings_WannaRemoveProfile'),
                 confirmText: this.$t('Confirm'),
                 cancelText: this.$t('Cancel'),
-                onConfirm: async () => {
-                    try {
-                        await this.$store.dispatch(User.F.Actions.REMOVE_PROFILE)
-                        await this.$router.replace(Routes.LOGIN)
-                    } catch (error) {
-                        if (error) {
-                            this.$showError(error.message)
-                        }
-                    }
+                onConfirm: () => {
+                    this.$store.dispatch(User.F.Actions.REMOVE_PROFILE).catch(this.$showError)
                 }
             })
         }

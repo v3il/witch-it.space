@@ -12,6 +12,7 @@
         role="alert"
         animation="fade150"
         class="layout__notification"
+        :closable="false"
       >
         {{ notificationMessage }}
       </b-notification>
