@@ -151,6 +151,8 @@ export const ru = {
     Settings_WannaMakePrivate: 'Вы действительно хотите сделать ваш профиль приватным?<br>Ваш маркет и список желаний не будут доступными для других пользователей',
     Settings_MakePrivateConfirmButtonTitle: 'Подтвердить',
     Settings_ProfileVisibilityChanged: 'Видимость профиля изменена',
+    Settings_RemoveProfileTitle: 'Удаление профиля',
+    Settings_WannaRemoveProfile: 'Вы действительно хотите удалить ваш профиль?<br>Ваш маркет и список желаний будут безвозвратно удалены',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

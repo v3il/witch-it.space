@@ -4,7 +4,7 @@ import { genSalt, hash } from 'bcrypt'
 import { User } from '../models'
 import { extractUserPublicData, translateText } from '../util'
 import {
-    config,
+    config, Cookies,
     validateAvatarId,
     validateDiscordTag,
     validateDisplayName,
@@ -165,13 +165,29 @@ const toggleProfile = async (request, response) => {
     updateUserToken({ response, user })
 }
 
+const removeProfile = async (request, response) => {
+    const { isPublic } = request.body
+    const { id } = request.user
+    const user = await User.findOne({ where: { id } })
+
+    if (!user) {
+        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    }
+
+    await user.destroy()
+    response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
+    request.user = null
+    response.sendStatus(200)
+}
+
 const userController = {
     getCurrentUser,
     changeUserLocale,
     changeUserTheme,
     disconnectSocial,
     updateSettings,
-    toggleProfile
+    toggleProfile,
+    removeProfile
 }
 
 export { userController }

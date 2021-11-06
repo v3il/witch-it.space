@@ -1,15 +1,15 @@
 export const showPopup = (vm, options) => {
     vm.$buefy.dialog.confirm({
         ...options,
-        animation: 'none',
-        onCancel: () => {
-            const marginRight = getBodyMargin()
-            document.body.style.marginRight = (marginRight - getScrollbarWidth()) + 'px'
-        }
+        animation: 'none'
+        // onCancel: () => {
+        //     const marginRight = getBodyMargin()
+        //     document.body.style.marginRight = (marginRight - getScrollbarWidth()) + 'px'
+        // }
     })
 
-    const marginRight = getBodyMargin()
-    document.body.style.marginRight = (marginRight + getScrollbarWidth()) + 'px'
+    // const marginRight = getBodyMargin()
+    // document.body.style.marginRight = (marginRight + getScrollbarWidth()) + 'px'
 }
 
 function getBodyMargin () {

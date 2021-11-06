@@ -63,9 +63,31 @@ export default {
         })
     },
 
+    mounted () {
+        document.documentElement.style.setProperty('--scrollbar-width', this.getScrollbarWidth() + 'px')
+    },
+
     methods: {
         closeActiveNotification () {
             this.isNotificationVisible = false
+        },
+
+        getScrollbarWidth () {
+            const outer = document.createElement('div')
+            outer.style.visibility = 'hidden'
+            outer.style.position = 'absolute'
+            outer.style.left = '-2000px'
+            outer.style.overflow = 'scroll'
+            document.body.appendChild(outer)
+
+            const inner = document.createElement('div')
+            outer.appendChild(inner)
+
+            const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth)
+
+            outer.parentNode.removeChild(outer)
+
+            return scrollbarWidth
         }
     }
 }
