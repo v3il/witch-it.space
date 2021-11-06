@@ -12,7 +12,7 @@ export const extractUserPublicData = (user) => {
         steamTradeLink: user.steamTradeLink,
         steamProfileUrl: user.steamProfileUrl,
         isGuardProtected: user.isGuardProtected,
-        isActive: user.isActive,
+        isPublic: user.isPublic,
         avatarId: user.avatarId,
         locale: user.locale,
         theme: user.theme,

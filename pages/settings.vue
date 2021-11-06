@@ -175,7 +175,7 @@
       <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
         <div class="wit-flex__item--grow">
           <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</strong>
-          <p v-if="isProfileActive" class="wit-color--success">
+          <p v-if="isProfilePublic" class="wit-color--success">
             {{ $t('Settings_ProfileIsVisible') }}
           </p>
           <p v-else class="wit-color--warning">
@@ -183,12 +183,12 @@
           </p>
         </div>
 
-        <b-button v-if="isProfileActive" type="is-warning" class="wit-font-weight--700" @click="toggleProfile">
-          {{ $t('Hide') }}
+        <b-button v-if="isProfilePublic" type="is-warning" class="wit-font-weight--700" @click="toggleProfile">
+          {{ $t('Settings_MakePrivate') }}
         </b-button>
 
         <b-button v-else type="is-success" class="wit-font-weight--700" @click="toggleProfile">
-          {{ $t('Unhide') }}
+          {{ $t('Settings_MakePublic') }}
         </b-button>
       </div>
 
@@ -235,8 +235,8 @@ export default {
             return this.user?.hasLocalProfile
         },
 
-        isProfileActive () {
-            return this.user?.isActive
+        isProfilePublic () {
+            return this.user?.isPublic
         }
     },
 
@@ -338,7 +338,7 @@ export default {
         },
 
         toggleProfile () {
-            this.isProfileActive ? this.makeProfilePrivate() : this.makeProfilePublic()
+            this.isProfilePublic ? this.makeProfilePrivate() : this.makeProfilePublic()
         },
 
         async makeProfilePublic () {

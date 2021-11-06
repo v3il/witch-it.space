@@ -150,7 +150,7 @@ const updateSettings = async (request, response) => {
 }
 
 const toggleProfile = async (request, response) => {
-    const { isActive } = request.body
+    const { isPublic } = request.body
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
 
@@ -159,7 +159,7 @@ const toggleProfile = async (request, response) => {
     }
 
     await user.update({
-        isActive: !!isActive
+        isPublic: !!isPublic
     })
 
     updateUserToken({ response, user })

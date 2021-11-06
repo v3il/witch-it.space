@@ -35,7 +35,7 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: false
             },
 
-            isActive: {
+            isPublic: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
             },

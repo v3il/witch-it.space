@@ -142,6 +142,8 @@ export const ru = {
     Settings_DisconnectSocialConfirmButtonTitle: 'Отвязать',
     Settings_ProfileIsPublic: 'Профиль активен',
     Settings_ProfileIsPrivate: 'Профиль скрыт',
+    Settings_MakePrivate: 'Сделать приватным',
+    Settings_MakePublic: 'Сделать публичным',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
