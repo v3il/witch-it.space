@@ -6,7 +6,7 @@
       </p>
     </div>
 
-    <QuestsView v-if="isSteamConnected" />
+    <QuestsView v-if="user.isSteamConnected" />
     <ConnectSteam v-else />
   </div>
 </template>
@@ -29,11 +29,7 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             'user'
-        ]),
-
-        isSteamConnected () {
-            return this.user?.isSteamConnected
-        }
+        ])
     }
 }
 </script>
