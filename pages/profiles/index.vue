@@ -50,14 +50,12 @@ export default {
 }
 
 .wis-profiles__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    column-gap: 16px;
-    row-gap: 16px;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .wis-profiles__profile {
-    width: 250px;
+    width: 350px;
+    margin: 16px;
 }
 </style>
