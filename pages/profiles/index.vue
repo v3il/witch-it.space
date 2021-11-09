@@ -4,7 +4,7 @@
 
     <div class="wis-profiles__grid">
       <div v-for="profile in profiles" :key="profile.id" class="wit-paddings--xs wr">
-        <ProfileView :profile="profile" class="wis-profiles__profile" />
+        <ProfileView :profile="profile" class="wis-profiles__profile wit-block--full-height" />
       </div>
     </div>
   </div>
@@ -61,6 +61,7 @@ export default {
     flex-wrap: wrap;
     margin-left: -8px;
     margin-right: -8px;
+    align-items: stretch;
 }
 
 .wis-profiles__profile {

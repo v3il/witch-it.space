@@ -26,12 +26,14 @@ export const extractUserPublicData = (user) => {
 }
 
 export const extractOtherUsersPublicData = (user) => {
+    const discordDMUrl = user.discordId ? `discord:///channels/@me/${user.discordId}` : null
+
     return {
         id: user.id,
         displayName: user.displayName,
         avatarId: user.avatarId,
         isGuardProtected: user.isGuardProtected,
         steamProfileUrl: user.steamProfileUrl,
-        discordProfileUrl: `https://discord.com/channels/@me/${user.discordId}`
+        discordDMUrl
     }
 }

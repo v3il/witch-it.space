@@ -20,6 +20,7 @@
 
       <div class="wit-flex wit-flex--column">
         <b-button
+          v-if="profile.steamProfileUrl"
           type="is-link"
           tag="a"
           :href="profile.steamProfileUrl"
@@ -31,9 +32,10 @@
         </b-button>
 
         <b-button
+          v-if="profile.discordDMUrl"
           type="is-link"
           tag="a"
-          :href="profile.discordProfileUrl"
+          :href="profile.discordDMUrl"
           target="_blank"
           class="wit-transition--background wit-flex wit-flex--center bb"
           data-social-link
