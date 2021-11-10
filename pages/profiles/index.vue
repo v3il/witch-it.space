@@ -40,7 +40,7 @@ export default {
         filteredProfiles () {
             const lowerCasedQuery = this.filtersData.query.toLowerCase()
             return this.profiles.filter((profile) => {
-                const isFilteredByName = profile.displayName.toLowerCase().includes(lowerCasedQuery)
+                const isFilteredByName = lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
                 const isFilteredBySteamGuard = this.filtersData.isSteamGuarded ? profile.isGuardProtected : true
 
                 return isFilteredByName && isFilteredBySteamGuard
@@ -48,11 +48,42 @@ export default {
         }
     },
 
+    watch: {
+        filtersData: {
+            handler (filtersData) {
+                const { query: params } = this.$route
+                const isQuerySame = params.query === filtersData.query
+                const isSteamGuardedSame = params.isSteamGuarded === filtersData.isSteamGuarded
+
+                if (isQuerySame && isSteamGuardedSame) {
+                    return
+                }
+
+                this.$router.replace({ path: this.$route.path, query: filtersData })
+            }
+        },
+
+        $route: {
+            deep: true,
+            handler () {
+                this.getFiltersFromRoute()
+            }
+        }
+    },
+
     async created () {
+        this.getFiltersFromRoute()
         await this.loadProfiles()
     },
 
     methods: {
+        getFiltersFromRoute () {
+            const { query: params } = this.$route
+
+            this.filtersData.query = params.query ?? ''
+            this.filtersData.isSteamGuarded = params.isSteamGuarded === 'true'
+        },
+
         async loadProfiles () {
             this.isLoading = true
 

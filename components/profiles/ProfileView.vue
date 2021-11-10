@@ -84,6 +84,7 @@ export default {
 <style scoped lang="scss">
 .wis-profile-view {
     border-radius: var(--offset-xs);
+    min-height: 110px;
 }
 
 .wis-profile-view__avatar {
