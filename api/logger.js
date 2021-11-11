@@ -1,6 +1,6 @@
-const { getLogger } = require('log4js')
+import log4js from 'log4js'
 
-const logger = getLogger()
+const logger = log4js.getLogger()
 
 const logLevels = {
     test: 'fatal',
@@ -10,4 +10,4 @@ const logLevels = {
 
 logger.level = logLevels[process.env.NODE_ENV || 'development'] || 'fatal'
 
-module.exports = { logger }
+export { logger }

@@ -1,5 +1,9 @@
 import { config } from './shared/config'
 
+require('module').Module._extensions['.js'] = function (module, filename) {
+    module._compile(require('fs').readFileSync(filename, 'utf8'), filename)
+}
+
 export default {
     head: {
         title: config.APP_NAME,

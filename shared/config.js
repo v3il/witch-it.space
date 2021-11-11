@@ -3,10 +3,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const isProduction = NODE_ENV === 'production'
 
-const Themes = { LIGHT: 'light', DARK: 'dark' }
-const Locales = { EN: 'en', RU: 'ru', UA: 'ua' }
+export const Themes = { LIGHT: 'light', DARK: 'dark' }
+export const Locales = { EN: 'en', RU: 'ru', UA: 'ua' }
 
-const config = {
+export const config = {
     PORT,
     NODE_ENV,
 
@@ -39,5 +39,3 @@ const config = {
     LOCALE_COOKIE_DURATION: 60 * 60 * 24 * 365, // 365 days
     QUESTS_UPDATE_TIMEOUT: 5 * 60 // 5 mins
 }
-
-module.exports = { config, Themes, Locales }

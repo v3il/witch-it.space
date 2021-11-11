@@ -4,3 +4,4 @@ export { extractUserPublicData, extractOtherUsersPublicData } from './extractUse
 export { createAsyncRouter } from './createAsyncRouter'
 export { getUserFromCookies } from './getUserFromCookies'
 export { getCurrentTimestamp } from './getCurrentTimestamp'
+export { capitalizePhrase } from './capitalizePhrase'

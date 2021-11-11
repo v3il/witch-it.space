@@ -1,10 +1,11 @@
+import sql from 'sequelize'
+import { config } from '../../shared/config'
+import { logger } from '../logger'
 import { initUserModel } from './User'
 import { initQuestModel } from './Quest'
 import { initItemModel } from './Item'
-const { Sequelize, DataTypes } = require('sequelize')
-const { config } = require('../../shared/config')
-const { logger } = require('../logger')
 
+const { Sequelize: Seq, DataTypes } = sql
 const db = {}
 
 try {
@@ -12,7 +13,7 @@ try {
     logger.info(`DB_NAME=${config.DB_NAME}`)
     logger.info(`DB_HOST=${config.DB_HOST}`)
 
-    const sequelize = new Sequelize({
+    const sequelize = new Seq({
         host: config.DB_HOST,
         database: config.DB_NAME,
         username: config.DB_USER,
@@ -37,7 +38,6 @@ try {
     db.Quest.belongsTo(db.User, { foreignKey: 'userId' })
 
     db.sequelize = sequelize
-    db.Sequelize = Sequelize
 
     sequelize.sync({ alter: true })
 
@@ -48,10 +48,8 @@ try {
     process.exit(1)
 }
 
-module.exports = {
-    User: db.User,
-    Quest: db.Quest,
-    Item: db.Item,
-    sequelize: db.sequelize,
-    Sequelize: db.Sequelize
-}
+export const User = db.User
+export const Quest = db.Quest
+export const Item = db.Item
+export const sequelize = db.sequelize
+export const Sequelize = Seq
