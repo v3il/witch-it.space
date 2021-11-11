@@ -56,4 +56,24 @@ export default {
     border-radius: var(--offset-xxs);
     border: 2px solid transparent;
 }
+
+.wit-item-image--very-rare {
+    .wit-item-image__image {
+        border-color: var(--item-very-rare);
+    }
+
+    .wit-item-image__counter {
+        background-color: var(--item-very-rare);
+    }
+}
+
+.wit-item-image--whimsical {
+    .wit-item-image__image {
+        border-color: var(--item-whimsical);
+    }
+
+    .wit-item-image__counter {
+        background-color: var(--item-whimsical);
+    }
+}
 </style>
