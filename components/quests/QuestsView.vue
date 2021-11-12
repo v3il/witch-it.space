@@ -56,7 +56,7 @@
           />
         </template>
 
-        <EmptyState v-else />
+        <EmptyState v-else :text="$t('Quests_NoQuests')" />
       </Card>
     </div>
   </div>
