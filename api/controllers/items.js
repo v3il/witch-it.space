@@ -1,7 +1,12 @@
 import { Item } from '../models'
 
 const getItems = async (request, response) => {
-    const items = await Item.findAll()
+    const items = await Item.findAll({
+        order: [
+            ['quality', 'DESC'],
+            ['id', 'ASC']
+        ]
+    })
 
     response.send({ items })
 }
