@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-item-view wit-paddings--xs1">
+  <div class="wit-item-view wit-paddings--xs1 wit-cursor--pointer" @click="onItemClicked">
     <div class="wit-position--relative bbbb wit-block--full-height" :class="itemClass">
       <img
         :src="item.previewUrl"
@@ -30,7 +30,7 @@ export default {
 
         itemCount: {
             required: false,
-            default: null,
+            default: Math.floor(Math.random() * 10),
             type: Number
         }
     },
@@ -47,6 +47,12 @@ export default {
                 promo: 'wit-item--promo',
                 eventrarity: 'wit-item--eventrarity'
             }[this.item.rarity]
+        }
+    },
+
+    methods: {
+        onItemClicked () {
+            this.$emit('clicked')
         }
     }
 }

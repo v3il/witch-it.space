@@ -1,15 +1,35 @@
 <template>
-  <div class="wit-items">
-    <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
+  <div class="wit-items wit-flex">
+    <div style="flex: 1;">
+      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
 
-    <div class="wit-flex1 wit-flex--justify-center">
-      <div class="wit-flex wit-flex--wrap  aaa">
-        <ItemView
-          v-for="item in slicedItems"
-          :key="item.id"
-          :item="item"
-          :item-count="Math.floor(Math.random() * 10)"
-        />
+      <div class="wit-flex1 wit-flex--justify-center">
+        <div class="wit-flex wit-flex--wrap  aaa">
+          <ItemView
+            v-for="item in slicedItems"
+            :key="item.id"
+            :item="item"
+            @clicked="selectedItem = item"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div style="flex-basis: 300px;" class="sp">
+      <div class="iv">
+        <template v-if="selectedItem">
+          <h4>{{ selectedItem.name }}</h4>
+
+          <ItemView
+            :item="selectedItem"
+            :item-count="Math.floor(Math.random() * 10)"
+            style="max-width: 125px;"
+          />
+        </template>
+
+        <p v-else>
+          No
+        </p>
       </div>
     </div>
   </div>
@@ -30,6 +50,8 @@ export default {
     data: () => ({
         page: 1,
 
+        selectedItem: null,
+
         filters: {
             query: ''
         }
@@ -49,7 +71,7 @@ export default {
         },
 
         slicedItems () {
-            return this.filteredItems.slice(0, this.page * 50)
+            return this.filteredItems.slice(0, this.page * 100)
         }
     },
 
@@ -128,5 +150,13 @@ export default {
     @media screen and (max-width: 768px) {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
+}
+
+.sp {
+    padding: 0 16px;
+}
+
+.iv {
+    position: fixed;
 }
 </style>
