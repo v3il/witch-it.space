@@ -1,6 +1,19 @@
+import path from 'path'
+import fs from 'fs'
+import { fileURLToPath } from 'url'
+import sharp from 'sharp'
 import { Item, sequelize } from '../../models/index'
 import { capitalizePhrase } from '../../util/capitalizePhrase'
+import { axiosInstance } from '../../axios'
 import { items } from './items'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const imagePath = path.join(__dirname, '../../../static/images/items')
+
+if (!fs.existsSync(imagePath)) {
+    fs.mkdirSync(imagePath)
+}
 
 export const updateItems = async () => {
     for (const item of items) {
@@ -29,6 +42,15 @@ async function processItem (item) {
         event: item.tagEvent,
         isTradeable: item.tradeable
     }
+
+    const response = await axiosInstance.get(item.iconUrl, { responseType: 'arraybuffer' })
+    const buffer = Buffer.from(response.data, 'utf-8')
+
+    await sharp(buffer)
+        .resize(200)
+        .sharpen()
+        .webp()
+        .toFile(path.join(imagePath, `${item.name}.webp`))
 
     const itemInDb = await Item.findOne({
         where: {
