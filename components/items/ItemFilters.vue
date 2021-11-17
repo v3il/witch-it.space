@@ -15,6 +15,33 @@
         />
       </div>
 
+      <b-dropdown
+        :value="filtersData.rarities"
+        multiple
+        aria-role="list"
+      >
+        <template #trigger>
+          <b-button
+            type="is-primary"
+            icon-right="menu-down"
+          >
+            Rarities
+          </b-button>
+        </template>
+
+        <b-dropdown-item value="option1" aria-role="listitem">
+          <span>Option 1</span>
+        </b-dropdown-item>
+
+        <b-dropdown-item value="option2" aria-role="listitem">
+          <span>Option 2</span>
+        </b-dropdown-item>
+
+        <b-dropdown-item value="option3" aria-role="listitem">
+          <span>Option 3</span>
+        </b-dropdown-item>
+      </b-dropdown>
+
       <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
         {{ $t('Profiles_SteamGuardedOnly') }}
       </b-switch>

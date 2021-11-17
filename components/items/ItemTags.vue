@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { raritiesManager } from '@/shared'
+
 export default {
     name: 'ItemTags',
 
@@ -42,16 +44,18 @@ export default {
 
     methods: {
         getRarityTag () {
-            return {
-                veryrare: 'Very rare',
-                whimsical: 'Whimsical',
-                rare: 'Rare',
-                common: 'Common',
-                uncommon: 'Uncommon',
-                unlock: 'Unlock',
-                promo: 'Promo',
-                eventrarity: 'Event'
-            }[this.item.rarity]
+            return raritiesManager.findByValue(this.item.rarity).label
+
+            // return {
+            //     veryrare: 'Very rare',
+            //     whimsical: 'Whimsical',
+            //     rare: 'Rare',
+            //     common: 'Common',
+            //     uncommon: 'Uncommon',
+            //     unlock: 'Unlock',
+            //     promo: 'Promo',
+            //     eventrarity: 'Event'
+            // }[this.item.rarity]
         },
 
         getIsTradeableTag () {
