@@ -15,21 +15,48 @@
       </div>
     </div>
 
-    <div style="flex-basis: 300px;" class="sp">
-      <div class="iv">
-        <template v-if="selectedItem">
-          <h4>{{ selectedItem.name }}</h4>
+    <div v-if="selectedItem" style="flex-basis: 450px;" class="sp">
+      <div class="iv wit-text--center1 wit-offset-bottom--sm wit-flex">
+        <img
+          :src="itemPreviewURL"
+          :alt="selectedItem.name"
+          :title="selectedItem.name"
+          class="wit-item-image__image wit-offset-right--sm"
+          style="max-width: 100px;"
+        >
 
-          <ItemView
-            :item="selectedItem"
-            :item-count="Math.floor(Math.random() * 10)"
-            style="max-width: 125px;"
-          />
-        </template>
+        <div>
+          <h4 class="wit-offset-bottom--sm">
+            {{ selectedItem.name }}
+          </h4>
 
-        <p v-else>
-          No
-        </p>
+          <b-taglist>
+            <b-tag type="is-primary">
+              Primary
+            </b-tag>
+            <b-tag type="is-primary is-light">
+              Light primary
+            </b-tag>
+
+            <b-tag type="is-success">
+              Success
+            </b-tag>
+            <b-tag type="is-success is-light">
+              Light success
+            </b-tag>
+
+            <b-tag type="is-danger">
+              Danger
+            </b-tag>
+            <b-tag type="is-danger is-light">
+              Light danger
+            </b-tag>
+          </b-taglist>
+        </div>
+
+        <!--        <p v-else>-->
+        <!--          No-->
+        <!--        </p>-->
       </div>
     </div>
   </div>
@@ -38,6 +65,7 @@
 <script>
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
+import { buildItemUrl } from '@/utils'
 
 export default {
     components: {
@@ -72,6 +100,10 @@ export default {
 
         slicedItems () {
             return this.filteredItems.slice(0, this.page * 100)
+        },
+
+        itemPreviewURL () {
+            return buildItemUrl(this.selectedItem?.name)
         }
     },
 
@@ -104,7 +136,7 @@ export default {
 
     mounted () {
         window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 300) {
+            if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 500) {
                 this.page++
             }
         })
@@ -154,9 +186,18 @@ export default {
 
 .sp {
     padding: 0 16px;
+    flex-basis: 300px;
+    position: sticky;
+    top: 86px;
+    max-height: calc(100vh - 70px);
+}
+
+.wit-item-image__image {
+    border-radius: 8px;
+    display: block;
 }
 
 .iv {
-    position: fixed;
+    //position: fixed;
 }
 </style>

@@ -1,3 +1,7 @@
+export const buildItemUrl = (itemName) => {
+    return `images/items/${itemName}.webp`
+}
+
 export const buildAvatarUrl = (avatarId) => {
     return `images/${avatarId}.png`
 }

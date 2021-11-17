@@ -2,7 +2,7 @@
   <div class="wit-item-view wit-paddings--xs1 wit-cursor--pointer" @click="onItemClicked">
     <div class="wit-position--relative bbbb wit-block--full-height" :class="itemClass">
       <img
-        :src="item.previewUrl"
+        :src="itemPreviewURL"
         :alt="item.name"
         :title="item.name"
         class="wit-item-image__image wit-offset-bottom--xxs"
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { buildItemUrl } from '@/utils'
+
 export default {
     name: 'ItemView',
 
@@ -47,6 +49,10 @@ export default {
                 promo: 'wit-item--promo',
                 eventrarity: 'wit-item--eventrarity'
             }[this.item.rarity]
+        },
+
+        itemPreviewURL () {
+            return buildItemUrl(this.item.name)
         }
     },
 
