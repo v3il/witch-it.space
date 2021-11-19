@@ -72,7 +72,12 @@ export default {
         selectedItem: null,
 
         filters: {
-            query: ''
+            query: '',
+            rarities: [],
+            isOnlyTradeable: false,
+            isOnlyOwned: false,
+            parts: [],
+            events: []
         }
     }),
 
