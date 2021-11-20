@@ -9,6 +9,8 @@
 <script>
 import { raritiesManager } from '@/shared'
 
+console.log(raritiesManager)
+
 export default {
     name: 'ItemTags',
 

@@ -1,4 +1,4 @@
-export { raritiesManager } from '@/shared/items'
+export { raritiesManager } from './items'
 export { Routes } from './Routes'
 export { Cookies } from './Cookies'
 export { config, Themes, Locales } from './config'

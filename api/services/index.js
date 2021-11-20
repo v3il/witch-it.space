@@ -1,5 +1,5 @@
 import axios from 'axios'
-import items from '../../shared/items.json'
+import items from '../../shared/items111.json'
 import { WitchItApiService } from './WitchItApiService'
 import { QuestsService } from './QuestsService'
 

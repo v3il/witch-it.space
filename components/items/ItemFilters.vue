@@ -19,26 +19,19 @@
         :value="filtersData.rarities"
         multiple
         aria-role="list"
+        @input="onRaritiesChange"
       >
         <template #trigger>
           <b-button
             type="is-primary"
             icon-right="menu-down"
           >
-            Rarities
+            {{ filtersData.rarities }}
           </b-button>
         </template>
 
-        <b-dropdown-item value="option1" aria-role="listitem">
-          <span>Option 1</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item value="option2" aria-role="listitem">
-          <span>Option 2</span>
-        </b-dropdown-item>
-
-        <b-dropdown-item value="option3" aria-role="listitem">
-          <span>Option 3</span>
+        <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">
+          <span>{{ rarity.label }}</span>
         </b-dropdown-item>
       </b-dropdown>
 
@@ -50,8 +43,12 @@
 </template>
 
 <script>
+import { raritiesManager } from '@/shared'
+
 export default {
     name: 'ProfilesFilter',
+
+    rarities: raritiesManager.getAll(),
 
     props: {
         filtersData: {
@@ -63,6 +60,10 @@ export default {
     methods: {
         onQueryChange (query) {
             this.updateFilters({ query })
+        },
+
+        onRaritiesChange (rarities) {
+            this.updateFilters({ rarities })
         },
 
         onIsSteamGuardedChange (isSteamGuarded) {
