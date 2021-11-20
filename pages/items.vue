@@ -31,6 +31,22 @@
         <!--          No-->
         <!--        </p>-->
       </div>
+
+      <p class="wit-offset-bottom--sm">
+        In stock: 10
+      </p>
+
+      <b-button type="is-primary" class="wit-transition">
+        Create offer
+      </b-button>
+
+      <b-button type="is-primary" class="wit-transition">
+        Wishlist item
+      </b-button>
+
+      <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">
+        Close
+      </b-button>
     </div>
   </div>
 </template>
