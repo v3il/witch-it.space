@@ -15,78 +15,115 @@
         />
       </div>
 
-      <b-dropdown
-        :value="filtersData.rarities"
-        multiple
-        aria-role="list"
-        @input="onRaritiesChange"
-      >
-        <template #trigger>
-          <b-button
-            type="is-primary"
-            icon-right="menu-down"
-          >
-            <div v-if="filtersData.rarities.length" class="wit-flex">
-              <div v-for="rarity in filtersData.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right--xxs" :class="`wit-rarity-indicator--${rarity}`" />
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
+        <b-dropdown
+          :value="filtersData.rarities"
+          multiple
+          aria-role="list"
+          @input="onRaritiesChange"
+        >
+          <template #trigger>
+            <b-button
+              type="is-primary"
+              icon-right="menu-down"
+            >
+              <div v-if="filtersData.rarities.length" class="wit-flex wit-flex--align-center">
+                <p class="wit-offset-right--xs wit-font-size--xxs">
+                  Rarity:
+                </p>
+                <div v-for="rarity in filtersData.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right--xxs" :class="`wit-rarity-indicator--${rarity}`" />
+              </div>
+
+              <span v-else>
+                Any rarity
+              </span>
+            </b-button>
+          </template>
+
+          <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">
+            <div class="wit-flex wit-flex--align-center">
+              <div class="wit-rarity-indicator wit-offset-right--xs" :class="`wit-rarity-indicator--${rarity.value}`" />
+              <span>{{ rarity.label }}</span>
             </div>
+          </b-dropdown-item>
+        </b-dropdown>
 
-            <span v-else>
-              All rarities
-            </span>
-          </b-button>
-        </template>
+        <b-button type="is-ghost" size="is-small" @click="resetFilter('rarities')">
+          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
+        </b-button>
+      </div>
 
-        <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">
-          <div class="wit-flex wit-flex--align-center">
-            <div class="wit-rarity-indicator wit-offset-right--xs" :class="`wit-rarity-indicator--${rarity.value}`" />
-            <span>{{ rarity.label }}</span>
-          </div>
-        </b-dropdown-item>
-      </b-dropdown>
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
+        <b-dropdown
+          :value="filtersData.events"
+          multiple
+          aria-role="list"
+          scrollable
+          :max-height="250"
+          @input="onEventsChange"
+        >
+          <template #trigger>
+            <b-button
+              type="is-primary"
+              icon-right="menu-down"
+            >
+              <div v-if="filtersData.events.length" class="wit-flex wit-flex--align-center">
+                <p class="wit-offset-right--xs wit-font-size--xxs">
+                  Event:
+                </p>
+              </div>
 
-      <b-dropdown
-        :value="filtersData.events"
-        multiple
-        aria-role="list"
-        scrollable
-        :max-height="250"
-        @input="onEventsChange"
-      >
-        <template #trigger>
-          <b-button
-            type="is-primary"
-            icon-right="menu-down"
-          >
-            {{ filtersData.events }}
-          </b-button>
-        </template>
+              <span v-else>
+                Any event
+              </span>
+            </b-button>
+          </template>
 
-        <b-dropdown-item v-for="event in $options.events" :key="event.value" :value="event.value">
-          <span>{{ event.label }}</span>
-        </b-dropdown-item>
-      </b-dropdown>
+          <b-dropdown-item v-for="event in $options.events" :key="event.value" :value="event.value">
+            <span>{{ event.label }}</span>
+          </b-dropdown-item>
+        </b-dropdown>
 
-      <b-dropdown
-        :value="filtersData.slots"
-        multiple
-        aria-role="list"
-        scrollable
-        :max-height="250"
-        @input="onSlotsChange"
-      >
-        <template #trigger>
-          <b-button
-            type="is-primary"
-            icon-right="menu-down"
-          >
-            {{ filtersData.slots }}
-          </b-button>
-        </template>
+        <b-button type="is-ghost" size="is-small" @click="resetFilter('events')">
+          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
+        </b-button>
+      </div>
 
-        <b-dropdown-item v-for="slot in $options.slots" :key="slot.value" :value="slot.value">
-          <span>{{ slot.label }}</span>
-        </b-dropdown-item>
-      </b-dropdown>
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
+        <b-dropdown
+          :value="filtersData.slots"
+          multiple
+          aria-role="list"
+          scrollable
+          :max-height="250"
+          @input="onSlotsChange"
+        >
+          <template #trigger>
+            <b-button
+              type="is-primary"
+              icon-right="menu-down"
+            >
+              <div v-if="filtersData.slots.length" class="wit-flex wit-flex--align-center">
+                <p class="wit-offset-right--xs wit-font-size--xxs">
+                  Slot:
+                </p>
+              </div>
+
+              <span v-else>
+                Any slot
+              </span>
+            </b-button>
+          </template>
+
+          <b-dropdown-item v-for="slot in $options.slots" :key="slot.value" :value="slot.value">
+            <span>{{ slot.label }}</span>
+          </b-dropdown-item>
+        </b-dropdown>
+
+        <b-button type="is-ghost" size="is-small" @click="resetFilter('slots')">
+          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
+        </b-button>
+      </div>
 
       <b-switch :value="filtersData.isOnlyTradeable" @input="onIsOnlyTradeableChange">
         Only tradeable
@@ -150,6 +187,10 @@ export default {
                 ...this.filtersData,
                 ...updatedFilters
             })
+        },
+
+        resetFilter (filterProp) {
+            this.$emit('reset', filterProp)
         }
     }
 }

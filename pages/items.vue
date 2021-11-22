@@ -1,7 +1,7 @@
 <template>
   <div class="wit-items wit-flex">
-    <div style="flex: 1;">
-      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
+    <div class="wit-flex__item--grow">
+      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" @reset="resetFilter" />
 
       <div class="wit-flex1 wit-flex--justify-center">
         <div class="wit-flex wit-flex--wrap  aaa">
@@ -26,10 +26,6 @@
 
           <ItemTags :item="selectedItem" />
         </div>
-
-        <!--        <p v-else>-->
-        <!--          No-->
-        <!--        </p>-->
       </div>
 
       <p class="wit-offset-bottom--sm">
@@ -52,11 +48,20 @@
 </template>
 
 <script>
-import { isEqual } from 'lodash'
+import { differenceWith, isEqual } from 'lodash'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
-import { buildItemUrl } from '@/utils'
+import { buildItemUrl, getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
+
+const DEFAULT_FILTERS = {
+    query: '',
+    rarities: [],
+    isOnlyTradeable: false,
+    isOnlyOwned: false,
+    slots: [],
+    events: []
+}
 
 export default {
     components: {
@@ -69,17 +74,8 @@ export default {
 
     data: () => ({
         page: 1,
-
         selectedItem: null,
-
-        filters: {
-            query: '',
-            rarities: [],
-            isOnlyTradeable: false,
-            isOnlyOwned: false,
-            slots: [],
-            events: []
-        }
+        filters: { ...DEFAULT_FILTERS }
     }),
 
     computed: {
@@ -113,25 +109,29 @@ export default {
 
     watch: {
         filters: {
+            deep: true,
             handler (filters) {
-                if (isEqual(this.filters, this.$route.query)) {
+                const routeFilters = this.getFiltersFromRoute()
+
+                if (isEqual(filters, routeFilters)) {
                     return
                 }
 
-                this.$router.replace({ path: this.$route.path, query: filters })
+                const changedFilters = getObjectsDiff(DEFAULT_FILTERS, filters)
+                this.$router.replace({ path: this.$route.path, query: changedFilters })
             }
         },
 
         $route: {
             deep: true,
             handler () {
-                this.getFiltersFromRoute()
+                this.filters = this.getFiltersFromRoute()
             }
         }
     },
 
     created () {
-        this.getFiltersFromRoute()
+        this.filters = this.getFiltersFromRoute()
     },
 
     mounted () {
@@ -145,17 +145,25 @@ export default {
     methods: {
         getFiltersFromRoute () {
             const { query: params } = this.$route
+            const filters = {}
 
-            this.filters.query = params.query ?? ''
-            this.filters.rarities = params.rarities ?? []
-            this.filters.slots = params.slots ?? []
-            this.filters.events = params.events ?? []
-            this.filters.isOnlyTradeable = params.isOnlyTradeable === 'true' ?? false
-            this.filters.isOnlyOwned = params.isOnlyOwned === 'true' ?? false
+            filters.query = params.query ?? DEFAULT_FILTERS.query
+            filters.rarities = params.rarities ?? DEFAULT_FILTERS.rarities
+            filters.slots = params.slots ?? DEFAULT_FILTERS.slots
+            filters.events = params.events ?? DEFAULT_FILTERS.events
+            filters.isOnlyTradeable = params.isOnlyTradeable === 'true' ?? DEFAULT_FILTERS.isOnlyTradeable
+            filters.isOnlyOwned = params.isOnlyOwned === 'true' ?? DEFAULT_FILTERS.isOnlyOwned
+
+            return filters
         },
 
         onFiltersChange (filters) {
             this.filters = filters
+            this.page = 1
+        },
+
+        resetFilter (filterProp) {
+            this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
             this.page = 1
         }
     }
