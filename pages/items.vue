@@ -15,9 +15,9 @@
       </div>
     </div>
 
-    <div v-if="selectedItem" style="flex-basis: 450px;" class="sp">
-      <div class="iv wit-text--center1 wit-offset-bottom--sm wit-flex">
-        <ItemView :item="selectedItem" style="width: 100%; max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink" />
+    <div v-if="selectedItem" class="wit-items__sidebar">
+      <div class="wit-offset-bottom--sm wit-flex">
+        <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink wit-items__selected-item-view" />
 
         <div>
           <h4 class="wit-offset-bottom--sm wit-font-size--sm">
@@ -196,29 +196,21 @@ export default {
     }
 }
 
-.sp {
+.wit-items__sidebar {
+    flex-basis: 450px;
     padding: 0 24px;
-    flex-basis: 300px;
     position: sticky;
     top: 94px;
     max-height: calc(100vh - 94px);
+}
 
-    //position: absolute;
-    //right: -1000px;
-    //transform: translateX(-1000px);
-    //max-width: calc(100vw - 16px);
-    //height: 100%;
-    //background: #222736;
-    //z-index: 222;
-    //transition: transform 0.3s ease;
+.wit-items__selected-item-view {
+    width: 100%;
+    max-width: 100px;
 }
 
 .wit-item-image__image {
     border-radius: 8px;
     display: block;
-}
-
-.iv {
-    //position: fixed;
 }
 </style>

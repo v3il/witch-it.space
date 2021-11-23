@@ -36,7 +36,7 @@ export default {
             type: Number
         },
 
-        isItemShown: {
+        isTitleShown: {
             required: false,
             type: Boolean,
             default: true
