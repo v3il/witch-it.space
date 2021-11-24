@@ -9,7 +9,7 @@
             v-for="item in slicedItems"
             :key="item.id"
             :item="item"
-            @clicked="selectedItem = item"
+            @clicked="onItemSelected"
           />
         </div>
       </div>
@@ -169,6 +169,10 @@ export default {
         resetFilter (filterProp) {
             this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
             this.page = 1
+        },
+
+        onItemSelected (selectedItem) {
+            this.selectedItem = selectedItem
         }
     }
 }

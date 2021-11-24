@@ -64,7 +64,7 @@ export default {
 
     methods: {
         onItemClicked () {
-            this.$emit('clicked')
+            this.$emit('clicked', this.item)
         }
     }
 }
