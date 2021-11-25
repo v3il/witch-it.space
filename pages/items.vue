@@ -17,7 +17,7 @@
 
     <div v-if="selectedItem" style="flex-basis: 450px;" class="sp">
       <div class="iv wit-text--center1 wit-offset-bottom--sm wit-flex">
-        <ItemView :item="selectedItem" style="max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink" />
+        <ItemView :item="selectedItem" style="width: 100%; max-width: 100px;" :is-item-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink" />
 
         <div>
           <h4 class="wit-offset-bottom--sm wit-font-size--sm">

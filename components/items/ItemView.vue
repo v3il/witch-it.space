@@ -1,6 +1,6 @@
 <template>
   <div class="wit-item-view wit-paddings--xs1 wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-position--relative bbbb wit-block--full-height" :class="itemClass">
+    <div class="wit-position--relative bbbb wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
       <img
         :src="itemPreviewURL"
         :alt="item.name"
@@ -72,6 +72,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-item-view {
+    width: 100%;
     //max-width: 150px;
 }
 
@@ -169,6 +170,8 @@ export default {
     max-width: 100%;
     max-height: 100%;
     border-radius: var(--offset-xs);
+    aspect-ratio: 1;
+    min-height: 50px;
     //border: 2px solid transparent;
 }
 
