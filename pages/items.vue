@@ -3,8 +3,8 @@
     <div class="wit-flex__item--grow">
       <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" @reset="resetFilter" />
 
-      <div class="wit-flex1 wit-flex--justify-center">
-        <div class="wit-flex wit-flex--wrap  aaa">
+      <div>
+        <div class="wit-flex wit-flex--wrap wit-items__item-grid">
           <ItemView
             v-for="item in slicedItems"
             :key="item.id"
@@ -184,11 +184,7 @@ export default {
     }
 }
 
-.aaa {
-    //margin-left: -8px;
-    //margin-right: -8px;
-    //align-items: stretch;
-
+.wit-items__item-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     grid-column-gap: 8px;
