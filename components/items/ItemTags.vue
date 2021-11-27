@@ -27,7 +27,7 @@ export default {
             const tags = [
                 this.getRarityTag(),
                 this.getIsTradeableTag(),
-                this.getPartTag()
+                this.getSlotTag()
             ]
 
             if (eventTag) {
@@ -51,7 +51,8 @@ export default {
             return this.item.isTradeable ? 'Tradeable' : 'Not Tradeable'
         },
 
-        getPartTag () {
+        getSlotTag () {
+            console.log(this.item.slot)
             return slotsManager.find(this.item.slot).label
         },
 

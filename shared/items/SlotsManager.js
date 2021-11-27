@@ -10,7 +10,8 @@ export class SlotsManager {
         { value: 'head', label: 'Head' },
         { value: 'body', label: 'Body' },
         { value: 'projectile', label: 'Projectile' },
-        { value: 'broom', label: 'Broom' }
+        { value: 'broom', label: 'Broom' },
+        { value: 'recipe', label: 'Recipe' }
     ]
 
     find (value) {
