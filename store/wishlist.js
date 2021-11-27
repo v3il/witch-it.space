@@ -1,4 +1,4 @@
-import { Wishlist } from '@/store/Types'
+import { Wishlist } from '@/store'
 
 export const state = () => ({
     isLoaded: false,
@@ -6,11 +6,14 @@ export const state = () => ({
 })
 
 export const actions = {
-    async [Wishlist.Actions.FETCH_WISHLIST] ({ commit, state }) {
+    async [Wishlist.Actions.FETCH_WISHLIST] ({ commit }) {
         commit(Wishlist.Mutations.SET_LOADING, true)
 
         try {
             const response = await this.$axios.get('/api/wishlist')
+
+            console.log(response.data)
+
             return response.data.wishlist
         } catch (e) {
             return { error: e.message }

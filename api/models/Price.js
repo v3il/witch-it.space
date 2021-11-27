@@ -10,8 +10,7 @@ const initPriceModel = (sequelize, DataTypes) => {
             itemCount2: DataTypes.INTEGER,
             itemId3: DataTypes.INTEGER,
             itemCount3: DataTypes.INTEGER
-        },
-        { timestamps: true }
+        }
     )
 }
 

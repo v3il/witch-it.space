@@ -1,11 +1,11 @@
-import { User, Wish } from '../models'
+import { Price, User, Wish } from '../models'
 import { extractUserPublicData } from '../util'
 
 const getUserWishlist = async (request, response) => {
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
 
-    const wishlist = await user.getWishes()
+    const wishlist = await user.getWishes({ include: { model: Price, as: 'prices' } })
 
     console.log(wishlist)
 

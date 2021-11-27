@@ -1,6 +1,8 @@
 <template>
   <div>
-    Settings
+    Wishlist
+    <br>
+    {{ wishlist }}
 
     <UserView />
   </div>
@@ -8,27 +10,21 @@
 
 <script>
 import UserView from '@/components/UserView'
+import { Wishlist } from '@/store/Types'
 
 export default {
-
     components: {
         UserView
     },
+
     middleware: ['fetchUser'],
 
     data: () => ({
-        user: null
+        wishlist: []
     }),
 
     created () {
-        this.user = this.$store.state.user
-        // console.log(this.$store)
-
-        // this.$store.commit('add', 'Test')
-
-        // console.log('Created')
-
-        // console.log()
+        this.wishlist = this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST)
     },
 
     methods: {

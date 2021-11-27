@@ -1,4 +1,4 @@
-import { Theme, User, Root, Locale, Items } from '@/store/Types'
+import { Theme, User, Root, Locale, Items, Wishlist } from '@/store/Types'
 import { Cookies } from '~/shared'
 
 export const state = () => ({})
@@ -12,4 +12,4 @@ export const actions = {
 
 export const mutations = {}
 
-export { Theme, User, Locale, Root, Items }
+export { Theme, User, Locale, Root, Items, Wishlist }
