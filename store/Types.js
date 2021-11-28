@@ -77,3 +77,13 @@ export const Items = StoreWrap.wrap('items', {
         SET_LOADING: 'setLoading'
     }
 })
+
+export const Wishlist = StoreWrap.wrap('wishlist', {
+    Actions: {
+        FETCH_WISHLIST: 'fetchWishlist'
+    },
+
+    Mutations: {
+        SET_LOADING: 'setLoading'
+    }
+})

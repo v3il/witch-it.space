@@ -13,5 +13,6 @@ rootRouter.use('/user', userRouter)
 rootRouter.use('/profiles', profilesRouter)
 rootRouter.use('/quests', questsRouter)
 rootRouter.use('/items', itemsRouter)
+rootRouter.use('/wishlist', itemsRouter)
 
 export { rootRouter, errorsHandler }
