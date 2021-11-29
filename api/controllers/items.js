@@ -8,7 +8,13 @@ const getItems = async (request, response) => {
         ]
     })
 
-    response.send({ items })
+    const itemMap = {}
+
+    items.forEach((item) => {
+        itemMap[item.id] = item
+    })
+
+    response.send({ items: itemMap })
 }
 
 const itemsController = {

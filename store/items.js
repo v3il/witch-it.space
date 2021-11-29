@@ -1,4 +1,5 @@
 import { Items } from '@/store/Types'
+import { itemsService } from '@/service'
 
 export const state = () => ({
     items: [],
@@ -16,6 +17,7 @@ export const actions = {
 
         try {
             const response = await this.$axios.get('/api/items')
+            itemsService.setItems(response.data)
             commit(Items.Mutations.SET_ITEMS, response.data)
             return { isSuccess: true }
         } catch (e) {
