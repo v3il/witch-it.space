@@ -69,7 +69,8 @@ export const Quest = StoreWrap.wrap('quest', {
 
 export const Items = StoreWrap.wrap('items', {
     Actions: {
-        FETCH_ITEMS: 'fetchItems'
+        FETCH_ITEMS: 'fetchItems',
+        GET_BY_ID: 'getById'
     },
 
     Mutations: {

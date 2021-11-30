@@ -18,7 +18,6 @@ import { User } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
 
 export default {
-
     components: {
         ConnectSteam,
         QuestsView

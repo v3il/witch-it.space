@@ -5,10 +5,10 @@
 
       <div>
         <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-          <ItemView
+          <WishlistItemView
             v-for="item in wishlist"
             :key="item.id"
-            :item="item"
+            :wishlist-item="item"
             @clicked.stop
           />
         </div>
@@ -54,15 +54,17 @@ import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildItemUrl, getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
+import WishlistItemView from '@/components/wishlist/WishlistItemView'
 
 export default {
+
     components: {
         ItemView,
-        // ItemFilters,
+        WishlistItemView,
         ItemTags
     },
 
-    middleware: ['fetchUser', 'fetchItems'],
+    middleware: ['fetchUser'],
 
     data: () => ({
         wishlist: [],
@@ -73,6 +75,11 @@ export default {
 
     async created () {
         this.wishlist = await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST)
+        // console.error(222, this.$itemsService.getById(1000))
+
+        // setTimeout(() => {
+        //     console.log(222222222222222, itemsService.toList().length)
+        // }, 2000)
     },
 
     methods: {

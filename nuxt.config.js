@@ -27,7 +27,8 @@ export default {
     plugins: [
         '~/plugins/axios.js',
         '~/plugins/vueExtensions.js',
-        '~/plugins/prototypeExtensions.js'
+        '~/plugins/prototypeExtensions.js',
+        '~/plugins/injectServices.js'
     ],
 
     loading: false,

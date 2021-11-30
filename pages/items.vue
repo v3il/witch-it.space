@@ -70,7 +70,12 @@ export default {
         ItemTags
     },
 
-    middleware: ['fetchUser', 'fetchItems'],
+    middleware: ['fetchUser'],
+
+    async asyncData ({ app: { $itemsService } }) {
+        await $itemsService.fetch()
+        return { items: $itemsService.toList() }
+    },
 
     data: () => ({
         page: 1,
@@ -80,7 +85,7 @@ export default {
 
     computed: {
         filteredItems () {
-            const items = this.$store.state.items.items
+            const items = this.items
             const lowerCasedQuery = this.filters.query.toLowerCase()
 
             return items.filter((item) => {
