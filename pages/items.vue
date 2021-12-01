@@ -135,7 +135,8 @@ export default {
         }
     },
 
-    created () {
+    async created () {
+        await this.$itemsService.fetch()
         this.filters = this.getFiltersFromRoute()
     },
 

@@ -1,9 +1,9 @@
 export const buildItemUrl = (itemName) => {
-    return `images/items/${itemName}.webp`
+    return `/images/items/${itemName}.webp`
 }
 
 export const buildAvatarUrl = (avatarId) => {
-    return `images/${avatarId}.png`
+    return `/images/${avatarId}.png`
 }
 
 export const buildUserMarketUrl = (userId) => {

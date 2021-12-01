@@ -1,10 +1,18 @@
 <template>
-  <div>{{ item }}</div>
+  <div>
+    <ItemView :item="item" />
+  </div>
 </template>
 
 <script>
+import ItemView from '@/components/items/ItemView'
+
 export default {
     name: 'WishlistItemView',
+
+    components: {
+        ItemView
+    },
 
     props: {
         wishlistItem: {
@@ -14,13 +22,13 @@ export default {
     },
 
     data: () => ({
-
+        item: {}
     }),
 
     created () {
-        // this.item = await this.$store.dispatch(Items.F.Actions.GET_BY_ID, 1000)
+        this.item = this.$itemsService.getById(this.wishlistItem.itemId)
 
-        console.log(this.$itemsService.getById(1000))
+        console.log(this.item)
     }
 }
 </script>

@@ -2,11 +2,11 @@
   <b-navbar class="wiz-header">
     <template #brand>
       <b-navbar-item tag="router-link" :to="{ path: '/' }" class="wit-paddings--none">
-        <img class="wiz-header__logo" src="images/hey.png" alt="Hey!">
+        <img class="wiz-header__logo" src="/images/hey.png" alt="Hey!">
       </b-navbar-item>
     </template>
 
-    <template v-if="user" #start class="wiz-header__start">
+    <template v-if="user" #start>
       <b-navbar-item
         v-for="link in links"
         :key="link.to"
@@ -19,7 +19,7 @@
       </b-navbar-item>
     </template>
 
-    <template #end class="wiz-header__end">
+    <template #end>
       <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
         <LocaleSwitcher />
       </b-navbar-item>
