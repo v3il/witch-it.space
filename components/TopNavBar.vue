@@ -65,8 +65,8 @@ export default {
 
     created () {
         this.links = [
-            { to: buildUserMarketUrl(this.user.id), textId: 'MainMenu_MyMarket', icon: '' },
-            { to: buildUserWishlistUrl(this.user.id), textId: 'MainMenu_MyWishlist', icon: '' },
+            { to: buildUserMarketUrl(this.user?.id), textId: 'MainMenu_MyMarket', icon: '' },
+            { to: buildUserWishlistUrl(this.user?.id), textId: 'MainMenu_MyWishlist', icon: '' },
             { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: '' },
             { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: '' },
             { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: '' }

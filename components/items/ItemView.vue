@@ -1,7 +1,7 @@
 <template>
   <div class="wit-item-view wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
-      <div class="wit-flex wit-position--relative" :style="colWidth">
+    <div class="wit-item-view__container wit-block--full-height wit-flex" :class="itemClass">
+      <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
         <img
           :src="itemPreviewURL"
           :alt="item.name"
@@ -26,6 +26,7 @@
 
 <script>
 import { buildItemUrl } from '@/utils'
+import { raritiesManager } from '@/shared'
 
 export default {
     name: 'ItemView',
@@ -57,18 +58,8 @@ export default {
 
     computed: {
         itemClass () {
-            const rarity = {
-                veryrare: 'very-rare',
-                whimsical: 'whimsical',
-                rare: 'rare',
-                common: 'common',
-                uncommon: 'uncommon',
-                unlock: 'unlock',
-                promo: 'promo',
-                eventrarity: 'eventrarity'
-            }[this.item.rarity]
-
-            return `wit-item-view--${rarity}`
+            const rarity = raritiesManager.find(this.item.rarity)
+            return `wit-item-view--${rarity.value}`
         },
 
         itemPreviewURL () {
@@ -106,8 +97,8 @@ export default {
 }
 
 .wit-item-view__container {
-    border: 2px solid transparent;
-    border-radius: var(--offset-xs);
+    border: 1px solid transparent;
+    border-radius: var(--offset-xxs);
 
     &.wit-item-view--common {
         border-color: var(--item-common);
@@ -163,7 +154,7 @@ export default {
         }
     }
 
-    &.wit-item-view--very-rare {
+    &.wit-item-view--veryrare {
         border-color: var(--item-very-rare);
 
         .wit-item-view__counter {
@@ -188,7 +179,7 @@ export default {
     width: 100%;
     max-width: 100%;
     max-height: 100%;
-    border-radius: var(--offset-xs);
+    border-radius: var(--offset-xxs);
     aspect-ratio: 1;
     min-height: 30px;
 }

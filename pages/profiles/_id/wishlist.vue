@@ -106,7 +106,7 @@ export default {
 
 .wit-items__item-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-column-gap: 8px;
     justify-items: center;
     grid-row-gap: 16px;
