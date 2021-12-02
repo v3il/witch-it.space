@@ -1,25 +1,27 @@
 <template>
   <div class="wit-flex wit-flex--align-center">
-    <template v-if="item1">
+    <template v-if="$options.item1">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
-        <ItemView :item="item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
+        <ItemView :item="$options.item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      <span v-if="item2 || item3" class="plus wit-color--muted">+</span>
+
+      <span v-if="hasSecondPrice" class="plus wit-color--muted">+</span>
     </template>
 
-    <template v-if="item2">
+    <template v-if="$options.item2">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
-        <ItemView :item="item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
+        <ItemView :item="$options.item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      <span v-if="item3" class="plus wit-color--muted">+</span>
+
+      <span v-if="hasThirdPrice" class="plus wit-color--muted">+</span>
     </template>
 
-    <template v-if="item3">
+    <template v-if="$options.item3">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount3 > 1" class="ic">&times;{{ price.itemCount3 }}</span>
-        <ItemView :item="item3" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
+        <ItemView :item="$options.item3" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
     </template>
   </div>
@@ -30,6 +32,10 @@ import ItemView from '@/components/items/ItemView'
 
 export default {
     name: 'ItemPrice',
+
+    item1: null,
+    item2: null,
+    item3: null,
 
     components: {
         ItemView
@@ -42,14 +48,24 @@ export default {
         }
     },
 
-    created () {
-        this.item1 = this.$itemsService.getById(this.price.itemId)
-        this.item2 = this.$itemsService.getById(this.price.itemId2)
-        this.item3 = this.$itemsService.getById(this.price.itemId3)
+    data: () => ({
 
-        console.log(this.item1)
-        console.log(this.item2)
-        console.log(this.item3)
+    }),
+
+    computed: {
+        hasSecondPrice () {
+            return this.$options.item2 || this.$options.item3
+        },
+
+        hasThirdPrice () {
+            return this.$options.item3
+        }
+    },
+
+    created () {
+        this.$options.item1 = this.$itemsService.getById(this.price.itemId)
+        this.$options.item2 = this.$itemsService.getById(this.price.itemId2)
+        this.$options.item3 = this.$itemsService.getById(this.price.itemId3)
     }
 }
 </script>
