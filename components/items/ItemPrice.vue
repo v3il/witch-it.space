@@ -5,7 +5,7 @@
         <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
         <ItemView :item="item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      <span class="plus wit-color--muted">+</span>
+      <span v-if="item2 || item3" class="plus wit-color--muted">+</span>
     </template>
 
     <template v-if="item2">
@@ -13,7 +13,7 @@
         <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
         <ItemView :item="item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      <span class="plus wit-color--muted">+</span>
+      <span v-if="item3" class="plus wit-color--muted">+</span>
     </template>
 
     <template v-if="item3">
