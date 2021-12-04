@@ -1,24 +1,30 @@
 <template>
-  <div style="background-color: #2a3042;" class="aaa wit-paddings--sm" :class="itemClass">
+  <div style="background-color: #2a3042;" class="aaa wit-paddings--sm wit-flex wit-flex--column" :class="itemClass">
     <p class="wit-offset-bottom--xs wit-line-height--sm">
       {{ item.name }}
     </p>
-    <div class="wit-item-view wit-cursor--pointer wit-flex">
-      <div style="max-width: 80px;" class="wit-offset-right--xs wit-paddings--xs1">
-        <ItemView :item="item" :is-title-shown="false" class="wit-flex--align-start" />
+    <div class="wit-item-view wit-cursor--pointer wit-flex wit-flex__item--grow">
+      <div style="flex: 1 0 70px; max-width: 70px;" class="wit-offset-right--xs wit-paddings--xs1">
+        <ItemView :item="item" :is-title-shown="false" />
       </div>
 
-      <div class="wit-aaa" style="border-left: 1px solid #36394c;">
-        <p class="wit-font-size--xxs wit-offset-bottom--xs">
+      <div class="wit-aaa wit-flex__item--grow" style="border-left: 1px solid #36394c;">
+        <p class="wit-font-size--xs wit-offset-bottom--xs">
           I offer:
         </p>
 
-        <ItemPrice
-          v-for="price in wishlistItem.prices"
-          :key="price.id"
-          :price="price"
-          class="wit-offset-bottom--xs1 pv wit-paddings--xs1"
-        />
+        <template v-if="wishlistItem.prices.length">
+          <ItemPrice
+            v-for="price in wishlistItem.prices"
+            :key="price.id"
+            :price="price"
+            class="wit-offset-bottom--xs1 pv wit-paddings--xs1"
+          />
+        </template>
+
+        <p v-else class="wit-text--center wit-line-height--md wit-color--muted wit-font-size--xxs">
+          No specific prices for this item
+        </p>
       </div>
     </div>
   </div>
@@ -75,6 +81,7 @@ export default {
         width: 275px;
         padding: 8px 16px;
         border-radius: 8px;
+        min-height: 220px;
     }
 
     .pv:not(:last-child) {
