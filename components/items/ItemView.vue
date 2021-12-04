@@ -1,6 +1,6 @@
 <template>
   <div class="wit-item-view wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-item-view__container wit-block--full-height wit-flex" :class="itemClass">
+    <div class="wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
       <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
         <img
           :src="itemPreviewURL"
@@ -15,10 +15,6 @@
         <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
           {{ item.name }}
         </p>
-      </div>
-
-      <div v-if="$slots.sidebar">
-        <slot name="sidebar" />
       </div>
     </div>
   </div>

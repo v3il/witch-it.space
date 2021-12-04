@@ -3,23 +3,23 @@
     <template v-if="item1">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
-        <ItemView :item="item1" :is-title-shown="false" style="width: 50px;" class="wit-offset-right--xxs wit-offset-left--xxs" />
+        <ItemView :item="item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      +
+      <span class="plus">+</span>
     </template>
 
     <template v-if="item2">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
-        <ItemView :item="item2" :is-title-shown="false" style="width: 50px;" class="wit-offset-right--xxs wit-offset-left--xxs" />
+        <ItemView :item="item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
-      +
+      <span class="plus">+</span>
     </template>
 
     <template v-if="item3">
       <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount3 > 1" class="ic">&times;{{ price.itemCount3 }}</span>
-        <ItemView :item="item3" :is-title-shown="false" style="width: 50px;" class="wit-offset-right--xxs wit-offset-left--xxs" />
+        <ItemView :item="item3" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
     </template>
   </div>
@@ -74,7 +74,15 @@ export default {
     /*border-radius: 0.25rem;*/
     background-color: #02a499 !important;
     border-radius: 50rem !important;
-    right: -3px;
-    top: -3px;
+    right: -5px;
+    top: -5px;
+}
+
+.aaa {
+    width: 40px;
+}
+
+.plus {
+    margin: 0 4px;
 }
 </style>
