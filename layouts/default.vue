@@ -1,41 +1,8 @@
 <template>
   <div class="layout">
-    <LeftNavBar class="a" />
-    <!--    <div class="a wit-flex wit-flex&#45;&#45;column wit-flex&#45;&#45;justify-between">-->
-    <!--      <img class="wiz-header__logo" src="/images/hey.png" alt="Hey!" style="max-height: 60px;">-->
+    <LeftNavBar v-if="user" class="layout__left" />
 
-    <!--      <div class="wit-flex wit-flex&#45;&#45;column">-->
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="shopping-music" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="heart-multiple" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="account-group" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="view-grid" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="file-tree" />-->
-    <!--        </b-button>-->
-
-    <!--        <b-button type="is-ghost" class="is-large">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="cog-sync" />-->
-    <!--        </b-button>-->
-    <!--      </div>-->
-
-    <!--      <b-button type="is-ghost" class="is-large">-->
-    <!--        <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="dots-grid" />-->
-    <!--      </b-button>-->
-    <!--    </div>-->
-
-    <div class="b">
+    <div class="layout__right">
       <TopNavBar class="layout__header" />
 
       <main class="layout__main">
@@ -58,9 +25,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-
-const { mapState } = createNamespacedHelpers('theme')
+import { mapState } from 'vuex'
+import { User, Theme } from '@/store'
 
 export default {
     name: 'Default',
@@ -81,7 +47,8 @@ export default {
     },
 
     computed: {
-        ...mapState(['theme']),
+        ...mapState(Theme.PATH, [Theme.State.THEME]),
+        ...mapState(User.PATH, [User.State.USER]),
 
         notificationClass () {
             return {
@@ -132,15 +99,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .a {
+    .layout__left {
         position: fixed;
-        width: 60px;
-        background: #2a3142; //var(--secondary);
+        width: var(--left-navbar-width);
+        background: var(--left-navbar-bg);
         height: 100vh;
     }
 
-    .b {
-        margin-left: 60px;
+    .layout__left + .layout__right {
+        margin-left: var(--left-navbar-width);
     }
 
     .layout__main {
