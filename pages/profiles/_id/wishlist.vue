@@ -1,9 +1,12 @@
 <template>
   <div class="wit-items wit-flex">
     <div class="wit-flex__item--grow">
-      <ItemFilters :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" @reset="() => {}" />
+      <div class="wit-flex wit-offset-bottom--sm">
+        <UserView v-if="user" :profile="user" style="flex-basis: 500px;" class="wit-offset-right--sm" />
+        <ItemFilters :filters-data="filters" class="wit-flex__item--grow" @change="() => {}" @reset="() => {}" />
+      </div>
 
-      <div>
+      <Card>
         <div class="wit-flex wit-flex--wrap wit-items__item-grid">
           <WishlistItemView
             v-for="item in wishlist"
@@ -12,7 +15,7 @@
             @clicked.stop
           />
         </div>
-      </div>
+      </Card>
     </div>
 
     <div v-if="selectedItem" class="wit-items__sidebar">
@@ -48,13 +51,14 @@
 </template>
 
 <script>
-// import UserView from '@/components/UserView'
+import UserView from '@/components/UserView'
 import { Wishlist } from '@/store/Types'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildItemUrl, getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
+import Card from '@/components/Card'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -71,13 +75,16 @@ export default {
         ItemView,
         WishlistItemView,
         ItemTags,
-        ItemFilters
+        ItemFilters,
+        UserView,
+        Card
     },
 
     middleware: ['fetchUser'],
 
     data: () => ({
         wishlist: [],
+        user: null,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS }
@@ -90,13 +97,14 @@ export default {
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, wishlist } = await this.$wishlistService.fetch(this.$route.params.id)
+        const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
 
         if (error) {
             return this.$showError(error)
         }
 
         this.wishlist = wishlist
+        this.user = user
     },
 
     methods: {

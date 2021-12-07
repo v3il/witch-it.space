@@ -1,4 +1,4 @@
-export class WishlistService {
+export class UserService {
     #axiosInstance = null
 
     constructor (axiosInstance) {
@@ -10,14 +10,12 @@ export class WishlistService {
             const { data } = await this.#axiosInstance.get(`/api/wishlist?userId=${userId}`)
             return {
                 error: null,
-                wishlist: data.wishlist,
-                user: data.user
+                wishlist: data.wishlist
             }
         } catch (e) {
             return {
                 error: e.message,
-                wishlist: null,
-                user: null
+                wishlist: null
             }
         }
     }

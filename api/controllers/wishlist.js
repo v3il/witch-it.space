@@ -20,7 +20,10 @@ const getUserWishlist = async (request, response) => {
 
     console.log(wishlist)
 
-    response.send({ wishlist })
+    response.send({
+        wishlist,
+        user: extractUserPublicData(user)
+    })
 }
 
 const addToWishlist = async (request, response) => {
