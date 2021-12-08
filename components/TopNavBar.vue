@@ -86,6 +86,7 @@ export default {
 <style scoped lang="scss">
 .wiz-header {
     background-color: var(--header-bg);
+    min-height: var(--header-height);
     height: var(--header-height);
     padding: 0 var(--offset-sm);
     position: sticky;
@@ -106,7 +107,8 @@ export default {
 }
 
 .wiz-header__logo {
-    max-height: none;
+    max-height: var(--header-height);
+    height: 100%;
 }
 
 @media screen and (max-width: 1024px) {

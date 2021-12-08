@@ -88,6 +88,8 @@ h6 {
 
 .navbar-brand {
     margin-right: var(--offset-lg);
+    min-height: var(--header-height);
+    max-height: var(--header-height);
 
     @media screen and (max-width: 1024px) {
         margin-right: 0;

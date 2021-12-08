@@ -18,7 +18,7 @@ const getUserWishlist = async (request, response) => {
 
     const wishlist = await user.getWishes({ include: { model: Price, as: 'prices' } })
 
-    console.log(wishlist)
+    // console.log(wishlist)
 
     response.send({
         wishlist,
