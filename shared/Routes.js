@@ -6,5 +6,6 @@ export const Routes = Object.freeze({
     WISHLIST: '/wishlist',
     ITEMS: '/items',
     PROFILES: '/profiles',
-    QUESTS: '/quests'
+    QUESTS: '/quests',
+    SETTINGS: '/settings'
 })

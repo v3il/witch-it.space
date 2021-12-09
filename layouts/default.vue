@@ -1,22 +1,59 @@
 <template>
   <div class="layout">
-    <TopNavBar class="layout__header" />
+    <LeftNavBar class="a" />
+    <!--    <div class="a wit-flex wit-flex&#45;&#45;column wit-flex&#45;&#45;justify-between">-->
+    <!--      <img class="wiz-header__logo" src="/images/hey.png" alt="Hey!" style="max-height: 60px;">-->
 
-    <main class="layout__main">
-      <Nuxt />
+    <!--      <div class="wit-flex wit-flex&#45;&#45;column">-->
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="shopping-music" />-->
+    <!--        </b-button>-->
 
-      <b-notification
-        v-if="isNotificationVisible"
-        :type="notificationClass"
-        aria-close-label="Close notification"
-        role="alert"
-        animation="fade150"
-        class="layout__notification"
-        :closable="false"
-      >
-        {{ notificationMessage }}
-      </b-notification>
-    </main>
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="heart-multiple" />-->
+    <!--        </b-button>-->
+
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="account-group" />-->
+    <!--        </b-button>-->
+
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="view-grid" />-->
+    <!--        </b-button>-->
+
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="file-tree" />-->
+    <!--        </b-button>-->
+
+    <!--        <b-button type="is-ghost" class="is-large">-->
+    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="cog-sync" />-->
+    <!--        </b-button>-->
+    <!--      </div>-->
+
+    <!--      <b-button type="is-ghost" class="is-large">-->
+    <!--        <b-icon class="is-size-5 wit-color&#45;&#45;Y400" icon="dots-grid" />-->
+    <!--      </b-button>-->
+    <!--    </div>-->
+
+    <div class="b">
+      <TopNavBar class="layout__header" />
+
+      <main class="layout__main">
+        <Nuxt />
+
+        <b-notification
+          v-if="isNotificationVisible"
+          :type="notificationClass"
+          aria-close-label="Close notification"
+          role="alert"
+          animation="fade150"
+          class="layout__notification"
+          :closable="false"
+        >
+          {{ notificationMessage }}
+        </b-notification>
+      </main>
+    </div>
   </div>
 </template>
 
@@ -95,6 +132,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
+    .a {
+        position: fixed;
+        width: 60px;
+        background: #2a3142; //var(--secondary);
+        height: 100vh;
+    }
+
+    .b {
+        margin-left: 60px;
+    }
+
     .layout__main {
         padding: 0 var(--offset-md) var(--offset-md);
 

@@ -3,6 +3,7 @@ export const extractUserPublicData = (user) => {
     const isGoogleConnected = !!user.googleId
     const isDiscordConnected = !!user.discordId
     const isAnySocialConnected = isSteamConnected || isDiscordConnected || isGoogleConnected
+    const discordDMUrl = user.discordId ? `discord:///channels/@me/${user.discordId}` : null
 
     return {
         id: user.id,
@@ -21,6 +22,7 @@ export const extractUserPublicData = (user) => {
         isGoogleConnected,
         isDiscordConnected,
         isAnySocialConnected,
+        discordDMUrl,
         hasLocalProfile: !!user.password
     }
 }

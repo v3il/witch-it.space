@@ -1,10 +1,27 @@
 <template>
   <div class="wit-items wit-flex">
     <div class="wit-flex__item--grow">
-      <div class="wit-flex wit-offset-bottom--sm">
-        <UserView v-if="user" :profile="user" style="flex-basis: 500px;" class="wit-offset-right--sm" />
-        <ItemFilters :filters-data="filters" class="wit-flex__item--grow" @change="() => {}" @reset="() => {}" />
+      <div class="wit-flex wit-offset-bottom--md wit-flex--justify-center">
+        <UserView v-if="user" :profile="user" style="flex-basis: 500px;" class="" />
+
+        <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">
+          <div class="wit-offset-bottom--xs">
+            <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
+              Add items
+            </b-button>
+
+            <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
+              Manage
+            </b-button>
+          </div>
+
+          <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="areFiltersVisible = !areFiltersVisible">
+            Filters
+          </b-button>
+        </div>
       </div>
+
+      <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item--grow wit-offset-bottom--md" @change="() => {}" @reset="() => {}" />
 
       <Card>
         <div class="wit-flex wit-flex--wrap wit-items__item-grid">
@@ -87,7 +104,8 @@ export default {
         user: null,
         page: 1,
         selectedItem: null,
-        filters: { ...DEFAULT_FILTERS }
+        filters: { ...DEFAULT_FILTERS },
+        areFiltersVisible: false
     }),
 
     // async fetch ({ app: { $itemsService } }) {
