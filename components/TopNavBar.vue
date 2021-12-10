@@ -2,39 +2,34 @@
   <b-navbar class="wiz-header">
     <template #brand>
       <b-navbar-item class="wit-paddings--none wit-font-size--sm">
-        <p class="wit-offset-right--sm">
-          {{ activeLink ? $t(activeLink.textId) : '' }}
-        </p>
+        <slot name="brand" />
 
-        <b-dropdown
-          v-if="0"
-          animation="fade150"
-          class="wit-block--full-height wiz-background--transparent"
-          position="is-bottom-right"
-        >
-          <template #trigger>
-            <b-icon class="is-size-5 wit-color--muted wit-flex wit-block--full-height" icon="help-box" />
-          </template>
+        <!--        <p class="wit-offset-right&#45;&#45;sm">-->
+        <!--          {{ activeLink ? $t(activeLink.textId) : '' }}-->
+        <!--        </p>-->
 
-          <div class="wit-paddings--xs">
-            Test
-          </div>
-        </b-dropdown>
+        <!--        <b-dropdown-->
+        <!--          v-if="0"-->
+        <!--          animation="fade150"-->
+        <!--          class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent"-->
+        <!--          position="is-bottom-right"-->
+        <!--        >-->
+        <!--          <template #trigger>-->
+        <!--            <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
+        <!--          </template>-->
+
+        <!--          <div class="wit-paddings&#45;&#45;xs">-->
+        <!--            Test-->
+        <!--          </div>-->
+        <!--        </b-dropdown>-->
       </b-navbar-item>
     </template>
 
-    <!--    <template v-if="user" #start>-->
-    <!--      <b-navbar-item-->
-    <!--        v-for="link in links"-->
-    <!--        :key="link.to"-->
-    <!--        :to="link.to"-->
-    <!--        tag="nuxt-link"-->
-    <!--        :class="getLinkClasses(link)"-->
-    <!--        class="wit-transition wiz-header__link"-->
-    <!--      >-->
-    <!--        {{ $t(link.textId) }}-->
-    <!--      </b-navbar-item>-->
-    <!--    </template>-->
+    <template #start>
+      <!--      <div class="wit-paddings&#45;&#45;none">-->
+      <slot name="topMenu" />
+      <!--      </div>-->
+    </template>
 
     <template #end>
       <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">

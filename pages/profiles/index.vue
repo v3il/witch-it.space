@@ -1,6 +1,27 @@
 <template>
   <div>
-    <TopNavBar class="layout__header" />
+    <TopNavBar class="layout__header">
+      <template #brand>
+        {{ $t('MainMenu_Profiles') }}
+      </template>
+
+      <template #topMenu>
+        <ul class="wit-flex wit-flex--center wit-top-tabs">
+          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass('all')">
+            <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'all'">
+              All Profiles
+              <span class="wit-top-tabs__counter">{{ guardedProfilesCount }}</span>
+            </b-button>
+          </li>
+
+          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center" :class="getTopNavLinkClass('me')">
+            <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'me'">
+              My Profile
+            </b-button>
+          </li>
+        </ul>
+      </template>
+    </TopNavBar>
 
     <main class="wis-profiles">
       <Card>
@@ -24,10 +45,12 @@
 
 <script>
 import { isEqual } from 'lodash'
+import { mapState } from 'vuex'
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
 import ProfileView from '@/components/profiles/ProfileView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
+import { User } from '@/store'
 
 export default {
     components: {
@@ -40,6 +63,7 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
+        mode: 'all',
         profiles: [],
         isLoading: false,
 
@@ -50,7 +74,19 @@ export default {
     }),
 
     computed: {
+        ...mapState(User.PATH, [
+            User.State.USER
+        ]),
+
+        guardedProfilesCount () {
+            return this.profiles.filter(profile => profile.isGuardProtected).length
+        },
+
         filteredProfiles () {
+            if (this.mode === 'me') {
+                return this.profiles.filter(profile => profile.id === this.user.id)
+            }
+
             const lowerCasedQuery = this.filtersData.query.toLowerCase()
             return this.profiles.filter((profile) => {
                 const isFilteredByName = lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
@@ -108,6 +144,12 @@ export default {
 
         onFiltersChange (filtersData) {
             this.filtersData = filtersData
+        },
+
+        getTopNavLinkClass (linkTag) {
+            return {
+                active: linkTag === this.mode
+            }
         }
     }
 }
@@ -152,5 +194,42 @@ export default {
     @media (min-width: 2500px) {
         width: 20%;
     }
+}
+
+.wit-top-tabs__button {
+    &,
+    &:active,
+    &:focus,
+    &:hover {
+        color: var(--white);
+        text-decoration: none;
+        padding: 0;
+    }
+}
+
+.wit-top-tabs__tab {
+    border-bottom: 2px solid transparent;
+    height: 100%;
+    transition: border-color var(--default-transition);
+
+    &.active {
+        border-color: var(--warning);
+
+        .wit-top-tabs__button {
+            //color: var(--success);
+        }
+    }
+}
+
+.wit-top-tabs__counter {
+    display: inline-block;
+    padding: 0 8px;
+    background-color: #dbdbdb;
+    border-radius: 50px;
+    font-size: 12px;
+    line-height: 1.4;
+    margin-left: 4px;
+    color: #222736;
+    font-weight: 700;
 }
 </style>
