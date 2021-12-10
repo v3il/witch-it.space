@@ -1,18 +1,20 @@
 <template>
   <div class="wis-profiles">
-    <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
+    <Card>
+      <ProfilesFilter :filters-data="filtersData" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
 
-    <div class="wit-padding-top--sm wit-padding-bottom--sm">
-      <Loader v-if="isLoading" />
+      <div class="wit-padding-top--sm wit-padding-bottom--sm">
+        <Loader v-if="isLoading" />
 
-      <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-        <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-          <ProfileView :profile="profile" class="wit-block--full-height" />
+        <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
+          <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+            <ProfileView :profile="profile" class="wit-block--full-height" />
+          </div>
         </div>
-      </div>
 
-      <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
-    </div>
+        <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
+      </div>
+    </Card>
   </div>
 </template>
 
@@ -20,11 +22,13 @@
 import { isEqual } from 'lodash'
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
 import ProfileView from '@/components/profiles/ProfileView'
+import Card from '@/components/Card'
 
 export default {
     components: {
         ProfilesFilter,
-        ProfileView
+        ProfileView,
+        Card
     },
 
     middleware: ['fetchUser'],
@@ -105,7 +109,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-profiles {
-    padding: var(--offset-md) var(--offset-md) var(--offset-sm);
+    padding: var(--offset-md) 0;
 
     @media screen and (max-width: 1024px) {
         padding-left: 0;

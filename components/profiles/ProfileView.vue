@@ -85,6 +85,7 @@ export default {
 .wis-profile-view {
     border-radius: var(--offset-xs);
     min-height: 110px;
+    border: 1px solid #36394c;
 }
 
 .wis-profile-view__avatar {
