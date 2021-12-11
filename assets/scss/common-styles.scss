@@ -5,3 +5,37 @@
     margin: var(--offset-xs) 0;
     border-radius: var(--offset-xxs);
 }
+
+.wit-top-tabs {
+    .wit-top-tabs__button {
+        &,
+        &:active,
+        &:focus,
+        &:hover {
+            color: var(--white);
+            text-decoration: none;
+            padding: 0;
+        }
+    }
+
+    .wit-top-tabs__tab {
+        border-bottom: 2px solid transparent;
+        height: 100%;
+        transition: border-color var(--default-transition);
+
+        &.active {
+            border-color: var(--warning);
+        }
+    }
+
+    .wit-top-tabs__counter {
+        display: inline-block;
+        padding: 0 var(--offset-xs);
+        background-color: #dbdbdb;
+        border-radius: 50px;
+        font-size: var(--text-size-xxs);
+        line-height: var(--line-height-sm);
+        color: var(--body-bg);
+        font-weight: 700;
+    }
+}

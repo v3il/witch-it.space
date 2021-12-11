@@ -7,15 +7,15 @@
 
       <template #topMenu>
         <ul class="wit-flex wit-flex--center wit-top-tabs">
-          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass('all')">
-            <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'all'">
+          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center wit-offset-right--md" :class="getTopNavLinkClass($options.modes.ALL)">
+            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleAllProfilesMode">
               {{ hasFilteredProfiles ? 'Filtered Profiles' : 'All Profiles' }}
-              <span class="wit-top-tabs__counter">{{ profilesCount }}</span>
+              <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profilesCount }}</span>
             </b-button>
           </li>
 
-          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center" :class="getTopNavLinkClass('me')">
-            <b-button type="is-ghost" class="wit-top-tabs__button" @click="mode = 'me'">
+          <li class="wit-top-tabs__tab wit-flex wit-flex--align-center" :class="getTopNavLinkClass($options.modes.ME)">
+            <b-button type="is-ghost" class="wit-top-tabs__button" @click="toggleMyProfileMode">
               My Profile
             </b-button>
           </li>
@@ -30,9 +30,9 @@
         <div class="wit-padding-top--sm wit-padding-bottom--sm">
           <Loader v-if="isLoading" />
 
-          <div v-else-if="mode === 'me'" class="wit-flex wit-flex--wrap wis-profiles__grid">
+          <div v-else-if="isMyProfileMode" class="wit-flex wit-flex--wrap wis-profiles__grid">
             <div class="wit-paddings--xs wis-profiles__profile-container">
-              <ProfileView :profile="me" class="wit-block--full-height" />
+              <ProfileView :profile="myProfile" class="wit-block--full-height" />
             </div>
           </div>
 
@@ -58,7 +58,14 @@ import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
 
+const modes = {
+    ALL: 'all',
+    ME: 'me'
+}
+
 export default {
+    modes,
+
     components: {
         ProfilesFilter,
         ProfileView,
@@ -69,7 +76,7 @@ export default {
     middleware: ['fetchUser'],
 
     data: () => ({
-        mode: 'all',
+        mode: modes.ALL,
         profiles: [],
         isLoading: false,
 
@@ -84,11 +91,15 @@ export default {
             User.State.USER
         ]),
 
+        isMyProfileMode () {
+            return this.mode === this.$options.modes.ME
+        },
+
         hasFilteredProfiles () {
             return this.profiles.length !== this.filteredProfiles.length
         },
 
-        me () {
+        myProfile () {
             return this.profiles.find(profile => profile.id === this.user.id)
         },
 
@@ -160,6 +171,14 @@ export default {
             return {
                 active: linkTag === this.mode
             }
+        },
+
+        toggleAllProfilesMode () {
+            this.mode = this.$options.modes.ALL
+        },
+
+        toggleMyProfileMode () {
+            this.mode = this.$options.modes.ME
         }
     }
 }
@@ -204,42 +223,5 @@ export default {
     @media (min-width: 2500px) {
         width: 20%;
     }
-}
-
-.wit-top-tabs__button {
-    &,
-    &:active,
-    &:focus,
-    &:hover {
-        color: var(--white);
-        text-decoration: none;
-        padding: 0;
-    }
-}
-
-.wit-top-tabs__tab {
-    border-bottom: 2px solid transparent;
-    height: 100%;
-    transition: border-color var(--default-transition);
-
-    &.active {
-        border-color: var(--warning);
-
-        .wit-top-tabs__button {
-            //color: var(--success);
-        }
-    }
-}
-
-.wit-top-tabs__counter {
-    display: inline-block;
-    padding: 0 8px;
-    background-color: #dbdbdb;
-    border-radius: 50px;
-    font-size: 12px;
-    line-height: 1.4;
-    margin-left: 4px;
-    color: #222736;
-    font-weight: 700;
 }
 </style>
