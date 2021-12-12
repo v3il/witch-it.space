@@ -13,3 +13,7 @@ export const buildUserMarketUrl = (userId) => {
 export const buildUserWishlistUrl = (userId) => {
     return `/profiles/${userId}/wishlist`
 }
+
+export const buildRarityFilterUrl = (userId, rarity) => {
+    return `${buildUserMarketUrl(userId)}?rarity=${rarity}`
+}

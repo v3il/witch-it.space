@@ -1,5 +1,5 @@
 <template>
-  <div class=" wit-overflow--hidden wis-profile-view wit-background--content wit-position--relative wit-cursor--pointer wit-flex wit-flex--column wit-flex--align-center" @click="onProfileClick">
+  <div class=" wit-overflow--hidden wis-profile-view wit-background--content wit-position--relative wit-cursor--pointer wit-flex wit-flex--column wit-flex--align-center">
     <img
       :src="avatarUrl"
       alt="Avatar"
@@ -15,12 +15,10 @@
     <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
       <b-button
         type="is-link"
-        tag="a"
-        :href="profile.steamProfileUrl"
-        target="_blank"
-        class="wit-offset-bottom--xs1 wit-transition--background wit-flex wit-flex--center"
+        tag="router-link"
+        :to="marketUrl"
+        class="wit-transition--background"
         style="padding: 8px; height: auto; background: transparent; border-right: 1px solid #2e3648; flex: 1 0 50%;"
-        @click.stop
       >
         <div class="wit-flex wit-flex--column">
           <span class="wit-font-weight--700">{{ profile.ordersCount }}</span>
@@ -30,12 +28,10 @@
 
       <b-button
         type="is-link"
-        tag="a"
-        :href="profile.discordDMUrl"
-        target="_blank"
+        tag="router-link"
+        :to="wishlistUrl"
         class="wit-transition--background wit-flex wit-flex--center"
         style="padding: 8px; height: auto; background: transparent; flex: 1 0 50%;"
-        @click.stop
       >
         <div class="wit-flex wit-flex--column">
           <span class="wit-font-weight--700">{{ profile.wishlistCount }}</span>
@@ -55,7 +51,6 @@
         :href="profile.steamProfileUrl"
         target="_blank"
         class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-        @click.stop
       >
         <div class="wit-flex wit-flex--align-center">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="steam" />
@@ -70,7 +65,6 @@
         :href="profile.discordDMUrl"
         target="_blank"
         class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-        @click.stop
       >
         <div class="wit-flex wit-flex--align-center">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="arrow-decision" />
@@ -86,7 +80,6 @@
         :href="profile.discordDMUrl"
         target="_blank"
         class="wit-transition--background wit-flex wit-flex--center"
-        @click.stop
       >
         <div class="wit-flex wit-flex--align-center">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="discord" />
@@ -141,7 +134,7 @@
 
 <script>
 // import Card from '@/components/Card'
-import { buildAvatarUrl, buildUserMarketUrl } from '@/utils'
+import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 import ProfileScale from '@/components/profiles/ProfileScale'
 
 export default {
@@ -160,6 +153,14 @@ export default {
     },
 
     computed: {
+        marketUrl () {
+            return buildUserMarketUrl(this.profile.id)
+        },
+
+        wishlistUrl () {
+            return buildUserWishlistUrl(this.profile.id)
+        },
+
         avatarUrl () {
             return buildAvatarUrl(this.profile.avatarId)
         }

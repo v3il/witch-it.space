@@ -21,9 +21,9 @@
 
     <main class="wis-profiles">
       <Card>
-        <ProfilesFilter :filters-data="filters" class="wit-offset-left--auto wit-offset-right--auto" @change="onFiltersChange" />
+        <ProfilesFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
 
-        <div class="wit-padding-top--sm wit-padding-bottom--sm">
+        <div class="wit-padding-top--sm1 wit-padding-bottom--sm1">
           <Loader v-if="isLoading" />
 
           <div v-else-if="isMyProfileMode" class="wit-flex wit-flex--wrap wis-profiles__grid">
