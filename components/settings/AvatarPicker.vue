@@ -11,9 +11,6 @@
       <img
         :src="`images/${avatarId}.png`"
         :alt="avatarId"
-        height="36px"
-        width="36px"
-        style="border-radius: 50%;"
         class="wit-avatar-picker__img"
       >
     </button>
@@ -23,7 +20,7 @@
 <script>
 export default {
     name: 'AvatarPicker',
-    avatarIds: [1, 2, 3, 4, 5],
+    avatarIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 
     model: {
         event: 'change',
@@ -56,12 +53,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$avatar-size: 55px;
+
 .wit-avatar-picker__btn {
     padding: 0;
     border: 3px solid transparent;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    border-radius: var(--offset-xxs);
+    width: $avatar-size;
+    height: $avatar-size;
     background-color: transparent;
     cursor: pointer;
 
@@ -73,6 +72,6 @@ export default {
 .wit-avatar-picker__img {
     height: 100%;
     width: 100%;
-    border-radius: 50%;
+    border-radius: inherit;
 }
 </style>
