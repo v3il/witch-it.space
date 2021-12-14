@@ -1,15 +1,19 @@
 <template>
-  <Card class="wis-profile-view wit-background--content wit-position--relative wit-cursor--pointer" @click="onProfileClick">
-    <div class="wit-flex">
+  <div class="wis-profile-view wit-background--content" @click="onProfileClick">
+    <div style="border-bottom: 1px solid #36394c; padding: 24px;">
       <img
         :src="avatarUrl"
         alt="Avatar"
-        class="wit-offset-right--sm wit-flex--align-self-start wis-profile-view__avatar"
+        class="wis-profile-view__avatar wit-offset-bottom--sm"
       >
+
+      <h5 class="wit-color--primary1 wit-offset-bottom--xs1 wit-font-size--sm wit-text--overflow wit-text--center">
+        {{ profile.displayName }}
+      </h5>
+    </div>
+
+    <div class="wit-flex">
       <div class="wit-offset-right--xs wit-flex__item--grow wit-overflow--hidden">
-        <h5 class="wit-color--primary wit-offset-bottom--xs wit-font-size--sm wit-text--overflow">
-          {{ profile.displayName }}
-        </h5>
         <!--        <p class="wit-offset-bottom&#45;&#45;xs">-->
         <!--          {{ $t('OffersAvailable', [profile.offersCount]) }}-->
         <!--        </p>-->
@@ -46,18 +50,18 @@
         </b-button>
       </div>
     </div>
-  </Card>
+  </div>
 </template>
 
 <script>
-import Card from '@/components/Card'
+// import Card from '@/components/Card'
 import { buildAvatarUrl, buildUserMarketUrl } from '@/utils'
 
 export default {
     name: 'UserView',
 
     components: {
-        Card
+        // Card
     },
 
     props: {
@@ -90,12 +94,12 @@ export default {
 .wis-profile-view__avatar {
     $avatar-size: 75px;
 
-    border-radius: 50%;
-    padding: var(--offset-xxs);
-    background-color: var(--gray-200);
-    border: 1px solid var(--gray-300);
+    border-radius: var(--offset-xs);
     width: $avatar-size;
     height: $avatar-size;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .wis-profile-view__social-btn {

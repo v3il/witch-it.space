@@ -2,7 +2,9 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        {{ user ? user.displayName : '' }}
+        <nuxt-link to="/profiles">
+          Profiles
+        </nuxt-link>
       </template>
 
       <template #topMenu>
