@@ -2,7 +2,7 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        {{ $t('MainMenu_Wishlist', [user ? user.displayName : '']) }}
+        {{ user ? user.displayName : '' }}
       </template>
 
       <template #topMenu>
@@ -13,6 +13,7 @@
 
           <template #tab1>
             {{ $t('Wishlist_TopTabs_Wishlist') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
           </template>
         </TopTabs>
       </template>
@@ -89,17 +90,16 @@
 
 <script>
 import UserView from '@/components/UserView'
-import { Wishlist } from '@/store/Types'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
-import { buildItemUrl, buildUserMarketUrl, getObjectsDiff } from '@/utils'
+import { buildUserMarketUrl } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 
 const modes = {
-    ORDERS: 'orders',
+    MARKET: 'market',
     WISHLIST: 'wishlist'
 }
 
@@ -134,7 +134,7 @@ export default {
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
         areFiltersVisible: false,
-        selectedMode: modes.WISHLIST
+        mode: modes.WISHLIST
     }),
 
     // async fetch ({ app: { $itemsService } }) {
