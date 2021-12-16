@@ -1,6 +1,6 @@
 <template>
   <div class="a wit-flex wit-flex--column wit-flex--justify-between">
-    <img class="wiz-header__logo" src="/images/hey.png" alt="Hey!" style="max-height: 60px;">
+    <img class="wiz-header__logo" src="/images/hey.webp" alt="Hey!" style="max-height: 60px;">
 
     <div class="wit-flex wit-flex--column">
       <b-button

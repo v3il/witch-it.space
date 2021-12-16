@@ -58,6 +58,7 @@ export const ru = {
     MainMenu_Items: 'Предметы',
     MainMenu_Quests: 'Квесты',
     MainMenu_Settings: 'Настройки',
+    MainMenu_Wishlist: 'Список желаемого: %s',
 
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D',
@@ -180,6 +181,9 @@ export const ru = {
     Items_Filters_AnySlot: 'Любой слот',
     Items_Filters_OnlyTradeable: 'Только обмениваемые',
     Items_Filters_OnlyOwned: 'Только имеющиеся',
+
+    Wishlist_TopTabs_Orders: 'Заказы',
+    Wishlist_TopTabs_Wishlist: 'Желаемое',
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''

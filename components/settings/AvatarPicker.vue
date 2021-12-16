@@ -1,11 +1,11 @@
 <template>
-  <div class="wit-flex wit-flex--align-center">
+  <div class="wit-flex wit-flex--wrap wit-flex--align-center">
     <button
       v-for="avatarId in $options.avatarIds"
       :key="avatarId"
       :class="getAvatarClasses(avatarId)"
       type="is-ghost"
-      class="wit-offset-right--xs wit-avatar-picker__btn"
+      class="wit-offset-right--xs wit-avatar-picker__btn wit-offset-bottom--xs"
       @click="onAvatarSelected(avatarId)"
     >
       <img

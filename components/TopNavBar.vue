@@ -99,7 +99,7 @@ export default {
 }
 
 .wit-link {
-    padding: 4px 24px;
+    padding: 4px 20px;
     width: 100%;
     color: white;
     justify-content: flex-start;
