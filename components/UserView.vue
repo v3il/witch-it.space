@@ -15,11 +15,7 @@
     </div>
 
     <div style="border-bottom: 1px solid #36394c; padding: 24px;">
-      <b-button type="is-primary" class="wit-transition wit-offset-bottom--sm" expanded @click="() => {}">
-        Send trade offer
-      </b-button>
-
-      <div class="wit-flex wit-block--full-width">
+      <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
         <b-button
           type="is-link"
           tag="router-link"
@@ -44,6 +40,10 @@
           </div>
         </b-button>
       </div>
+
+      <b-button type="is-primary" class="wit-transition wit-offset-bottom--sm1" expanded @click="() => {}">
+        Send trade offer
+      </b-button>
 
       <!--      <div class="wit-offset-right&#45;&#45;xs wit-flex__item&#45;&#45;grow wit-overflow&#45;&#45;hidden">-->
       <!--        &lt;!&ndash;        <p class="wit-offset-bottom&#45;&#45;xs">&ndash;&gt;-->
@@ -84,11 +84,14 @@
     </div>
 
     <div style="padding: 24px;">
-      <p class="wit-flex wit-flex--align-center wit-offset-bottom--sm">
-        Steam Guard:
-        <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color--success wit-offset-left--xxs" icon="shield-check" />
-        <b-icon v-else size="is-small" class="is-size-6 wit-color--danger wit-offset-left--xxs" icon="shield-remove" />
-      </p>
+      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs">
+        <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success" icon="shield-check" />
+        <b-icon v-else size="is-large1" class="is-size-61 wit-color--danger" icon="shield-remove" />
+      </b-tooltip>
+
+      <b-tooltip label="Items exchange" class="ttt">
+        <b-icon size="is-large1" class="is-size-61 wit-color--danger" icon="swap-horizontal-circle-outline" />
+      </b-tooltip>
     </div>
   </div>
 </template>
@@ -173,7 +176,22 @@ export default {
     }
 
     &:not(:last-child) {
-        border-right: 1px solid #2e3648;
+        border-right: 1px solid #36394c;
     }
+}
+
+.ttt {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #36394c;
+    border-radius: 50%;
+}
+</style>
+
+<style>
+.ttt .tooltip-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 </style>
