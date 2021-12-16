@@ -20,7 +20,9 @@
     </TopNavBar>
 
     <div class="wit-items wit-flex">
-      <UserView v-if="user" :profile="user" style="flex-basis: 350px;" class="wit-offset-right--md" />
+      <div style="flex-basis: 350px;" class="wit-offset-right--md">
+        <UserView v-if="user" :profile="user" />
+      </div>
 
       <div class="wit-flex__item--grow">
         <div class="wit-flex wit-offset-bottom--md wit-flex--justify-center">
