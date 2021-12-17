@@ -13,6 +13,8 @@ const initUserModel = (sequelize, DataTypes) => {
             discordId: DataTypes.STRING,
             discordTag: DataTypes.STRING,
             googleId: DataTypes.STRING,
+            marketNote: DataTypes.TEXT,
+            wishlistNote: DataTypes.TEXT,
             questsUpdateTimestamp: DataTypes.INTEGER,
 
             theme: {
@@ -31,6 +33,11 @@ const initUserModel = (sequelize, DataTypes) => {
             },
 
             isGuardProtected: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
+
+            allowMaterialsReplacement: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
             },

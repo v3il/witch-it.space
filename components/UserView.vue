@@ -1,5 +1,5 @@
 <template>
-  <div class="wis-profile-view wit-background--content">
+  <div class="wis-profile-view wit-background--content wit-position--relative">
     <div style="border-bottom: 1px solid #36394c; padding: 24px;">
       <img
         :src="avatarUrl"
@@ -15,7 +15,13 @@
     </div>
 
     <div style="border-bottom: 1px solid #36394c; padding: 24px;">
-      <div class="wit-flex wit-block--full-width wit-offset-bottom--xs">
+      <b-button type="is-primary" class="wit-transition wit-offset-bottom--sm1" expanded @click="() => {}">
+        Send trade offer
+      </b-button>
+    </div>
+
+    <div style="border-bottom: 1px solid #36394c; padding: 4px;">
+      <div class="wit-flex wit-block--full-width wit-offset-bottom--xs1">
         <b-button
           type="is-link"
           tag="router-link"
@@ -40,57 +46,25 @@
           </div>
         </b-button>
       </div>
-
-      <b-button type="is-primary" class="wit-transition wit-offset-bottom--sm1" expanded @click="() => {}">
-        Send trade offer
-      </b-button>
-
-      <!--      <div class="wit-offset-right&#45;&#45;xs wit-flex__item&#45;&#45;grow wit-overflow&#45;&#45;hidden">-->
-      <!--        &lt;!&ndash;        <p class="wit-offset-bottom&#45;&#45;xs">&ndash;&gt;-->
-      <!--        &lt;!&ndash;          {{ $t('OffersAvailable', [profile.offersCount]) }}&ndash;&gt;-->
-      <!--        &lt;!&ndash;        </p>&ndash;&gt;-->
-      <!--              <p class="wit-flex wit-flex&#45;&#45;align-center">-->
-      <!--                Steam Guard:-->
-      <!--                <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-6 wit-color&#45;&#45;success wit-offset-left&#45;&#45;xxs" icon="shield-check" />-->
-      <!--                <b-icon v-else size="is-small" class="is-size-6 wit-color&#45;&#45;danger wit-offset-left&#45;&#45;xxs" icon="shield-remove" />-->
-      <!--              </p>-->
-      <!--      </div>-->
-
-      <!--      <div class="wit-flex wit-flex&#45;&#45;column">-->
-      <!--        <b-button-->
-      <!--          v-if="profile.steamProfileUrl"-->
-      <!--          type="is-link"-->
-      <!--          tag="a"-->
-      <!--          :href="profile.steamProfileUrl"-->
-      <!--          target="_blank"-->
-      <!--          class="wit-offset-bottom&#45;&#45;xs wit-transition&#45;&#45;background wit-flex wit-flex&#45;&#45;center wis-profile-view__social-btn"-->
-      <!--          @click.stop-->
-      <!--        >-->
-      <!--          <b-icon size="is-small" class="is-size-5" icon="steam" />-->
-      <!--        </b-button>-->
-
-      <!--        <b-button-->
-      <!--          v-if="profile.discordDMUrl"-->
-      <!--          type="is-link"-->
-      <!--          tag="a"-->
-      <!--          :href="profile.discordDMUrl"-->
-      <!--          target="_blank"-->
-      <!--          class="wit-transition&#45;&#45;background wit-flex wit-flex&#45;&#45;center wis-profile-view__social-btn"-->
-      <!--          @click.stop-->
-      <!--        >-->
-      <!--          <b-icon size="is-small" class="is-size-5" icon="discord" />-->
-      <!--        </b-button>-->
-      <!--      </div>-->
     </div>
 
-    <div style="padding: 24px;">
-      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs">
-        <b-icon v-if="profile.isGuardProtected" size="is-small" class="is-size-61 wit-color--success" icon="shield-check" />
-        <b-icon v-else size="is-large1" class="is-size-61 wit-color--danger" icon="shield-remove" />
+    <div v-if="profile.wishlistNote" style="padding: 24px;">
+      <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--sm">
+        Wishlist note
+      </h5>
+      <p class="wit-line-height--md wit-color--muted">
+        {{ profile.wishlistNote }}
+      </p>
+    </div>
+
+    <div class="tttttt">
+      <b-tooltip label="Steam Guard" class="ttt wit-offset-right--xs1">
+        <b-icon v-if="profile.isGuardProtected" custom-size="mdi-24px" size="is-small1" class="is-size-61 wit-color--success" icon="shield-check" />
+        <b-icon v-else size="is-small1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="shield-remove" />
       </b-tooltip>
 
       <b-tooltip label="Items exchange" class="ttt">
-        <b-icon size="is-large1" class="is-size-61 wit-color--danger" icon="swap-horizontal-circle-outline" />
+        <b-icon size="is-medium1" custom-size="mdi-24px" class="is-size-61 wit-color--danger" icon="swap-horizontal-circle-outline" />
       </b-tooltip>
     </div>
   </div>
@@ -181,11 +155,19 @@ export default {
 }
 
 .ttt {
-    width: 50px;
-    height: 50px;
     border: 1px solid #36394c;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
 }
+
+.tttttt {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border-radius: 24px;
+}
+
 </style>
 
 <style>

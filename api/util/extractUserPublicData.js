@@ -23,7 +23,10 @@ export const extractUserPublicData = (user) => {
         isDiscordConnected,
         isAnySocialConnected,
         discordDMUrl,
-        hasLocalProfile: !!user.password
+        hasLocalProfile: !!user.password,
+        marketNote: user.marketNote,
+        wishlistNote: user.wishlistNote,
+        allowMaterialsReplacement: user.allowMaterialsReplacement
     }
 }
 
@@ -38,6 +41,9 @@ export const extractOtherUsersPublicData = (user) => {
         steamProfileUrl: user.steamProfileUrl,
         steamTradeLink: user.steamTradeLink,
         discordDMUrl,
-        offersCount: Math.floor(Math.random() * 10)
+        offersCount: Math.floor(Math.random() * 10),
+        marketNote: user.marketNote,
+        wishlistNote: user.wishlistNote,
+        allowMaterialsReplacement: user.allowMaterialsReplacement
     }
 }
