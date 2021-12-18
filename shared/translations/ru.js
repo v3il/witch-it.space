@@ -161,6 +161,11 @@ export const ru = {
     Settings_ProfileVisibilityChanged: 'Видимость профиля изменена',
     Settings_RemoveProfileTitle: 'Удаление профиля',
     Settings_WannaRemoveProfile: 'Вы действительно хотите удалить ваш профиль?<br>Ваш маркет и список желаний будут безвозвратно удалены',
+    Settings_NotVerifiedAccountTitle: 'Ваш профиль не верифицирован',
+    Settings_NotVerifiedAccountMessage: 'Некоторые функции сайта (например, маркет) не доступны для таких аккаунтов. Также ваш профиль не будет отображаться в списке пользователей сайта.<br>Для верификации аккаунта необходимо выполнить следующие задания:',
+    Settings_NotVerifiedAccountTask1: 'Подключить аккаунт Steam',
+    Settings_NotVerifiedAccountTask2: 'Подключить аккаунт Discord',
+    Settings_NotVerifiedAccountTask3: 'Добавить ссылку на обмен Steam',
 
     Profiles_AllProfiles: 'Все профили',
     Profiles_FilteredProfiles: 'Выбранные профили',

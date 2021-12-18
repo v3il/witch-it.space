@@ -47,3 +47,12 @@
         }
     }
 }
+
+.message.wis-settings-message {
+    background-color: #222736;
+    border: 1px solid #f14668;
+
+    .message-body {
+        color: var(--red-400);
+    }
+}

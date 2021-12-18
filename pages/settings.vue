@@ -4,17 +4,32 @@
       <template #brand>
         {{ $t('MainMenu_Settings') }}
       </template>
-
-      <template #topMenu>
-        <TopTabs :modes="[]" selected-mode="">
-          <template #slot0>
-            0
-          </template>
-        </TopTabs>
-      </template>
     </TopNavBar>
 
     <div class="wit-settings">
+      <b-message
+        v-if="!user.isVerified"
+        :title="$t('Settings_NotVerifiedAccountTitle')"
+        type="is-danger"
+        :closable="false"
+        class="wis-settings-message wit-line-height--md wit-offset-bottom--none"
+        aria-close-label="Close message"
+      >
+        <p class="wit-color--white wit-offset-bottom--xs" v-html="$t('Settings_NotVerifiedAccountMessage')" />
+
+        <ul class="wit-color--warning wit-settings__todo-list">
+          <li v-if="!user.isSteamConnected">
+            {{ $t('Settings_NotVerifiedAccountTask1') }}
+          </li>
+          <li v-if="!user.isDiscordConnected">
+            {{ $t('Settings_NotVerifiedAccountTask2') }}
+          </li>
+          <li v-if="!hasTradeLink">
+            {{ $t('Settings_NotVerifiedAccountTask3') }}
+          </li>
+        </ul>
+      </b-message>
+
       <div class="wit-flex wit-flex--justify-end wit-settings__sticky-panel">
         <b-field>
           <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="updateSettings">
@@ -61,7 +76,7 @@
           <b-input
             v-model="password"
             type="password"
-            autocomplete="off"
+            autocomplete="new-password"
             :disabled="!hasLocalProfile"
             :placeholder="$t('Login_PasswordInputPlaceholder')"
             custom-class="wit-transition"
@@ -250,6 +265,10 @@ export default {
 
         isProfilePublic () {
             return this.user.isPublic
+        },
+
+        hasTradeLink () {
+            return !!this.user.steamTradeLink
         }
     },
 
@@ -401,9 +420,14 @@ export default {
 
 .wit-settings__sticky-panel {
     position: sticky;
-    top: var(--header-height);
+    top: calc(var(--header-height) - 1px);
     z-index: 2;
     background: var(--body-bg);
     padding: var(--offset-sm) 0;
+}
+
+.wit-settings__todo-list {
+    list-style: decimal;
+    margin-left: var(--offset-sm);
 }
 </style>
