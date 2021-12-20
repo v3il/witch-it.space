@@ -22,7 +22,7 @@
     </TopNavBar>
 
     <div class="wit-items wit-flex">
-      <div style="flex-basis: 350px;" class="wit-offset-right--md wit-background--content ">
+      <div style="flex-basis: 350px;" class="wit-offset-right--md">
         <UserView v-if="profile" :profile="profile" />
       </div>
 

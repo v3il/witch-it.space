@@ -108,10 +108,10 @@ export default {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        top: -5px;
-        right: -5px;
+        top: -8px;
+        right: -8px;
         background-color: var(--danger);
-        animation: pulse 5s infinite linear;
+        animation: pulse 10s infinite linear;
         will-change: opacify;
         border: 3px solid #36394c;
         box-sizing: content-box;

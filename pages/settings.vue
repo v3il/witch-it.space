@@ -4,6 +4,19 @@
       <template #brand>
         {{ $t('MainMenu_Settings') }}
       </template>
+
+      <template #topMenu>
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="() => {}">
+          <template #tab0>
+            {{ $t('Wishlist_TopTabs_Orders') }}
+          </template>
+
+          <template #tab1>
+            {{ $t('Wishlist_TopTabs_Wishlist') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
+          </template>
+        </TopTabs>
+      </template>
     </TopNavBar>
 
     <div class="wit-settings">

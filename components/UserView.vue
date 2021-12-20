@@ -1,15 +1,15 @@
 <template>
-  <div class="wis-user-view wit-position--relative">
+  <div class="wis-user-view wit-background--content wit-position--relative">
     <div class="wis-user-view__icons">
       <b-tooltip :label="steamGuardStatusTooltipText" class="wis-user-view__icon" square>
         <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-24px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
+          <i class="mdi mdi-18px" :class="[steamGuardStatusClass, steamGuardStatusIcon]" />
         </div>
       </b-tooltip>
 
       <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-view__icon" square>
         <div class="wit-flex wit-flex--center wit-block--full-height">
-          <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />
+          <i class="mdi mdi-swap-horizontal-circle-outline mdi-18px" :class="allowMaterialsReplacementClass" />
         </div>
       </b-tooltip>
     </div>
@@ -209,8 +209,8 @@ export default {
 .wis-user-view__icon {
     border: 1px solid var(--user-view-border);
     border-radius: 50%;
-    width: var(--offset-xlg);
-    height: var(--offset-xlg);
+    width: var(--offset-lg);
+    height: var(--offset-lg);
 }
 
 .wis-user-view__icons {
