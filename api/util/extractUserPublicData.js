@@ -27,7 +27,10 @@ export const extractUserPublicData = (user) => {
         hasLocalProfile: !!user.password,
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
-        allowMaterialsReplacement: user.allowMaterialsReplacement,
+        isStrictPrice: user.isStrictPrice,
+        isWorkingWithSteamGuardedOnly: user.isWorkingWithSteamGuardedOnly,
+        isBargainAvailable: user.isBargainAvailable,
+        isTradingOnlyDups: user.isTradingOnlyDups,
         isVerified
     }
 }
@@ -50,7 +53,10 @@ export const extractOtherUsersPublicData = (user) => {
         offersCount: Math.floor(Math.random() * 10),
         marketNote: user.marketNote,
         wishlistNote: user.wishlistNote,
-        allowMaterialsReplacement: user.allowMaterialsReplacement,
+        isStrictPrice: user.isStrictPrice,
+        isWorkingWithSteamGuardedOnly: user.isWorkingWithSteamGuardedOnly,
+        isBargainAvailable: user.isBargainAvailable,
+        isTradingOnlyDups: user.isTradingOnlyDups,
         isVerified
     }
 }

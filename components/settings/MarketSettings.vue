@@ -4,7 +4,25 @@
       {{ $t('Settings_MarketSettings') }}
     </template>
 
-    <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsAllowedReplaceMaterials')">
+    <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsStrictPrice')">
+      <b-switch :value="marketSettings.isStrictPrice" @input="onStatusChange">
+        {{ marketSettings.isStrictPrice ? $t('Yes') : $t('No') }}
+      </b-switch>
+    </b-field>
+
+    <b-field class="wit-offset-bottom--none" :label="$t('Settings_AcceptsTradeFromNonGuardedUsers')">
+      <b-switch :value="marketSettings.allowMaterialsReplacement" @input="onStatusChange">
+        {{ marketSettings.allowMaterialsReplacement ? $t('Yes') : $t('No') }}
+      </b-switch>
+    </b-field>
+
+    <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsBargainAvailable')">
+      <b-switch :value="marketSettings.allowMaterialsReplacement" @input="onStatusChange">
+        {{ marketSettings.allowMaterialsReplacement ? $t('Yes') : $t('No') }}
+      </b-switch>
+    </b-field>
+
+    <b-field class="wit-offset-bottom--none" :label="$t('Settings_TradingOnlyDuplicates')">
       <b-switch :value="marketSettings.allowMaterialsReplacement" @input="onStatusChange">
         {{ marketSettings.allowMaterialsReplacement ? $t('Yes') : $t('No') }}
       </b-switch>

@@ -35,9 +35,24 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: false
             },
 
-            allowMaterialsReplacement: {
+            isStrictPrice: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false
+                defaultValue: true
+            },
+
+            isWorkingWithSteamGuardedOnly: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
+            isBargainAvailable: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
+            isTradingOnlyDups: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
             },
 
             isPublic: {

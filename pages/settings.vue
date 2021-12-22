@@ -80,7 +80,7 @@ export default {
         },
 
         marketSettings: {
-            allowMaterialsReplacement: false
+            isStrictPrice: false
         }
     }),
 
@@ -101,7 +101,7 @@ export default {
         this.accountSettings.isGuardProtected = this.user.isGuardProtected
         this.accountSettings.avatarId = this.user.avatarId
 
-        this.marketSettings.allowMaterialsReplacement = this.user.allowMaterialsReplacement
+        this.marketSettings.isStrictPrice = this.user.isStrictPrice
     },
 
     methods: {
@@ -129,7 +129,7 @@ export default {
                     steamTradeLink: this.accountSettings.steamTradeLink,
                     isGuardProtected: this.accountSettings.isGuardProtected,
                     avatarId: this.accountSettings.avatarId,
-                    allowMaterialsReplacement: this.marketSettings.allowMaterialsReplacement
+                    isStrictPrice: this.marketSettings.isStrictPrice
                 }
 
                 if (this.accountSettings.password) {

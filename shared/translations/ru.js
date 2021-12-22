@@ -166,7 +166,10 @@ export const ru = {
     Wishlist_TopTabs_Account: 'Профиль',
     Wishlist_TopTabs_Market: 'Маркет',
     Settings_MarketSettings: 'Настройки маркета',
-    Settings_IsAllowedReplaceMaterials: 'Разрешено заменять ингредиенты другими типами',
+    Settings_IsStrictPrice: 'Разрешено заменять ингредиенты другими типами',
+    Settings_AcceptsTradeFromNonGuardedUsers: 'Принимаю предложения только от пользователей со Steam Guard',
+    Settings_IsBargainAvailable: 'Возможен торг',
+    Settings_TradingOnlyDuplicates: 'Продаю только дубликаты',
 
     Profiles_AllProfiles: 'Все профили',
     Profiles_FilteredProfiles: 'Выбранные профили',
