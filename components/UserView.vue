@@ -71,7 +71,7 @@
     </div>
 
     <div class="wis-user-view__section">
-      <UserIcons :profile="profile" />
+      <UserIcons :profile="profile" :icon-size="18" />
     </div>
   </div>
 </template>

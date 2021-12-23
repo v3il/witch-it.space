@@ -5,37 +5,13 @@
       :key="icon.id"
       :label="$t(icon.tooltipText)"
       class="wis-user-icon"
-      :class="[`wis-user-icon--${iconSize}`]"
+      :class="[`wis-user-icon--${iconSize}`, icon.iconColorClass]"
       square
     >
       <div class="wit-flex wit-flex--center wit-block--full-height">
-        <i class="mdi" :class="[iconSizeClass, icon.iconClass, icon.iconColorClass]" />
+        <i class="mdi" :class="[icon.iconClass, iconSizeClass]" />
       </div>
     </b-tooltip>
-
-    <!--      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-icon" square>-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
-    <!--              <i class="mdi mdi-swap-horizontal-circle-outline mdi-24px" :class="allowMaterialsReplacementClass" />-->
-    <!--          </div>-->
-    <!--      </b-tooltip>-->
-
-    <!--      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-icon" square>-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
-    <!--              <i class="mdi mdi-shield-alert mdi-24px" :class="allowMaterialsReplacementClass" />-->
-    <!--          </div>-->
-    <!--      </b-tooltip>-->
-
-    <!--      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-icon" square>-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
-    <!--              <i class="mdi mdi-database-arrow-down mdi-24px" :class="allowMaterialsReplacementClass" />-->
-    <!--          </div>-->
-    <!--      </b-tooltip>-->
-
-    <!--      <b-tooltip :label="allowMaterialsReplacementTooltipText" class="wis-user-icon" square>-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height">-->
-    <!--              <i class="mdi mdi-content-duplicate mdi-24px" :class="allowMaterialsReplacementClass" />-->
-    <!--          </div>-->
-    <!--      </b-tooltip>11-->
   </div>
 </template>
 
@@ -110,8 +86,8 @@ export default {
 
             return {
                 id: 1,
-                iconClass: isGuarded ? 'mdi-shield-check' : 'mdi-shield-off',
-                iconColorClass: isGuarded ? 'wit-color--success' : 'wit-color--danger',
+                iconClass: 'mdi-shield-check',
+                iconColorClass: isGuarded ? 'wis-user-icon--success' : 'wis-user-icon--danger',
                 tooltipText: isGuarded ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled',
                 isVisible: true
             }
@@ -122,8 +98,8 @@ export default {
 
             return {
                 id: 2,
-                iconClass: 'mdi-swap-horizontal-circle-outline',
-                iconColorClass: isStrictRarity ? 'wit-color--success' : 'wit-color--danger',
+                iconClass: 'mdi-swap-vertical-circle',
+                iconColorClass: isStrictRarity ? 'wis-user-icon--success' : 'wis-user-icon--danger',
                 tooltipText: isStrictRarity ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled',
                 isVisible: !this.showMainOnly
             }
@@ -134,8 +110,8 @@ export default {
 
             return {
                 id: 3,
-                iconClass: onlyGuarded ? 'mdi-lock-alert' : 'mdi-lock-minus',
-                iconColorClass: onlyGuarded ? 'wit-color--success' : 'wit-color--danger',
+                iconClass: 'mdi-shield-remove',
+                iconColorClass: onlyGuarded ? 'wis-user-icon--success' : 'wis-user-icon--danger',
                 tooltipText: onlyGuarded ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
                 isVisible: !this.showMainOnly
             }
@@ -147,7 +123,7 @@ export default {
             return {
                 id: 4,
                 iconClass: 'mdi-database-arrow-down',
-                iconColorClass: isBargainAvailable ? 'wit-color--success' : 'wit-color--danger',
+                iconColorClass: isBargainAvailable ? 'wis-user-icon--success' : 'wis-user-icon--danger',
                 tooltipText: isBargainAvailable ? 'UserView_BargainAvailable' : 'UserView_BargainNotAvailable',
                 isVisible: !this.showMainOnly
             }
@@ -158,8 +134,8 @@ export default {
 
             return {
                 id: 5,
-                iconClass: 'mdi-content-duplicate',
-                iconColorClass: isTradingOnlyDups ? 'wit-color--success' : 'wit-color--danger',
+                iconClass: 'mdi-numeric-2-box-multiple',
+                iconColorClass: isTradingOnlyDups ? 'wis-user-icon--success' : 'wis-user-icon--danger',
                 tooltipText: isTradingOnlyDups ? 'UserView_TradingOnlyDupes' : 'UserView_TradingAnyItem',
                 isVisible: !this.showMainOnly
             }
@@ -169,9 +145,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$icon-size: 12px;
+
 .wis-user-icon {
-    border: 1px solid var(--user-view-border);
+    border: 2px solid var(--user-view-border);
     border-radius: 50%;
+
+    &::after {
+        display: flex;
+        position: absolute;
+        width: $icon-size;
+        height: $icon-size;
+        top: -4px;
+        right: -2px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        font-size: $icon-size;
+        line-height: $icon-size;
+        color: #2a3042;
+        font-weight: bold;
+    }
 
     &.wis-user-icon--24 {
         width: 40px;
@@ -179,8 +173,35 @@ export default {
     }
 
     &.wis-user-icon--18 {
-        width: 32px;
-        height: 32px;
+        width: 36px;
+        height: 36px;
+    }
+
+    &.wis-user-icon--success {
+        border-color: var(--success);
+
+        &::after {
+            background: var(--success);
+            content: "\F012C";
+            font-family: "Material Design Icons", serif;
+        }
+
+        .mdi {
+            color: var(--success);
+        }
+    }
+
+    &.wis-user-icon--danger {
+        border-color: var(--danger);
+
+        &::after {
+            background: var(--danger);
+            content: "×";
+        }
+
+        .mdi {
+            color: var(--danger);
+        }
     }
 
     &:not(:last-child) {
