@@ -24,13 +24,14 @@
 
       <template v-if="isAccountMode">
         <AccountSettings :profile="user" :account-settings="accountSettings" @change="accountSettings = $event" />
-        <SocialNetworks :profile="user" />
-        <DangerZone :profile="user" />
+        <SocialNetworks :profile="user" class="wit-offset-bottom--xlg" />
       </template>
 
       <template v-else>
-        <MarketSettings :market-settings="marketSettings" @change="marketSettings = $event" />
+        <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--xlg" @change="marketSettings = $event" />
       </template>
+
+      <DangerZone :profile="user" />
     </div>
   </div>
 </template>
@@ -80,7 +81,11 @@ export default {
         },
 
         marketSettings: {
-            isStrictPrice: false
+            isStrictRarity: false,
+            onlyGuarded: false,
+            isBargainAvailable: false,
+            isTradingOnlyDups: false,
+            areRecipesHidden: false
         }
     }),
 
@@ -101,7 +106,11 @@ export default {
         this.accountSettings.isGuardProtected = this.user.isGuardProtected
         this.accountSettings.avatarId = this.user.avatarId
 
-        this.marketSettings.isStrictPrice = this.user.isStrictPrice
+        this.marketSettings.isStrictRarity = this.user.isStrictRarity
+        this.marketSettings.onlyGuarded = this.user.onlyGuarded
+        this.marketSettings.isBargainAvailable = this.user.isBargainAvailable
+        this.marketSettings.isTradingOnlyDups = this.user.isTradingOnlyDups
+        this.marketSettings.areRecipesHidden = this.user.areRecipesHidden
     },
 
     methods: {
@@ -129,7 +138,11 @@ export default {
                     steamTradeLink: this.accountSettings.steamTradeLink,
                     isGuardProtected: this.accountSettings.isGuardProtected,
                     avatarId: this.accountSettings.avatarId,
-                    isStrictPrice: this.marketSettings.isStrictPrice
+                    isStrictRarity: this.marketSettings.isStrictRarity,
+                    onlyGuarded: this.marketSettings.onlyGuarded,
+                    isBargainAvailable: this.marketSettings.isBargainAvailable,
+                    isTradingOnlyDups: this.marketSettings.isTradingOnlyDups,
+                    areRecipesHidden: this.marketSettings.areRecipesHidden
                 }
 
                 if (this.accountSettings.password) {

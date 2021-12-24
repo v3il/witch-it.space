@@ -1,5 +1,5 @@
 <template>
-  <Card class="wit-offset-bottom--xlg">
+  <Card>
     <template #title>
       {{ $t('Settings_SocialNetworks') }}
     </template>

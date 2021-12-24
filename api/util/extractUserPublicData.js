@@ -31,6 +31,7 @@ export const extractUserPublicData = (user) => {
         onlyGuarded: user.onlyGuarded,
         isBargainAvailable: user.isBargainAvailable,
         isTradingOnlyDups: user.isTradingOnlyDups,
+        areRecipesHidden: user.areRecipesHidden,
         isVerified
     }
 }
@@ -57,6 +58,7 @@ export const extractOtherUsersPublicData = (user) => {
         onlyGuarded: user.onlyGuarded,
         isBargainAvailable: user.isBargainAvailable,
         isTradingOnlyDups: user.isTradingOnlyDups,
+        areRecipesHidden: user.areRecipesHidden,
         isVerified
     }
 }

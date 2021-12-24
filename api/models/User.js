@@ -55,6 +55,11 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: true
             },
 
+            areRecipesHidden: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
             isPublic: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: true
