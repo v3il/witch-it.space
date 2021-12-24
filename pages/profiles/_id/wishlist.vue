@@ -23,7 +23,17 @@
 
     <div class="wit-items wit-flex">
       <div style="flex-basis: 350px;" class="wit-offset-right--md">
-        <UserView v-if="profile" :profile="profile" />
+        <UserView v-if="profile" :profile="profile">
+          <template #note>
+            <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
+              {{ $t('UserView_NoteTitle') }}111
+            </h5>
+
+            <p class="wit-line-height--md wit-color--muted">
+              {{ profile.wishlistNote }}
+            </p>
+          </template>
+        </UserView>
       </div>
 
       <div class="wit-flex__item--grow">

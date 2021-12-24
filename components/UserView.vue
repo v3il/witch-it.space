@@ -60,14 +60,8 @@
       </div>
     </div>
 
-    <div v-if="profile.wishlistNote" class="wis-user-view__section">
-      <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
-        {{ $t('UserView_NoteTitle') }}
-      </h5>
-
-      <p class="wit-line-height--md wit-color--muted">
-        {{ profile.wishlistNote }}
-      </p>
+    <div v-if="$slots.note" class="wis-user-view__section">
+      <slot name="note" />
     </div>
 
     <div class="wis-user-view__section">
