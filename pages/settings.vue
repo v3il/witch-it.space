@@ -28,7 +28,8 @@
       </template>
 
       <template v-else>
-        <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--xlg" @change="marketSettings = $event" />
+        <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--sm" @change="marketSettings = $event" />
+        <NoteEditor class="wit-offset-bottom--xlg" />
       </template>
 
       <DangerZone :profile="user" />
@@ -47,6 +48,7 @@ import DangerZone from '@/components/settings/DangerZone'
 import MarketSettings from '@/components/settings/MarketSettings'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'
+import NoteEditor from '@/components/settings/NoteEditor'
 
 const Modes = {
     ACCOUNT: 'account',
@@ -63,7 +65,8 @@ export default {
         DangerZone,
         MarketSettings,
         NotVerifiedProfileMessage,
-        StickyPanel
+        StickyPanel,
+        NoteEditor
     },
 
     middleware: ['fetchUser'],
