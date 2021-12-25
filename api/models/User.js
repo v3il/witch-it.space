@@ -11,9 +11,17 @@ const initUserModel = (sequelize, DataTypes) => {
             steamTradeLink: DataTypes.STRING,
             discordId: DataTypes.STRING,
             googleId: DataTypes.STRING,
-            marketNote: DataTypes.TEXT,
-            wishlistNote: DataTypes.TEXT,
             questsUpdateTimestamp: DataTypes.INTEGER,
+
+            marketNote: {
+                type: DataTypes.TEXT,
+                defaultValue: ''
+            },
+
+            wishlistNote: {
+                type: DataTypes.TEXT,
+                defaultValue: ''
+            },
 
             theme: {
                 type: DataTypes.STRING,

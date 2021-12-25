@@ -100,7 +100,9 @@ const updateSettings = async (request, response) => {
         onlyGuarded,
         isBargainAvailable,
         isTradingOnlyDups,
-        areRecipesHidden
+        areRecipesHidden,
+        wishlistNote,
+        marketNote
     } = request.body
 
     const errors = []
@@ -137,7 +139,9 @@ const updateSettings = async (request, response) => {
         onlyGuarded: !!onlyGuarded,
         isBargainAvailable: !!isBargainAvailable,
         isTradingOnlyDups: !!isTradingOnlyDups,
-        areRecipesHidden: !!areRecipesHidden
+        areRecipesHidden: !!areRecipesHidden,
+        wishlistNote,
+        marketNote
     }
 
     if (password) {

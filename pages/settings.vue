@@ -29,7 +29,8 @@
 
       <template v-else>
         <MarketSettings :market-settings="marketSettings" class="wit-offset-bottom--sm" @change="marketSettings = $event" />
-        <NoteEditor class="wit-offset-bottom--xlg" />
+        <NoteEditor :content="marketSettings.marketNote" label="Market" class="wit-offset-bottom--sm" @input="marketSettings.marketNote = $event" />
+        <NoteEditor :content="marketSettings.wishlistNote" label="Wishlist" class="wit-offset-bottom--xlg" @input="marketSettings.wishlistNote = $event" />
       </template>
 
       <DangerZone :profile="user" />
@@ -88,7 +89,9 @@ export default {
             onlyGuarded: false,
             isBargainAvailable: false,
             isTradingOnlyDups: false,
-            areRecipesHidden: false
+            areRecipesHidden: false,
+            marketNote: '',
+            wishlistNote: ''
         }
     }),
 
@@ -114,6 +117,8 @@ export default {
         this.marketSettings.isBargainAvailable = this.user.isBargainAvailable
         this.marketSettings.isTradingOnlyDups = this.user.isTradingOnlyDups
         this.marketSettings.areRecipesHidden = this.user.areRecipesHidden
+        this.marketSettings.marketNote = this.user.marketNote
+        this.marketSettings.wishlistNote = this.user.wishlistNote
     },
 
     methods: {
@@ -145,7 +150,9 @@ export default {
                     onlyGuarded: this.marketSettings.onlyGuarded,
                     isBargainAvailable: this.marketSettings.isBargainAvailable,
                     isTradingOnlyDups: this.marketSettings.isTradingOnlyDups,
-                    areRecipesHidden: this.marketSettings.areRecipesHidden
+                    areRecipesHidden: this.marketSettings.areRecipesHidden,
+                    marketNote: this.marketSettings.marketNote,
+                    wishlistNote: this.marketSettings.wishlistNote
                 }
 
                 if (this.accountSettings.password) {

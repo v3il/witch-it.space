@@ -1,22 +1,39 @@
 <template>
   <Card>
-    <b-field label="Message">
-      <b-input maxlength="200" type="textarea" />
-    </b-field>
+    <template #title>
+      {{ label }}
+    </template>
+
+    <TextEditor :content="content" @input="$emit('input', $event)" />
   </Card>
 </template>
 
 <script>
-// import VueTrix from 'vue-trix'
 import Card from '@/components/Card'
+import TextEditor from '@/components/TextEditor'
 
 export default {
+    name: 'NoteEditor',
+
     components: {
-        Card
+        Card,
+        TextEditor
     },
 
-    data: () => ({
-        cont: 'test'
-    })
+    props: {
+        content: {
+            type: String,
+            required: true
+        },
+
+        label: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
+
+<style scoped>
+
+</style>
