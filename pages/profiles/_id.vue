@@ -23,21 +23,22 @@
 
     <div class="wit-items wit-flex">
       <div style="flex-basis: 350px;" class="wit-offset-right--md">
-        <UserView v-if="user" :profile="user">
-          <!-- todo -->
-          <template #note>
+        <UserView v-if="profile" :profile="profile">
+          <template v-if="note" #note>
             <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
               {{ $t('UserView_NoteTitle') }}
             </h5>
 
-            <p class="wit-line-height--md wit-color--muted">
-              {{ user.wishlistNote }}
+            <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
+              {{ note.trim() }}
             </p>
           </template>
         </UserView>
       </div>
 
       <div class="wit-flex__item--grow">
+        {{ isMyProfile }}
+        <pre>{{ user }}</pre>
         <nuxt-child />
       </div>
 
@@ -107,6 +108,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import UserView from '@/components/UserView'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
@@ -116,6 +118,7 @@ import WishlistItemView from '@/components/wishlist/WishlistItemView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { Routes } from '@/shared'
+import { User } from '@/store'
 
 const Modes = {
     MARKET: 'market',
@@ -148,13 +151,31 @@ export default {
 
     data: () => ({
         wishlist: [],
-        user: null,
+        profile: null,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
         areFiltersVisible: false,
         mode: Modes.MARKET
     }),
+
+    computed: {
+        ...mapState(User.PATH, [
+            User.State.USER
+        ]),
+
+        isMyProfile () {
+            return this.user.id === this.profile?.id
+        },
+
+        isMarket () {
+            return this.mode === Modes.MARKET
+        },
+
+        note () {
+            return this.isMarket ? this.profile.marketNote : this.profile.wishlistNote
+        }
+    },
 
     watch: {
         $route: {
@@ -173,19 +194,19 @@ export default {
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
+        const { error, wishlist, user: profile } = await this.$wishlistService.fetch(this.$route.params.id)
 
         if (error) {
             return this.$showError(error)
         }
 
         this.wishlist = wishlist
-        this.user = user
+        this.profile = profile
     },
 
     methods: {
         onModeChange (mode) {
-            const route = mode === Modes.MARKET ? buildUserMarketUrl(this.user.id) : buildUserWishlistUrl(this.user.id)
+            const route = mode === Modes.MARKET ? buildUserMarketUrl(this.profile.id) : buildUserWishlistUrl(this.profile.id)
             this.$router.push(route)
         }
     }
