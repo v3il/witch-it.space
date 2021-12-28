@@ -194,6 +194,8 @@ const getById = async (request, response) => {
 
     const user = await userService.getById(id)
 
+    console.log(user)
+
     if (!user) {
         throw new NotFound(translateText('Error_UserNotFound', request.locale))
     }
