@@ -22,25 +22,31 @@
     </TopNavBar>
 
     <div class="wit-items wit-flex">
-      <div style="flex-basis: 350px;" class="wit-offset-right--md">
-        <UserView v-if="profile" :profile="profile">
-          <template v-if="note" #note>
-            <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
-              {{ $t('UserView_NoteTitle') }}
-            </h5>
+      <template v-if="error">
+        No user
+      </template>
 
-            <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
-              {{ note.trim() }}
-            </p>
-          </template>
-        </UserView>
-      </div>
+      <template v-else>
+        <div style="flex-basis: 350px;" class="wit-offset-right--md">
+          <UserView v-if="profile" :profile="profile">
+            <template v-if="note" #note>
+              <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
+                {{ $t('UserView_NoteTitle') }}
+              </h5>
 
-      <div class="wit-flex__item--grow">
-        {{ isMyProfile }}
-        <pre>{{ user }}</pre>
-        <nuxt-child />
-      </div>
+              <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
+                {{ note.trim() }}
+              </p>
+            </template>
+          </UserView>
+        </div>
+
+        <div class="wit-flex__item--grow">
+          {{ isMyProfile }}
+          <pre>{{ user }}</pre>
+          <nuxt-child />
+        </div>
+      </template>
 
       <!--                <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">-->
       <!--                    <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">-->
@@ -152,6 +158,7 @@ export default {
     data: () => ({
         wishlist: [],
         profile: null,
+        error: null,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
@@ -194,13 +201,13 @@ export default {
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, wishlist, user: profile } = await this.$wishlistService.fetch(this.$route.params.id)
+        const { error, user: profile } = await this.$userService.fetch(this.$route.params.id + 1)
 
         if (error) {
-            return this.$showError(error)
+            this.$showError(error)
         }
 
-        this.wishlist = wishlist
+        this.error = error
         this.profile = profile
     },
 

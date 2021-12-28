@@ -1,4 +1,4 @@
-import { BadRequest } from '@curveball/http-errors'
+import { BadRequest, NotFound } from '@curveball/http-errors'
 import { genSalt, hash } from 'bcrypt'
 import { User } from '../models'
 import { extractUserPublicData, translateText } from '../util'
@@ -184,6 +184,22 @@ const removeProfile = async (request, response) => {
     response.sendStatus(200)
 }
 
+const getById = async (request, response) => {
+    const { id } = request.params
+
+    if (!id) {
+        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    }
+
+    const user = await User.findOne({ where: { id } })
+
+    if (!user) {
+        throw new NotFound(translateText('Error_UserNotFound', request.locale))
+    }
+
+    response.send({ user: extractUserPublicData(user) })
+}
+
 const userController = {
     getCurrentUser,
     changeUserLocale,
@@ -191,7 +207,8 @@ const userController = {
     disconnectSocial,
     updateSettings,
     toggleProfile,
-    removeProfile
+    removeProfile,
+    getById
 }
 
 export { userController }

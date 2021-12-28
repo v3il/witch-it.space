@@ -7,15 +7,15 @@ export class UserService {
 
     async fetch (userId) {
         try {
-            const { data } = await this.#axiosInstance.get(`/api/wishlist?userId=${userId}`)
+            const { data } = await this.#axiosInstance.get(`/api/user/${userId}`)
             return {
                 error: null,
-                wishlist: data.wishlist
+                user: data.user
             }
         } catch (e) {
             return {
                 error: e.message,
-                wishlist: null
+                user: null
             }
         }
     }
