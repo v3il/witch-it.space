@@ -53,7 +53,7 @@
     {{ profile.id }} |
     {{ profile.userStat.marketSize }}
 
-    <ProfileScale :profile="profile" @click="onScaleClick" />
+    <ProfileScale :scale-data="{total: 10, whimsical: 3, veryRare: 1, rare: 2, uncommon: 3, common: 1}" @click="onScaleClick" />
 
     <UserIcons :profile="profile" class="wis-profile-view__icons" show-main-only />
   </div>

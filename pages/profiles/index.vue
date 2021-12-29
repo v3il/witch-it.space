@@ -34,7 +34,15 @@
 
           <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
             <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-              <UserView :profile="profile" class="wit-block--full-height wit-profile-view" />
+              <UserView
+                :profile="profile"
+                class="wit-block--full-height wit-profile-view"
+                hide-icons
+                hide-social-buttons
+                hide-trade-button
+                hide-note
+                :avatar-size="50"
+              />
 
               <!--              <ProfileView :profile="profile" class="wit-block&#45;&#45;full-height" />-->
             </div>

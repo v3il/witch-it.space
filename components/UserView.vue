@@ -4,12 +4,41 @@
       <img
         :src="avatarUrl"
         alt="Avatar"
-        class="wis-user-view__avatar wit-offset-bottom--sm"
+        class="wis-user-view__avatar wit-offset-bottom--xs"
+        :style="avatarStyles"
       >
 
       <h5 class="wit-offset-bottom--sm wit-font-size--sm wit-text--overflow wit-text--center">
         {{ profile.displayName }}
       </h5>
+
+      <div v-if="!hideStatButtons" class="wit-offset-bottom--sm">
+        <div class="wit-flex wit-block--full-width">
+          <b-button
+            type="is-link"
+            tag="router-link"
+            :to="marketUrl"
+            class="wis-user-view__stat-button wit-padding-bottom--xxs wit-padding-top--xxs"
+          >
+            <div class="wit-flex wit-flex--column">
+              <span class="wit-font-weight--700">{{ profile.userStat.marketSize }}</span>
+              <span class="wit-color--muted">{{ $t('Profiles_StatButtonOrders') }}</span>
+            </div>
+          </b-button>
+
+          <b-button
+            type="is-link"
+            tag="router-link"
+            :to="wishlistUrl"
+            class="wis-user-view__stat-button wit-padding-bottom--xxs wit-padding-top--xxs"
+          >
+            <div class="wit-flex wit-flex--column">
+              <span class="wit-font-weight--700">{{ profile.userStat.wishlistSize }}</span>
+              <span class="wit-color--muted">{{ $t('Profiles_StatButtonWishlist') }}</span>
+            </div>
+          </b-button>
+        </div>
+      </div>
 
       <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />
     </div>
@@ -55,34 +84,6 @@
           <div class="wit-flex wit-flex--column wit-flex--align-center">
             <i class="mdi mdi-discord mdi-24px" />
             <span class="wit-color--muted">Discord</span>
-          </div>
-        </b-button>
-      </div>
-    </div>
-
-    <div v-if="!hideStatButtons" class="wis-user-view__section wis-user-view__section--xs">
-      <div class="wit-flex wit-block--full-width">
-        <b-button
-          type="is-link"
-          tag="router-link"
-          :to="marketUrl"
-          class="wis-user-view__stat-button wit-paddings--xs"
-        >
-          <div class="wit-flex wit-flex--column">
-            <span class="wit-font-weight--700">{{ profile.userStat.marketSize }}</span>
-            <span class="wit-color--muted">{{ $t('Profiles_StatButtonOrders') }}</span>
-          </div>
-        </b-button>
-
-        <b-button
-          type="is-link"
-          tag="router-link"
-          :to="wishlistUrl"
-          class="wis-user-view__stat-button wit-paddings--xs"
-        >
-          <div class="wit-flex wit-flex--column">
-            <span class="wit-font-weight--700">{{ profile.userStat.wishlistSize }}</span>
-            <span class="wit-color--muted">{{ $t('Profiles_StatButtonWishlist') }}</span>
           </div>
         </b-button>
       </div>
@@ -146,6 +147,12 @@ export default {
             required: false,
             type: Boolean,
             default: false
+        },
+
+        avatarSize: {
+            required: false,
+            type: Number,
+            default: 75
         }
     },
 
@@ -160,6 +167,12 @@ export default {
 
         wishlistUrl () {
             return buildUserWishlistUrl(this.profile.id)
+        },
+
+        avatarStyles () {
+            return {
+                '--avatar-size': `${this.avatarSize}px`
+            }
         },
 
         // steamGuardStatusIcon () {
@@ -225,26 +238,16 @@ export default {
 }
 
 .wis-user-view__avatar {
-    $avatar-size: 75px;
-
-    border-radius: var(--offset-xs);
-    width: $avatar-size;
-    height: $avatar-size;
+    border-radius: var(--offset-xxs);
+    width: var(--avatar-size);
+    height: var(--avatar-size);
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
 
-.wis-user-view__social-btn {
-    $button-size: var(--offset-lg);
-
-    width: $button-size;
-    height: $button-size;
-    border-radius: 50%;
-}
-
 .wis-user-view__stat-button {
-    padding: 0;
+    padding: var(--offset-xxs);
     height: auto;
     transition: background-color var(--default-transition);
     flex: 1 0 50%;
@@ -262,23 +265,4 @@ export default {
         border-right: 1px solid var(--user-view-border);
     }
 }
-
-//.wis-user-view__icon {
-//    border: 1px solid var(--user-view-border);
-//    border-radius: 50%;
-//    width: 48px;
-//    height: 48px;
-//
-//    &:not(:last-child) {
-//        margin-right: 16px;
-//    }
-//}
-
-.wis-user-view__icons {
-    //position: absolute;
-    //top: var(--offset-xs);
-    //right: var(--offset-xs);
-    //border-radius: var(--offset-md);
-}
-
 </style>
