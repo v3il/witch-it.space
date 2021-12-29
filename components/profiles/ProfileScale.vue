@@ -164,6 +164,10 @@ $borderRadius: 4px;
         border-top-right-radius: $borderRadius;
         border-bottom-right-radius: $borderRadius;
     }
+
+    &:not(:last-child) {
+        margin-right: 2px;
+    }
 }
 
 .wit-profile-scale__whimsical {

@@ -55,3 +55,8 @@
         color: var(--red-400);
     }
 }
+
+.mdi-20px::before {
+    font-size: 20px;
+    line-height: 22px;
+}

@@ -23,7 +23,7 @@
       <Card>
         <ProfilesFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
 
-        <div class="wit-padding-top--sm1 wit-padding-bottom--sm1">
+        <div>
           <Loader v-if="isLoading" />
 
           <div v-else-if="isMyProfileMode" class="wit-flex wit-flex--wrap wis-profiles__grid">
@@ -43,8 +43,6 @@
                 hide-note
                 :avatar-size="50"
               />
-
-              <!--              <ProfileView :profile="profile" class="wit-block&#45;&#45;full-height" />-->
             </div>
           </div>
 
@@ -59,7 +57,6 @@
 import { isEqual } from 'lodash'
 import { mapState } from 'vuex'
 import ProfilesFilter from '@/components/profiles/ProfilesFilter'
-import ProfileView from '@/components/profiles/ProfileView'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
@@ -82,7 +79,6 @@ export default {
 
     components: {
         ProfilesFilter,
-        ProfileView,
         Card,
         TopNavBar,
         TopTabs,

@@ -4,11 +4,11 @@
       <img
         :src="avatarUrl"
         alt="Avatar"
-        class="wis-user-view__avatar wit-offset-bottom--xs"
+        class="wis-user-view__avatar"
         :style="avatarStyles"
       >
 
-      <h5 class="wit-offset-bottom--sm wit-font-size--sm wit-text--overflow wit-text--center">
+      <h5 class="wit-font-size--sm wit-text--overflow wit-text--center" :class="titleOffsetClass">
         {{ profile.displayName }}
       </h5>
 
@@ -18,7 +18,7 @@
             type="is-link"
             tag="router-link"
             :to="marketUrl"
-            class="wis-user-view__stat-button wit-padding-bottom--xxs wit-padding-top--xxs"
+            class="wis-user-view__stat-button"
           >
             <div class="wit-flex wit-flex--column">
               <span class="wit-font-weight--700">{{ profile.userStat.marketSize }}</span>
@@ -30,7 +30,7 @@
             type="is-link"
             tag="router-link"
             :to="wishlistUrl"
-            class="wis-user-view__stat-button wit-padding-bottom--xxs wit-padding-top--xxs"
+            class="wis-user-view__stat-button"
           >
             <div class="wit-flex wit-flex--column">
               <span class="wit-font-weight--700">{{ profile.userStat.wishlistSize }}</span>
@@ -68,7 +68,7 @@
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <i class="mdi mdi-steam mdi-24px" />
+            <i class="mdi mdi-steam mdi-20px" />
             <span class="wit-color--muted">Steam</span>
           </div>
         </b-button>
@@ -82,7 +82,7 @@
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <i class="mdi mdi-discord mdi-24px" />
+            <i class="mdi mdi-discord mdi-20px" />
             <span class="wit-color--muted">Discord</span>
           </div>
         </b-button>
@@ -175,27 +175,12 @@ export default {
             }
         },
 
-        // steamGuardStatusIcon () {
-        //     return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
-        // },
-        //
-        // steamGuardStatusClass () {
-        //     return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
-        // },
-        //
-        // steamGuardStatusTooltipText () {
-        //     const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
-        //     return this.$t(id)
-        // },
-
-        // allowMaterialsReplacementClass () {
-        //     return this.profile.allowMaterialsReplacement ? 'wit-color--success' : 'wit-color--danger'
-        // },
-        //
-        // allowMaterialsReplacementTooltipText () {
-        //     const id = this.profile.allowMaterialsReplacement ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
-        //     return this.$t(id)
-        // },
+        titleOffsetClass () {
+            return {
+                'wit-offset-top--xs wit-offset-bottom--xs': this.avatarSize <= 50,
+                'wit-offset-top--sm wit-offset-bottom--sm': this.avatarSize > 50
+            }
+        },
 
         profileScaleData () {
             const stat = this.profile.userStat
@@ -234,7 +219,7 @@ export default {
 }
 
 .wis-user-view__section--xs {
-    padding: 4px 0;
+    padding: var(--offset-xxs) 0;
 }
 
 .wis-user-view__avatar {
