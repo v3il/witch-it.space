@@ -11,12 +11,12 @@
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>
             {{ $t('Wishlist_TopTabs_Orders') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ marketSize }}</span>
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profile.userStat.marketSize }}</span>
           </template>
 
           <template #tab1>
             {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlistSize }}</span>
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profile.userStat.wishlistSize }}</span>
           </template>
         </TopTabs>
       </template>
@@ -29,17 +29,7 @@
 
       <template v-else>
         <div style="flex-basis: 350px;" class="wit-offset-right--md">
-          <UserView v-if="profile" :profile="profile" mode="market" hide-stat-buttons>
-            <template v-if="note" #note>
-              <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
-                {{ $t('UserView_NoteTitle') }}
-              </h5>
-
-              <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
-                {{ note.trim() }}
-              </p>
-            </template>
-          </UserView>
+          <UserView v-if="profile" :profile="profile" mode="market" hide-stat-buttons />
         </div>
 
         <div class="wit-flex__item--grow">
@@ -158,8 +148,8 @@ export default {
 
     data: () => ({
         wishlist: [],
-        profile: null,
-        error: null,
+        // profile: null,
+        // error: null,
         marketSize: 0,
         wishlistSize: 0,
         page: 1,
@@ -175,15 +165,11 @@ export default {
         ]),
 
         isMyProfile () {
-            return this.user.id === this.profile?.id
+            return this.user.id === this.profile.id
         },
 
         isMarket () {
             return this.mode === Modes.MARKET
-        },
-
-        note () {
-            return this.isMarket ? this.profile.marketNote : this.profile.wishlistNote
         }
     },
 
@@ -197,28 +183,30 @@ export default {
         }
     },
 
-    // async fetch ({ app: { $itemsService } }) {
-    //     await $itemsService.fetch()
-    //     return { items: $itemsService.toList() }
-    // },
+    async asyncData ({ app: { $userService }, route }) {
+        const { error, profile } = await $userService.fetch(route.params.id)
+        return { error, profile }
+    },
 
     async created () {
         await this.$itemsService.fetch()
-        const { error, profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
+        // const { error, profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
 
-        console.log(profile)
+        // console.log(profile)
 
-        this.error = error
+        // this.error = error
 
-        console.log(marketSize, wishlistSize)
+        // console.log(marketSize, wishlistSize)
 
-        if (error) {
-            this.$showError(error)
-        } else {
-            this.profile = profile
-            this.marketSize = marketSize
-            this.wishlistSize = wishlistSize
+        if (this.error) {
+            this.$showError(this.error)
         }
+
+        // else {
+        //     this.profile = profile
+        //     this.marketSize = marketSize
+        //     this.wishlistSize = wishlistSize
+        // }
     },
 
     methods: {

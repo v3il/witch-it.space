@@ -8,12 +8,13 @@
       <template #topMenu>
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">
           <template #tab0>
-            {{ firstTabLabel }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profilesCount }}</span>
+            {{ $t('Profiles_VerifiedProfiles') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ verifiedProfiles.length }}</span>
           </template>
 
           <template #tab1>
-            {{ $t('Profiles_MyProfile') }}
+            {{ $t('Profiles_AllProfiles') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profiles.length }}</span>
           </template>
         </TopTabs>
       </template>
@@ -66,8 +67,8 @@ import { getObjectsDiff } from '@/utils'
 import UserView from '@/components/UserView'
 
 const modes = {
-    ALL: 'allProfiles',
-    ME: 'myProfile'
+    VERIFIED: 'verified',
+    ALL: 'allProfiles'
 }
 
 const DEFAULT_FILTERS = {
@@ -88,9 +89,14 @@ export default {
 
     middleware: ['fetchUser'],
 
+    async asyncData ({ app: { $userService } }) {
+        const { error, profiles } = await $userService.fetchAll()
+        return { error, profiles }
+    },
+
     data: () => ({
         mode: modes.ALL,
-        profiles: [],
+        // profiles: [],
         isLoading: false,
         filters: { ...DEFAULT_FILTERS }
     }),
@@ -129,6 +135,12 @@ export default {
         firstTabLabel () {
             const key = this.hasFilteredProfiles ? 'Profiles_FilteredProfiles' : 'Profiles_AllProfiles'
             return this.$t(key)
+        },
+
+        verifiedProfiles () {
+            return this.profiles.filter((user) => {
+                return user.steamTradeLink && user.discordId && user.steamId
+            })
         }
     },
 
@@ -155,8 +167,11 @@ export default {
         }
     },
 
-    async created () {
-        await this.loadProfiles()
+    created () {
+        if (this.error) {
+            this.$showError(this.error)
+        }
+
         this.filters = this.getFiltersFromRoute()
     },
 
@@ -180,18 +195,18 @@ export default {
             this.page = 1
         },
 
-        async loadProfiles () {
-            this.isLoading = true
-
-            try {
-                const { data } = await this.$axios.get('/api/profiles')
-                this.profiles = data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
-            } catch (e) {
-                this.$showError(e)
-            }
-
-            this.isLoading = false
-        },
+        // async loadProfiles () {
+        //     this.isLoading = true
+        //
+        //     try {
+        //         const { data } = await this.$axios.get('/api/profiles')
+        //         this.profiles = data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
+        //     } catch (e) {
+        //         this.$showError(e)
+        //     }
+        //
+        //     this.isLoading = false
+        // },
 
         switchMode (mode) {
             this.mode = mode

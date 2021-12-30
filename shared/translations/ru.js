@@ -175,7 +175,7 @@ export const ru = {
 
     Profiles_AllProfiles: 'Все профили',
     Profiles_FilteredProfiles: 'Выбранные профили',
-    Profiles_MyProfile: 'Мой профиль',
+    Profiles_VerifiedProfiles: 'Верифицированные',
     Profiles_NoProfiles: 'Нет профилей',
     Profiles_SearchByUsername: 'Поиск пользователя',
     Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',

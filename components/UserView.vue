@@ -94,7 +94,7 @@
         {{ $t('UserView_NoteTitle') }}
       </h5>
 
-      <p class="wit-line-height--md wit-color--muted">
+      <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
         {{ note }}
       </p>
     </div>

@@ -18,4 +18,18 @@ export class UserService {
             }
         }
     }
+
+    async fetchAll () {
+        try {
+            const { data } = await this.#axiosInstance.get('/api/profiles')
+            return {
+                error: null,
+                profiles: data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
+            }
+        } catch (e) {
+            return {
+                error: e.message
+            }
+        }
+    }
 }
