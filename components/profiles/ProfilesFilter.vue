@@ -1,12 +1,11 @@
 <template>
   <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
     <b-input
-      class="wit-offset-right--xs"
+      class="wit-offset-right--xs wit-profiles-filter__input"
       :value="filtersData.query"
       maxlength="20"
       :placeholder="$t('Profiles_SearchByUsername')"
       custom-class="wit-transition"
-      style="flex: 0 1 300px;"
       :has-counter="false"
       icon-right="close"
       icon-right-clickable
@@ -14,49 +13,23 @@
       @icon-right-click="clearQuery"
     />
 
-    <div>
-      <b-dropdown
-        animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs"
-        style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer;"
-        position="is-bottom-left"
-        @active-change="() => {}"
-      >
-        <template #trigger>
-          <b-icon icon="filter" style="color: #dbdbdb; height: 100%; width: 36px;" />
-        </template>
+    <b-dropdown
+      animation="fade150"
+      class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__filter-button"
+      position="is-bottom-left"
+    >
+      <template #trigger>
+        <b-icon icon="filter" class="wit-profiles-filter__filter-icon" :class="{'with-indicator': filtersData.isSteamGuarded}" />
+      </template>
 
-        <div style="width: 600px; height: 600px;">
-          Filters
-        </div>
-
-        <!--            <b-dropdown-item class="wit-transition&#45;&#45;background">-->
-        <!--                <nuxt-link to="/settings" class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
-        <!--                    <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="cog-sync" />-->
-        <!--                    <span class="wit-inline-block username">{{ $t('Settings') }}</span>-->
-        <!--                </nuxt-link>-->
-        <!--            </b-dropdown-item>-->
-
-        <!--            <b-dropdown-item class="wit-transition&#45;&#45;background" @click="logout">-->
-        <!--                <div class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;danger">-->
-        <!--                    <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="logout-variant" />-->
-        <!--                    <span class="wit-inline-block">{{ $t('Logout') }}</span>-->
-        <!--                </div>-->
-        <!--            </b-dropdown-item>-->
-      </b-dropdown>
-
-      <!--      <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">-->
-      <!--        {{ $t('Profiles_SteamGuardedOnly') }}-->
-      <!--      </b-switch>-->
-    </div>
-
-    <!--    <div class="wit-flex wit-flex&#45;&#45;wrap wit-profiles-filter__container">-->
-    <!--      <div class="wit-profiles-filter__input-container wit-block&#45;&#45;full-width">-->
-    <!--        -->
-    <!--      </div>-->
-
-    <!--      -->
-    <!--    </div>-->
+      <div class="wit-profiles-filter__filter-popup">
+        <b-field :label="$t('Profiles_SteamGuardedOnly')">
+          <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
+            {{ filtersData.isSteamGuarded ? $t('Yes') : $t('No') }}
+          </b-switch>
+        </b-field>
+      </div>
+    </b-dropdown>
   </div>
 </template>
 
@@ -95,25 +68,42 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-profiles-filter {
-    //max-width: 800px;
+.wit-profiles-filter__input {
+    flex: 0 1 300px;
 }
 
-.wit-profiles-filter__input-container {
-    max-width: 350px;
-    margin-right: var(--offset-md);
+.wit-profiles-filter__filter-button {
+    background-color: rgb(46, 54, 72);
+    border: 1px solid rgb(54, 57, 76);
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-@media screen and (max-width: 850px) {
-    .wit-profiles-filter__container {
-        flex-direction: column;
+.wit-profiles-filter__filter-icon {
+    color: #dbdbdb;
+    height: 100%;
+    width: 32px;
+
+    &.with-indicator {
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            top: -4px;
+            right: -4px;
+            background-color: var(--danger);
+            animation: pulse 5s infinite linear;
+            will-change: opacify;
+        }
     }
-
-    .wit-profiles-filter__input-container {
-        max-width: none;
-        margin-bottom: var(--offset-sm);
-        margin-right: 0;
-    }
 }
 
+.wit-profiles-filter__filter-popup {
+    padding: 8px 24px;
+    min-width: 400px;
+}
 </style>

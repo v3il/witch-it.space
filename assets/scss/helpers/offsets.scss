@@ -125,6 +125,10 @@
     padding: 0;
 }
 
+.wit-paddings--md {
+    padding: var(--offset-md);
+}
+
 .wit-paddings--sm {
     padding: var(--offset-sm);
 }

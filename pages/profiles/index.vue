@@ -186,7 +186,6 @@ export default {
 
 .wis-profiles__grid {
     display: grid;
-    flex-wrap: wrap;
     margin-left: calc(-1 * var(--offset-xs));
     margin-right: calc(-1 * var(--offset-xs));
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
