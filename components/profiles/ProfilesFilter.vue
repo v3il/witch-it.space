@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
+  <div class="wit-profiles-filter wit-flex--justify-end wit-flex">
     <b-input
       class="wit-offset-right--xs wit-profiles-filter__input"
       :value="filtersData.query"
@@ -19,7 +19,7 @@
       position="is-bottom-left"
     >
       <template #trigger>
-        <b-icon icon="filter" class="wit-profiles-filter__filter-icon" :class="{'with-indicator': filtersData.isSteamGuarded}" />
+        <i class="mdi mdi-filter mdi-20px wit-profiles-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
       </template>
 
       <div class="wit-profiles-filter__filter-popup">
@@ -28,6 +28,12 @@
             {{ filtersData.isSteamGuarded ? $t('Yes') : $t('No') }}
           </b-switch>
         </b-field>
+
+        <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
+          <b-button type="is-danger" size="is-small1" class="wis-user-view__stat-button">
+            Clear
+          </b-button>
+        </div>
       </div>
     </b-dropdown>
   </div>
@@ -41,6 +47,11 @@ export default {
         filtersData: {
             required: true,
             type: Object
+        },
+
+        hasChanges: {
+            required: true,
+            type: Boolean
         }
     },
 
@@ -69,29 +80,29 @@ export default {
 
 <style scoped lang="scss">
 .wit-profiles-filter__input {
-    flex: 0 1 300px;
+    flex: 0 1 350px;
 }
 
 .wit-profiles-filter__filter-button {
     background-color: rgb(46, 54, 72);
     border: 1px solid rgb(54, 57, 76);
-    border-radius: 4px;
+    border-radius: var(--offset-xxs);
     cursor: pointer;
 }
 
 .wit-profiles-filter__filter-icon {
     color: #dbdbdb;
-    height: 100%;
-    width: 32px;
+    width: var(--offset-lg);
+    height: var(--offset-lg);
 
     &.with-indicator {
         position: relative;
 
-        &::before {
+        &::after {
             content: "";
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: var(--offset-xs);
+            height: var(--offset-xs);
             border-radius: 50%;
             top: -4px;
             right: -4px;
@@ -103,7 +114,11 @@ export default {
 }
 
 .wit-profiles-filter__filter-popup {
-    padding: 8px 24px;
-    min-width: 400px;
+    padding: var(--offset-xs) var(--offset-md);
+    min-width: 460px;
+
+    @media (max-width: 850px) {
+        min-width: 0;
+    }
 }
 </style>

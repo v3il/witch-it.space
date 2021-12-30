@@ -22,7 +22,7 @@
 
     <main class="wis-profiles">
       <Card>
-        <ProfilesFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
+        <ProfilesFilter :filters-data="filters" :has-changes="hasFilterChanges" class="wit-offset-bottom--sm" @change="onFiltersChange" />
 
         <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
           <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
@@ -110,6 +110,13 @@ export default {
             return this.profiles.filter((profile) => {
                 return profile.steamTradeLink && profile.discordId && profile.steamId
             })
+        },
+
+        hasFilterChanges () {
+            const { query, ...otherProps } = this.filters
+            const { query: originalQuery, ...otherPropsOriginal } = DEFAULT_FILTERS
+
+            return !isEqual(otherPropsOriginal, otherProps)
         }
     },
 
@@ -188,6 +195,6 @@ export default {
     display: grid;
     margin-left: calc(-1 * var(--offset-xs));
     margin-right: calc(-1 * var(--offset-xs));
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 </style>

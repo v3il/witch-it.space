@@ -270,7 +270,7 @@ export default {
 }
 
 .wis-user-view__stat-button {
-    padding: var(--offset-xxs);
+    padding: var(--offset-xxs) var(--offset-xs);
     height: auto;
     transition: background-color var(--default-transition);
     flex: 1 0 50%;
