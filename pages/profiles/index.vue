@@ -24,32 +24,22 @@
       <Card>
         <ProfilesFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="onFiltersChange" />
 
-        <div>
-          <Loader v-if="isLoading" />
-
-          <div v-else-if="isMyProfileMode" class="wit-flex wit-flex--wrap wis-profiles__grid">
-            <div class="wit-paddings--xs wis-profiles__profile-container">
-              <ProfileView :profile="myProfile" class="wit-block--full-height" />
-            </div>
+        <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
+          <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+            <UserView
+              :profile="profile"
+              class="wit-block--full-height wit-profile-view"
+              hide-icons
+              hide-social-buttons
+              hide-trade-button
+              hide-note
+              :avatar-size="50"
+              mode="market"
+            />
           </div>
-
-          <div v-else-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-            <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-              <UserView
-                :profile="profile"
-                class="wit-block--full-height wit-profile-view"
-                hide-icons
-                hide-social-buttons
-                hide-trade-button
-                hide-note
-                :avatar-size="50"
-                mode="market"
-              />
-            </div>
-          </div>
-
-          <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
         </div>
+
+        <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
       </Card>
     </main>
   </div>
@@ -66,7 +56,7 @@ import TopTabs from '@/components/TopTabs'
 import { getObjectsDiff } from '@/utils'
 import UserView from '@/components/UserView'
 
-const modes = {
+const Modes = {
     VERIFIED: 'verified',
     ALL: 'allProfiles'
 }
@@ -77,7 +67,7 @@ const DEFAULT_FILTERS = {
 }
 
 export default {
-    modes: Object.values(modes),
+    modes: Object.values(Modes),
 
     components: {
         ProfilesFilter,
@@ -95,9 +85,7 @@ export default {
     },
 
     data: () => ({
-        mode: modes.ALL,
-        // profiles: [],
-        isLoading: false,
+        mode: Modes.VERIFIED,
         filters: { ...DEFAULT_FILTERS }
     }),
 
@@ -106,21 +94,11 @@ export default {
             User.State.USER
         ]),
 
-        isMyProfileMode () {
-            return this.mode === modes.ME
-        },
-
-        hasFilteredProfiles () {
-            return this.profiles.length !== this.filteredProfiles.length
-        },
-
-        myProfile () {
-            return this.profiles.find(profile => profile.id === this.user.id)
-        },
-
         filteredProfiles () {
+            const profiles = this.mode === Modes.VERIFIED ? this.verifiedProfiles : this.profiles
             const lowerCasedQuery = this.filters.query.toLowerCase()
-            return this.profiles.filter((profile) => {
+
+            return profiles.filter((profile) => {
                 const isFilteredByName = lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
                 const isFilteredBySteamGuard = this.filters.isSteamGuarded ? profile.isGuardProtected : true
 
@@ -128,18 +106,9 @@ export default {
             })
         },
 
-        profilesCount () {
-            return this.hasFilteredProfiles ? this.filteredProfiles.length : this.profiles.length
-        },
-
-        firstTabLabel () {
-            const key = this.hasFilteredProfiles ? 'Profiles_FilteredProfiles' : 'Profiles_AllProfiles'
-            return this.$t(key)
-        },
-
         verifiedProfiles () {
-            return this.profiles.filter((user) => {
-                return user.steamTradeLink && user.discordId && user.steamId
+            return this.profiles.filter((profile) => {
+                return profile.steamTradeLink && profile.discordId && profile.steamId
             })
         }
     },
@@ -187,26 +156,11 @@ export default {
 
         onFiltersChange (filters) {
             this.filters = filters
-            this.page = 1
         },
 
         resetFilter (filterProp) {
             this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
-            this.page = 1
         },
-
-        // async loadProfiles () {
-        //     this.isLoading = true
-        //
-        //     try {
-        //         const { data } = await this.$axios.get('/api/profiles')
-        //         this.profiles = data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
-        //     } catch (e) {
-        //         this.$showError(e)
-        //     }
-        //
-        //     this.isLoading = false
-        // },
 
         switchMode (mode) {
             this.mode = mode
@@ -231,33 +185,10 @@ export default {
 }
 
 .wis-profiles__grid {
-    display: flex;
+    display: grid;
     flex-wrap: wrap;
     margin-left: calc(-1 * var(--offset-xs));
     margin-right: calc(-1 * var(--offset-xs));
-}
-
-.wis-profiles__profile-container {
-    flex: 0 0 auto;
-
-    @media screen and (max-width: 600px) {
-        width: 100%;
-    }
-
-    @media screen and (min-width: 601px) {
-        width: 50%;
-    }
-
-    @media (min-width: 900px) {
-        width: 33.3333%;
-    }
-
-    @media (min-width: 1450px) {
-        width: 20%;
-    }
-
-    @media (min-width: 2500px) {
-        width: 15%;
-    }
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 </style>

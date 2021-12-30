@@ -174,7 +174,7 @@ export const ru = {
     Settings_HideRecipes: 'Всегда скрывать рецепты из списка предметов',
 
     Profiles_AllProfiles: 'Все профили',
-    Profiles_FilteredProfiles: 'Выбранные профили',
+    // Profiles_FilteredProfiles: 'Выбранные профили',
     Profiles_VerifiedProfiles: 'Верифицированные',
     Profiles_NoProfiles: 'Нет профилей',
     Profiles_SearchByUsername: 'Поиск пользователя',
