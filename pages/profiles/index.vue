@@ -42,6 +42,7 @@
                 hide-trade-button
                 hide-note
                 :avatar-size="50"
+                mode="market"
               />
             </div>
           </div>

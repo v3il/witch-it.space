@@ -29,7 +29,7 @@
 
       <template v-else>
         <div style="flex-basis: 350px;" class="wit-offset-right--md">
-          <UserView v-if="profile" :profile="profile">
+          <UserView v-if="profile" :profile="profile" mode="market" hide-stat-buttons>
             <template v-if="note" #note>
               <h5 class="wit-font-weight--700 wit-font-size--sm wit-offset-bottom--xs">
                 {{ $t('UserView_NoteTitle') }}

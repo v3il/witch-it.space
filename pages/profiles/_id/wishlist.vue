@@ -27,13 +27,13 @@
       <!--      <div style="flex-basis: 350px;" class="wit-offset-right&#45;&#45;md">-->
       <!--        <UserView v-if="profile" :profile="profile">-->
       <!--          <template #note>-->
-      <!--            <h5 class="wit-font-weight&#45;&#45;700 wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
-      <!--              {{ $t('UserView_NoteTitle') }}111-->
-      <!--            </h5>-->
+      <!--                  <h5 class="wit-font-weight&#45;&#45;700 wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
+      <!--                    {{ $t('UserView_NoteTitle') }}111-->
+      <!--                  </h5>-->
 
-      <!--            <p class="wit-line-height&#45;&#45;md wit-color&#45;&#45;muted">-->
-      <!--              {{ profile.wishlistNote }}-->
-      <!--            </p>-->
+      <!--                  <p class="wit-line-height&#45;&#45;md wit-color&#45;&#45;muted">-->
+      <!--                    {{ profile.wishlistNote }}-->
+      <!--                  </p>-->
       <!--          </template>-->
       <!--        </UserView>-->
       <!--      </div>-->

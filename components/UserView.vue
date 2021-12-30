@@ -60,10 +60,10 @@
     <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs">
       <div class="wit-flex wit-block--full-width">
         <b-button
-          :disabled="!profile.steamProfileUrl"
+          :disabled="!steamProfileURL"
           type="is-link"
           tag="a"
-          :href="profile.steamProfileUrl"
+          :href="steamProfileURL"
           target="_blank"
           class="wis-user-view__stat-button"
         >
@@ -74,10 +74,10 @@
         </b-button>
 
         <b-button
-          :disabled="!profile.discordDMUrl"
+          :disabled="!discordURL"
           type="is-link"
           tag="a"
-          :href="profile.discordDMUrl"
+          :href="discordURL"
           target="_blank"
           class="wis-user-view__stat-button"
         >
@@ -89,8 +89,14 @@
       </div>
     </div>
 
-    <div v-if="$slots.note && !hideNote" class="wis-user-view__section">
-      <slot name="note" />
+    <div v-if="note && !hideNote" class="wis-user-view__section">
+      <h5 class="wit-font-weight--700 wit-font-size--xs wit-offset-bottom--xs">
+        {{ $t('UserView_NoteTitle') }}
+      </h5>
+
+      <p class="wit-line-height--md wit-color--muted">
+        {{ note }}
+      </p>
     </div>
 
     <div v-if="!hideIcons" class="wis-user-view__section">
@@ -153,6 +159,11 @@ export default {
             required: false,
             type: Number,
             default: 75
+        },
+
+        mode: {
+            required: true,
+            type: String
         }
     },
 
@@ -167,6 +178,14 @@ export default {
 
         wishlistUrl () {
             return buildUserWishlistUrl(this.profile.id)
+        },
+
+        discordURL () {
+            return this.profile.discordId ? `discord:///channels/@me/${this.profile.discordId}` : null
+        },
+
+        steamProfileURL () {
+            return this.profile.steamId ? `https://steamcommunity.com/profiles/${this.profile.steamId}` : null
         },
 
         avatarStyles () {
@@ -185,14 +204,33 @@ export default {
         profileScaleData () {
             const stat = this.profile.userStat
 
-            return {
-                total: stat.marketSize,
-                common: stat.marketSizeCommon,
-                uncommon: stat.marketSizeUncommon,
-                rare: stat.marketSizeRare,
-                veryRare: stat.marketSizeVeryRare,
-                whimsical: stat.marketSizeWhimsical
+            if (this.isMarketMode) {
+                return {
+                    total: stat.marketSize,
+                    common: stat.marketSizeCommon,
+                    uncommon: stat.marketSizeUncommon,
+                    rare: stat.marketSizeRare,
+                    veryRare: stat.marketSizeVeryRare,
+                    whimsical: stat.marketSizeWhimsical
+                }
             }
+
+            return {
+                total: stat.wishlistSize,
+                common: stat.wishlistSizeCommon,
+                uncommon: stat.wishlistSizeUncommon,
+                rare: stat.wishlistSizeRare,
+                veryRare: stat.wishlistSizeVeryRare,
+                whimsical: stat.wishlistSizeWhimsical
+            }
+        },
+
+        isMarketMode () {
+            return this.mode === 'market'
+        },
+
+        note () {
+            return this.isMarketMode ? this.profile.settings.marketNote : this.profile.settings.wishlistNote
         }
     },
 
