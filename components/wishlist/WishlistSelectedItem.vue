@@ -24,7 +24,7 @@
               <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
             </b-button>
 
-            <b-button v-tooltip="{ content: 'Remove', boundariesElement: 'body' }" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm1">
+            <b-button v-tooltip="'Remove'" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm1">
               <i class="mdi mdi-24px mdi-trash-can-outline wit-color--danger" />
             </b-button>
 

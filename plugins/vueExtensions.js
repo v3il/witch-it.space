@@ -9,7 +9,7 @@ export default function ({ store }) {
     }
 
     VTooltip.options.container = 'body'
-    VTooltip.options.boundariesElement = 'body'
+    VTooltip.options.defaultBoundariesElement = 'body'
     VTooltip.options.placement = 'top'
 
     Vue.directive('tooltip', VTooltip)
