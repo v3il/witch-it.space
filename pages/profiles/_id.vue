@@ -29,12 +29,13 @@
 
       <template v-else>
         <div style="flex-basis: 350px;" class="wit-offset-right--md">
-          <UserView v-if="profile" :profile="profile" mode="market" hide-stat-buttons />
+          <UserView v-if="profile" :profile="profile" :mode="userViewMode" hide-stat-buttons />
         </div>
 
         <div class="wit-flex__item--grow">
           {{ isMyProfile }}
           <pre>{{ user }}</pre>
+          <pre>{{ profile }}</pre>
           <nuxt-child />
         </div>
       </template>
@@ -170,6 +171,10 @@ export default {
 
         isMarket () {
             return this.mode === Modes.MARKET
+        },
+
+        userViewMode () {
+            return this.isMarket ? 'market' : 'wishlist'
         }
     },
 

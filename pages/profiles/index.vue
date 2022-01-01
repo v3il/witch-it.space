@@ -23,6 +23,23 @@
     <main class="wis-profiles">
       <Card>
         <ProfilesFilter :filters-data="filters" :has-changes="hasFilterChanges" class="wit-offset-bottom--sm" @change="onFiltersChange" />
+        <Filters :filters="filters" class="wit-offset-bottom--sm" @change="onFiltersChange">
+          <template #default="{ filters, update }">
+            <div class="wit-profiles-filter__filter-popup">
+              <b-field :label="$t('Profiles_SteamGuardedOnly')">
+                <b-switch :value="filters.isSteamGuarded" @input="update">
+                  {{ filters.isSteamGuarded ? $t('Yes') : $t('No') }}
+                </b-switch>
+              </b-field>
+
+              <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
+                <b-button type="is-danger" size="is-small1" class="wis-user-view__stat-button">
+                  Clear
+                </b-button>
+              </div>
+            </div>
+          </template>
+        </Filters>
 
         <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
           <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
@@ -55,6 +72,7 @@ import { User } from '@/store'
 import TopTabs from '@/components/TopTabs'
 import { getObjectsDiff } from '@/utils'
 import UserView from '@/components/UserView'
+import Filters from '@/components/Filters.vue'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -74,7 +92,8 @@ export default {
         Card,
         TopNavBar,
         TopTabs,
-        UserView
+        UserView,
+        Filters
     },
 
     middleware: ['fetchUser'],
@@ -110,64 +129,64 @@ export default {
             return this.profiles.filter((profile) => {
                 return profile.steamTradeLink && profile.discordId && profile.steamId
             })
-        },
-
-        hasFilterChanges () {
-            const { query, ...otherProps } = this.filters
-            const { query: originalQuery, ...otherPropsOriginal } = DEFAULT_FILTERS
-
-            return !isEqual(otherPropsOriginal, otherProps)
         }
+
+        // hasFilterChanges () {
+        //     const { query, ...otherProps } = this.filters
+        //     const { query: originalQuery, ...otherPropsOriginal } = DEFAULT_FILTERS
+        //
+        //     return !isEqual(otherPropsOriginal, otherProps)
+        // }
     },
 
-    watch: {
-        filters: {
-            deep: true,
-            handler (filters) {
-                const routeFilters = this.getFiltersFromRoute()
-
-                if (isEqual(filters, routeFilters)) {
-                    return
-                }
-
-                const changedFilters = getObjectsDiff(DEFAULT_FILTERS, filters)
-                this.$router.replace({ path: this.$route.path, query: changedFilters })
-            }
-        },
-
-        $route: {
-            deep: true,
-            handler () {
-                this.filters = this.getFiltersFromRoute()
-            }
-        }
-    },
+    // watch: {
+    //     filters: {
+    //         deep: true,
+    //         handler (filters) {
+    //             const routeFilters = this.getFiltersFromRoute()
+    //
+    //             if (isEqual(filters, routeFilters)) {
+    //                 return
+    //             }
+    //
+    //             const changedFilters = getObjectsDiff(DEFAULT_FILTERS, filters)
+    //             this.$router.replace({ path: this.$route.path, query: changedFilters })
+    //         }
+    //     },
+    //
+    //     $route: {
+    //         deep: true,
+    //         handler () {
+    //             this.filters = this.getFiltersFromRoute()
+    //         }
+    //     }
+    // },
 
     created () {
         if (this.error) {
             this.$showError(this.error)
         }
 
-        this.filters = this.getFiltersFromRoute()
+        // this.filters = this.getFiltersFromRoute()
     },
 
     methods: {
-        getFiltersFromRoute () {
-            const { query: params } = this.$route
-
-            return {
-                query: params.query ?? DEFAULT_FILTERS.query,
-                isSteamGuarded: params.isSteamGuarded === 'true' ?? DEFAULT_FILTERS.isSteamGuarded
-            }
-        },
+        // getFiltersFromRoute () {
+        //     const { query: params } = this.$route
+        //
+        //     return {
+        //         query: params.query ?? DEFAULT_FILTERS.query,
+        //         isSteamGuarded: params.isSteamGuarded === 'true' ?? DEFAULT_FILTERS.isSteamGuarded
+        //     }
+        // },
 
         onFiltersChange (filters) {
             this.filters = filters
         },
 
-        resetFilter (filterProp) {
-            this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
-        },
+        // resetFilter (filterProp) {
+        //     this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
+        // },
 
         switchMode (mode) {
             this.mode = mode

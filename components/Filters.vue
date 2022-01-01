@@ -2,16 +2,19 @@
   <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
     <b-input
       class="wit-offset-right--xs wit-profiles-filter__input"
-      :value="filtersData.query"
+      :value="filters.query"
       maxlength="20"
       :placeholder="$t('Profiles_SearchByUsername')"
       custom-class="wit-transition"
       :has-counter="false"
       icon-right="close"
       icon-right-clickable
-      @input="onQueryChange"
+      @input="update({ query: $event })"
       @icon-right-click="clearQuery"
     />
+
+    {{ filters }}
+    {{ defaultFilters }}
 
     <div>
       <b-dropdown
@@ -49,58 +52,113 @@
           <i class="mdi mdi-filter mdi-20px wit-profiles-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
         </template>
 
-        <div class="wit-profiles-filter__filter-popup">
-          <b-field :label="$t('Profiles_SteamGuardedOnly')">
-            <b-switch :value="filtersData.isSteamGuarded" @input="onIsSteamGuardedChange">
-              {{ filtersData.isSteamGuarded ? $t('Yes') : $t('No') }}
-            </b-switch>
-          </b-field>
-
-          <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
-            <b-button type="is-danger" size="is-small1" class="wis-user-view__stat-button">
-              Clear
-            </b-button>
-          </div>
-        </div>
+        <slot :filters="filters" :update="update" />
       </b-dropdown>
     </div>
   </div>
 </template>
 
 <script>
+import { isEqual } from 'lodash'
+import { getObjectsDiff } from '@/utils/index.js'
+
 export default {
-    name: 'ProfilesFilter',
+    name: 'Filters',
 
     props: {
-        filtersData: {
+        // filtersData: {
+        //     required: true,
+        //     type: Object
+        // },
+        //
+        // hasChanges: {
+        //     required: true,
+        //     type: Boolean
+        // },
+
+        filters: {
             required: true,
             type: Object
-        },
-
-        hasChanges: {
-            required: true,
-            type: Boolean
         }
     },
 
+    data () {
+        return {
+            // defaultFilters: {...this.filters}
+        }
+    },
+
+    computed: {
+        hasChanges () {
+            const { query, ...otherProps } = this.filters
+            const { query: originalQuery, ...otherPropsOriginal } = this.defaultFilters
+
+            return !isEqual(otherPropsOriginal, otherProps)
+        }
+    },
+
+    watch: {
+        filters: {
+            deep: true,
+            handler (filters) {
+                const routeFilters = this.getFiltersFromRoute()
+
+                if (isEqual(filters, routeFilters)) {
+                    return
+                }
+
+                const changedFilters = getObjectsDiff(this.defaultFilters, filters)
+                this.$router.replace({ path: this.$route.path, query: changedFilters })
+            }
+        },
+
+        $route: {
+            deep: true,
+            handler () {
+                // eslint-disable-next-line vue/no-mutating-props
+                this.filters = this.getFiltersFromRoute()
+            }
+        }
+    },
+
+    created () {
+        this.defaultFilters = { ...this.filters }
+        // eslint-disable-next-line vue/no-mutating-props
+        this.filters = this.getFiltersFromRoute()
+    },
+
     methods: {
-        onQueryChange (query) {
-            this.updateFilters({ query })
-        },
+        // onQueryChange (query) {
+        //     this.update({ query })
+        // },
+        //
+        // onIsSteamGuardedChange (isSteamGuarded) {
+        //     this.update({ isSteamGuarded })
+        // },
 
-        onIsSteamGuardedChange (isSteamGuarded) {
-            this.updateFilters({ isSteamGuarded })
-        },
+        // clearQuery () {
+        //     this.update({ query: '' })
+        // },
 
-        clearQuery () {
-            this.updateFilters({ query: '' })
-        },
-
-        updateFilters (updatedFilters) {
+        update (updatedFilters) {
             this.$emit('change', {
                 ...this.filtersData,
                 ...updatedFilters
             })
+        },
+
+        getFiltersFromRoute () {
+            const { query: params } = this.$route
+
+            return {
+                query: params.query ?? this.defaultFilters.query,
+                isSteamGuarded: params.isSteamGuarded === 'true' ?? this.defaultFilters.isSteamGuarded
+            }
+        },
+
+        resetFilter (filterProp) {
+            // eslint-disable-next-line vue/no-mutating-props
+            this.filters[filterProp] = this.defaultFilters[filterProp]
         }
     }
 }
