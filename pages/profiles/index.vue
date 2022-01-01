@@ -21,23 +21,25 @@
     </TopNavBar>
 
     <main class="wis-profiles">
-      <Card>
-        <ProfilesFilter :filters-data="filters" :has-changes="hasFilterChanges" class="wit-offset-bottom--sm" @change="onFiltersChange" />
-        <Filters :filters="filters" class="wit-offset-bottom--sm" @change="onFiltersChange">
-          <template #default="{ filters, update }">
-            <div class="wit-profiles-filter__filter-popup">
-              <b-field :label="$t('Profiles_SteamGuardedOnly')">
-                <b-switch :value="filters.isSteamGuarded" @input="update">
-                  {{ filters.isSteamGuarded ? $t('Yes') : $t('No') }}
-                </b-switch>
-              </b-field>
+      <!--      <pre>-->
+      <!--          {{ JSON.stringify(filters, null, 2) }}-->
+      <!--      </pre>-->
 
-              <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
-                <b-button type="is-danger" size="is-small1" class="wis-user-view__stat-button">
-                  Clear
-                </b-button>
-              </div>
-            </div>
+      <Card>
+        <Filters
+          ref="filters"
+          :filters="filters"
+          :default-filters="$options.defaultFilters"
+          :query-input-placeholder="$t('Profiles_SearchByUsername')"
+          class="wit-offset-bottom--sm"
+          @change="onFiltersChange"
+        >
+          <template #default="{ filterParams, update }">
+            <b-field :label="$t('Profiles_SteamGuardedOnly')">
+              <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">
+                {{ filterParams.isSteamGuarded ? $t('Yes') : $t('No') }}
+              </b-switch>
+            </b-field>
           </template>
         </Filters>
 
@@ -70,7 +72,7 @@ import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
 import TopTabs from '@/components/TopTabs'
-import { getObjectsDiff } from '@/utils'
+import { getFiltersFromRoute, getObjectsDiff } from '@/utils'
 import UserView from '@/components/UserView'
 import Filters from '@/components/Filters.vue'
 
@@ -87,8 +89,12 @@ const DEFAULT_FILTERS = {
 export default {
     modes: Object.values(Modes),
 
+    defaultFilters: {
+        query: '',
+        isSteamGuarded: false
+    },
+
     components: {
-        ProfilesFilter,
         Card,
         TopNavBar,
         TopTabs,
@@ -105,7 +111,7 @@ export default {
 
     data: () => ({
         mode: Modes.VERIFIED,
-        filters: { ...DEFAULT_FILTERS }
+        filters: {}
     }),
 
     computed: {
@@ -166,6 +172,10 @@ export default {
         if (this.error) {
             this.$showError(this.error)
         }
+
+        // console.log(this.$refs.filters.getFiltersFromRoute())
+        //
+        this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
 
         // this.filters = this.getFiltersFromRoute()
     },

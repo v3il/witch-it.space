@@ -1,4 +1,5 @@
 export { openWindow } from './openWindow'
 export { showPopup } from './showPopup'
 export { getObjectsDiff } from './getObjectsDiff'
+export { getFiltersFromRoute } from './getFiltersFromRoute'
 export { buildUserWishlistUrl, buildUserMarketUrl, buildAvatarUrl, buildItemUrl } from './buildUrls'

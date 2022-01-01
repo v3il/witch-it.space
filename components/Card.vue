@@ -60,6 +60,10 @@ export default {
 .wit-card-body {
     flex: 1 1 auto;
     padding: var(--offset-md);
+
+    @media screen and (max-width: 1024px) {
+        padding: var(--offset-xs);
+    }
 }
 
 .wit-card-title {
