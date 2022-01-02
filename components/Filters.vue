@@ -1,49 +1,23 @@
 <template>
   <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
-    <b-input
-      class="wit-offset-right--xs wit-profiles-filter__input"
-      :value="filters.query"
-      maxlength="20"
-      :placeholder="queryInputPlaceholder"
-      custom-class="wit-transition"
-      :has-counter="false"
-      icon-right="close"
-      icon-right-clickable
-      @input="update({ query: $event })"
-      @icon-right-click="resetFilter('query')"
-    />
-
     <div class="wit-flex">
-      <b-dropdown
-        animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__sort-dropdown"
-        position="is-bottom-left"
-      >
-        <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-profiles-filter__sort-button">
-            <span class="wit-color--muted">Sort by</span>
-          </b-button>
-        </template>
-
-        <b-dropdown-item class="wit-transition--background">
-          <nuxt-link to="/settings" class="wit-flex wit-flex--align-center wit-color--white">
-            <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="cog-sync" />
-            <span class="wit-inline-block username">{{ $t('Settings') }}</span>
-          </nuxt-link>
-        </b-dropdown-item>
-
-        <b-dropdown-item class="wit-transition--background">
-          <div class="wit-flex wit-flex--align-center wit-color--danger">
-            <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="logout-variant" />
-            <span class="wit-inline-block">{{ $t('Logout') }}</span>
-          </div>
-        </b-dropdown-item>
-      </b-dropdown>
+      <b-input
+        class="wit-offset-right--xs wit-profiles-filter__input"
+        :value="filters.query"
+        maxlength="20"
+        :placeholder="queryInputPlaceholder"
+        custom-class="wit-transition"
+        :has-counter="false"
+        icon-right="close"
+        icon-right-clickable
+        @input="update({ query: $event })"
+        @icon-right-click="resetFilter('query')"
+      />
 
       <b-dropdown
         animation="fade150"
         class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__filter-button"
-        position="is-bottom-left"
+        position="is-bottom-right"
       >
         <template #trigger>
           <i class="mdi mdi-filter mdi-20px wit-profiles-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
@@ -59,6 +33,46 @@
           </div>
         </div>
       </b-dropdown>
+    </div>
+
+    <div class="wit-flex">
+      <b-dropdown
+        animation="fade150"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__sort-dropdown wit-offset-right--xs"
+        position="is-bottom-left"
+      >
+        <template #trigger>
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-profiles-filter__sort-button">
+            <span class="wit-color--muted">Sort by</span>
+          </b-button>
+        </template>
+
+        <template v-for="(label, key) in defaultSort">
+          <b-dropdown-item :key="key + 'asc'" class="wit-transition--background">
+            <div class="wit-flex wit-flex--align-center wit-color--white">
+              <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-ascending" />
+              <span class="wit-inline-block username">{{ $t(label) }}</span>
+            </div>
+          </b-dropdown-item>
+
+          <b-dropdown-item :key="key + 'desc'" class="wit-transition--background">
+            <div class="wit-flex wit-flex--align-center wit-color--white">
+              <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-descending" />
+              <span class="wit-inline-block username">{{ $t(label) }}</span>
+            </div>
+          </b-dropdown-item>
+        </template>
+      </b-dropdown>
+
+      <b-button
+        target="_blank"
+        class="wit-profiles-filter__filter-button"
+      >
+        <div class="wit-fle wit-color--muted">
+          <i class="mdi mdi-sort-ascending mdi-20px" />
+          <!--          <i class="mdi mdi-sort-descending mdi-20px" />-->
+        </div>
+      </b-button>
     </div>
   </div>
 </template>
@@ -77,6 +91,16 @@ export default {
         },
 
         defaultFilters: {
+            required: true,
+            type: Object
+        },
+
+        sort: {
+            required: true,
+            type: Object
+        },
+
+        defaultSort: {
             required: true,
             type: Object
         },
@@ -114,14 +138,14 @@ export default {
         $route: {
             deep: true,
             handler () {
-                this.$emit('change', getFiltersFromRoute(this.$route, this.defaultFilters))
+                this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
             }
         }
     },
 
     methods: {
         update (updatedFilters) {
-            this.$emit('change', {
+            this.$emit('filtersChanged', {
                 ...this.filters,
                 ...updatedFilters
             })
@@ -140,7 +164,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-profiles-filter__input {
-    flex: 0 1 350px;
+    flex: 0 1 300px;
 }
 
 .wit-profiles-filter__sort-button {

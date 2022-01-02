@@ -29,10 +29,13 @@
         <Filters
           ref="filters"
           :filters="filters"
+          :sort="sort"
           :default-filters="$options.defaultFilters"
+          :default-sort="$options.sort"
           :query-input-placeholder="$t('Profiles_SearchByUsername')"
           class="wit-offset-bottom--sm"
-          @change="onFiltersChange"
+          @filtersChanged="onFiltersChange"
+          @sortChanged="onSortChange"
         >
           <template #default="{ filterParams, update }">
             <b-field :label="$t('Profiles_SteamGuardedOnly')">
@@ -65,14 +68,12 @@
 </template>
 
 <script>
-import { isEqual } from 'lodash'
 import { mapState } from 'vuex'
-import ProfilesFilter from '@/components/profiles/ProfilesFilter'
 import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
 import { User } from '@/store'
 import TopTabs from '@/components/TopTabs'
-import { getFiltersFromRoute, getObjectsDiff } from '@/utils'
+import { getFiltersFromRoute, getSortFromRoute } from '@/utils'
 import UserView from '@/components/UserView'
 import Filters from '@/components/Filters.vue'
 
@@ -81,17 +82,18 @@ const Modes = {
     ALL: 'allProfiles'
 }
 
-const DEFAULT_FILTERS = {
-    query: '',
-    isSteamGuarded: false
-}
-
 export default {
     modes: Object.values(Modes),
 
     defaultFilters: {
         query: '',
         isSteamGuarded: false
+    },
+
+    sort: {
+        marketSize: 'Profiles_Sort_Market',
+        wishlistSize: 'Profiles_Sort_Wishlist',
+        name: 'Profiles_Sort_Name'
     },
 
     components: {
@@ -111,7 +113,8 @@ export default {
 
     data: () => ({
         mode: Modes.VERIFIED,
-        filters: {}
+        filters: {},
+        sort: {}
     }),
 
     computed: {
@@ -136,67 +139,25 @@ export default {
                 return profile.steamTradeLink && profile.discordId && profile.steamId
             })
         }
-
-        // hasFilterChanges () {
-        //     const { query, ...otherProps } = this.filters
-        //     const { query: originalQuery, ...otherPropsOriginal } = DEFAULT_FILTERS
-        //
-        //     return !isEqual(otherPropsOriginal, otherProps)
-        // }
     },
-
-    // watch: {
-    //     filters: {
-    //         deep: true,
-    //         handler (filters) {
-    //             const routeFilters = this.getFiltersFromRoute()
-    //
-    //             if (isEqual(filters, routeFilters)) {
-    //                 return
-    //             }
-    //
-    //             const changedFilters = getObjectsDiff(DEFAULT_FILTERS, filters)
-    //             this.$router.replace({ path: this.$route.path, query: changedFilters })
-    //         }
-    //     },
-    //
-    //     $route: {
-    //         deep: true,
-    //         handler () {
-    //             this.filters = this.getFiltersFromRoute()
-    //         }
-    //     }
-    // },
 
     created () {
         if (this.error) {
             this.$showError(this.error)
         }
 
-        // console.log(this.$refs.filters.getFiltersFromRoute())
-        //
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-
-        // this.filters = this.getFiltersFromRoute()
+        this.sort = getSortFromRoute(this.$route, this.$options.sort)
     },
 
     methods: {
-        // getFiltersFromRoute () {
-        //     const { query: params } = this.$route
-        //
-        //     return {
-        //         query: params.query ?? DEFAULT_FILTERS.query,
-        //         isSteamGuarded: params.isSteamGuarded === 'true' ?? DEFAULT_FILTERS.isSteamGuarded
-        //     }
-        // },
-
         onFiltersChange (filters) {
             this.filters = filters
         },
 
-        // resetFilter (filterProp) {
-        //     this.filters[filterProp] = DEFAULT_FILTERS[filterProp]
-        // },
+        onSortChange (sort) {
+            this.sort = sort
+        },
 
         switchMode (mode) {
             this.mode = mode

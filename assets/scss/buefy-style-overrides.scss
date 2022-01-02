@@ -22,6 +22,28 @@ body {
 
 .input {
     padding: var(--offset-xs) var(--offset-sm);
+
+    & + .icon.is-right {
+        display: none;
+    }
+
+    &:hover,
+    &:focus {
+        & + .icon.is-right {
+            display: flex;
+            color: var(--muted-text-color);
+        }
+    }
+
+    & + .icon.is-right:hover {
+        display: flex;
+        color: var(--white);
+    }
+
+    & + .icon.is-right .mdi::before {
+        font-size: 16px;
+        line-height: 20px;
+    }
 }
 
 .text-link {

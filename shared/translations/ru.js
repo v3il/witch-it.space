@@ -177,11 +177,15 @@ export const ru = {
     // Profiles_FilteredProfiles: 'Выбранные профили',
     Profiles_VerifiedProfiles: 'Верифицированные',
     Profiles_NoProfiles: 'Нет профилей',
-    Profiles_SearchByUsername: 'Поиск',
+    Profiles_SearchByUsername: 'Поиск пользователя',
     Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
     Profiles_StatButtonOrders: 'Предложений',
     Profiles_StatButtonWishlist: 'В желаемом',
     Profiles_Trade: 'Обмен',
+
+    Profiles_Sort_Market: 'Предложения',
+    Profiles_Sort_Wishlist: 'Список желаемого',
+    Profiles_Sort_Name: 'Имя пользователя',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
     Items_Filters_AnyRarity: 'Любая редкость',
