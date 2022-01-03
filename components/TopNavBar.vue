@@ -17,7 +17,6 @@
           class="wit-transition wit-link"
           :to="link.to"
           tag="nuxt-link"
-          :class="getLinkClasses(link)"
         >
           <b-icon size="is-small" class="is-size-4 wit-color--Y400 wit-offset-right--xs" :icon="link.icon" />
           {{ $t(link.textId) }}
@@ -61,23 +60,11 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ]),
-
-        activeLink () {
-            return this.links.find(({ to }) => to === this.$route.path)
-        }
+        ])
     },
 
     created () {
         this.links = getNavbarLinks(this.user)
-    },
-
-    methods: {
-        getLinkClasses (link) {
-            return {
-                active: link === this.activeLink
-            }
-        }
     }
 }
 </script>
@@ -108,7 +95,7 @@ export default {
     text-decoration: none;
 
     &:hover,
-    &.active {
+    &.nuxt-link-exact-active {
         background-color: rgba(239, 242, 247, 0.05);
         color: white;
         text-decoration: none;

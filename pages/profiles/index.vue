@@ -33,16 +33,17 @@
           :default-filters="$options.defaultFilters"
           :default-sort="$options.defaultSort"
           :query-input-placeholder="$t('Profiles_SearchByUsername')"
+          :sorts="$options.sorts"
           class="wit-offset-bottom--sm"
           @filtersChanged="onFiltersChange"
           @sortChanged="onSortChange"
         >
           <template #default="{ filterParams, update }">
-            <b-field :label="$t('Profiles_SteamGuardedOnly')">
-              <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">
-                {{ filterParams.isSteamGuarded ? $t('Yes') : $t('No') }}
-              </b-switch>
-            </b-field>
+            <!--            <b-field :label="$t('Profiles_SteamGuardedOnly')">-->
+            <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">
+              {{ $t('Profiles_SteamGuardedOnly') }}
+            </b-switch>
+            <!--            </b-field>-->
           </template>
         </Filters>
 
@@ -92,10 +93,10 @@ export default {
 
     defaultSort: {
         sortBy: 'market',
-        order: 'asc'
+        order: 'desc'
     },
 
-    sort: {
+    sorts: {
         market: 'Profiles_Sort_Market',
         wishlist: 'Profiles_Sort_Wishlist',
         name: 'Profiles_Sort_Name'
@@ -152,7 +153,7 @@ export default {
         }
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        this.sort = getSortFromRoute(this.$route, this.$options.sort)
+        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
 
         console.log(this.sort)
     },

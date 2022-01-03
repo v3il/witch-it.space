@@ -10,7 +10,6 @@
         class="is-large wit-transition wit-link"
         :to="link.to"
         tag="nuxt-link"
-        :class="getLinkClasses(link)"
       >
         <b-icon class="is-size-5 wit-color--Y400" :icon="link.icon" />
       </b-button>
@@ -40,8 +39,6 @@
 <script>
 import { mapState } from 'vuex'
 import { User } from '@/store'
-import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-import { Routes } from '@/shared'
 
 export default {
     name: 'LeftNavBar',
@@ -56,19 +53,7 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ]),
-
-        activeLink () {
-            return this.links.find(({ to }) => to === this.$route.path)
-        }
-    },
-
-    methods: {
-        getLinkClasses (link) {
-            return {
-                active: link === this.activeLink
-            }
-        }
+        ])
     }
 }
 </script>
@@ -78,7 +63,7 @@ export default {
     border-radius: 0;
 
     &:hover,
-    &.active {
+    &.nuxt-link-exact-active {
         background-color: rgba(239, 242, 247, 0.05);
     }
 }

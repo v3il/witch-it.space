@@ -2,11 +2,11 @@
   <div class="wit-filter wit-flex--justify-between wit-flex">
     <div class="wit-flex wit-filter__filter">
       <b-input
-        class="wit-filter__input"
+        class="wit-filter__input wit-offset-right--xs"
         :value="filters.query"
         maxlength="20"
         :placeholder="queryInputPlaceholder"
-        custom-class="wit-transition wit-search-input"
+        custom-class="wit-transition"
         :has-counter="false"
         icon-right="close"
         icon-right-clickable
@@ -16,15 +16,20 @@
 
       <b-dropdown
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-filter__filter-button"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
         position="is-bottom-right"
       >
         <template #trigger>
-          <i class="mdi mdi-filter mdi-20px wit-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button" :class="{ 'with-indicator': hasChanges }">
+            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Filter</span>
+            <!--            <i class="mdi mdi-filter mdi-20px wit-filter__filter-icon wit-flex wit-flex&#45;&#45;center" />-->
+          </b-button>
         </template>
 
         <div class="wit-filter__filter-popup">
-          <slot :filterParams="filters" :update="update" />
+          <div class="wit-offset-bottom--sm">
+            <slot :filterParams="filters" :update="update" />
+          </div>
 
           <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
             <b-button type="is-danger" class="wis-user-view__stat-button" @click="resetFilters">
@@ -38,29 +43,25 @@
     <div class="wit-flex">
       <b-dropdown
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs1 wit-filter__sort-dropdown"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
         position="is-bottom-left"
       >
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button">
-            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Sort by</span>
-            <span class="wit-color--white">{{ $t(defaultSort[sort.sortBy]) }}</span>
+            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Sort by:</span>
+            <span class="wit-color--white">{{ $t(sorts[sort.sortBy]) }}</span>
           </b-button>
         </template>
 
-        <b-dropdown-item v-for="(label, key) in defaultSort" :key="key" class="wit-transition--background">
+        <b-dropdown-item v-for="(label, key) in sorts" :key="key" class="wit-transition--background" @click="updateSort({ sortBy: key })">
           <div class="wit-flex wit-flex--align-center wit-color--white">
-            <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-ascending" />
+            <!--            <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="sort-ascending" />-->
             <span class="wit-inline-block username">{{ $t(label) }}</span>
           </div>
         </b-dropdown-item>
       </b-dropdown>
 
-      <b-button
-        target="_blank"
-        class="wit-filter__order-button"
-        @click="updateSort({ order: sort.order === 'asc' ? 'desc' : 'asc' })"
-      >
+      <b-button class="wit-filter__order-button" @click="toggleOrder">
         <div class="wit-fle wit-color--muted">
           <i v-if="sort.order === 'asc'" class="mdi mdi-sort-ascending mdi-20px" />
           <i v-else class="mdi mdi-sort-descending mdi-20px" />
@@ -101,6 +102,11 @@ export default {
         queryInputPlaceholder: {
             required: true,
             type: String
+        },
+
+        sorts: {
+            required: true,
+            type: Object
         }
     },
 
@@ -116,46 +122,15 @@ export default {
     watch: {
         filters: {
             deep: true,
-            handler (filters) {
-                const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
-
-                if (isEqual(filters, routeFilters)) {
-                    return
-                }
-
-                const changedFilters = getObjectsDiff(this.defaultFilters, filters)
-                this.$router.replace({
-                    path: this.$route.path,
-                    query: {
-                        ...this.$route.query,
-                        ...changedFilters
-                    }
-                })
+            handler () {
+                this.updateUrl()
             }
         },
 
         sort: {
             deep: true,
-            handler (sort) {
-                const routeSort = getSortFromRoute(this.$route, this.defaultSort)
-
-                console.log(routeSort, this.defaultSort)
-
-                if (isEqual(sort, routeSort)) {
-                    return
-                }
-
-                const changedSort = getObjectsDiff(this.defaultSort, sort)
-
-                console.log(changedSort)
-
-                this.$router.replace({
-                    path: this.$route.path,
-                    query: {
-                        ...this.$route.query,
-                        ...changedSort
-                    }
-                })
+            handler () {
+                this.updateUrl()
             }
         },
 
@@ -163,12 +138,32 @@ export default {
             deep: true,
             handler () {
                 this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
-                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort))
+                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, this.sorts))
             }
         }
     },
 
     methods: {
+        updateUrl () {
+            const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
+            const routeSort = getSortFromRoute(this.$route, this.defaultSort, this.sorts)
+
+            if (isEqual(this.filters, routeFilters) && isEqual(this.sort, routeSort)) {
+                return
+            }
+
+            const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
+            const changedSort = getObjectsDiff(this.defaultSort, this.sort)
+
+            this.$router.replace({
+                path: this.$route.path,
+                query: {
+                    ...changedSort,
+                    ...changedFilters
+                }
+            })
+        },
+
         updateSort (updatedSort) {
             this.$emit('sortChanged', {
                 ...this.sort,
@@ -189,6 +184,10 @@ export default {
 
         resetFilters () {
             this.update(this.defaultFilters)
+        },
+
+        toggleOrder () {
+            this.updateSort({ order: this.sort.order === 'asc' ? 'desc' : 'asc' })
         }
     }
 }
@@ -211,13 +210,13 @@ export default {
     padding: 0 var(--offset-xs);
 }
 
-.wit-filter__filter-button,
+.wit-filter__filter-button1,
 .wit-filter__order-button {
     border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
     border-left: 0;
 }
 
-.wit-filter__input,
+.wit-filter__input1,
 .wit-filter__sort-button {
     border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
 }
@@ -246,8 +245,8 @@ export default {
 }
 
 .wit-filter__filter-popup {
-    padding: var(--offset-xs) var(--offset-md);
-    min-width: 460px;
+    padding: var(--offset-sm) var(--offset-sm) var(--offset-xs);
+    min-width: 400px;
 
     @media (max-width: 850px) {
         min-width: 0;
