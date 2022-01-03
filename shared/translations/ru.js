@@ -73,6 +73,9 @@ export const ru = {
     Confirm: 'Подтвердить',
     Cancel: 'Отменить',
     Change: 'Изменить',
+    Filter: 'Фильтр',
+    Clear: 'Очистить',
+    SortedBy: 'Сортировка',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',

@@ -21,10 +21,6 @@
     </TopNavBar>
 
     <main class="wis-profiles">
-      <!--      <pre>-->
-      <!--          {{ JSON.stringify(filters, null, 2) }}-->
-      <!--      </pre>-->
-
       <Card>
         <Filters
           ref="filters"
@@ -34,7 +30,7 @@
           :default-sort="$options.defaultSort"
           :query-input-placeholder="$t('Profiles_SearchByUsername')"
           :sorts="$options.sorts"
-          class="wit-offset-bottom--sm"
+          class="wit-offset-bottom--xxs"
           @filtersChanged="onFiltersChange"
           @sortChanged="onSortChange"
         >

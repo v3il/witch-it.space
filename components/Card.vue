@@ -62,7 +62,7 @@ export default {
     padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {
-        padding: var(--offset-xs);
+        padding: var(--offset-sm);
     }
 }
 

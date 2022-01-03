@@ -1,8 +1,8 @@
 <template>
   <div class="wit-filter wit-flex--justify-between wit-flex">
-    <div class="wit-flex wit-filter__filter">
+    <div class="wit-flex wit-filter__filter wit-offset-right--xs wit-offset-bottom--xs">
       <b-input
-        class="wit-filter__input wit-offset-right--xs"
+        class="wit-filter__input wit-offset-right--xs wit-flex__item--grow"
         :value="filters.query"
         maxlength="20"
         :placeholder="queryInputPlaceholder"
@@ -21,26 +21,25 @@
       >
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button" :class="{ 'with-indicator': hasChanges }">
-            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Filter</span>
-            <!--            <i class="mdi mdi-filter mdi-20px wit-filter__filter-icon wit-flex wit-flex&#45;&#45;center" />-->
+            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('Filter') }}</span>
           </b-button>
         </template>
 
         <div class="wit-filter__filter-popup">
-          <div class="wit-offset-bottom--sm">
+          <div class="wit-offset-bottom--md">
             <slot :filterParams="filters" :update="update" />
           </div>
 
           <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
             <b-button type="is-danger" class="wis-user-view__stat-button" @click="resetFilters">
-              Clear
+              {{ $t('Clear') }}
             </b-button>
           </div>
         </div>
       </b-dropdown>
     </div>
 
-    <div class="wit-flex">
+    <div class="wit-flex wit-offset-bottom--xs">
       <b-dropdown
         animation="fade150"
         class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
@@ -48,14 +47,13 @@
       >
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button">
-            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Sort by:</span>
+            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
             <span class="wit-color--white">{{ $t(sorts[sort.sortBy]) }}</span>
           </b-button>
         </template>
 
         <b-dropdown-item v-for="(label, key) in sorts" :key="key" class="wit-transition--background" @click="updateSort({ sortBy: key })">
           <div class="wit-flex wit-flex--align-center wit-color--white">
-            <!--            <b-icon size="is-small" class="is-size-5 wit-offset-right&#45;&#45;xs" icon="sort-ascending" />-->
             <span class="wit-inline-block username">{{ $t(label) }}</span>
           </div>
         </b-dropdown-item>
@@ -194,8 +192,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wit-filter {
+    flex-wrap: wrap;
+}
+
 .wit-filter__filter {
     flex: 0 1 350px;
+
+    @media (max-width: 600px) {
+        flex: 0 1 100%;
+        margin-right: 0 !important;
+        margin-bottom: var(--offset-xs);
+    }
 }
 
 .wit-filter__order-button,
@@ -216,7 +224,6 @@ export default {
     border-left: 0;
 }
 
-.wit-filter__input1,
 .wit-filter__sort-button {
     border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
 }
