@@ -6,6 +6,6 @@ export const getSortFromRoute = (route, sortParams) => {
 
     return {
         order: SORT_ORDERS.includes(order) ? order : SORT_ORDERS[0],
-        sortBy: sortParams[sortBy] ? sortBy : Object.values(sortParams)[0]
+        sortBy: sortParams[sortBy] ? sortBy : Object.keys(sortParams)[0]
     }
 }

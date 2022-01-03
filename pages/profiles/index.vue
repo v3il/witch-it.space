@@ -31,7 +31,7 @@
           :filters="filters"
           :sort="sort"
           :default-filters="$options.defaultFilters"
-          :default-sort="$options.sort"
+          :default-sort="$options.defaultSort"
           :query-input-placeholder="$t('Profiles_SearchByUsername')"
           class="wit-offset-bottom--sm"
           @filtersChanged="onFiltersChange"
@@ -90,9 +90,14 @@ export default {
         isSteamGuarded: false
     },
 
+    defaultSort: {
+        sortBy: 'market',
+        order: 'asc'
+    },
+
     sort: {
-        marketSize: 'Profiles_Sort_Market',
-        wishlistSize: 'Profiles_Sort_Wishlist',
+        market: 'Profiles_Sort_Market',
+        wishlist: 'Profiles_Sort_Wishlist',
         name: 'Profiles_Sort_Name'
     },
 
@@ -148,6 +153,8 @@ export default {
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.sort)
+
+        console.log(this.sort)
     },
 
     methods: {

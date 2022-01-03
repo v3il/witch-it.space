@@ -69,3 +69,7 @@
 .wit-animation--spin {
     animation: spin 2s infinite linear;
 }
+
+.wit-search-input {
+    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+}

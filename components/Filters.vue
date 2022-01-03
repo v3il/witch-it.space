@@ -1,12 +1,12 @@
 <template>
-  <div class="wit-profiles-filter wit-flex--justify-between wit-flex">
-    <div class="wit-flex">
+  <div class="wit-filter wit-flex--justify-between wit-flex">
+    <div class="wit-flex wit-filter__filter">
       <b-input
-        class="wit-offset-right--xs wit-profiles-filter__input"
+        class="wit-filter__input"
         :value="filters.query"
         maxlength="20"
         :placeholder="queryInputPlaceholder"
-        custom-class="wit-transition"
+        custom-class="wit-transition wit-search-input"
         :has-counter="false"
         icon-right="close"
         icon-right-clickable
@@ -16,14 +16,14 @@
 
       <b-dropdown
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__filter-button"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-filter__filter-button"
         position="is-bottom-right"
       >
         <template #trigger>
-          <i class="mdi mdi-filter mdi-20px wit-profiles-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
+          <i class="mdi mdi-filter mdi-20px wit-filter__filter-icon wit-flex wit-flex--center" :class="{ 'with-indicator': hasChanges }" />
         </template>
 
-        <div class="wit-profiles-filter__filter-popup">
+        <div class="wit-filter__filter-popup">
           <slot :filterParams="filters" :update="update" />
 
           <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
@@ -38,39 +38,32 @@
     <div class="wit-flex">
       <b-dropdown
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-profiles-filter__sort-dropdown wit-offset-right--xs"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs1 wit-filter__sort-dropdown"
         position="is-bottom-left"
       >
         <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-profiles-filter__sort-button">
-            <span class="wit-color--muted">Sort by</span>
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button">
+            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">Sort by</span>
+            <span class="wit-color--white">{{ $t(defaultSort[sort.sortBy]) }}</span>
           </b-button>
         </template>
 
-        <template v-for="(label, key) in defaultSort">
-          <b-dropdown-item :key="key + 'asc'" class="wit-transition--background">
-            <div class="wit-flex wit-flex--align-center wit-color--white">
-              <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-ascending" />
-              <span class="wit-inline-block username">{{ $t(label) }}</span>
-            </div>
-          </b-dropdown-item>
-
-          <b-dropdown-item :key="key + 'desc'" class="wit-transition--background">
-            <div class="wit-flex wit-flex--align-center wit-color--white">
-              <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-descending" />
-              <span class="wit-inline-block username">{{ $t(label) }}</span>
-            </div>
-          </b-dropdown-item>
-        </template>
+        <b-dropdown-item v-for="(label, key) in defaultSort" :key="key" class="wit-transition--background">
+          <div class="wit-flex wit-flex--align-center wit-color--white">
+            <b-icon size="is-small" class="is-size-5 wit-offset-right--xs" icon="sort-ascending" />
+            <span class="wit-inline-block username">{{ $t(label) }}</span>
+          </div>
+        </b-dropdown-item>
       </b-dropdown>
 
       <b-button
         target="_blank"
-        class="wit-profiles-filter__filter-button"
+        class="wit-filter__order-button"
+        @click="updateSort({ order: sort.order === 'asc' ? 'desc' : 'asc' })"
       >
         <div class="wit-fle wit-color--muted">
-          <i class="mdi mdi-sort-ascending mdi-20px" />
-          <!--          <i class="mdi mdi-sort-descending mdi-20px" />-->
+          <i v-if="sort.order === 'asc'" class="mdi mdi-sort-ascending mdi-20px" />
+          <i v-else class="mdi mdi-sort-descending mdi-20px" />
         </div>
       </b-button>
     </div>
@@ -79,7 +72,7 @@
 
 <script>
 import { isEqual } from 'lodash'
-import { getFiltersFromRoute, getObjectsDiff } from '@/utils/index.js'
+import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 
 export default {
     name: 'Filters',
@@ -131,7 +124,38 @@ export default {
                 }
 
                 const changedFilters = getObjectsDiff(this.defaultFilters, filters)
-                this.$router.replace({ path: this.$route.path, query: changedFilters })
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        ...changedFilters
+                    }
+                })
+            }
+        },
+
+        sort: {
+            deep: true,
+            handler (sort) {
+                const routeSort = getSortFromRoute(this.$route, this.defaultSort)
+
+                console.log(routeSort, this.defaultSort)
+
+                if (isEqual(sort, routeSort)) {
+                    return
+                }
+
+                const changedSort = getObjectsDiff(this.defaultSort, sort)
+
+                console.log(changedSort)
+
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        ...this.$route.query,
+                        ...changedSort
+                    }
+                })
             }
         },
 
@@ -139,11 +163,19 @@ export default {
             deep: true,
             handler () {
                 this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
+                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort))
             }
         }
     },
 
     methods: {
+        updateSort (updatedSort) {
+            this.$emit('sortChanged', {
+                ...this.sort,
+                ...updatedSort
+            })
+        },
+
         update (updatedFilters) {
             this.$emit('filtersChanged', {
                 ...this.filters,
@@ -163,25 +195,34 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-profiles-filter__input {
-    flex: 0 1 300px;
+.wit-filter__filter {
+    flex: 0 1 350px;
 }
 
-.wit-profiles-filter__sort-button {
+.wit-filter__order-button,
+.wit-filter__sort-button,
+.wit-filter__filter-button {
     background-color: rgb(46, 54, 72);
     border: 1px solid rgb(54, 57, 76);
-    border-radius: var(--offset-xxs);
     color: var(--body-color);
 }
 
-.wit-profiles-filter__filter-button {
-    background-color: rgb(46, 54, 72);
-    border: 1px solid rgb(54, 57, 76);
-    border-radius: var(--offset-xxs);
-    cursor: pointer;
+.wit-filter__order-button {
+    padding: 0 var(--offset-xs);
 }
 
-.wit-profiles-filter__filter-icon {
+.wit-filter__filter-button,
+.wit-filter__order-button {
+    border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
+    border-left: 0;
+}
+
+.wit-filter__input,
+.wit-filter__sort-button {
+    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+}
+
+.wit-filter__filter-icon {
     color: #dbdbdb;
     width: var(--offset-lg);
     height: var(--offset-lg);
@@ -204,7 +245,7 @@ export default {
     }
 }
 
-.wit-profiles-filter__filter-popup {
+.wit-filter__filter-popup {
     padding: var(--offset-xs) var(--offset-md);
     min-width: 460px;
 

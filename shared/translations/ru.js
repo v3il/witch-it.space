@@ -183,8 +183,8 @@ export const ru = {
     Profiles_StatButtonWishlist: 'В желаемом',
     Profiles_Trade: 'Обмен',
 
-    Profiles_Sort_Market: 'Предложения',
-    Profiles_Sort_Wishlist: 'Список желаемого',
+    Profiles_Sort_Market: 'Маркет',
+    Profiles_Sort_Wishlist: 'Желаемое',
     Profiles_Sort_Name: 'Имя пользователя',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
