@@ -39,16 +39,14 @@
           @sortChanged="onSortChange"
         >
           <template #default="{ filterParams, update }">
-            <!--            <b-field :label="$t('Profiles_SteamGuardedOnly')">-->
             <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">
               {{ $t('Profiles_SteamGuardedOnly') }}
             </b-switch>
-            <!--            </b-field>-->
           </template>
         </Filters>
 
         <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-          <div v-for="profile in filteredProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
+          <div v-for="profile in sortedProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
             <UserView
               :profile="profile"
               class="wit-block--full-height wit-profile-view"
@@ -137,6 +135,27 @@ export default {
                 const isFilteredBySteamGuard = this.filters.isSteamGuarded ? profile.isGuardProtected : true
 
                 return isFilteredByName && isFilteredBySteamGuard
+            })
+        },
+
+        sortedProfiles () {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            return Array.from(this.filteredProfiles).sort((a, b) => {
+                const first = isAsc ? a : b
+                const second = isAsc ? b : a
+
+                switch (sortBy) {
+                case 'market':
+                    return first.userStat.marketSize - second.userStat.marketSize
+                case 'wishlist':
+                    return first.userStat.wishlistSize - second.userStat.wishlistSize
+                case 'name':
+                    return first.displayName.localeCompare(second.displayName)
+                }
+
+                return 0
             })
         },
 
