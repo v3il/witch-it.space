@@ -23,15 +23,15 @@
       append-to-body
       @active-change="() => {}"
     >
-      <template #trigger>
-        <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 32px;">
-          <i class="mdi mdi-dots-grid mdi-24px wit-color--Y400" />
-        </div>
-      </template>
+      <!--      <template #trigger>-->
+      <!--        <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height" style="width: 32px;">-->
+      <!--          <i class="mdi mdi-dots-grid mdi-24px wit-color&#45;&#45;Y400" />-->
+      <!--        </div>-->
+      <!--      </template>-->
 
-      <div style="width: 600px; height: 600px;">
-        Filters
-      </div>
+      <!--      <div style="width: 600px; height: 600px;">-->
+      <!--        Filters-->
+      <!--      </div>-->
     </b-dropdown>
   </div>
 </template>

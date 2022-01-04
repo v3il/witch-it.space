@@ -56,7 +56,7 @@
           />
         </template>
 
-        <EmptyState v-else :text="$t('Quests_NoQuests')" />
+        <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
       </Card>
     </div>
   </div>

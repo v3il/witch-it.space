@@ -56,7 +56,7 @@
           </div>
         </div>
 
-        <EmptyState v-else :text="$t('Profiles_NoProfiles')" />
+        <EmptyState v-else :text="$t('Profiles_NoProfiles')" icon="account-multiple-remove" class="wit-padding-top--sm" />
       </Card>
     </main>
   </div>

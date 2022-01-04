@@ -20,7 +20,7 @@
         position="is-bottom-right"
       >
         <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button" :class="{ 'with-indicator': hasChanges }">
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button">
             <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('Filter') }}</span>
           </b-button>
         </template>

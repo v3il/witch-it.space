@@ -1,9 +1,9 @@
 <template>
   <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center wit-offset-bottom--xs">
     <b-icon
-      icon="microsoft-xbox-controller-battery-empty"
+      :icon="icon"
       size="is-large"
-      class="wit-offset-bottom--sm"
+      class="wit-offset-bottom--xs"
     />
     {{ text }}
   </div>
@@ -15,6 +15,11 @@ export default {
 
     props: {
         text: {
+            required: true,
+            type: String
+        },
+
+        icon: {
             required: true,
             type: String
         }
