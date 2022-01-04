@@ -1,7 +1,7 @@
 import { genSalt, hash } from 'bcrypt'
 import { User } from '../models'
 
-const EXCLUDED_ATTRIBUTES = ['password', 'googleId']
+const EXCLUDED_ATTRIBUTES = ['password']
 
 export class UserService {
     getById (id) {

@@ -35,6 +35,13 @@ export const User = StoreWrap.wrap('user', {
         USER: 'user'
     },
 
+    Getters: {
+        IS_STEAM_CONNECTED: 'isSteamConnected',
+        IS_DISCORD_CONNECTED: 'isDiscordConnected',
+        IS_GOOGLE_CONNECTED: 'isGoogleConnected',
+        IS_VERIFIED: 'isVerified'
+    },
+
     Actions: {
         FETCH_USER: 'fetchUser',
         LOGIN: 'login',

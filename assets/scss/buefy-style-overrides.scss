@@ -112,6 +112,7 @@ h6 {
     margin-right: var(--offset-lg);
     min-height: var(--header-height);
     max-height: var(--header-height);
+    min-width: 150px;
 
     @media screen and (max-width: 1024px) {
         margin-right: 0;

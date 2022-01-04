@@ -8,6 +8,24 @@ export const state = () => ({
     user: null
 })
 
+export const getters = {
+    [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
+        return !!user?.steamId
+    },
+
+    [User.Getters.IS_DISCORD_CONNECTED] ({ user }) {
+        return !!user?.discordId
+    },
+
+    [User.Getters.IS_GOOGLE_CONNECTED] ({ user }) {
+        return !!user?.googleId
+    },
+
+    [User.Getters.IS_VERIFIED] ({ user }) {
+        return !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink
+    }
+}
+
 export const actions = {
     async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
         try {
