@@ -60,3 +60,18 @@
     font-size: 20px;
     line-height: 22px;
 }
+
+.wit-indicator {
+    &::after {
+        content: "";
+        position: absolute;
+        width: var(--offset-xs);
+        height: var(--offset-xs);
+        border-radius: 50%;
+        top: -4px;
+        right: -4px;
+        background-color: var(--danger);
+        animation: pulse 10s infinite linear;
+        will-change: opacify;
+    }
+}

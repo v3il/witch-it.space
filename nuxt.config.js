@@ -31,7 +31,10 @@ export default {
         '~/plugins/injectServices.js'
     ],
 
-    loading: false,
+    loading: {
+        color: '#626ed4',
+        height: '2px'
+    },
     components: true,
 
     buildModules: [

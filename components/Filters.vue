@@ -15,12 +15,13 @@
       />
 
       <b-dropdown
+        ref="filterDropdown"
         animation="fade150"
         class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
         position="is-bottom-right"
       >
         <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button">
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button" :class="{ 'wit-indicator': hasFilterChanges }">
             <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('Filter') }}</span>
           </b-button>
         </template>
@@ -39,7 +40,7 @@
       </b-dropdown>
     </div>
 
-    <div class="wit-flex wit-offset-bottom--xs">
+    <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
       <b-dropdown
         animation="fade150"
         class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
@@ -109,11 +110,15 @@ export default {
     },
 
     computed: {
-        hasChanges () {
+        hasFilterChanges () {
             const { query, ...otherProps } = this.filters
             const { query: originalQuery, ...otherPropsOriginal } = this.defaultFilters
 
             return !isEqual(otherPropsOriginal, otherProps)
+        },
+
+        hasSortChanges () {
+            return !isEqual(this.sort, this.defaultSort)
         }
     },
 
@@ -182,6 +187,7 @@ export default {
 
         resetFilters () {
             this.update(this.defaultFilters)
+            this.$refs.filterDropdown.toggle()
         },
 
         toggleOrder () {
@@ -216,39 +222,34 @@ export default {
 
 .wit-filter__order-button {
     padding: 0 var(--offset-xs);
-}
-
-.wit-filter__filter-button1,
-.wit-filter__order-button {
     border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
-    border-left: 0;
 }
 
 .wit-filter__sort-button {
     border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
 }
 
-.wit-filter__filter-icon {
-    color: #dbdbdb;
-    width: var(--offset-lg);
-    height: var(--offset-lg);
+.wit-filter__filter-button {
+    //color: #dbdbdb;
+    //width: var(--offset-lg);
+    //height: var(--offset-lg);
 
-    &.with-indicator {
-        position: relative;
-
-        &::after {
-            content: "";
-            position: absolute;
-            width: var(--offset-xs);
-            height: var(--offset-xs);
-            border-radius: 50%;
-            top: -4px;
-            right: -4px;
-            background-color: var(--danger);
-            animation: pulse 5s infinite linear;
-            will-change: opacify;
-        }
-    }
+    //&.with-indicator {
+    //    position: relative;
+    //
+    //    &::after {
+    //        content: "";
+    //        position: absolute;
+    //        width: var(--offset-xs);
+    //        height: var(--offset-xs);
+    //        border-radius: 50%;
+    //        top: -4px;
+    //        right: -4px;
+    //        background-color: var(--danger);
+    //        animation: pulse 5s infinite linear;
+    //        will-change: opacify;
+    //    }
+    //}
 }
 
 .wit-filter__filter-popup {
