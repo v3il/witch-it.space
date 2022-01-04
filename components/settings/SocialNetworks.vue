@@ -11,7 +11,7 @@
     <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
       <div class="wit-flex__item--grow">
         <strong class="wit-block wit-offset-bottom--xs">Steam</strong>
-        <p v-if="profile.isSteamConnected" class="wit-color--success">
+        <p v-if="isSteamConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
         <p v-else class="wit-color--warning">
@@ -19,7 +19,7 @@
         </p>
       </div>
 
-      <b-button v-if="profile.isSteamConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('steam')">
+      <b-button v-if="isSteamConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('steam')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -31,7 +31,7 @@
     <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
       <div class="wit-flex__item--grow">
         <strong class="wit-block wit-offset-bottom--xs">Discord</strong>
-        <p v-if="profile.isDiscordConnected" class="wit-color--success">
+        <p v-if="isDiscordConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
         <p v-else class="wit-color--warning">
@@ -39,7 +39,7 @@
         </p>
       </div>
 
-      <b-button v-if="profile.isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('discord')">
+      <b-button v-if="isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('discord')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -51,7 +51,7 @@
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
         <strong class="wit-block wit-offset-bottom--xs">Google</strong>
-        <p v-if="profile.isGoogleConnected" class="wit-color--success">
+        <p v-if="isGoogleConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
         <p v-else class="wit-color--warning">
@@ -59,7 +59,7 @@
         </p>
       </div>
 
-      <b-button v-if="profile.isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('google')">
+      <b-button v-if="isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('google')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Card from '@/components/Card'
 import { User } from '@/store'
 import { showPopup } from '@/utils'
@@ -96,7 +97,13 @@ export default {
 
         toggleButtonType () {
             return this.isPublicProfile ? 'is-warning' : 'is-success'
-        }
+        },
+
+        ...mapGetters(User.PATH, [
+            User.Getters.IS_STEAM_CONNECTED,
+            User.Getters.IS_DISCORD_CONNECTED,
+            User.Getters.IS_GOOGLE_CONNECTED
+        ])
     },
 
     methods: {

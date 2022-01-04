@@ -7,5 +7,5 @@ export const getNavbarLinks = user => [
     { to: Routes.PROFILES, textId: 'MainMenu_Profiles', icon: 'account-group' },
     { to: Routes.ITEMS, textId: 'MainMenu_Items', icon: 'view-grid' },
     { to: Routes.QUESTS, textId: 'MainMenu_Quests', icon: 'file-tree' },
-    { to: Routes.SETTINGS, textId: 'MainMenu_Settings', icon: 'cog-sync' }
+    { to: Routes.SETTINGS, textId: 'MainMenu_Settings', icon: 'cog-sync', withIndicator: true }
 ]

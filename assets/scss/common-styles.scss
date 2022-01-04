@@ -74,4 +74,11 @@
         animation: pulse 10s infinite linear;
         will-change: opacify;
     }
+
+    &--6px::after {
+        width: 6px;
+        height: 6px;
+        top: -3px;
+        right: -3px;
+    }
 }

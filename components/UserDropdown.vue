@@ -8,7 +8,7 @@
   >
     <template #trigger>
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
-        <div class="wit-user-dropdown__image-block wit-offset-right--xs wit-flex wit-flex--center" :class="{ 'with-error': !user.isVerified }">
+        <div class="wit-user-dropdown__image-block wit-offset-right--xs wit-flex wit-flex--center">
           <img
             class="wit-user-dropdown__image"
             :src="avatarUrl"
@@ -19,8 +19,6 @@
         <div class="username">
           {{ user.displayName }}
         </div>
-
-        <!--        <b-icon size="is-small" class="is-size-5 wit-offset-left&#45;&#45;xs" icon="menu-down" />-->
       </div>
     </template>
 
@@ -43,7 +41,6 @@
 <script>
 import { mapState } from 'vuex'
 import { User } from '@/store'
-import { Routes } from '@/shared'
 import { buildAvatarUrl } from '@/utils'
 
 export default {

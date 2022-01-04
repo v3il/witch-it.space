@@ -19,7 +19,7 @@
     </TopNavBar>
 
     <div class="wit-settings">
-      <NotVerifiedProfileMessage v-if="!user.isVerified" :profile="user" />
+      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" />
       <StickyPanel @update="updateSettings" />
 
       <div class="wit-offset-bottom--xlg">
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import TopTabs from '@/components/TopTabs'
@@ -82,6 +82,10 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
+        ]),
+
+        ...mapGetters(User.PATH, [
+            User.Getters.IS_VERIFIED
         ])
     },
 

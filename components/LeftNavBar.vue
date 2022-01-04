@@ -11,7 +11,9 @@
         :to="link.to"
         tag="nuxt-link"
       >
-        <b-icon class="is-size-5 wit-color--Y400" :icon="link.icon" />
+        <div class="wit-link__icon-container wit-position--relative" :class="getLinkClass(link)">
+          <b-icon class="is-size-5 wit-color--Y400" :icon="link.icon" />
+        </div>
       </b-button>
     </div>
 
@@ -37,7 +39,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store'
 
 export default {
@@ -53,7 +55,19 @@ export default {
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
+        ]),
+
+        ...mapGetters(User.PATH, [
+            User.Getters.IS_VERIFIED
         ])
+    },
+
+    methods: {
+        getLinkClass (link) {
+            return {
+                'wit-indicator wit-indicator--6px': !this.isVerified && link.withIndicator
+            }
+        }
     }
 }
 </script>
@@ -66,5 +80,10 @@ export default {
     &.nuxt-link-exact-active {
         background-color: rgba(239, 242, 247, 0.05);
     }
+}
+
+.wit-link__icon-container {
+    height: 1.5em;
+    width: 1.5em;
 }
 </style>

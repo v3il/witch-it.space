@@ -9,10 +9,10 @@
     <p class="wit-color--white wit-offset-bottom--xs" v-html="$t('Settings_NotVerifiedAccountMessage')" />
 
     <ul class="wit-color--warning wit-settings__todo-list">
-      <li v-if="!profile.isSteamConnected">
+      <li v-if="!isSteamConnected">
         {{ $t('Settings_NotVerifiedAccountTask1') }}
       </li>
-      <li v-if="!profile.isDiscordConnected">
+      <li v-if="!isDiscordConnected">
         {{ $t('Settings_NotVerifiedAccountTask2') }}
       </li>
       <li v-if="!profile.steamTradeLink">
@@ -23,6 +23,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { User } from '@/store/index.js'
+
 export default {
     name: 'NotVerifiedProfileMessage',
 
@@ -31,6 +34,13 @@ export default {
             required: true,
             type: Object
         }
+    },
+
+    computed: {
+        ...mapGetters(User.PATH, [
+            User.Getters.IS_STEAM_CONNECTED,
+            User.Getters.IS_DISCORD_CONNECTED
+        ])
     }
 }
 </script>
