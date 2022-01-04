@@ -177,18 +177,17 @@ export const ru = {
     Settings_HideRecipes: 'Всегда скрывать рецепты из списка предметов',
 
     Profiles_AllProfiles: 'Все профили',
-    // Profiles_FilteredProfiles: 'Выбранные профили',
     Profiles_VerifiedProfiles: 'Верифицированные',
     Profiles_NoProfiles: 'Нет профилей',
     Profiles_SearchByUsername: 'Поиск пользователя',
-    Profiles_SteamGuardedOnly: 'Только пользователи со Steam Guard',
+    Profiles_SteamGuardedOnly: 'Только со Steam Guard',
     Profiles_StatButtonOrders: 'Предложений',
     Profiles_StatButtonWishlist: 'В желаемом',
     Profiles_Trade: 'Обмен',
 
     Profiles_Sort_Market: 'Маркет',
     Profiles_Sort_Wishlist: 'Желаемое',
-    Profiles_Sort_Name: 'Имя пользователя',
+    Profiles_Sort_Name: 'Имя',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
     Items_Filters_AnyRarity: 'Любая редкость',

@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-filter wit-flex--justify-between wit-flex">
-    <div class="wit-flex wit-filter__filter wit-offset-right--xs wit-offset-bottom--xs">
+  <div class="wit-flex--justify-between wit-flex wit-flex--wrap">
+    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs">
       <b-input
         class="wit-filter__input wit-offset-right--xs wit-flex__item--grow"
         :value="filters.query"
@@ -17,7 +17,7 @@
       <b-dropdown
         ref="filterDropdown"
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs"
         position="is-bottom-right"
       >
         <template #trigger>
@@ -31,8 +31,8 @@
             <slot :filterParams="filters" :update="update" />
           </div>
 
-          <div class="wit-padding-top--sm wit-flex wit-flex--justify-end" style="border-top: 1px solid #36394c;">
-            <b-button type="is-danger" class="wis-user-view__stat-button" @click="resetFilters">
+          <div class="wit-padding-top--sm wit-flex wit-flex--justify-end wiz-border--top">
+            <b-button type="is-danger" @click="resetFilters">
               {{ $t('Clear') }}
             </b-button>
           </div>
@@ -43,7 +43,7 @@
     <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
       <b-dropdown
         animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs wit-filter__sort-dropdown"
+        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs"
         position="is-bottom-left"
       >
         <template #trigger>
@@ -55,14 +55,14 @@
 
         <b-dropdown-item v-for="(label, key) in sorts" :key="key" class="wit-transition--background" @click="updateSort({ sortBy: key })">
           <div class="wit-flex wit-flex--align-center wit-color--white">
-            <span class="wit-inline-block username">{{ $t(label) }}</span>
+            {{ $t(label) }}
           </div>
         </b-dropdown-item>
       </b-dropdown>
 
       <b-button class="wit-filter__order-button" @click="toggleOrder">
-        <div class="wit-fle wit-color--muted">
-          <i v-if="sort.order === 'asc'" class="mdi mdi-sort-ascending mdi-20px" />
+        <div class="wit-color--muted">
+          <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />
           <i v-else class="mdi mdi-sort-descending mdi-20px" />
         </div>
       </b-button>
@@ -119,6 +119,10 @@ export default {
 
         hasSortChanges () {
             return !isEqual(this.sort, this.defaultSort)
+        },
+
+        isAscendingOrder () {
+            return this.sort.order === 'asc'
         }
     },
 
@@ -191,23 +195,20 @@ export default {
         },
 
         toggleOrder () {
-            this.updateSort({ order: this.sort.order === 'asc' ? 'desc' : 'asc' })
+            this.updateSort({ order: this.isAscendingOrder ? 'desc' : 'asc' })
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.wit-filter {
-    flex-wrap: wrap;
-}
-
 .wit-filter__filter {
     flex: 0 1 350px;
+    margin-right: var(--offset-xs);
 
     @media (max-width: 600px) {
         flex: 0 1 100%;
-        margin-right: 0 !important;
+        margin-right: 0;
         margin-bottom: var(--offset-xs);
     }
 }
@@ -216,7 +217,7 @@ export default {
 .wit-filter__sort-button,
 .wit-filter__filter-button {
     background-color: rgb(46, 54, 72);
-    border: 1px solid rgb(54, 57, 76);
+    border: var(--default-border);
     color: var(--body-color);
 }
 
@@ -227,29 +228,6 @@ export default {
 
 .wit-filter__sort-button {
     border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
-}
-
-.wit-filter__filter-button {
-    //color: #dbdbdb;
-    //width: var(--offset-lg);
-    //height: var(--offset-lg);
-
-    //&.with-indicator {
-    //    position: relative;
-    //
-    //    &::after {
-    //        content: "";
-    //        position: absolute;
-    //        width: var(--offset-xs);
-    //        height: var(--offset-xs);
-    //        border-radius: 50%;
-    //        top: -4px;
-    //        right: -4px;
-    //        background-color: var(--danger);
-    //        animation: pulse 5s infinite linear;
-    //        will-change: opacify;
-    //    }
-    //}
 }
 
 .wit-filter__filter-popup {

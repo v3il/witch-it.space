@@ -169,8 +169,6 @@ export default {
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
-
-        console.log(this.sort)
     },
 
     methods: {
@@ -194,7 +192,7 @@ export default {
     padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {
-        padding: var(--offset-xs);
+        padding: var(--offset-sm);
     }
 }
 
