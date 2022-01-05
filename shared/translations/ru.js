@@ -184,6 +184,8 @@ export const ru = {
     Profiles_StatButtonOrders: 'Предложений',
     Profiles_StatButtonWishlist: 'В желаемом',
     Profiles_Trade: 'Обмен',
+    Profiles_ProfileNotFound: 'Профиль не найден',
+    Profiles_BackToProfilesList: 'Вернуться ко всем профилям',
 
     Profiles_Sort_Market: 'Маркет',
     Profiles_Sort_Wishlist: 'Желаемое',

@@ -5,12 +5,12 @@
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>
             {{ $t('Wishlist_TopTabs_Orders') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profile.userStat.marketSize }}</span>
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ marketSize }}</span>
           </template>
 
           <template #tab1>
             {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profile.userStat.wishlistSize }}</span>
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlistSize }}</span>
           </template>
         </TopTabs>
       </template>
@@ -18,7 +18,11 @@
 
     <div class="wit-items wit-flex">
       <template v-if="error">
-        No user
+        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
+          <nuxt-link to="/profiles" class="wit-padding-top--xs">
+            {{ $t('Profiles_BackToProfilesList') }}
+          </nuxt-link>
+        </EmptyState>
       </template>
 
       <template v-else>
@@ -102,15 +106,10 @@
 <script>
 import { mapState } from 'vuex'
 import UserView from '@/components/UserView'
-import ItemView from '@/components/items/ItemView'
-import ItemFilters from '@/components/items/ItemFilters'
 import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-import ItemTags from '@/components/items/ItemTags'
-import WishlistItemView from '@/components/wishlist/WishlistItemView'
-import Card from '@/components/Card'
 import TopNavBar from '@/components/TopNavBar'
-import { Routes } from '@/shared'
 import { User } from '@/store'
+import EmptyState from '@/components/EmptyState.vue'
 
 const Modes = {
     MARKET: 'market',
@@ -136,7 +135,8 @@ export default {
         // ItemFilters,
         UserView,
         // Card,
-        TopNavBar
+        TopNavBar,
+        EmptyState
     },
 
     middleware: ['fetchUser'],
@@ -145,8 +145,8 @@ export default {
         wishlist: [],
         // profile: null,
         // error: null,
-        marketSize: 0,
-        wishlistSize: 0,
+        // marketSize: 0,
+        // wishlistSize: 0,
         page: 1,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS },
@@ -169,6 +169,14 @@ export default {
 
         userViewMode () {
             return this.isMarket ? 'market' : 'wishlist'
+        },
+
+        marketSize () {
+            return this.profile?.userStat.marketSize ?? 0
+        },
+
+        wishlistSize () {
+            return this.profile?.userStat.wishlistSize ?? 0
         }
     },
 
@@ -197,9 +205,9 @@ export default {
 
         // console.log(marketSize, wishlistSize)
 
-        if (this.error) {
-            this.$showError(this.error)
-        }
+        // if (this.error) {
+        //     this.$showError(this.error)
+        // }
 
         // else {
         //     this.profile = profile

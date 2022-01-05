@@ -1,11 +1,12 @@
 <template>
-  <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center wit-offset-bottom--xs">
+  <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center">
     <b-icon
       :icon="icon"
       size="is-large"
       class="wit-offset-bottom--xs"
     />
     {{ text }}
+    <slot />
   </div>
 </template>
 
