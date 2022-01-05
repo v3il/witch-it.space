@@ -97,11 +97,11 @@ const updateSettings = async (request, response) => {
         steamTradeLink,
         isGuardProtected,
         avatarId,
-        isStrictRarity,
-        onlyGuarded,
-        isBargainAvailable,
-        isTradingOnlyDups,
-        areRecipesHidden,
+        switchRarities,
+        tradeWithGuardedOnly,
+        discountAvailable,
+        tradeDuplicatesOnly,
+        hideRecipes,
         wishlistNote,
         marketNote
     } = request.body
@@ -136,13 +136,16 @@ const updateSettings = async (request, response) => {
         steamTradeLink,
         avatarId,
         isGuardProtected: !!isGuardProtected,
-        isStrictRarity: !!isStrictRarity,
-        onlyGuarded: !!onlyGuarded,
-        isBargainAvailable: !!isBargainAvailable,
-        isTradingOnlyDups: !!isTradingOnlyDups,
-        areRecipesHidden: !!areRecipesHidden,
-        wishlistNote,
-        marketNote
+        settings: {
+            ...user.settings,
+            switchRarities: !!switchRarities,
+            tradeWithGuardedOnly: !!tradeWithGuardedOnly,
+            discountAvailable: !!discountAvailable,
+            tradeDuplicatesOnly: !!tradeDuplicatesOnly,
+            hideRecipes: !!hideRecipes,
+            wishlistNote,
+            marketNote
+        }
     }
 
     if (password) {

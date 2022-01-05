@@ -105,11 +105,12 @@ export default {
         this.settings.steamTradeLink = this.user.steamTradeLink ?? ''
         this.settings.isGuardProtected = this.user.isGuardProtected
         this.settings.avatarId = this.user.avatarId
-        this.settings.isStrictRarity = this.user.isStrictRarity
-        this.settings.onlyGuarded = this.user.onlyGuarded
-        this.settings.isBargainAvailable = this.user.isBargainAvailable
-        this.settings.isTradingOnlyDups = this.user.isTradingOnlyDups
-        this.settings.areRecipesHidden = this.user.areRecipesHidden
+
+        this.settings.switchRarities = this.user.settings.switchRarities
+        this.settings.tradeWithGuardedOnly = this.user.settings.tradeWithGuardedOnly
+        this.settings.discountAvailable = this.user.settings.discountAvailable
+        this.settings.tradeDuplicatesOnly = this.user.settings.tradeDuplicatesOnly
+        this.settings.hideRecipes = this.user.settings.hideRecipes
         this.settings.marketNote = this.user.marketNote ?? ''
         this.settings.wishlistNote = this.user.wishlistNote ?? ''
     },
@@ -147,11 +148,11 @@ export default {
                     steamTradeLink: this.settings.steamTradeLink,
                     isGuardProtected: this.settings.isGuardProtected,
                     avatarId: this.settings.avatarId,
-                    isStrictRarity: this.settings.isStrictRarity,
-                    onlyGuarded: this.settings.onlyGuarded,
-                    isBargainAvailable: this.settings.isBargainAvailable,
-                    isTradingOnlyDups: this.settings.isTradingOnlyDups,
-                    areRecipesHidden: this.settings.areRecipesHidden,
+                    switchRarities: this.settings.switchRarities,
+                    tradeWithGuardedOnly: this.settings.tradeWithGuardedOnly,
+                    discountAvailable: this.settings.discountAvailable,
+                    tradeDuplicatesOnly: this.settings.tradeDuplicatesOnly,
+                    hideRecipes: this.settings.hideRecipes,
                     marketNote: this.settings.marketNote,
                     wishlistNote: this.settings.wishlistNote
                 }

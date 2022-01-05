@@ -94,49 +94,49 @@ export default {
         },
 
         getIsStrictRarityIcon () {
-            const isStrictRarity = this.profile.isStrictRarity
+            const switchRarities = this.profile.settings.switchRarities
 
             return {
                 id: 2,
                 iconClass: 'mdi-swap-vertical-circle',
-                iconColorClass: isStrictRarity ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: isStrictRarity ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled',
+                iconColorClass: switchRarities ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                tooltipText: switchRarities ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled',
                 isVisible: !this.showMainOnly
             }
         },
 
         getWorkingWithSteamGuardedIcon () {
-            const onlyGuarded = this.profile.onlyGuarded
+            const tradeWithGuardedOnly = this.profile.settings.tradeWithGuardedOnly
 
             return {
                 id: 3,
                 iconClass: 'mdi-shield-off',
-                iconColorClass: onlyGuarded ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: onlyGuarded ? 'UserView_TradingAnyUser' : 'UserView_TradingOnlyGuarded',
+                iconColorClass: tradeWithGuardedOnly ? 'wis-user-icon--danger' : 'wis-user-icon--success',
+                tooltipText: tradeWithGuardedOnly ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
                 isVisible: !this.showMainOnly
             }
         },
 
         getBargainIcon () {
-            const isBargainAvailable = this.profile.isBargainAvailable
+            const discountAvailable = this.profile.settings.discountAvailable
 
             return {
                 id: 4,
                 iconClass: 'mdi-database-arrow-down',
-                iconColorClass: isBargainAvailable ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: isBargainAvailable ? 'UserView_BargainAvailable' : 'UserView_BargainNotAvailable',
+                iconColorClass: discountAvailable ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                tooltipText: discountAvailable ? 'UserView_BargainAvailable' : 'UserView_BargainNotAvailable',
                 isVisible: !this.showMainOnly
             }
         },
 
         getIsTradingDupsIcon () {
-            const isTradingOnlyDups = this.profile.isTradingOnlyDups
+            const tradeDuplicatesOnly = this.profile.settings.tradeDuplicatesOnly
 
             return {
                 id: 5,
                 iconClass: 'mdi-numeric-1-box-multiple',
-                iconColorClass: isTradingOnlyDups ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: isTradingOnlyDups ? 'UserView_TradingAnyItem' : 'UserView_TradingOnlyDupes',
+                iconColorClass: tradeDuplicatesOnly ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                tooltipText: tradeDuplicatesOnly ? 'UserView_TradingAnyItem' : 'UserView_TradingOnlyDupes',
                 isVisible: !this.showMainOnly
             }
         }
@@ -171,10 +171,10 @@ $icon-size: 12px;
     }
 
     &.wis-user-icon--danger {
-        border-color: var(--red-400);
+        border-color: var(--warning);
 
         &::after {
-            background: var(--red-400);
+            background: var(--warning);
             content: "!";
             display: flex;
             position: absolute;
@@ -192,7 +192,7 @@ $icon-size: 12px;
         }
 
         .mdi {
-            color: var(--red-400);
+            color: var(--warning);
         }
     }
 

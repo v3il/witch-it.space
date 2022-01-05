@@ -1,38 +1,28 @@
 <template>
   <Card class="wit-offset-bottom--sm">
     <template #title>
-      {{ $t('Settings_MarketSettings') }}
+      {{ $t('Settings_Preferences') }}
     </template>
 
-    <b-field class="wit-offset-bottom--sm" :label="$t('Settings_IsStrictPrice')">
-      <b-switch :value="marketSettings.isStrictRarity" @input="onStrictPriceChange">
-        {{ marketSettings.isStrictRarity ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
+    <b-switch :value="marketSettings.switchRarities" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ switchRarities: $event })">
+      {{ $t('Settings_SwitchRarities') }}
+    </b-switch>
 
-    <b-field class="wit-offset-bottom--sm" :label="$t('Settings_AcceptsTradeFromNonGuardedUsers')">
-      <b-switch :value="marketSettings.onlyGuarded" @input="onOnlyGuardedChange">
-        {{ marketSettings.onlyGuarded ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
+    <b-switch :value="marketSettings.tradeWithGuardedOnly" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ tradeWithGuardedOnly: $event })">
+      {{ $t('Settings_TradeWithGuardedOnly') }}
+    </b-switch>
 
-    <b-field class="wit-offset-bottom--sm" :label="$t('Settings_IsBargainAvailable')">
-      <b-switch :value="marketSettings.isBargainAvailable" @input="onBargainChange">
-        {{ marketSettings.isBargainAvailable ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
+    <b-switch :value="marketSettings.discountAvailable" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ discountAvailable: $event })">
+      {{ $t('Settings_DiscountAvailable') }}
+    </b-switch>
 
-    <b-field class="wit-offset-bottom--sm" :label="$t('Settings_TradingOnlyDuplicates')">
-      <b-switch :value="marketSettings.isTradingOnlyDups" @input="onTradingDupsChange">
-        {{ marketSettings.isTradingOnlyDups ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
+    <b-switch :value="marketSettings.tradeDuplicatesOnly" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ tradeDuplicatesOnly: $event })">
+      {{ $t('Settings_TradeDuplicatesOnly') }}
+    </b-switch>
 
-    <b-field class="wit-offset-bottom--none1" :label="$t('Settings_HideRecipes')">
-      <b-switch :value="marketSettings.areRecipesHidden" @input="onHideRecipesChange">
-        {{ marketSettings.areRecipesHidden ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
+    <b-switch :value="marketSettings.hideRecipes" class="wit-offset-bottom--sm wit-block--full-width wiz-border--top wit-padding-top--sm" @input="emitEvent({ hideRecipes: $event })">
+      {{ $t('Settings_HideRecipes') }}
+    </b-switch>
   </Card>
 </template>
 
@@ -54,27 +44,7 @@ export default {
     },
 
     methods: {
-        onStrictPriceChange (isStrictRarity) {
-            this._emitEvent({ isStrictRarity })
-        },
-
-        onOnlyGuardedChange (onlyGuarded) {
-            this._emitEvent({ onlyGuarded })
-        },
-
-        onBargainChange (isBargainAvailable) {
-            this._emitEvent({ isBargainAvailable })
-        },
-
-        onTradingDupsChange (isTradingOnlyDups) {
-            this._emitEvent({ isTradingOnlyDups })
-        },
-
-        onHideRecipesChange (areRecipesHidden) {
-            this._emitEvent({ areRecipesHidden })
-        },
-
-        _emitEvent (changedSettings) {
+        emitEvent (changedSettings) {
             this.$emit('change', {
                 ...this.marketSettings,
                 ...changedSettings
