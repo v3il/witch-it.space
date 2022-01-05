@@ -223,7 +223,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-items {
+.wit-profile {
     padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {

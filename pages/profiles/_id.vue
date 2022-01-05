@@ -16,7 +16,7 @@
       </template>
     </TopNavBar>
 
-    <div class="wit-items wit-flex">
+    <div class="wit-profile wit-flex">
       <template v-if="error">
         <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
           <nuxt-link to="/profiles" class="wit-padding-top--xs">
@@ -26,79 +26,14 @@
       </template>
 
       <template v-else>
-        <div style="flex-basis: 350px;" class="wit-offset-right--md">
+        <div class="wit-offset-right--md wit-profile__user">
           <UserView v-if="profile" :profile="profile" :mode="userViewMode" hide-stat-buttons />
         </div>
 
         <div class="wit-flex__item--grow">
-          {{ isMyProfile }}
-          <pre>{{ user }}</pre>
-          <pre>{{ profile }}</pre>
-          <nuxt-child />
+          <nuxt-child :profile="profile" />
         </div>
       </template>
-
-      <!--                <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">-->
-      <!--                    <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">-->
-      <!--                        <div class="wit-offset-bottom&#45;&#45;xs">-->
-      <!--                            <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
-      <!--                                Add items-->
-      <!--                            </b-button>-->
-
-      <!--                            <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
-      <!--                                Manage-->
-      <!--                            </b-button>-->
-      <!--                        </div>-->
-
-      <!--                        <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="areFiltersVisible = !areFiltersVisible">-->
-      <!--                            Filters-->
-      <!--                        </b-button>-->
-      <!--                    </div>-->
-      <!--                </div>-->
-
-      <!--                <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />-->
-
-      <!--                <Card>-->
-      <!--                    <div class="wit-flex wit-flex&#45;&#45;wrap wit-items__item-grid">-->
-      <!--                        <WishlistItemView-->
-      <!--                            v-for="item in wishlist"-->
-      <!--                            :key="item.id"-->
-      <!--                            :wishlist-item="item"-->
-      <!--                            @clicked.stop-->
-      <!--                        />-->
-      <!--                    </div>-->
-      <!--                </Card>-->
-      <!--            </div>-->
-
-      <!--            <div v-if="selectedItem" class="wit-items__sidebar">-->
-      <!--                <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
-      <!--                    <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />-->
-
-      <!--                    <div>-->
-      <!--                        <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">-->
-      <!--                            {{ selectedItem.name }}-->
-      <!--                        </h4>-->
-
-      <!--                        <ItemTags :item="selectedItem" />-->
-      <!--                    </div>-->
-      <!--                </div>-->
-
-      <!--                <p class="wit-offset-bottom&#45;&#45;sm">-->
-      <!--                    In stock: 10-->
-      <!--                </p>-->
-
-      <!--                <b-button type="is-primary" class="wit-transition">-->
-      <!--                    Create offer-->
-      <!--                </b-button>-->
-
-      <!--                <b-button type="is-primary" class="wit-transition">-->
-      <!--                    Wishlist item-->
-      <!--                </b-button>-->
-
-      <!--                <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
-      <!--                    Close-->
-      <!--                </b-button>-->
-      <!--            </div>-->
     </div>
   </div>
 </template>
@@ -116,41 +51,23 @@ const Modes = {
     WISHLIST: 'wishlist'
 }
 
-const DEFAULT_FILTERS = {
-    query: '',
-    rarities: [],
-    isOnlyTradeable: false,
-    isOnlyOwned: false,
-    slots: [],
-    events: []
-}
-
 export default {
     modes: Object.values(Modes),
 
     components: {
-        // ItemView,
-        // WishlistItemView,
-        // ItemTags,
-        // ItemFilters,
         UserView,
-        // Card,
         TopNavBar,
         EmptyState
     },
 
     middleware: ['fetchUser'],
 
+    async asyncData ({ app: { $userService }, route }) {
+        const { error, profile } = await $userService.fetch(route.params.id)
+        return { error, profile }
+    },
+
     data: () => ({
-        wishlist: [],
-        // profile: null,
-        // error: null,
-        // marketSize: 0,
-        // wishlistSize: 0,
-        page: 1,
-        selectedItem: null,
-        filters: { ...DEFAULT_FILTERS },
-        areFiltersVisible: false,
         mode: Modes.MARKET
     }),
 
@@ -163,12 +80,8 @@ export default {
             return this.user.id === this.profile.id
         },
 
-        isMarket () {
-            return this.mode === Modes.MARKET
-        },
-
         userViewMode () {
-            return this.isMarket ? 'market' : 'wishlist'
+            return this.mode === Modes.MARKET ? 'market' : 'wishlist'
         },
 
         marketSize () {
@@ -190,30 +103,8 @@ export default {
         }
     },
 
-    async asyncData ({ app: { $userService }, route }) {
-        const { error, profile } = await $userService.fetch(route.params.id)
-        return { error, profile }
-    },
-
     async created () {
         await this.$itemsService.fetch()
-        // const { error, profile, marketSize, wishlistSize } = await this.$userService.fetch(this.$route.params.id)
-
-        // console.log(profile)
-
-        // this.error = error
-
-        // console.log(marketSize, wishlistSize)
-
-        // if (this.error) {
-        //     this.$showError(this.error)
-        // }
-
-        // else {
-        //     this.profile = profile
-        //     this.marketSize = marketSize
-        //     this.wishlistSize = wishlistSize
-        // }
     },
 
     methods: {
@@ -226,46 +117,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-items {
+.wit-profile {
     padding: var(--offset-md);
 
     @media screen and (max-width: 1024px) {
-        padding-left: 0;
-        padding-right: 0;
+        padding: var(--offset-sm);
     }
 }
 
-.wit-items__item-grid {
-    //display: grid;
-    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-column-gap: 16px;
-    //justify-items: center;
-    grid-row-gap: 16px;
-
-    //@media screen and (max-width: 768px) {
-    //    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    //}
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
-}
-
-.wit-items__sidebar {
-    flex-basis: 450px;
-    padding: 0 24px;
-    position: sticky;
-    top: 94px;
-    max-height: calc(100vh - 94px);
-}
-
-.wit-items__selected-item-view {
-    width: 100%;
-    max-width: 100px;
-}
-
-.wit-item-image__image {
-    border-radius: 8px;
-    display: block;
+.wit-profile__user {
+    flex-basis: 350px;
 }
 </style>
