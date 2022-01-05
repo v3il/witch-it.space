@@ -39,28 +39,6 @@ export default {
     },
 
     computed: {
-        steamGuardStatusIcon () {
-            return this.profile.isGuardProtected ? 'mdi-shield-check' : 'mdi-shield-remove'
-        },
-
-        steamGuardStatusClass () {
-            return this.profile.isGuardProtected ? 'wit-color--success' : 'wit-color--danger'
-        },
-
-        steamGuardStatusTooltipText () {
-            const id = this.profile.isGuardProtected ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled'
-            return this.$t(id)
-        },
-
-        allowMaterialsReplacementClass () {
-            return this.profile.isStrictRarity ? 'wit-color--success' : 'wit-color--danger'
-        },
-
-        allowMaterialsReplacementTooltipText () {
-            const id = this.profile.isStrictRarity ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
-            return this.$t(id)
-        },
-
         iconSizeClass () {
             return `mdi-${this.iconSize}px`
         },
@@ -161,7 +139,7 @@ $icon-size: 12px;
     }
 
     &.wis-user-icon--success {
-        --color: var(--success);
+        --color: var(--green-400);
     }
 
     &.wis-user-icon--error {

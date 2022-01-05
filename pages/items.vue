@@ -2,7 +2,9 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        {{ $t('MainMenu_Items') }}
+        <div class="wit-font-size--sm">
+          {{ $t('MainMenu_Items') }}
+        </div>
       </template>
     </TopNavBar>
 

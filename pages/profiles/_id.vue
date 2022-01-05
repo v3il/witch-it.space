@@ -1,12 +1,6 @@
 <template>
   <div>
     <TopNavBar class="layout__header">
-      <template #brand>
-        <nuxt-link to="/profiles">
-          Profiles
-        </nuxt-link>
-      </template>
-
       <template #topMenu>
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>

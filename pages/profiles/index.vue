@@ -2,7 +2,9 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        {{ $t('MainMenu_Profiles') }}
+        <div class="wit-font-size--sm">
+          {{ $t('MainMenu_Profiles') }}
+        </div>
       </template>
 
       <template #topMenu>
@@ -108,9 +110,6 @@ export default {
 
     async asyncData ({ app: { $userService } }) {
         const { error, profiles } = await $userService.fetchAll()
-
-        // console.log(profiles)
-
         return { error, profiles }
     },
 
