@@ -24,7 +24,7 @@ export class UserService {
             const { data } = await this.#axiosInstance.get('/api/profiles')
             return {
                 error: null,
-                profiles: data.profiles.sort((a, b) => b.userStat.marketSize - a.userStat.marketSize)
+                profiles: data.profiles
             }
         } catch (e) {
             return {

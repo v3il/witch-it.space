@@ -87,7 +87,7 @@ export default {
             return {
                 id: 1,
                 iconClass: 'mdi-shield-check',
-                iconColorClass: isGuarded ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                iconColorClass: isGuarded ? 'wis-user-icon--success' : 'wis-user-icon--error',
                 tooltipText: isGuarded ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled',
                 isVisible: true
             }
@@ -99,7 +99,7 @@ export default {
             return {
                 id: 2,
                 iconClass: 'mdi-swap-vertical-circle',
-                iconColorClass: switchRarities ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                iconColorClass: switchRarities ? 'wis-user-icon--success' : 'wis-user-icon--warning',
                 tooltipText: switchRarities ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled',
                 isVisible: !this.showMainOnly
             }
@@ -111,7 +111,7 @@ export default {
             return {
                 id: 3,
                 iconClass: 'mdi-shield-off',
-                iconColorClass: tradeWithGuardedOnly ? 'wis-user-icon--danger' : 'wis-user-icon--success',
+                iconColorClass: tradeWithGuardedOnly ? 'wis-user-icon--warning' : 'wis-user-icon--success',
                 tooltipText: tradeWithGuardedOnly ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
                 isVisible: !this.showMainOnly
             }
@@ -123,7 +123,7 @@ export default {
             return {
                 id: 4,
                 iconClass: 'mdi-database-arrow-down',
-                iconColorClass: discountAvailable ? 'wis-user-icon--success' : 'wis-user-icon--danger',
+                iconColorClass: discountAvailable ? 'wis-user-icon--success' : 'wis-user-icon--warning',
                 tooltipText: discountAvailable ? 'UserView_BargainAvailable' : 'UserView_BargainNotAvailable',
                 isVisible: !this.showMainOnly
             }
@@ -135,8 +135,8 @@ export default {
             return {
                 id: 5,
                 iconClass: 'mdi-numeric-1-box-multiple',
-                iconColorClass: tradeDuplicatesOnly ? 'wis-user-icon--success' : 'wis-user-icon--danger',
-                tooltipText: tradeDuplicatesOnly ? 'UserView_TradingAnyItem' : 'UserView_TradingOnlyDupes',
+                iconColorClass: tradeDuplicatesOnly ? 'wis-user-icon--warning' : 'wis-user-icon--success',
+                tooltipText: tradeDuplicatesOnly ? 'UserView_TradingOnlyDupes' : 'UserView_TradingAnyItem',
                 isVisible: !this.showMainOnly
             }
         }
@@ -148,8 +148,12 @@ export default {
 $icon-size: 12px;
 
 .wis-user-icon {
-    border: 2px solid var(--user-view-border);
+    border: 2px solid var(--color);
     border-radius: 50%;
+
+    .mdi {
+        color: var(--color);
+    }
 
     &.wis-user-icon--18 {
         width: 36px;
@@ -157,24 +161,21 @@ $icon-size: 12px;
     }
 
     &.wis-user-icon--success {
-        border-color: var(--success);
-
-        //&::after {
-        //    background: var(--success);
-        //    content: "\F012C";
-        //    font-family: "Material Design Icons", serif;
-        //}
-
-        .mdi {
-            color: var(--success);
-        }
+        --color: var(--success);
     }
 
-    &.wis-user-icon--danger {
-        border-color: var(--warning);
+    &.wis-user-icon--error {
+        --color: var(--danger);
+    }
 
+    &.wis-user-icon--warning {
+        --color: var(--warning);
+    }
+
+    &.wis-user-icon--warning,
+    &.wis-user-icon--error {
         &::after {
-            background: var(--warning);
+            background: var(--color);
             content: "!";
             display: flex;
             position: absolute;
@@ -189,10 +190,6 @@ $icon-size: 12px;
             line-height: $icon-size;
             color: #2a3042;
             font-weight: bold;
-        }
-
-        .mdi {
-            color: var(--warning);
         }
     }
 

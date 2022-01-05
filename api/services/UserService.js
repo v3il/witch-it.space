@@ -6,28 +6,15 @@ const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 
 export class UserService {
-    getById (id) {
+    getById (id, { excludeAttrs } = { excludeAttrs: true }) {
         const params = {
             where: { id },
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: [
-                {
-                    model: UserSettings,
-                    as: 'settings',
-                    attributes: {
-                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
-                    }
-                },
-                {
-                    model: UserStat,
-                    as: 'userStat',
-                    attributes: {
-                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
-                    }
-                }
-            ]
+            include: this._getIncludes(excludeAttrs),
+            benchmark: true,
+            logging: console.log
         }
 
         return User.findOne(params)
@@ -39,22 +26,9 @@ export class UserService {
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: [
-                {
-                    model: UserSettings,
-                    as: 'settings',
-                    attributes: {
-                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
-                    }
-                },
-                {
-                    model: UserStat,
-                    as: 'userStat',
-                    attributes: {
-                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
-                    }
-                }
-            ]
+            include: this._getIncludes(),
+            benchmark: true,
+            logging: console.log
         }
 
         return User.findAll(params)
@@ -71,26 +45,30 @@ export class UserService {
             settings: {},
             userStat: {}
         }, {
-            include: [
-                {
-                    model: UserSettings,
-                    as: 'settings',
-                    attributes: {
-                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
-                    }
-                },
-                {
-                    model: UserStat,
-                    as: 'userStat',
-                    attributes: {
-                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
-                    }
-                }
-            ]
+            include: this._getIncludes()
         })
     }
 
     toObject (user) {
         return user.get({ plain: true })
+    }
+
+    _getIncludes (excludeAttrs = true) {
+        return [
+            {
+                model: UserSettings,
+                as: 'settings',
+                attributes: {
+                    exclude: excludeAttrs ? USER_SETTINGS_EXCLUDED_ATTRIBUTES : []
+                }
+            },
+            {
+                model: UserStat,
+                as: 'userStat',
+                attributes: {
+                    exclude: excludeAttrs ? USER_STAT_EXCLUDED_ATTRIBUTES : []
+                }
+            }
+        ]
     }
 }

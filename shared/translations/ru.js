@@ -209,9 +209,9 @@ export const ru = {
     UserView_SendTradeOffer: 'Предложение обмена',
     UserView_NoteTitle: 'Описание',
     UserView_TradingAnyUser: 'Обмениваюсь с пользователями без Steam Guard',
-    UserView_TradingOnlyGuarded: 'Не обмениваюсь с пользователями без Steam Guard',
+    UserView_TradingOnlyGuarded: 'Обмениваюсь только с пользователями со Steam Guard',
     UserView_BargainAvailable: 'Готов предоставить скидку',
-    UserView_BargainNotAvailable: 'Не предоставляю скидки, цена окончательная',
+    UserView_BargainNotAvailable: 'Не предоставляю скидки, окончательная цена',
     UserView_TradingOnlyDupes: 'Обмениваю только предметы-дубликаты',
     UserView_TradingAnyItem: 'Обмениваю предметы в единичном экземпляре',
 

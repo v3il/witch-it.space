@@ -10,6 +10,7 @@ import {
 } from '../../shared'
 import { updateUserToken } from '../controllers/auth/signInUser'
 import { userService } from '../services'
+import { UserSettings } from '../models/index.js'
 
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
@@ -124,7 +125,7 @@ const updateSettings = async (request, response) => {
     }
 
     const { id } = request.user
-    const user = await userService.getById(id)
+    const user = await userService.getById(id, { excludeAttrs: false })
 
     if (!user) {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
@@ -134,24 +135,28 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         avatarId,
-        isGuardProtected: !!isGuardProtected,
-        settings: {
-            ...user.settings,
-            switchRarities: !!switchRarities,
-            tradeWithGuardedOnly: !!tradeWithGuardedOnly,
-            discountAvailable: !!discountAvailable,
-            tradeDuplicatesOnly: !!tradeDuplicatesOnly,
-            hideRecipes: !!hideRecipes,
-            wishlistNote,
-            marketNote
-        }
+        isGuardProtected: !!isGuardProtected
     }
 
     if (password) {
         updateData.password = await userService.encryptPassword(password)
     }
 
-    await user.update(updateData)
+    await user.settings.update({
+        switchRarities: !!switchRarities,
+        tradeWithGuardedOnly: !!tradeWithGuardedOnly,
+        discountAvailable: !!discountAvailable,
+        tradeDuplicatesOnly: !!tradeDuplicatesOnly,
+        hideRecipes: !!hideRecipes,
+        wishlistNote,
+        marketNote
+    })
+
+    await user.update(updateData, {
+        include: [
+            UserSettings
+        ]
+    })
 
     updateUserToken({ response, user })
 }
