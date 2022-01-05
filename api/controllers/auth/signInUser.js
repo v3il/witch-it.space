@@ -1,8 +1,9 @@
 import { generateToken } from '../../util'
 import { config, Routes, Cookies } from '../../../shared'
+import { userService } from '../../services/index.js'
 
 const getUserData = (user) => {
-    const userPublicData = user.get()
+    const userPublicData = userService.toObject(user)
     const token = generateToken(userPublicData)
 
     return { userPublicData, token }

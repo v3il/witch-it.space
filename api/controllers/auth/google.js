@@ -3,6 +3,7 @@ import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
 import { getUserFromCookies } from '../../util'
 import { User } from '../../models'
+import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
 const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/google/callback`
@@ -63,7 +64,7 @@ const authUsingGoogleCallback = async (request, response) => {
     }
 
     if (!user) {
-        user = await User.create({
+        user = await userService.createUser({
             googleId,
             displayName: name,
             locale: request.locale,
@@ -83,7 +84,8 @@ const googleAuthController = {
         try {
             await authUsingGoogleCallback(request, response)
         } catch (e) {
-            console.log(e)
+            // eslint-disable-next-line no-console
+            console.error(e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

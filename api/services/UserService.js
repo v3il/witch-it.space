@@ -1,7 +1,8 @@
 import { genSalt, hash } from 'bcrypt'
-import { User } from '../models'
+import { User, UserSettings } from '../models'
 
 const EXCLUDED_ATTRIBUTES = ['password']
+const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 
 export class UserService {
     getById (id) {
@@ -9,6 +10,13 @@ export class UserService {
             where: { id },
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
+            },
+            include: {
+                model: UserSettings,
+                as: 'settings',
+                attributes: {
+                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                }
             }
         }
 
@@ -20,6 +28,13 @@ export class UserService {
             where: { isPublic: true },
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
+            },
+            include: {
+                model: UserSettings,
+                as: 'settings',
+                attributes: {
+                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                }
             }
         }
 
@@ -29,5 +44,24 @@ export class UserService {
     async encryptPassword (password) {
         const salt = await genSalt(3)
         return hash(password, salt)
+    }
+
+    async createUser (userData) {
+        return await User.create({
+            ...userData,
+            settings: {}
+        }, {
+            include: {
+                model: UserSettings,
+                as: 'settings',
+                attributes: {
+                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                }
+            }
+        })
+    }
+
+    toObject (user) {
+        return user.get({ plain: true })
     }
 }

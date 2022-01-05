@@ -6,6 +6,7 @@ import { initQuestModel } from './Quest'
 import { initItemModel } from './Item'
 import { initWishModel } from './Wish'
 import { initPriceModel } from './Price'
+import { initUserSettingsModel } from './UserSettings'
 
 const { Sequelize: Seq, DataTypes } = sql
 const db = {}
@@ -37,14 +38,17 @@ try {
     const Item = initItemModel(sequelize, DataTypes)
     const Wish = initWishModel(sequelize, DataTypes)
     const Price = initPriceModel(sequelize, DataTypes)
+    const UserSettings = initUserSettingsModel(sequelize, DataTypes)
 
     User.hasMany(Quest)
     User.hasMany(Wish)
+    User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings' })
     Wish.hasMany(Price, { foreignKey: 'offerId', as: 'prices' })
 
     Quest.belongsTo(User, { foreignKey: 'userId' })
     Wish.belongsTo(User, { foreignKey: 'userId' })
     Price.belongsTo(Wish, { foreignKey: 'offerId' })
+    UserSettings.belongsTo(User, { foreignKey: 'userId', as: 'settings' })
 
     db.sequelize = sequelize
     db.User = User
@@ -52,6 +56,7 @@ try {
     db.Item = Item
     db.Wish = Wish
     db.Price = Price
+    db.UserSettings = UserSettings
 
     sequelize.sync({ alter: true })
 
@@ -67,5 +72,6 @@ export const Quest = db.Quest
 export const Item = db.Item
 export const Wish = db.Wish
 export const Price = db.Price
+export const UserSettings = db.UserSettings
 export const sequelize = db.sequelize
 export const Sequelize = Seq

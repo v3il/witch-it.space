@@ -1,9 +1,8 @@
 import { BadRequest, NotFound } from '@curveball/http-errors'
-import { genSalt, hash } from 'bcrypt'
-import { User } from '../models'
-import { extractUserPublicData, translateText } from '../util'
+import { translateText } from '../util'
 import {
-    config, Cookies,
+    config,
+    Cookies,
     validateAvatarId,
     validateDisplayName,
     validatePassword,
@@ -15,7 +14,7 @@ import { userService } from '../services'
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
     const user = await userService.getById(id)
-    const parsedUser = user ? user.get() : null
+    const parsedUser = user ? userService.toObject(user) : null
 
     response.send({ user: parsedUser })
 }
@@ -200,7 +199,7 @@ const getById = async (request, response) => {
         throw new NotFound(translateText('Error_UserNotFound', request.locale))
     }
 
-    response.send({ profile: user.get() })
+    response.send({ profile: userService.toObject(user) })
 }
 
 const userController = {

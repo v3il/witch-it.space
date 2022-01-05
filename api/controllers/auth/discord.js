@@ -3,6 +3,7 @@ import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
 import { getUserFromCookies } from '../../util'
 import { User } from '../../models'
+import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
 const REDIRECT_URL = `${config.SERVER_ORIGIN}/api/auth/discord/callback`
@@ -62,7 +63,7 @@ const authUsingDiscordCallback = async (request, response) => {
     }
 
     if (!user) {
-        user = await User.create({
+        user = await userService.createUser({
             discordId,
             displayName: username,
             locale: request.locale,
@@ -82,6 +83,8 @@ const discordAuthController = {
         try {
             await authUsingDiscordCallback(request, response)
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

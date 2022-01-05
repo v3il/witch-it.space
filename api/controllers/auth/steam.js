@@ -2,6 +2,7 @@ import SteamAuth from 'node-steam-openid'
 import { config, Routes } from '../../../shared'
 import { getUserFromCookies } from '../../util'
 import { User } from '../../models'
+import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
 const steam = new SteamAuth({
@@ -42,7 +43,7 @@ const authUsingSteamCallback = async (request, response) => {
     }
 
     if (!user) {
-        user = await User.create({
+        user = await userService.createUser({
             steamId,
             displayName: username,
             locale: request.locale,
@@ -62,6 +63,8 @@ const steamAuthController = {
         try {
             await authUsingSteamCallback(request, response)
         } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

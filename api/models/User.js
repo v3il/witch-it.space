@@ -53,27 +53,27 @@ const initUserModel = (sequelize, DataTypes) => {
                 defaultValue: null
             },
 
-            settings: {
-                type: DataTypes.JSONB,
-
-                get () {
-                    return JSON.parse(this.getDataValue('settings'))
-                },
-
-                set (value) {
-                    return this.setDataValue('settings', JSON.stringify(value))
-                },
-
-                defaultValue: JSON.stringify({
-                    marketNote: '',
-                    wishlistNote: '',
-                    switchRarities: false,
-                    tradeWithGuardedOnly: true,
-                    discountAvailable: true,
-                    tradeDuplicatesOnly: true,
-                    hideRecipes: false
-                })
-            },
+            // settings: {
+            //     type: DataTypes.JSONB,
+            //
+            //     get () {
+            //         return JSON.parse(this.getDataValue('settings'))
+            //     },
+            //
+            //     set (value) {
+            //         return this.setDataValue('settings', JSON.stringify(value))
+            //     },
+            //
+            //     defaultValue: JSON.stringify({
+            //         marketNote: '',
+            //         wishlistNote: '',
+            //         switchRarities: false,
+            //         tradeWithGuardedOnly: true,
+            //         discountAvailable: true,
+            //         tradeDuplicatesOnly: true,
+            //         hideRecipes: false
+            //     })
+            // },
 
             userStat: {
                 type: DataTypes.JSONB,

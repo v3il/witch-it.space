@@ -108,6 +108,9 @@ export default {
 
     async asyncData ({ app: { $userService } }) {
         const { error, profiles } = await $userService.fetchAll()
+
+        // console.log(profiles)
+
         return { error, profiles }
     },
 

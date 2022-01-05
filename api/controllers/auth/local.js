@@ -59,7 +59,7 @@ const register = async (request, response) => {
 
     const encryptedPassword = await userService.encryptPassword(password)
 
-    const user = await User.create({
+    const user = await userService.createUser({
         login,
         displayName: login,
         password: encryptedPassword,
