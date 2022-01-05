@@ -1,8 +1,9 @@
 import { genSalt, hash } from 'bcrypt'
-import { User, UserSettings } from '../models'
+import { User, UserSettings, UserStat } from '../models'
 
 const EXCLUDED_ATTRIBUTES = ['password']
 const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
+const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 
 export class UserService {
     getById (id) {
@@ -11,13 +12,22 @@ export class UserService {
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: {
-                model: UserSettings,
-                as: 'settings',
-                attributes: {
-                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+            include: [
+                {
+                    model: UserSettings,
+                    as: 'settings',
+                    attributes: {
+                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                    }
+                },
+                {
+                    model: UserStat,
+                    as: 'userStat',
+                    attributes: {
+                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
+                    }
                 }
-            }
+            ]
         }
 
         return User.findOne(params)
@@ -29,13 +39,22 @@ export class UserService {
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: {
-                model: UserSettings,
-                as: 'settings',
-                attributes: {
-                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+            include: [
+                {
+                    model: UserSettings,
+                    as: 'settings',
+                    attributes: {
+                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                    }
+                },
+                {
+                    model: UserStat,
+                    as: 'userStat',
+                    attributes: {
+                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
+                    }
                 }
-            }
+            ]
         }
 
         return User.findAll(params)
@@ -49,15 +68,25 @@ export class UserService {
     async createUser (userData) {
         return await User.create({
             ...userData,
-            settings: {}
+            settings: {},
+            userStat: {}
         }, {
-            include: {
-                model: UserSettings,
-                as: 'settings',
-                attributes: {
-                    exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+            include: [
+                {
+                    model: UserSettings,
+                    as: 'settings',
+                    attributes: {
+                        exclude: USER_SETTINGS_EXCLUDED_ATTRIBUTES
+                    }
+                },
+                {
+                    model: UserStat,
+                    as: 'userStat',
+                    attributes: {
+                        exclude: USER_STAT_EXCLUDED_ATTRIBUTES
+                    }
                 }
-            }
+            ]
         })
     }
 
