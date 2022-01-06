@@ -1,68 +1,13 @@
 <template>
-  <div>
-    <!--    <TopNavBar class="layout__header">-->
-    <!--      <template #brand>-->
-    <!--        <nuxt-link to="/profiles">-->
-    <!--          Profiles-->
-    <!--        </nuxt-link>-->
-    <!--      </template>-->
-
-    <!--      <template #topMenu>-->
-    <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="redirectToOrders">-->
-    <!--          <template #tab0>-->
-    <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
-    <!--          </template>-->
-
-    <!--          <template #tab1>-->
-    <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
-    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlist.length }}</span>-->
-    <!--          </template>-->
-    <!--        </TopTabs>-->
-    <!--      </template>-->
-    <!--    </TopNavBar>-->
+  <Card>
+    {{ profile }}
+    {{ wishlist }}
 
     <div class="wit-items wit-flex">
       wishlist
 
-      {{ profile }}
-      {{ wishlist }}
-
-      <!--      <div style="flex-basis: 350px;" class="wit-offset-right&#45;&#45;md">-->
-      <!--        <UserView v-if="profile" :profile="profile">-->
-      <!--          <template #note>-->
-      <!--                  <h5 class="wit-font-weight&#45;&#45;700 wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
-      <!--                    {{ $t('UserView_NoteTitle') }}111-->
-      <!--                  </h5>-->
-
-      <!--                  <p class="wit-line-height&#45;&#45;md wit-color&#45;&#45;muted">-->
-      <!--                    {{ profile.wishlistNote }}-->
-      <!--                  </p>-->
-      <!--          </template>-->
-      <!--        </UserView>-->
-      <!--      </div>-->
-
       <div class="wit-flex__item--grow">
-        <!--        <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">-->
-        <!--          <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">-->
-        <!--            <div class="wit-offset-bottom&#45;&#45;xs">-->
-        <!--              <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
-        <!--                Add items-->
-        <!--              </b-button>-->
-
-        <!--              <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
-        <!--                Manage-->
-        <!--              </b-button>-->
-        <!--            </div>-->
-
-        <!--            <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="areFiltersVisible = !areFiltersVisible">-->
-        <!--              Filters-->
-        <!--            </b-button>-->
-        <!--          </div>-->
-        <!--        </div>-->
-
-        <!--        <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />-->
-
-        <Card v-if="isMyProfile" class="wit-offset-bottom--md">
+        <div v-if="isMyProfile" class="wit-offset-bottom--md">
           <div class="wit-flex wit-flex--justify-end wit-flex--wrap">
             <b-button type="is-primary" class="wit-transition wit-offset-right--xs">
               Create offer
@@ -94,9 +39,9 @@
             <!--              <i class="mdi mdi-dots-grid mdi-24px" />-->
             <!--            </b-button>-->
           </div>
-        </Card>
+        </div>
 
-        <Card>
+        <div>
           <WishlistFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" />
 
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
@@ -107,7 +52,7 @@
               @clicked.stop
             />
           </div>
-        </Card>
+        </div>
       </div>
 
       <!--      <div v-if="selectedItem" class="wit-items__sidebar">-->
@@ -140,7 +85,7 @@
       <!--        </b-button>-->
       <!--      </div>-->
     </div>
-  </div>
+  </Card>
 </template>
 
 <script>
@@ -185,6 +130,11 @@ export default {
         profile: {
             required: true,
             type: Object
+        },
+
+        isMyProfile: {
+            required: true,
+            type: Boolean
         }
     },
 

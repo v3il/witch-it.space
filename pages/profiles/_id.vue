@@ -31,7 +31,7 @@
         </div>
 
         <div class="wit-flex__item--grow">
-          <nuxt-child :profile="profile" />
+          <nuxt-child :profile="profile" :is-my-profile="isMyProfile" />
         </div>
       </template>
     </div>
