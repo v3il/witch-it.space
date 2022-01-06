@@ -1,6 +1,7 @@
 import { BadRequest } from '@curveball/http-errors'
 import { Price, User, Wish } from '../models'
 import { extractOtherUsersPublicData, extractUserPublicData, translateText } from '../util'
+import { userService } from '../services/index.js'
 
 const r = () => Math.floor(Math.random() * 100)
 
@@ -12,7 +13,7 @@ const getUserWishlist = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    const user = await User.findOne({ where: { id: numericUserId } })
+    const user = await userService.getById(numericUserId)
 
     if (!user) {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
@@ -20,26 +21,8 @@ const getUserWishlist = async (request, response) => {
 
     const wishlist = await user.getWishes({ include: { model: Price, as: 'prices' } })
 
-    const whimsicals = r()
-    const veryRares = r()
-    const rares = r()
-    const common = r()
-    const uncommons = r()
-
-    const usr = {
-        ...extractOtherUsersPublicData(user),
-        ordersCount: whimsicals + veryRares + rares + common + uncommons,
-        wishlistCount: r(),
-        whimsicals,
-        veryRares,
-        rares,
-        common,
-        uncommons
-    }
-
     response.send({
-        wishlist,
-        user: usr
+        wishlist
     })
 }
 

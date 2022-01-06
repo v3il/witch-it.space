@@ -24,6 +24,9 @@
     <div class="wit-items wit-flex">
       wishlist
 
+      {{ profile }}
+      {{ wishlist }}
+
       <!--      <div style="flex-basis: 350px;" class="wit-offset-right&#45;&#45;md">-->
       <!--        <UserView v-if="profile" :profile="profile">-->
       <!--          <template #note>-->
@@ -107,35 +110,35 @@
         </Card>
       </div>
 
-      <div v-if="selectedItem" class="wit-items__sidebar">
-        <div class="wit-offset-bottom--sm wit-flex">
-          <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink wit-items__selected-item-view" />
+      <!--      <div v-if="selectedItem" class="wit-items__sidebar">-->
+      <!--        <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
+      <!--          <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />-->
 
-          <div>
-            <h4 class="wit-offset-bottom--sm wit-font-size--sm">
-              {{ selectedItem.name }}
-            </h4>
+      <!--          <div>-->
+      <!--            <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">-->
+      <!--              {{ selectedItem.name }}-->
+      <!--            </h4>-->
 
-            <ItemTags :item="selectedItem" />
-          </div>
-        </div>
+      <!--            <ItemTags :item="selectedItem" />-->
+      <!--          </div>-->
+      <!--        </div>-->
 
-        <p class="wit-offset-bottom--sm">
-          In stock: 10
-        </p>
+      <!--        <p class="wit-offset-bottom&#45;&#45;sm">-->
+      <!--          In stock: 10-->
+      <!--        </p>-->
 
-        <b-button type="is-primary" class="wit-transition">
-          Create offer
-        </b-button>
+      <!--        <b-button type="is-primary" class="wit-transition">-->
+      <!--          Create offer-->
+      <!--        </b-button>-->
 
-        <b-button type="is-primary" class="wit-transition">
-          Wishlist item
-        </b-button>
+      <!--        <b-button type="is-primary" class="wit-transition">-->
+      <!--          Wishlist item-->
+      <!--        </b-button>-->
 
-        <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">
-          Close
-        </b-button>
-      </div>
+      <!--        <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
+      <!--          Close-->
+      <!--        </b-button>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -153,10 +156,10 @@ import TopNavBar from '@/components/TopNavBar'
 import WishlistFilter from '@/components/wishlist/WishlistFilter'
 import { User } from '@/store'
 
-const Modes = {
-    MARKET: 'market',
-    WISHLIST: 'wishlist'
-}
+// const Modes = {
+//     MARKET: 'market',
+//     WISHLIST: 'wishlist'
+// }
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -168,28 +171,36 @@ const DEFAULT_FILTERS = {
 }
 
 export default {
-    modes: Object.values(Modes),
-
     components: {
-        ItemView,
+        // ItemView,
         WishlistItemView,
-        ItemTags,
+        // ItemTags,
         WishlistFilter,
         // UserView,
         Card
         // TopNavBar
     },
 
-    middleware: ['fetchUser'],
+    props: {
+        profile: {
+            required: true,
+            type: Object
+        }
+    },
+
+    async  asyncData ({ app: { $wishlistService }, route }) {
+        const { error, wishlist } = await $wishlistService.fetch(route.params.id)
+        return { error, wishlist }
+    },
 
     data: () => ({
-        wishlist: [],
-        profile: null,
-        page: 1,
-        selectedItem: null,
-        filters: { ...DEFAULT_FILTERS },
-        areFiltersVisible: false,
-        mode: Modes.WISHLIST
+        // wishlist: [],
+        // profile: null,
+        // page: 1,
+        // selectedItem: null,
+        filters: { ...DEFAULT_FILTERS }
+        // areFiltersVisible: false,
+        // mode: Modes.WISHLIST
     })
 
     // computed: {
@@ -223,14 +234,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-profile {
-    padding: var(--offset-md);
-
-    @media screen and (max-width: 1024px) {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
+//.wit-profile {
+//    padding: var(--offset-md);
+//
+//    @media screen and (max-width: 1024px) {
+//        padding-left: 0;
+//        padding-right: 0;
+//    }
+//}
 
 .wit-items__item-grid {
     //display: grid;
