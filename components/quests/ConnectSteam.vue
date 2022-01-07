@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
+import Card from '@/components/basic/Card.vue'
 import { User } from '@/store'
 
 export default {

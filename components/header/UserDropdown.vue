@@ -40,8 +40,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { User } from '@/store'
-import { buildAvatarUrl } from '@/utils'
+import { User } from '@/store/index.js'
+import { buildAvatarUrl } from '@/utils/index.js'
 
 export default {
     name: 'UserDropdown',

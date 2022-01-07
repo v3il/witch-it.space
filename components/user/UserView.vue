@@ -106,10 +106,10 @@
 </template>
 
 <script>
-import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-import ProfileScale from '@/components/profiles/ProfileScale'
-import { buildRarityFilterUrl } from '@/utils/buildUrls'
-import UserIcons from '@/components/UserIcons'
+import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils/index.js'
+import ProfileScale from '@/components/profiles/ProfileScale.vue'
+import { buildRarityFilterUrl } from '@/utils/buildUrls.js'
+import UserIcons from '@/components/user/UserIcons.vue'
 
 export default {
     name: 'UserView',

@@ -42,11 +42,11 @@
 
 <script>
 import { mapState } from 'vuex'
-import ThemeSwitcher from '@/components/ThemeSwitcher'
-import LocaleSwitcher from '@/components/LocaleSwitcher'
-import { User } from '@/store'
-import UserDropdown from '@/components/UserDropdown'
-import { getNavbarLinks } from '@/shared'
+import ThemeSwitcher from '@/components/header/ThemeSwitcher.vue'
+import LocaleSwitcher from '@/components/header/LocaleSwitcher.vue'
+import { User } from '@/store/index.js'
+import UserDropdown from '@/components/header/UserDropdown.vue'
+import { getNavbarLinks } from '@/shared/index.js'
 
 export default {
     name: 'TopNavBar',

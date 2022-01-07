@@ -65,7 +65,7 @@ import Socials from '@/components/auth/Socials'
 import { User } from '@/store'
 import { Routes } from '@/shared'
 import { validateLogin, validatePassword } from '@/shared/validators'
-import TopNavBar from '@/components/TopNavBar'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 
 export default {
     year: new Date().getFullYear(),

@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
+import Card from '@/components/basic/Card.vue'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 
 export default {

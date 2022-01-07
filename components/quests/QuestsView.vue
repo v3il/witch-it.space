@@ -67,9 +67,9 @@ import { mapState } from 'vuex'
 import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
-import Card from '@/components/Card'
-import EmptyState from '@/components/EmptyState'
-import Loader from '@/components/Loader'
+import Card from '@/components/basic/Card.vue'
+import EmptyState from '@/components/basic/EmptyState.vue'
+import Loader from '@/components/basic/Loader.vue'
 import { showPopup } from '@/utils'
 
 export default {

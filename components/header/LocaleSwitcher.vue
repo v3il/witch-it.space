@@ -25,8 +25,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { Locale } from '@/store'
-import { Locales } from '@/shared'
+import { Locale } from '@/store/index.js'
+import { Locales } from '@/shared/index.js'
 
 export default {
     name: 'LocaleSwitcher',

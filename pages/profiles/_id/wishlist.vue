@@ -90,14 +90,14 @@
 
 <script>
 import { mapState } from 'vuex'
-import UserView from '@/components/UserView'
+import UserView from '@/components/user/UserView.vue'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { buildUserMarketUrl } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import WishlistItemView from '@/components/wishlist/WishlistItemView'
-import Card from '@/components/Card'
-import TopNavBar from '@/components/TopNavBar'
+import Card from '@/components/basic/Card.vue'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 import WishlistFilter from '@/components/wishlist/WishlistFilter'
 import { User } from '@/store'
 

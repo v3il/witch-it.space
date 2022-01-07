@@ -37,7 +37,7 @@
 import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
-import TopTabs from '@/components/TopTabs'
+import TopTabs from '@/components/header/TopTabs.vue'
 import DangerZone from '@/components/settings/DangerZone'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'

@@ -34,7 +34,7 @@ import { mapGetters } from 'vuex'
 import ConnectSteam from '@/components/quests/ConnectSteam'
 import { User } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
-import TopNavBar from '@/components/TopNavBar'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 
 export default {
     components: {

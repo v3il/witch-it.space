@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import CircleProgressBar from '@/components/quests/CircleProgressBar'
+import CircleProgressBar from '@/components/basic/CircleProgressBar.vue'
 import ItemName from '@/components/ItemName'
 import ItemImage from '@/components/ItemImage'
 

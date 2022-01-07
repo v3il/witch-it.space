@@ -40,11 +40,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import UserView from '@/components/UserView'
+import UserView from '@/components/user/UserView.vue'
 import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-import TopNavBar from '@/components/TopNavBar'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 import { User } from '@/store'
-import EmptyState from '@/components/EmptyState.vue'
+import EmptyState from '@/components/basic/EmptyState.vue'
+import TopTabs from '@/components/header/TopTabs.vue'
 
 const Modes = {
     MARKET: 'market',
@@ -57,7 +58,8 @@ export default {
     components: {
         UserView,
         TopNavBar,
-        EmptyState
+        EmptyState,
+        TopTabs
     },
 
     middleware: ['fetchUser'],

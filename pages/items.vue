@@ -63,7 +63,7 @@ import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
 import { getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
-import TopNavBar from '@/components/TopNavBar'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 
 const DEFAULT_FILTERS = {
     query: '',

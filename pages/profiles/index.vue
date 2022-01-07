@@ -66,13 +66,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import Card from '@/components/Card'
-import TopNavBar from '@/components/TopNavBar'
+import Card from '@/components/basic/Card.vue'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 import { User } from '@/store'
-import TopTabs from '@/components/TopTabs'
+import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils'
-import UserView from '@/components/UserView'
-import Filters from '@/components/Filters.vue'
+import UserView from '@/components/user/UserView.vue'
+import Filters from '@/components/basic/Filters.vue'
 
 const Modes = {
     VERIFIED: 'verified',

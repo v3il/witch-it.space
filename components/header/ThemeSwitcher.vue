@@ -10,8 +10,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import { Theme } from '@/store'
-import { Themes } from '@/shared'
+import { Theme } from '@/store/index.js'
+import { Themes } from '@/shared/index.js'
 
 export default {
     name: 'ThemeSwitcher',

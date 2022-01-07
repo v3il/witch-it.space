@@ -35,7 +35,7 @@ import ItemView from '@/components/items/ItemView'
 import ItemPrice from '@/components/items/ItemPrice'
 import { raritiesManager } from '@/shared'
 import { buildItemUrl } from '@/utils'
-import Card from '@/components/Card'
+import Card from '@/components/basic/Card.vue'
 
 export default {
     name: 'WishlistItemView',

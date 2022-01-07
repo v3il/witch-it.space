@@ -72,7 +72,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Card from '@/components/Card'
+import Card from '@/components/basic/Card.vue'
 import { User } from '@/store'
 import { showPopup } from '@/utils'
 

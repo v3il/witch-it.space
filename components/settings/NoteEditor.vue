@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
-import TextEditor from '@/components/TextEditor'
+import Card from '@/components/basic/Card.vue'
+import TextEditor from '@/components/basic/TextEditor.vue'
 
 export default {
     name: 'NoteEditor',
