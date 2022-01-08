@@ -1,5 +1,5 @@
 <template>
-  <div class="wishlist-editor">
+  <div class="wishlist-editor wit-flex wit-flex--column">
     <div class="wishlist-editor__header">
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
         <b-button type="is-primary is-light" class="wit-transition wit-offset-right--xs" @click="$emit('close')">
@@ -9,24 +9,29 @@
     </div>
 
     <div class="wit-flex wishlist-editor__container">
-      <div class="wishlist-editor__items">
-        <ItemsList :items="items" />
+      <div class="wishlist-editor__items-container wit-offset-right--sm wit-paddings--xs wit-background--content">
+        <!--        <div class="wit-flex wit-flex&#45;&#45;column">-->
+        <ItemsList :items="items" class="wishlist-editor__items wit-block--full-height" />
+        <!--        </div>-->
       </div>
-      <div class="wishlist-editor__editor">
+
+      <Card class="wishlist-editor__editor">
         1
-      </div>
+      </Card>
     </div>
   </div>
 </template>
 
 <script>
 import ItemsList from '@/components/items/ItemsList.vue'
+import Card from '@/components/basic/Card.vue'
 
 export default {
     name: 'WishlistEditor',
 
     components: {
-        ItemsList
+        ItemsList,
+        Card
     },
 
     props: {
@@ -55,19 +60,24 @@ export default {
 
 .wishlist-editor__header {
     background-color: var(--header-bg);
-    height: 50px;
+    flex: 0 0 50px;
     position: sticky;
     top: 0;
     padding: 0 var(--offset-sm);
 }
 
 .wishlist-editor__container {
-    height: 100%;
+    max-height: calc(100% - 50px);
     padding: var(--offset-sm);
 }
 
-.wishlist-editor__items {
+.wishlist-editor__items-container {
     flex: 1;
+    //overflow-y: scroll;
+}
+
+.wishlist-editor__items {
+    //overflow-y: scroll;
 }
 
 .wishlist-editor__editor {

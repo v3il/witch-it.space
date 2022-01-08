@@ -21,12 +21,21 @@ export default {
             required: false,
             default: '',
             type: String
+        },
+
+        paddings: {
+            required: false,
+            default: 'md',
+            type: String
         }
     },
 
     computed: {
         cardClass () {
-            return this.type
+            return [
+                this.type,
+                `wit-card--${this.paddings}`
+            ]
         },
 
         titleOffsetClass () {
@@ -59,11 +68,18 @@ export default {
 
 .wit-card-body {
     flex: 1 1 auto;
-    padding: var(--offset-md);
 
-    @media screen and (max-width: 1024px) {
-        padding: var(--offset-sm);
-    }
+    //@media screen and (max-width: 1024px) {
+    //    padding: var(--offset-sm);
+    //}
+}
+
+.wit-card--md .wit-card-body {
+    padding: var(--offset-md);
+}
+
+.wit-card--xs .wit-card-body {
+    padding: var(--offset-xs);
 }
 
 .wit-card-title {
