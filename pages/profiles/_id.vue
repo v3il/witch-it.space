@@ -128,6 +128,6 @@ export default {
 }
 
 .wit-profile__user {
-    flex-basis: 350px;
+    flex: 0 0 350px;
 }
 </style>

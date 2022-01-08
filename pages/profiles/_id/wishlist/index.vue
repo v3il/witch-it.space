@@ -1,0 +1,222 @@
+<template>
+  <Card>
+    <div class="wit-items wit-flex">
+      <div class="wit-flex__item--grow">
+        <div v-if="isMyProfile" class="wit-offset-bottom--md">
+          <div class="wit-flex wit-flex--justify-end wit-flex--wrap">
+            <b-button type="is-primary" class="wit-transition wit-offset-right--xs" @click="isVisible = true">
+              Create offer
+            </b-button>
+
+            <!--            <b-button type="is-primary" class="wit-transition wit-offset-right&#45;&#45;xs">-->
+            <!--              Wishlist item-->
+            <!--            </b-button>-->
+
+            <!--            <b-dropdown-->
+            <!--              animation="fade150"-->
+            <!--              class="wit-block&#45;&#45;full-height wit-transition&#45;&#45;background wit-dropdown&#45;&#45;offset-xs"-->
+            <!--              style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer; height: 35px; width: 35px;"-->
+            <!--              position="is-bottom-left"-->
+            <!--              @active-change="() => {}"-->
+            <!--            >-->
+            <!--              <template #trigger>-->
+            <!--                <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height" style="width: 32px;">-->
+            <!--                  <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />-->
+            <!--                </div>-->
+            <!--              </template>-->
+
+            <!--              <div style="width: 600px; height: 600px;">-->
+            <!--                Filters-->
+            <!--              </div>-->
+            <!--            </b-dropdown>-->
+
+            <!--            <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
+            <!--              <i class="mdi mdi-dots-grid mdi-24px" />-->
+            <!--            </b-button>-->
+          </div>
+        </div>
+
+        <div>
+          <WishlistFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" />
+
+          <div class="wit-flex wit-flex--wrap wit-items__item-grid">
+            <WishlistItemView
+              v-for="item in wishlist"
+              :key="item.id"
+              :wishlist-item="item"
+              @clicked.stop
+            />
+          </div>
+        </div>
+      </div>
+
+      <WishlistEditor v-if="isVisible" @close="isVisible = false" />
+
+      <!--      <div v-if="selectedItem" class="wit-items__sidebar">-->
+      <!--        <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
+      <!--          <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />-->
+
+      <!--          <div>-->
+      <!--            <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">-->
+      <!--              {{ selectedItem.name }}-->
+      <!--            </h4>-->
+
+      <!--            <ItemTags :item="selectedItem" />-->
+      <!--          </div>-->
+      <!--        </div>-->
+
+      <!--        <p class="wit-offset-bottom&#45;&#45;sm">-->
+      <!--          In stock: 10-->
+      <!--        </p>-->
+
+      <!--        <b-button type="is-primary" class="wit-transition">-->
+      <!--          Create offer-->
+      <!--        </b-button>-->
+
+      <!--        <b-button type="is-primary" class="wit-transition">-->
+      <!--          Wishlist item-->
+      <!--        </b-button>-->
+
+      <!--        <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
+      <!--          Close-->
+      <!--        </b-button>-->
+      <!--      </div>-->
+    </div>
+  </Card>
+</template>
+
+<script>
+import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
+import Card from '@/components/basic/Card.vue'
+import WishlistFilter from '@/components/wishlist/WishlistFilter.vue'
+import WishlistEditor from '@/components/wishlist/WishlistEditor.vue'
+
+// const Modes = {
+//     MARKET: 'market',
+//     WISHLIST: 'wishlist'
+// }
+
+const DEFAULT_FILTERS = {
+    query: '',
+    rarities: [],
+    isOnlyTradeable: false,
+    isOnlyOwned: false,
+    slots: [],
+    events: []
+}
+
+export default {
+    components: {
+        // ItemView,
+        WishlistItemView,
+        // ItemTags,
+        WishlistFilter,
+        // UserView,
+        Card,
+        WishlistEditor
+        // TopNavBar
+    },
+
+    props: {
+        profile: {
+            required: true,
+            type: Object
+        },
+
+        isMyProfile: {
+            required: true,
+            type: Boolean
+        }
+    },
+
+    async  asyncData ({ app: { $wishlistService }, route }) {
+        const { error, wishlist } = await $wishlistService.fetch(route.params.id)
+        return { error, wishlist }
+    },
+
+    data: () => ({
+        // wishlist: [],
+        // profile: null,
+        // page: 1,
+        // selectedItem: null,
+        filters: { ...DEFAULT_FILTERS },
+        // areFiltersVisible: false,
+        // mode: Modes.WISHLIST
+
+        isVisible: false
+    })
+
+    // computed: {
+    //     ...mapState(User.PATH, [
+    //         User.State.USER
+    //     ]),
+    //
+    //     isMyProfile () {
+    //         return this.user.id === this.profile?.id
+    //     }
+    // },
+    //
+    // async created () {
+    //     await this.$itemsService.fetch()
+    //     const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
+    //
+    //     if (error) {
+    //         return this.$showError(error)
+    //     }
+    //
+    //     this.wishlist = wishlist
+    //     this.profile = user
+    // },
+    //
+    // methods: {
+    //     redirectToOrders () {
+    //         this.$router.push(buildUserMarketUrl(this.profile.id))
+    //     }
+    // }
+}
+</script>
+
+<style scoped lang="scss">
+//.wit-profile {
+//    padding: var(--offset-md);
+//
+//    @media screen and (max-width: 1024px) {
+//        padding-left: 0;
+//        padding-right: 0;
+//    }
+//}
+
+.wit-items__item-grid {
+    //display: grid;
+    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-column-gap: 16px;
+    //justify-items: center;
+    grid-row-gap: 16px;
+
+    //@media screen and (max-width: 768px) {
+    //    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    //}
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.wit-items__sidebar {
+    flex-basis: 450px;
+    padding: 0 24px;
+    position: sticky;
+    top: 94px;
+    max-height: calc(100vh - 94px);
+}
+
+.wit-items__selected-item-view {
+    width: 100%;
+    max-width: 100px;
+}
+
+.wit-item-image__image {
+    border-radius: 8px;
+    display: block;
+}
+</style>

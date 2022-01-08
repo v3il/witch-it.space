@@ -1,11 +1,6 @@
 <template>
   <Card>
-    {{ profile }}
-    {{ wishlist }}
-
     <div class="wit-items wit-flex">
-      wishlist
-
       <div class="wit-flex__item--grow">
         <div v-if="isMyProfile" class="wit-offset-bottom--md">
           <div class="wit-flex wit-flex--justify-end wit-flex--wrap">
@@ -13,27 +8,27 @@
               Create offer
             </b-button>
 
-            <b-button type="is-primary" class="wit-transition wit-offset-right--xs">
-              Wishlist item
-            </b-button>
+            <!--            <b-button type="is-primary" class="wit-transition wit-offset-right&#45;&#45;xs">-->
+            <!--              Wishlist item-->
+            <!--            </b-button>-->
 
-            <b-dropdown
-              animation="fade150"
-              class="wit-block--full-height wit-transition--background wit-dropdown--offset-xs"
-              style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer; height: 35px; width: 35px;"
-              position="is-bottom-left"
-              @active-change="() => {}"
-            >
-              <template #trigger>
-                <div class="wit-flex wit-flex--center wit-block--full-height" style="width: 32px;">
-                  <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />
-                </div>
-              </template>
+            <!--            <b-dropdown-->
+            <!--              animation="fade150"-->
+            <!--              class="wit-block&#45;&#45;full-height wit-transition&#45;&#45;background wit-dropdown&#45;&#45;offset-xs"-->
+            <!--              style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer; height: 35px; width: 35px;"-->
+            <!--              position="is-bottom-left"-->
+            <!--              @active-change="() => {}"-->
+            <!--            >-->
+            <!--              <template #trigger>-->
+            <!--                <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height" style="width: 32px;">-->
+            <!--                  <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />-->
+            <!--                </div>-->
+            <!--              </template>-->
 
-              <div style="width: 600px; height: 600px;">
-                Filters
-              </div>
-            </b-dropdown>
+            <!--              <div style="width: 600px; height: 600px;">-->
+            <!--                Filters-->
+            <!--              </div>-->
+            <!--            </b-dropdown>-->
 
             <!--            <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
             <!--              <i class="mdi mdi-dots-grid mdi-24px" />-->
@@ -41,19 +36,21 @@
           </div>
         </div>
 
-        <div>
-          <WishlistFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" />
+        <!--        <div>-->
+        <!--          <WishlistFilter :filters-data="filters" class="wit-offset-bottom&#45;&#45;sm" @change="() => {}" />-->
 
-          <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-            <WishlistItemView
-              v-for="item in wishlist"
-              :key="item.id"
-              :wishlist-item="item"
-              @clicked.stop
-            />
-          </div>
-        </div>
+        <!--          <div class="wit-flex wit-flex&#45;&#45;wrap wit-items__item-grid">-->
+        <!--            <WishlistItemView-->
+        <!--              v-for="item in wishlist"-->
+        <!--              :key="item.id"-->
+        <!--              :wishlist-item="item"-->
+        <!--              @clicked.stop-->
+        <!--            />-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
+
+      <!--      <WishlistEditor />-->
 
       <!--      <div v-if="selectedItem" class="wit-items__sidebar">-->
       <!--        <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
@@ -89,17 +86,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import UserView from '@/components/user/UserView.vue'
-import ItemView from '@/components/items/ItemView'
-import ItemFilters from '@/components/items/ItemFilters'
-import { buildUserMarketUrl } from '@/utils'
-import ItemTags from '@/components/items/ItemTags'
-import WishlistItemView from '@/components/wishlist/WishlistItemView'
+import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import Card from '@/components/basic/Card.vue'
-import TopNavBar from '@/components/header/TopNavBar.vue'
-import WishlistFilter from '@/components/wishlist/WishlistFilter'
-import { User } from '@/store'
+import WishlistFilter from '@/components/wishlist/WishlistFilter.vue'
+import WishlistEditor from '@/components/wishlist/WishlistEditor.vue'
 
 // const Modes = {
 //     MARKET: 'market',
@@ -118,11 +108,12 @@ const DEFAULT_FILTERS = {
 export default {
     components: {
         // ItemView,
-        WishlistItemView,
-        // ItemTags,
-        WishlistFilter,
+        // WishlistItemView,
+        // // ItemTags,
+        // WishlistFilter,
         // UserView,
         Card
+        // WishlistEditor
         // TopNavBar
     },
 
