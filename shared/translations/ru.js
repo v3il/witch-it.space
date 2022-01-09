@@ -201,6 +201,9 @@ export const ru = {
     Items_Filters_AnySlot: 'Любой слот',
     Items_Filters_OnlyTradeable: 'Только обмениваемые',
     Items_Filters_OnlyOwned: 'Только имеющиеся',
+    Items_Sort_Name: 'Название',
+    Items_Sort_Rarity: 'Редкость',
+    Items_Sort_Tradeable: 'Обмениваемые',
 
     Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Список желаемого',

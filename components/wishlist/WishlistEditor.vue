@@ -9,19 +9,22 @@
     </div>
 
     <div class="wit-flex wit-wishlist-editor__container">
-      <div class="wit-wishlist-editor__items-container wit-offset-right--sm wit-paddings--xs wit-background--content wit-flex wit-flex--column">
+      <div class="wit-wishlist-editor__items-container wit-offset-right--sm wit-paddings--sm wit-background--content wit-flex wit-flex--column">
         <Filters
-          :default-filters="{}"
-          :filters="{}"
-          :default-sort="{}"
-          :sort="{}"
+          :default-filters="$options.defaultFilters"
+          :filters="filters"
+          :default-sort="$options.defaultSort"
+          :sort="sort"
           query-input-placeholder="Search item"
-          :sorts="{}"
+          :sorts="$options.sorts"
+          :store-in-url="false"
           class="wit-offset-bottom--xs"
+          @filtersChanged="onFiltersChange"
+          @sortChanged="onSortChange"
         >
           test
         </Filters>
-        <ItemsList :items="items" class="wit-wishlist-editor__items" />
+        <ItemsList :items="sortedItems" class="wit-wishlist-editor__items" />
       </div>
 
       <Card class="wit-wishlist-editor__editor">
@@ -36,8 +39,30 @@ import ItemsList from '@/components/items/ItemsList.vue'
 import Card from '@/components/basic/Card.vue'
 import Filters from '@/components/basic/Filters.vue'
 
+const DEFAULT_FILTERS = {
+    query: '',
+    rarities: [],
+    onlyTradeable: false,
+    onlyOwned: false,
+    slots: [],
+    events: []
+}
+
+const DEFAULT_SORT = {
+    sortBy: 'rarity',
+    order: 'desc'
+}
+
 export default {
     name: 'WishlistEditor',
+
+    defaultFilters: { ...DEFAULT_FILTERS },
+    defaultSort: { ...DEFAULT_SORT },
+
+    sorts: {
+        rarity: 'Items_Sort_Rarity',
+        name: 'Items_Sort_Name'
+    },
 
     components: {
         ItemsList,
@@ -45,14 +70,62 @@ export default {
         Filters
     },
 
-    props: {
-
-    },
+    data: () => ({
+        filters: { ...DEFAULT_FILTERS },
+        sort: { ...DEFAULT_SORT }
+    }),
 
     computed: {
         items () {
-            console.log(this.$store.state.items.isLoaded)
-            return Object.values(this.$store.state.items.items).slice(0, 100)
+            return Object.values(this.$store.state.items.items).filter(item => item.isTradeable)
+        },
+
+        filteredItems () {
+            const items = this.items
+            const lowerCasedQuery = this.filters.query.toLowerCase()
+
+            return items.filter((item) => {
+                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+
+                return isFilteredByRarity &&
+                    isFilteredBySlot &&
+                    isFilteredByName &&
+                    isFilteredByTradeable &&
+                    isFilteredByEvent
+            })
+        },
+
+        sortedItems () {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            return Array.from(this.filteredItems).sort((a, b) => {
+                const first = isAsc ? a : b
+                const second = isAsc ? b : a
+
+                switch (sortBy) {
+                case 'rarity':
+                    return first.quality - second.quality
+                case 'name':
+                    return first.name.localeCompare(second.name)
+                }
+
+                return 0
+            })
+        }
+    },
+
+    methods: {
+        onFiltersChange (filters) {
+            this.filters = filters
+        },
+
+        onSortChange (sort) {
+            this.sort = sort
         }
     }
 }

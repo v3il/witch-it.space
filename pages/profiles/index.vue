@@ -73,6 +73,7 @@ import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils'
 import UserView from '@/components/user/UserView.vue'
 import Filters from '@/components/basic/Filters.vue'
+import EmptyState from '@/components/basic/EmptyState.vue'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -103,7 +104,8 @@ export default {
         TopNavBar,
         TopTabs,
         UserView,
-        Filters
+        Filters,
+        EmptyState
     },
 
     middleware: ['fetchUser'],

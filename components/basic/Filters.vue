@@ -106,6 +106,12 @@ export default {
         sorts: {
             required: true,
             type: Object
+        },
+
+        storeInUrl: {
+            required: false,
+            type: Boolean,
+            default: true
         }
     },
 
@@ -126,27 +132,14 @@ export default {
         }
     },
 
-    watch: {
-        filters: {
-            deep: true,
-            handler () {
-                this.updateUrl()
-            }
-        },
-
-        sort: {
-            deep: true,
-            handler () {
-                this.updateUrl()
-            }
-        },
-
-        $route: {
-            deep: true,
-            handler () {
+    created () {
+        if (this.storeInUrl) {
+            this.$watch('filters', this.updateUrl, { deep: true })
+            this.$watch('sort', this.updateUrl, { deep: true })
+            this.$watch('$route', () => {
                 this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
                 this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, this.sorts))
-            }
+            }, { deep: true })
         }
     },
 
