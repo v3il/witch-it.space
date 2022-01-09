@@ -1,6 +1,6 @@
 <template>
-  <div class="wishlist-editor wit-flex wit-flex--column">
-    <div class="wishlist-editor__header">
+  <div class="wit-wishlist-editor wit-flex wit-flex--column">
+    <div class="wit-wishlist-editor__header">
       <div class="wit-flex wit-flex--align-center wit-block--full-height">
         <b-button type="is-primary is-light" class="wit-transition wit-offset-right--xs" @click="$emit('close')">
           {{ $t('Close') }}
@@ -8,14 +8,23 @@
       </div>
     </div>
 
-    <div class="wit-flex wishlist-editor__container">
-      <div class="wishlist-editor__items-container wit-offset-right--sm wit-paddings--xs wit-background--content">
-        <!--        <div class="wit-flex wit-flex&#45;&#45;column">-->
-        <ItemsList :items="items" class="wishlist-editor__items wit-block--full-height" />
-        <!--        </div>-->
+    <div class="wit-flex wit-wishlist-editor__container">
+      <div class="wit-wishlist-editor__items-container wit-offset-right--sm wit-paddings--xs wit-background--content wit-flex wit-flex--column">
+        <Filters
+          :default-filters="{}"
+          :filters="{}"
+          :default-sort="{}"
+          :sort="{}"
+          query-input-placeholder="Search item"
+          :sorts="{}"
+          class="wit-offset-bottom--xs"
+        >
+          test
+        </Filters>
+        <ItemsList :items="items" class="wit-wishlist-editor__items" />
       </div>
 
-      <Card class="wishlist-editor__editor">
+      <Card class="wit-wishlist-editor__editor">
         1
       </Card>
     </div>
@@ -25,13 +34,15 @@
 <script>
 import ItemsList from '@/components/items/ItemsList.vue'
 import Card from '@/components/basic/Card.vue'
+import Filters from '@/components/basic/Filters.vue'
 
 export default {
     name: 'WishlistEditor',
 
     components: {
         ItemsList,
-        Card
+        Card,
+        Filters
     },
 
     props: {
@@ -48,7 +59,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wishlist-editor {
+.wit-wishlist-editor {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -58,7 +69,7 @@ export default {
     background-color: var(--body-bg);
 }
 
-.wishlist-editor__header {
+.wit-wishlist-editor__header {
     background-color: var(--header-bg);
     flex: 0 0 50px;
     position: sticky;
@@ -66,21 +77,23 @@ export default {
     padding: 0 var(--offset-sm);
 }
 
-.wishlist-editor__container {
+.wit-wishlist-editor__container {
     max-height: calc(100% - 50px);
     padding: var(--offset-sm);
 }
 
-.wishlist-editor__items-container {
+.wit-wishlist-editor__items-container {
     flex: 1;
+    border-radius: var(--offset-xxs);
     //overflow-y: scroll;
 }
 
-.wishlist-editor__items {
-    //overflow-y: scroll;
+.wit-wishlist-editor__items {
+    overflow-y: scroll;
+    padding-right: var(--offset-xs);
 }
 
-.wishlist-editor__editor {
+.wit-wishlist-editor__editor {
     flex: 0 0 450px;
 }
 </style>

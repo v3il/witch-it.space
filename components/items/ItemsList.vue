@@ -35,7 +35,6 @@ export default {
     grid-column-gap: 8px;
     justify-items: center;
     grid-row-gap: 16px;
-    overflow-y: auto;
 
     @media screen and (max-width: 768px) {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
