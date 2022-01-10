@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { config } from '@/shared'
+
 export default {
     name: 'Result',
     layout: 'blank',
@@ -20,7 +22,7 @@ export default {
             const error = errorTextCode ? this.$t(errorTextCode) : null
             const user = userJSON ? JSON.parse(userJSON) : null
 
-            window.opener.$setAuthResult({ isSuccess, error, user })
+            window.opener.postMessage({ isSuccess, error, user }, config.SERVER_ORIGIN)
         }
     }
 }

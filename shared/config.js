@@ -1,4 +1,4 @@
-const PORT = process.env.SERVER_ORIGIN || 3000
+const PORT = process.env.PORT || 3000
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const isProduction = NODE_ENV === 'production'
@@ -12,7 +12,7 @@ export const config = {
 
     APP_NAME: 'Witch It.Space',
 
-    SERVER_ORIGIN: isProduction ? '' : 'http://localhost:3000',
+    SERVER_ORIGIN: isProduction ? 'https://witch-it.space' : `http://localhost:${PORT}`,
 
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_USER: process.env.DB_USER || 'postgres',

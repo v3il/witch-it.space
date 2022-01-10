@@ -1,6 +1,6 @@
-import { Locale, Theme, User } from '@/store/Types'
+import { Locale, Theme, User } from '@/store'
 import { openWindow } from '@/utils'
-import { Routes } from '@/shared'
+import { Routes, config } from '@/shared'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -65,14 +65,26 @@ export const actions = {
                 }
             }, 1000)
 
-            window.$setAuthResult = function ({ isSuccess, error, user }) {
+            const handler = ({ origin, data }) => {
+                const isOurMessage = ['isSuccess', 'error', 'user'].every(prop => Object.prototype.hasOwnProperty.call(data, prop))
+
+                if (origin !== config.SERVER_ORIGIN || !isOurMessage) {
+                    return
+                }
+
+                const { isSuccess, error, user } = data
+
                 authWindow?.close()
                 isSuccess ? resolve() : reject(new Error(error))
 
                 if (user) {
                     commit(User.Mutations.SET_USER, user)
                 }
+
+                window.removeEventListener('message', handler, false)
             }
+
+            window.addEventListener('message', handler, false)
         })
     },
 
