@@ -58,6 +58,8 @@ export default {
     created () {
         this.navbarLinks = getNavbarLinks(this.user)
 
+        console.log(this.user, this.navbarLinks)
+
         this.$eventBus.$on('showNotification', ({
             type,
             message

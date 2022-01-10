@@ -19,11 +19,10 @@ const setCookieToken = (token, response) => {
 }
 
 export const signInUser = ({ user, response }) => {
-    const { userPublicData, token } = getUserData(user)
+    const { token } = getUserData(user)
     setCookieToken(token, response)
 
-    const userJSON = JSON.stringify(userPublicData)
-    response.redirect(`${Routes.AUTH_RESULT}?user=${encodeURIComponent(userJSON)}`)
+    response.redirect(Routes.AUTH_RESULT)
 }
 
 export const updateUserToken = ({ user, response }) => {

@@ -11,18 +11,16 @@ export default {
 
     mounted () {
         const errorTextCode = this.$route.query.error
-        const userJSON = this.$route.query.user
-
-        this.setAuthResult(errorTextCode, userJSON)
+        this.setAuthResult(errorTextCode)
     },
 
     methods: {
-        setAuthResult (errorTextCode, userJSON) {
-            const isSuccess = errorTextCode === undefined
+        setAuthResult (errorTextCode) {
             const error = errorTextCode ? this.$t(errorTextCode) : null
-            const user = userJSON ? JSON.parse(userJSON) : null
 
-            window.opener.postMessage({ isSuccess, error, user }, config.SERVER_ORIGIN)
+            window.opener.postMessage({
+                authResult: { error }
+            }, config.SERVER_ORIGIN)
         }
     }
 }

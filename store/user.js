@@ -37,10 +37,14 @@ export const actions = {
 
             const { user } = data
 
+            console.log('Fetched', user)
+
             commit(User.Mutations.SET_USER, user)
 
             await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
             await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
+
+            console.log('Set')
         } catch (e) {
             // console.error('User error')
             commit(User.Mutations.SET_USER, null)
@@ -65,23 +69,18 @@ export const actions = {
                 }
             }, 1000)
 
-            const handler = ({ origin, data }) => {
-                const isOurMessage = ['isSuccess', 'error', 'user'].every(prop => Object.prototype.hasOwnProperty.call(data, prop))
-
-                if (origin !== config.SERVER_ORIGIN || !isOurMessage) {
+            const handler = async ({ origin, data }) => {
+                if (origin !== config.SERVER_ORIGIN || !data.authResult) {
                     return
                 }
 
-                const { isSuccess, error, user } = data
+                const { error } = data.authResult
 
                 authWindow?.close()
-                isSuccess ? resolve() : reject(new Error(error))
-
-                if (user) {
-                    commit(User.Mutations.SET_USER, user)
-                }
-
+                error ? reject(new Error(error)) : resolve()
                 window.removeEventListener('message', handler, false)
+
+                await dispatch(User.Actions.FETCH_USER)
             }
 
             window.addEventListener('message', handler, false)
