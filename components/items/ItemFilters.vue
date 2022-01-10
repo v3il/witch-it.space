@@ -145,6 +145,7 @@
 
 <script>
 import { eventsManager, raritiesManager, slotsManager } from '@/shared'
+import Card from '@/components/basic/Card.vue'
 
 export default {
     name: 'ProfilesFilter',
@@ -152,6 +153,10 @@ export default {
     rarities: raritiesManager.getAll(),
     events: eventsManager.getAll(),
     slots: slotsManager.getAll(),
+
+    components: {
+        Card
+    },
 
     props: {
         filtersData: {

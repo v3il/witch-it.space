@@ -42,6 +42,7 @@ import DangerZone from '@/components/settings/DangerZone'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'
 import { Routes } from '@/shared'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 
 const Modes = {
     ACCOUNT: 'account',
@@ -55,7 +56,8 @@ export default {
         TopTabs,
         DangerZone,
         NotVerifiedProfileMessage,
-        StickyPanel
+        StickyPanel,
+        TopNavBar
     },
 
     middleware: ['fetchUser'],

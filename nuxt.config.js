@@ -51,7 +51,9 @@ export default {
         'cookie-universal-nuxt'
     ],
 
-    axios: {},
+    axios: {
+        baseURL: config.SERVER_ORIGIN
+    },
 
     pwa: {
         manifest: {
@@ -59,32 +61,9 @@ export default {
         }
     },
 
-    build: {
-        vendor: ['keen-ui']
-    },
+    build: {},
 
     serverMiddleware: [
         '~/api/index.js'
     ]
-
-    // i18n: {
-    //     locales: config.AVAILABLE_LOCALES,
-    //     defaultLocale: config.DEFAULT_LOCALE,
-    //     strategy: 'no_prefix',
-    //     vueI18n: {
-    //         strategy: 'no_prefix',
-    //         fallbackLocale: 'en',
-    //         messages: {
-    //             en,
-    //             ua,
-    //             ru
-    //         }
-    //     },
-    //     detectBrowserLanguage: {
-    //         useCookie: true,
-    //         cookieKey: Cookies.LOCALE,
-    //         redirectOn: 'root',
-    //         alwaysRedirect: true
-    //     }
-    // }
 }

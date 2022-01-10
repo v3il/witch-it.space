@@ -91,14 +91,6 @@ export default {
     },
 
     computed: {
-        isPublicProfile () {
-            return this.profile.isPublic
-        },
-
-        toggleButtonType () {
-            return this.isPublicProfile ? 'is-warning' : 'is-success'
-        },
-
         ...mapGetters(User.PATH, [
             User.Getters.IS_STEAM_CONNECTED,
             User.Getters.IS_DISCORD_CONNECTED,
