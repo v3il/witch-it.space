@@ -2,14 +2,14 @@ import { Rarity } from './Rarity'
 
 export class RaritiesManager {
     #rarities = [
-        { value: Rarity.WHIMSICAL, label: 'Whimsical' },
-        { value: Rarity.VERY_RARE, label: 'Very rare' },
-        { value: Rarity.RARE, label: 'Rare' },
-        { value: Rarity.UNCOMMON, label: 'Uncommon' },
-        { value: Rarity.COMMON, label: 'Common' },
-        { value: Rarity.UNLOCK, label: 'Unlock' },
-        { value: Rarity.EVENT, label: 'Event' },
-        { value: Rarity.PROMO, label: 'Promo' }
+        { value: Rarity.WHIMSICAL, label: 'Whimsical', isTradeable: true },
+        { value: Rarity.VERY_RARE, label: 'Very rare', isTradeable: true },
+        { value: Rarity.RARE, label: 'Rare', isTradeable: true },
+        { value: Rarity.UNCOMMON, label: 'Uncommon', isTradeable: true },
+        { value: Rarity.COMMON, label: 'Common', isTradeable: true },
+        { value: Rarity.UNLOCK, label: 'Unlock', isTradeable: false },
+        { value: Rarity.EVENT, label: 'Event', isTradeable: false },
+        { value: Rarity.PROMO, label: 'Promo', isTradeable: false }
     ]
 
     find (value) {
@@ -18,5 +18,9 @@ export class RaritiesManager {
 
     getAll () {
         return this.#rarities
+    }
+
+    getTradeable () {
+        return this.#rarities.filter(rarity => rarity.isTradeable)
     }
 }

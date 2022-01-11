@@ -7,6 +7,7 @@
           :alt="item.name"
           :title="item.name"
           class="wit-item-view__image wit-block"
+          loading="lazy"
         >
         <div v-if="itemCount > 0" class="wit-item-view__counter">
           x{{ itemCount }}

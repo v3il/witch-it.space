@@ -2,10 +2,10 @@ import path from 'path'
 import fs from 'fs'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-import { Item, sequelize } from '../../models/index'
-import { capitalizePhrase } from '../../util/capitalizePhrase'
-import { axiosInstance } from '../../axios'
-import { items } from './items'
+import { Item, sequelize } from '../../models/index.js'
+import { capitalizePhrase } from '../../util/capitalizePhrase.js'
+import { axiosInstance } from '../../axios.js'
+import { items } from './items.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -46,7 +46,7 @@ async function processItem (item) {
     const buffer = Buffer.from(response.data, 'utf-8')
 
     await sharp(buffer)
-        .resize(200)
+        .resize(150)
         .sharpen()
         .webp()
         .toFile(path.join(imagePath, `${item.name}.webp`))

@@ -1,4 +1,6 @@
-import { isEqual } from 'lodash'
+import lodash from 'lodash'
+
+const { isEqual } = lodash
 
 export const getObjectsDiff = (original, objectToCheck) => {
     const diff = {}

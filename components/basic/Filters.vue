@@ -28,7 +28,7 @@
 
         <div class="wit-filter__filter-popup">
           <div class="wit-offset-bottom--md">
-            <slot :filterParams="filters" :update="update" />
+            <slot :filterParams="filters" :update="update" :reset="resetFilter" />
           </div>
 
           <div class="wit-padding-top--sm wit-flex wit-flex--justify-end wiz-border--top">
@@ -172,6 +172,8 @@ export default {
         },
 
         update (updatedFilters) {
+            console.log()
+
             this.$emit('filtersChanged', {
                 ...this.filters,
                 ...updatedFilters
