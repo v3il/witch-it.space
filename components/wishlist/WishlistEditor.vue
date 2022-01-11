@@ -33,7 +33,6 @@
 <script>
 import ItemsList from '@/components/items/ItemsList.vue'
 import Card from '@/components/basic/Card.vue'
-import Filters from '@/components/basic/Filters.vue'
 import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 

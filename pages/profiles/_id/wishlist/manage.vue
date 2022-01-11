@@ -1,220 +1,323 @@
 <template>
-  <Card>
-    <div class="wit-items wit-flex">
-      <div class="wit-flex__item--grow">
-        <div v-if="isMyProfile" class="wit-offset-bottom--md">
-          <div class="wit-flex wit-flex--justify-end wit-flex--wrap">
-            <b-button type="is-primary" class="wit-transition wit-offset-right--xs">
-              Create offer
-            </b-button>
+  <div>
+    <TopNavBar class="layout__header">
+      <template #topMenu>
+        <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">-->
+        <!--          <template #tab0>-->
+        <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
+        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ marketSize }}</span>-->
+        <!--          </template>-->
 
-            <!--            <b-button type="is-primary" class="wit-transition wit-offset-right&#45;&#45;xs">-->
-            <!--              Wishlist item-->
-            <!--            </b-button>-->
+        <!--          <template #tab1>-->
+        <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
+        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlistSize }}</span>-->
+        <!--          </template>-->
+        <!--        </TopTabs>-->
+      </template>
+    </TopNavBar>
 
-            <!--            <b-dropdown-->
-            <!--              animation="fade150"-->
-            <!--              class="wit-block&#45;&#45;full-height wit-transition&#45;&#45;background wit-dropdown&#45;&#45;offset-xs"-->
-            <!--              style="background-color: rgb(46, 54, 72); border: 1px solid rgb(54, 57, 76); border-radius: 4px; cursor: pointer; height: 35px; width: 35px;"-->
-            <!--              position="is-bottom-left"-->
-            <!--              @active-change="() => {}"-->
-            <!--            >-->
-            <!--              <template #trigger>-->
-            <!--                <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height" style="width: 32px;">-->
-            <!--                  <i class="mdi mdi-dots-grid mdi-24px" style="color: #dbdbdb;" />-->
-            <!--                </div>-->
-            <!--              </template>-->
+    <div class="wit-profile wit-flex">
+      <template v-if="error">
+        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
+          <nuxt-link to="/profiles" class="wit-padding-top--xs">
+            {{ $t('Profiles_BackToProfilesList') }}
+          </nuxt-link>
+        </EmptyState>
+      </template>
 
-            <!--              <div style="width: 600px; height: 600px;">-->
-            <!--                Filters-->
-            <!--              </div>-->
-            <!--            </b-dropdown>-->
+      <template v-else>
+        <div class="wit-flex wit-wishlist-editor__container wit-flex__item--grow">
+          <div class="wit-wishlist-editor__items-container wit-offset-right--sm wit-paddings--sm wit-background--content wit-flex wit-flex--column">
+            <WishlistFilters
+              :default-filters="$options.defaultFilters"
+              :filters="filters"
+              :default-sort="$options.defaultSort"
+              :sort="sort"
+              class="wit-offset-bottom--xs"
+              @filtersChanged="onFiltersChange"
+              @sortChanged="onSortChange"
+            />
 
-            <!--            <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
-            <!--              <i class="mdi mdi-dots-grid mdi-24px" />-->
-            <!--            </b-button>-->
+            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items wit-flex__item--grow" />
           </div>
+
+          <Card class="wit-wishlist-editor__editor">
+            1
+          </Card>
         </div>
-
-        <!--        <div>-->
-        <!--          <WishlistFilter :filters-data="filters" class="wit-offset-bottom&#45;&#45;sm" @change="() => {}" />-->
-
-        <!--          <div class="wit-flex wit-flex&#45;&#45;wrap wit-items__item-grid">-->
-        <!--            <WishlistItemView-->
-        <!--              v-for="item in wishlist"-->
-        <!--              :key="item.id"-->
-        <!--              :wishlist-item="item"-->
-        <!--              @clicked.stop-->
-        <!--            />-->
-        <!--          </div>-->
-        <!--        </div>-->
-      </div>
-
-      <!--      <WishlistEditor />-->
-
-      <!--      <div v-if="selectedItem" class="wit-items__sidebar">-->
-      <!--        <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
-      <!--          <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />-->
-
-      <!--          <div>-->
-      <!--            <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">-->
-      <!--              {{ selectedItem.name }}-->
-      <!--            </h4>-->
-
-      <!--            <ItemTags :item="selectedItem" />-->
-      <!--          </div>-->
-      <!--        </div>-->
-
-      <!--        <p class="wit-offset-bottom&#45;&#45;sm">-->
-      <!--          In stock: 10-->
-      <!--        </p>-->
-
-      <!--        <b-button type="is-primary" class="wit-transition">-->
-      <!--          Create offer-->
-      <!--        </b-button>-->
-
-      <!--        <b-button type="is-primary" class="wit-transition">-->
-      <!--          Wishlist item-->
-      <!--        </b-button>-->
-
-      <!--        <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
-      <!--          Close-->
-      <!--        </b-button>-->
-      <!--      </div>-->
+      </template>
     </div>
-  </Card>
+  </div>
 </template>
 
 <script>
-import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
+import ItemsList from '@/components/items/ItemsList.vue'
 import Card from '@/components/basic/Card.vue'
-import WishlistFilter from '@/components/wishlist/WishlistFilters.vue'
-import WishlistEditor from '@/components/wishlist/WishlistEditor.vue'
-
-// const Modes = {
-//     MARKET: 'market',
-//     WISHLIST: 'wishlist'
-// }
+import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
+import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
+import TopNavBar from '@/components/header/TopNavBar.vue'
+import EmptyState from '@/components/basic/EmptyState.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
     rarities: [],
-    isOnlyTradeable: false,
-    isOnlyOwned: false,
     slots: [],
-    events: []
+    events: [],
+    hideRecipes: true
+}
+
+const DEFAULT_SORT = {
+    sortBy: 'rarity',
+    order: 'desc'
 }
 
 export default {
+    name: 'WishlistEditor',
+
+    defaultFilters: { ...DEFAULT_FILTERS },
+    defaultSort: { ...DEFAULT_SORT },
+
+    rarities: raritiesManager.getTradeable(),
+    events: eventsManager.getAll(),
+    slots: slotsManager.getAll(),
+
+    sorts: {
+        rarity: 'Items_Sort_Rarity',
+        name: 'Items_Sort_Name'
+    },
+
     components: {
-        // ItemView,
-        // WishlistItemView,
-        // // ItemTags,
-        // WishlistFilter,
-        // UserView,
-        Card
-        // WishlistEditor
-        // TopNavBar
+        ItemsList,
+        Card,
+        WishlistFilters,
+        // TopTabs,
+        TopNavBar,
+        EmptyState
     },
 
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        },
-
-        isMyProfile: {
-            required: true,
-            type: Boolean
-        }
-    },
-
-    async  asyncData ({ app: { $wishlistService }, route }) {
-        const { error, wishlist } = await $wishlistService.fetch(route.params.id)
-        return { error, wishlist }
+    async asyncData ({ app: { $userService, $wishlistService }, route }) {
+        const { profile } = await $userService.fetch(route.params.id)
+        const { wishlist } = await $wishlistService.fetch(route.params.id)
+        return { profile, wishlist, error: null }
     },
 
     data: () => ({
-        // wishlist: [],
-        // profile: null,
-        // page: 1,
-        // selectedItem: null,
-        filters: { ...DEFAULT_FILTERS }
-        // areFiltersVisible: false,
-        // mode: Modes.WISHLIST
-    })
+        filters: { ...DEFAULT_FILTERS },
+        sort: { ...DEFAULT_SORT }
+    }),
 
-    // computed: {
-    //     ...mapState(User.PATH, [
-    //         User.State.USER
-    //     ]),
-    //
-    //     isMyProfile () {
-    //         return this.user.id === this.profile?.id
-    //     }
-    // },
-    //
-    // async created () {
-    //     await this.$itemsService.fetch()
-    //     const { error, wishlist, user } = await this.$wishlistService.fetch(this.$route.params.id)
-    //
-    //     if (error) {
-    //         return this.$showError(error)
-    //     }
-    //
-    //     this.wishlist = wishlist
-    //     this.profile = user
-    // },
-    //
-    // methods: {
-    //     redirectToOrders () {
-    //         this.$router.push(buildUserMarketUrl(this.profile.id))
-    //     }
-    // }
+    computed: {
+        items () {
+            return Object.values(this.$store.state.items.items)/* .slice(0, 100) */.filter(item => item.isTradeable)
+        },
+
+        filteredItems () {
+            const items = this.items
+            const lowerCasedQuery = this.filters.query.toLowerCase()
+
+            return items.filter((item) => {
+                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+
+                return isFilteredByRarity &&
+                    isFilteredBySlot &&
+                    isFilteredByName &&
+                    isFilteredByTradeable &&
+                    isFilteredByEvent
+            })
+        },
+
+        sortedItems () {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            return Array.from(this.filteredItems).sort((a, b) => {
+                const first = isAsc ? a : b
+                const second = isAsc ? b : a
+
+                switch (sortBy) {
+                case 'rarity':
+                    return first.quality - second.quality
+                case 'name':
+                    return first.name.localeCompare(second.name)
+                }
+
+                return 0
+            })
+        }
+    },
+
+    created () {
+        console.log(111, this.filters)
+        console.log(this.$options.defaultFilters)
+        console.log(this.sort)
+        console.log(this.$options.defaultSort)
+    },
+
+    methods: {
+        onFiltersChange (filters) {
+            this.filters = filters
+        },
+
+        onSortChange (sort) {
+            this.sort = sort
+        }
+    }
 }
 </script>
 
 <style scoped lang="scss">
-//.wit-profile {
-//    padding: var(--offset-md);
-//
-//    @media screen and (max-width: 1024px) {
-//        padding-left: 0;
-//        padding-right: 0;
-//    }
-//}
-
-.wit-items__item-grid {
-    //display: grid;
-    //grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    grid-column-gap: 16px;
-    //justify-items: center;
-    grid-row-gap: 16px;
-
-    //@media screen and (max-width: 768px) {
-    //    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    //}
-
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
+.wit-profile {
+    max-height: calc(100vh - var(--header-height));
 }
 
-.wit-items__sidebar {
-    flex-basis: 450px;
-    padding: 0 24px;
+.wit-wishlist-editor {
+    //position: fixed;
+    //top: 0;
+    //bottom: 0;
+    //left: 0;
+    //right: 0;
+    //z-index: calc(var(--zindex-fixed) + 1);
+    //background-color: var(--body-bg);
+}
+
+.wit-wishlist-editor__header {
+    background-color: var(--header-bg);
+    flex: 0 0 50px;
     position: sticky;
-    top: 94px;
-    max-height: calc(100vh - 94px);
+    top: 0;
+    padding: 0 var(--offset-sm);
 }
 
-.wit-items__selected-item-view {
-    width: 100%;
-    max-width: 100px;
+.wit-wishlist-editor__container {
+    max-height: calc(100% - 50px);
+    padding: var(--offset-sm);
 }
 
-.wit-item-image__image {
-    border-radius: 8px;
-    display: block;
+.wit-wishlist-editor__items-container {
+    flex: 1;
+    border-radius: var(--offset-xxs);
+    //overflow-y: scroll;
+}
+
+.wit-wishlist-editor__items {
+    overflow-y: scroll;
+    padding-right: var(--offset-xs);
+}
+
+.wit-wishlist-editor__editor {
+    flex: 0 0 450px;
 }
 </style>
+
+<!--<script>-->
+<!--import { mapState } from 'vuex'-->
+<!--import UserView from '@/components/user/UserView.vue'-->
+<!--import ItemView from '@/components/items/ItemView'-->
+<!--import ItemFilters from '@/components/items/ItemFilters'-->
+<!--import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'-->
+<!--import ItemTags from '@/components/items/ItemTags'-->
+<!--import WishlistItemView from '@/components/wishlist/WishlistItemView'-->
+<!--import Card from '@/components/basic/Card.vue'-->
+<!--import TopNavBar from '@/components/header/TopNavBar.vue'-->
+<!--import EmptyState from '@/components/basic/EmptyState.vue'-->
+<!--import TopTabs from '@/components/header/TopTabs.vue'-->
+<!--import { User } from '@/store/index.js'-->
+
+<!--const DEFAULT_FILTERS = {-->
+<!--    query: '',-->
+<!--    rarities: [],-->
+<!--    isOnlyTradeable: false,-->
+<!--    isOnlyOwned: false,-->
+<!--    slots: [],-->
+<!--    events: []-->
+<!--}-->
+
+<!--const Modes = {-->
+<!--    MARKET: 'market',-->
+<!--    WISHLIST: 'wishlist'-->
+<!--}-->
+
+<!--export default {-->
+<!--    modes: Object.values(Modes),-->
+
+<!--    components: {-->
+<!--        UserView,-->
+<!--        TopNavBar,-->
+<!--        EmptyState,-->
+<!--        TopTabs-->
+<!--    },-->
+
+<!--    // middleware: ['fetchUser'],-->
+
+<!--    async asyncData ({ app: { $userService, $wishlistService }, route }) {-->
+<!--        const { profile } = await $userService.fetch(route.params.id)-->
+<!--        const { wishlist } = await $wishlistService.fetch(route.params.id)-->
+<!--        return { profile, wishlist, error: null }-->
+<!--    },-->
+
+<!--    data: () => ({-->
+<!--        mode: Modes.WISHLIST-->
+<!--    }),-->
+
+<!--    computed: {-->
+<!--        ...mapState(User.PATH, [-->
+<!--            User.State.USER-->
+<!--        ]),-->
+
+<!--        isMyProfile () {-->
+<!--            return this.user.id === this.profile.id-->
+<!--        },-->
+
+<!--        userViewMode () {-->
+<!--            return this.mode === Modes.MARKET ? 'market' : 'wishlist'-->
+<!--        },-->
+
+<!--        marketSize () {-->
+<!--            return this.profile?.userStat.marketSize ?? 0-->
+<!--        },-->
+
+<!--        wishlistSize () {-->
+<!--            return this.profile?.userStat.wishlistSize ?? 0-->
+<!--        }-->
+<!--    },-->
+
+<!--    watch: {-->
+<!--        $route: {-->
+<!--            immediate: true,-->
+
+<!--            handler (route) {-->
+<!--                this.mode = route.fullPath.includes('wishlist') ? Modes.WISHLIST : Modes.MARKET-->
+<!--            }-->
+<!--        }-->
+<!--    },-->
+
+<!--    async created () {-->
+<!--        await this.$itemsService.fetch()-->
+<!--    },-->
+
+<!--    methods: {-->
+<!--        onModeChange (mode) {-->
+<!--            const route = mode === Modes.MARKET ? buildUserMarketUrl(this.profile.id) : buildUserWishlistUrl(this.profile.id)-->
+<!--            this.$router.push(route)-->
+<!--        }-->
+<!--    }-->
+<!--}-->
+<!--</script>-->
+
+<!--<style scoped lang="scss">-->
+<!--.wit-profile {-->
+<!--    padding: var(&#45;&#45;offset-md);-->
+
+<!--    @media screen and (max-width: 1024px) {-->
+<!--        padding: var(&#45;&#45;offset-sm);-->
+<!--    }-->
+<!--}-->
+
+<!--.wit-profile__user {-->
+<!--    flex: 0 0 350px;-->
+<!--}-->
+<!--</style>-->

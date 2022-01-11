@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
+    <LeftNavBar v-if="1 || user" :links="navbarLinks" class="layout__left" />
 
     <div class="layout__right">
       <Nuxt />
