@@ -199,11 +199,11 @@ export const ru = {
     Items_Filters_AnyEvent: 'Любое событие',
     Items_Filters_SlotsSelected: 'Слотов выбрано: %s',
     Items_Filters_AnySlot: 'Любой слот',
-    Items_Filters_OnlyTradeable: 'Только обмениваемые',
-    Items_Filters_OnlyOwned: 'Только имеющиеся',
+    Items_Filters_HideRecipes: 'Скрыть рецепты',
     Items_Sort_Name: 'Название',
     Items_Sort_Rarity: 'Редкость',
     Items_Sort_Tradeable: 'Обмениваемые',
+    Items_SearchByItemName: 'Поиск предмета',
 
     Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Список желаемого',

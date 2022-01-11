@@ -88,7 +88,7 @@
 <script>
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import Card from '@/components/basic/Card.vue'
-import WishlistFilter from '@/components/wishlist/WishlistFilter.vue'
+import WishlistFilter from '@/components/wishlist/WishlistFilters.vue'
 import WishlistEditor from '@/components/wishlist/WishlistEditor.vue'
 
 // const Modes = {

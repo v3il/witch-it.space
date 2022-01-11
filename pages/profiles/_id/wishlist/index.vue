@@ -37,7 +37,7 @@
         </div>
 
         <div>
-          <WishlistFilter :filters-data="filters" class="wit-offset-bottom--sm" @change="() => {}" />
+          <!--          <WishlistFilter :filters-data="filters" class="wit-offset-bottom&#45;&#45;sm" @change="() => {}" />-->
 
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
             <WishlistItemView
@@ -88,7 +88,6 @@
 <script>
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import Card from '@/components/basic/Card.vue'
-import WishlistFilter from '@/components/wishlist/WishlistFilter.vue'
 import WishlistEditor from '@/components/wishlist/WishlistEditor.vue'
 
 // const Modes = {
@@ -110,7 +109,6 @@ export default {
         // ItemView,
         WishlistItemView,
         // ItemTags,
-        WishlistFilter,
         // UserView,
         Card,
         WishlistEditor
