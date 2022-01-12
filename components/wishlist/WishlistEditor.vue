@@ -168,12 +168,13 @@ export default {
     //overflow-y: scroll;
 }
 
-.wit-wishlist-editor__items {
-    overflow-y: scroll;
-    padding-right: var(--offset-xs);
-}
+//.wit-wishlist-editor__items {
+//    overflow-y: scroll;
+//    padding-right: var(--offset-xs);
+//}
 
 .wit-wishlist-editor__editor {
     flex: 0 0 450px;
+    overflow-y: scroll;
 }
 </style>

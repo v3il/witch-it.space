@@ -1,26 +1,15 @@
 <template>
   <div class="wit-flex wit-flex--wrap wit-items__item-grid" @scroll="onScroll">
-    <ItemView
-      v-for="item in visibleItems"
-      :key="item.id"
-      :item="item"
-      @clicked="() => {}"
-    />
+    <slot :visibleItems="visibleItems" />
   </div>
 </template>
 
 <script>
-import ItemView from '@/components/items/ItemView.vue'
-
 const SCROLL_OFFSET = 400
 const ITEMS_PER_PAGE = 100
 
 export default {
     name: 'ItemsList',
-
-    components: {
-        ItemView
-    },
 
     props: {
         items: {

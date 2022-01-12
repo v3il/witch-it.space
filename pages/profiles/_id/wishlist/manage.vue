@@ -6,20 +6,6 @@
           {{ $t('MainMenu_EditWishlist') }}
         </div>
       </template>
-
-      <template #topMenu>
-        <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">-->
-        <!--          <template #tab0>-->
-        <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
-        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ marketSize }}</span>-->
-        <!--          </template>-->
-
-        <!--          <template #tab1>-->
-        <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
-        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlistSize }}</span>-->
-        <!--          </template>-->
-        <!--        </TopTabs>-->
-      </template>
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
@@ -32,8 +18,8 @@
       </template>
 
       <template v-else>
-        <div class="wit-flex wit-wishlist-editor__container wit-flex__item--grow">
-          <div class="wit-wishlist-editor__items-container wit-offset-right--sm wit-paddings--sm wit-background--content wit-flex wit-flex--column">
+        <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
+          <div class="wit-wishlist-editor__items-container wit-paddings--sm wit-background--content wit-flex wit-flex--column">
             <WishlistFilters
               :default-filters="$options.defaultFilters"
               :filters="filters"
@@ -44,12 +30,24 @@
               @sortChanged="onSortChange"
             />
 
-            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items1 wit-flex__item--grow" />
+            <ItemsList :items="sortedItems" class="wit-flex__item--grow">
+              <template #default="{ visibleItems }">
+                <ItemView
+                  v-for="item in visibleItems"
+                  :key="item.id"
+                  :item="item"
+                  :class="{test: selectedItems.includes(item)}"
+                  @clicked="onItemClicked"
+                />
+              </template>
+            </ItemsList>
           </div>
 
-          <Card class="wit-wishlist-editor__editor">
-            1
-          </Card>
+          <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
+            <div style="overflow-y: scroll;" class="wit-block--full-height">
+              {{ selectedItems }}
+            </div>
+          </div>
         </div>
       </template>
     </div>
@@ -58,11 +56,11 @@
 
 <script>
 import ItemsList from '@/components/items/ItemsList.vue'
-import Card from '@/components/basic/Card.vue'
 import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
+import ItemView from '@/components/items/ItemView.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -94,11 +92,10 @@ export default {
 
     components: {
         ItemsList,
-        Card,
         WishlistFilters,
-        // TopTabs,
         TopNavBar,
-        EmptyState
+        EmptyState,
+        ItemView
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route }) {
@@ -109,7 +106,8 @@ export default {
 
     data: () => ({
         filters: { ...DEFAULT_FILTERS },
-        sort: { ...DEFAULT_SORT }
+        sort: { ...DEFAULT_SORT },
+        selectedItems: []
     }),
 
     computed: {
@@ -163,6 +161,14 @@ export default {
 
         onSortChange (sort) {
             this.sort = sort
+        },
+
+        onItemClicked (item) {
+            if (this.selectedItems.includes(item)) {
+                return this.selectedItems = this.selectedItems.filter(i => i !== item)
+            }
+
+            this.selectedItems.push(item)
         }
     }
 }
@@ -174,132 +180,16 @@ export default {
     max-height: calc(100vh - var(--header-height));
 }
 
-.wit-wishlist-editor__container {
-    //max-height: calc(100% - 50px);
-    padding: var(--offset-sm);
-}
-
 .wit-wishlist-editor__items-container {
     flex: 1;
     border-radius: var(--offset-xxs);
-    //overflow-y: scroll;
-}
-
-.wit-wishlist-editor__items {
-    overflow-y: scroll;
-    padding-right: var(--offset-xs);
 }
 
 .wit-wishlist-editor__editor {
     flex: 0 0 450px;
 }
+
+.test {
+    box-shadow: 3px 3px 3px red;
+}
 </style>
-
-<!--<script>-->
-<!--import { mapState } from 'vuex'-->
-<!--import UserView from '@/components/user/UserView.vue'-->
-<!--import ItemView from '@/components/items/ItemView'-->
-<!--import ItemFilters from '@/components/items/ItemFilters'-->
-<!--import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'-->
-<!--import ItemTags from '@/components/items/ItemTags'-->
-<!--import WishlistItemView from '@/components/wishlist/WishlistItemView'-->
-<!--import Card from '@/components/basic/Card.vue'-->
-<!--import TopNavBar from '@/components/header/TopNavBar.vue'-->
-<!--import EmptyState from '@/components/basic/EmptyState.vue'-->
-<!--import TopTabs from '@/components/header/TopTabs.vue'-->
-<!--import { User } from '@/store/index.js'-->
-
-<!--const DEFAULT_FILTERS = {-->
-<!--    query: '',-->
-<!--    rarities: [],-->
-<!--    isOnlyTradeable: false,-->
-<!--    isOnlyOwned: false,-->
-<!--    slots: [],-->
-<!--    events: []-->
-<!--}-->
-
-<!--const Modes = {-->
-<!--    MARKET: 'market',-->
-<!--    WISHLIST: 'wishlist'-->
-<!--}-->
-
-<!--export default {-->
-<!--    modes: Object.values(Modes),-->
-
-<!--    components: {-->
-<!--        UserView,-->
-<!--        TopNavBar,-->
-<!--        EmptyState,-->
-<!--        TopTabs-->
-<!--    },-->
-
-<!--    // middleware: ['fetchUser'],-->
-
-<!--    async asyncData ({ app: { $userService, $wishlistService }, route }) {-->
-<!--        const { profile } = await $userService.fetch(route.params.id)-->
-<!--        const { wishlist } = await $wishlistService.fetch(route.params.id)-->
-<!--        return { profile, wishlist, error: null }-->
-<!--    },-->
-
-<!--    data: () => ({-->
-<!--        mode: Modes.WISHLIST-->
-<!--    }),-->
-
-<!--    computed: {-->
-<!--        ...mapState(User.PATH, [-->
-<!--            User.State.USER-->
-<!--        ]),-->
-
-<!--        isMyProfile () {-->
-<!--            return this.user.id === this.profile.id-->
-<!--        },-->
-
-<!--        userViewMode () {-->
-<!--            return this.mode === Modes.MARKET ? 'market' : 'wishlist'-->
-<!--        },-->
-
-<!--        marketSize () {-->
-<!--            return this.profile?.userStat.marketSize ?? 0-->
-<!--        },-->
-
-<!--        wishlistSize () {-->
-<!--            return this.profile?.userStat.wishlistSize ?? 0-->
-<!--        }-->
-<!--    },-->
-
-<!--    watch: {-->
-<!--        $route: {-->
-<!--            immediate: true,-->
-
-<!--            handler (route) {-->
-<!--                this.mode = route.fullPath.includes('wishlist') ? Modes.WISHLIST : Modes.MARKET-->
-<!--            }-->
-<!--        }-->
-<!--    },-->
-
-<!--    async created () {-->
-<!--        await this.$itemsService.fetch()-->
-<!--    },-->
-
-<!--    methods: {-->
-<!--        onModeChange (mode) {-->
-<!--            const route = mode === Modes.MARKET ? buildUserMarketUrl(this.profile.id) : buildUserWishlistUrl(this.profile.id)-->
-<!--            this.$router.push(route)-->
-<!--        }-->
-<!--    }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style scoped lang="scss">-->
-<!--.wit-profile {-->
-<!--    padding: var(&#45;&#45;offset-md);-->
-
-<!--    @media screen and (max-width: 1024px) {-->
-<!--        padding: var(&#45;&#45;offset-sm);-->
-<!--    }-->
-<!--}-->
-
-<!--.wit-profile__user {-->
-<!--    flex: 0 0 350px;-->
-<!--}-->
-<!--</style>-->
