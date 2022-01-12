@@ -184,7 +184,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-settings {
-    padding: var(--offset-md) var(--offset-sm);
+    padding: var(--offset-sm);
     max-width: 800px;
     margin: 0 auto;
 }

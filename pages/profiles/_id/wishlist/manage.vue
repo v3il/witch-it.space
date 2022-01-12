@@ -173,24 +173,6 @@ export default {
     max-height: calc(100vh - var(--header-height));
 }
 
-.wit-wishlist-editor {
-    //position: fixed;
-    //top: 0;
-    //bottom: 0;
-    //left: 0;
-    //right: 0;
-    //z-index: calc(var(--zindex-fixed) + 1);
-    //background-color: var(--body-bg);
-}
-
-.wit-wishlist-editor__header {
-    background-color: var(--header-bg);
-    flex: 0 0 50px;
-    position: sticky;
-    top: 0;
-    padding: 0 var(--offset-sm);
-}
-
 .wit-wishlist-editor__container {
     max-height: calc(100% - 50px);
     padding: var(--offset-sm);

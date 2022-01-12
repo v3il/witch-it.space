@@ -54,7 +54,7 @@ export const ru = {
     MainMenu_Login: 'Вход',
     MainMenu_Register: 'Регистрация',
     MainMenu_MyMarket: 'Маркет',
-    MainMenu_MyWishlist: 'Список желаний',
+    MainMenu_MyWishlist: 'Список желаемого',
     MainMenu_Profiles: 'Профили',
     MainMenu_Items: 'Предметы',
     MainMenu_Quests: 'Квесты',
@@ -207,7 +207,7 @@ export const ru = {
     Items_SearchByItemName: 'Поиск предмета',
 
     Wishlist_TopTabs_Orders: 'Предложения',
-    Wishlist_TopTabs_Wishlist: 'Список желаемого',
+    Wishlist_TopTabs_Wishlist: 'Желаемое',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

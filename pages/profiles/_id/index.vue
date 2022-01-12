@@ -36,7 +36,7 @@
           <UserView v-if="profile" :profile="profile" :mode="userViewMode" hide-stat-buttons />
         </div>
 
-        <div class="wit-flex__item--grow">
+        <div class="wit-a wit-flex__item--grow">
           <div>
             <!--    <TopNavBar class="layout__header">-->
             <!--      <template #brand>-->
@@ -79,66 +79,66 @@
 
               <div class="wit-flex__item--grow">
                 <div class="wit-flex wit-offset-bottom--md wit-flex--justify-center">
-                  <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">
-                    <div class="wit-offset-bottom--xs">
-                      <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
-                        Add items
-                      </b-button>
+                  <!--                  <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">-->
+                  <!--                    <div class="wit-offset-bottom&#45;&#45;xs">-->
+                  <!--                      <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
+                  <!--                        Add items-->
+                  <!--                      </b-button>-->
 
-                      <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="() => {}">
-                        Manage
-                      </b-button>
-                    </div>
+                  <!--                      <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">-->
+                  <!--                        Manage-->
+                  <!--                      </b-button>-->
+                  <!--                    </div>-->
 
-                    <b-button type="is-success" class="wit-transition wit-offset-right--xxs" @click="areFiltersVisible = !areFiltersVisible">
-                      Filters
-                    </b-button>
-                  </div>
+                  <!--                    <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="areFiltersVisible = !areFiltersVisible">-->
+                  <!--                      Filters-->
+                  <!--                    </b-button>-->
+                  <!--                  </div>-->
                 </div>
 
-                <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item--grow wit-offset-bottom--md" @change="() => {}" @reset="() => {}" />
+                <!--                <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />-->
 
-                <Card>
-                  <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-                    <WishlistItemView
-                      v-for="item in wishlist"
-                      :key="item.id"
-                      :wishlist-item="item"
-                      @clicked.stop
-                    />
-                  </div>
-                </Card>
+                <!--                <Card>-->
+                <!--                  <div class="wit-flex wit-flex&#45;&#45;wrap wit-items__item-grid">-->
+                <!--                    <WishlistItemView-->
+                <!--                      v-for="item in wishlist"-->
+                <!--                      :key="item.id"-->
+                <!--                      :wishlist-item="item"-->
+                <!--                      @clicked.stop-->
+                <!--                    />-->
+                <!--                  </div>-->
+                <!--                </Card>-->
               </div>
 
-              <div v-if="selectedItem" class="wit-items__sidebar">
-                <div class="wit-offset-bottom--sm wit-flex">
-                  <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right--sm wit-flex__item--no-shrink wit-items__selected-item-view" />
+              <!--              <div v-if="selectedItem" class="wit-items__sidebar">-->
+              <!--                <div class="wit-offset-bottom&#45;&#45;sm wit-flex">-->
+              <!--                  <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />-->
 
-                  <div>
-                    <h4 class="wit-offset-bottom--sm wit-font-size--sm">
-                      {{ selectedItem.name }}
-                    </h4>
+              <!--                  <div>-->
+              <!--                    <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">-->
+              <!--                      {{ selectedItem.name }}-->
+              <!--                    </h4>-->
 
-                    <ItemTags :item="selectedItem" />
-                  </div>
-                </div>
+              <!--                    <ItemTags :item="selectedItem" />-->
+              <!--                  </div>-->
+              <!--                </div>-->
 
-                <p class="wit-offset-bottom--sm">
-                  In stock: 10
-                </p>
+              <!--                <p class="wit-offset-bottom&#45;&#45;sm">-->
+              <!--                  In stock: 10-->
+              <!--                </p>-->
 
-                <b-button type="is-primary" class="wit-transition">
-                  Create offer
-                </b-button>
+              <!--                <b-button type="is-primary" class="wit-transition">-->
+              <!--                  Create offer-->
+              <!--                </b-button>-->
 
-                <b-button type="is-primary" class="wit-transition">
-                  Wishlist item
-                </b-button>
+              <!--                <b-button type="is-primary" class="wit-transition">-->
+              <!--                  Wishlist item-->
+              <!--                </b-button>-->
 
-                <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">
-                  Close
-                </b-button>
-              </div>
+              <!--                <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">-->
+              <!--                  Close-->
+              <!--                </b-button>-->
+              <!--              </div>-->
             </div>
           </div>
         </div>
@@ -247,13 +247,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-items {
-    padding: var(--offset-md);
-
-    @media screen and (max-width: 1024px) {
-        padding-left: 0;
-        padding-right: 0;
-    }
+.wit-profile {
+    padding: var(--offset-sm);
 }
 
 .wit-items__item-grid {

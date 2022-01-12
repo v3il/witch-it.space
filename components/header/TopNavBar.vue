@@ -74,7 +74,7 @@ export default {
     background-color: var(--header-bg);
     min-height: var(--header-height);
     height: var(--header-height);
-    padding: 0 var(--offset-xs) 0 var(--offset-md);
+    padding: 0 var(--offset-xs) 0 var(--offset-sm);
     position: sticky;
     top: 0;
 }

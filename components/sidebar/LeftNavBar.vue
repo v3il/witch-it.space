@@ -1,7 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--column">
     <div class="wit-flex wit-flex--center wis-logo-wrap">
-      <Logo />
+      <Logo class="wis-logo" />
     </div>
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
@@ -65,6 +65,10 @@ export default {
     height: 64px;
     width: 60px;
     border-bottom: 2px solid var(--header-bg);
+}
+
+.wis-logo {
+    width: 55px;
 }
 
 .wit-link {

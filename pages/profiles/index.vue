@@ -193,11 +193,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-profiles {
-    padding: var(--offset-md);
-
-    @media screen and (max-width: 1024px) {
-        padding: var(--offset-sm);
-    }
+    padding: var(--offset-sm);
 }
 
 .wit-profile-view {

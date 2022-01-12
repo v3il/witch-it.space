@@ -194,12 +194,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-items {
-    padding: var(--offset-md) var(--offset-md) var(--offset-sm);
-
-    @media screen and (max-width: 1024px) {
-        padding-left: 0;
-        padding-right: 0;
-    }
+    padding: var(--offset-sm);
 }
 
 .wit-items__item-grid {
