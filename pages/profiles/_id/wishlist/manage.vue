@@ -44,7 +44,7 @@
               @sortChanged="onSortChange"
             />
 
-            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items wit-flex__item--grow" />
+            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items1 wit-flex__item--grow" />
           </div>
 
           <Card class="wit-wishlist-editor__editor">
@@ -170,11 +170,12 @@ export default {
 
 <style scoped lang="scss">
 .wit-profile {
+    height: calc(100vh - var(--header-height));
     max-height: calc(100vh - var(--header-height));
 }
 
 .wit-wishlist-editor__container {
-    max-height: calc(100% - 50px);
+    //max-height: calc(100% - 50px);
     padding: var(--offset-sm);
 }
 
