@@ -1,6 +1,12 @@
 <template>
   <div>
     <TopNavBar class="layout__header">
+      <template #brand>
+        <div class="wit-font-size--sm">
+          {{ $t('MainMenu_EditWishlist') }}
+        </div>
+      </template>
+
       <template #topMenu>
         <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">-->
         <!--          <template #tab0>-->
@@ -148,13 +154,6 @@ export default {
                 return 0
             })
         }
-    },
-
-    created () {
-        console.log(111, this.filters)
-        console.log(this.$options.defaultFilters)
-        console.log(this.sort)
-        console.log(this.$options.defaultSort)
     },
 
     methods: {

@@ -1,6 +1,12 @@
 <template>
   <div>
     <TopNavBar class="layout__header">
+      <template #brand>
+        <div class="wit-font-size--sm">
+          {{ $t('MainMenu_MyMarket') }}
+        </div>
+      </template>
+
       <template #topMenu>
         <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
           <template #tab0>

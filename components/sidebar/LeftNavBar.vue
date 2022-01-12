@@ -1,8 +1,10 @@
 <template>
-  <div class="a wit-flex wit-flex--column wit-flex--justify-between">
-    <img class="wiz-header__logo" src="/images/hey.webp" alt="Hey!" style="max-height: 60px;">
+  <div class="wit-flex wit-flex--column">
+    <div class="wit-flex wit-flex--center wis-logo-wrap">
+      <Logo />
+    </div>
 
-    <div class="wit-flex wit-flex--column">
+    <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
       <b-button
         v-for="link in links"
         :key="link.to"
@@ -16,34 +18,20 @@
         </div>
       </b-button>
     </div>
-
-    <b-dropdown
-      animation="fade150"
-      :class="'wit-block--full-height wit-transition--background wit-dropdown--offset-xs wit-offset-bottom--sm'"
-      style="display: flex; justify-content: center; border-radius: 4px; cursor: pointer; height: 35px; width: 100%;"
-      position="is-top-right"
-      append-to-body
-      @active-change="() => {}"
-    >
-      <!--      <template #trigger>-->
-      <!--        <div class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height" style="width: 32px;">-->
-      <!--          <i class="mdi mdi-dots-grid mdi-24px wit-color&#45;&#45;Y400" />-->
-      <!--        </div>-->
-      <!--      </template>-->
-
-      <!--      <div style="width: 600px; height: 600px;">-->
-      <!--        Filters-->
-      <!--      </div>-->
-    </b-dropdown>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
-import { User } from '@/store'
+import { User } from '@/store/index.js'
+import Logo from '@/components/sidebar/Logo.vue'
 
 export default {
     name: 'LeftNavBar',
+
+    components: {
+        Logo
+    },
 
     props: {
         links: {
@@ -73,6 +61,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wis-logo-wrap {
+    height: 64px;
+    width: 60px;
+    border-bottom: 2px solid var(--header-bg);
+}
+
 .wit-link {
     border-radius: 0;
 

@@ -53,13 +53,14 @@ export const ru = {
 
     MainMenu_Login: 'Вход',
     MainMenu_Register: 'Регистрация',
-    MainMenu_MyMarket: 'Мой маркет',
+    MainMenu_MyMarket: 'Маркет',
     MainMenu_MyWishlist: 'Список желаний',
     MainMenu_Profiles: 'Профили',
     MainMenu_Items: 'Предметы',
     MainMenu_Quests: 'Квесты',
     MainMenu_Settings: 'Настройки',
     MainMenu_Wishlist: 'Список желаемого: %s',
+    MainMenu_EditWishlist: 'Редактирование списка желаемого',
 
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D',

@@ -1,9 +1,6 @@
 html {
     font-size: 14px;
-
-    &.is-clipped {
-        padding-right: var(--scrollbar-width);
-    }
+    overflow-y: auto;
 }
 
 body {
@@ -113,6 +110,11 @@ h6 {
     min-height: var(--header-height);
     max-height: var(--header-height);
     min-width: 150px;
+
+    .navbar-item {
+        padding-left: 0;
+        padding-right: 0;
+    }
 
     @media screen and (max-width: 1024px) {
         margin-right: 0;

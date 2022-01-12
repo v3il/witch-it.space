@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <LeftNavBar v-if="1 || user" :links="navbarLinks" class="layout__left" />
+    <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
 
     <div class="layout__right">
       <Nuxt />
@@ -24,9 +24,14 @@
 import { mapState } from 'vuex'
 import { User, Theme } from '@/store'
 import { getNavbarLinks } from '@/shared'
+import LeftNavBar from '@/components/sidebar/LeftNavBar.vue'
 
 export default {
     name: 'Default',
+
+    components: {
+        LeftNavBar
+    },
 
     data: () => ({
         isNotificationVisible: false,
