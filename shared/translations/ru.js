@@ -203,7 +203,7 @@ export const ru = {
     Items_Filters_HideRecipes: 'Скрыть рецепты',
     Items_Sort_Name: 'Название',
     Items_Sort_Rarity: 'Редкость',
-    Items_Sort_Tradeable: 'Обмениваемые',
+    Items_Sort_Wishlist_Status: 'Наличие в желаемом',
     Items_SearchByItemName: 'Поиск предмета',
 
     Wishlist_TopTabs_Orders: 'Предложения',

@@ -146,7 +146,8 @@ export default {
 
     sorts: {
         rarity: 'Items_Sort_Rarity',
-        name: 'Items_Sort_Name'
+        name: 'Items_Sort_Name',
+        wishlistStatus: 'Items_Sort_Wishlist_Status'
     },
 
     components: {

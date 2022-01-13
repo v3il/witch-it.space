@@ -49,7 +49,7 @@ export default {
 .wit-items__item-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    grid-column-gap: var(--offset-xs);
+    grid-column-gap: var(--offset-sm);
     grid-auto-rows: max-content;
     grid-row-gap: var(--offset-sm);
     justify-items: center;

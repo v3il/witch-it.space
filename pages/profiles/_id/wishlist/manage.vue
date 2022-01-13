@@ -19,26 +19,30 @@
 
       <template v-else>
         <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
-          <div class="wit-wishlist-editor__items-container wit-paddings--sm wit-background--content wit-flex wit-flex--column">
+          <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
             <WishlistFilters
               :default-filters="$options.defaultFilters"
               :filters="filters"
               :default-sort="$options.defaultSort"
               :sort="sort"
-              class="wit-offset-bottom--xs"
+              class="wit-wishlist-editor__items-filter"
               @filtersChanged="onFiltersChange"
               @sortChanged="onSortChange"
             />
 
-            <ItemsList :items="sortedItems" class="wit-flex__item--grow">
+            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
                 <ItemView
                   v-for="item in visibleItems"
                   :key="item.id"
                   :item="item"
-                  :class="{test: selectedItems.includes(item)}"
+                  :class="{ 'wit-selected-item': isItemSelected(item) }"
                   @clicked="onItemClicked"
-                />
+                >
+                  <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                    <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
+                  </div>
+                </ItemView>
               </template>
             </ItemsList>
           </div>
@@ -56,7 +60,6 @@
 
 <script>
 import ItemsList from '@/components/items/ItemsList.vue'
-import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
@@ -81,15 +84,6 @@ export default {
     defaultFilters: { ...DEFAULT_FILTERS },
     defaultSort: { ...DEFAULT_SORT },
 
-    rarities: raritiesManager.getTradeable(),
-    events: eventsManager.getAll(),
-    slots: slotsManager.getAll(),
-
-    sorts: {
-        rarity: 'Items_Sort_Rarity',
-        name: 'Items_Sort_Name'
-    },
-
     components: {
         ItemsList,
         WishlistFilters,
@@ -112,7 +106,7 @@ export default {
 
     computed: {
         items () {
-            return Object.values(this.$store.state.items.items)/* .slice(0, 100) */.filter(item => item.isTradeable)
+            return Object.values(this.$store.state.items.items).filter(item => item.isTradeable)
         },
 
         filteredItems () {
@@ -147,6 +141,8 @@ export default {
                     return first.quality - second.quality
                 case 'name':
                     return first.name.localeCompare(second.name)
+                case 'wishlistStatus':
+                    return this.isItemInWishlist(first) - this.isItemInWishlist(second)
                 }
 
                 return 0
@@ -164,11 +160,25 @@ export default {
         },
 
         onItemClicked (item) {
-            if (this.selectedItems.includes(item)) {
-                return this.selectedItems = this.selectedItems.filter(i => i !== item)
+            if (this.isItemSelected(item)) {
+                return this.removeFromSelected(item)
             }
 
             this.selectedItems.push(item)
+        },
+
+        removeFromSelected (item) {
+            this.selectedItems = this.selectedItems.filter(selectedItem => selectedItem !== item)
+        },
+
+        isItemSelected (item) {
+            return this.selectedItems.includes(item)
+        },
+
+        isItemInWishlist (item) {
+            return [903, 902, 904].includes(item.id)
+
+            // return this.wishlist.some(wishlistItem => wishlistItem.itemId === item.id)
         }
     }
 }
@@ -183,13 +193,40 @@ export default {
 .wit-wishlist-editor__items-container {
     flex: 1;
     border-radius: var(--offset-xxs);
+    padding: var(--offset-sm) var(--offset-xs);
+}
+
+.wit-wishlist-editor__items-filter {
+    padding: 0 var(--offset-xs);
+}
+
+.wit-wishlist-editor__items-list {
+    padding: var(--offset-xs) var(--offset-xs) 0;
 }
 
 .wit-wishlist-editor__editor {
     flex: 0 0 450px;
 }
 
-.test {
-    box-shadow: 3px 3px 3px red;
+.wit-selected-item {
+    box-shadow: 0 0 6px 3px var(--color);
+}
+
+.wit-item__icon-container {
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--danger);
+}
+
+.wit-item__icon {
+    width: 18px;
+    height: 18px;
+    text-align: center;
 }
 </style>

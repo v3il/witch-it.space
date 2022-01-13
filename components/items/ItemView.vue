@@ -1,23 +1,22 @@
 <template>
-  <div class="wit-item-view wit-cursor--pointer" @click="onItemClicked">
-    <div class="wit-item-view__container wit-block--full-height wit-flex wit-flex--column" :class="itemClass">
-      <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
-        <img
-          :src="itemPreviewURL"
-          :alt="item.name"
-          :title="item.name"
-          class="wit-item-view__image wit-block"
-          loading="lazy"
-        >
-        <div v-if="itemCount > 0" class="wit-item-view__counter">
-          x{{ itemCount }}
-        </div>
-
-        <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
-          {{ item.name }}
-        </p>
+  <div class="wit-position--relative wit-item-view__container wit-block--full-height wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
+    <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
+      <img
+        :src="itemPreviewURL"
+        :alt="item.name"
+        :title="item.name"
+        class="wit-item-view__image wit-block"
+        loading="lazy"
+      >
+      <div v-if="itemCount > 0" class="wit-item-view__counter">
+        x{{ itemCount }}
       </div>
+
+      <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
+        {{ item.name }}
+      </p>
     </div>
+    <slot />
   </div>
 </template>
 
@@ -94,77 +93,46 @@ export default {
 }
 
 .wit-item-view__container {
-    border: 1px solid transparent;
+    --color: transparent;
+
+    border: 1px solid var(--color);
     border-radius: var(--offset-xxs);
 
-    &.wit-item-view--common {
-        border-color: var(--item-common);
+    .wit-item-view__counter {
+        background-color: var(--color);
+        color: var(--white);
+    }
 
-        .wit-item-view__counter {
-            background-color: var(--item-common);
-            color: var(--black);
-        }
+    &.wit-item-view--common {
+        --color: var(--item-common);
     }
 
     &.wit-item-view--uncommon {
-        border-color: var(--item-uncommon);
-
-        .wit-item-view__counter {
-            background-color: var(--item-uncommon);
-            color: var(--black);
-        }
+        --color: var(--item-uncommon);
     }
 
     &.wit-item-view--promo {
-        border-color: var(--item-promo);
-
-        .wit-item-view__counter {
-            background-color: var(--item-promo);
-            color: var(--black);
-        }
+        --color: var(--item-promo);
     }
 
     &.wit-item-view--eventrarity {
-        border-color: var(--item-event);
-
-        .wit-item-view__counter {
-            background-color: var(--item-event);
-            color: var(--black);
-        }
+        --color: var(--item-event);
     }
 
     &.wit-item-view--unlock {
-        border-color: var(--item-unlock);
-
-        .wit-item-view__counter {
-            background-color: var(--item-unlock);
-            color: var(--black);
-        }
+        --color: var(--item-unlock);
     }
 
     &.wit-item-view--rare {
-        border-color: var(--item-rare);
-
-        .wit-item-view__counter {
-            background-color: var(--item-rare);
-            color: var(--black);
-        }
+        --color: var(--item-rare);
     }
 
     &.wit-item-view--veryrare {
-        border-color: var(--item-very-rare);
-
-        .wit-item-view__counter {
-            background-color: var(--item-very-rare);
-        }
+        --color: var(--item-very-rare);
     }
 
     &.wit-item-view--whimsical {
-        border-color: var(--item-whimsical);
-
-        .wit-item-view__counter {
-            background-color: var(--item-whimsical);
-        }
+        --color: var(--item-whimsical);
     }
 }
 
