@@ -49,11 +49,13 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
             <div style="overflow-y: scroll;" class="wit-block--full-height">
-              {{ selectedItems }}
+              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.item.id" :wishlist-item="wi" class="wit-offset-bottom--sm" />
 
-              <p v-for="wi in selectedItems" :key="wi.item.id">
-                {{ wi.item.id }}
-              </p>
+              <!--              {{ selectedItems }}-->
+
+              <!--              <p v-for="wi in selectedItems" :key="wi.item.id">-->
+              <!--                {{ wi.item.id }}-->
+              <!--              </p>-->
             </div>
           </div>
         </div>
@@ -69,6 +71,7 @@ import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import { WishlistItem } from '@/models/WishlistItem.js'
+import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -94,7 +97,8 @@ export default {
         WishlistFilters,
         TopNavBar,
         EmptyState,
-        ItemView
+        ItemView,
+        WishlistSelectedItem
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
