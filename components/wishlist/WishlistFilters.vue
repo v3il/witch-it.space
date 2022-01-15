@@ -6,7 +6,6 @@
     :default-sort="defaultSort"
     :query-input-placeholder="$t('Items_SearchByItemName')"
     :sorts="$options.sorts"
-    :store-in-url="false"
     @filtersChanged="$emit('filtersChanged', $event)"
     @sortChanged="$emit('sortChanged', $event)"
   >

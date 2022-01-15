@@ -50,6 +50,10 @@
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
             <div style="overflow-y: scroll;" class="wit-block--full-height">
               {{ selectedItems }}
+
+              <p v-for="wi in selectedItems" :key="wi.item.id">
+                {{ wi.item.id }}
+              </p>
             </div>
           </div>
         </div>
@@ -64,6 +68,7 @@ import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import ItemView from '@/components/items/ItemView.vue'
+import { WishlistItem } from '@/models/WishlistItem.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -92,10 +97,23 @@ export default {
         ItemView
     },
 
-    async asyncData ({ app: { $userService, $wishlistService }, route }) {
+    async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
+        const items = store.state.items.items
+
         const { profile } = await $userService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
-        return { profile, wishlist, error: null }
+
+        // console.log(wishlist.map((w) => {
+        //     return WishlistItem.fromSaved(items[w.itemId], w.prices)
+        // }))
+
+        return {
+            profile,
+            wishlist: wishlist.map((w) => {
+                return WishlistItem.fromSaved({ id: 0, item: items[w.itemId], prices: w.prices })
+            }),
+            error: null
+        }
     },
 
     data: () => ({
@@ -164,15 +182,15 @@ export default {
                 return this.removeFromSelected(item)
             }
 
-            this.selectedItems.push(item)
+            this.selectedItems.push(WishlistItem.fromNew({ item }))
         },
 
         removeFromSelected (item) {
-            this.selectedItems = this.selectedItems.filter(selectedItem => selectedItem !== item)
+            this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem.item !== item)
         },
 
         isItemSelected (item) {
-            return this.selectedItems.includes(item)
+            return this.selectedItems.some(wishlistItem => wishlistItem.item === item)
         },
 
         isItemInWishlist (item) {
