@@ -30,13 +30,16 @@
               @sortChanged="onSortChange"
             />
 
-            <VPopover placement="right-end">
-              <button>Click me</button>
-
-              <template slot="popover">
-                <a v-close-popover>Close</a>
-              </template>
-            </VPopover>
+            <div class="wit-wishlist-editor__wishlist-list wit-flex__item--grow">
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
+              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
+            </div>
 
             <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
@@ -80,9 +83,10 @@ import EmptyState from '@/components/basic/EmptyState.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import { WishlistItem } from '@/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
+import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 
 const DEFAULT_FILTERS = {
-    query: 'mand',
+    query: '',
     rarities: [],
     slots: [],
     events: [],
@@ -106,7 +110,8 @@ export default {
         TopNavBar,
         EmptyState,
         ItemView,
-        WishlistSelectedItem
+        WishlistSelectedItem,
+        WishlistItemView
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
@@ -121,10 +126,9 @@ export default {
 
         return {
             profile,
-            wishlist: wishlist.map((w) => {
-                console.error(items[w.itemId])
+            wishlist, /* .map((w) => {                console.error(items[w.itemId])
                 return WishlistItem.fromSaved({ id: 0, item: items[w.itemId], prices: w.prices })
-            }),
+            }) */
             error: null
         }
     },
@@ -197,6 +201,10 @@ export default {
             this.sort = sort
         },
 
+        onWlClick () {
+            console.log(this.wishlist[0])
+        },
+
         onItemClicked (item) {
             const a = this.wishlist.find(wi => wi.item?.id === item?.id)
 
@@ -245,7 +253,19 @@ export default {
     padding: 0 var(--offset-xs);
 }
 
-.wit-wishlist-editor__items-list {
+.wit-wishlist-editor__wishlist-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-column-gap: 16px; //var(--offset-sm);
+    grid-auto-rows: max-content;
+    grid-row-gap: 16px; //var(--offset-sm);
+    justify-items: center;
+    overflow-y: scroll;
+    padding-right: var(--offset-xs);
+}
+
+.wit-wishlist-editor__items-list,
+.wit-wishlist-editor__wishlist-list {
     padding: var(--offset-xs) var(--offset-xs) 0;
 }
 
@@ -253,7 +273,8 @@ export default {
     flex: 0 0 450px;
 }
 
-.wit-selected-item {
+.wit-selected-item,
+.ccc {
     box-shadow: 0 0 6px 3px var(--color);
 }
 

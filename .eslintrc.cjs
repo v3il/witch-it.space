@@ -23,5 +23,6 @@ module.exports = {
         'import/named': 'off',
         'vue/multi-word-component-names': 'off',
         'vue/no-v-html': 'off',
+        'vue/no-unused-components': 'off',
     }
 }

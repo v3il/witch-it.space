@@ -1,8 +1,8 @@
 <template>
   <div class="wit-flex wit-flex--align-center">
     <template v-if="$options.item1">
-      <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
-        <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
+      <div class="wit-flex wit-flex--column1 wit-flex--align-center wit-position--relative">
+        <span v-if="price.itemCount > 1" class="ic">{{ price.itemCount }}&times;</span>
         <ItemView :item="$options.item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
 
@@ -10,20 +10,20 @@
     </template>
 
     <template v-if="$options.item2">
-      <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
-        <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
+      <div class="wit-flex wit-flex--column1 wit-flex--align-center wit-position--relative">
+        <span v-if="price.itemCount2 > 1" class="ic">{{ price.itemCount2 }}&times;</span>
         <ItemView :item="$options.item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
       </div>
 
-      <span v-if="hasThirdPrice" class="plus wit-color--muted">+</span>
+      <!--      <span v-if="hasThirdPrice" class="plus wit-color&#45;&#45;muted">+</span>-->
     </template>
 
-    <template v-if="$options.item3">
-      <div class="wit-flex wit-flex--column wit-flex--align-center wit-position--relative">
-        <span v-if="price.itemCount3 > 1" class="ic">&times;{{ price.itemCount3 }}</span>
-        <ItemView :item="$options.item3" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
-      </div>
-    </template>
+    <!--    <template v-if="$options.item3">-->
+    <!--      <div class="wit-flex wit-flex&#45;&#45;column wit-flex&#45;&#45;align-center wit-position&#45;&#45;relative">-->
+    <!--        <span v-if="price.itemCount3 > 1" class="ic">&times;{{ price.itemCount3 }}</span>-->
+    <!--        <ItemView :item="$options.item3" :is-title-shown="false" class="aaa wit-offset-right&#45;&#45;xxs1 wit-offset-left&#45;&#45;xxs1" />-->
+    <!--      </div>-->
+    <!--    </template>-->
   </div>
 </template>
 
@@ -96,7 +96,7 @@ export default {
     white-space: nowrap;
     vertical-align: baseline;
     /*border-radius: 0.25rem;*/
-    background-color: #02a499 !important;
+    background-color: var(--danger);
     border-radius: 50rem !important;
     right: -5px;
     top: -5px;

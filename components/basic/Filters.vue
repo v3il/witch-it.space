@@ -14,6 +14,26 @@
         @icon-right-click="resetFilter('query')"
       />
 
+      <!--      <VPopover ref="filterDropdown" placement="bottom-start">-->
+      <!--        <b-button icon-right="menu-down" class="wit-flex wit-flex&#45;&#45;center wit-filter__filter-button" :class="{ 'wit-indicator': hasFilterChanges }">-->
+      <!--          <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('Filter') }}</span>-->
+      <!--        </b-button>-->
+
+      <!--        <template slot="popover">-->
+      <!--          <div class="wit-filter__filter-popup">-->
+      <!--            <div class="wit-offset-bottom&#45;&#45;md">-->
+      <!--              <slot :filterParams="filters" :update="update" :reset="resetFilter" />-->
+      <!--            </div>-->
+
+      <!--            <div class="wit-padding-top&#45;&#45;sm wit-flex wit-flex&#45;&#45;justify-end wiz-border&#45;&#45;top">-->
+      <!--              <b-button type="is-danger" @click="resetFilters">-->
+      <!--                {{ $t('Clear') }}-->
+      <!--              </b-button>-->
+      <!--            </div>-->
+      <!--          </div>-->
+      <!--        </template>-->
+      <!--      </VPopover>-->
+
       <b-dropdown
         ref="filterDropdown"
         animation="fade150"
@@ -41,6 +61,23 @@
     </div>
 
     <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
+      <!--      <VPopover ref="filterDropdown" placement="bottom-start">-->
+      <!--        <b-button icon-right="menu-down" class="wit-flex wit-flex&#45;&#45;center wit-filter__sort-button">-->
+      <!--          <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('SortedBy') }}:</span>-->
+      <!--          <span class="wit-color&#45;&#45;white">{{ $t(sorts[sort.sortBy]) }}</span>-->
+      <!--        </b-button>-->
+
+      <!--        <template slot="popover">-->
+      <!--          <ul>-->
+      <!--            <li v-for="(label, key) in sorts" :key="key" class="wit-transition&#45;&#45;background" @click="updateSort({ sortBy: key })">-->
+      <!--              <div class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
+      <!--                {{ $t(label) }}-->
+      <!--              </div>-->
+      <!--            </li>-->
+      <!--          </ul>-->
+      <!--        </template>-->
+      <!--      </VPopover>-->
+
       <b-dropdown
         animation="fade150"
         class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs"
@@ -186,7 +223,7 @@ export default {
 
         resetFilters () {
             this.update(this.defaultFilters)
-            this.$refs.filterDropdown.toggle()
+            this.$refs.filterDropdown.hide()
         },
 
         toggleOrder () {
