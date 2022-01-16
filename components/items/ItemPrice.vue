@@ -63,9 +63,17 @@ export default {
     },
 
     created () {
-        this.$options.item1 = this.$itemsService.getById(this.price.itemId)
-        this.$options.item2 = this.$itemsService.getById(this.price.itemId2)
-        this.$options.item3 = this.$itemsService.getById(this.price.itemId3)
+        console.log(this.price)
+
+        const items = this.$store.state.items.items
+
+        this.$options.item1 = items[this.price?.itemId]
+        this.$options.item2 = items[this.price?.itemId2]
+        this.$options.item3 = items[this.price?.itemId3]
+
+        console.log(this.$options.item1)
+        console.log(this.$options.item2)
+        console.log(this.$options.item3)
     }
 }
 </script>

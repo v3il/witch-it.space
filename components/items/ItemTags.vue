@@ -16,6 +16,12 @@ export default {
         item: {
             type: Object,
             required: true
+        },
+
+        onlyPrimary: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
 
@@ -23,11 +29,27 @@ export default {
         tags () {
             const characterTag = this.getCharacterTag()
             const eventTag = this.getEventTag()
+            const rarityTag = this.getRarityTag()
+            const isTradeableTag = this.getIsTradeableTag()
+            const slotTag = this.getSlotTag()
+
+            if (this.onlyPrimary) {
+                const tags = [
+                    rarityTag,
+                    slotTag
+                ]
+
+                if (eventTag) {
+                    tags.push(eventTag.label)
+                }
+
+                return tags
+            }
 
             const tags = [
-                this.getRarityTag(),
-                this.getIsTradeableTag(),
-                this.getSlotTag()
+                rarityTag,
+                isTradeableTag,
+                slotTag
             ]
 
             if (eventTag) {

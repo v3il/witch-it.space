@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
 import { getTranslation } from '@/shared'
 
 export default function ({ store }) {
@@ -6,6 +7,10 @@ export default function ({ store }) {
         const lngSet = store.getters['locale/lngSet']
         return getTranslation(lngSet, textId, replacements)
     }
+
+    Vue.directive('tooltip', VTooltip)
+    Vue.directive('close-popover', VClosePopover)
+    Vue.component('VPopover', VPopover)
 
     Vue.prototype.$eventBus = new Vue()
 

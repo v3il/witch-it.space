@@ -30,6 +30,14 @@
               @sortChanged="onSortChange"
             />
 
+            <VPopover placement="right-end">
+              <button>Click me</button>
+
+              <template slot="popover">
+                <a v-close-popover>Close</a>
+              </template>
+            </VPopover>
+
             <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
                 <ItemView
@@ -49,7 +57,7 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
             <div style="overflow-y: scroll;" class="wit-block--full-height">
-              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.item.id" :wishlist-item="wi" class="wit-offset-bottom--sm" />
+              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom--sm" />
 
               <!--              {{ selectedItems }}-->
 
@@ -74,7 +82,7 @@ import { WishlistItem } from '@/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 
 const DEFAULT_FILTERS = {
-    query: '',
+    query: 'mand',
     rarities: [],
     slots: [],
     events: [],
@@ -114,6 +122,7 @@ export default {
         return {
             profile,
             wishlist: wishlist.map((w) => {
+                console.error(items[w.itemId])
                 return WishlistItem.fromSaved({ id: 0, item: items[w.itemId], prices: w.prices })
             }),
             error: null
@@ -172,6 +181,13 @@ export default {
         }
     },
 
+    created () {
+        // this.selectedItems = [this.wishlist[0]]
+
+        console.log(this.wishlist[0])
+        console.log(this.wishlist[0].prices)
+    },
+
     methods: {
         onFiltersChange (filters) {
             this.filters = filters
@@ -182,6 +198,13 @@ export default {
         },
 
         onItemClicked (item) {
+            const a = this.wishlist.find(wi => wi.item?.id === item?.id)
+
+            if (a) {
+                console.log(222, a)
+                return this.selectedItems.push(a)
+            }
+
             if (this.isItemSelected(item)) {
                 return this.removeFromSelected(item)
             }
