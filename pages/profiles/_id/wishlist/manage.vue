@@ -6,6 +6,20 @@
           {{ $t('MainMenu_EditWishlist') }}
         </div>
       </template>
+
+      <template #topMenu>
+        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">
+          <template #tab0>
+            {{ $t('Wishlist_TopTabs_Orders') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
+          </template>
+
+          <template #tab1>
+            {{ $t('Wishlist_TopTabs_Wishlist') }}
+            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ items.length }}</span>
+          </template>
+        </TopTabs>
+      </template>
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
@@ -30,18 +44,35 @@
               @sortChanged="onSortChange"
             />
 
-            <div class="wit-wishlist-editor__wishlist-list wit-flex__item--grow">
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
-              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />
-            </div>
+            <!--            <div class="wit-wishlist-editor__wishlist-list wit-flex__item&#45;&#45;grow">-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
+            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
+            <!--            </div>-->
 
-            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+            <ItemsList v-if="mode === 'wishlist'" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <template #default="{ visibleItems }">
+                <ItemView
+                  v-for="item in visibleItems"
+                  :key="item.id"
+                  :item="item"
+                  :class="{ 'wit-selected-item': isItemSelected(item) }"
+                  @clicked="onItemClicked"
+                >
+                  <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                    <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
+                  </div>
+                  prices
+                </ItemView>
+              </template>
+            </ItemsList>
+
+            <ItemsList v-else :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
                 <ItemView
                   v-for="item in visibleItems"
@@ -84,6 +115,7 @@ import ItemView from '@/components/items/ItemView.vue'
 import { WishlistItem } from '@/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
+import TopTabs from '@/components/header/TopTabs.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -98,9 +130,15 @@ const DEFAULT_SORT = {
     order: 'desc'
 }
 
+const Modes = {
+    WISHLIST: 'wishlist',
+    ALL_ITEMS: 'allItems'
+}
+
 export default {
     name: 'WishlistEditor',
 
+    modes: Object.values(Modes),
     defaultFilters: { ...DEFAULT_FILTERS },
     defaultSort: { ...DEFAULT_SORT },
 
@@ -111,7 +149,8 @@ export default {
         EmptyState,
         ItemView,
         WishlistSelectedItem,
-        WishlistItemView
+        WishlistItemView,
+        TopTabs
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
@@ -136,7 +175,8 @@ export default {
     data: () => ({
         filters: { ...DEFAULT_FILTERS },
         sort: { ...DEFAULT_SORT },
-        selectedItems: []
+        selectedItems: [],
+        mode: Modes.WISHLIST
     }),
 
     computed: {
@@ -144,8 +184,18 @@ export default {
             return Object.values(this.$store.state.items.items).filter(item => item.isTradeable)
         },
 
+        itemsInWishlist () {
+            const items = this.$store.state.items.items
+
+            console.log(this.wishlist)
+
+            console.log(333, this.wishlist.map(wishlistItem => items[wishlistItem.itemId]))
+
+            return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
+        },
+
         filteredItems () {
-            const items = this.items
+            const items = this.mode === Modes.WISHLIST ? this.itemsInWishlist : this.items
             const lowerCasedQuery = this.filters.query.toLowerCase()
 
             return items.filter((item) => {

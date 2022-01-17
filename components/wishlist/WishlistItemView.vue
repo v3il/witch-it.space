@@ -8,7 +8,7 @@
       {{ item.name }}
     </p>
 
-    <div class="wit-item-view wit-cursor--pointer wit-flex wit-flex--column wit-flex--align-start wit-flex__item--grow">
+    <div class="wit-item-view wit-cursor--pointer wit-flex wit-flex--column wit-flex--align-start wit-flex__item--grow wit-offset-bottom--xs">
       <div class="wit-aaa wit-flex__item--grow1">
         <template v-if="wishlistItem.prices.length">
           <ItemPrice
@@ -66,7 +66,7 @@ export default {
     },
 
     created () {
-        console.error(this.wishlistItem)
+        // console.error(this.wishlistItem)
 
         this.item = this.$store.state.items.items[this.wishlistItem.itemId] // this.$itemsService.getById(this.wishlistItem.item.id)
     }

@@ -63,7 +63,7 @@ export default {
     },
 
     created () {
-        console.log(this.price)
+        // console.log(this.price)
 
         const items = this.$store.state.items.items
 
@@ -71,9 +71,9 @@ export default {
         this.$options.item2 = items[this.price?.itemId2]
         this.$options.item3 = items[this.price?.itemId3]
 
-        console.log(this.$options.item1)
-        console.log(this.$options.item2)
-        console.log(this.$options.item3)
+        // console.log(this.$options.item1)
+        // console.log(this.$options.item2)
+        // console.log(this.$options.item3)
     }
 }
 </script>
