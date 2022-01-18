@@ -149,3 +149,9 @@ strong {
 .wit-dropdown--offset-xxs .dropdown-content {
     margin-top: var(--offset-xxs);
 }
+
+.b-tabs.wit-tabs--no-content {
+    .tab-content {
+        display: none;
+    }
+}

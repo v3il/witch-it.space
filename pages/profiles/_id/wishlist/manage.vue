@@ -39,23 +39,30 @@
               :filters="filters"
               :default-sort="$options.defaultSort"
               :sort="sort"
-              class="wit-wishlist-editor__items-filter"
+              class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
               @filtersChanged="onFiltersChange"
               @sortChanged="onSortChange"
             />
 
-            <!--            <div class="wit-wishlist-editor__wishlist-list wit-flex__item&#45;&#45;grow">-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc1" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
-            <!--              <WishlistItemView :wishlist-item="wishlist[0]" class="ccc" @click="onWlClick" />-->
-            <!--            </div>-->
+            <b-tabs v-model="mode" type="is-toggle" :animated="false" class="wit-tabs--no-content wit-offset-bottom--xs" style="padding: 0 8px;">
+              <b-tab-item value="wishlist">
+                <template #header>
+                  <i class="mdi mdi-20px mdi-heart wit-offset-right--xxs" />
+                  <!--                  <b-icon icon="heart" size />-->
+                  <span class="wit-flex wit-flex--center"> Wishlist <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ wishlist.length }} </b-tag> </span>
+                </template>
+              </b-tab-item>
 
-            <ItemsList v-if="mode === 'wishlist'" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <b-tab-item value="allItems">
+                <template #header>
+                  <i class="mdi mdi-20px mdi-grid wit-offset-right--xxs" />
+                  <span> All items <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ items.length }} </b-tag> </span>
+                </template>
+              </b-tab-item>
+              <!--              <b-tab-item label="All items" icon="google-photos" value="allItems" />-->
+            </b-tabs>
+
+            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
                 <ItemView
                   v-for="item in visibleItems"
@@ -64,29 +71,32 @@
                   :class="{ 'wit-selected-item': isItemSelected(item) }"
                   @clicked="onItemClicked"
                 >
-                  <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                  <div v-if="mode === 'allItems' && isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
                     <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
                   </div>
-                  prices
+
+                  <div v-if="mode === 'wishlist'">
+                    prices
+                  </div>
                 </ItemView>
               </template>
             </ItemsList>
 
-            <ItemsList v-else :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-              <template #default="{ visibleItems }">
-                <ItemView
-                  v-for="item in visibleItems"
-                  :key="item.id"
-                  :item="item"
-                  :class="{ 'wit-selected-item': isItemSelected(item) }"
-                  @clicked="onItemClicked"
-                >
-                  <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
-                    <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
-                  </div>
-                </ItemView>
-              </template>
-            </ItemsList>
+            <!--            <ItemsList v-else :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
+            <!--              <template #default="{ visibleItems }">-->
+            <!--                <ItemView-->
+            <!--                  v-for="item in visibleItems"-->
+            <!--                  :key="item.id"-->
+            <!--                  :item="item"-->
+            <!--                  :class="{ 'wit-selected-item': isItemSelected(item) }"-->
+            <!--                  @clicked="onItemClicked"-->
+            <!--                >-->
+            <!--                  <div v-if="isItemInWishlist(item)" class="wit-position&#45;&#45;absolute wit-background&#45;&#45;content wit-item__icon-container">-->
+            <!--                    <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
+            <!--                  </div>-->
+            <!--                </ItemView>-->
+            <!--              </template>-->
+            <!--            </ItemsList>-->
           </div>
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">

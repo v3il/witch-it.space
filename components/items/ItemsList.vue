@@ -6,7 +6,7 @@
 
 <script>
 const SCROLL_OFFSET = 400
-const ITEMS_PER_PAGE = 100
+const ITEMS_PER_PAGE = 75
 
 export default {
     name: 'ItemsList',
