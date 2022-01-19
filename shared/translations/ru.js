@@ -60,7 +60,7 @@ export const ru = {
     MainMenu_Quests: 'Квесты',
     MainMenu_Settings: 'Настройки',
     MainMenu_Wishlist: 'Список желаемого: %s',
-    MainMenu_EditWishlist: 'Редактирование списка желаемого',
+    MainMenu_EditWishlist: 'Редактирование желаемого',
 
     RegisterPrompt: 'Зарегистрироваться',
     CraftedBy: 'Сделано для комьюнити Witch It от !D',
