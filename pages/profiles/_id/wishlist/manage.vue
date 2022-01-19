@@ -65,6 +65,7 @@
                 :filters="filters"
                 :default-sort="$options.defaultSort"
                 :sort="sort"
+                :sorts="$options.sorts"
                 class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
                 @filtersChanged="onFiltersChange"
                 @sortChanged="onSortChange"
@@ -164,6 +165,12 @@ export default {
     defaultFilters: { ...DEFAULT_FILTERS },
     defaultSort: { ...DEFAULT_SORT },
 
+    sorts: {
+        rarity: 'Items_Sort_Rarity',
+        name: 'Items_Sort_Name',
+        wishlistStatus: 'Items_Sort_Wishlist_Status'
+    },
+
     components: {
         ItemsList,
         WishlistFilters,
@@ -259,7 +266,7 @@ export default {
 
     created () {
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, {})
+        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
 
     methods: {

@@ -5,7 +5,7 @@
     :default-filters="defaultFilters"
     :default-sort="defaultSort"
     :query-input-placeholder="$t('Items_SearchByItemName')"
-    :sorts="$options.sorts"
+    :sorts="sorts"
     @filtersChanged="$emit('filtersChanged', $event)"
     @sortChanged="$emit('sortChanged', $event)"
   >
@@ -143,12 +143,6 @@ export default {
     events: eventsManager.getAll(),
     slots: slotsManager.getAll(),
 
-    sorts: {
-        rarity: 'Items_Sort_Rarity',
-        name: 'Items_Sort_Name',
-        wishlistStatus: 'Items_Sort_Wishlist_Status'
-    },
-
     components: {
         Filters
     },
@@ -170,6 +164,11 @@ export default {
         },
 
         defaultSort: {
+            required: true,
+            type: Object
+        },
+
+        sorts: {
             required: true,
             type: Object
         }
