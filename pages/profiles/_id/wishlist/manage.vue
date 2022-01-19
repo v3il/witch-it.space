@@ -7,19 +7,19 @@
         </div>
       </template>
 
-      <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">
-          <template #tab0>
-            {{ $t('Wishlist_TopTabs_Orders') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlist.length }}</span>
-          </template>
+      <!--      <template #topMenu>-->
+      <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">-->
+      <!--          <template #tab0>-->
+      <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
+      <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlist.length }}</span>-->
+      <!--          </template>-->
 
-          <template #tab1>
-            {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ items.length }}</span>
-          </template>
-        </TopTabs>
-      </template>
+      <!--          <template #tab1>-->
+      <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
+      <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ items.length }}</span>-->
+      <!--          </template>-->
+      <!--        </TopTabs>-->
+      <!--      </template>-->
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
@@ -34,33 +34,42 @@
       <template v-else>
         <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
           <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
-            <WishlistFilters
-              :default-filters="$options.defaultFilters"
-              :filters="filters"
-              :default-sort="$options.defaultSort"
-              :sort="sort"
-              class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
-              @filtersChanged="onFiltersChange"
-              @sortChanged="onSortChange"
-            />
+            <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
+              <b-tabs
+                v-model="mode"
+                type="is-toggle"
+                :animated="false"
+                class="wit-tabs--no-content wit-offset-bottom--xs"
+                style="padding: 0 8px;"
+                position="is-centered"
+              >
+                <b-tab-item value="wishlist">
+                  <template #header>
+                    <!--                  <i class="mdi mdi-20px mdi-heart wit-offset-right&#45;&#45;xxs" />-->
+                    <!--                  <b-icon icon="heart" size />-->
+                    <span class="wit-flex wit-flex--center"> Wishlist <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ wishlist.length }} </b-tag> </span>
+                  </template>
+                </b-tab-item>
 
-            <b-tabs v-model="mode" type="is-toggle" :animated="false" class="wit-tabs--no-content wit-offset-bottom--xs" style="padding: 0 8px;">
-              <b-tab-item value="wishlist">
-                <template #header>
-                  <i class="mdi mdi-20px mdi-heart wit-offset-right--xxs" />
-                  <!--                  <b-icon icon="heart" size />-->
-                  <span class="wit-flex wit-flex--center"> Wishlist <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ wishlist.length }} </b-tag> </span>
-                </template>
-              </b-tab-item>
+                <b-tab-item value="allItems">
+                  <template #header>
+                    <!--                  <i class="mdi mdi-20px mdi-grid wit-offset-right&#45;&#45;xxs" />-->
+                    <span> All items <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ items.length }} </b-tag> </span>
+                  </template>
+                </b-tab-item>
+                <!--              <b-tab-item label="All items" icon="google-photos" value="allItems" />-->
+              </b-tabs>
 
-              <b-tab-item value="allItems">
-                <template #header>
-                  <i class="mdi mdi-20px mdi-grid wit-offset-right--xxs" />
-                  <span> All items <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ items.length }} </b-tag> </span>
-                </template>
-              </b-tab-item>
-              <!--              <b-tab-item label="All items" icon="google-photos" value="allItems" />-->
-            </b-tabs>
+              <WishlistFilters
+                :default-filters="$options.defaultFilters"
+                :filters="filters"
+                :default-sort="$options.defaultSort"
+                :sort="sort"
+                class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
+                @filtersChanged="onFiltersChange"
+                @sortChanged="onSortChange"
+              />
+            </div>
 
             <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
@@ -101,6 +110,8 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
             <div style="overflow-y: scroll;" class="wit-block--full-height">
+              Editor
+
               <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom--sm" />
 
               <!--              {{ selectedItems }}-->
@@ -126,6 +137,7 @@ import { WishlistItem } from '@/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
+import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -246,10 +258,8 @@ export default {
     },
 
     created () {
-        // this.selectedItems = [this.wishlist[0]]
-
-        console.log(this.wishlist[0])
-        console.log(this.wishlist[0].prices)
+        this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
+        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, {})
     },
 
     methods: {
@@ -331,6 +341,16 @@ export default {
 
 .wit-wishlist-editor__editor {
     flex: 0 0 450px;
+
+    @media screen and (max-width: 1023px) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        border-top: 1px solid red;
+        margin-left: 0 !important;
+    }
 }
 
 .wit-selected-item,

@@ -1,12 +1,12 @@
 <template>
-  <div class="wit-flex--justify-between wit-flex wit-flex--wrap">
+  <div class="wit-flex--justify-between1 wit-flex wit-flex--wrap">
     <div class="wit-flex wit-filter__filter wit-offset-bottom--xs">
       <b-input
-        class="wit-filter__input wit-offset-right--xs wit-flex__item--grow"
+        class="wit-offset-right--xs1 wit-flex__item--grow"
         :value="filters.query"
         maxlength="20"
         :placeholder="queryInputPlaceholder"
-        custom-class="wit-transition"
+        custom-class="wit-transition wit-split-part--left"
         :has-counter="false"
         icon-right="close"
         icon-right-clickable
@@ -41,8 +41,9 @@
         position="is-bottom-right"
       >
         <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__filter-button" :class="{ 'wit-indicator': hasFilterChanges }">
-            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('Filter') }}</span>
+          <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" :class="{ 'wit-indicator': hasFilterChanges }">
+            <i class="mdi mdi-20px mdi-filter wit-color--muted" />
+            <!--            <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('Filter') }}</span>-->
           </b-button>
         </template>
 
@@ -84,7 +85,7 @@
         position="is-bottom-left"
       >
         <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button">
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
             <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
             <span class="wit-color--white">{{ $t(sorts[sort.sortBy]) }}</span>
           </b-button>
@@ -97,7 +98,7 @@
         </b-dropdown-item>
       </b-dropdown>
 
-      <b-button class="wit-filter__order-button" @click="toggleOrder">
+      <b-button class="wit-filter__order-button wit-split-part--right" @click="toggleOrder">
         <div class="wit-color--muted">
           <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />
           <i v-else class="mdi mdi-sort-descending mdi-20px" />
@@ -235,7 +236,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-filter__filter {
-    flex: 0 1 350px;
+    flex: 0 1 250px;
     margin-right: var(--offset-xs);
 
     @media (max-width: 600px) {
@@ -253,14 +254,16 @@ export default {
     color: var(--body-color);
 }
 
+.wit-filter__filter-button,
 .wit-filter__order-button {
     padding: 0 var(--offset-xs);
-    border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
+    //border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
 }
 
-.wit-filter__sort-button {
-    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
-}
+//.wit-filter__input,
+//.wit-filter__sort-button {
+//    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+//}
 
 .wit-filter__filter-popup {
     padding: var(--offset-sm) var(--offset-sm) var(--offset-xs);

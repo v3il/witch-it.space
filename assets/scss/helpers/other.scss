@@ -69,3 +69,11 @@
 .wit-animation--spin {
     animation: spin 2s infinite linear;
 }
+
+.wit-split-part--left {
+    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+}
+
+.wit-split-part--right {
+    border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
+}
