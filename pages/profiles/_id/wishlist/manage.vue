@@ -21,30 +21,21 @@
         <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
           <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
             <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
-              <b-tabs
-                v-model="mode"
-                type="is-toggle"
-                :animated="false"
-                class="wit-tabs--no-content wit-offset-bottom--xs wit-tabs-switcher"
-              >
-                <b-tab-item value="wishlist">
-                  <template #header>
-                    <span class="wit-flex wit-flex--center">
-                      {{ $t('Wishlist_MyWishlist') }}
-                      <b-tag rounded class="wit-offset-left--xs">{{ wishlist.length }}</b-tag>
-                    </span>
-                  </template>
-                </b-tab-item>
+              <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
+                <template #tab0>
+                  {{ $t('Wishlist_MyWishlist') }}
+                  <b-tag rounded class="wit-offset-left--xs">
+                    {{ wishlist.length }}
+                  </b-tag>
+                </template>
 
-                <b-tab-item value="allItems">
-                  <template #header>
-                    <span>
-                      {{ $t('Wishlist_AllItems') }}
-                      <b-tag rounded class="wit-offset-left--xxs">{{ items.length }}</b-tag>
-                    </span>
-                  </template>
-                </b-tab-item>
-              </b-tabs>
+                <template #tab1>
+                  {{ $t('Wishlist_AllItems') }}
+                  <b-tag rounded class="wit-offset-left--xs">
+                    {{ items.length }}
+                  </b-tag>
+                </template>
+              </Tabs>
 
               <WishlistFilters
                 :default-filters="$options.defaultFilters"
@@ -67,11 +58,11 @@
                   :class="{ 'wit-selected-item': isItemSelected(item) }"
                   @clicked="onItemClicked"
                 >
-                  <div v-if="mode === 'allItems' && isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                  <div v-if="isAllItemsMode && isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
                     <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
                   </div>
 
-                  <div v-if="mode === 'wishlist'">
+                  <div v-if="isWishlistMode">
                     prices
                   </div>
                 </ItemView>
@@ -85,7 +76,7 @@
             <div style="overflow-y: scroll;" class="wit-block--full-height">
               Editor
 
-              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom--sm" />
+              <!--              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom&#45;&#45;sm" />-->
 
               <!--              {{ selectedItems }}-->
 
@@ -111,6 +102,7 @@ import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
+import Tabs from '@/components/basic/Tabs.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -151,7 +143,8 @@ export default {
         ItemView,
         WishlistSelectedItem,
         WishlistItemView,
-        TopTabs
+        TopTabs,
+        Tabs
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
@@ -187,10 +180,6 @@ export default {
 
         itemsInWishlist () {
             const items = this.$store.state.items.items
-
-            console.log(this.wishlist)
-
-            console.log(333, this.wishlist.map(wishlistItem => items[wishlistItem.itemId]))
 
             return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
         },
@@ -238,6 +227,14 @@ export default {
 
                 return 0
             })
+        },
+
+        isWishlistMode () {
+            return this.mode === Modes.WISHLIST
+        },
+
+        isAllItemsMode () {
+            return this.mode === Modes.ALL_ITEMS
         }
     },
 

@@ -150,31 +150,3 @@ strong {
 .wit-dropdown--offset-xxs .dropdown-content {
     margin-top: var(--offset-xxs);
 }
-
-.b-tabs.wit-tabs--no-content {
-    .tab-content {
-        display: none;
-    }
-
-    .tabs ul li > a {
-        height: 35px;
-
-        &,
-        &:hover,
-        &:focus {
-            background: #2e3648 !important;
-            color: var(--muted-text-color) !important;
-            border-color: #363e54 !important;
-        }
-    }
-
-    .tabs ul li.is-active > a {
-        &,
-        &:hover,
-        &:focus {
-            background: var(--primary) !important;
-            color: var(--white) !important;
-            border-color: var(--primary) !important;
-        }
-    }
-}
