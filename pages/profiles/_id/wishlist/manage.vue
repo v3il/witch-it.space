@@ -58,7 +58,7 @@
               />
             </div>
 
-            <ItemsList :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+            <ItemsList v-if="sortedItems.length" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ visibleItems }">
                 <ItemView
                   v-for="item in visibleItems"
@@ -78,21 +78,7 @@
               </template>
             </ItemsList>
 
-            <!--            <ItemsList v-else :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
-            <!--              <template #default="{ visibleItems }">-->
-            <!--                <ItemView-->
-            <!--                  v-for="item in visibleItems"-->
-            <!--                  :key="item.id"-->
-            <!--                  :item="item"-->
-            <!--                  :class="{ 'wit-selected-item': isItemSelected(item) }"-->
-            <!--                  @clicked="onItemClicked"-->
-            <!--                >-->
-            <!--                  <div v-if="isItemInWishlist(item)" class="wit-position&#45;&#45;absolute wit-background&#45;&#45;content wit-item__icon-container">-->
-            <!--                    <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
-            <!--                  </div>-->
-            <!--                </ItemView>-->
-            <!--              </template>-->
-            <!--            </ItemsList>-->
+            <EmptyState v-else icon="view-grid" text="No items" class="wit-padding-top--sm" />
           </div>
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
@@ -211,6 +197,11 @@ export default {
 
         filteredItems () {
             const items = this.mode === Modes.WISHLIST ? this.itemsInWishlist : this.items
+
+            if (!items.length) {
+                return items
+            }
+
             const lowerCasedQuery = this.filters.query.toLowerCase()
 
             return items.filter((item) => {
