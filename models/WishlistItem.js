@@ -1,20 +1,18 @@
 export class WishlistItem {
-    #id
+    #model
     #item
-    #prices
 
-    static fromSaved ({ id, item, prices }) {
-        return new WishlistItem({ id, item, prices })
+    static fromSaved ({ model, item }) {
+        return new WishlistItem({ model, item })
     }
 
     static fromNew ({ item }) {
-        return new WishlistItem({ id: null, item, prices: [] })
+        return new WishlistItem({ model: null, item })
     }
 
-    constructor ({ id, item, prices }) {
-        this.#id = id
+    constructor ({ model, item }) {
+        this.#model = model
         this.#item = item
-        this.#prices = prices
     }
 
     get item () {
@@ -22,10 +20,10 @@ export class WishlistItem {
     }
 
     get prices () {
-        return this.#prices
+        return this.#model.prices || []
     }
 
-    toString () {
-        return String(this.#item.id)
+    get id () {
+        return this.#model.id
     }
 }

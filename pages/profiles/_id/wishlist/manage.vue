@@ -24,14 +24,14 @@
               <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
                 <template #tab0>
                   {{ $t('Wishlist_MyWishlist') }}
-                  <b-tag rounded class="wit-offset-left--xs">
+                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ filteredItemsInWishlist.length }}
                   </b-tag>
                 </template>
 
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
-                  <b-tag rounded class="wit-offset-left--xs">
+                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ filteredItems.length }}
                   </b-tag>
                 </template>
@@ -49,27 +49,63 @@
               />
             </div>
 
-            <ItemsList v-if="sortedItems.length" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-              <template #default="{ visibleItems }">
-                <ItemView
-                  v-for="item in visibleItems"
-                  :key="item.id"
-                  :item="item"
-                  :class="{ 'wit-selected-item': isItemSelected(item) }"
-                  @clicked="onItemClicked"
-                >
-                  <div v-if="isAllItemsMode && isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
-                    <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
-                  </div>
+            <template v-if="isWishlistMode">
+              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+                <template #default="{ visibleItems }">
+                  <ItemView
+                    v-for="wishlistModel in visibleItems"
+                    :key="wishlistModel.id"
+                    :item="wishlistModel.item"
+                    :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
+                    @clicked="onItemClicked"
+                  >
+                    <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" class="wit-paddings--xs" />
+                  </ItemView>
+                </template>
+              </InfinityGrid>
 
-                  <div v-if="isWishlistMode">
-                    prices
-                  </div>
-                </ItemView>
-              </template>
-            </ItemsList>
+              <!--                          <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
+              <!--                            <template #default="{ visibleItems }">-->
+              <!--                              <ItemView-->
+              <!--                                v-for="item in visibleItems"-->
+              <!--                                :key="item.id"-->
+              <!--                                :item="item"-->
+              <!--                                :class="{ 'wit-selected-item': isItemSelected(item) }"-->
+              <!--                                @clicked="onItemClicked"-->
+              <!--                              >-->
+              <!--                                <div v-if="isAllItemsMode && isItemInWishlist(item)" class="wit-position&#45;&#45;absolute wit-background&#45;&#45;content wit-item__icon-container">-->
+              <!--                                  <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
+              <!--                                </div>-->
 
-            <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
+              <!--                                {{ item.prices }}-->
+
+              <!--                                <div v-if="isWishlistMode">-->
+              <!--                                  <ItemPrice v-for="price in item.prices" :key="price.id" :price="price" />-->
+              <!--                                </div>-->
+              <!--                              </ItemView>-->
+              <!--                            </template>-->
+              <!--                          </InfinityGrid>-->
+            </template>
+
+            <template v-if="isAllItemsMode">
+              <InfinityGrid v-if="sortedItems.length" :items="sortedItems" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+                <template #default="{ visibleItems }">
+                  <ItemView
+                    v-for="item in visibleItems"
+                    :key="item.id"
+                    :item="item"
+                    :class="{ 'wit-selected-item': isItemSelected(item) }"
+                    @clicked="onItemClicked"
+                  >
+                    <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                      <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
+                    </div>
+                  </ItemView>
+                </template>
+              </InfinityGrid>
+
+              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
+            </template>
           </div>
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
@@ -92,7 +128,6 @@
 </template>
 
 <script>
-import ItemsList from '@/components/items/ItemsList.vue'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
@@ -103,6 +138,9 @@ import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
 import Tabs from '@/components/basic/Tabs.vue'
+import ItemPrice from '@/components/items/ItemPrice.vue'
+import InfinityGrid from '@/components/basic/InfinityGrid.vue'
+import ItemPriceList from '@/components/items/ItemPriceList.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -136,7 +174,6 @@ export default {
     },
 
     components: {
-        ItemsList,
         WishlistFilters,
         TopNavBar,
         EmptyState,
@@ -144,24 +181,28 @@ export default {
         WishlistSelectedItem,
         WishlistItemView,
         TopTabs,
-        Tabs
+        Tabs,
+        ItemPrice,
+        InfinityGrid,
+        ItemPriceList
     },
 
     async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
-        const items = store.state.items.items
-
         const { profile } = await $userService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
-
+        // const wishlistModels = wishlist.map((w) => {
+        //     return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
+        // })
+        //
+        // console.log(wishlist)
+        //
         // console.log(wishlist.map((w) => {
-        //     return WishlistItem.fromSaved(items[w.itemId], w.prices)
+        //     return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
         // }))
 
         return {
             profile,
-            wishlist, /* .map((w) => {                console.error(items[w.itemId])
-                return WishlistItem.fromSaved({ id: 0, item: items[w.itemId], prices: w.prices })
-            }) */
+            wishlist,
             error: null
         }
     },
@@ -179,27 +220,49 @@ export default {
         },
 
         filteredItems () {
-            return this.filterItems(this.items)
-        },
-
-        itemsInWishlist () {
-            const items = this.$store.state.items.items
-
-            return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
-        },
-
-        filteredItemsInWishlist () {
-            return this.filterItems(this.itemsInWishlist)
+            return this.items.filter(this.isFilteredItem)
         },
 
         sortedItems () {
-            const items = this.mode === Modes.WISHLIST ? this.filteredItemsInWishlist : this.filteredItems
             const { sortBy, order } = this.sort
             const isAsc = order === 'asc'
 
-            return Array.from(items).sort((a, b) => {
+            return Array.from(this.filteredItems).sort((a, b) => {
                 const first = isAsc ? a : b
                 const second = isAsc ? b : a
+
+                switch (sortBy) {
+                case 'rarity':
+                    return first.quality - second.quality
+                case 'name':
+                    return first.name.localeCompare(second.name)
+                case 'wishlistStatus':
+                    return this.isItemInWishlist(first) - this.isItemInWishlist(second)
+                }
+
+                return 0
+            })
+        },
+
+        // -----
+
+        // itemsInWishlist () {
+        //     const items = this.$store.state.items.items
+        //
+        //     return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
+        // },
+
+        filteredItemsInWishlist () {
+            return this.wishlist.filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
+        },
+
+        sortedItemsInWishlist () {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            return Array.from(this.filteredItemsInWishlist).sort((a, b) => {
+                const first = isAsc ? a.item : b.item
+                const second = isAsc ? b.item : a.item
 
                 switch (sortBy) {
                 case 'rarity':
@@ -224,6 +287,12 @@ export default {
     },
 
     created () {
+        const items = this.$store.state.items.items
+
+        this.wishlist = this.wishlist.map((w) => {
+            return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
+        })
+
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
@@ -235,6 +304,21 @@ export default {
 
         onSortChange (sort) {
             this.sort = sort
+        },
+
+        isFilteredItem (item) {
+            const lowerCasedQuery = this.filters.query.toLowerCase()
+            const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+            const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+            const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+            const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+            const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+
+            return isFilteredByRarity &&
+                isFilteredBySlot &&
+                isFilteredByName &&
+                isFilteredByTradeable &&
+                isFilteredByEvent
         },
 
         filterItems (items) {
@@ -359,5 +443,11 @@ export default {
     width: 18px;
     height: 18px;
     text-align: center;
+}
+
+.wit-items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-column-gap: var(--offset-sm);
+    grid-row-gap: var(--offset-sm);
 }
 </style>

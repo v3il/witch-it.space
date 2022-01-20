@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-flex wit-flex--align-center">
+  <div class="wit-flex wit-flex--center">
     <template v-if="$options.item1">
       <div class="wit-flex wit-flex--column1 wit-flex--align-center wit-position--relative">
         <span v-if="price.itemCount > 1" class="ic">{{ price.itemCount }}&times;</span>
@@ -63,7 +63,7 @@ export default {
     },
 
     created () {
-        // console.log(this.price)
+        console.log(11, this.price)
 
         const items = this.$store.state.items.items
 
@@ -107,6 +107,6 @@ export default {
 }
 
 .plus {
-    margin: 0 4px;
+    margin: 0 8px;
 }
 </style>
