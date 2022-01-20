@@ -69,7 +69,7 @@
               </template>
             </ItemsList>
 
-            <EmptyState v-else icon="view-grid" text="No items" class="wit-padding-top--sm" />
+            <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
           </div>
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">

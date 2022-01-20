@@ -205,6 +205,7 @@ export const ru = {
     Items_Sort_Rarity: 'Редкость',
     Items_Sort_Wishlist_Status: 'Наличие в желаемом',
     Items_SearchByItemName: 'Поиск предмета',
+    Items_NoItems: 'Нет предметов',
 
     Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Желаемое',
