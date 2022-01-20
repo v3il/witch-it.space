@@ -208,6 +208,8 @@ export const ru = {
 
     Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Желаемое',
+    Wishlist_MyWishlist: 'Желаемое',
+    Wishlist_AllItems: 'Все предметы',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

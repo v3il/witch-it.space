@@ -6,20 +6,6 @@
           {{ $t('MainMenu_EditWishlist') }}
         </div>
       </template>
-
-      <!--      <template #topMenu>-->
-      <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="mode = $event">-->
-      <!--          <template #tab0>-->
-      <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
-      <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlist.length }}</span>-->
-      <!--          </template>-->
-
-      <!--          <template #tab1>-->
-      <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
-      <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ items.length }}</span>-->
-      <!--          </template>-->
-      <!--        </TopTabs>-->
-      <!--      </template>-->
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
@@ -39,25 +25,25 @@
                 v-model="mode"
                 type="is-toggle"
                 :animated="false"
-                class="wit-tabs--no-content wit-offset-bottom--xs"
-                style="padding: 0 8px;"
-                position="is-centered"
+                class="wit-tabs--no-content wit-offset-bottom--xs wit-tabs-switcher"
               >
                 <b-tab-item value="wishlist">
                   <template #header>
-                    <!--                  <i class="mdi mdi-20px mdi-heart wit-offset-right&#45;&#45;xxs" />-->
-                    <!--                  <b-icon icon="heart" size />-->
-                    <span class="wit-flex wit-flex--center"> Wishlist <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ wishlist.length }} </b-tag> </span>
+                    <span class="wit-flex wit-flex--center">
+                      {{ $t('Wishlist_MyWishlist') }}
+                      <b-tag rounded class="wit-offset-left--xs">{{ wishlist.length }}</b-tag>
+                    </span>
                   </template>
                 </b-tab-item>
 
                 <b-tab-item value="allItems">
                   <template #header>
-                    <!--                  <i class="mdi mdi-20px mdi-grid wit-offset-right&#45;&#45;xxs" />-->
-                    <span> All items <b-tag rounded class="wit-offset-left--xs" style="line-height: 15px;"> {{ items.length }} </b-tag> </span>
+                    <span>
+                      {{ $t('Wishlist_AllItems') }}
+                      <b-tag rounded class="wit-offset-left--xxs">{{ items.length }}</b-tag>
+                    </span>
                   </template>
                 </b-tab-item>
-                <!--              <b-tab-item label="All items" icon="google-photos" value="allItems" />-->
               </b-tabs>
 
               <WishlistFilters
@@ -326,7 +312,8 @@ export default {
     padding: var(--offset-sm) var(--offset-xs);
 }
 
-.wit-wishlist-editor__items-filter {
+.wit-wishlist-editor__items-filter,
+.wit-tabs-switcher {
     padding: 0 var(--offset-xs);
 }
 
