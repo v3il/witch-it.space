@@ -25,14 +25,14 @@
                 <template #tab0>
                   {{ $t('Wishlist_MyWishlist') }}
                   <b-tag rounded class="wit-offset-left--xs">
-                    {{ wishlist.length }}
+                    {{ filteredItemsInWishlist.length }}
                   </b-tag>
                 </template>
 
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
                   <b-tag rounded class="wit-offset-left--xs">
-                    {{ items.length }}
+                    {{ filteredItems.length }}
                   </b-tag>
                 </template>
               </Tabs>
@@ -178,41 +178,26 @@ export default {
             return Object.values(this.$store.state.items.items).filter(item => item.isTradeable)
         },
 
+        filteredItems () {
+            return this.filterItems(this.items)
+        },
+
         itemsInWishlist () {
             const items = this.$store.state.items.items
 
             return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
         },
 
-        filteredItems () {
-            const items = this.mode === Modes.WISHLIST ? this.itemsInWishlist : this.items
-
-            if (!items.length) {
-                return items
-            }
-
-            const lowerCasedQuery = this.filters.query.toLowerCase()
-
-            return items.filter((item) => {
-                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
-                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
-                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
-                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
-
-                return isFilteredByRarity &&
-                    isFilteredBySlot &&
-                    isFilteredByName &&
-                    isFilteredByTradeable &&
-                    isFilteredByEvent
-            })
+        filteredItemsInWishlist () {
+            return this.filterItems(this.itemsInWishlist)
         },
 
         sortedItems () {
+            const items = this.mode === Modes.WISHLIST ? this.filteredItemsInWishlist : this.filteredItems
             const { sortBy, order } = this.sort
             const isAsc = order === 'asc'
 
-            return Array.from(this.filteredItems).sort((a, b) => {
+            return Array.from(items).sort((a, b) => {
                 const first = isAsc ? a : b
                 const second = isAsc ? b : a
 
@@ -252,8 +237,26 @@ export default {
             this.sort = sort
         },
 
-        onWlClick () {
-            console.log(this.wishlist[0])
+        filterItems (items) {
+            if (!items.length) {
+                return items
+            }
+
+            const lowerCasedQuery = this.filters.query.toLowerCase()
+
+            return items.filter((item) => {
+                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+
+                return isFilteredByRarity &&
+                    isFilteredBySlot &&
+                    isFilteredByName &&
+                    isFilteredByTradeable &&
+                    isFilteredByEvent
+            })
         },
 
         onItemClicked (item) {
