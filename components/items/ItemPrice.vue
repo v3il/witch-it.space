@@ -1,29 +1,16 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <template v-if="$options.item1">
-      <div class="wit-flex wit-flex--column1 wit-flex--align-center wit-position--relative">
-        <span v-if="price.itemCount > 1" class="ic">{{ price.itemCount }}&times;</span>
-        <ItemView :item="$options.item1" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
-      </div>
+    <div class="wit-flex wit-flex--align-center wit-position--relative">
+      <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
+      <ItemView :item="item1" :is-title-shown="false" class="aaa wit-offset-left--xxs1" />
+    </div>
 
-      <span v-if="hasSecondPrice" class="plus wit-color--muted">+</span>
-    </template>
+    <span v-if="hasTwoItems" class="plus wit-color--muted">+</span>
 
-    <template v-if="$options.item2">
-      <div class="wit-flex wit-flex--column1 wit-flex--align-center wit-position--relative">
-        <span v-if="price.itemCount2 > 1" class="ic">{{ price.itemCount2 }}&times;</span>
-        <ItemView :item="$options.item2" :is-title-shown="false" class="aaa wit-offset-right--xxs1 wit-offset-left--xxs1" />
-      </div>
-
-      <!--      <span v-if="hasThirdPrice" class="plus wit-color&#45;&#45;muted">+</span>-->
-    </template>
-
-    <!--    <template v-if="$options.item3">-->
-    <!--      <div class="wit-flex wit-flex&#45;&#45;column wit-flex&#45;&#45;align-center wit-position&#45;&#45;relative">-->
-    <!--        <span v-if="price.itemCount3 > 1" class="ic">&times;{{ price.itemCount3 }}</span>-->
-    <!--        <ItemView :item="$options.item3" :is-title-shown="false" class="aaa wit-offset-right&#45;&#45;xxs1 wit-offset-left&#45;&#45;xxs1" />-->
-    <!--      </div>-->
-    <!--    </template>-->
+    <div class="wit-flex wit-flex--align-center wit-position--relative">
+      <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
+      <ItemView :item="item2" :is-title-shown="false" class="aaa wit-offset-left--xxs1" />
+    </div>
   </div>
 </template>
 
@@ -32,10 +19,6 @@ import ItemView from '@/components/items/ItemView'
 
 export default {
     name: 'ItemPrice',
-
-    item1: null,
-    item2: null,
-    item3: null,
 
     components: {
         ItemView
@@ -49,31 +32,21 @@ export default {
     },
 
     data: () => ({
-
+        item1: null,
+        item2: null
     }),
 
     computed: {
-        hasSecondPrice () {
-            return this.$options.item2 || this.$options.item3
-        },
-
-        hasThirdPrice () {
-            return this.$options.item3
+        hasTwoItems () {
+            return this.item1 && this.item2
         }
     },
 
     created () {
-        console.log(11, this.price)
-
         const items = this.$store.state.items.items
 
-        this.$options.item1 = items[this.price?.itemId]
-        this.$options.item2 = items[this.price?.itemId2]
-        this.$options.item3 = items[this.price?.itemId3]
-
-        // console.log(this.$options.item1)
-        // console.log(this.$options.item2)
-        // console.log(this.$options.item3)
+        this.item1 = items[this.price.itemId]
+        this.item2 = items[this.price.itemId2]
     }
 }
 </script>

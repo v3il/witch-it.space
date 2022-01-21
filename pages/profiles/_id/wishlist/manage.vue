@@ -64,27 +64,7 @@
                 </template>
               </InfinityGrid>
 
-              <!--                          <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
-              <!--                            <template #default="{ visibleItems }">-->
-              <!--                              <ItemView-->
-              <!--                                v-for="item in visibleItems"-->
-              <!--                                :key="item.id"-->
-              <!--                                :item="item"-->
-              <!--                                :class="{ 'wit-selected-item': isItemSelected(item) }"-->
-              <!--                                @clicked="onItemClicked"-->
-              <!--                              >-->
-              <!--                                <div v-if="isAllItemsMode && isItemInWishlist(item)" class="wit-position&#45;&#45;absolute wit-background&#45;&#45;content wit-item__icon-container">-->
-              <!--                                  <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
-              <!--                                </div>-->
-
-              <!--                                {{ item.prices }}-->
-
-              <!--                                <div v-if="isWishlistMode">-->
-              <!--                                  <ItemPrice v-for="price in item.prices" :key="price.id" :price="price" />-->
-              <!--                                </div>-->
-              <!--                              </ItemView>-->
-              <!--                            </template>-->
-              <!--                          </InfinityGrid>-->
+              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
             </template>
 
             <template v-if="isAllItemsMode">
