@@ -59,7 +59,7 @@
                     :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
                     @clicked="onItemClicked"
                   >
-                    <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" class="wit-paddings--xs" />
+                    <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                   </ItemView>
                 </template>
               </InfinityGrid>

@@ -1,15 +1,15 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <div class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount > 1" class="ic">&times;{{ price.itemCount }}</span>
-      <ItemView :item="item1" :is-title-shown="false" class="aaa wit-offset-left--xxs1" />
+    <div v-if="item1" class="wit-flex wit-flex--align-center wit-position--relative">
+      <span v-if="price.itemCount > 1" class="ic">{{ price.itemCount }}</span>
+      <ItemView :item="item1" :is-title-shown="false" class="aaa" />
     </div>
 
     <span v-if="hasTwoItems" class="plus wit-color--muted">+</span>
 
-    <div class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount2 > 1" class="ic">&times;{{ price.itemCount2 }}</span>
-      <ItemView :item="item2" :is-title-shown="false" class="aaa wit-offset-left--xxs1" />
+    <div v-if="item2" class="wit-flex wit-flex--align-center wit-position--relative">
+      <span v-if="price.itemCount2 > 1" class="ic">{{ price.itemCount2 }}</span>
+      <ItemView :item="item2" :is-title-shown="false" class="aaa" />
     </div>
   </div>
 </template>
