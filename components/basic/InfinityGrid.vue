@@ -18,12 +18,12 @@ export default {
         },
 
         cellWidth: {
-            type: Number,
+            type: String,
             required: true
         },
 
         mobileCellWidth: {
-            type: Number,
+            type: String,
             required: true
         },
 
@@ -45,8 +45,8 @@ export default {
 
         gridStyle () {
             return {
-                '--cell-width': `${this.cellWidth}px`,
-                '--mobile-cell-width': `${this.mobileCellWidth}px`,
+                '--cell-width': this.cellWidth,
+                '--mobile-cell-width': this.mobileCellWidth,
                 '--grid-gap': `${this.gridGap}px`
             }
         }

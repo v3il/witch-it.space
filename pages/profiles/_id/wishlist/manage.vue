@@ -50,7 +50,7 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" cell-width="130px" mobile-cell-width="100px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <ItemView
                     v-for="wishlistModel in visibleItems"
@@ -68,7 +68,7 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <InfinityGrid v-if="sortedItems.length" :items="sortedItems" :cell-width="130" :mobile-cell-width="100" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <InfinityGrid v-if="sortedItems.length" :items="sortedItems" cell-width="130px" mobile-cell-width="100px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <ItemView
                     v-for="item in visibleItems"
@@ -89,14 +89,12 @@
           </div>
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
-            <div style="overflow-y: scroll;" class="wit-block--full-height">
-              <template v-if="selectedItems.length">
-                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom--sm" />
-              </template>
+            <InfinityGrid v-if="selectedItems.length" :items="sortedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height">
+              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" />
+            </InfinityGrid>
 
-              <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
-                <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
-              </div>
+            <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
+              <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
             </div>
           </div>
         </div>
@@ -341,6 +339,14 @@ export default {
     justify-items: center;
     overflow-y: scroll;
     padding-right: var(--offset-xs);
+}
+
+.wit-wishlist-editor__item {
+    padding-bottom: 16px;
+
+    &:not(:last-child) {
+        border-bottom: var(--default-border);
+    }
 }
 
 .wit-wishlist-editor__items-list,

@@ -1,17 +1,13 @@
 <template>
-  <div class="wit-flex">
+  <div class="wit-flex wit-flex--align-start wit-block--full-width">
     <ItemView :item="wishlistItem.item" :is-title-shown="false" style="max-width: 75px;" class="wit-offset-right--xs" />
     <div>
       <p class="wit-offset-bottom--xs wit-font-size--sm">
         {{ wishlistItem.item.name }}
       </p>
+
       <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom--xs" />
-      <!--      <ItemPriceEditor :wishlist-item="wishlistItem" />-->
-
       <ItemPriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" />
-
-      <!--      <ItemPrice :price="wishlistItem.prices[0]" class="wit-offset-bottom&#45;&#45;xs" />-->
-      <!--      <ItemPrice :price="wishlistItem.prices[1]" class="wit-offset-bottom&#45;&#45;xs" />-->
     </div>
   </div>
 </template>
