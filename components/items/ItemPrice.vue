@@ -1,15 +1,15 @@
 <template>
   <div class="wit-flex wit-flex--center">
     <div v-if="item1" class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount > 1" class="ic">{{ price.itemCount }}</span>
-      <ItemView :item="item1" :is-title-shown="false" class="aaa" />
+      <span v-if="price.itemCount > 1" class="wit-price__counter">{{ price.itemCount }}</span>
+      <ItemView :item="item1" :is-title-shown="false" class="wit-price__item" />
     </div>
 
-    <span v-if="hasTwoItems" class="plus wit-color--muted">+</span>
+    <span v-if="hasTwoItems" class="wit-price__plus wit-color--muted">+</span>
 
     <div v-if="item2" class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount2 > 1" class="ic">{{ price.itemCount2 }}</span>
-      <ItemView :item="item2" :is-title-shown="false" class="aaa" />
+      <span v-if="price.itemCount2 > 1" class="wit-price__counter">{{ price.itemCount2 }}</span>
+      <ItemView :item="item2" :is-title-shown="false" class="wit-price__item" />
     </div>
   </div>
 </template>
@@ -52,34 +52,24 @@ export default {
 </script>
 
 <style scoped>
-.ic {
-    /*font-size: 11px;*/
+.wit-price__counter {
     font-size: 10px;
     position: absolute;
-    /*background: red;*/
-    /*padding: 2px;*/
     z-index: 2;
-    display: inline-block;
     padding: 0.25em 0.4em;
-    /* font-size: 75%; */
     font-weight: 500;
-    line-height: 1;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    /*border-radius: 0.25rem;*/
+    color: var(--white);
     background-color: var(--danger);
-    border-radius: 50rem !important;
+    border-radius: 50rem;
     right: -5px;
     top: -5px;
 }
 
-.aaa {
+.wit-price__item {
     width: 40px;
 }
 
-.plus {
+.wit-price__plus {
     margin: 0 8px;
 }
 </style>

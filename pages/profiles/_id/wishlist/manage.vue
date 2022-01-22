@@ -77,7 +77,7 @@
                     :class="{ 'wit-selected-item': isItemSelected(item) }"
                     @clicked="toggleItem"
                   >
-                    <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
+                    <div v-if="isItemInWishlist(item)" v-tooltip.top="$t('Wishlist_AlreadyInWishlist')" class="wit-position--absolute wit-item__icon-container">
                       <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
                     </div>
                   </ItemView>
@@ -315,9 +315,7 @@ export default {
         },
 
         isItemInWishlist (item) {
-            return [903, 902, 904].includes(item.id)
-
-            // return this.wishlist.some(wishlistItem => wishlistItem.itemId === item.id)
+            return this.wishlist.some(wishlistItem => wishlistItem.item.id === item.id)
         }
     }
 }
@@ -354,6 +352,7 @@ export default {
 .wit-wishlist-editor__items-list,
 .wit-wishlist-editor__wishlist-list {
     padding: var(--offset-xs) var(--offset-xs) 0;
+    margin-right: var(--offset-xs);
 }
 
 .wit-wishlist-editor__editor {
@@ -372,8 +371,7 @@ export default {
     }
 }
 
-.wit-selected-item,
-.ccc {
+.wit-selected-item {
     box-shadow: 0 0 6px 3px var(--color);
 }
 
