@@ -24,14 +24,14 @@
               <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
                 <template #tab0>
                   {{ $t('Wishlist_MyWishlist') }}
-                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                  <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
                     {{ filteredItemsInWishlist.length }}
                   </b-tag>
                 </template>
 
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
-                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                  <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
                     {{ filteredItems.length }}
                   </b-tag>
                 </template>
@@ -57,7 +57,7 @@
                     :key="wishlistModel.id"
                     :item="wishlistModel.item"
                     :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
-                    @clicked="onItemClicked"
+                    @clicked="toggleWishlistItem(wishlistModel)"
                   >
                     <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                   </ItemView>
@@ -75,7 +75,7 @@
                     :key="item.id"
                     :item="item"
                     :class="{ 'wit-selected-item': isItemSelected(item) }"
-                    @clicked="onItemClicked"
+                    @clicked="toggleItem"
                   >
                     <div v-if="isItemInWishlist(item)" class="wit-position--absolute wit-background--content wit-item__icon-container">
                       <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
@@ -94,7 +94,11 @@
 
               <!--              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom&#45;&#45;sm" />-->
 
-              <!--              {{ selectedItems }}-->
+              <pre v-if="selectedItems[0]">
+                  {{ selectedItems[0].item }}
+                  <br>
+                  {{ selectedItems[0].prices }}
+              </pre>
 
               <!--              <p v-for="wi in selectedItems" :key="wi.item.id">-->
               <!--                {{ wi.item.id }}-->
@@ -167,18 +171,9 @@ export default {
         ItemPriceList
     },
 
-    async asyncData ({ app: { $userService, $wishlistService }, route, store }) {
+    async asyncData ({ app: { $userService, $wishlistService }, route }) {
         const { profile } = await $userService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
-        // const wishlistModels = wishlist.map((w) => {
-        //     return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
-        // })
-        //
-        // console.log(wishlist)
-        //
-        // console.log(wishlist.map((w) => {
-        //     return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
-        // }))
 
         return {
             profile,
@@ -226,14 +221,8 @@ export default {
 
         // -----
 
-        // itemsInWishlist () {
-        //     const items = this.$store.state.items.items
-        //
-        //     return this.wishlist.map(wishlistItem => items[wishlistItem.itemId])
-        // },
-
         filteredItemsInWishlist () {
-            return this.wishlist.filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
+            return (this.wishlist || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
         },
 
         sortedItemsInWishlist () {
@@ -301,45 +290,24 @@ export default {
                 isFilteredByEvent
         },
 
-        filterItems (items) {
-            if (!items.length) {
-                return items
+        toggleWishlistItem (wishlistModel) {
+            if (this.selectedItems.includes(wishlistModel)) {
+                return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== wishlistModel)
             }
 
-            const lowerCasedQuery = this.filters.query.toLowerCase()
-
-            return items.filter((item) => {
-                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
-                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
-                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
-                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
-
-                return isFilteredByRarity &&
-                    isFilteredBySlot &&
-                    isFilteredByName &&
-                    isFilteredByTradeable &&
-                    isFilteredByEvent
-            })
+            this.selectedItems.push(wishlistModel)
         },
 
-        onItemClicked (item) {
-            const a = this.wishlist.find(wi => wi.item?.id === item?.id)
+        toggleItem (item) {
+            const selectedWishlistModel = this.selectedItems.find(wishlistModel => wishlistModel.item === item)
 
-            if (a) {
-                console.log(222, a)
-                return this.selectedItems.push(a)
+            if (selectedWishlistModel) {
+                return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
             }
 
-            if (this.isItemSelected(item)) {
-                return this.removeFromSelected(item)
-            }
+            const wishlistModel = this.wishlist.find(wishlistModel => wishlistModel.item === item)
 
-            this.selectedItems.push(WishlistItem.fromNew({ item }))
-        },
-
-        removeFromSelected (item) {
-            this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem.item !== item)
+            this.selectedItems.push(wishlistModel || WishlistItem.fromNew({ item }))
         },
 
         isItemSelected (item) {
@@ -390,6 +358,8 @@ export default {
 
 .wit-wishlist-editor__editor {
     flex: 0 0 450px;
+    max-width: 450px;
+    border-radius: var(--offset-xxs);
 
     @media screen and (max-width: 1023px) {
         position: fixed;

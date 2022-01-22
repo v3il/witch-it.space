@@ -7,7 +7,13 @@ export class WishlistItem {
     }
 
     static fromNew ({ item }) {
-        return new WishlistItem({ model: null, item })
+        return new WishlistItem({
+            item,
+            model: {
+                id: null,
+                prices: []
+            }
+        })
     }
 
     constructor ({ model, item }) {
