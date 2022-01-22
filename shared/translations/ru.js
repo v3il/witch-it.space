@@ -212,6 +212,7 @@ export const ru = {
     Wishlist_MyWishlist: 'Желаемое',
     Wishlist_AllItems: 'Все предметы',
     Wishlist_AlreadyInWishlist: 'В списке желаемого',
+    Wishlist_SelectItemToEdit: 'Выберите предмет для добавления<br>в список желаемого',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

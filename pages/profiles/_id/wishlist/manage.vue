@@ -90,19 +90,13 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
             <div style="overflow-y: scroll;" class="wit-block--full-height">
-              Editor
+              <template v-if="selectedItems.length">
+                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom--sm" />
+              </template>
 
-              <!--              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.prices.length" :wishlist-item="wi" class="wit-offset-bottom&#45;&#45;sm" />-->
-
-              <pre v-if="selectedItems[0]">
-                  {{ selectedItems[0].item }}
-                  <br>
-                  {{ selectedItems[0].prices }}
-              </pre>
-
-              <!--              <p v-for="wi in selectedItems" :key="wi.item.id">-->
-              <!--                {{ wi.item.id }}-->
-              <!--              </p>-->
+              <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
+                <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
+              </div>
             </div>
           </div>
         </div>

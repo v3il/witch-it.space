@@ -5,7 +5,7 @@
       size="is-large"
       class="wit-offset-bottom--xs"
     />
-    {{ text }}
+    <p class="wit-text--center wit-line-height--md" v-html="text" />
     <slot />
   </div>
 </template>

@@ -8,8 +8,10 @@
       <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom--xs" />
       <!--      <ItemPriceEditor :wishlist-item="wishlistItem" />-->
 
-      <ItemPrice :price="wishlistItem.prices[0]" class="wit-offset-bottom--xs" />
-      <ItemPrice :price="wishlistItem.prices[1]" class="wit-offset-bottom--xs" />
+      <ItemPriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" />
+
+      <!--      <ItemPrice :price="wishlistItem.prices[0]" class="wit-offset-bottom&#45;&#45;xs" />-->
+      <!--      <ItemPrice :price="wishlistItem.prices[1]" class="wit-offset-bottom&#45;&#45;xs" />-->
     </div>
   </div>
 </template>
@@ -26,7 +28,7 @@ export default {
     components: {
         ItemView,
         ItemTags,
-        // ItemPriceEditor,
+        ItemPriceEditor,
         ItemPrice
     },
 

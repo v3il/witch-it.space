@@ -1,5 +1,5 @@
 <template>
-  <div>1</div>
+  <div>{{ price }}</div>
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {
     name: 'ItemPriceEditor',
 
     props: {
-        wishlistItem: {
+        price: {
             type: Object,
             required: true
         }
