@@ -15,7 +15,7 @@
 <script>
 import ItemView from '@/components/items/ItemView.vue'
 import ItemTags from '@/components/items/ItemTags.vue'
-import ItemPriceEditor from '@/components/items/ItemPriceEditor.vue'
+import ItemPriceEditor from '@/components/price/PriceEditor.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 
 export default {
