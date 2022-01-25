@@ -78,7 +78,7 @@ export default {
     grid-auto-rows: max-content;
     justify-items: center;
     overflow-y: scroll;
-    padding-right: var(--offset-xs);
+    padding-right: var(--offset-sm);
 
     @media screen and (max-width: 768px) {
         grid-template-columns: repeat(auto-fill, minmax(var(--mobile-cell-width), 1fr));

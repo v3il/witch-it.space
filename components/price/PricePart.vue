@@ -4,7 +4,7 @@
     <template #trigger>
       <b-button
         type="is-link"
-        style="width: 36px;"
+        style="width: 36px; height: 36px;"
       >
         <i class="mdi mdi-24 mdi-plus" />
       </b-button>
