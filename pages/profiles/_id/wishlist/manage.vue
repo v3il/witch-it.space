@@ -88,10 +88,16 @@
             </template>
           </div>
 
-          <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content">
-            <InfinityGrid v-if="selectedItems.length" :items="sortedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height">
-              <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" />
-            </InfinityGrid>
+          <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
+            <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
+              <InfinityGrid :items="sortedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height wit-offset-bottom--sm">
+                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" />
+              </InfinityGrid>
+
+              <div style="height: 100px; border: 1px solid red;" class="wit-flex__item--no-shrink">
+                footer
+              </div>
+            </div>
 
             <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
               <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
@@ -356,8 +362,8 @@ export default {
 }
 
 .wit-wishlist-editor__editor {
-    flex: 0 0 450px;
-    max-width: 450px;
+    flex: 0 0 475px;
+    max-width: 475px;
     border-radius: var(--offset-xxs);
 
     @media screen and (max-width: 1023px) {

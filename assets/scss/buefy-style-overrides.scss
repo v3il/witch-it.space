@@ -151,12 +151,9 @@ strong {
     margin-top: var(--offset-xxs);
 }
 
-//.wit-select-sm {
-//    span {
-//        height: 100%;
-//    }
-//
-//    select {
-//        height: 40px;
-//    }
-//}
+.select select {
+    &,
+    option {
+        color: var(--body-color) !important;
+    }
+}
