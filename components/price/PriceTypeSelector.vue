@@ -1,5 +1,5 @@
 <template>
-  <b-select placeholder="Select a price type" expanded>
+  <b-select placeholder="Select a price type" expanded style="height: 36px;">
     <option value="option.id">
       {{ $t('') }}
     </option>

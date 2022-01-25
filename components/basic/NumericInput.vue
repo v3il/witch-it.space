@@ -1,7 +1,7 @@
 <template>
   <div class="zpc-editable-input">
     <label class="zpc-input__label">{{ label }}</label>
-    <b-input v-model="tempValue" />
+    <b-input v-model="tempValue" class="a" />
 
     <!--    <input-->
     <!--      :id="labelId"-->
@@ -133,25 +133,19 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .zpc-editable-input {
     position: relative;
 }
 
-.zpc-input__input {
-    padding: 0;
-    border: 0;
-    outline: none;
-    -moz-appearance: textfield;
-}
+.a {
+    height: 36px;
+    width: 36px;
 
-.zpc-input__input::-webkit-outer-spin-button,
-.zpc-input__input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.zpc-input__label {
-    text-transform: capitalize;
+    input {
+        height: 100%;
+        padding: var(--offset-xs) var(--offset-xs);
+        text-align: center;
+    }
 }
 </style>

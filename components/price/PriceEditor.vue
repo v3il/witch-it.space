@@ -1,36 +1,36 @@
 <template>
-  <div class="wit-price-editor wit-flex wit-flex--align-center1 wit-flex--column">
-    <PriceTypeSelector class="wit-offset-right--sm1 wit-offset-bottom--xs wit-flex__item--grow" />
+  <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
+    <PriceTypeSelector class="wit-offset-right--md wit-offset-bottom--xs1 wit-flex__item--grow" />
+
+    <!--    <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+    <div class="wit-flex wit-flex--align-center">
+      <!--        <p class="wit-offset-right&#45;&#45;xs">-->
+      <!--          (-->
+      <!--        </p>-->
+
+      <PricePart />
+      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
+      <NumericInput :value="4" />
+      <!--        <p class="wit-offset-left&#45;&#45;xs">-->
+      <!--          )-->
+      <!--        </p>-->
+    </div>
+
+    <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
     <div class="wit-flex wit-flex--align-center">
-      <div class="wit-flex wit-flex--align-center">
-        <!--        <p class="wit-offset-right&#45;&#45;xs">-->
-        <!--          (-->
-        <!--        </p>-->
+      <!--        <p class="wit-offset-right&#45;&#45;xs">-->
+      <!--          (-->
+      <!--        </p>-->
+      <PricePart />
+      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
+      <NumericInput :value="4" />
 
-        <PricePart />
-        <span class="wit-block wit-offset-left--xs wit-offset-right--xs">&times;</span>
-        <NumericInput :value="4" style="width: 60px;" />
-        <!--        <p class="wit-offset-left&#45;&#45;xs">-->
-        <!--          )-->
-        <!--        </p>-->
-      </div>
-
-      <span class="wit-block wit-offset-left--sm wit-offset-right--sm">+</span>
-
-      <div class="wit-flex wit-flex--align-center">
-        <!--        <p class="wit-offset-right&#45;&#45;xs">-->
-        <!--          (-->
-        <!--        </p>-->
-        <PricePart />
-        <span class="wit-block wit-offset-left--xs wit-offset-right--xs">&times;</span>
-        <NumericInput :value="4" style="width: 60px;" />
-
-        <!--        <p class="wit-offset-left&#45;&#45;xs">-->
-        <!--          )-->
-        <!--        </p>-->
-      </div>
+      <!--        <p class="wit-offset-left&#45;&#45;xs">-->
+      <!--          )-->
+      <!--        </p>-->
     </div>
+    <!--    </div>-->
   </div>
 </template>
 
