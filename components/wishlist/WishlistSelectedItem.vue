@@ -1,22 +1,42 @@
 <template>
   <div class="wit-flex wit-flex--column wit-flex--align-start wit-block--full-width">
     <div class="wit-flex wit-flex--align-start wit-block--full-width">
-      <ItemView :item="wishlistItem.item" :is-title-shown="false" style="max-width: 75px;" class="wit-offset-right--sm" />
+      <ItemView :item="wishlistItem.item" :is-title-shown="false" style="max-width: 50px;" class="wit-offset-right--sm" />
 
       <div class="wit-flex wit-flex--column wit-block--full-width">
-        <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
+        <div class="wit-flex wit-flex--align-center1 wit-offset-bottom--xs">
           <p class="wit-font-size--sm wit-offset-right--xs wit-flex__item--grow">
             {{ wishlistItem.item.name }}
           </p>
 
           <RemoveButton />
+          <!--          <b-button size="is-small" type="is-danger is-light">-->
+          <!--            Remove-->
+          <!--          </b-button>-->
         </div>
 
         <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom--none" />
       </div>
     </div>
 
-    <PriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" class="wit-price-editor wit-block--full-width" />
+    <div class="wit-offset-bottom--xs wit-block--full-width">
+      <PriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" class="wit-price-editor wit-block--full-width" />
+    </div>
+
+    <div class="wit-flex wit-flex--justify-between wit-block--full-width">
+      <b-button size="is-small" type="is-danger" style="padding: 0 4px;">
+        <!--        <i class="mdi mdi-20px mdi-heart-remove wit-color&#45;&#45;danger" />-->
+        Remove from wishlist
+      </b-button>
+
+      <b-button size="is-small" type="is-primary is-light1" class="wit-offset-right--xs1">
+        Add price
+      </b-button>
+
+      <!--      <b-button size="is-small" type="is-danger is-light">-->
+      <!--        Remove-->
+      <!--      </b-button>-->
+    </div>
   </div>
 </template>
 
