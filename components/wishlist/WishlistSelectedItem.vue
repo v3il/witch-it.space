@@ -4,14 +4,12 @@
       <ItemView :item="wishlistItem.item" :is-title-shown="false" style="max-width: 75px;" class="wit-offset-right--sm" />
 
       <div class="wit-flex wit-flex--column wit-block--full-width">
-        <div class="wit-flex wit-flex--align-center1 wit-offset-bottom--xs">
+        <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
           <p class="wit-font-size--sm wit-offset-right--xs wit-flex__item--grow">
             {{ wishlistItem.item.name }}
           </p>
 
-          <b-button type="is-ghost" class="wit-paddings--none" style="height: 18px; width: 18px;">
-            <i class="mdi mdi-18px mdi-close zzz" />
-          </b-button>
+          <RemoveButton />
         </div>
 
         <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom--none" />
@@ -27,6 +25,7 @@ import ItemView from '@/components/items/ItemView.vue'
 import ItemTags from '@/components/items/ItemTags.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
+import RemoveButton from '@/components/basic/RemoveButton.vue'
 
 export default {
     name: 'WishlistSelectedItem',
@@ -35,7 +34,8 @@ export default {
         ItemView,
         ItemTags,
         PriceEditor,
-        ItemPrice
+        ItemPrice,
+        RemoveButton
     },
 
     props: {
