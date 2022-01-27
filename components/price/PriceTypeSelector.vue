@@ -1,22 +1,30 @@
 <template>
-  <b-select placeholder="Price type" expanded style="height: 36px;">
-    <option value="option.id">
-      {{ $t('') }}
+  <b-select placeholder="Price type" expanded style="height: 36px;" :value="price.priceType">
+    <option value="any">
+      {{ $t('PriceType_Any') }}
     </option>
 
-    <option value="option.id">
-      {{ $t('') }}
+    <option value="specific">
+      {{ $t('PriceType_Specific') }}
     </option>
 
-    <option value="option.id">
-      {{ $t('') }}
+    <option value="wishlist">
+      {{ $t('PriceType_Wishlist') }}
     </option>
   </b-select>
 </template>
 
 <script>
+
 export default {
-    name: 'PriceTypeSelector'
+    name: 'PriceTypeSelector',
+
+    props: {
+        price: {
+            type: Object,
+            required: true
+        }
+    }
 }
 </script>
 

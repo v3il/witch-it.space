@@ -227,6 +227,10 @@ export const ru = {
     UserView_TradingOnlyDupes: 'Обмениваю только предметы-дубликаты',
     UserView_TradingAnyItem: 'Обмениваю предметы в единичном экземпляре',
 
+    PriceType_Any: 'Любое предложение',
+    PriceType_Specific: 'Конкретная цена',
+    PriceType_Wishlist: 'Предмет из списка желаемого',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10

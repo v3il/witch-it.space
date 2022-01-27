@@ -1,22 +1,22 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
-    <PriceTypeSelector class="wit-offset-right--sm wit-offset-bottom--xs1 wit-flex__item--grow" />
+    <PriceTypeSelector :price="price" class="wit-offset-right--sm wit-offset-bottom--xs1 wit-flex__item--grow" />
 
-    <!--    <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-    <div class="wit-flex wit-flex--align-center">
-      <PricePart />
-      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-      <NumericInput :value="4" />
-    </div>
+    <template v-if="isSpecificPrice">
+      <div class="wit-flex wit-flex--align-center">
+        <PricePart />
+        <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
+        <NumericInput :value="4" />
+      </div>
 
-    <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
+      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
-    <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
-      <PricePart />
-      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-      <NumericInput :value="4" />
-    </div>
-    <!--    </div>-->
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
+        <PricePart />
+        <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
+        <NumericInput :value="4" />
+      </div>
+    </template>
 
     <RemoveButton />
   </div>
@@ -42,6 +42,12 @@ export default {
         price: {
             type: Object,
             required: true
+        }
+    },
+
+    computed: {
+        isSpecificPrice () {
+            return this.price.priceType === 'specific'
         }
     }
 }

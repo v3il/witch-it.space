@@ -3,13 +3,12 @@ const initPriceModel = (sequelize, DataTypes) => {
         'Price',
         {
             offerId: DataTypes.INTEGER,
-            priceType: DataTypes.INTEGER,
+            priceType: DataTypes.STRING,
             itemId: DataTypes.INTEGER,
             itemCount: DataTypes.INTEGER,
             itemId2: DataTypes.INTEGER,
             itemCount2: DataTypes.INTEGER,
-            itemId3: DataTypes.INTEGER,
-            itemCount3: DataTypes.INTEGER
+            priceValue: DataTypes.INTEGER
         }
     )
 }
