@@ -20,7 +20,7 @@
     </div>
 
     <div class="wit-offset-bottom--xs wit-block--full-width">
-      <PriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" class="wit-price-editor wit-block--full-width" />
+      <PriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" class="wit-price-editor wit-block--full-width" @priceTypeChanged="onPriceTypeChanged" />
     </div>
 
     <div class="wit-flex wit-flex--justify-between wit-block--full-width">
@@ -62,6 +62,12 @@ export default {
         wishlistItem: {
             type: Object,
             required: true
+        }
+    },
+
+    methods: {
+        onPriceTypeChanged ({ price, priceType }) {
+            this.wishlistItem.setPriceType(price, priceType)
         }
     }
 }

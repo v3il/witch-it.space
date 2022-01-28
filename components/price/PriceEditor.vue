@@ -1,6 +1,6 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
-    <PriceTypeSelector :price="price" class="wit-offset-right--sm wit-offset-bottom--xs1 wit-flex__item--grow" />
+    <PriceTypeSelector :price="price" class="wit-offset-right--sm wit-offset-bottom--xs1 wit-flex__item--grow" @change="onPriceTypeChange" />
 
     <template v-if="isSpecificPrice">
       <div class="wit-flex wit-flex--align-center">
@@ -48,6 +48,13 @@ export default {
     computed: {
         isSpecificPrice () {
             return this.price.priceType === 'specific'
+        }
+    },
+
+    methods: {
+        onPriceTypeChange (priceType) {
+            this.$emit('priceTypeChanged', { price: this.price, priceType })
+            console.log(priceType)
         }
     }
 }

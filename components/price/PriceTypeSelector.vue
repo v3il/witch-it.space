@@ -1,5 +1,5 @@
 <template>
-  <b-select placeholder="Price type" expanded style="height: 36px;" :value="price.priceType">
+  <b-select expanded style="height: 36px;" :value="price.priceType" class="" @input="$emit('change', $event)">
     <option value="any">
       {{ $t('PriceType_Any') }}
     </option>
