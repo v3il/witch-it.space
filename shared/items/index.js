@@ -2,6 +2,7 @@ import { RaritiesManager } from './RaritiesManager'
 import { EventsManager } from './EventsManager'
 import { SlotsManager } from './SlotsManager'
 
+export { PriceType } from './PriceType'
 export { Rarity } from './Rarity'
 
 export const slotsManager = new SlotsManager()

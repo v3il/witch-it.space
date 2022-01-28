@@ -228,7 +228,7 @@ export const ru = {
     UserView_TradingAnyItem: 'Обмениваю предметы в единичном экземпляре',
 
     PriceType_Any: 'Любое предложение',
-    PriceType_Specific: 'Конкретная цена',
+    PriceType_Fixed: 'Фиксированный',
     PriceType_Wishlist: 'Предмет из списка желаемого',
 
     Time_NMinutesAgo: (minutes) => {

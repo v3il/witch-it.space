@@ -1,9 +1,9 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
-    <PriceTypeSelector :price="price" class="wit-offset-right--sm wit-offset-bottom--xs1 wit-flex__item--grow" @change="onPriceTypeChange" />
+    <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" @change="onPriceTypeChange" />
 
     <template v-if="isSpecificPrice">
-      <div class="wit-flex wit-flex--align-center">
+      <div class="wit-flex wit-flex--align-center wit-offset-left--sm">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="4" />
@@ -11,14 +11,14 @@
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
-      <div class="wit-flex wit-flex--align-center wit-offset-right--sm">
+      <div class="wit-flex wit-flex--align-center">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="4" />
       </div>
     </template>
 
-    <RemoveButton />
+    <RemoveButton v-if="isRemoveable" class="wit-offset-left--sm" @click="onPriceRemove" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ import PriceTypeSelector from '@/components/price/PriceTypeSelector.vue'
 import PricePart from '@/components/price/PricePart.vue'
 import NumericInput from '@/components/basic/NumericInput.vue'
 import RemoveButton from '@/components/basic/RemoveButton.vue'
+import { PriceType } from '@/shared/items'
 
 export default {
     name: 'PriceEditor',
@@ -42,19 +43,27 @@ export default {
         price: {
             type: Object,
             required: true
+        },
+
+        isRemoveable: {
+            type: Boolean,
+            required: true
         }
     },
 
     computed: {
         isSpecificPrice () {
-            return this.price.priceType === 'specific'
+            return this.price.priceType === PriceType.FIXED
         }
     },
 
     methods: {
         onPriceTypeChange (priceType) {
             this.$emit('priceTypeChanged', { price: this.price, priceType })
-            console.log(priceType)
+        },
+
+        onPriceRemove () {
+            this.$emit('priceRemoved', { price: this.price })
         }
     }
 }

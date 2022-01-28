@@ -20,7 +20,15 @@
     </div>
 
     <div class="wit-offset-bottom--xs wit-block--full-width">
-      <PriceEditor v-for="price in wishlistItem.prices" :key="price.id" :price="price" class="wit-price-editor wit-block--full-width" @priceTypeChanged="onPriceTypeChanged" />
+      <PriceEditor
+        v-for="price in wishlistItem.prices"
+        :key="price.id"
+        :price="price"
+        :is-removeable="isRemoveable"
+        class="wit-price-editor wit-block--full-width"
+        @priceTypeChanged="onPriceTypeChanged"
+        @priceRemoved="onPriceRemoved"
+      />
     </div>
 
     <div class="wit-flex wit-flex--justify-between wit-block--full-width">
@@ -65,9 +73,19 @@ export default {
         }
     },
 
+    computed: {
+        isRemoveable () {
+            return this.wishlistItem.prices.length > 1
+        }
+    },
+
     methods: {
         onPriceTypeChanged ({ price, priceType }) {
             this.wishlistItem.setPriceType(price, priceType)
+        },
+
+        onPriceRemoved ({ price }) {
+            this.wishlistItem.removePrice(price)
         }
     }
 }
