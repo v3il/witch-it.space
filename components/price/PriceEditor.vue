@@ -1,9 +1,12 @@
 <template>
-  <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
-    <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" />
+  <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
+    <div class="wit-flex wit-flex--align-center wit-block--full-width">
+      <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" />
+      <RemoveButton v-if="isRemoveable" class="wit-offset-left--sm" @click="onPriceRemove" />
+    </div>
 
-    <template v-if="price.isFixedPrice">
-      <div class="wit-flex wit-flex--align-center wit-offset-left--sm">
+    <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
+      <div class="wit-flex wit-flex--align-center">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item1Count" />
@@ -16,9 +19,7 @@
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item2Count" />
       </div>
-    </template>
-
-    <RemoveButton v-if="isRemoveable" class="wit-offset-left--sm" @click="onPriceRemove" />
+    </div>
   </div>
 </template>
 
@@ -78,6 +79,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-price-editor {
-    padding: var(--offset-xs) 0;
+    //padding: var(--offset-xs) 0;
+    margin-bottom: var(--offset-sm);
 }
 </style>

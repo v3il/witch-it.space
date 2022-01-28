@@ -3,7 +3,7 @@
     <div class="wit-flex wit-flex--align-start wit-block--full-width">
       <ItemView :item="wishlistItem.item" :is-title-shown="false" style="max-width: 50px;" class="wit-offset-right--sm" />
 
-      <div class="wit-flex wit-flex--column wit-block--full-width">
+      <div class="wit-flex wit-flex--column wit-block--full-width wit-offset-bottom--xs">
         <div class="wit-flex wit-flex--align-center1 wit-offset-bottom--xs">
           <p class="wit-font-size--sm wit-offset-right--xs wit-flex__item--grow">
             {{ wishlistItem.item.name }}
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="wit-offset-bottom--xs wit-block--full-width">
+    <div class="wit-block--full-width">
       <PriceEditor
         v-for="price in wishlistItem.prices"
         :key="price.id"
