@@ -169,7 +169,9 @@ export default {
         ItemPriceList
     },
 
-    async asyncData ({ app: { $usersService, $wishlistService }, route }) {
+    async asyncData ({ app: { $usersService, $wishlistService, $itemsService }, route }) {
+        console.log(3333, $itemsService.toList().length)
+
         const { profile } = await $usersService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
 
@@ -256,6 +258,8 @@ export default {
     },
 
     created () {
+        console.log(this.$itemsService.toList().length)
+
         const items = this.$store.state.items.items
 
         this.wishlist = this.wishlist.map((w) => {

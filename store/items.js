@@ -1,5 +1,4 @@
 import { Items } from '@/store/Types'
-import { itemsService } from '@/services'
 
 export const state = () => ({
     items: {},

@@ -44,12 +44,12 @@ export default {
     ],
 
     modules: [
+        'nuxt-client-init-module',
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources',
         'nuxt-buefy',
-        'cookie-universal-nuxt',
-        'nuxt-client-init-module'
+        'cookie-universal-nuxt'
     ],
 
     axios: {
