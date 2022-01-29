@@ -84,12 +84,8 @@ export default {
 
     middleware: ['fetchUser'],
 
-    async asyncData ({ app: { $itemsService } }) {
-        await $itemsService.fetch()
-        return { items: $itemsService.toList() }
-    },
-
     data: () => ({
+        items: [],
         page: 2,
         selectedItem: null,
         filters: { ...DEFAULT_FILTERS }
@@ -143,8 +139,8 @@ export default {
         }
     },
 
-    async created () {
-        await this.$itemsService.fetch()
+    created () {
+        this.items = this.$itemsService.toList()
         this.filters = this.getFiltersFromRoute()
     },
 
