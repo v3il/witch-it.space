@@ -2,6 +2,10 @@ export class WishlistItem {
     #model
     #item
 
+    static create ({ rawModel }) {
+        return new WishlistItem({ model: rawModel })
+    }
+
     static fromSaved ({ model, item }) {
         return new WishlistItem({ model, item })
     }
@@ -28,22 +32,18 @@ export class WishlistItem {
     }
 
     get item () {
-        return this.#item
+        return this.#model.item
     }
 
     get prices () {
-        return this.#model.prices || []
+        return this.#model.prices
     }
 
     get id () {
         return this.#model.id
     }
 
-    setPriceType (price, type) {
-        price.priceType = type
-    }
-
     removePrice (priceToRemove) {
-        this.#model.prices = this.#model.prices.filter(price => price !== priceToRemove)
+        this.#model.prices = this.prices.filter(price => price !== priceToRemove)
     }
 }

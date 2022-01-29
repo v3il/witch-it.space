@@ -1,5 +1,3 @@
-import { priceService } from '@/domain/index.js'
-
 export class WishlistService {
     #axiosInstance = null
     #itemsService = null
@@ -31,8 +29,18 @@ export class WishlistService {
         }
     }
 
-    toModel (rawWishlistItem) {
-        rawWishlistItem.prices = rawWishlistItem.prices.map(rawPrice => this.#priceService.createPrice(rawPrice))
+    createWishlistItem (rawWishlistItem) {
+        rawWishlistItem.prices = (rawWishlistItem.prices || []).map(rawPrice => this.#priceService.createPrice(rawPrice))
+        rawWishlistItem.item = this.#itemsService.getById(rawWishlistItem.itemId)
         return this.#wishlistItemFactory.createWishlist(rawWishlistItem)
+    }
+
+    createNewWishlistItem (rawWishlistItem) {
+        const item = this.#itemsService.getById(rawWishlistItem.itemId)
+
+        return this.#wishlistItemFactory.createWishlist({
+            item,
+            prices: []
+        })
     }
 }

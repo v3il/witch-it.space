@@ -14,4 +14,8 @@ export class Price {
     get isFixedPrice () {
         return this.#price.priceType === PriceType.FIXED
     }
+
+    setPriceType (type) {
+        this.#price.priceType = type
+    }
 }

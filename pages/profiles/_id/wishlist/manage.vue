@@ -258,13 +258,18 @@ export default {
     },
 
     created () {
-        console.log(this.$itemsService.toList().length)
+        // console.log(this.$itemsService.toList().length)
+        //
+        // console.log(
+        //     this.wishlist.map((w) => {
+        //         return this.$wishlistService.createWishlistItem(w)
+        //         // WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
+        //     })[0].item
+        // )
+        //
+        // const items = this.$store.state.items.items
 
-        const items = this.$store.state.items.items
-
-        this.wishlist = this.wishlist.map((w) => {
-            return WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
-        })
+        this.wishlist = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
