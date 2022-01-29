@@ -9,6 +9,10 @@ export const actions = {
         await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
         await app.store.dispatch(User.F.Actions.FETCH_USER)
         await app.store.dispatch(Items.F.Actions.FETCH_ITEMS)
+    },
+
+    nuxtClientInit ({ commit }, { store, $itemsService }) {
+        console.log('Client!!!', store.state.items.items, $itemsService)
     }
 }
 

@@ -114,7 +114,7 @@ import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import ItemView from '@/components/items/ItemView.vue'
-import { WishlistItem } from '@/models/WishlistItem.js'
+import { WishlistItem } from '@/domain/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
@@ -169,9 +169,11 @@ export default {
         ItemPriceList
     },
 
-    async asyncData ({ app: { $userService, $wishlistService }, route }) {
-        const { profile } = await $userService.fetch(route.params.id)
+    async asyncData ({ app: { $usersService, $wishlistService }, route }) {
+        const { profile } = await $usersService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
+
+        console.error(2)
 
         return {
             profile,

@@ -37,14 +37,14 @@ export const actions = {
 
             const { user } = data
 
-            console.log('Fetched', user)
+            // console.log('Fetched', user)
 
             commit(User.Mutations.SET_USER, user)
 
             await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
             await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
 
-            console.log('Set')
+            // console.log('Set')
         } catch (e) {
             // console.error('User error')
             commit(User.Mutations.SET_USER, null)

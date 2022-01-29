@@ -37,5 +37,7 @@ export const config = {
 
     TOKEN_COOKIE_DURATION: 60 * 60 * 24 * 30, // 30 days
     LOCALE_COOKIE_DURATION: 60 * 60 * 24 * 365, // 365 days
-    QUESTS_UPDATE_TIMEOUT: 5 * 60 // 5 mins
+    QUESTS_UPDATE_TIMEOUT: 5 * 60, // 5 mins
+
+    MAX_PRICES: 2
 }

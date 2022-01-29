@@ -9,7 +9,7 @@
             {{ wishlistItem.item.name }}
           </p>
 
-          <RemoveButton />
+          <!--          <RemoveButton />-->
           <!--          <b-button size="is-small" type="is-danger is-light">-->
           <!--            Remove-->
           <!--          </b-button>-->
@@ -24,7 +24,7 @@
         v-for="price in wishlistItem.prices"
         :key="price.id"
         :price="price"
-        :is-removeable="isRemoveable"
+        :is-removeable="isAllPricesAdded"
         class="wit-price-editor wit-block--full-width"
         @priceTypeChanged="onPriceTypeChanged"
         @priceRemoved="onPriceRemoved"
@@ -32,18 +32,19 @@
     </div>
 
     <div class="wit-flex wit-flex--justify-between wit-block--full-width">
-      <b-button size="is-small" type="is-danger" style="padding: 0 4px;">
-        <!--        <i class="mdi mdi-20px mdi-heart-remove wit-color&#45;&#45;danger" />-->
-        Remove from wishlist
+      <b-button size="is-small" type="is-danger">
+        {{ $t('Wishlist_RemoveFromWishlist') }}
       </b-button>
 
-      <b-button size="is-small" type="is-primary is-light1" class="wit-offset-right--xs1">
-        Add price
-      </b-button>
+      <div class="wit-flex wit-flex--align-center">
+        <b-button v-if="!isAllPricesAdded" size="is-small" type="is-primary" class="wit-offset-right--sm">
+          {{ $t('Wishlist_AddPrice') }}
+        </b-button>
 
-      <!--      <b-button size="is-small" type="is-danger is-light">-->
-      <!--        Remove-->
-      <!--      </b-button>-->
+        <b-button size="is-small" type="is-danger is-light">
+          {{ $t('Wishlist_Remove') }}
+        </b-button>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +55,7 @@ import ItemTags from '@/components/items/ItemTags.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 import RemoveButton from '@/components/basic/RemoveButton.vue'
+import { config } from '@/shared/index.js'
 
 export default {
     name: 'WishlistSelectedItem',
@@ -74,8 +76,8 @@ export default {
     },
 
     computed: {
-        isRemoveable () {
-            return this.wishlistItem.prices.length > 1
+        isAllPricesAdded () {
+            return this.wishlistItem.prices.length === config.MAX_PRICES
         }
     },
 

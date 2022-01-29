@@ -192,8 +192,8 @@ export default {
 
     // middleware: ['fetchUser'],
 
-    async asyncData ({ app: { $userService, $wishlistService }, route }) {
-        const { profile } = await $userService.fetch(route.params.id)
+    async asyncData ({ app: { $usersService, $wishlistService }, route }) {
+        const { profile } = await $usersService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
         return { profile, wishlist, error: null }
     },

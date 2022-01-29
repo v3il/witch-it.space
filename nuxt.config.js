@@ -48,7 +48,8 @@ export default {
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources',
         'nuxt-buefy',
-        'cookie-universal-nuxt'
+        'cookie-universal-nuxt',
+        'nuxt-client-init-module'
     ],
 
     axios: {

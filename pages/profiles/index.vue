@@ -110,8 +110,8 @@ export default {
 
     middleware: ['fetchUser'],
 
-    async asyncData ({ app: { $userService } }) {
-        const { error, profiles } = await $userService.fetchAll()
+    async asyncData ({ app: { $usersService } }) {
+        const { error, profiles } = await $usersService.fetchAll()
         return { error, profiles }
     },
 

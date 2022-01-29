@@ -13,8 +13,8 @@ export class UserService {
                 exclude: EXCLUDED_ATTRIBUTES
             },
             include: this._getIncludes(excludeAttrs),
-            benchmark: true,
-            logging: console.log
+            benchmark: true
+            // logging: console.log
         }
 
         return User.findOne(params)
@@ -27,8 +27,8 @@ export class UserService {
                 exclude: EXCLUDED_ATTRIBUTES
             },
             include: this._getIncludes(),
-            benchmark: true,
-            logging: console.log
+            benchmark: true
+            // logging: console.log
         }
 
         return User.findAll(params)

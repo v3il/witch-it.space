@@ -213,6 +213,9 @@ export const ru = {
     Wishlist_AllItems: 'Все предметы',
     Wishlist_AlreadyInWishlist: 'В списке желаемого',
     Wishlist_SelectItemToEdit: 'Выберите предмет для добавления<br>в список желаемого',
+    Wishlist_RemoveFromWishlist: 'Убрать из желаемого',
+    Wishlist_AddPrice: 'Добавить цену',
+    Wishlist_Remove: 'Удалить',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',
@@ -228,7 +231,7 @@ export const ru = {
     UserView_TradingAnyItem: 'Обмениваю предметы в единичном экземпляре',
 
     PriceType_Any: 'Любое предложение',
-    PriceType_Fixed: 'Фиксированный',
+    PriceType_Fixed: 'Фиксированная цена',
     PriceType_Wishlist: 'Предмет из списка желаемого',
 
     Time_NMinutesAgo: (minutes) => {

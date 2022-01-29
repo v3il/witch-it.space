@@ -1,7 +1,12 @@
-import { ItemsService, WishlistService, UserService } from '@/services'
+import { itemsService, usersService, wishlistService } from '@/domain/services'
 
 export default function ({ $axios }, inject) {
-    inject('itemsService', new ItemsService($axios))
-    inject('wishlistService', new WishlistService($axios))
-    inject('userService', new UserService($axios))
+    usersService.setAxios($axios)
+    wishlistService.setAxios($axios)
+
+    console.error(1)
+
+    inject('itemsService', itemsService)
+    inject('wishlistService', wishlistService)
+    inject('usersService', usersService)
 }

@@ -45,6 +45,7 @@
     "node-steam-openid": "^1.0.0",
     "nuxt": "^2.15.7",
     "nuxt-buefy": "^0.4.10",
+    "nuxt-client-init-module": "^0.3.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
     "qs": "^6.10.1",
