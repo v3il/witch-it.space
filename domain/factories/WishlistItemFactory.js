@@ -1,5 +1,5 @@
 export class WishlistItemFactory {
-    createWishlist () {
+    createWishlist (rawWishlistItem) {
 
     }
 }

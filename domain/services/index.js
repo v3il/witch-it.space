@@ -1,7 +1,4 @@
-import { ItemsService } from './ItemsService'
-import { UsersService } from './UsersService.js'
-import { WishlistService } from './WishlistService'
-
-export const itemsService = new ItemsService()
-export const usersService = new UsersService()
-export const wishlistService = new WishlistService()
+export { ItemsService } from './ItemsService'
+export { UsersService } from './UsersService'
+export { WishlistService } from './WishlistService'
+export { PriceService } from './PriceService'
