@@ -43,10 +43,15 @@ export default {
     },
 
     created () {
+        console.error('Created', this.price.item1Id)
+
         const items = this.$store.state.items.items
 
-        this.item1 = items[this.price.itemId]
-        this.item2 = items[this.price.itemId2]
+        this.item1 = items[this.price.item1Id]
+        this.item2 = items[this.price.item2Id]
+
+        // console.log(222, this.price.price)
+        // console.log(this.item2)
     }
 }
 </script>

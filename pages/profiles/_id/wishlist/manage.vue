@@ -123,6 +123,7 @@ import Tabs from '@/components/basic/Tabs.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
+import { Price } from '@/domain/models/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -169,13 +170,9 @@ export default {
         ItemPriceList
     },
 
-    async asyncData ({ app: { $usersService, $wishlistService, $itemsService }, route }) {
-        console.log(3333, $itemsService.toList().length)
-
+    async asyncData ({ $usersService, $wishlistService, route }) {
         const { profile } = await $usersService.fetch(route.params.id)
         const { wishlist } = await $wishlistService.fetch(route.params.id)
-
-        console.error(2)
 
         return {
             profile,
@@ -257,7 +254,15 @@ export default {
         }
     },
 
+    // beforeMount () {
+    //     console.warn('Mounted 1')
+    //
+    //     this.wishlist = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
+    // },
+
     created () {
+        console.warn('Created 1')
+
         // console.log(this.$itemsService.toList().length)
         //
         // console.log(
@@ -268,6 +273,10 @@ export default {
         // )
         //
         // const items = this.$store.state.items.items
+
+        // console.log('Created!!!!!!!', this.wishlist[0])
+        //
+        console.log(JSON.stringify(this.wishlist[0]))
 
         this.wishlist = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
 
