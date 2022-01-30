@@ -37,7 +37,7 @@
       </b-button>
 
       <div class="wit-flex wit-flex--align-center">
-        <b-button v-if="!isAllPricesAdded" size="is-small" type="is-primary" class="wit-offset-right--sm">
+        <b-button v-if="!isAllPricesAdded" size="is-small" type="is-primary" class="wit-offset-right--sm" @click="addPrice">
           {{ $t('Wishlist_AddPrice') }}
         </b-button>
 
@@ -90,33 +90,34 @@ export default {
             this.wishlistItem.removePrice(price)
         },
 
-        onaaa ({ target }) {
-            this.wishlistItem.aaa(target.value)
+        addPrice () {
+            const newPrice = this.$priceService.createDefaultPrice()
+            this.wishlistItem.addPrice(newPrice)
         }
     }
 }
 </script>
 
-<style scoped lang="scss">
-.wit-price-editor {
-    &:not(:last-child) {
-        //border-bottom: var(--default-border);
-    }
-}
+<!--<style scoped lang="scss">-->
+<!--.wit-price-editor {-->
+<!--    &:not(:last-child) {-->
+<!--        //border-bottom: var(&#45;&#45;default-border);-->
+<!--    }-->
+<!--}-->
 
-.zzz {
-    background-color: var(--danger);
-    color: white;
-    border-radius: 50%;
-    height: 18px;
-    width: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+<!--.zzz {-->
+<!--    background-color: var(&#45;&#45;danger);-->
+<!--    color: white;-->
+<!--    border-radius: 50%;-->
+<!--    height: 18px;-->
+<!--    width: 18px;-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--    justify-content: center;-->
 
-    &::before {
-        font-size: 12px;
-        line-height: 18px;
-    }
-}
-</style>
+<!--    &::before {-->
+<!--        font-size: 12px;-->
+<!--        line-height: 18px;-->
+<!--    }-->
+<!--}-->
+<!--</style>-->

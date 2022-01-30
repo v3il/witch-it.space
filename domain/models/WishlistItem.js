@@ -51,11 +51,11 @@ export class WishlistItem {
         return this.#model.itemRarity
     }
 
-    removePrice (priceToRemove) {
-        this.#model.prices2 = this.prices.filter(price => price !== priceToRemove)
+    addPrice (price) {
+        this.#model.prices.push(price)
     }
 
-    aaa (aaa) {
-        this.#model.itemRarity = aaa
+    removePrice (priceToRemove) {
+        this.#model.prices = this.prices.filter(price => price !== priceToRemove)
     }
 }
