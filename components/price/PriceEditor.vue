@@ -2,7 +2,9 @@
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
     <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" @change="onPriceTypeChange" />
 
-    <template v-if="isSpecificPrice">
+    {{ price.priceType }}
+
+    <template v-if="price.isFixedPrice">
       <div class="wit-flex wit-flex--align-center wit-offset-left--sm">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
@@ -59,7 +61,14 @@ export default {
 
     methods: {
         onPriceTypeChange (priceType) {
-            this.$emit('priceTypeChanged', { price: this.price, priceType })
+            console.log(priceType)
+
+            // eslint-disable-next-line vue/no-mutating-props
+            // this.price.price.priceType = (priceType)
+            this.price.setPriceType(priceType)
+            // this.$forceUpdate()
+
+            // this.$emit('priceTypeChanged', { price: this.price, priceType })
         },
 
         onPriceRemove () {

@@ -1,14 +1,14 @@
 <template>
   <div class="wit-flex wit-flex--center">
     <div v-if="item1" class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount > 1" class="wit-price__counter">{{ price.itemCount }}</span>
+      <span v-if="price.item1Count > 1" class="wit-price__counter">{{ price.item1Count }}</span>
       <ItemView :item="item1" :is-title-shown="false" class="wit-price__item" />
     </div>
 
     <span v-if="hasTwoItems" class="wit-price__plus wit-color--muted">+</span>
 
     <div v-if="item2" class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.itemCount2 > 1" class="wit-price__counter">{{ price.itemCount2 }}</span>
+      <span v-if="price.item2Count > 1" class="wit-price__counter">{{ price.item2Count }}</span>
       <ItemView :item="item2" :is-title-shown="false" class="wit-price__item" />
     </div>
   </div>
@@ -43,15 +43,8 @@ export default {
     },
 
     created () {
-        console.error('Created', this.price.item1Id)
-
-        const items = this.$store.state.items.items
-
-        this.item1 = items[this.price.item1Id]
-        this.item2 = items[this.price.item2Id]
-
-        // console.log(222, this.price.price)
-        // console.log(this.item2)
+        this.item1 = this.$itemsService.getById(this.price.item1Id)
+        this.item2 = this.$itemsService.getById(this.price.item2Id)
     }
 }
 </script>

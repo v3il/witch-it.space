@@ -59,6 +59,7 @@
                     :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
                     @clicked="toggleWishlistItem(wishlistModel)"
                   >
+                    {{ wishlistModel.id }}
                     <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                   </ItemView>
                 </template>
@@ -185,7 +186,8 @@ export default {
         filters: { ...DEFAULT_FILTERS },
         sort: { ...DEFAULT_SORT },
         selectedItems: [],
-        mode: Modes.WISHLIST
+        mode: Modes.WISHLIST,
+        wishlist2: []
     }),
 
     computed: {
@@ -221,7 +223,7 @@ export default {
         // -----
 
         filteredItemsInWishlist () {
-            return (this.wishlist || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
+            return (this.wishlist2 || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
         },
 
         sortedItemsInWishlist () {
@@ -276,12 +278,16 @@ export default {
 
         // console.log('Created!!!!!!!', this.wishlist[0])
         //
-        console.log(JSON.stringify(this.wishlist[0]))
+        // console.log(JSON.stringify(this.wishlist[0]))
 
-        this.wishlist = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
+        this.wishlist2 = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
+
+        // setTimeout(() => {
+        //     this.wishlist[0].id = 1111
+        // }, 2000)
     },
 
     methods: {
@@ -323,7 +329,7 @@ export default {
                 return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
             }
 
-            const wishlistModel = this.wishlist.find(wishlistModel => wishlistModel.item === item)
+            const wishlistModel = this.wishlist2.find(wishlistModel => wishlistModel.item === item)
 
             this.selectedItems.push(wishlistModel || WishlistItem.fromNew({ item }))
         },
@@ -333,7 +339,7 @@ export default {
         },
 
         isItemInWishlist (item) {
-            return this.wishlist.some(wishlistItem => wishlistItem.item.id === item.id)
+            return this.wishlist2.some(wishlistItem => wishlistItem.item.id === item.id)
         }
     }
 }

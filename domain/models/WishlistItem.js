@@ -36,14 +36,26 @@ export class WishlistItem {
     }
 
     get prices () {
-        return this.#model.prices
+        return this.#model.prices2
     }
 
     get id () {
         return this.#model.id
     }
 
+    set id (id) {
+        this.#model.id = id
+    }
+
+    get itemRarity () {
+        return this.#model.itemRarity
+    }
+
     removePrice (priceToRemove) {
-        this.#model.prices = this.prices.filter(price => price !== priceToRemove)
+        this.#model.prices2 = this.prices.filter(price => price !== priceToRemove)
+    }
+
+    aaa (aaa) {
+        this.#model.itemRarity = aaa
     }
 }

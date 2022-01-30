@@ -19,6 +19,9 @@
       </div>
     </div>
 
+    {{ wishlistItem.itemRarity }}
+    <input :value="wishlistItem.itemRarity" type="text" @input="onaaa">
+
     <div class="wit-offset-bottom--xs wit-block--full-width">
       <PriceEditor
         v-for="price in wishlistItem.prices"
@@ -88,6 +91,10 @@ export default {
 
         onPriceRemoved ({ price }) {
             this.wishlistItem.removePrice(price)
+        },
+
+        onaaa ({ target }) {
+            this.wishlistItem.aaa(target.value)
         }
     }
 }
