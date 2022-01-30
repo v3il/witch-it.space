@@ -35,9 +35,7 @@ export class WishlistService {
         return this.#wishlistItemFactory.createWishlist(rawWishlistItem)
     }
 
-    createNewWishlistItem (rawWishlistItem) {
-        const item = this.#itemsService.getById(rawWishlistItem.itemId)
-
+    createNewWishlistItem (item) {
         return this.#wishlistItemFactory.createWishlist({
             item,
             prices: []

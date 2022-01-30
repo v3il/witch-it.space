@@ -186,7 +186,7 @@ export default {
         sort: { ...DEFAULT_SORT },
         selectedItems: [],
         mode: Modes.WISHLIST,
-        wishlist2: []
+        wishlistModels: []
     }),
 
     computed: {
@@ -222,7 +222,7 @@ export default {
         // -----
 
         filteredItemsInWishlist () {
-            return (this.wishlist2 || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
+            return (this.wishlistModels || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
         },
 
         sortedItemsInWishlist () {
@@ -255,38 +255,11 @@ export default {
         }
     },
 
-    // beforeMount () {
-    //     console.warn('Mounted 1')
-    //
-    //     this.wishlist = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
-    // },
-
     created () {
-        console.warn('Created 1')
-
-        // console.log(this.$itemsService.toList().length)
-        //
-        // console.log(
-        //     this.wishlist.map((w) => {
-        //         return this.$wishlistService.createWishlistItem(w)
-        //         // WishlistItem.fromSaved({ model: w, item: items[w.itemId] })
-        //     })[0].item
-        // )
-        //
-        // const items = this.$store.state.items.items
-
-        // console.log('Created!!!!!!!', this.wishlist[0])
-        //
-        // console.log(JSON.stringify(this.wishlist[0]))
-
-        this.wishlist2 = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
+        this.wishlistModels = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
-
-        // setTimeout(() => {
-        //     this.wishlist[0].id = 1111
-        // }, 2000)
     },
 
     methods: {
@@ -328,9 +301,9 @@ export default {
                 return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
             }
 
-            const wishlistModel = this.wishlist2.find(wishlistModel => wishlistModel.item === item)
+            const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
 
-            this.selectedItems.push(wishlistModel || WishlistItem.fromNew({ item }))
+            this.selectedItems.push(wishlistModel || this.$wishlistService.createNewWishlistItem(item))
         },
 
         isItemSelected (item) {
@@ -338,7 +311,7 @@ export default {
         },
 
         isItemInWishlist (item) {
-            return this.wishlist2.some(wishlistItem => wishlistItem.item.id === item.id)
+            return this.wishlistModels.some(wishlistItem => wishlistItem.item.id === item.id)
         }
     }
 }

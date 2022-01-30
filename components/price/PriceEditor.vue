@@ -1,15 +1,15 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
-      <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" />
-      <RemoveButton v-if="isRemoveable" class="wit-offset-left--sm" @click="onPriceRemove" />
+      <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
+      <RemoveButton class="wit-offset-left--sm" @click="onPriceRemove" />
     </div>
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
       <div class="wit-flex wit-flex--align-center">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item1Count" />
+        <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setItem1Count" />
       </div>
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
@@ -17,7 +17,7 @@
       <div class="wit-flex wit-flex--align-center">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item2Count" />
+        <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setItem2Count" />
       </div>
     </div>
   </div>
@@ -44,11 +44,6 @@ export default {
         price: {
             type: Object,
             required: true
-        },
-
-        isRemoveable: {
-            type: Boolean,
-            required: true
         }
     },
 
@@ -59,19 +54,16 @@ export default {
     },
 
     methods: {
-        // onPriceTypeChange (priceType) {
-        //     console.log(priceType)
-        //
-        //     // eslint-disable-next-line vue/no-mutating-props
-        //     // this.price.price.priceType = (priceType)
-        //     this.price.setPriceType(priceType)
-        //     // this.$forceUpdate()
-        //
-        //     // this.$emit('priceTypeChanged', { price: this.price, priceType })
-        // },
-
         onPriceRemove () {
             this.$emit('priceRemoved', { price: this.price })
+        },
+
+        setItem1Count (count) {
+            this.price.setItem1Count(count)
+        },
+
+        setItem2Count (count) {
+            this.price.setItem2Count(count)
         }
     }
 }
@@ -79,7 +71,6 @@ export default {
 
 <style scoped lang="scss">
 .wit-price-editor {
-    //padding: var(--offset-xs) 0;
     margin-bottom: var(--offset-sm);
 }
 </style>

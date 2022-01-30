@@ -42,4 +42,20 @@ export class Price {
     setPriceType (type) {
         this._rawPrice.priceType = type
     }
+
+    setItem1Id (id) {
+        this._rawPrice.itemId = id
+    }
+
+    setItem1Count (count) {
+        this._rawPrice.itemCount = count
+    }
+
+    setItem2Id (id) {
+        this._rawPrice.itemId2 = id
+    }
+
+    setItem2Count (count) {
+        this._rawPrice.itemCount2 = count
+    }
 }

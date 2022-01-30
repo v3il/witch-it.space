@@ -1,61 +1,31 @@
 export class WishlistItem {
-    #model
-    #item
+    _model
 
     static create ({ rawModel }) {
         return new WishlistItem({ model: rawModel })
     }
 
-    static fromSaved ({ model, item }) {
-        return new WishlistItem({ model, item })
-    }
-
-    static fromNew ({ item }) {
-        return new WishlistItem({
-            item,
-            model: {
-                id: null,
-                prices: [{
-                    priceType: 'any',
-                    itemId: 0,
-                    itemCount: 4,
-                    itemId2: 0,
-                    itemCount2: 4
-                }]
-            }
-        })
-    }
-
-    constructor ({ model, item }) {
-        this.#model = model
-        this.#item = item
+    constructor ({ model }) {
+        this._model = model
     }
 
     get item () {
-        return this.#model.item
+        return this._model.item
     }
 
     get prices () {
-        return this.#model.prices
+        return this._model.prices
     }
 
     get id () {
-        return this.#model.id
-    }
-
-    set id (id) {
-        this.#model.id = id
-    }
-
-    get itemRarity () {
-        return this.#model.itemRarity
+        return this._model.id
     }
 
     addPrice (price) {
-        this.#model.prices.push(price)
+        this._model.prices.push(price)
     }
 
     removePrice (priceToRemove) {
-        this.#model.prices = this.prices.filter(price => price !== priceToRemove)
+        this._model.prices = this.prices.filter(price => price !== priceToRemove)
     }
 }
