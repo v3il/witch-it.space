@@ -7,7 +7,7 @@
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-id="price.item1Id" />
+        <PricePart :item-id="price.item1Id" popover-position="bottom-start" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setItem1Count" />
       </div>
@@ -15,7 +15,7 @@
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-id="price.item2Id" />
+        <PricePart :item-id="price.item2Id" popover-position="bottom" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setItem2Count" />
       </div>

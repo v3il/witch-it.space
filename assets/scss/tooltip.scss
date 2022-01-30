@@ -1,12 +1,12 @@
 $tooltip-offset: 10px;
-$bg-color: var(--dropdown-content-background-color);
+$bg-color: var(--body-bg);
 
 .tooltip {
     display: block !important;
     z-index: 10000;
 
     .tooltip-inner {
-        background: $bg-color;
+        background: var(--body-bg);
         color: white;
         border-radius: 4px;
         padding: 5px 10px 4px;
@@ -18,7 +18,7 @@ $bg-color: var(--dropdown-content-background-color);
         border-style: solid;
         position: absolute;
         margin: 5px;
-        border-color: black;
+        border-color: var(--body-bg);
         z-index: 1;
     }
 
@@ -84,15 +84,18 @@ $bg-color: var(--dropdown-content-background-color);
 
     &.popover {
         .popover-inner {
-            background-color: var(--dropdown-content-background-color);
+            //background-color: var(--body-bg);
+            background-color: #2e3648;
             border-radius: var(--dropdown-content-radius);
             box-shadow: var(--dropdown-content-shadow);
             padding-bottom: var(--dropdown-content-padding-bottom);
             padding-top: var(--dropdown-content-padding-top);
+            border: 1px solid #3a425a;
         }
 
         .popover-arrow {
-            border-color: $bg-color;
+            //border-color: var(--body-bg);
+            border-color: #3a425a;
         }
     }
 
