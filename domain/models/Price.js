@@ -58,4 +58,8 @@ export class Price {
     setItem2Count (count) {
         this._rawPrice.itemCount2 = count
     }
+
+    clone () {
+        return new Price({ ...this._rawPrice })
+    }
 }

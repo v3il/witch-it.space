@@ -28,4 +28,11 @@ export class WishlistItem {
     removePrice (priceToRemove) {
         this._model.prices = this.prices.filter(price => price !== priceToRemove)
     }
+
+    clone () {
+        const prices = this.prices.map(price => price.clone())
+        const model = { ...this._model, prices }
+
+        return new WishlistItem({ model })
+    }
 }
