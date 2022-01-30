@@ -1,6 +1,6 @@
 <template>
-  <b-button type="is-ghost" class="wit-paddings--none bbbb" @click="$emit('click')">
-    <i class="mdi mdi-18px mdi-close zzz" />
+  <b-button type="is-ghost" class="wit-paddings--none wit-remove-button" @click="$emit('click')">
+    <i class="mdi mdi-18px mdi-close wit-remove-button__icon" />
   </b-button>
 </template>
 
@@ -11,24 +11,30 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.zzz {
+$size: 18px;
+
+.wit-remove-button {
+    width: $size;
+    height: $size;
+
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.wit-remove-button__icon {
     background-color: var(--danger);
-    color: white;
+    color: var(--white);
     border-radius: 50%;
-    height: 18px;
-    width: 18px;
+    height: $size;
+    width: $size;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &::before {
-        font-size: 12px;
-        line-height: 18px;
+        font-size: var(--text-size-xxs);
+        line-height: $size;
     }
-}
-
-.bbbb {
-    width: 18px;
-    height: 18px;
 }
 </style>
