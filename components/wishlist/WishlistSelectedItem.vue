@@ -41,7 +41,7 @@
           {{ $t('Wishlist_AddPrice') }}
         </b-button>
 
-        <b-button size="is-small" type="is-danger is-light">
+        <b-button size="is-small" type="is-danger is-light" @click="removeItem">
           {{ $t('Wishlist_Remove') }}
         </b-button>
       </div>
@@ -93,6 +93,10 @@ export default {
         addPrice () {
             const newPrice = this.$priceService.createDefaultPrice()
             this.wishlistItem.addPrice(newPrice)
+        },
+
+        removeItem () {
+            this.$emit('itemRemoved', this.wishlistItem)
         }
     }
 }

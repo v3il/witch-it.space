@@ -91,7 +91,7 @@
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
             <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
               <InfinityGrid :items="sortedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height wit-offset-bottom--sm">
-                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" />
+                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
               </InfinityGrid>
 
               <div style="height: 100px; border: 1px solid red;" class="wit-flex__item--no-shrink">
