@@ -36,7 +36,7 @@ export class WishlistItem {
     }
 
     get prices () {
-        return this.#model.prices2
+        return this.#model.prices
     }
 
     get id () {

@@ -59,7 +59,6 @@
                     :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
                     @clicked="toggleWishlistItem(wishlistModel)"
                   >
-                    {{ wishlistModel.id }}
                     <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                   </ItemView>
                 </template>

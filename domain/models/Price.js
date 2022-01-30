@@ -1,65 +1,45 @@
 import { PriceType } from '@/shared/items/index.js'
 
 export class Price {
-    price
-
-    id
-    priceType
-    item1Id
-    item1Count
-    item2Id
-    item2Count
+    _rawPrice
 
     static create ({ price }) {
         return new Price(price)
     }
 
     constructor (price) {
-        this.id = price.id
-        this.priceType = price.priceType
-        this.item1Id = price.itemId
-        this.item1Count = price.itemCount
-        this.item2Id = price.itemId2
-        this.item2Count = price.itemCount2
-
-        this.price = price
+        this._rawPrice = price
     }
 
-    // get price () {
-    //     return this.price
-    // }
+    get id () {
+        return this._rawPrice.id
+    }
 
-    // get item1Id () {
-    //     return this.price.itemId
-    // }
-    //
-    // get item1Count () {
-    //     return this.price.itemCount
-    // }
-    //
-    // get item2Id () {
-    //     return this.price.itemId2
-    // }
-    //
-    // get item2Count () {
-    //     return this.price.itemCount2
-    // }
+    get item1Id () {
+        return this._rawPrice.itemId
+    }
 
-    // get priceType () {
-    //     return this.priceType
-    // }
+    get item1Count () {
+        return this._rawPrice.itemCount
+    }
+
+    get item2Id () {
+        return this._rawPrice.itemId2
+    }
+
+    get item2Count () {
+        return this._rawPrice.itemCount2
+    }
+
+    get priceType () {
+        return this._rawPrice.priceType
+    }
 
     get isFixedPrice () {
         return this.priceType === PriceType.FIXED
     }
 
     setPriceType (type) {
-        this.priceType = type
-
-        console.log(this.priceType)
-    }
-
-    toJSON () {
-        return { ...this } // here I make a POJO's copy of the class instance
+        this._rawPrice.priceType = type
     }
 }

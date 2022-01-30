@@ -19,9 +19,6 @@
       </div>
     </div>
 
-    {{ wishlistItem.itemRarity }}
-    <input :value="wishlistItem.itemRarity" type="text" @input="onaaa">
-
     <div class="wit-offset-bottom--xs wit-block--full-width">
       <PriceEditor
         v-for="price in wishlistItem.prices"

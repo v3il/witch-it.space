@@ -19,7 +19,7 @@ const getUserWishlist = async (request, response) => {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    const wishlist = await user.getWishes({ include: { model: Price, as: 'prices' } })
+    const wishlist = await user.getWishes({ include: { model: Price, as: 'rawPrices' } })
 
     response.send({
         wishlist

@@ -1,5 +1,5 @@
 <template>
-  <b-select expanded :value="price.priceType" class="wit-price-type-selector" @input="$emit('change', $event)">
+  <b-select expanded :value="price.priceType" class="wit-price-type-selector" @input="onPriceTypeChange">
     <option :value="$options.PriceType.ANY">
       {{ $t('PriceType_Any') }}
     </option>
@@ -26,6 +26,12 @@ export default {
         price: {
             type: Object,
             required: true
+        }
+    },
+
+    methods: {
+        onPriceTypeChange (priceType) {
+            this.price.setPriceType(priceType)
         }
     }
 }

@@ -1,14 +1,12 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column1">
-    <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" @change="onPriceTypeChange" />
-
-    {{ price.priceType }}
+    <PriceTypeSelector :price="price" class="wit-offset-bottom--xs1 wit-flex__item--grow" />
 
     <template v-if="price.isFixedPrice">
       <div class="wit-flex wit-flex--align-center wit-offset-left--sm">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="4" />
+        <NumericInput :value="price.item1Count" />
       </div>
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
@@ -16,7 +14,7 @@
       <div class="wit-flex wit-flex--align-center">
         <PricePart />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="4" />
+        <NumericInput :value="price.item2Count" />
       </div>
     </template>
 
@@ -60,16 +58,16 @@ export default {
     },
 
     methods: {
-        onPriceTypeChange (priceType) {
-            console.log(priceType)
-
-            // eslint-disable-next-line vue/no-mutating-props
-            // this.price.price.priceType = (priceType)
-            this.price.setPriceType(priceType)
-            // this.$forceUpdate()
-
-            // this.$emit('priceTypeChanged', { price: this.price, priceType })
-        },
+        // onPriceTypeChange (priceType) {
+        //     console.log(priceType)
+        //
+        //     // eslint-disable-next-line vue/no-mutating-props
+        //     // this.price.price.priceType = (priceType)
+        //     this.price.setPriceType(priceType)
+        //     // this.$forceUpdate()
+        //
+        //     // this.$emit('priceTypeChanged', { price: this.price, priceType })
+        // },
 
         onPriceRemove () {
             this.$emit('priceRemoved', { price: this.price })

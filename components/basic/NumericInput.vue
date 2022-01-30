@@ -1,7 +1,7 @@
 <template>
   <div class="zpc-editable-input">
     <label class="zpc-input__label">{{ label }}</label>
-    <b-input v-model="tempValue" class="a" />
+    <b-input v-model="tempValue" class="a wit-color--white1" custom-class="wit-color--white" />
 
     <!--    <input-->
     <!--      :id="labelId"-->

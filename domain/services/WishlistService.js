@@ -30,17 +30,7 @@ export class WishlistService {
     }
 
     createWishlistItem (rawWishlistItem) {
-        console.log('Prices', rawWishlistItem.prices)
-
-        rawWishlistItem.prices2 = (rawWishlistItem.prices || []).map((rawPrice) => {
-            console.log(6666, rawPrice)
-            return this.#priceService.createPrice(rawPrice)
-        })
-
-        console.log('Prices2', rawWishlistItem.prices2)
-
-        // console.error(222222, rawWishlistItem.prices1[0].item1Id)
-
+        rawWishlistItem.prices = rawWishlistItem.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
         rawWishlistItem.item = this.#itemsService.getById(rawWishlistItem.itemId)
         return this.#wishlistItemFactory.createWishlist(rawWishlistItem)
     }

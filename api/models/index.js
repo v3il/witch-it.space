@@ -46,7 +46,7 @@ try {
     User.hasMany(Wish)
     User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings' })
     User.hasOne(UserStat, { foreignKey: 'userId', as: 'userStat' })
-    Wish.hasMany(Price, { foreignKey: 'offerId', as: 'prices' })
+    Wish.hasMany(Price, { foreignKey: 'offerId', as: 'rawPrices' })
 
     Quest.belongsTo(User, { foreignKey: 'userId' })
     Wish.belongsTo(User, { foreignKey: 'userId' })
