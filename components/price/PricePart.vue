@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-popover ref="popover" :placement="popoverPosition" boundaries-element="body">
-      <!-- This will be the popover target (for the events and position) -->
       <b-button
         type="is-link"
         class="wit-position--relative"
@@ -9,13 +8,10 @@
       >
         <template v-if="selectedItem">
           <ItemView :item="selectedItem" :is-title-shown="false" style="width: 45px;" />
-          <!--          <RemoveButton class="wit-position&#45;&#45;absolute" style="top: -8px; right: -8px; width: 16px; height: 16px;" />-->
         </template>
 
         <i v-else class="mdi mdi-24 mdi-plus" />
-        <!--        Item-->
       </b-button>
-      <!-- This will be the content of the popover -->
 
       <div slot="popover" class="wit-paddings--xs" style="max-width: 270px;">
         <b-button type="is-danger" expanded class="wit-offset-bottom--sm" @click="onItemClear">
