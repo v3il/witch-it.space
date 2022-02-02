@@ -7,7 +7,7 @@ export const actions = {
     async nuxtServerInit ({ commit }, { app, $itemsService }) {
         await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
         await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
-        await app.store.dispatch(User.F.Actions.FETCH_USER)
+        await app.store.dispatch(User.F.Actions.FETCH_USER) // todo: Fix
         await app.store.dispatch(Items.F.Actions.FETCH_ITEMS)
 
         $itemsService.setItems(app.store.state.items.items)

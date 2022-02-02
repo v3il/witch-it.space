@@ -4,9 +4,10 @@
     <template #trigger>
       <b-button
         type="is-link"
-        style="width: 36px; height: 36px;"
+        style="width: 50px; height: 36px;"
       >
         <i class="mdi mdi-24 mdi-plus" />
+        {{ itemId }}
       </b-button>
     </template>
 
@@ -17,7 +18,14 @@
 
 <script>
 export default {
-    name: 'PricePart'
+    name: 'PricePart',
+
+    props: {
+        itemId: {
+            required: true,
+            type: Number
+        }
+    }
 }
 </script>
 
