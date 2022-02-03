@@ -2,7 +2,7 @@
   <div class="wit-flex--justify-between wit-flex wit-flex--justify-end wit-flex--wrap">
     <div class="wit-flex wit-filter__filter wit-offset-bottom--xs">
       <b-input
-        class="wit-offset-right--xs1 wit-flex__item--grow"
+        class="wit-flex__item--grow"
         :value="filters.query"
         maxlength="20"
         :placeholder="queryInputPlaceholder"
@@ -237,7 +237,7 @@ export default {
 <style scoped lang="scss">
 .wit-filter__filter {
     flex: 0 1 250px;
-    margin-right: var(--offset-xs);
+    //margin-right: var(--offset-xs);
 
     @media (max-width: 600px) {
         flex: 0 1 100%;

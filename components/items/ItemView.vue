@@ -2,9 +2,9 @@
   <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
     <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
       <img
+        v-tooltip="tooltip"
         :src="itemPreviewURL"
         :alt="item.name"
-        :title="item.name"
         class="wit-item-view__image wit-block"
         loading="lazy"
       >
@@ -45,10 +45,10 @@ export default {
             default: true
         },
 
-        itemMaxWidth: {
+        addTooltip: {
             required: false,
-            type: Number,
-            default: 100
+            type: Boolean,
+            default: false
         }
     },
 
@@ -62,10 +62,8 @@ export default {
             return buildItemUrl(this.item.name)
         },
 
-        colWidth () {
-            return {
-                maxWidth: `${this.itemMaxWidth}px`
-            }
+        tooltip () {
+            return this.addTooltip ? this.item.name : null
         }
     },
 

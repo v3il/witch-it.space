@@ -43,20 +43,14 @@ export class Price {
         this._rawPrice.priceType = type
     }
 
-    setItem1Id (id) {
-        this._rawPrice.itemId = id
+    setItemCount ({ itemCount, position }) {
+        const prop = position === 1 ? 'itemCount' : 'itemCount2'
+        this._rawPrice[prop] = itemCount
     }
 
-    setItem1Count (count) {
-        this._rawPrice.itemCount = count
-    }
-
-    setItem2Id (id) {
-        this._rawPrice.itemId2 = id
-    }
-
-    setItem2Count (count) {
-        this._rawPrice.itemCount2 = count
+    setItemId ({ itemId, position }) {
+        const prop = position === 1 ? 'itemId' : 'itemId2'
+        this._rawPrice[prop] = itemId
     }
 
     clone () {
