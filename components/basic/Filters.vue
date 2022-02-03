@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-flex--justify-between1 wit-flex wit-flex--wrap">
+  <div class="wit-flex--justify-between wit-flex wit-flex--justify-end wit-flex--wrap">
     <div class="wit-flex wit-filter__filter wit-offset-bottom--xs">
       <b-input
         class="wit-offset-right--xs1 wit-flex__item--grow"

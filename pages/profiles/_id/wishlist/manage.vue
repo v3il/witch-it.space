@@ -258,8 +258,6 @@ export default {
     created () {
         this.wishlistModels = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem(wishlistItem))
 
-        console.log(this.wishlistModels[0].clone())
-
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
