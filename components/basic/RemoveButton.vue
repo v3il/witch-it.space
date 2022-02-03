@@ -33,8 +33,8 @@ $size: 18px;
     justify-content: center;
 
     &::before {
-        font-size: var(--text-size-xxs);
-        line-height: $size;
+        font-size: var(--text-size-xxs) !important;
+        line-height: $size !important;
     }
 }
 </style>

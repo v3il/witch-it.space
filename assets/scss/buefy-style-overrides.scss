@@ -157,3 +157,7 @@ strong {
         color: var(--body-color) !important;
     }
 }
+
+.tag > span {
+    line-height: 15px;
+}
