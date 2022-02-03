@@ -2,7 +2,7 @@
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
       <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
-      <RemoveButton class="wit-offset-left--sm" @click="onPriceRemove" />
+      <RemoveButton v-tooltip="'Remove price'" class="wit-offset-left--sm" @click="onPriceRemove" />
     </div>
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
