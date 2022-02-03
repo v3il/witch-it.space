@@ -1,13 +1,13 @@
 $tooltip-offset: 10px;
 $tooltip-bg: var(--body-bg);
-$popover-border: #2e3648;
+$tooltip-border: #3a425a;
 $popover-bg: #2e3648;
 $popover-border: #3a425a;
 
 .tooltip {
     display: block !important;
     z-index: 10000;
-    border: 1px solid $popover-border;
+    border: 1px solid $tooltip-border;
     border-radius: 4px;
 
     .tooltip-inner {

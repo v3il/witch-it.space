@@ -53,6 +53,11 @@ export class Price {
         this._rawPrice[prop] = itemId
     }
 
+    clearItemId ({ position }) {
+        const prop = position === 1 ? 'itemId' : 'itemId2'
+        this._rawPrice[prop] = 0
+    }
+
     clone () {
         return new Price({ ...this._rawPrice })
     }

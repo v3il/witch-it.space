@@ -8,8 +8,11 @@ export default function ({ store }) {
         return getTranslation(lngSet, textId, replacements)
     }
 
+    VTooltip.options.container = 'body'
+    VTooltip.options.boundariesElement = 'body'
+    VTooltip.options.placement = 'top'
+
     Vue.directive('tooltip', VTooltip)
-    // Vue.directive('close-popover', VClosePopover)
     Vue.component('VPopover', VPopover)
 
     Vue.prototype.$eventBus = new Vue()

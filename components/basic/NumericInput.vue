@@ -109,7 +109,7 @@ export default {
 <style lang="scss">
 .wit-number-input {
     height: 36px;
-    width: 50px;
+    width: 40px;
     padding: var(--offset-xs) var(--offset-xs);
     text-align: center;
     -moz-appearance: textfield;

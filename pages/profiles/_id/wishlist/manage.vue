@@ -346,7 +346,8 @@ export default {
 }
 
 .wit-wishlist-editor__item {
-    padding-bottom: 16px;
+    padding-bottom: 8px;
+    padding-top: 8px;
 
     &:not(:last-child) {
         border-bottom: var(--default-border);

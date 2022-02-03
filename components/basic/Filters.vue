@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex--justify-between wit-flex wit-flex--justify-end wit-flex--wrap">
-    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs">
+    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs wit-offset-right--xs">
       <b-input
         class="wit-flex__item--grow"
         :value="filters.query"

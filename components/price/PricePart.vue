@@ -1,56 +1,32 @@
 <template>
   <div>
-    <!--    <b-dropdown aria-role="list" class="wit-materials-dropdown wit-dropdown&#45;&#45;offset-xs" position="is-bottom-left" append-to-body>-->
-    <!--      <template #trigger>-->
-    <!--            <b-button-->
-    <!--              type="is-link"-->
-    <!--              style="width: 50px; height: 36px;"-->
-    <!--            >-->
-    <!--              <i class="mdi mdi-24 mdi-plus" />-->
-    <!--              {{ itemId }}-->
-    <!--            </b-button>-->
-    <!--      </template>-->
-
-    <!--          <div class="wit-paddings&#45;&#45;sm">-->
-    <!--            <p class="wit-offset-bottom&#45;&#45;xs">-->
-    <!--              Primary ingredients-->
-    <!--            </p>-->
-
-    <!--            <div class="wit-flex wit-offset-bottom&#45;&#45;sm">-->
-    <!--              <b-button v-for="item in primaryIngredients" :key="item.id" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;xs wiz-background&#45;&#45;transparent" style="border: 0; width: 45px; height: 45px;">-->
-    <!--                <ItemView :is-title-shown="false" :item="item" type="is-ghost" style="width: 100%;" />-->
-    <!--              </b-button>-->
-    <!--            </div>-->
-
-    <!--            <p class="wit-offset-bottom&#45;&#45;xs">-->
-    <!--              Secondary ingredients-->
-    <!--            </p>-->
-
-    <!--            <div class="wit-flex wit-flex&#45;&#45;wrap">-->
-    <!--              <b-button v-for="item in secondaryIngredients" :key="item.id" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;xs wit-offset-bottom&#45;&#45;xs wiz-background&#45;&#45;transparent" style="border: 0; width: 45px; height: 45px;">-->
-    <!--                <ItemView :is-title-shown="false" :item="item" type="is-ghost" style="width: 100%;" />-->
-    <!--              </b-button>-->
-    <!--            </div>-->
-    <!--          </div>-->
-    <!--    </b-dropdown>-->
-
-    <v-popover ref="popover" :placement="popoverPosition" container="body" boundaries-element="body">
+    <v-popover ref="popover" :placement="popoverPosition" boundaries-element="body">
       <!-- This will be the popover target (for the events and position) -->
       <b-button
         type="is-link"
-        style="width: 50px; height: 36px;"
+        class="wit-position--relative"
+        style="width: 45px; height: 45px; background: transparent; border: 1px dashed #626ed4;"
       >
-        <i class="mdi mdi-24 mdi-plus" />
-        {{ itemId }}
+        <template v-if="selectedItem">
+          <ItemView :item="selectedItem" :is-title-shown="false" style="width: 45px;" />
+          <!--          <RemoveButton class="wit-position&#45;&#45;absolute" style="top: -8px; right: -8px; width: 16px; height: 16px;" />-->
+        </template>
+
+        <i v-else class="mdi mdi-24 mdi-plus" />
+        <!--        Item-->
       </b-button>
       <!-- This will be the content of the popover -->
 
-      <div slot="popover" class="wit-paddings--xs" style="max-width: 300px;">
+      <div slot="popover" class="wit-paddings--xs" style="max-width: 270px;">
+        <b-button type="is-danger" expanded class="wit-offset-bottom--sm" @click="onItemClear">
+          Remove
+        </b-button>
+
         <p class="wit-offset-bottom--xs">
           Primary ingredients
         </p>
 
-        <div class="wit-flex wit-offset-bottom--sm">
+        <div class="wit-flex wit-offset-bottom--sm" style="display: grid; grid-template-columns: repeat(5, 45px); column-gap: 8px;">
           <b-button
             v-for="item in primaryIngredients"
             :key="item.id"
@@ -67,7 +43,7 @@
           Secondary ingredients
         </p>
 
-        <div class="wit-flex wit-flex--wrap">
+        <div class="wit-flex wit-flex--wrap" style="display: grid; grid-template-columns: repeat(5, 45px); column-gap: 8px;">
           <b-button
             v-for="item in secondaryIngredients"
             :key="item.id"
@@ -86,12 +62,14 @@
 
 <script>
 import ItemView from '@/components/items/ItemView.vue'
+import RemoveButton from '~/components/basic/RemoveButton.vue'
 
 export default {
     name: 'PricePart',
 
     components: {
-        ItemView
+        ItemView,
+        RemoveButton
     },
 
     props: {
@@ -118,6 +96,10 @@ export default {
 
         pairedItemId () {
             return this.itemPosition === 1 ? this.price.item2Id : this.price.item1Id
+        },
+
+        selectedItem () {
+            return this.$itemsService.getById(this.itemId)
         }
     },
 
@@ -129,8 +111,12 @@ export default {
     methods: {
         onItemSelect (item) {
             this.$emit('itemSelect', { itemId: item.id, position: this.itemPosition })
+            this.$refs.popover.hide()
+        },
 
-            console.log(this.$refs.popover.hide())
+        onItemClear () {
+            this.$emit('itemClear', { position: this.itemPosition })
+            this.$refs.popover.hide()
         }
     }
 }

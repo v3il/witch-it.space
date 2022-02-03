@@ -7,7 +7,7 @@
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-position="1" :price="price" popover-position="bottom-start" @itemSelect="setItem" />
+        <PricePart :item-position="1" :price="price" popover-position="bottom-start" @itemSelect="setItem" @itemClear="clearItem" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setItem1Count" />
       </div>
@@ -15,7 +15,7 @@
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-position="2" :price="price" popover-position="bottom" @itemSelect="setItem" />
+        <PricePart :item-position="2" :price="price" popover-position="bottom" @itemSelect="setItem" @itemClear="clearItem" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
         <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setItem2Count" />
       </div>
@@ -68,6 +68,10 @@ export default {
 
         setItem (eventData) {
             this.price.setItemId(eventData)
+        },
+
+        clearItem (eventData) {
+            this.price.clearItemId(eventData)
         }
     }
 }
