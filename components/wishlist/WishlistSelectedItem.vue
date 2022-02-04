@@ -4,13 +4,13 @@
       <ItemView add-tooltip :item="wishlistItem.item" :is-title-shown="false" style="max-width: 58px;" class="wit-offset-right--sm wit-flex__item--no-shrink" />
 
       <div class="wit-flex__item--grow" style="flex: 1 1 auto; min-width: 0;">
-        <div class="wit-flex wit-flex--column wit-block--full-width wit-offset-bottom--xs">
+        <div class="wit-flex wit-flex--column wit-block--full-width wit-offset-bottom--xs1">
           <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
             <p class="wit-font-size--sm wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow">
               {{ wishlistItem.item.name }}
             </p>
 
-            <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink" style="margin-right: -4px;">
+            <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink" style="margin-right: -3px;">
               <!--            <b-button v-tooltip="'Add price'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">-->
               <!--              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />-->
               <!--            </b-button>-->
@@ -19,7 +19,7 @@
                 <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
               </b-button>
 
-              <b-button v-tooltip="'Remove'" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm1">
+              <b-button v-tooltip="'Remove'" size="is-small" type="is-ghost" class="wit-paddings--none" @click="removeItem">
                 <i class="mdi mdi-24px mdi-trash-can-outline wit-color--danger" />
               </b-button>
 

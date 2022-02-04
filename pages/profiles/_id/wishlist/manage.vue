@@ -94,8 +94,10 @@
                 <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
               </InfinityGrid>
 
-              <div style="height: 100px; border: 1px solid red;" class="wit-flex__item--no-shrink">
-                footer
+              <div style="padding: 8px 0;" class="wit-flex__item--no-shrink">
+                <b-button type="is-danger" expanded @click.stop="">
+                  Save
+                </b-button>
               </div>
             </div>
 
@@ -361,7 +363,7 @@ export default {
 }
 
 .wit-wishlist-editor__editor {
-    flex: 0 0 475px;
+    flex: 0 0 400px;
     max-width: 475px;
     border-radius: var(--offset-xxs);
 

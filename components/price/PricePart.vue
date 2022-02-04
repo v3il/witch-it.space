@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-popover ref="popover" :placement="popoverPosition" boundaries-element="body">
+    <v-popover ref="popover" :placement="popoverPosition">
       <b-button
         type="is-link"
         class="wit-position--relative"
@@ -13,11 +13,7 @@
         <i v-else class="mdi mdi-24 mdi-plus" />
       </b-button>
 
-      <div slot="popover" class="wit-paddings--xs" style="max-width: 270px;">
-        <b-button type="is-danger" expanded class="wit-offset-bottom--sm" @click="onItemClear">
-          Remove
-        </b-button>
-
+      <div slot="popover" class="wit-paddings--xs">
         <p class="wit-offset-bottom--xs">
           Primary ingredients
         </p>
@@ -39,7 +35,7 @@
           Secondary ingredients
         </p>
 
-        <div class="wit-flex wit-flex--wrap" style="display: grid; grid-template-columns: repeat(5, 45px); column-gap: 8px;">
+        <div class="wit-flex wit-flex--wrap wit-offset-bottom--xs" style="display: grid; grid-template-columns: repeat(5, 45px); column-gap: 8px;">
           <b-button
             v-for="item in secondaryIngredients"
             :key="item.id"
@@ -51,6 +47,10 @@
             <ItemView add-tooltip :is-title-shown="false" :item="item" type="is-ghost" style="width: 100%;" />
           </b-button>
         </div>
+
+        <b-button type="is-danger" expanded @click="onItemClear">
+          Remove
+        </b-button>
       </div>
     </v-popover>
   </div>
