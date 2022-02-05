@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column1 wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
+  <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
     <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
       <img
         v-tooltip="tooltip"
@@ -136,6 +136,13 @@ export default {
 
 .wit-item-view__title {
     padding: 0 var(--offset-xs);
+    height: 36px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    text-align: center;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .wit-item-view__image {
@@ -144,6 +151,6 @@ export default {
     max-height: 100%;
     border-radius: var(--offset-xxs);
     aspect-ratio: 1;
-    min-height: 30px;
+    min-height: 25px;
 }
 </style>

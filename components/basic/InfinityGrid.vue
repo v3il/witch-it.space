@@ -30,7 +30,7 @@ export default {
         gridGap: {
             type: Number,
             required: false,
-            default: 16
+            default: 12
         }
     },
 
@@ -81,7 +81,8 @@ export default {
     padding-right: var(--offset-sm);
 
     @media screen and (max-width: 768px) {
-        grid-template-columns: repeat(auto-fill, minmax(var(--mobile-cell-width), 1fr));
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(var(--mobile-cell-width), var(--mobile-cell-width)));
     }
 }
 </style>
