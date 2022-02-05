@@ -40,6 +40,14 @@ export default {
         hasTwoItems () {
             return this.item1 && this.item2
         }
+
+        // item1 () {
+        //     return this.$itemsService.getById(this.price.item1Id)
+        // },
+        //
+        // item2 () {
+        //     return this.$itemsService.getById(this.price.item2Id)
+        // }
     },
 
     created () {

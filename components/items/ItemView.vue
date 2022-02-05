@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
+  <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column1 wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
     <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
       <img
         v-tooltip="tooltip"

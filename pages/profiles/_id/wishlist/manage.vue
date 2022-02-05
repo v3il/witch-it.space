@@ -94,8 +94,8 @@
                 <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
               </InfinityGrid>
 
-              <div style="padding: 8px 0;" class="wit-flex__item--no-shrink">
-                <b-button type="is-danger" expanded @click.stop="">
+              <div class="wit-flex__item--no-shrink">
+                <b-button type="is-danger" expanded @click="saveWishlistItems">
                   Save
                 </b-button>
               </div>
@@ -116,7 +116,6 @@ import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import ItemView from '@/components/items/ItemView.vue'
-import { WishlistItem } from '@/domain/models/WishlistItem.js'
 import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
@@ -125,7 +124,6 @@ import Tabs from '@/components/basic/Tabs.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
-import { Price } from '@/domain/models/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -314,6 +312,10 @@ export default {
 
         isItemInWishlist (item) {
             return this.wishlistModels.some(wishlistItem => wishlistItem.item.id === item.id)
+        },
+
+        saveWishlistItems () {
+            this.$wishlistService.saveWishlist(this.selectedItems)
         }
     }
 }
@@ -363,8 +365,8 @@ export default {
 }
 
 .wit-wishlist-editor__editor {
-    flex: 0 0 400px;
-    max-width: 475px;
+    flex: 0 0 420px;
+    max-width: 420px;
     border-radius: var(--offset-xxs);
 
     @media screen and (max-width: 1023px) {

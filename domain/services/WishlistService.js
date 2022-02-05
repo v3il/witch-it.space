@@ -41,4 +41,26 @@ export class WishlistService {
             prices: []
         })
     }
+
+    async saveWishlist (wishlistItems) {
+        const data = wishlistItems.map(wi => ({
+            id: wi.id,
+            itemId: wi.item.id
+        }))
+
+        try {
+            await this.#axiosInstance.post('/api/wishlist/manage', {
+                wishlist: data
+            })
+            return {
+                error: null
+                // wishlist: data.wishlist
+            }
+        } catch (e) {
+            return {
+                error: e.message,
+                wishlist: null
+            }
+        }
+    }
 }
