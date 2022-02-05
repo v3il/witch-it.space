@@ -2,13 +2,15 @@
   <div class="wit-flex wit-flex--center">
     <div v-if="item1" class="wit-flex wit-flex--align-center wit-position--relative">
       <span v-if="price.item1Count > 1" class="wit-price__counter wit-offset-right--xxs">{{ price.item1Count }}</span>
-      <ItemView :item="item1" :is-title-shown="false" class="wit-price__item" />
+      <span v-if="isTimesVisible" class="wit-color--muted wit-offset-right--xxs">&times;</span>
+      <ItemView add-tooltip :item="item1" :is-title-shown="false" class="wit-price__item" />
     </div>
 
     <span v-if="hasTwoItems" class="wit-price__plus wit-color--muted">+</span>
 
     <div v-if="item2" class="wit-flex wit-flex--align-center wit-position--relative">
-      <ItemView :item="item2" :is-title-shown="false" class="wit-price__item" />
+      <ItemView add-tooltip :item="item2" :is-title-shown="false" class="wit-price__item" />
+      <span v-if="isTimesVisible" class="wit-offset-left--xxs wit-color--muted">&times;</span>
       <span v-if="price.item2Count > 1" class="wit-price__counter wit-offset-left--xxs">{{ price.item2Count }}</span>
     </div>
   </div>
@@ -39,6 +41,10 @@ export default {
     computed: {
         hasTwoItems () {
             return this.item1 && this.item2
+        },
+
+        isTimesVisible () {
+            return !this.item1 || !this.item2
         }
 
         // item1 () {
@@ -77,6 +83,10 @@ export default {
 }
 
 .wit-price__plus {
-    margin: 0 5px;
+    margin: 0 4px;
+}
+
+.wit-price__times {
+    margin: 0 3px;
 }
 </style>
