@@ -91,46 +91,49 @@ export default {
 }
 
 .wit-item-view__container {
-    --color: transparent;
+    --bg-color: transparent;
+    --color: #2e3648;
 
-    border: 1px solid var(--color);
+    border: 1px solid var(--bg-color);
     border-radius: var(--offset-xxs);
 
     .wit-item-view__counter {
-        background-color: var(--color);
+        background-color: var(--bg-color);
         color: var(--white);
     }
 
     &.wit-item-view--common {
-        --color: var(--item-common);
+        --bg-color: var(--item-common);
     }
 
     &.wit-item-view--uncommon {
-        --color: var(--item-uncommon);
+        --bg-color: var(--item-uncommon);
     }
 
     &.wit-item-view--promo {
-        --color: var(--item-promo);
+        --bg-color: var(--item-promo);
     }
 
     &.wit-item-view--eventrarity {
-        --color: var(--item-event);
+        --bg-color: var(--item-event);
     }
 
     &.wit-item-view--unlock {
-        --color: var(--item-unlock);
+        --bg-color: var(--item-unlock);
     }
 
     &.wit-item-view--rare {
-        --color: var(--item-rare);
+        --bg-color: var(--item-rare);
     }
 
     &.wit-item-view--veryrare {
-        --color: var(--item-very-rare);
+        --bg-color: var(--item-very-rare);
+        --color: var(--white);
     }
 
     &.wit-item-view--whimsical {
-        --color: var(--item-whimsical);
+        --bg-color: var(--item-whimsical);
+        --color: var(--white);
     }
 }
 

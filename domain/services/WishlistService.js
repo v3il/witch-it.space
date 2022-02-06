@@ -45,7 +45,15 @@ export class WishlistService {
     async saveWishlist (wishlistItems) {
         const data = wishlistItems.map(wi => ({
             id: wi.id,
-            itemId: wi.item.id
+            itemId: wi.item.id,
+            rawPrices: wi.prices.map(p => ({
+                id: p.id,
+                priceType: p.priceType,
+                itemId: p.item1Id,
+                itemCount: p.item1Count,
+                itemId2: p.item2Id,
+                itemCount2: p.item2Count
+            }))
         }))
 
         try {
