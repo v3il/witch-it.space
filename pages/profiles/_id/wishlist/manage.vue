@@ -50,7 +50,7 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" cell-width="130px" mobile-cell-width="150px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" cell-width="130px" mobile-cell-width="140px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <ItemView
                     v-for="wishlistModel in visibleItems"
