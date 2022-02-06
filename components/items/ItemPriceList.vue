@@ -28,7 +28,7 @@ export default {
     padding: var(--offset-xxs) var(--offset-xxs);
     background-color: #3a445b;
     //border-radius: 4px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 
     //&:not(:first-child) {
     //    padding-top: var(--offset-xs);

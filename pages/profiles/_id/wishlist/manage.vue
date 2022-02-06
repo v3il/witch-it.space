@@ -381,7 +381,7 @@ export default {
 }
 
 .wit-selected-item {
-    box-shadow: 0 0 6px 3px var(--color);
+    box-shadow: 0 0 6px 3px var(--bg-color);
 }
 
 .wit-item__icon-container {
