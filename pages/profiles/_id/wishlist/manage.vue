@@ -47,6 +47,10 @@
                 @filtersChanged="onFiltersChange"
                 @sortChanged="onSortChange"
               />
+
+              <button @click="addAll">
+                Add all
+              </button>
             </div>
 
             <template v-if="isWishlistMode">
@@ -90,8 +94,10 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
             <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
-              <InfinityGrid :items="sortedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height wit-offset-bottom--sm">
-                <WishlistSelectedItem v-for="wi in selectedItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
+              <InfinityGrid :items="selectedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height wit-offset-bottom--sm">
+                <template #default="{ visibleItems }">
+                  <WishlistSelectedItem v-for="wi in visibleItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
+                </template>
               </InfinityGrid>
 
               <div class="wit-flex__item--no-shrink">
@@ -263,6 +269,14 @@ export default {
     },
 
     methods: {
+        addAll () {
+            this.sortedItems.forEach((item) => {
+                const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
+
+                this.selectedItems.push(wishlistModel || this.$wishlistService.createNewWishlistItem(item))
+            })
+        },
+
         onFiltersChange (filters) {
             this.filters = filters
         },

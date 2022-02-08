@@ -60,7 +60,7 @@ const addToWishlist = async (request, response) => {
             })
         }
 
-        for (const priceModel of model.rawPrices) {
+        for (const priceModel of (model.rawPrices || [])) {
             const raw = wishlistItem.rawPrices.find(raw => raw.id === priceModel.id)
 
             if (!raw) {
@@ -70,8 +70,26 @@ const addToWishlist = async (request, response) => {
             }
         }
 
-        for (const rawPrice of wishlistItem.rawPrices) {
-            const priceModel = model.rawPrices.find(model => model.id === rawPrice.id)
+        for (const rawPrice of /* wishlistItem.rawPrices */ [
+            {
+                priceType: 'fixed',
+                itemId: 903,
+                itemCount: 10,
+                itemId2: 904,
+                itemCount2: 10,
+                priceValue: 0
+            },
+
+            {
+                priceType: 'fixed',
+                itemId: 903,
+                itemCount: 10,
+                itemId2: 904,
+                itemCount2: 10,
+                priceValue: 0
+            }
+        ]) {
+            const priceModel = (model.rawPrices || []).find(model => model.id === rawPrice.id)
 
             if (priceModel) {
                 console.error('Update', priceModel.get())

@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import { isEqual } from 'lodash'
+import { debounce, isEqual } from 'lodash'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 
 export default {
@@ -171,6 +171,8 @@ export default {
     },
 
     created () {
+        this.update = debounce(this.update, 300)
+
         if (this.storeInUrl) {
             this.$watch('filters', this.updateUrl, { deep: true })
             this.$watch('sort', this.updateUrl, { deep: true })

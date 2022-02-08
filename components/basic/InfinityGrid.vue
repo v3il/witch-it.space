@@ -6,7 +6,7 @@
 
 <script>
 const SCROLL_OFFSET = 400
-const ITEMS_PER_PAGE = 75
+const ITEMS_PER_PAGE = 30
 
 export default {
     name: 'InfinityGrid',
