@@ -13,7 +13,7 @@ const initServer = () => {
 
     app.use(cors())
     app.use(cookieParser())
-    app.use(bodyParser.json())
+    app.use(bodyParser.json({ limit: '50mb' }))
 
     app.use('', i18n, rootRouter)
     app.use(errorsHandler)

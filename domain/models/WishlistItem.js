@@ -18,7 +18,7 @@ export class WishlistItem {
     }
 
     get id () {
-        return this._model.id
+        return this._model.id || Math.random()
     }
 
     addPrice (price) {

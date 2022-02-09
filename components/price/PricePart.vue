@@ -5,6 +5,7 @@
         type="is-link"
         class="wit-position--relative"
         style="width: 45px; height: 45px; background: transparent; border: 1px dashed #626ed4;"
+        @click="show1"
       >
         <template v-if="selectedItem">
           <ItemView :item="selectedItem" :is-title-shown="false" style="width: 45px;" />
@@ -13,7 +14,7 @@
         <i v-else class="mdi mdi-24 mdi-plus" />
       </b-button>
 
-      <div slot="popover" class="wit-paddings--xs">
+      <div v-if="show" slot="popover" class="wit-paddings--xs">
         <p class="wit-offset-bottom--xs">
           Primary ingredients
         </p>
@@ -85,6 +86,10 @@ export default {
         }
     },
 
+    data: () => ({
+        show: false
+    }),
+
     computed: {
         itemId () {
             return this.itemPosition === 1 ? this.price.item1Id : this.price.item2Id
@@ -105,6 +110,11 @@ export default {
     },
 
     methods: {
+        show1 () {
+            this.show = true
+            // this.$refs.popover.open()
+        },
+
         onItemSelect (item) {
             this.$emit('itemSelect', { itemId: item.id, position: this.itemPosition })
             this.$refs.popover.hide()

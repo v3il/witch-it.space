@@ -94,11 +94,17 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
             <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
-              <InfinityGrid :items="selectedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block--full-height wit-offset-bottom--sm">
+              <ScrollablePagination :items="selectedItems" :items-per-page="25" class="wit-offset-bottom--sm">
                 <template #default="{ visibleItems }">
                   <WishlistSelectedItem v-for="wi in visibleItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
                 </template>
-              </InfinityGrid>
+              </ScrollablePagination>
+
+              <!--              <InfinityGrid :items="selectedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block&#45;&#45;full-height wit-offset-bottom&#45;&#45;sm">-->
+              <!--                <template #default="{ visibleItems }">-->
+              <!--                  <WishlistSelectedItem v-for="wi in visibleItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />-->
+              <!--                </template>-->
+              <!--              </InfinityGrid>-->
 
               <div class="wit-flex__item--no-shrink">
                 <b-button type="is-danger" expanded @click="saveWishlistItems">
@@ -130,6 +136,7 @@ import Tabs from '@/components/basic/Tabs.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
+import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -173,7 +180,8 @@ export default {
         Tabs,
         ItemPrice,
         InfinityGrid,
-        ItemPriceList
+        ItemPriceList,
+        ScrollablePagination
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -270,11 +278,15 @@ export default {
 
     methods: {
         addAll () {
+            const a = performance.now()
+
             this.sortedItems.forEach((item) => {
                 const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
 
                 this.selectedItems.push(wishlistModel || this.$wishlistService.createNewWishlistItem(item))
             })
+
+            console.log(performance.now() - a)
         },
 
         onFiltersChange (filters) {
