@@ -10,9 +10,9 @@
               {{ wishlistItem.item.name }}
             </p>
 
-            <p>{{ wishlistItem.isNew }}</p>&nbsp;
-            <p>{{ JSON.stringify(wishlistItem.id) }}</p>&nbsp;
-            <p>{{ wishlistItem.hasChanges }}</p>
+            <!--            <p>{{ wishlistItem.isNew }}</p>&nbsp;-->
+            <!--            <p>{{ JSON.stringify(wishlistItem.id) }}</p>&nbsp;-->
+            <!--            <p>{{ wishlistItem.hasChanges }}</p>-->
 
             <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink" style="margin-right: -3px;">
               <!--            <b-button v-tooltip="'Add price'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">-->
@@ -75,7 +75,15 @@
           <!--            &lt;!&ndash;          </div>&ndash;&gt;-->
           <!--          </div>-->
 
-          <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom--none" />
+          <b-tag v-if="wishlistItem.isNew" type="is-success" style="width: 100px;">
+            New
+          </b-tag>
+
+          <b-tag v-else type="is-primary" style="width: 100px;">
+            In wishlist
+          </b-tag>
+
+          <!--          <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom&#45;&#45;none" />-->
         </div>
       </div>
     </div>

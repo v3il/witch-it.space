@@ -29,16 +29,16 @@ export class WishlistService {
         }
     }
 
-    createWishlistItem (rawWishlistItem) {
-        rawWishlistItem.prices = rawWishlistItem.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
-        rawWishlistItem.item = this.#itemsService.getById(rawWishlistItem.itemId)
-        return this.#wishlistItemFactory.createWishlist(rawWishlistItem)
+    createWishlistItem ({ wishlistItem }) {
+        wishlistItem.prices = wishlistItem.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
+        wishlistItem.item = this.#itemsService.getById(wishlistItem.itemId)
+        return this.#wishlistItemFactory.createWishlist(wishlistItem)
     }
 
     createNewWishlistItem (item) {
         return this.#wishlistItemFactory.createWishlist({
             item,
-            prices: []
+            prices: [this.#priceService.createDefaultPrice()]
         })
     }
 
