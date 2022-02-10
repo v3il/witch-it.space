@@ -100,6 +100,7 @@
                     v-for="wi in visibleItems"
                     :key="wi.id"
                     :wishlist-item="wi"
+                    :is-in-wishlist="isItemInWishlist(wi)"
                     class="wit-wishlist-editor__item"
                     @itemRemoved="toggleWishlistItem"
                     @delete="onDelete"

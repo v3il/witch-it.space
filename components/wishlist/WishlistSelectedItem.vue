@@ -19,11 +19,25 @@
               <!--              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />-->
               <!--            </b-button>-->
 
-              <b-button v-tooltip="'Remove from wishlist'" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm" @click="$emit('delete', wishlistItem.id)">
+              <b-button
+                v-if="isInWishlist"
+                v-tooltip="'Remove from wishlist'"
+                size="is-small"
+                type="is-ghost"
+                class="wit-paddings--none wit-offset-right--sm"
+                @click="$emit('delete', wishlistItem.id)"
+              >
                 <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
               </b-button>
 
-              <b-button v-tooltip="'Remove'" size="is-small" type="is-ghost" class="wit-paddings--none" @click="removeItem">
+              <b-button
+                v-if="!wishlistItem.isNew"
+                v-tooltip="'Remove'"
+                size="is-small"
+                type="is-ghost"
+                class="wit-paddings--none"
+                @click="removeItem"
+              >
                 <i class="mdi mdi-24px mdi-trash-can-outline wit-color--danger" />
               </b-button>
 
@@ -118,6 +132,11 @@ export default {
     props: {
         wishlistItem: {
             type: Object,
+            required: true
+        },
+
+        isInWishlist: {
+            type: Boolean,
             required: true
         }
     },

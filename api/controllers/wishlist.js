@@ -70,7 +70,7 @@ const addToWishlist = async (request, response) => {
             }
         }
 
-        for (const rawPrice of /* wishlistItem.rawPrices */ [
+        for (const rawPrice of wishlistItem.rawPrices || [
             {
                 priceType: 'fixed',
                 itemId: 903,
