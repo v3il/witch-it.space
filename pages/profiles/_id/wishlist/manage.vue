@@ -294,8 +294,16 @@ export default {
         },
 
         async removeSelected () {
-            const ids = this.selectedItems.map(wi => wi.id)
-            await this.$wishlistService.removeFromWishlist(ids)
+            const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.selectedItems)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+            this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+
+            this.$showSuccess(`Removed ${removed} items`)
         },
 
         addAll () {

@@ -7,7 +7,8 @@ export const en = {
         wrongPassword: 'Неправильный пароль',
         invalidLogin: 'Некорректный логин',
         invalidPassword: 'Некорректный пароль (минимум 8 символов)',
-        notUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе'
+        notUniqueLogin: 'Пользователь с таким логином уже зарегистрирован в системе',
+        Error_BadRequest: 'Bad req'
     },
 
     welcome_back: 'Welcome Back!',

@@ -72,7 +72,15 @@ export class WishlistService {
         }
     }
 
-    async removeFromWishlist (ids) {
+    async removeFromWishlist (wishlistItems) {
+        const entityIds = wishlistItems.reduce((ids, wishlistItem) => {
+            if (wishlistItem.id) {
+                ids.push(wishlistItem.id)
+            }
+
+            return ids
+        }, [])
+
         // const data = wishlistItems.map(wi => ({
         //     id: wi.id,
         //     itemId: wi.item.id,
@@ -86,21 +94,16 @@ export class WishlistService {
         //     }))
         // }))
 
-        console.error('Delete', ids, ids.length)
+        console.error('Delete', entityIds, entityIds.length)
 
         try {
-            await this.#axiosInstance.post('/api/wishlist/remove', {
-                ids
-            })
-            return {
-                error: null
-                // wishlist: data.wishlist
-            }
+            const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { entityIds })
+
+            console.error(removed)
+
+            return { removed, entityIds, error: null }
         } catch (e) {
-            return {
-                error: e.message,
-                wishlist: null
-            }
+            return { error: e.message }
         }
     }
 }

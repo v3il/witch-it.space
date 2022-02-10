@@ -211,17 +211,29 @@ const editWishlistItem = async (request, response) => {
 const removeFromWishlist = async (request, response) => {
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
-    const { ids } = request.body
 
-    await Wish.destroy({
+    if (!user) {
+        throw new BadRequest(request.$t('Error_BadRequest'))
+    }
+
+    const { entityIds } = request.body
+
+    if (!Array.isArray(entityIds)) {
+        throw new BadRequest(request.$t('Error_BadRequest'))
+    }
+
+    if (!entityIds.length) {
+        return response.send({ removed: 0 })
+    }
+
+    const removed = await Wish.destroy({
         where: {
-            id: ids,
+            id: entityIds,
             userId: user.id
-        },
-        logging: console.log
+        }
     })
 
-    response.send({ })
+    response.send({ removed })
 }
 
 const isWishlistedItem = async (request, response) => {

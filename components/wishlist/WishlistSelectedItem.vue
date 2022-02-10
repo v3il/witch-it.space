@@ -31,7 +31,6 @@
               </b-button>
 
               <b-button
-                v-if="!wishlistItem.isNew"
                 v-tooltip="'Remove'"
                 size="is-small"
                 type="is-ghost"
