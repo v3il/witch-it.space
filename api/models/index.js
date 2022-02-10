@@ -44,9 +44,9 @@ try {
 
     User.hasMany(Quest)
     User.hasMany(Wish)
-    User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings' })
-    User.hasOne(UserStat, { foreignKey: 'userId', as: 'userStat' })
-    Wish.hasMany(Price, { foreignKey: 'offerId', as: 'rawPrices' })
+    User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings', onDelete: 'CASCADE' })
+    User.hasOne(UserStat, { foreignKey: 'userId', as: 'userStat', onDelete: 'CASCADE' })
+    Wish.hasMany(Price, { foreignKey: 'offerId', as: 'rawPrices', onDelete: 'CASCADE' })
 
     Quest.belongsTo(User, { foreignKey: 'userId' })
     Wish.belongsTo(User, { foreignKey: 'userId' })

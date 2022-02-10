@@ -10,12 +10,16 @@
               {{ wishlistItem.item.name }}
             </p>
 
+            <p>{{ wishlistItem.isNew }}</p>&nbsp;
+            <p>{{ JSON.stringify(wishlistItem.id) }}</p>&nbsp;
+            <p>{{ wishlistItem.hasChanges }}</p>
+
             <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink" style="margin-right: -3px;">
               <!--            <b-button v-tooltip="'Add price'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">-->
               <!--              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />-->
               <!--            </b-button>-->
 
-              <b-button v-tooltip="'Remove from wishlist'" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm">
+              <b-button v-tooltip="'Remove from wishlist'" size="is-small" type="is-ghost" class="wit-paddings--none wit-offset-right--sm" @click="$emit('delete', wishlistItem.id)">
                 <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
               </b-button>
 
@@ -120,7 +124,7 @@ export default {
 
     computed: {
         isAllPricesAdded () {
-            return this.wishlistItem.prices.length === config.MAX_PRICES
+            return this.wishlistItem.prices.length >= config.MAX_PRICES
         }
     },
 

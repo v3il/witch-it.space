@@ -1,5 +1,6 @@
 export class WishlistItem {
     _model
+    #modelJSON
 
     static create ({ rawModel }) {
         return new WishlistItem({ model: rawModel })
@@ -7,6 +8,7 @@ export class WishlistItem {
 
     constructor ({ model }) {
         this._model = model
+        this.#modelJSON = JSON.stringify(model)
     }
 
     get item () {
@@ -18,7 +20,15 @@ export class WishlistItem {
     }
 
     get id () {
-        return this._model.id || Math.random()
+        return this._model.id
+    }
+
+    get isNew () {
+        return !this.id
+    }
+
+    get hasChanges () {
+        return JSON.stringify(this._model) !== this.#modelJSON
     }
 
     addPrice (price) {

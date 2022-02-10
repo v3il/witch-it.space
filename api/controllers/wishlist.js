@@ -211,9 +211,17 @@ const editWishlistItem = async (request, response) => {
 const removeFromWishlist = async (request, response) => {
     const { id } = request.user
     const user = await User.findOne({ where: { id } })
-    const parsedUser = user ? extractUserPublicData(user) : null
+    const { ids } = request.body
 
-    response.send({ user: parsedUser })
+    await Wish.destroy({
+        where: {
+            id: ids,
+            userId: user.id
+        },
+        logging: console.log
+    })
+
+    response.send({ })
 }
 
 const isWishlistedItem = async (request, response) => {

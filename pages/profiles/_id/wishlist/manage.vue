@@ -94,9 +94,16 @@
 
           <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
             <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
-              <ScrollablePagination :items="selectedItems" :items-per-page="25" class="wit-offset-bottom--sm">
+              <ScrollablePagination :items="selectedItems" :items-per-page="20" class="wit-offset-bottom--sm">
                 <template #default="{ visibleItems }">
-                  <WishlistSelectedItem v-for="wi in visibleItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />
+                  <WishlistSelectedItem
+                    v-for="wi in visibleItems"
+                    :key="wi.id"
+                    :wishlist-item="wi"
+                    class="wit-wishlist-editor__item"
+                    @itemRemoved="toggleWishlistItem"
+                    @delete="onDelete"
+                  />
                 </template>
               </ScrollablePagination>
 
@@ -106,9 +113,13 @@
               <!--                </template>-->
               <!--              </InfinityGrid>-->
 
-              <div class="wit-flex__item--no-shrink">
-                <b-button type="is-danger" expanded @click="saveWishlistItems">
+              <div class="wit-flex__item--no-shrink wit-flex">
+                <b-button type="is-danger" class="wit-flex__item--grow wit-offset-right--xs" expanded @click="saveWishlistItems">
                   Save
+                </b-button>
+
+                <b-button type="is-danger" expanded @click="removeSelected">
+                  R
                 </b-button>
               </div>
             </div>
@@ -277,6 +288,15 @@ export default {
     },
 
     methods: {
+        async onDelete (id) {
+            await this.$wishlistService.removeFromWishlist([id])
+        },
+
+        async removeSelected () {
+            const ids = this.selectedItems.map(wi => wi.id)
+            await this.$wishlistService.removeFromWishlist(ids)
+        },
+
         addAll () {
             const a = performance.now()
 

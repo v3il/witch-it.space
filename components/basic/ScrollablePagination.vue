@@ -48,7 +48,6 @@ export default {
         },
 
         onScrollToBottom () {
-            console.log('Bot!!')
             this.page++
         }
     }
