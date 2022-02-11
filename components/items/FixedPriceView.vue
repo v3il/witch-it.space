@@ -50,10 +50,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$size: #{var(--offset-lg)};
+$size: 32px;
 
 .wit-price__counter {
-    font-size: 11px;
+    font-size: 12px;
     line-height: $size;
     font-weight: 500;
     min-width: 13px;

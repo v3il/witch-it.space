@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-flex wit-flex--center any-price wiz-border--items">
-    <i class="mdi mdi-20px mdi-cloud-question wit-color--Y400" />
+  <div v-tooltip="$t('PriceType_Any')" class="wit-flex wit-flex--center any-price wiz-border--items">
+    <i class="mdi mdi-20px mdi-help-circle wit-color--Y400" />
   </div>
 </template>
 

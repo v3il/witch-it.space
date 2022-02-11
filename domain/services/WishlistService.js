@@ -81,26 +81,8 @@ export class WishlistService {
             return ids
         }, [])
 
-        // const data = wishlistItems.map(wi => ({
-        //     id: wi.id,
-        //     itemId: wi.item.id,
-        //     rawPrices: wi.prices.map(p => ({
-        //         id: p.id,
-        //         priceType: p.priceType,
-        //         itemId: p.item1Id,
-        //         itemCount: p.item1Count,
-        //         itemId2: p.item2Id,
-        //         itemCount2: p.item2Count
-        //     }))
-        // }))
-
-        console.error('Delete', entityIds, entityIds.length)
-
         try {
             const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { entityIds })
-
-            console.error(removed)
-
             return { removed, entityIds, error: null }
         } catch (e) {
             return { error: e.message }

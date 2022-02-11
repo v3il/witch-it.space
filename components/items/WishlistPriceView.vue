@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-flex wit-flex--center wishlist-price wiz-border--items">
+  <div v-tooltip="$t('PriceType_Wishlist')" class="wit-flex wit-flex--center wishlist-price wiz-border--items">
     <i class="mdi mdi-20px mdi-heart wit-color--danger" />
   </div>
 </template>
