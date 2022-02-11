@@ -119,3 +119,24 @@
 .wiz-border--bottom {
     border-bottom: var(--default-border);
 }
+
+.wiz-border--items {
+    z-index: 0;
+    position: relative;
+
+    &::after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 1px;
+        border-radius: 4px;
+        background: linear-gradient(to bottom right, var(--item-rare), var(--item-very-rare), var(--item-whimsical));
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+    }
+}

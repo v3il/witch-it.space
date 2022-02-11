@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-flex wit-flex--center">
-    any
+  <div class="wit-flex wit-flex--center any-price wiz-border--items">
+    <i class="mdi mdi-20px mdi-cloud-question wit-color--Y400" />
   </div>
 </template>
 
@@ -20,19 +20,9 @@ export default {
 <style scoped lang="scss">
 $size: #{var(--offset-lg)};
 
-//.wit-price__counter {
-//    font-size: 11px;
-//    line-height: $size;
-//    font-weight: 500;
-//    min-width: 13px;
-//}
-//
-//.wit-price__item {
-//    width: $size;
-//    height: $size;
-//}
-//
-//.wit-price__plus {
-//    margin: 0 var(--offset-xxs);
-//}
+.any-price {
+    width: $size;
+    height: $size;
+    margin: 0 auto;
+}
 </style>
