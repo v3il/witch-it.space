@@ -35,6 +35,14 @@ export class Price {
         return this._rawPrice.priceType
     }
 
+    get isAnyPrice () {
+        return this.priceType === PriceType.ANY
+    }
+
+    get isWishlistPrice () {
+        return this.priceType === PriceType.WISHLIST
+    }
+
     get isFixedPrice () {
         return this.priceType === PriceType.FIXED
     }

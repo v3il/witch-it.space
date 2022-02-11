@@ -1,27 +1,23 @@
 <template>
-  <div class="wit-flex wit-flex--center">
-    <div v-if="item1" class="wit-flex wit-flex--align-center wit-position--relative">
-      <span v-if="price.item1Count > 1" class="wit-price__counter wit-offset-right--xxs wit-text--right">{{ price.item1Count }}</span>
-      <ItemView add-tooltip :item="item1" :is-title-shown="false" class="wit-price__item" />
-    </div>
-
-    <span v-if="hasTwoItems" class="wit-price__plus">+</span>
-
-    <div v-if="item2" class="wit-flex wit-flex--align-center wit-position--relative">
-      <ItemView add-tooltip :item="item2" :is-title-shown="false" class="wit-price__item" />
-      <span v-if="price.item2Count > 1" class="wit-price__counter wit-offset-left--xxs wit-text--left">{{ price.item2Count }}</span>
-    </div>
+  <div>
+    <AnyPriceView v-if="price.isAnyPrice" :price="price" />
+    <FixedPriceView v-if="price.isFixedPrice" :price="price" />
+    <WishlistPriceView v-if="price.isWishlistPrice" :price="price" />
   </div>
 </template>
 
 <script>
-import ItemView from '@/components/items/ItemView'
+import AnyPriceView from '@/components/items/AnyPriceView.vue'
+import FixedPriceView from '@/components/items/FixedPriceView.vue'
+import WishlistPriceView from '@/components/items/WishlistPriceView.vue'
 
 export default {
     name: 'ItemPrice',
 
     components: {
-        ItemView
+        AnyPriceView,
+        FixedPriceView,
+        WishlistPriceView
     },
 
     props: {
@@ -29,22 +25,6 @@ export default {
             type: Object,
             required: true
         }
-    },
-
-    data: () => ({
-        item1: null,
-        item2: null
-    }),
-
-    computed: {
-        hasTwoItems () {
-            return this.item1 && this.item2
-        }
-    },
-
-    created () {
-        this.item1 = this.$itemsService.getById(this.price.item1Id)
-        this.item2 = this.$itemsService.getById(this.price.item2Id)
     }
 }
 </script>
