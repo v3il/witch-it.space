@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$size: #{var(--offset-lg)};
+$size: 32px;
 
 .wishlist-price {
     width: $size;
