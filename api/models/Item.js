@@ -9,14 +9,14 @@ const initItemModel = (sequelize, DataTypes) => {
 
             name: DataTypes.STRING,
             description: DataTypes.STRING,
-            createdTimestamp: DataTypes.INTEGER,
+            createdDate: DataTypes.DATE,
             quality: DataTypes.INTEGER,
             rarity: DataTypes.STRING,
             character: DataTypes.STRING,
             slot: DataTypes.STRING,
             type: DataTypes.STRING,
             event: DataTypes.STRING,
-            isTradeable: DataTypes.BOOLEAN
+            isTradable: DataTypes.BOOLEAN
         },
         {}
     )

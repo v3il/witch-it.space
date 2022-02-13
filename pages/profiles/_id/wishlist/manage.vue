@@ -37,20 +37,39 @@
                 </template>
               </Tabs>
 
-              <WishlistFilters
-                :default-filters="$options.defaultFilters"
-                :filters="filters"
-                :default-sort="$options.defaultSort"
-                :sort="sort"
-                :sorts="$options.sorts"
-                class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
-                @filtersChanged="onFiltersChange"
-                @sortChanged="onSortChange"
-              />
+              <div class="wit-flex wit-flex--align-start">
+                <WishlistFilters
+                  :default-filters="$options.defaultFilters"
+                  :filters="filters"
+                  :default-sort="$options.defaultSort"
+                  :sort="sort"
+                  :sorts="$options.sorts"
+                  class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
+                  @filtersChanged="onFiltersChange"
+                  @sortChanged="onSortChange"
+                />
 
-              <button @click="addAll">
-                Add all
-              </button>
+                <v-popover ref="popover" placement="bottom-end">
+                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                    <i class="mdi mdi-24px mdi-dots-grid" />
+                  </b-button>
+
+                  <div slot="popover">
+                    <ul>
+                      <li>
+                        <b-button type="is-ghost" class="wit-color--white" @click="addItemsToEditor">
+                          Add filtered items to editor
+                        </b-button>
+                      </li>
+                      <li>
+                        <b-button type="is-ghost" class="wit-color--white" @click="removeFromWishlist">
+                          Remove filtered items from wishlist
+                        </b-button>
+                      </li>
+                    </ul>
+                  </div>
+                </v-popover>
+              </div>
             </div>
 
             <template v-if="isWishlistMode">
@@ -177,8 +196,8 @@ export default {
 
     sorts: {
         rarity: 'Items_Sort_Rarity',
-        name: 'Items_Sort_Name',
-        wishlistStatus: 'Items_Sort_Wishlist_Status'
+        name: 'Items_Sort_Name'
+        // wishlistStatus: 'Items_Sort_Wishlist_Status'
     },
 
     components: {
@@ -237,8 +256,8 @@ export default {
                     return first.quality - second.quality
                 case 'name':
                     return first.name.localeCompare(second.name)
-                case 'wishlistStatus':
-                    return this.isItemInWishlist(first) - this.isItemInWishlist(second)
+                // case 'wishlistStatus':
+                //     return this.isItemInWishlist(first) - this.isItemInWishlist(second)
                 }
 
                 return 0
@@ -264,8 +283,8 @@ export default {
                     return first.quality - second.quality
                 case 'name':
                     return first.name.localeCompare(second.name)
-                case 'wishlistStatus':
-                    return this.isItemInWishlist(first) - this.isItemInWishlist(second)
+                // case 'wishlistStatus':
+                //     return this.isItemInWishlist(first) - this.isItemInWishlist(second)
                 }
 
                 return 0
@@ -289,6 +308,31 @@ export default {
     },
 
     methods: {
+        addItemsToEditor () {
+            this.sortedItemsInWishlist.forEach((wishlistModel) => {
+                console.log(this.selectedItems)
+
+                // const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
+
+                if (!this.selectedItems.includes(wishlistModel)) {
+                    this.selectedItems.push(wishlistModel /* || this.$wishlistService.createNewWishlistItem(item) */)
+                }
+            })
+        },
+
+        async removeFromWishlist () {
+            const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.sortedItemsInWishlist)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+            this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+
+            this.$showSuccess(`Removed ${removed} items`)
+        },
+
         async onDelete (id) {
             await this.$wishlistService.removeFromWishlist([id])
         },
@@ -389,8 +433,18 @@ export default {
 }
 
 .wit-wishlist-editor__items-filter,
-.wit-tabs-switcher {
+.wit-tabs-switcher,
+.wit-more-actions {
     padding: 0 var(--offset-xs);
+}
+
+.wit-more-actions {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background-color: #2e3648;
+    border: var(--default-border);
+    color: var(--body-color);
 }
 
 .wit-wishlist-editor__wishlist-list {

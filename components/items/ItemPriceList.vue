@@ -25,7 +25,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-item-price {
-    padding: var(--offset-xxs) var(--offset-xxs);
+    padding: 5px var(--offset-xxs);
     background-color: #3a445b;
     //border-radius: 4px;
     margin-bottom: 2px;
