@@ -11,7 +11,7 @@ const getItems = async (request, response) => {
     const itemMap = {}
 
     items.forEach((item) => {
-        itemMap[item.id] = item
+        itemMap[item.id] = item.get({ raw: true })
     })
 
     response.send({ items: itemMap })

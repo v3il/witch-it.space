@@ -4,7 +4,7 @@ import fs from 'fs'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import sharp from 'sharp'
-import { Item, sequelize } from '../../models/index.js'
+import { Item, sequelize } from '../models/index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

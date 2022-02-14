@@ -236,7 +236,7 @@ export default {
 
     computed: {
         items () {
-            return Object.values(this.$store.state.items.items).filter(item => item.isTradeable)
+            return Object.values(this.$store.state.items.items).filter(item => item.isTradable)
         },
 
         filteredItems () {

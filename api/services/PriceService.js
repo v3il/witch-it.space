@@ -2,28 +2,10 @@ import { AVAILABLE, PriceType } from '../../shared/items'
 import { config } from '../../shared'
 
 export class PriceService {
-    isValidRawPrice (rawPrice) {
-        if (!rawPrice) {
-            return false
-        }
-
-        const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
-
-        if ((!itemId && !itemId2) || (!itemCount && !itemCount2)) {
-            return false
-        }
-
-        const isValidType = Object.values(PriceType).includes(priceType)
-        const isValidItemId1 = !itemId || AVAILABLE.includes(itemId)
-        const isValidItemCount1 = Number.isInteger(itemCount) && itemCount >= 1 && itemCount < 100
-        const isValidItemId2 = !itemId2 || AVAILABLE.includes(itemId2)
-        const isValidItemCount2 = Number.isInteger(itemCount2) && itemCount2 >= 1 && itemCount2 < 100
-
-        return isValidType && isValidItemId1 && isValidItemCount1 && isValidItemId2 && isValidItemCount2
-    }
-
     normalizeRawPrices (rawPrices) {
         const normalizedPrices = []
+
+        console.log(222, rawPrices)
 
         rawPrices.forEach((rawPrice) => {
             if (!this.#isValidPrice(rawPrice)) {
@@ -31,16 +13,19 @@ export class PriceService {
             }
 
             const { priceType, itemId, itemCount, itemId2, itemCount2, id } = rawPrice
+            const isFixedPrice = priceType === PriceType.FIXED
 
             normalizedPrices.push({
                 id,
                 priceType,
-                itemId,
-                itemId2,
+                itemId: isFixedPrice ? itemId : 0,
+                itemId2: isFixedPrice ? itemId2 : 0,
                 itemCount: itemId ? itemCount : 0,
                 itemCount2: itemId2 ? itemCount2 : 0
             })
         })
+
+        console.log(222, normalizedPrices)
 
         return normalizedPrices.slice(0, config.MAX_PRICES)
     }
@@ -52,7 +37,7 @@ export class PriceService {
 
         const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
 
-        if ((!itemId && !itemId2) || (!itemCount && !itemCount2)) {
+        if (priceType === PriceType.FIXED && ((!itemId && !itemId2) || (!itemCount && !itemCount2))) {
             return false
         }
 
