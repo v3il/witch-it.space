@@ -1,5 +1,5 @@
-export const buildItemUrl = (itemName) => {
-    return `/images/items/${itemName}.webp`
+export const buildItemUrl = (itemId) => {
+    return `/images/items/${itemId}.webp`
 }
 
 export const buildAvatarUrl = (avatarId) => {

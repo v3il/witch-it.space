@@ -1,7 +1,14 @@
 import { Price } from '../models'
+import { config } from '../../shared'
 import { validatePrice } from '../../shared/validators'
 
 export class WishlistService {
+    #priceService
+
+    constructor ({ priceService }) {
+        this.#priceService = priceService
+    }
+
     async manage (user, wishlist) {
         const itemsToSave = []
 
@@ -19,13 +26,10 @@ export class WishlistService {
                     continue
                 }
 
-                const validatedPrices = (wishlistItem.rawPrices || []).filter(rawPrice => validatePrice(rawPrice))
-
-                if (!validatedPrices.length) {
-                    continue
-                }
-
-                wishlistItem.rawPrices = validatedPrices.slice(0, 2)
+                itemsToSave.push({
+                    itemId,
+                    rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
+                })
 
                 continue
             }

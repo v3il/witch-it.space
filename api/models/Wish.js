@@ -3,8 +3,7 @@ const initWishModel = (sequelize, DataTypes) => {
         'Wish',
         {
             itemId: DataTypes.INTEGER,
-            itemCount: DataTypes.INTEGER,
-            itemRarity: DataTypes.STRING
+            itemCount: DataTypes.INTEGER
         },
         { timestamps: true }
     )

@@ -4,6 +4,7 @@ import { WitchItApiService } from './WitchItApiService'
 import { QuestsService } from './QuestsService'
 import { UserService } from './UserService'
 import { WishlistService } from './WishlistService'
+import { PriceService } from './PriceService'
 
 const axiosInstance = axios.create({
     baseURL: 'https://master.witchit.com/api/v1',
@@ -19,4 +20,5 @@ const axiosInstance = axios.create({
 export const witchItApiService = new WitchItApiService({ axiosInstance })
 export const questsService = new QuestsService(items)
 export const userService = new UserService()
-export const wishlistService = new WishlistService()
+export const priceService = new PriceService()
+export const wishlistService = new WishlistService({ priceService })
