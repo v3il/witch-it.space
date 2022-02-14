@@ -1,7 +1,7 @@
 import { BadRequest } from '@curveball/http-errors'
 import { Price, Quest, User, Wish } from '../models'
 import { extractOtherUsersPublicData, extractUserPublicData, translateText } from '../util'
-import { userService } from '../services/index.js'
+import { userService, wishlistService } from '../services/index.js'
 
 const r = () => Math.floor(Math.random() * 100)
 
@@ -35,95 +35,194 @@ const getUserWishlist = async (request, response) => {
 }
 
 const addToWishlist = async (request, response) => {
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    console.log(Wish.bulkUpdate)
+
+    const used21 = process.memoryUsage().heapUsed / 1024 / 1024
+    console.log(`The script uses approximately ${used21} MB`)
+
+    const { user } = request
     const { wishlist } = request.body
 
-    const existingModelIds = wishlist.map(wishlistItem => wishlistItem.id)
-    const models = await Wish.findAll({
-        where: {
-            id: existingModelIds
-        },
-        include: [{ model: Price, as: 'rawPrices' }]
-    })
+    await wishlistService.manage(user, wishlist)
 
-    console.log(models)
+    // const existingWishlistItems = await user.getWishes({
+    //     include: { model: Price, as: 'rawPrices' }
+    // })
 
-    for (const wishlistItem of wishlist) {
-        let model = models.find(model => model.id === wishlistItem.id)
+    const used2 = process.memoryUsage().heapUsed / 1024 / 1024
+    console.log(`The script uses approximately ${used2} MB`)
 
-        if (!model) {
-            model = await Wish.create({
-                id: wishlistItem.id,
-                itemId: wishlistItem.itemId,
-                userId: user.id
-            })
-        }
+    // for (const wishlistItem of wishlist) {
+    //     const { id } = wishlistItem
+    //
+    //     if (!id) {
+    //
+    //     }
 
-        for (const priceModel of (model.rawPrices || [])) {
-            const raw = wishlistItem.rawPrices.find(raw => raw.id === priceModel.id)
+    //     let model = models.find(model => model.id === wishlistItem.id)
+    //
+    //     if (!model) {
+    //         model = await Wish.create({
+    //             id: wishlistItem.id,
+    //             itemId: wishlistItem.itemId,
+    //             userId: user.id
+    //         })
+    //     }
+    //
+    //     for (const priceModel of (model.rawPrices || [])) {
+    //         const raw = wishlistItem.rawPrices.find(raw => raw.id === priceModel.id)
+    //
+    //         if (!raw) {
+    //             console.error('Remove', priceModel.get())
+    //
+    //             await priceModel.destroy()
+    //         }
+    //     }
+    //
+    //     for (const rawPrice of wishlistItem.rawPrices || [
+    //         {
+    //             priceType: 'fixed',
+    //             itemId: 903,
+    //             itemCount: 10,
+    //             itemId2: 904,
+    //             itemCount2: 10,
+    //             priceValue: 0
+    //         },
+    //
+    //         {
+    //             priceType: 'fixed',
+    //             itemId: 903,
+    //             itemCount: 10,
+    //             itemId2: 904,
+    //             itemCount2: 10,
+    //             priceValue: 0
+    //         }
+    //     ]) {
+    //         const priceModel = (model.rawPrices || []).find(model => model.id === rawPrice.id)
+    //
+    //         if (priceModel) {
+    //             // console.error('Update', priceModel.get())
+    //             await priceModel.update({
+    //                 priceType: rawPrice.priceType,
+    //                 itemId: rawPrice.itemId,
+    //                 itemCount: rawPrice.itemCount,
+    //                 itemId2: rawPrice.itemId2,
+    //                 itemCount2: rawPrice.itemCount2,
+    //                 priceValue: 0
+    //             })
+    //         } else {
+    //             // console.error('Create', {
+    //             //     priceType: rawPrice.priceType,
+    //             //     itemId: rawPrice.itemId,
+    //             //     itemCount: rawPrice.itemCount,
+    //             //     itemId2: rawPrice.itemId2,
+    //             //     itemCount2: rawPrice.itemCount2
+    //             // })
+    //
+    //             const a = await Price.create({
+    //                 offerId: model.id,
+    //                 priceType: rawPrice.priceType,
+    //                 itemId: rawPrice.itemId,
+    //                 itemCount: rawPrice.itemCount,
+    //                 itemId2: rawPrice.itemId2,
+    //                 itemCount2: rawPrice.itemCount2,
+    //                 priceValue: 0
+    //             })
+    //
+    //             // console.error('Create', a.get())
+    //         }
+    //     }
+    // }
 
-            if (!raw) {
-                console.error('Remove', priceModel.get())
-
-                await priceModel.destroy()
-            }
-        }
-
-        for (const rawPrice of wishlistItem.rawPrices || [
-            {
-                priceType: 'fixed',
-                itemId: 903,
-                itemCount: 10,
-                itemId2: 904,
-                itemCount2: 10,
-                priceValue: 0
-            },
-
-            {
-                priceType: 'fixed',
-                itemId: 903,
-                itemCount: 10,
-                itemId2: 904,
-                itemCount2: 10,
-                priceValue: 0
-            }
-        ]) {
-            const priceModel = (model.rawPrices || []).find(model => model.id === rawPrice.id)
-
-            if (priceModel) {
-                console.error('Update', priceModel.get())
-                await priceModel.update({
-                    priceType: rawPrice.priceType,
-                    itemId: rawPrice.itemId,
-                    itemCount: rawPrice.itemCount,
-                    itemId2: rawPrice.itemId2,
-                    itemCount2: rawPrice.itemCount2,
-                    priceValue: 0
-                })
-            } else {
-                console.error('Create', {
-                    priceType: rawPrice.priceType,
-                    itemId: rawPrice.itemId,
-                    itemCount: rawPrice.itemCount,
-                    itemId2: rawPrice.itemId2,
-                    itemCount2: rawPrice.itemCount2
-                })
-
-                const a = await Price.create({
-                    offerId: model.id,
-                    priceType: rawPrice.priceType,
-                    itemId: rawPrice.itemId,
-                    itemCount: rawPrice.itemCount,
-                    itemId2: rawPrice.itemId2,
-                    itemCount2: rawPrice.itemCount2,
-                    priceValue: 0
-                })
-
-                console.error('Create', a.get())
-            }
-        }
-    }
+    // const existingModelIds = wishlist.map(wishlistItem => wishlistItem.id)
+    // const models = await Wish.findAll({
+    //     where: {
+    //         id: existingModelIds,
+    //         userId: id
+    //     },
+    //     include: [{ model: Price, as: 'rawPrices' }]
+    // })
+    //
+    // const used = process.memoryUsage().heapUsed / 1024 / 1024
+    // console.log(`The script uses approximately ${used} MB`)
+    //
+    // // console.log(models)
+    //
+    // for (const wishlistItem of wishlist) {
+    //     let model = models.find(model => model.id === wishlistItem.id)
+    //
+    //     if (!model) {
+    //         model = await Wish.create({
+    //             id: wishlistItem.id,
+    //             itemId: wishlistItem.itemId,
+    //             userId: user.id
+    //         })
+    //     }
+    //
+    //     for (const priceModel of (model.rawPrices || [])) {
+    //         const raw = wishlistItem.rawPrices.find(raw => raw.id === priceModel.id)
+    //
+    //         if (!raw) {
+    //             console.error('Remove', priceModel.get())
+    //
+    //             await priceModel.destroy()
+    //         }
+    //     }
+    //
+    //     for (const rawPrice of wishlistItem.rawPrices || [
+    //         {
+    //             priceType: 'fixed',
+    //             itemId: 903,
+    //             itemCount: 10,
+    //             itemId2: 904,
+    //             itemCount2: 10,
+    //             priceValue: 0
+    //         },
+    //
+    //         {
+    //             priceType: 'fixed',
+    //             itemId: 903,
+    //             itemCount: 10,
+    //             itemId2: 904,
+    //             itemCount2: 10,
+    //             priceValue: 0
+    //         }
+    //     ]) {
+    //         const priceModel = (model.rawPrices || []).find(model => model.id === rawPrice.id)
+    //
+    //         if (priceModel) {
+    //             // console.error('Update', priceModel.get())
+    //             await priceModel.update({
+    //                 priceType: rawPrice.priceType,
+    //                 itemId: rawPrice.itemId,
+    //                 itemCount: rawPrice.itemCount,
+    //                 itemId2: rawPrice.itemId2,
+    //                 itemCount2: rawPrice.itemCount2,
+    //                 priceValue: 0
+    //             })
+    //         } else {
+    //             // console.error('Create', {
+    //             //     priceType: rawPrice.priceType,
+    //             //     itemId: rawPrice.itemId,
+    //             //     itemCount: rawPrice.itemCount,
+    //             //     itemId2: rawPrice.itemId2,
+    //             //     itemCount2: rawPrice.itemCount2
+    //             // })
+    //
+    //             const a = await Price.create({
+    //                 offerId: model.id,
+    //                 priceType: rawPrice.priceType,
+    //                 itemId: rawPrice.itemId,
+    //                 itemCount: rawPrice.itemCount,
+    //                 itemId2: rawPrice.itemId2,
+    //                 itemCount2: rawPrice.itemCount2,
+    //                 priceValue: 0
+    //             })
+    //
+    //             // console.error('Create', a.get())
+    //         }
+    //     }
+    // }
 
     //     if (wishlistItem.id) {
     //         const wi = await Wish.findOne({ where: { id: wishlistItem.id } })
