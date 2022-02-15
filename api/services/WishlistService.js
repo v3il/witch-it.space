@@ -1,6 +1,4 @@
-import { Price } from '../models'
-import { config } from '../../shared'
-import { validatePrice } from '../../shared/validators'
+import { Price, sequelize, Wish } from '../models'
 
 export class WishlistService {
     #priceService
@@ -11,8 +9,8 @@ export class WishlistService {
 
     async manage (user, wishlist) {
         const itemsToSave = []
-        const itemsToUpdate = []
-        let pricesToRemoveIds = []
+
+        console.log('manage', wishlist)
 
         const existingWishlistItems = await user.getWishes({
             include: { model: Price, as: 'rawPrices' }
@@ -33,6 +31,8 @@ export class WishlistService {
                     rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
                 })
 
+                console.log('Create')
+
                 continue
             }
 
@@ -42,22 +42,33 @@ export class WishlistService {
                 continue
             }
 
-            const removedPrices = existingModel.rawPrices
-                .filter(existingPrice => !wishlistItem.rawPrices.some(rawPrice => rawPrice.id === existingPrice.id))
+            await sequelize.transaction(async (transaction) => {
+                const removedPrices = existingModel.rawPrices
+                    .filter(existingPrice => !wishlistItem.rawPrices.some(rawPrice => rawPrice.id === existingPrice.id))
 
-            console.log(removedPrices)
+                await Price.destroy({
+                    transaction,
+                    where: { id: removedPrices.map(existingPrice => existingPrice.id) }
+                })
 
-            pricesToRemoveIds = pricesToRemoveIds.concat(removedPrices.map(existingPrice => existingPrice.id))
+                await Wish.update({
+                    id,
+                    itemId,
+                    rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
+                }, { include: { model: Price, as: 'rawPrices' }, transaction })
 
-            itemsToUpdate.push({
-                id,
-                itemId,
-                rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
+                console.log('Update')
             })
         }
 
-        console.log(JSON.stringify(itemsToSave, null, 2))
-        console.log(JSON.stringify(itemsToUpdate, null, 2))
-        console.log(JSON.stringify(pricesToRemoveIds, null, 2))
+        console.log('Create2', itemsToSave)
+
+        await Wish.bulkCreate(itemsToSave, {
+            include: { model: Price, as: 'rawPrices' }
+        })
+
+        // console.log(JSON.stringify(itemsToSave, null, 2))
+        // console.log(JSON.stringify(itemsToUpdate, null, 2))
+        // console.log(JSON.stringify(pricesToRemoveIds, null, 2))
     }
 }

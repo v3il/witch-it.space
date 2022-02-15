@@ -5,8 +5,6 @@ export class PriceService {
     normalizeRawPrices (rawPrices) {
         const normalizedPrices = []
 
-        console.log(222, rawPrices)
-
         rawPrices.forEach((rawPrice) => {
             if (!this.#isValidPrice(rawPrice)) {
                 return
@@ -24,8 +22,6 @@ export class PriceService {
                 itemCount2: itemId2 ? itemCount2 : 0
             })
         })
-
-        console.log(222, normalizedPrices)
 
         return normalizedPrices.slice(0, config.MAX_PRICES)
     }
