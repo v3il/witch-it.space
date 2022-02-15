@@ -10,7 +10,7 @@ export class WishlistService {
     async manage (user, wishlist) {
         const itemsToSave = []
 
-        console.log('manage', wishlist)
+        // console.log('manage', wishlist)
 
         const existingWishlistItems = await user.getWishes({
             include: { model: Price, as: 'rawPrices' }
@@ -28,6 +28,7 @@ export class WishlistService {
 
                 itemsToSave.push({
                     itemId,
+                    userId: user.id,
                     rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
                 })
 
@@ -51,17 +52,24 @@ export class WishlistService {
                     where: { id: removedPrices.map(existingPrice => existingPrice.id) }
                 })
 
-                await Wish.update({
-                    id,
-                    itemId,
-                    rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
-                }, { include: { model: Price, as: 'rawPrices' }, transaction })
+                const normalizedPrices = this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
+
+                for (const price of normalizedPrices) {
+                    await Price.upsert({
+                        ...price,
+                        offerId: existingModel.id
+                    }, { returning: true, transaction })
+                }
+
+                // await existingModel.update({
+                //     rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
+                // }, { include: { model: Price, as: 'rawPrices' }, transaction })
 
                 console.log('Update')
             })
         }
 
-        console.log('Create2', itemsToSave)
+        // console.log('Create2', itemsToSave)
 
         await Wish.bulkCreate(itemsToSave, {
             include: { model: Price, as: 'rawPrices' }

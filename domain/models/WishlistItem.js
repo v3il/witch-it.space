@@ -1,3 +1,5 @@
+import { Price } from '@/domain/models/Price.js'
+
 export class WishlistItem {
     _model
     #modelJSON
@@ -44,5 +46,12 @@ export class WishlistItem {
         const model = { ...this._model, prices }
 
         return new WishlistItem({ model })
+    }
+
+    __SET_PRICES () {
+        this._model.prices = [
+            new Price({ priceType: 'fixed', itemId: 903, itemCount: 50, itemId2: 904, itemCount2: 50 }),
+            new Price({ priceType: 'fixed', itemId: 901, itemCount: 50, itemId2: 902, itemCount2: 50 })
+        ]
     }
 }

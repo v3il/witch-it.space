@@ -141,6 +141,10 @@
                 <b-button type="is-danger" expanded @click="removeSelected">
                   R
                 </b-button>
+
+                <b-button type="is-danger" expanded @click="setPrice">
+                  sp
+                </b-button>
               </div>
             </div>
 
@@ -308,9 +312,19 @@ export default {
     },
 
     methods: {
+        setPrice () {
+            this.selectedItems.forEach(si => si.__SET_PRICES())
+        },
+
         addItemsToEditor () {
+            if (this.isAllItemsMode) {
+                return this.addAll()
+            }
+
+            console.time()
+
             this.sortedItemsInWishlist.forEach((wishlistModel) => {
-                console.log(this.selectedItems)
+                // console.log(this.selectedItems)
 
                 // const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
 
@@ -318,6 +332,8 @@ export default {
                     this.selectedItems.push(wishlistModel /* || this.$wishlistService.createNewWishlistItem(item) */)
                 }
             })
+
+            console.timeEnd()
         },
 
         async removeFromWishlist () {
