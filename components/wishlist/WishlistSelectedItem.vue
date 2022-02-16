@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex wit-flex--column wit-flex--align-start wit-block--full-width">
-    <div class="wit-flex wit-flex--align-start wit-block--full-width wit-offset-bottom--xs">
+    <div class="wit-flex wit-flex--align-start wit-block--full-width wit-offset-bottom--sm">
       <ItemView add-tooltip :item="wishlistItem.item" :is-title-shown="false" style="max-width: 58px;" class="wit-offset-right--sm wit-flex__item--no-shrink" />
 
       <div class="wit-flex__item--grow" style="flex: 1 1 auto; min-width: 0;">
@@ -14,7 +14,7 @@
             <!--            <p>{{ JSON.stringify(wishlistItem.id) }}</p>&nbsp;-->
             <!--            <p>{{ wishlistItem.hasChanges }}</p>-->
 
-            <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink" style="margin-right: -3px;">
+            <div class="wit-flex wit-flex--align-center wit-offset-left--md wit-flex__item--no-shrink">
               <!--            <b-button v-tooltip="'Add price'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">-->
               <!--              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />-->
               <!--            </b-button>-->
@@ -25,20 +25,22 @@
                 size="is-small"
                 type="is-ghost"
                 class="wit-paddings--none wit-offset-right--sm"
-                @click="$emit('delete', wishlistItem.id)"
+                @click="$emit('delete', wishlistItem)"
               >
                 <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
               </b-button>
 
-              <b-button
-                v-tooltip="'Remove'"
-                size="is-small"
-                type="is-ghost"
-                class="wit-paddings--none"
-                @click="removeItem"
-              >
-                <i class="mdi mdi-24px mdi-trash-can-outline wit-color--danger" />
-              </b-button>
+              <RemoveButton v-tooltip="'Remove'" @click="removeItem" />
+
+              <!--              <b-button-->
+              <!--                v-tooltip="'Remove'"-->
+              <!--                size="is-small"-->
+              <!--                type="is-ghost"-->
+              <!--                class="wit-paddings&#45;&#45;none"-->
+              <!--                @click="removeItem"-->
+              <!--              >-->
+              <!--                <i class="mdi mdi-24px mdi-trash-can-outline wit-color&#45;&#45;danger" />-->
+              <!--              </b-button>-->
 
               <!--            <b-button size="is-small" type="is-danger is-light" @click="removeItem">-->
               <!--              {{ $t('Wishlist_Remove') }}-->
@@ -74,13 +76,15 @@
           <!--            &lt;!&ndash;          </div>&ndash;&gt;-->
           <!--          </div>-->
 
-          <b-tag v-if="wishlistItem.isNew" type="is-success" style="width: 100px;">
-            New
-          </b-tag>
+          <b-taglist>
+            <b-tag v-if="wishlistItem.isNew" type="is-success">
+              New
+            </b-tag>
 
-          <b-tag v-else type="is-primary" style="width: 100px;">
-            In wishlist
-          </b-tag>
+            <b-tag v-else type="is-primary">
+              In wishlist
+            </b-tag>
+          </b-taglist>
 
           <!--          <ItemTags :item="wishlistItem.item" only-primary class="wit-offset-bottom&#45;&#45;none" />-->
         </div>
@@ -92,7 +96,7 @@
         v-for="price in wishlistItem.prices"
         :key="price.id"
         :price="price"
-        :is-removeable="isAllPricesAdded"
+        :is-removable="hasOnePrice"
         class="wit-price-editor wit-block--full-width"
         @priceTypeChanged="onPriceTypeChanged"
         @priceRemoved="onPriceRemoved"
@@ -151,6 +155,10 @@ export default {
     computed: {
         isAllPricesAdded () {
             return this.wishlistItem.prices.length >= config.MAX_PRICES
+        },
+
+        hasOnePrice () {
+            return this.wishlistItem.prices.length > 1
         }
     },
 
@@ -169,6 +177,7 @@ export default {
         },
 
         removeItem () {
+            console.log(this.wishlistItem)
             this.$emit('itemRemoved', this.wishlistItem)
         }
     }

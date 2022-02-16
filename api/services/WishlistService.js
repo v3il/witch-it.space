@@ -69,14 +69,8 @@ export class WishlistService {
             })
         }
 
-        // console.log('Create2', itemsToSave)
-
         await Wish.bulkCreate(itemsToSave, {
             include: { model: Price, as: 'rawPrices' }
         })
-
-        // console.log(JSON.stringify(itemsToSave, null, 2))
-        // console.log(JSON.stringify(itemsToUpdate, null, 2))
-        // console.log(JSON.stringify(pricesToRemoveIds, null, 2))
     }
 }

@@ -80,6 +80,7 @@
                     :key="wishlistModel.id"
                     :item="wishlistModel.item"
                     :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
+                    style="border-width: 2px;"
                     @clicked="toggleWishlistItem(wishlistModel)"
                   >
                     <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
@@ -349,8 +350,17 @@ export default {
             this.$showSuccess(`Removed ${removed} items`)
         },
 
-        async onDelete (id) {
-            await this.$wishlistService.removeFromWishlist([id])
+        async onDelete (wishlistModel) {
+            const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist([wishlistModel])
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+            this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+
+            this.$showSuccess(`Removed ${removed} items`)
         },
 
         async removeSelected () {
@@ -425,8 +435,8 @@ export default {
             return this.selectedItems.some(wishlistItem => wishlistItem.item === item)
         },
 
-        isItemInWishlist (item) {
-            return this.wishlistModels.some(wishlistItem => wishlistItem.item.id === item.id)
+        isItemInWishlist (wishlistModel) {
+            return this.wishlistModels.includes(wishlistModel)
         },
 
         saveWishlistItems () {
