@@ -1,3 +1,5 @@
+import { PRIMARY, SECONDARY } from '@/shared/items/index.js'
+
 export class ItemsService {
     #items = {}
     #primary = []
@@ -5,12 +7,12 @@ export class ItemsService {
 
     setItems (items) {
         this.#items = items
-        this.#primary = [900, 901, 902, 903, 904].map(id => this.getById(id))
-        this.#secondary = [910, 911, 912, 913, 914, 915, 916, 917, 918].map(id => this.getById(id))
+        this.#primary = PRIMARY.map(id => this.getById(id))
+        this.#secondary = SECONDARY.map(id => this.getById(id))
     }
 
     getById (id) {
-        return this.#items[String(id)]
+        return Object.freeze(this.#items[String(id)])
     }
 
     toList () {

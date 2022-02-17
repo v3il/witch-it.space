@@ -79,7 +79,7 @@
                     v-for="wishlistModel in visibleItems"
                     :key="wishlistModel.id"
                     :item="wishlistModel.item"
-                    :class="{ 'wit-selected-item': isItemSelected(wishlistModel.item) }"
+                    :class="{ 'wit-selected-item': isWishlistItemSelected(wishlistModel) }"
                     style="border-width: 2px;"
                     @clicked="toggleWishlistItem(wishlistModel)"
                   >
@@ -101,9 +101,9 @@
                     :class="{ 'wit-selected-item': isItemSelected(item) }"
                     @clicked="toggleItem"
                   >
-                    <div v-if="isItemInWishlist(item)" v-tooltip.top="$t('Wishlist_AlreadyInWishlist')" class="wit-position--absolute wit-item__icon-container">
-                      <i class="mdi mdi-heart mdi-18px wit-color--white wit-item__icon" />
-                    </div>
+                    <!--                    <div v-if="isItemInWishlist(item)" v-tooltip.top="$t('Wishlist_AlreadyInWishlist')" class="wit-position&#45;&#45;absolute wit-item__icon-container">-->
+                    <!--                      <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
+                    <!--                    </div>-->
                   </ItemView>
                 </template>
               </InfinityGrid>
@@ -117,10 +117,9 @@
               <ScrollablePagination :items="selectedItems" :items-per-page="20" class="wit-offset-bottom--sm">
                 <template #default="{ visibleItems }">
                   <WishlistSelectedItem
-                    v-for="wi in visibleItems"
-                    :key="wi.id"
-                    :wishlist-item="wi"
-                    :is-in-wishlist="isItemInWishlist(wi)"
+                    v-for="wishlistModel in visibleItems"
+                    :key="wishlistModel.id"
+                    :wishlist-item="wishlistModel"
                     class="wit-wishlist-editor__item"
                     @itemRemoved="toggleWishlistItem"
                     @delete="onDelete"
@@ -143,7 +142,7 @@
                   R
                 </b-button>
 
-                <b-button type="is-danger" expanded @click="setPrice">
+                <b-button type="is-danger" expanded>
                   sp
                 </b-button>
               </div>
@@ -236,16 +235,18 @@ export default {
         sort: { ...DEFAULT_SORT },
         selectedItems: [],
         mode: Modes.WISHLIST,
-        wishlistModels: []
+        wishlistModels: [],
+        tradableItems: []
     }),
 
     computed: {
-        items () {
-            return Object.values(this.$store.state.items.items).filter(item => item.isTradable)
+        availableItems () {
+            const itemsInWishlist = this.wishlistModels.map(wishlistItem => wishlistItem.item)
+            return this.tradableItems.filter(item => !itemsInWishlist.includes(item))
         },
 
         filteredItems () {
-            return this.items.filter(this.isFilteredItem)
+            return this.availableItems.filter(this.isFilteredItem)
         },
 
         sortedItems () {
@@ -261,8 +262,6 @@ export default {
                     return first.quality - second.quality
                 case 'name':
                     return first.name.localeCompare(second.name)
-                // case 'wishlistStatus':
-                //     return this.isItemInWishlist(first) - this.isItemInWishlist(second)
                 }
 
                 return 0
@@ -288,8 +287,6 @@ export default {
                     return first.quality - second.quality
                 case 'name':
                     return first.name.localeCompare(second.name)
-                // case 'wishlistStatus':
-                //     return this.isItemInWishlist(first) - this.isItemInWishlist(second)
                 }
 
                 return 0
@@ -306,6 +303,7 @@ export default {
     },
 
     created () {
+        this.tradableItems = this.$itemsService.toList().filter(item => item.isTradable)
         this.wishlistModels = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem({ wishlistItem }))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
@@ -313,28 +311,20 @@ export default {
     },
 
     methods: {
-        setPrice () {
-            this.selectedItems.forEach(si => si.__SET_PRICES())
-        },
-
         addItemsToEditor () {
             if (this.isAllItemsMode) {
-                return this.addAll()
+                return this.sortedItems.forEach((item) => {
+                    if (!this.isItemSelected(item)) {
+                        this.selectedItems.push(this.$wishlistService.createNewWishlistItem(item))
+                    }
+                })
             }
 
-            console.time()
-
             this.sortedItemsInWishlist.forEach((wishlistModel) => {
-                // console.log(this.selectedItems)
-
-                // const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
-
-                if (!this.selectedItems.includes(wishlistModel)) {
-                    this.selectedItems.push(wishlistModel /* || this.$wishlistService.createNewWishlistItem(item) */)
+                if (!this.isWishlistItemSelected(wishlistModel)) {
+                    this.selectedItems.push(wishlistModel)
                 }
             })
-
-            console.timeEnd()
         },
 
         async removeFromWishlist () {
@@ -376,18 +366,6 @@ export default {
             this.$showSuccess(`Removed ${removed} items`)
         },
 
-        addAll () {
-            const a = performance.now()
-
-            this.sortedItems.forEach((item) => {
-                const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
-
-                this.selectedItems.push(wishlistModel || this.$wishlistService.createNewWishlistItem(item))
-            })
-
-            console.log(performance.now() - a)
-        },
-
         onFiltersChange (filters) {
             this.filters = filters
         },
@@ -412,7 +390,7 @@ export default {
         },
 
         toggleWishlistItem (wishlistModel) {
-            if (this.selectedItems.includes(wishlistModel)) {
+            if (this.isWishlistItemSelected(wishlistModel)) {
                 return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== wishlistModel)
             }
 
@@ -426,18 +404,20 @@ export default {
                 return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
             }
 
-            const wishlistModel = this.wishlistModels.find(wishlistModel => wishlistModel.item === item)
+            this.selectedItems.push(this.$wishlistService.createNewWishlistItem(item))
+        },
 
-            this.selectedItems.push(wishlistModel || this.$wishlistService.createNewWishlistItem(item))
+        isWishlistItemSelected (wishlistModel) {
+            return this.selectedItems.includes(wishlistModel)
         },
 
         isItemSelected (item) {
-            return this.selectedItems.some(wishlistItem => wishlistItem.item === item)
+            return this.selectedItems.some(wishlistModel => wishlistModel.item === item)
         },
 
-        isItemInWishlist (wishlistModel) {
-            return this.wishlistModels.includes(wishlistModel)
-        },
+        // isItemInWishlist (wishlistModel) {
+        //     return this.wishlistModels.includes(wishlistModel)
+        // },
 
         saveWishlistItems () {
             this.$wishlistService.saveWishlist(this.selectedItems)
@@ -519,27 +499,27 @@ export default {
     box-shadow: 0 0 6px 3px var(--bg-color);
 }
 
-.wit-item__icon-container {
-    top: 4px;
-    left: 4px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--danger);
-}
+//.wit-item__icon-container {
+//    top: 4px;
+//    left: 4px;
+//    width: 24px;
+//    height: 24px;
+//    border-radius: 50%;
+//    display: flex;
+//    align-items: center;
+//    justify-content: center;
+//    background: var(--danger);
+//}
+//
+//.wit-item__icon {
+//    width: 18px;
+//    height: 18px;
+//    text-align: center;
+//}
 
-.wit-item__icon {
-    width: 18px;
-    height: 18px;
-    text-align: center;
-}
-
-.wit-items-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    grid-column-gap: var(--offset-sm);
-    grid-row-gap: var(--offset-sm);
-}
+//.wit-items-grid {
+//    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+//    grid-column-gap: var(--offset-sm);
+//    grid-row-gap: var(--offset-sm);
+//}
 </style>
