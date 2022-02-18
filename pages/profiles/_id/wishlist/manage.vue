@@ -453,28 +453,30 @@ export default {
     color: var(--body-color);
 }
 
-.wit-wishlist-editor__wishlist-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    grid-column-gap: 16px; //var(--offset-sm);
-    grid-auto-rows: max-content;
-    grid-row-gap: 16px; //var(--offset-sm);
-    justify-items: center;
-    overflow-y: scroll;
-    padding-right: var(--offset-xs);
-}
+//.wit-wishlist-editor__wishlist-list {
+//    display: grid;
+//    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+//    grid-column-gap: 16px; //var(--offset-sm);
+//    grid-auto-rows: max-content;
+//    grid-row-gap: 16px; //var(--offset-sm);
+//    justify-items: center;
+//    overflow-y: scroll;
+//    padding-right: var(--offset-xs);
+//}
 
 .wit-wishlist-editor__item {
-    padding-bottom: 8px;
-    padding-top: 8px;
+    &:not(:first-child) {
+        padding-top: 16px;
+    }
 
     &:not(:last-child) {
         border-bottom: var(--default-border);
+        padding-bottom: 16px;
     }
 }
 
-.wit-wishlist-editor__items-list,
-.wit-wishlist-editor__wishlist-list {
+.wit-wishlist-editor__items-list/*,
+.wit-wishlist-editor__wishlist-list*/ {
     padding: var(--offset-xs) var(--offset-xs) 0;
     margin-right: var(--offset-xs);
 }

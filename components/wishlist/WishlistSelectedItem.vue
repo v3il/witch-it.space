@@ -108,7 +108,7 @@
       size="is-small1"
       type="is-primary is-light"
       expanded
-      class="wit-offset-bottom--sm"
+      class="wit-offset-bottom--sm1"
       style="background: transparent; border: 1px dashed var(--primary); color: var(--muted-text-color);"
       @click="addPrice"
     >
