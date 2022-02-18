@@ -73,28 +73,30 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <InfinityGrid v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" cell-width="130px" mobile-cell-width="140px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
-                  <ItemView
-                    v-for="wishlistModel in visibleItems"
-                    :key="wishlistModel.id"
-                    :item="wishlistModel.item"
-                    :class="{ 'wit-selected-item': isWishlistItemSelected(wishlistModel) }"
-                    style="border-width: 2px;"
-                    @clicked="toggleWishlistItem(wishlistModel)"
-                  >
-                    <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
-                  </ItemView>
+                  <Grid cell-width="130px" mobile-cell-width="130px">
+                    <ItemView
+                      v-for="wishlistModel in visibleItems"
+                      :key="wishlistModel.id"
+                      :item="wishlistModel.item"
+                      :class="{ 'wit-selected-item': isWishlistItemSelected(wishlistModel) }"
+                      style="border-width: 2px;"
+                      @clicked="toggleWishlistItem(wishlistModel)"
+                    >
+                      <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
+                    </ItemView>
+                  </Grid>
                 </template>
-              </InfinityGrid>
+              </ScrollablePagination>
 
               <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" :items-per-page="50" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
-                  <Grid cell-width="130px" mobile-cell-width="100px">
+                  <Grid cell-width="130px" mobile-cell-width="130px">
                     <ItemView
                       v-for="item in visibleItems"
                       :key="item.id"
@@ -124,12 +126,6 @@
                   />
                 </template>
               </ScrollablePagination>
-
-              <!--              <InfinityGrid :items="selectedItems" cell-width="100%" mobile-cell-width="100%" class="wit-block&#45;&#45;full-height wit-offset-bottom&#45;&#45;sm">-->
-              <!--                <template #default="{ visibleItems }">-->
-              <!--                  <WishlistSelectedItem v-for="wi in visibleItems" :key="wi.id" :wishlist-item="wi" class="wit-wishlist-editor__item" @itemRemoved="toggleWishlistItem" />-->
-              <!--                </template>-->
-              <!--              </InfinityGrid>-->
 
               <div class="wit-flex__item--no-shrink wit-flex">
                 <b-button type="is-danger" class="wit-flex__item--grow wit-offset-right--xs" expanded @click="saveWishlistItems">
