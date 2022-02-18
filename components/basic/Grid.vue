@@ -12,10 +12,10 @@ export default {
     name: 'InfinityGrid',
 
     props: {
-        items: {
-            type: Array,
-            required: true
-        },
+        // items: {
+        //     type: Array,
+        //     required: true
+        // },
 
         cellWidth: {
             type: String,
@@ -77,8 +77,8 @@ export default {
     grid-row-gap: var(--grid-gap);
     grid-auto-rows: max-content;
     justify-items: center;
-    overflow-y: scroll;
-    padding-right: var(--offset-sm);
+    //overflow-y: scroll;
+    //padding-right: var(--offset-sm);
 
     @media screen and (max-width: 768px) {
         justify-content: center;

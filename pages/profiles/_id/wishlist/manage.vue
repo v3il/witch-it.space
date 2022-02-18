@@ -92,21 +92,19 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <InfinityGrid v-if="sortedItems.length" :items="sortedItems" cell-width="130px" mobile-cell-width="100px" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" :items-per-page="50" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
-                  <ItemView
-                    v-for="item in visibleItems"
-                    :key="item.id"
-                    :item="item"
-                    :class="{ 'wit-selected-item': isItemSelected(item) }"
-                    @clicked="toggleItem"
-                  >
-                    <!--                    <div v-if="isItemInWishlist(item)" v-tooltip.top="$t('Wishlist_AlreadyInWishlist')" class="wit-position&#45;&#45;absolute wit-item__icon-container">-->
-                    <!--                      <i class="mdi mdi-heart mdi-18px wit-color&#45;&#45;white wit-item__icon" />-->
-                    <!--                    </div>-->
-                  </ItemView>
+                  <Grid cell-width="130px" mobile-cell-width="100px">
+                    <ItemView
+                      v-for="item in visibleItems"
+                      :key="item.id"
+                      :item="item"
+                      :class="{ 'wit-selected-item': isItemSelected(item) }"
+                      @clicked="toggleItem"
+                    />
+                  </Grid>
                 </template>
-              </InfinityGrid>
+              </ScrollablePagination>
 
               <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
             </template>
@@ -172,6 +170,7 @@ import ItemPrice from '@/components/items/ItemPrice.vue'
 import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
+import Grid from '@/components/basic/Grid.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -216,7 +215,8 @@ export default {
         ItemPrice,
         InfinityGrid,
         ItemPriceList,
-        ScrollablePagination
+        ScrollablePagination,
+        Grid
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
