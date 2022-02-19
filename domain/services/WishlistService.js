@@ -57,17 +57,23 @@ export class WishlistService {
         }))
 
         try {
-            await this.#axiosInstance.post('/api/wishlist/manage', {
+            const { created, updated } = await this.#axiosInstance.$post('/api/wishlist/manage', {
                 wishlist: data
             })
+
+            console.error(created, updated)
+
             return {
-                error: null
+                error: null,
+                created,
+                updated
                 // wishlist: data.wishlist
             }
         } catch (e) {
             return {
                 error: e.message,
-                wishlist: null
+                created: [],
+                updated: []
             }
         }
     }

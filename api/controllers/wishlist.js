@@ -43,7 +43,7 @@ const addToWishlist = async (request, response) => {
     const { user } = request
     const { wishlist } = request.body
 
-    await wishlistService.manage(user, wishlist)
+    const { created, updated } = await wishlistService.manage(user, wishlist)
 
     // const existingWishlistItems = await user.getWishes({
     //     include: { model: Price, as: 'rawPrices' }
@@ -296,7 +296,7 @@ const addToWishlist = async (request, response) => {
 
     // const parsedUser = user ? extractUserPublicData(user) : null
 
-    response.send({ ok: 1 })
+    response.send({ created, updated })
 }
 
 const editWishlistItem = async (request, response) => {

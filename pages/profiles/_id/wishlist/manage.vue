@@ -390,7 +390,7 @@ export default {
                 return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== wishlistModel)
             }
 
-            this.selectedItems.push(wishlistModel)
+            this.selectedItems.push(wishlistModel.clone())
         },
 
         toggleItem (item) {
@@ -415,8 +415,33 @@ export default {
         //     return this.wishlistModels.includes(wishlistModel)
         // },
 
-        saveWishlistItems () {
-            this.$wishlistService.saveWishlist(this.selectedItems)
+        async saveWishlistItems () {
+            const { created, updated, error } = await this.$wishlistService.saveWishlist(this.selectedItems)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            const createdModels = created.map(wishlistItem => this.$wishlistService.createWishlistItem({ wishlistItem }))
+            this.wishlistModels.push(...createdModels)
+
+            updated.forEach((updatedModel) => {
+                const index = this.wishlistModels.findIndex(wm => wm.id === updatedModel.id)
+
+                if (index) {
+                    this.wishlistModels.splice(index, 1,
+                        this.$wishlistService.createWishlistItem({ wishlistItem: updatedModel }))
+                }
+            })
+
+            this.selectedItems = []
+
+            // this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+            // this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
+
+            // this.$showSuccess(`Removed ${removed} items`)
+
+            console.log(created, updated, error)
         }
     }
 }
