@@ -7,6 +7,21 @@ export class WishlistService {
         this.#priceService = priceService
     }
 
+    async getUserWishes (userId) {
+        return await Wish.findAll({
+            where: { userId },
+
+            order: [
+                [{ model: Price, as: 'rawPrices' }, 'id', 'ASC']
+            ],
+
+            include: {
+                model: Price,
+                as: 'rawPrices'
+            }
+        })
+    }
+
     async manage (user, wishlist) {
         const updated = []
         const itemsToSave = []
@@ -51,7 +66,7 @@ export class WishlistService {
                     .filter(existingPrice => !wishlistItem.rawPrices.some(rawPrice => rawPrice.id === existingPrice.id))
 
                 await Price.destroy({
-                // transaction,
+                    transaction,
                     where: { id: removedPrices.map(existingPrice => existingPrice.id) }
                 })
 
@@ -65,7 +80,7 @@ export class WishlistService {
                     await Price.upsert({
                         ...price,
                         offerId: existingModel.id
-                    }, { returning: true/*, transaction */ })
+                    }, { returning: true, transaction })
                 }
 
                 await existingModel.reload({

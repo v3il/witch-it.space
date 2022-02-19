@@ -32,26 +32,40 @@ export class PriceService {
     }
 
     #isValidPrice (rawPrice) {
-        console.error(rawPrice)
+        // console.error(rawPrice)
 
         if (!rawPrice) {
             return false
         }
 
-        const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
+        if (rawPrice.priceType === PriceType.FIXED) {
+            console.log(this.#isFixedPriceValid(rawPrice))
 
-        if (priceType === PriceType.FIXED && ((!itemId && !itemId2) || (!itemCount && !itemCount2))) {
+            return this.#isFixedPriceValid(rawPrice)
+        }
+
+        return rawPrice.priceType === PriceType.ANY || rawPrice.priceType === PriceType.WISHLIST
+    }
+
+    #isFixedPriceValid (rawPrice) {
+        const { itemId, itemCount, itemId2, itemCount2 } = rawPrice
+
+        const hasValidItems = [itemId, itemId2].some(itemId => AVAILABLE.includes(itemId))
+
+        if (!hasValidItems) {
             return false
         }
 
-        const isValidType = Object.values(PriceType).includes(priceType)
-        const isValidItemId1 = !itemId || AVAILABLE.includes(itemId)
-        const isValidItemCount1 = Number.isInteger(itemCount) && itemCount >= 0 && itemCount < 100
-        const isValidItemId2 = !itemId2 || AVAILABLE.includes(itemId2)
-        const isValidItemCount2 = Number.isInteger(itemCount2) && itemCount2 >= 0 && itemCount2 < 100
+        const isValidItemId1 = AVAILABLE.includes(itemId)
+        const isValidItemCount1 = Number.isInteger(itemCount) && itemCount >= config.MIN_PRICE_VALUE && itemCount < config.MAX_PRICE_VALUE
 
-        console.error(isValidType && isValidItemId1 && isValidItemCount1 && isValidItemId2 && isValidItemCount2)
+        if (isValidItemId1 && !isValidItemCount1) {
+            return false
+        }
 
-        return isValidType && isValidItemId1 && isValidItemCount1 && isValidItemId2 && isValidItemCount2
+        const isValidItemId2 = AVAILABLE.includes(itemId2)
+        const isValidItemCount2 = Number.isInteger(itemCount2) && itemCount2 >= config.MIN_PRICE_VALUE && itemCount2 < config.MAX_PRICE_VALUE
+
+        return !(isValidItemId2 && !isValidItemCount2)
     }
 }

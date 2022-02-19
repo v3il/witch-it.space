@@ -39,5 +39,7 @@ export const config = {
     LOCALE_COOKIE_DURATION: 60 * 60 * 24 * 365, // 365 days
     QUESTS_UPDATE_TIMEOUT: 5 * 60, // 5 mins
 
-    MAX_PRICES: 2
+    MAX_PRICES: 2,
+    MIN_PRICE_VALUE: 1,
+    MAX_PRICE_VALUE: 100
 }
