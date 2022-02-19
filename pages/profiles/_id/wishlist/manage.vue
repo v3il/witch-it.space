@@ -387,7 +387,7 @@ export default {
 
         toggleWishlistItem (wishlistModel) {
             if (this.isWishlistItemSelected(wishlistModel)) {
-                return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== wishlistModel)
+                return this.selectedItems = this.selectedItems.filter(selectedOffer => selectedOffer.id !== wishlistModel.id)
             }
 
             this.selectedItems.push(wishlistModel.clone())
@@ -404,7 +404,7 @@ export default {
         },
 
         isWishlistItemSelected (wishlistModel) {
-            return this.selectedItems.includes(wishlistModel)
+            return this.selectedItems.some(selectedOffer => selectedOffer.id === wishlistModel.id)
         },
 
         isItemSelected (item) {
@@ -426,20 +426,27 @@ export default {
             this.wishlistModels.push(...createdModels)
 
             updated.forEach((updatedModel) => {
-                const index = this.wishlistModels.findIndex(wm => wm.id === updatedModel.id)
+                const offerModel = this.wishlistModels.find(offerModel => offerModel.id === updatedModel.id)
 
-                if (index) {
-                    this.wishlistModels.splice(index, 1,
-                        this.$wishlistService.createWishlistItem({ wishlistItem: updatedModel }))
+                if (offerModel) {
+                    this.$wishlistService.updateWishlistItem(offerModel, updatedModel)
                 }
             })
 
-            this.selectedItems = []
+            this.selectedItems.forEach((offerModel, index) => {
+                const model = this.wishlistModels.find(wm => wm.item.id === offerModel.item.id)
+
+                if (model) {
+                    this.selectedItems.splice(index, 1, model.clone())
+                }
+            })
+
+            // this.selectedItems = []
 
             // this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
             // this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
 
-            // this.$showSuccess(`Removed ${removed} items`)
+            this.$showSuccess(`Updated ${updated.length} items`)
 
             console.log(created, updated, error)
         }

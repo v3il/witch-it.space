@@ -1,2 +1,2 @@
-export { WishlistItem } from './WishlistItem'
+export { Offer } from './Offer.js'
 export { Price } from './Price'

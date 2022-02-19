@@ -1,7 +1,7 @@
-import { WishlistItem } from '@/domain/models/index.js'
+import { Offer } from '@/domain/models/index.js'
 
 export class WishlistItemFactory {
     createWishlist (rawWishlistItem) {
-        return WishlistItem.create({ rawModel: rawWishlistItem })
+        return Offer.create({ rawModel: rawWishlistItem })
     }
 }

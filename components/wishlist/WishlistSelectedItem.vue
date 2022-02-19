@@ -8,6 +8,11 @@
           <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
             <p class="wit-font-size--sm wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow">
               {{ wishlistItem.item.name }}
+
+              <br>
+
+              {{ wishlistItem.isNew }}
+              {{ wishlistItem.hasChanges }}
             </p>
 
             <!--            <p>{{ wishlistItem.isNew }}</p>&nbsp;-->

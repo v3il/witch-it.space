@@ -69,4 +69,15 @@ export class Price {
     clone () {
         return new Price({ ...this._rawPrice })
     }
+
+    getData () {
+        return {
+            id: this.id,
+            priceType: this.priceType,
+            itemId: this.item1Id,
+            itemCount: this.item1Count,
+            itemId2: this.item2Id,
+            itemCount2: this.item2Count
+        }
+    }
 }

@@ -35,6 +35,11 @@ export class WishlistService {
         return this.#wishlistItemFactory.createWishlist(wishlistItem)
     }
 
+    updateWishlistItem (offerModel, updatedData) {
+        updatedData.prices = updatedData.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
+        offerModel.update(updatedData)
+    }
+
     createNewWishlistItem (item) {
         return this.#wishlistItemFactory.createWishlist({
             item,
@@ -43,38 +48,28 @@ export class WishlistService {
     }
 
     async saveWishlist (wishlistItems) {
-        const data = wishlistItems.map(wi => ({
-            id: wi.id,
-            itemId: wi.item.id,
-            rawPrices: wi.prices.map(p => ({
-                id: p.id,
-                priceType: p.priceType,
-                itemId: p.item1Id,
-                itemCount: p.item1Count,
-                itemId2: p.item2Id,
-                itemCount2: p.item2Count
-            }))
-        }))
+        const changedOffersData = []
+
+        wishlistItems.forEach((offerModel) => {
+            if (offerModel.isNew || offerModel.hasChanges) {
+                changedOffersData.push(offerModel.getData())
+            }
+        })
+
+        if (!wishlistItems.length) {
+            return { created: [], updated: [] }
+        }
 
         try {
             const { created, updated } = await this.#axiosInstance.$post('/api/wishlist/manage', {
-                wishlist: data
+                wishlist: changedOffersData
             })
 
             console.error(created, updated)
 
-            return {
-                error: null,
-                created,
-                updated
-                // wishlist: data.wishlist
-            }
+            return { error: null, created, updated }
         } catch (e) {
-            return {
-                error: e.message,
-                created: [],
-                updated: []
-            }
+            return { error: e.message }
         }
     }
 

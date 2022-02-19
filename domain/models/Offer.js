@@ -1,9 +1,9 @@
-export class WishlistItem {
+export class Offer {
     _model
     #modelJSON
 
     static create ({ rawModel }) {
-        return new WishlistItem({ model: rawModel })
+        return new Offer({ model: rawModel })
     }
 
     constructor ({ model }) {
@@ -43,6 +43,22 @@ export class WishlistItem {
         const prices = this.prices.map(price => price.clone())
         const model = { ...this._model, prices }
 
-        return new WishlistItem({ model })
+        return new Offer({ model })
+    }
+
+    getData () {
+        const rawPrices = this.prices.map(priceModel => priceModel.getData())
+
+        return {
+            id: this.id,
+            itemId: this.item.id,
+            rawPrices
+        }
+    }
+
+    update (updatedData) {
+        this._model.id = updatedData.id
+        this._model.prices = updatedData.prices
+        this.#modelJSON = JSON.stringify(this._model)
     }
 }
