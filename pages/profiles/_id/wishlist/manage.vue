@@ -84,7 +84,7 @@
                     >
                       <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                       <div v-if="isWishlistItemSelected(wishlistModel)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
-                        <i class="mdi mdi-24px mdi-square-edit-outline wit-color--success wit-selected-item-overlay__icon" />
+                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />
                       </div>
                     </ItemView>
                   </Grid>
@@ -105,7 +105,7 @@
                       @clicked="toggleItem"
                     >
                       <div v-if="isItemSelected(item)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
-                        <i class="mdi mdi-24px mdi-square-edit-outline wit-color--success wit-selected-item-overlay__icon" />
+                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />
                       </div>
                     </ItemView>
                   </Grid>
@@ -522,20 +522,6 @@ export default {
         height: 100px;
         border-top: 1px solid red;
         margin-left: 0 !important;
-    }
-}
-
-.wit-selected-item-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgb(34 39 54 / 55%);
-
-    &__icon {
-        margin: var(--offset-xxs) var(--offset-xs);
-        color: var(--light-green);
     }
 }
 </style>
