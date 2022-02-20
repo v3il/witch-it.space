@@ -6,7 +6,7 @@
       <div class="wit-flex__item--grow" style="flex: 1 1 auto; min-width: 0;">
         <div class="wit-flex wit-flex--column wit-block--full-width wit-offset-bottom--xs1">
           <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
-            <p class="wit-font-size--sm wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow">
+            <p class="wit-font-size--sm1 wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow">
               {{ wishlistItem.item.name }}
             </p>
 
@@ -27,7 +27,7 @@
                 class="wit-paddings--none wit-offset-right--sm"
                 @click="$emit('delete', wishlistItem)"
               >
-                <i class="mdi mdi-24px mdi-heart-off wit-color--danger" />
+                <i class="mdi mdi-20px mdi-heart-off wit-color--danger" />
               </b-button>
 
               <RemoveButton v-tooltip="'Remove'" @click="removeItem" />

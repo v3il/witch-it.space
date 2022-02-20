@@ -94,7 +94,7 @@ export default {
     --bg-color: transparent;
     --color: #2e3648;
 
-    border: 1px solid var(--bg-color);
+    border: 2px solid var(--bg-color);
     border-radius: var(--offset-xxs);
 
     .wit-item-view__counter {

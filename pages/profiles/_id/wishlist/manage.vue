@@ -73,18 +73,19 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ScrollablePagination v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <ItemView
                       v-for="wishlistModel in visibleItems"
                       :key="wishlistModel.id"
                       :item="wishlistModel.item"
-                      :class="{ 'wit-selected-item': isWishlistItemSelected(wishlistModel) }"
-                      style="border-width: 2px;"
                       @clicked="toggleWishlistItem(wishlistModel)"
                     >
                       <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
+                      <div v-if="isWishlistItemSelected(wishlistModel)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
+                        <i class="mdi mdi-24px mdi-square-edit-outline wit-color--success wit-selected-item-overlay__icon" />
+                      </div>
                     </ItemView>
                   </Grid>
                 </template>
@@ -94,16 +95,19 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" class="wit-offset-bottom--sm wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <ItemView
                       v-for="item in visibleItems"
                       :key="item.id"
                       :item="item"
-                      :class="{ 'wit-selected-item': isItemSelected(item) }"
                       @clicked="toggleItem"
-                    />
+                    >
+                      <div v-if="isItemSelected(item)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
+                        <i class="mdi mdi-24px mdi-square-edit-outline wit-color--success wit-selected-item-overlay__icon" />
+                      </div>
+                    </ItemView>
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -134,10 +138,6 @@
 
                 <b-button type="is-danger" expanded @click="removeSelected">
                   R
-                </b-button>
-
-                <b-button type="is-danger" expanded>
-                  sp
                 </b-button>
               </div>
             </div>
@@ -525,31 +525,17 @@ export default {
     }
 }
 
-.wit-selected-item {
-    box-shadow: 0 0 6px 3px var(--bg-color);
+.wit-selected-item-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgb(34 39 54 / 55%);
+
+    &__icon {
+        margin: var(--offset-xxs) var(--offset-xs);
+        color: var(--light-green);
+    }
 }
-
-//.wit-item__icon-container {
-//    top: 4px;
-//    left: 4px;
-//    width: 24px;
-//    height: 24px;
-//    border-radius: 50%;
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//    background: var(--danger);
-//}
-//
-//.wit-item__icon {
-//    width: 18px;
-//    height: 18px;
-//    text-align: center;
-//}
-
-//.wit-items-grid {
-//    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-//    grid-column-gap: var(--offset-sm);
-//    grid-row-gap: var(--offset-sm);
-//}
 </style>
