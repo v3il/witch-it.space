@@ -2,6 +2,7 @@
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
       <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
+      <AddButton v-if="!isRemovable" v-tooltip="'Add price'" class="wit-offset-left--sm" @click="onPriceAdd" />
       <RemoveButton v-if="isRemovable" v-tooltip="'Remove price'" class="wit-offset-left--sm" @click="onPriceRemove" />
     </div>
 
@@ -29,6 +30,7 @@ import PricePart from '@/components/price/PricePart.vue'
 import NumericInput from '@/components/basic/NumericInput.vue'
 import RemoveButton from '@/components/basic/RemoveButton.vue'
 import { PriceType } from '@/shared/items'
+import AddButton from '@/components/basic/AddButton.vue'
 
 export default {
     name: 'PriceEditor',
@@ -37,7 +39,8 @@ export default {
         PriceTypeSelector,
         PricePart,
         NumericInput,
-        RemoveButton
+        RemoveButton,
+        AddButton
     },
 
     props: {
@@ -59,6 +62,10 @@ export default {
     },
 
     methods: {
+        onPriceAdd () {
+            this.$emit('priceAdded')
+        },
+
         onPriceRemove () {
             this.$emit('priceRemoved', { price: this.price })
         },
@@ -84,6 +91,8 @@ export default {
 
 <style scoped lang="scss">
 .wit-price-editor {
-    margin-bottom: var(--offset-sm);
+    &:not(:last-child) {
+        margin-bottom: var(--offset-sm);
+    }
 }
 </style>

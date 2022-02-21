@@ -493,13 +493,11 @@ export default {
 //}
 
 .wit-wishlist-editor__item {
-    &:not(:first-child) {
-        padding-top: 16px;
-    }
+    border-bottom: var(--default-border);
+    padding-bottom: var(--offset-md);
 
-    &:not(:last-child) {
-        border-bottom: var(--default-border);
-        padding-bottom: 16px;
+    &:not(:first-child) {
+        padding-top: var(--offset-md);
     }
 }
 

@@ -1,3 +1,4 @@
+import joi from 'joi'
 import { AVAILABLE, PriceType } from '../../shared/items'
 import { config } from '../../shared'
 
@@ -16,10 +17,12 @@ export class PriceService {
             const normalizedPrice = {
                 priceType,
                 itemId: isFixedPrice ? itemId : 0,
-                itemId2: isFixedPrice ? itemId2 : 0,
                 itemCount: itemId ? itemCount : 0,
+                itemId2: isFixedPrice ? itemId2 : 0,
                 itemCount2: itemId2 ? itemCount2 : 0
             }
+
+            console.log(normalizedPrice)
 
             if (rawPrice.id) {
                 normalizedPrice.id = rawPrice.id
@@ -56,16 +59,14 @@ export class PriceService {
             return false
         }
 
-        const isValidItemId1 = AVAILABLE.includes(itemId)
-        const isValidItemCount1 = Number.isInteger(itemCount) && itemCount >= config.MIN_PRICE_VALUE && itemCount < config.MAX_PRICE_VALUE
+        const itemCountSchema = joi.number().integer().greater(config.MIN_PRICE_VALUE).less(config.MAX_PRICE_VALUE)
+        const count1Validation = itemCountSchema.validate(itemCount)
+        const count2Validation = itemCountSchema.validate(itemCount2)
+        const isValidItem1 = AVAILABLE.includes(itemId) && !count1Validation.error
+        const isValidItem2 = AVAILABLE.includes(itemId2) && !count2Validation.error
 
-        if (isValidItemId1 && !isValidItemCount1) {
-            return false
-        }
+        console.log(`${itemId} * ${itemCount} + ${itemId2} * ${itemCount2} = ${isValidItem1 || isValidItem2}`)
 
-        const isValidItemId2 = AVAILABLE.includes(itemId2)
-        const isValidItemCount2 = Number.isInteger(itemCount2) && itemCount2 >= config.MIN_PRICE_VALUE && itemCount2 < config.MAX_PRICE_VALUE
-
-        return !(isValidItemId2 && !isValidItemCount2)
+        return isValidItem1 || isValidItem2
     }
 }

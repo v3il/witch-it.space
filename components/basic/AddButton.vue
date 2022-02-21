@@ -1,12 +1,12 @@
 <template>
   <b-button type="is-ghost" class="wit-paddings--none wit-remove-button" @click="$emit('click')">
-    <i class="mdi mdi-18px mdi-close wit-remove-button__icon" />
+    <i class="mdi mdi-18px mdi-plus wit-remove-button__icon" />
   </b-button>
 </template>
 
 <script>
 export default {
-    name: 'RemoveButton'
+    name: 'AddButton'
 }
 </script>
 
@@ -23,7 +23,7 @@ $size: 20px;
 }
 
 .wit-remove-button__icon {
-    background-color: var(--danger);
+    background-color: var(--primary);
     color: var(--white);
     border-radius: 50%;
     height: $size;

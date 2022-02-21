@@ -31,20 +31,18 @@ export default {
         }
     },
 
-    data: () => ({
-        item1: null,
-        item2: null
-    }),
-
     computed: {
         hasTwoItems () {
             return this.item1 && this.item2
-        }
-    },
+        },
 
-    created () {
-        this.item1 = this.$itemsService.getById(this.price.item1Id)
-        this.item2 = this.$itemsService.getById(this.price.item2Id)
+        item1 () {
+            return this.$itemsService.getById(this.price.item1Id)
+        },
+
+        item2 () {
+            return this.$itemsService.getById(this.price.item2Id)
+        }
     }
 }
 </script>

@@ -6,7 +6,7 @@
       <div class="wit-flex__item--grow" style="flex: 1 1 auto; min-width: 0;">
         <div class="wit-flex wit-flex--column wit-block--full-width wit-offset-bottom--xs1">
           <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs">
-            <p class="wit-font-size--sm1 wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow">
+            <p class="wit-font-size--sm1 wit-offset-right--xs1 wit-flex__item--grow wit-text--overflow" style="font-size: 16px;">
               {{ wishlistItem.item.name }}
             </p>
 
@@ -25,6 +25,7 @@
                 size="is-small"
                 type="is-ghost"
                 class="wit-paddings--none wit-offset-right--sm"
+                style="width: 20px; height: 20px;"
                 @click="$emit('delete', wishlistItem)"
               >
                 <i class="mdi mdi-20px mdi-heart-off wit-color--danger" />
@@ -100,24 +101,25 @@
         class="wit-price-editor wit-block--full-width"
         @priceTypeChanged="onPriceTypeChanged"
         @priceRemoved="onPriceRemoved"
+        @priceAdded="addPrice"
       />
     </div>
 
-    <b-button
-      v-if="!isAllPricesAdded"
-      size="is-small1"
-      type="is-primary is-light"
-      expanded
-      class="wit-offset-bottom--sm1"
-      style="background: transparent; border: 1px dashed var(--primary); color: var(--muted-text-color);"
-      @click="addPrice"
-    >
-      <div class="wit-flex wit-flex--center wit-color--white">
-        <i class="mdi mdi-24px mdi-plus wit-offset-right--xxs" />
-        <!--        Price-->
-      </div>
-      <!--      {{ // $t('Wishlist_AddPrice') }}-->
-    </b-button>
+    <!--    <b-button-->
+    <!--      v-if="!isAllPricesAdded"-->
+    <!--      size="is-small1"-->
+    <!--      type="is-primary is-light"-->
+    <!--      expanded-->
+    <!--      class="wit-offset-bottom&#45;&#45;sm1"-->
+    <!--      style="background: transparent; border: 1px dashed var(&#45;&#45;primary); color: var(&#45;&#45;muted-text-color);"-->
+    <!--      @click="addPrice"-->
+    <!--    >-->
+    <!--      <div class="wit-flex wit-flex&#45;&#45;center wit-color&#45;&#45;white">-->
+    <!--        <i class="mdi mdi-24px mdi-plus wit-offset-right&#45;&#45;xxs" />-->
+    <!--        &lt;!&ndash;        Price&ndash;&gt;-->
+    <!--      </div>-->
+    <!--      &lt;!&ndash;      {{ // $t('Wishlist_AddPrice') }}&ndash;&gt;-->
+    <!--    </b-button>-->
   </div>
 </template>
 
