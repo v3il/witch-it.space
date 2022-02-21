@@ -58,12 +58,19 @@ export class Price {
 
     setItemId ({ itemId, position }) {
         const prop = position === 1 ? 'itemId' : 'itemId2'
+        const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
         this._rawPrice[prop] = itemId
+
+        if (this._rawPrice[prop2] === 0) {
+            this._rawPrice[prop2] = 1
+        }
     }
 
     clearItemId ({ position }) {
         const prop = position === 1 ? 'itemId' : 'itemId2'
+        const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
         this._rawPrice[prop] = 0
+        this._rawPrice[prop2] = 0
     }
 
     clone () {

@@ -1,7 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--center">
     <div v-if="item1" class="wit-flex wit-flex--align-center">
-      <span v-if="price.item1Count > 1" class="wit-price__counter wit-offset-right--xxs wit-text--right">{{ price.item1Count }}</span>
+      <span class="wit-price__counter wit-offset-right--xxs wit-text--right">{{ price.item1Count }}</span>
       <ItemView add-tooltip :item="item1" :is-title-shown="false" class="wit-price__item" />
     </div>
 
@@ -9,7 +9,7 @@
 
     <div v-if="item2" class="wit-flex wit-flex--align-center">
       <ItemView add-tooltip :item="item2" :is-title-shown="false" class="wit-price__item" />
-      <span v-if="price.item2Count > 1" class="wit-price__counter wit-offset-left--xxs wit-text--left">{{ price.item2Count }}</span>
+      <span class="wit-price__counter wit-offset-left--xxs wit-text--left">{{ price.item2Count }}</span>
     </div>
   </div>
 </template>

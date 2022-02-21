@@ -11,7 +11,7 @@ export class PriceService {
                 return
             }
 
-            const { priceType, itemId, itemCount, itemId2, itemCount2, id } = rawPrice
+            const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
             const isFixedPrice = priceType === PriceType.FIXED
 
             const normalizedPrice = {
@@ -21,8 +21,6 @@ export class PriceService {
                 itemId2: isFixedPrice ? itemId2 : 0,
                 itemCount2: itemId2 ? itemCount2 : 0
             }
-
-            console.log(normalizedPrice)
 
             if (rawPrice.id) {
                 normalizedPrice.id = rawPrice.id
@@ -35,15 +33,11 @@ export class PriceService {
     }
 
     #isValidPrice (rawPrice) {
-        // console.error(rawPrice)
-
         if (!rawPrice) {
             return false
         }
 
         if (rawPrice.priceType === PriceType.FIXED) {
-            console.log(this.#isFixedPriceValid(rawPrice))
-
             return this.#isFixedPriceValid(rawPrice)
         }
 
@@ -59,13 +53,13 @@ export class PriceService {
             return false
         }
 
-        const itemCountSchema = joi.number().integer().greater(config.MIN_PRICE_VALUE).less(config.MAX_PRICE_VALUE)
+        const itemCountSchema = joi.number().integer().greater(0).less(config.MAX_PRICE_VALUE)
         const count1Validation = itemCountSchema.validate(itemCount)
         const count2Validation = itemCountSchema.validate(itemCount2)
         const isValidItem1 = AVAILABLE.includes(itemId) && !count1Validation.error
         const isValidItem2 = AVAILABLE.includes(itemId2) && !count2Validation.error
 
-        console.log(`${itemId} * ${itemCount} + ${itemId2} * ${itemCount2} = ${isValidItem1 || isValidItem2}`)
+        // console.log(`${itemId} * ${itemCount} + ${itemId2} * ${itemCount2} = ${isValidItem1}, ${isValidItem2}`)
 
         return isValidItem1 || isValidItem2
     }
