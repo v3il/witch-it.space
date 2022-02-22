@@ -12354,6 +12354,11 @@ vue-eslint-parser@^8.0.1:
     lodash "^4.17.21"
     semver "^7.3.5"
 
+vue-final-modal@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/vue-final-modal/-/vue-final-modal-2.4.1.tgz#7c3776295fecbd456e4f83de921379f1d980590a"
+  integrity sha512-tvkPaf94wzoANjNFNP8b40bXuCAk28jg0OkhRKL3oQ9VTTwhlX25gnWG5d2qyxLfnE2237E8ngwF3KNPf/bhrw==
+
 vue-functional-data-merge@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz"

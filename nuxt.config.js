@@ -28,7 +28,8 @@ export default {
         '~/plugins/axios.js',
         '~/plugins/vueExtensions.js',
         '~/plugins/prototypeExtensions.js',
-        '~/plugins/injectServices.js'
+        '~/plugins/injectServices.js',
+        '~/plugins/vueFinalModal.js'
     ],
 
     loading: {
@@ -62,7 +63,9 @@ export default {
         }
     },
 
-    build: {},
+    build: {
+        transpile: ['vue-final-modal']
+    },
 
     serverMiddleware: [
         '~/api/index.js'

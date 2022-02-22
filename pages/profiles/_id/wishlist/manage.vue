@@ -148,6 +148,8 @@
           </div>
         </div>
       </template>
+
+      <Popup />
     </div>
   </div>
 </template>
@@ -167,6 +169,7 @@ import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
 import Grid from '@/components/basic/Grid.vue'
+import Popup from '@/components/basic/Popup.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -196,7 +199,6 @@ export default {
     sorts: {
         rarity: 'Items_Sort_Rarity',
         name: 'Items_Sort_Name'
-        // wishlistStatus: 'Items_Sort_Wishlist_Status'
     },
 
     components: {
@@ -212,7 +214,8 @@ export default {
         InfinityGrid,
         ItemPriceList,
         ScrollablePagination,
-        Grid
+        Grid,
+        Popup
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -232,7 +235,8 @@ export default {
         selectedItems: [],
         mode: Modes.WISHLIST,
         wishlistModels: [],
-        tradableItems: []
+        tradableItems: [],
+        show: !false
     }),
 
     computed: {
