@@ -67,6 +67,10 @@
     flex-wrap: wrap-reverse;
 }
 
+.wit-flex--row-reverse {
+    flex-direction: row-reverse;
+}
+
 .wit-flex--half {
     flex-basis: 50%;
 }

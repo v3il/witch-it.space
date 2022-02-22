@@ -46,7 +46,6 @@ export class PriceService {
 
     #isFixedPriceValid (rawPrice) {
         const { itemId, itemCount, itemId2, itemCount2 } = rawPrice
-
         const hasValidItems = [itemId, itemId2].some(itemId => AVAILABLE.includes(itemId))
 
         if (!hasValidItems) {

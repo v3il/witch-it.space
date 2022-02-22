@@ -1,27 +1,22 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <div v-if="item1" class="wit-flex wit-flex--align-center">
-      <span class="wit-price__counter wit-offset-right--xxs wit-text--right">{{ price.item1Count }}</span>
-      <ItemView add-tooltip :item="item1" :is-title-shown="false" class="wit-price__item" />
-    </div>
+    <FixedPricePart :count="parts[0].count" :item="parts[0].item" :is-single-part="!hasTwoItems" />
 
-    <span v-if="hasTwoItems" class="wit-price__plus">+</span>
-
-    <div v-if="item2" class="wit-flex wit-flex--align-center">
-      <ItemView add-tooltip :item="item2" :is-title-shown="false" class="wit-price__item" />
-      <span class="wit-price__counter wit-offset-left--xxs wit-text--left">{{ price.item2Count }}</span>
-    </div>
+    <template v-if="hasTwoItems">
+      <span class="wit-offset-right--xxs wit-offset-left--xxs">+</span>
+      <FixedPricePart :count="parts[1].count" :item="parts[1].item" :is-single-part="!hasTwoItems" reversed />
+    </template>
   </div>
 </template>
 
 <script>
-import ItemView from '@/components/items/ItemView'
+import FixedPricePart from '@/components/items/FixedPricePart.vue'
 
 export default {
     name: 'FixedPriceView',
 
     components: {
-        ItemView
+        FixedPricePart
     },
 
     props: {
@@ -33,36 +28,30 @@ export default {
 
     computed: {
         hasTwoItems () {
-            return this.item1 && this.item2
+            return this.parts.length === 2
         },
 
-        item1 () {
-            return this.$itemsService.getById(this.price.item1Id)
-        },
+        parts () {
+            const parts = []
+            const item1 = this.$itemsService.getById(this.price.item1Id)
+            const item2 = this.$itemsService.getById(this.price.item2Id)
 
-        item2 () {
-            return this.$itemsService.getById(this.price.item2Id)
+            if (item1) {
+                parts.push({
+                    item: item1,
+                    count: this.price.item1Count
+                })
+            }
+
+            if (item2) {
+                parts.push({
+                    item: item2,
+                    count: this.price.item2Count
+                })
+            }
+
+            return parts
         }
     }
 }
 </script>
-
-<style scoped lang="scss">
-$size: 32px;
-
-.wit-price__counter {
-    font-size: 12px;
-    line-height: $size;
-    font-weight: 500;
-    min-width: 13px;
-}
-
-.wit-price__item {
-    width: $size;
-    height: $size;
-}
-
-.wit-price__plus {
-    margin: 0 var(--offset-xxs);
-}
-</style>
