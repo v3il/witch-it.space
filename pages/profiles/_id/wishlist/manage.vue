@@ -149,7 +149,15 @@
         </div>
       </template>
 
-      <Popup />
+      <Popup>
+        <template #header>
+          <h5>Test2222</h5>
+        </template>
+
+        <div style="width: 500px;">
+          Test
+        </div>
+      </Popup>
     </div>
   </div>
 </template>
