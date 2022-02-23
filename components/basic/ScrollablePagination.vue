@@ -57,6 +57,6 @@ export default {
 <style scoped lang="scss">
 .scrollable-pagination {
     overflow-y: scroll;
-    padding-right: var(--offset-sm);
+    //padding-right: var(--offset-sm);
 }
 </style>

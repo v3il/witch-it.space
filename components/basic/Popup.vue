@@ -16,7 +16,7 @@
       </b-button>
 
       <slot name="submit">
-        <b-button type="is-primary" @click="close">
+        <b-button type="is-primary" @click="$emit('submit')">
           {{ $t('Confirm') }}
         </b-button>
       </slot>
@@ -29,7 +29,7 @@ export default {
     name: 'Popup',
 
     data: () => ({
-        isVisible: !false
+        isVisible: false
     }),
 
     methods: {

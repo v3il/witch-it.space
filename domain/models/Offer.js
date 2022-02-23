@@ -61,4 +61,8 @@ export class Offer {
         this._model.prices = updatedData.prices
         this.#modelJSON = JSON.stringify(this._model)
     }
+
+    setPrices (prices) {
+        this._model.prices = prices.map(price => price.clone())
+    }
 }

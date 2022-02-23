@@ -116,7 +116,7 @@
             </template>
           </div>
 
-          <div class="wit-wishlist-editor__editor wit-paddings--sm wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
+          <div class="wit-wishlist-editor__editor wit-paddings--sm1 wit-padding-top--sm wit-padding-right--xs wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
             <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
               <ScrollablePagination :items="selectedItems" :items-per-page="20" class="wit-offset-bottom--sm">
                 <template #default="{ visibleItems }">
@@ -170,7 +170,7 @@
         </div>
       </template>
 
-      <Popup ref="setGlobalPrice">
+      <Popup ref="setGlobalPrice" @submit="setGlobalPrices">
         <template #header>
           Bulk price editor
         </template>
@@ -181,11 +181,11 @@
               v-for="price in globalPrices"
               :key="price.id"
               :price="price"
-              :is-removable="false"
+              :is-removable="globalPrices.length > 1"
               class="wit-price-editor wit-block--full-width"
               @priceTypeChanged="() => {}"
-              @priceRemoved="() => {}"
-              @priceAdded="globalPrices.push($event)"
+              @priceRemoved="removeGlobalPrice"
+              @priceAdded="addGlobalPrice"
             />
           </div>
         </div>
@@ -360,6 +360,21 @@ export default {
         setPriceForAllItems () {
             this.globalPrices = [this.$priceService.createDefaultPrice()]
             this.$refs.setGlobalPrice.show()
+        },
+
+        addGlobalPrice () {
+            this.globalPrices.push(this.$priceService.createDefaultPrice())
+        },
+
+        removeGlobalPrice ({ price }) {
+            console.log(price)
+            this.globalPrices = this.globalPrices.filter(p => p !== price)
+        },
+
+        setGlobalPrices () {
+            console.log(this.globalPrices)
+            this.selectedItems.forEach(offerModel => offerModel.setPrices(this.globalPrices))
+            this.$refs.setGlobalPrice.hide()
         },
 
         addItemsToEditor () {
@@ -549,10 +564,16 @@ export default {
 
 .wit-wishlist-editor__item {
     border-bottom: var(--default-border);
-    padding-bottom: var(--offset-md);
+    padding-bottom: var(--offset-sm);
+    padding-left: var(--offset-sm);
+    padding-right: var(--offset-sm);
+
+    //&:nth-child(even) {
+    //    background-color: rgba(0, 0, 0, 0.1);
+    //}
 
     &:not(:first-child) {
-        padding-top: var(--offset-md);
+        padding-top: var(--offset-sm);
     }
 }
 
