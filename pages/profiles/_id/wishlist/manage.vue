@@ -132,13 +132,34 @@
               </ScrollablePagination>
 
               <div class="wit-flex__item--no-shrink wit-flex">
-                <b-button type="is-danger" class="wit-flex__item--grow wit-offset-right--xs" expanded @click="saveWishlistItems">
+                <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
                   Save
                 </b-button>
 
-                <b-button type="is-danger" expanded @click="removeSelected">
-                  R
+                <b-button type="is-primary is-light" class="wit-offset-right--xs" expanded @click="clearEditor">
+                  Clear editor
                 </b-button>
+
+                <v-popover ref="popover" placement="top-end">
+                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                    <i class="mdi mdi-24px mdi-dots-grid" />
+                  </b-button>
+
+                  <div slot="popover">
+                    <ul>
+                      <li>
+                        <b-button type="is-ghost" class="wit-color--white" @click="setPriceForAllItems">
+                          Set price for all items
+                        </b-button>
+                      </li>
+                      <!--                      <li>-->
+                      <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
+                      <!--                          Remove filtered items from wishlist-->
+                      <!--                        </b-button>-->
+                      <!--                      </li>-->
+                    </ul>
+                  </div>
+                </v-popover>
               </div>
             </div>
 
@@ -149,13 +170,24 @@
         </div>
       </template>
 
-      <Popup>
+      <Popup ref="setGlobalPrice">
         <template #header>
-          <h5>Test2222</h5>
+          Bulk price editor
         </template>
 
         <div style="width: 500px;">
-          Test
+          <div class="wit-block--full-width">
+            <PriceEditor
+              v-for="price in globalPrices"
+              :key="price.id"
+              :price="price"
+              :is-removable="false"
+              class="wit-price-editor wit-block--full-width"
+              @priceTypeChanged="() => {}"
+              @priceRemoved="() => {}"
+              @priceAdded="globalPrices.push($event)"
+            />
+          </div>
         </div>
       </Popup>
     </div>
@@ -178,6 +210,7 @@ import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
 import Grid from '@/components/basic/Grid.vue'
 import Popup from '@/components/basic/Popup.vue'
+import PriceEditor from '@/components/price/PriceEditor.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -223,7 +256,8 @@ export default {
         ItemPriceList,
         ScrollablePagination,
         Grid,
-        Popup
+        Popup,
+        PriceEditor
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -244,7 +278,7 @@ export default {
         mode: Modes.WISHLIST,
         wishlistModels: [],
         tradableItems: [],
-        show: !false
+        globalPrices: []
     }),
 
     computed: {
@@ -319,6 +353,15 @@ export default {
     },
 
     methods: {
+        clearEditor () {
+            this.selectedItems = []
+        },
+
+        setPriceForAllItems () {
+            this.globalPrices = [this.$priceService.createDefaultPrice()]
+            this.$refs.setGlobalPrice.show()
+        },
+
         addItemsToEditor () {
             if (this.isAllItemsMode) {
                 return this.sortedItems.forEach((item) => {

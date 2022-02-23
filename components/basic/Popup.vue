@@ -1,11 +1,9 @@
 <template>
   <vue-final-modal v-slot="{ close }" v-model="isVisible">
     <div class="wit-popup-header wit-paddings--sm">
-      <slot name="header">
-        <h5 class="modal__title">
-          Hello, vue-final-modal
-        </h5>
-      </slot>
+      <h5 class="modal__title">
+        <slot name="header" />
+      </h5>
     </div>
 
     <div class="wit-popup-content wit-paddings--sm">
@@ -64,7 +62,7 @@ export default {
     /*padding: 1rem;*/
     border: var(--default-border);
     border-radius: var(--offset-xxs);
-    background: var(--modal-card-body-background-color);
+    background: var(--card-bg-color);
     min-width: 350px;
 }
 
