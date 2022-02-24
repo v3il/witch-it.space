@@ -116,9 +116,9 @@
             </template>
           </div>
 
-          <div class="wit-wishlist-editor__editor wit-paddings--sm1 wit-padding-top--sm wit-padding-right--xs wit-offset-left--sm wit-background--content wit-flex wit-flex--column">
-            <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height">
-              <ScrollablePagination :items="selectedItems" :items-per-page="20" class="wit-offset-bottom--sm">
+          <div class="wit-wishlist-editor__editor wit-paddings--sm1 wit-padding-top--sm1 wit-padding-right--xs1 wit-offset-left--sm1 wit-background--content wit-flex wit-flex--column">
+            <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height aaa">
+              <ScrollablePagination :items="selectedItems" :items-per-page="20">
                 <template #default="{ visibleItems }">
                   <WishlistSelectedItem
                     v-for="wishlistModel in visibleItems"
@@ -131,7 +131,7 @@
                 </template>
               </ScrollablePagination>
 
-              <div class="wit-flex__item--no-shrink wit-flex">
+              <div class="wit-flex__item--no-shrink wit-flex wit-paddings--sm">
                 <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
                   Save
                 </b-button>
@@ -170,6 +170,62 @@
         </div>
       </template>
 
+      <Popup ref="wishlistEditor" @submit="setGlobalPrices">
+        <template #header>
+          Bulk price editor
+        </template>
+
+        <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height aaa">
+          <ScrollablePagination :items="selectedItems" :items-per-page="20">
+            <template #default="{ visibleItems }">
+              <WishlistSelectedItem
+                v-for="wishlistModel in visibleItems"
+                :key="wishlistModel.id"
+                :wishlist-item="wishlistModel"
+                class="wit-wishlist-editor__item"
+                @itemRemoved="toggleWishlistItem"
+                @delete="onDelete"
+              />
+            </template>
+          </ScrollablePagination>
+
+          <div class="wit-flex__item--no-shrink wit-flex wit-paddings--sm">
+            <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
+              Save
+            </b-button>
+
+            <b-button type="is-primary is-light" class="wit-offset-right--xs" expanded @click="clearEditor">
+              Clear editor
+            </b-button>
+
+            <v-popover ref="popover" placement="top-end">
+              <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                <i class="mdi mdi-24px mdi-dots-grid" />
+              </b-button>
+
+              <div slot="popover">
+                <ul>
+                  <li>
+                    <b-button type="is-ghost" class="wit-color--white" @click="setPriceForAllItems">
+                      Set price for all items
+                    </b-button>
+                  </li>
+                  <!--                      <li>-->
+                  <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
+                  <!--                          Remove filtered items from wishlist-->
+                  <!--                        </b-button>-->
+                  <!--                      </li>-->
+                </ul>
+              </div>
+            </v-popover>
+          </div>
+        </div>
+
+        <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
+          <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
+        </div>
+      </Popup>
+
       <Popup ref="setGlobalPrice" @submit="setGlobalPrices">
         <template #header>
           Bulk price editor
@@ -190,6 +246,10 @@
           </div>
         </div>
       </Popup>
+
+      <b-button class="editor" type="is-primary" @click="openEditor">
+        Editor
+      </b-button>
     </div>
   </div>
 </template>
@@ -353,6 +413,10 @@ export default {
     },
 
     methods: {
+        openEditor () {
+            this.$refs.wishlistEditor.show()
+        },
+
         clearEditor () {
             this.selectedItems = []
         },
@@ -579,23 +643,50 @@ export default {
 
 .wit-wishlist-editor__items-list/*,
 .wit-wishlist-editor__wishlist-list*/ {
-    padding: var(--offset-xs) var(--offset-xs) 0;
-    margin-right: var(--offset-xs);
+    padding: 0 var(--offset-xs);
+    //margin-right: var(--offset-xs);
+}
+
+.editor {
+    position: fixed;
+    bottom: 0;
+    right: 0;
 }
 
 .wit-wishlist-editor__editor {
-    flex: 0 0 420px;
-    max-width: 420px;
-    border-radius: var(--offset-xxs);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 24px;
+    display: none;
 
-    @media screen and (max-width: 1023px) {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 100px;
-        border-top: 1px solid red;
-        margin-left: 0 !important;
+    .aaa {
+        display: block;
+        //position: fixed;
+        //left: 24px;
+        //top: 24px;
+        //z-index: 9998;
+        //right: 24px;
+        //bottom: 24px;
+        background-color: var(--card-bg-color);
     }
+
+    //flex: 0 0 420px;
+    //max-width: 420px;
+    //border-radius: var(--offset-xxs);
+    //
+    //@media screen and (max-width: 1023px) {
+    //    position: fixed;
+    //    bottom: 0;
+    //    left: 0;
+    //    right: 0;
+    //    height: 100px;
+    //    border-top: 1px solid red;
+    //    margin-left: 0 !important;
+    //}
 }
 </style>
