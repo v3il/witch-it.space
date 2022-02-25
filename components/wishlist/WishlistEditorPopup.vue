@@ -1,7 +1,7 @@
 <template>
   <Popup ref="wishlistEditor" popup-title="Wishlist editor" :popup-size="$options.popupSize">
-    <div v-if="selectedItems.length" class="wit-flex wit-flex--column wit-overflow--hidden">
-      <ScrollablePagination :items="selectedItems" :items-per-page="20">
+    <div v-if="offers.length" class="wit-flex wit-flex--column wit-overflow--hidden">
+      <ScrollablePagination :items="offers" :items-per-page="20">
         <template #default="{ visibleItems }">
           <Grid cell-width="300px" mobile-cell-width="100%" class="wit-offset-right--xs">
             <WishlistSelectedItem
@@ -76,7 +76,7 @@ export default {
     },
 
     props: {
-        selectedItems: {
+        offers: {
             required: true,
             type: Array
         }
@@ -87,8 +87,9 @@ export default {
             this.$refs.wishlistEditor.show()
         },
 
-        removeFromEditor () {
-
+        removeFromEditor (offerToRemove) {
+            const remainingOffers = this.offers.filter(offer => offer !== offerToRemove)
+            this.$emit('updateOfferList', remainingOffers)
         },
 
         deleteOffer () {

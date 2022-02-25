@@ -170,7 +170,7 @@
         </div>
       </template>
 
-      <WishlistEditorPopup ref="wishlistEditor" :selected-items="selectedItems" />
+      <WishlistEditorPopup ref="wishlistEditor" :offers="selectedItems" @updateOfferList="selectedItems = $event" />
 
       <!--      <Popup ref="wishlistEditor" @submit="setGlobalPrices">-->
       <!--        <template #header>-->
