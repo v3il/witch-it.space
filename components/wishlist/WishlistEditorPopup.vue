@@ -1,51 +1,51 @@
 <template>
-  <Popup ref="wishlistEditor" popup-title="Wishlist editor" :popup-size="$options.popupSize" @submit="setGlobalPrices">
-    <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height aaa">
+  <Popup ref="wishlistEditor" popup-title="Wishlist editor" :popup-size="$options.popupSize">
+    <div v-if="selectedItems.length" class="wit-flex wit-flex--column wit-overflow--hidden">
       <ScrollablePagination :items="selectedItems" :items-per-page="20">
         <template #default="{ visibleItems }">
-          <Grid cell-width="300px" mobile-cell-width="300px">
+          <Grid cell-width="300px" mobile-cell-width="100%" class="wit-offset-right--xs">
             <WishlistSelectedItem
               v-for="wishlistModel in visibleItems"
               :key="wishlistModel.id"
               :wishlist-item="wishlistModel"
-              class="wit-wishlist-editor__item"
-              @itemRemoved="toggleWishlistItem"
-              @delete="onDelete"
+              class="wit-wishlist-editor__item wit-paddings--sm"
+              @itemRemoved="removeFromEditor"
+              @delete="deleteOffer"
             />
           </Grid>
         </template>
       </ScrollablePagination>
 
-      <div class="wit-flex__item--no-shrink wit-flex wit-paddings--sm">
-        <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
-          Save
-        </b-button>
+      <!--      <div class="wit-flex__item&#45;&#45;no-shrink wit-flex wit-paddings&#45;&#45;sm">-->
+      <!--        <b-button type="is-primary" class="wit-flex__item&#45;&#45;grow1 wit-offset-right&#45;&#45;xs" expanded @click="saveWishlistItems">-->
+      <!--          Save-->
+      <!--        </b-button>-->
 
-        <b-button type="is-primary is-light" class="wit-offset-right--xs" expanded @click="clearEditor">
-          Clear editor
-        </b-button>
+      <!--        <b-button type="is-primary is-light" class="wit-offset-right&#45;&#45;xs" expanded @click="clearEditor">-->
+      <!--          Clear editor-->
+      <!--        </b-button>-->
 
-        <v-popover ref="popover" placement="top-end">
-          <b-button type="is-link" class="wit-position--relative wit-more-actions">
-            <i class="mdi mdi-24px mdi-dots-grid" />
-          </b-button>
+      <!--        <v-popover ref="popover" placement="top-end">-->
+      <!--          <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
+      <!--            <i class="mdi mdi-24px mdi-dots-grid" />-->
+      <!--          </b-button>-->
 
-          <div slot="popover">
-            <ul>
-              <li>
-                <b-button type="is-ghost" class="wit-color--white" @click="setPriceForAllItems">
-                  Set price for all items
-                </b-button>
-              </li>
-              <!--                      <li>-->
-              <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
-              <!--                          Remove filtered items from wishlist-->
-              <!--                        </b-button>-->
-              <!--                      </li>-->
-            </ul>
-          </div>
-        </v-popover>
-      </div>
+      <!--          <div slot="popover">-->
+      <!--            <ul>-->
+      <!--              <li>-->
+      <!--                <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="setPriceForAllItems">-->
+      <!--                  Set price for all items-->
+      <!--                </b-button>-->
+      <!--              </li>-->
+      <!--              &lt;!&ndash;                      <li>&ndash;&gt;-->
+      <!--              &lt;!&ndash;                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">&ndash;&gt;-->
+      <!--              &lt;!&ndash;                          Remove filtered items from wishlist&ndash;&gt;-->
+      <!--              &lt;!&ndash;                        </b-button>&ndash;&gt;-->
+      <!--              &lt;!&ndash;                      </li>&ndash;&gt;-->
+      <!--            </ul>-->
+      <!--          </div>-->
+      <!--        </v-popover>-->
+      <!--      </div>-->
     </div>
 
     <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
@@ -85,11 +85,22 @@ export default {
     methods: {
         show () {
             this.$refs.wishlistEditor.show()
+        },
+
+        removeFromEditor () {
+
+        },
+
+        deleteOffer () {
+
         }
     }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.wit-wishlist-editor__item {
+    border: var(--default-border);
+    border-radius: var(--offset-xxs);
+}
 </style>

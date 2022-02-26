@@ -6,7 +6,7 @@
       </h5>
     </div>
 
-    <div class="wit-popup-content wit-paddings--sm">
+    <div class="wit-popup-content wit-paddings--sm wit-flex wit-flex--column wit-overflow--hidden">
       <slot />
     </div>
 

@@ -228,11 +228,7 @@
       <!--        </div>-->
       <!--      </Popup>-->
 
-      <Popup ref="setGlobalPrice" @submit="setGlobalPrices">
-        <template #header>
-          Bulk price editor
-        </template>
-
+      <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="setGlobalPrices">
         <div style="width: 500px;">
           <div class="wit-block--full-width">
             <PriceEditor
