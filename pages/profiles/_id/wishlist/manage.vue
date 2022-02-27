@@ -170,61 +170,63 @@
         </div>
       </template>
 
-      <Popup ref="wishlistEditor" @submit="setGlobalPrices">
-        <template #header>
-          Bulk price editor
-        </template>
+      <WishlistEditorPopup ref="wishlistEditor" :selected-items="selectedItems" />
 
-        <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height aaa">
-          <ScrollablePagination :items="selectedItems" :items-per-page="20">
-            <template #default="{ visibleItems }">
-              <WishlistSelectedItem
-                v-for="wishlistModel in visibleItems"
-                :key="wishlistModel.id"
-                :wishlist-item="wishlistModel"
-                class="wit-wishlist-editor__item"
-                @itemRemoved="toggleWishlistItem"
-                @delete="onDelete"
-              />
-            </template>
-          </ScrollablePagination>
+      <!--      <Popup ref="wishlistEditor" @submit="setGlobalPrices">-->
+      <!--        <template #header>-->
+      <!--          Bulk price editor-->
+      <!--        </template>-->
 
-          <div class="wit-flex__item--no-shrink wit-flex wit-paddings--sm">
-            <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
-              Save
-            </b-button>
+      <!--        <div v-if="selectedItems.length" class="wit-flex__item&#45;&#45;grow wit-flex wit-flex&#45;&#45;column wit-block&#45;&#45;full-height aaa">-->
+      <!--          <ScrollablePagination :items="selectedItems" :items-per-page="20">-->
+      <!--            <template #default="{ visibleItems }">-->
+      <!--              <WishlistSelectedItem-->
+      <!--                v-for="wishlistModel in visibleItems"-->
+      <!--                :key="wishlistModel.id"-->
+      <!--                :wishlist-item="wishlistModel"-->
+      <!--                class="wit-wishlist-editor__item"-->
+      <!--                @itemRemoved="toggleWishlistItem"-->
+      <!--                @delete="onDelete"-->
+      <!--              />-->
+      <!--            </template>-->
+      <!--          </ScrollablePagination>-->
 
-            <b-button type="is-primary is-light" class="wit-offset-right--xs" expanded @click="clearEditor">
-              Clear editor
-            </b-button>
+      <!--          <div class="wit-flex__item&#45;&#45;no-shrink wit-flex wit-paddings&#45;&#45;sm">-->
+      <!--            <b-button type="is-primary" class="wit-flex__item&#45;&#45;grow1 wit-offset-right&#45;&#45;xs" expanded @click="saveWishlistItems">-->
+      <!--              Save-->
+      <!--            </b-button>-->
 
-            <v-popover ref="popover" placement="top-end">
-              <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                <i class="mdi mdi-24px mdi-dots-grid" />
-              </b-button>
+      <!--            <b-button type="is-primary is-light" class="wit-offset-right&#45;&#45;xs" expanded @click="clearEditor">-->
+      <!--              Clear editor-->
+      <!--            </b-button>-->
 
-              <div slot="popover">
-                <ul>
-                  <li>
-                    <b-button type="is-ghost" class="wit-color--white" @click="setPriceForAllItems">
-                      Set price for all items
-                    </b-button>
-                  </li>
-                  <!--                      <li>-->
-                  <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
-                  <!--                          Remove filtered items from wishlist-->
-                  <!--                        </b-button>-->
-                  <!--                      </li>-->
-                </ul>
-              </div>
-            </v-popover>
-          </div>
-        </div>
+      <!--            <v-popover ref="popover" placement="top-end">-->
+      <!--              <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
+      <!--                <i class="mdi mdi-24px mdi-dots-grid" />-->
+      <!--              </b-button>-->
 
-        <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
-          <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
-        </div>
-      </Popup>
+      <!--              <div slot="popover">-->
+      <!--                <ul>-->
+      <!--                  <li>-->
+      <!--                    <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="setPriceForAllItems">-->
+      <!--                      Set price for all items-->
+      <!--                    </b-button>-->
+      <!--                  </li>-->
+      <!--                  &lt;!&ndash;                      <li>&ndash;&gt;-->
+      <!--                  &lt;!&ndash;                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">&ndash;&gt;-->
+      <!--                  &lt;!&ndash;                          Remove filtered items from wishlist&ndash;&gt;-->
+      <!--                  &lt;!&ndash;                        </b-button>&ndash;&gt;-->
+      <!--                  &lt;!&ndash;                      </li>&ndash;&gt;-->
+      <!--                </ul>-->
+      <!--              </div>-->
+      <!--            </v-popover>-->
+      <!--          </div>-->
+      <!--        </div>-->
+
+      <!--        <div v-else class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height wit-paddings&#45;&#45;xs">-->
+      <!--          <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top&#45;&#45;sm" />-->
+      <!--        </div>-->
+      <!--      </Popup>-->
 
       <Popup ref="setGlobalPrice" @submit="setGlobalPrices">
         <template #header>
@@ -269,8 +271,9 @@ import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
 import Grid from '@/components/basic/Grid.vue'
-import Popup from '@/components/basic/Popup.vue'
+import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
+import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -317,7 +320,8 @@ export default {
         ScrollablePagination,
         Grid,
         Popup,
-        PriceEditor
+        PriceEditor,
+        WishlistEditorPopup
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {

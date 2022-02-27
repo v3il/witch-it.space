@@ -1,8 +1,8 @@
 <template>
-  <vue-final-modal v-slot="{ close }" v-model="isVisible">
+  <vue-final-modal v-slot="{ close }" v-model="isVisible" :content-style="popupStyles">
     <div class="wit-popup-header wit-paddings--sm">
       <h5 class="modal__title">
-        <slot name="header" />
+        {{ popupTitle }}
       </h5>
     </div>
 
@@ -25,12 +25,35 @@
 </template>
 
 <script>
+import { PopupSizes } from '@/components/basic/popup/PopupSizes.js'
+
 export default {
     name: 'Popup',
+
+    props: {
+        popupTitle: {
+            required: true,
+            type: String
+        },
+
+        popupSize: {
+            required: false,
+            type: Number,
+            default: PopupSizes.SM
+        }
+    },
 
     data: () => ({
         isVisible: false
     }),
+
+    computed: {
+        popupStyles () {
+            return {
+                width: `${this.popupSize}px`
+            }
+        }
+    },
 
     methods: {
         show () {

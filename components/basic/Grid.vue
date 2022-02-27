@@ -5,18 +5,10 @@
 </template>
 
 <script>
-const SCROLL_OFFSET = 400
-const ITEMS_PER_PAGE = 30
-
 export default {
     name: 'InfinityGrid',
 
     props: {
-        // items: {
-        //     type: Array,
-        //     required: true
-        // },
-
         cellWidth: {
             type: String,
             required: true
@@ -34,15 +26,7 @@ export default {
         }
     },
 
-    // data: () => ({
-    //     page: 1
-    // }),
-
     computed: {
-        // visibleItems () {
-        //     return this.items.slice(0, ITEMS_PER_PAGE * this.page)
-        // },
-
         gridStyle () {
             return {
                 '--cell-width': this.cellWidth,
@@ -51,21 +35,6 @@ export default {
             }
         }
     }
-
-    // watch: {
-    //     items () {
-    //         this.$el.scrollTo({ top: 0 })
-    //         this.page = 1
-    //     }
-    // },
-
-    // methods: {
-    //     onScroll () {
-    //         if (this.$el.scrollTop >= (this.$el.scrollHeight - this.$el.offsetHeight) - SCROLL_OFFSET) {
-    //             this.page++
-    //         }
-    //     }
-    // }
 }
 </script>
 
