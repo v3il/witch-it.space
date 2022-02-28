@@ -3,7 +3,7 @@
     <div v-if="offers.length" class="wit-flex wit-flex--column wit-overflow--hidden">
       <ScrollablePagination :items="offers" :items-per-page="20">
         <template #default="{ visibleItems }">
-          <Grid cell-width="300px" mobile-cell-width="100%" class="wit-offset-right--xs">
+          <Grid cell-width="300px" mobile-cell-width="100%">
             <WishlistSelectedItem
               v-for="wishlistModel in visibleItems"
               :key="wishlistModel.id"
@@ -38,9 +38,9 @@
       <!--                </b-button>-->
       <!--              </li>-->
       <!--              &lt;!&ndash;                      <li>&ndash;&gt;-->
-      <!--              &lt;!&ndash;                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">&ndash;&gt;-->
-      <!--              &lt;!&ndash;                          Remove filtered items from wishlist&ndash;&gt;-->
-      <!--              &lt;!&ndash;                        </b-button>&ndash;&gt;-->
+      <!--                                            <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
+      <!--                                              Remove filtered items from wishlist-->
+      <!--                                            </b-button>-->
       <!--              &lt;!&ndash;                      </li>&ndash;&gt;-->
       <!--            </ul>-->
       <!--          </div>-->
@@ -51,6 +51,22 @@
     <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
       <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
     </div>
+
+    <template v-if="offers.length" #controlsLeft>
+      <b-button type="is-danger is-light" class="wit-offset-right--xs" @click="clearEditor">
+        {{ $t('Wishlist_ClearEditor') }}
+      </b-button>
+
+      <b-button type="is-primary is-light" @click="saveOffers">
+        {{ $t('Wishlist_SetGlobalPrice') }}
+      </b-button>
+    </template>
+
+    <template v-if="offers.length" #controlsRight>
+      <b-button type="is-primary" class="wit-color--white" @click="saveOffers">
+        {{ $t('Save') }}
+      </b-button>
+    </template>
   </Popup>
 </template>
 
@@ -92,7 +108,15 @@ export default {
             this.$emit('updateOfferList', remainingOffers)
         },
 
+        clearEditor () {
+            this.$emit('updateOfferList', [])
+        },
+
         deleteOffer () {
+
+        },
+
+        saveOffers () {
 
         }
     }

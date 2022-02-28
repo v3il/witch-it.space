@@ -78,6 +78,7 @@ export const ru = {
     Clear: 'Очистить',
     SortedBy: 'Сортировка',
     Close: 'Закрыть',
+    Save: 'Сохранить',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -216,6 +217,8 @@ export const ru = {
     Wishlist_RemoveFromWishlist: 'Убрать из желаемого',
     Wishlist_AddPrice: 'Добавить цену',
     Wishlist_Remove: 'Удалить',
+    Wishlist_ClearEditor: 'Очистить редактор',
+    Wishlist_SetGlobalPrice: 'Установить цену',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

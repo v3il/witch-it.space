@@ -10,16 +10,20 @@
       <slot />
     </div>
 
-    <div class="wit-popup-footer wit-paddings--sm wit-flex wit-flex--justify-end">
-      <b-button class="wit-offset-right--xs" @click="close">
-        {{ $t('Cancel') }}
-      </b-button>
+    <div class="wit-popup-footer wit-paddings--sm wit-flex wit-flex--justify-between">
+      <div>
+        <slot name="controlsLeft" />
+      </div>
 
-      <slot name="submit">
-        <b-button type="is-primary" @click="$emit('submit')">
-          {{ $t('Confirm') }}
+      <div class="wit-flex">
+        <b-button @click="close">
+          {{ $t('Close') }}
         </b-button>
-      </slot>
+
+        <div v-if="$slots.controlsRight" class="wit-offset-left--xs">
+          <slot name="controlsRight" />
+        </div>
+      </div>
     </div>
   </vue-final-modal>
 </template>
@@ -82,7 +86,6 @@ export default {
     flex-direction: column;
     max-height: 90%;
     margin: 0 1rem;
-    /*padding: 1rem;*/
     border: var(--default-border);
     border-radius: var(--offset-xxs);
     background: var(--card-bg-color);
