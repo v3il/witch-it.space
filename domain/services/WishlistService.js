@@ -89,4 +89,14 @@ export class WishlistService {
             return { error: e.message }
         }
     }
+
+    getOffersList (tradableItems, wishlistOffers = []) {
+        const existingItemIds = wishlistOffers.map(offer => offer.itemId)
+        const nonWishlistItems = tradableItems.filter(item => !existingItemIds.includes(item.id))
+
+        const newOffers = nonWishlistItems.map(item => this.createNewWishlistItem(item))
+        const existingOffers = wishlistOffers.map(offer => this.createWishlistItem({ wishlistItem: offer }))
+
+        return { newOffers, existingOffers }
+    }
 }

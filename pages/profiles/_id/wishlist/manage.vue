@@ -25,14 +25,14 @@
                 <template #tab0>
                   {{ $t('Wishlist_MyWishlist') }}
                   <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ filteredItemsInWishlist.length }}
+                    {{ filteredExistingOffers.length }}
                   </b-tag>
                 </template>
 
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
                   <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ filteredItems.length }}
+                    {{ filteredNewOffers.length }}
                   </b-tag>
                 </template>
               </Tabs>
@@ -73,21 +73,32 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ScrollablePagination v-if="sortedItemsInWishlist.length" :items="sortedItemsInWishlist" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedExistingOffers.length" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
-                    <ItemView
-                      v-for="(wishlistModel, index) in visibleItems"
-                      :key="wishlistModel.id"
-                      :item="wishlistModel.item"
-                      @clicked="toggleWishlistItem(wishlistModel)"
+                    <WishlistOfferView
+                      v-for="(offerModel, index) in visibleItems"
+                      :key="offerModel.id"
+                      :offer-model="offerModel"
+                      @click="toggleWishlistItem(offerModel)"
                       @shiftClick="toggleRange(index)"
                     >
-                      <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
-                      <div v-if="isWishlistItemSelected(wishlistModel)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
-                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />
-                      </div>
-                    </ItemView>
+                      <ItemPriceList :prices="offerModel.prices" />
+                      <SelectedItemOverlay v-if="isWishlistItemSelected(offerModel)" />
+                    </WishlistOfferView>
+
+                    <!--                    <ItemView-->
+                    <!--                      v-for="(wishlistModel, index) in visibleItems"-->
+                    <!--                      :key="wishlistModel.id"-->
+                    <!--                      :item="wishlistModel.item"-->
+                    <!--                      @clicked="toggleWishlistItem(wishlistModel)"-->
+                    <!--                      @shiftClick="toggleRange(index)"-->
+                    <!--                    >-->
+                    <!--                      <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />-->
+                    <!--                      <div v-if="isWishlistItemSelected(wishlistModel)" class="wit-flex wit-flex&#45;&#45;justify-end wit-selected-item-overlay">-->
+                    <!--                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />-->
+                    <!--                      </div>-->
+                    <!--                    </ItemView>-->
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -96,19 +107,30 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedItems.length" :items="sortedItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedNewOffers.length" :items="sortedNewOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
-                    <ItemView
-                      v-for="item in visibleItems"
-                      :key="item.id"
-                      :item="item"
-                      @clicked="toggleItem"
+                    <WishlistOfferView
+                      v-for="(offerModel, index) in visibleItems"
+                      :key="offerModel.id"
+                      :offer-model="offerModel"
+                      @click="toggleWishlistItem(offerModel)"
+                      @shiftClick="toggleRange(index)"
                     >
-                      <div v-if="isItemSelected(item)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
-                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />
-                      </div>
-                    </ItemView>
+                      <SelectedItemOverlay v-if="isWishlistItemSelected(offerModel)" />
+                    </WishlistOfferView>
+
+                    <!--                    <ItemView-->
+                    <!--                      v-for="(wishlistModel, index) in visibleItems"-->
+                    <!--                      :key="wishlistModel.id"-->
+                    <!--                      :item="wishlistModel.item"-->
+                    <!--                      @clicked="toggleWishlistItem(wishlistModel)"-->
+                    <!--                      @shiftClick="toggleRange(index)"-->
+                    <!--                    >-->
+                    <!--                      <div v-if="isItemSelected(wishlistModel)" class="wit-flex wit-flex&#45;&#45;justify-end wit-selected-item-overlay">-->
+                    <!--                        <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />-->
+                    <!--                      </div>-->
+                    <!--                    </ItemView>-->
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -271,6 +293,8 @@ import Grid from '@/components/basic/Grid.vue'
 import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
+import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
+import SelectedItemOverlay from '@/components/items/SelectedItemOverlay.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -318,7 +342,9 @@ export default {
         Grid,
         Popup,
         PriceEditor,
-        WishlistEditorPopup
+        WishlistEditorPopup,
+        WishlistOfferView,
+        SelectedItemOverlay
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -339,61 +365,27 @@ export default {
         mode: Modes.WISHLIST,
         wishlistModels: [],
         tradableItems: [],
-        globalPrices: []
+        globalPrices: [],
+        offers: [],
+        existingOffers: [],
+        newOffers: []
     }),
 
     computed: {
-        availableItems () {
-            const itemsInWishlist = this.wishlistModels.map(wishlistItem => wishlistItem.item)
-            return this.tradableItems.filter(item => !itemsInWishlist.includes(item))
+        filteredNewOffers () {
+            return this.filterOffers(this.newOffers)
         },
 
-        filteredItems () {
-            return this.availableItems.filter(this.isFilteredItem)
+        sortedNewOffers () {
+            return this.sortOffers(this.filteredNewOffers)
         },
 
-        sortedItems () {
-            const { sortBy, order } = this.sort
-            const isAsc = order === 'asc'
-
-            return Array.from(this.filteredItems).sort((a, b) => {
-                const first = isAsc ? a : b
-                const second = isAsc ? b : a
-
-                switch (sortBy) {
-                case 'rarity':
-                    return first.quality - second.quality
-                case 'name':
-                    return first.name.localeCompare(second.name)
-                }
-
-                return 0
-            })
+        filteredExistingOffers () {
+            return this.filterOffers(this.existingOffers)
         },
 
-        // -----
-
-        filteredItemsInWishlist () {
-            return (this.wishlistModels || []).filter(wishlistModel => this.isFilteredItem(wishlistModel.item))
-        },
-
-        sortedItemsInWishlist () {
-            const { sortBy, order } = this.sort
-            const isAsc = order === 'asc'
-
-            return Array.from(this.filteredItemsInWishlist).sort((a, b) => {
-                const first = isAsc ? a.item : b.item
-                const second = isAsc ? b.item : a.item
-
-                switch (sortBy) {
-                case 'rarity':
-                    return first.quality - second.quality
-                case 'name':
-                    return first.name.localeCompare(second.name)
-                }
-
-                return 0
-            })
+        sortedExistingOffers () {
+            return this.sortOffers(this.filteredExistingOffers)
         },
 
         isWishlistMode () {
@@ -406,8 +398,20 @@ export default {
     },
 
     created () {
-        this.tradableItems = this.$itemsService.toList().filter(item => item.isTradable)
-        this.wishlistModels = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem({ wishlistItem }))
+        const tradableItems = this.$itemsService.getTradableItems()
+        const { newOffers, existingOffers } = this.$wishlistService.getOffersList(tradableItems, this.wishlist)
+
+        this.newOffers = newOffers
+        this.existingOffers = existingOffers
+
+        // this.offers = tradableItems.map(item => {
+        //     const isExisting
+        //
+        //     this.$wishlistService.createNewWishlistItem(item)
+        // })
+
+        // this.tradableItems = this.$itemsService.toList().filter(item => item.isTradable)
+        // this.wishlistModels = this.wishlist.map(wishlistItem => this.$wishlistService.createWishlistItem({ wishlistItem }))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
@@ -505,19 +509,41 @@ export default {
             this.sort = sort
         },
 
-        isFilteredItem (item) {
-            const lowerCasedQuery = this.filters.query.toLowerCase()
-            const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-            const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
-            const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
-            const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
-            const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+        filterOffers (offers) {
+            return offers.filter((offerModel) => {
+                const { item } = offerModel
+                const lowerCasedQuery = this.filters.query.toLowerCase()
+                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
 
-            return isFilteredByRarity &&
-                isFilteredBySlot &&
-                isFilteredByName &&
-                isFilteredByTradeable &&
-                isFilteredByEvent
+                return isFilteredByRarity &&
+                    isFilteredBySlot &&
+                    isFilteredByName &&
+                    isFilteredByTradeable &&
+                    isFilteredByEvent
+            })
+        },
+
+        sortOffers (offers) {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            return Array.from(offers).sort((a, b) => {
+                const first = isAsc ? a.item : b.item
+                const second = isAsc ? b.item : a.item
+
+                switch (sortBy) {
+                case 'rarity':
+                    return first.quality - second.quality
+                case 'name':
+                    return first.name.localeCompare(second.name)
+                }
+
+                return 0
+            })
         },
 
         toggleWishlistItem (wishlistModel) {

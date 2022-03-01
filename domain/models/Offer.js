@@ -6,10 +6,10 @@ export class Offer extends BasicModel {
         return new Offer({ originalModel: rawModel })
     }
 
-    constructor ({ originalModel }) {
-        originalModel.prices = originalModel.rawPrices.map(rawPrice => new Price(rawPrice))
-        super({ originalModel })
-    }
+    // constructor ({ originalModel }) {
+    //     originalModel.prices = originalModel.rawPrices.map(rawPrice => new Price(rawPrice))
+    //     super({ originalModel })
+    // }
 
     get id () {
         return this.originalModel.id
@@ -25,14 +25,6 @@ export class Offer extends BasicModel {
 
     get isNew () {
         return !this.id
-    }
-
-    addPrice (price) {
-        this.changedModel.prices.push(price)
-    }
-
-    removePrice (priceToRemove) {
-        this.changedModel.prices = this.changedModel.prices.filter(price => price !== priceToRemove)
     }
 
     getData () {
@@ -52,5 +44,19 @@ export class Offer extends BasicModel {
 
     setPrices (prices) {
         this.originalModel.prices = prices
+    }
+
+    // Changed
+
+    get changedPrices () {
+        return this.changedModel.prices
+    }
+
+    addPrice (price) {
+        this.changedModel.prices.push(price)
+    }
+
+    removePrice (priceToRemove) {
+        this.changedModel.prices = this.changedModel.prices.filter(price => price !== priceToRemove)
     }
 }

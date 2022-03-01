@@ -26,4 +26,8 @@ export class ItemsService {
     getSecondaryIngredients () {
         return this.#secondary
     }
+
+    getTradableItems () {
+        return this.toList().filter(item => item.isTradable)
+    }
 }
