@@ -1,5 +1,10 @@
 <template>
-  <div class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width" :class="itemClass" @click="onItemClicked">
+  <div
+    class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width"
+    :class="itemClass"
+    @click.exact="onItemClicked"
+    @click.shift="onShiftClick"
+  >
     <div class="wit-flex wit-position--relative wit-flex wit-flex--column">
       <img
         v-tooltip="tooltip"
@@ -70,6 +75,10 @@ export default {
     methods: {
         onItemClicked () {
             this.$emit('clicked', this.item)
+        },
+
+        onShiftClick () {
+            this.$emit('shiftClick', this.item)
         }
     }
 }

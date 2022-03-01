@@ -77,10 +77,11 @@
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <ItemView
-                      v-for="wishlistModel in visibleItems"
+                      v-for="(wishlistModel, index) in visibleItems"
                       :key="wishlistModel.id"
                       :item="wishlistModel.item"
                       @clicked="toggleWishlistItem(wishlistModel)"
+                      @shiftClick="toggleRange(index)"
                     >
                       <ItemPriceList v-if="wishlistModel.prices.length" :prices="wishlistModel.prices" />
                       <div v-if="isWishlistItemSelected(wishlistModel)" class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
@@ -583,6 +584,20 @@ export default {
             this.$showSuccess(`Updated ${updated.length} items`)
 
             console.log(created, updated, error)
+        },
+
+        toggleRange (clickedItemIndex) {
+            // const model = this.wishlistModels.find(wm => wm.item.id === offerModel.item.id)
+
+            const prevSelectedIndex = null
+
+            // while (let i = clickedItemIndex - 1; i>= 0; i--) {
+            //     const model =this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
+            //
+            //
+            // }
+
+            console.log(clickedItemIndex)
         }
     }
 }
