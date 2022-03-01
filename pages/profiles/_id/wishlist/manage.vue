@@ -80,11 +80,11 @@
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
-                      @click="toggleWishlistItem(offerModel)"
+                      @click="toggleOffer(offerModel)"
                       @shiftClick="toggleRange(index)"
                     >
                       <ItemPriceList :prices="offerModel.prices" />
-                      <SelectedItemOverlay v-if="isWishlistItemSelected(offerModel)" />
+                      <SelectedItemOverlay v-if="isEditingOffer(offerModel)" />
                     </WishlistOfferView>
 
                     <!--                    <ItemView-->
@@ -114,10 +114,10 @@
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
-                      @click="toggleWishlistItem(offerModel)"
+                      @click="toggleOffer(offerModel)"
                       @shiftClick="toggleRange(index)"
                     >
-                      <SelectedItemOverlay v-if="isWishlistItemSelected(offerModel)" />
+                      <SelectedItemOverlay v-if="isEditingOffer(offerModel)" />
                     </WishlistOfferView>
 
                     <!--                    <ItemView-->
@@ -139,61 +139,61 @@
             </template>
           </div>
 
-          <div class="wit-wishlist-editor__editor wit-paddings--sm1 wit-padding-top--sm1 wit-padding-right--xs1 wit-offset-left--sm1 wit-background--content wit-flex wit-flex--column">
-            <div v-if="selectedItems.length" class="wit-flex__item--grow wit-flex wit-flex--column wit-block--full-height aaa">
-              <ScrollablePagination :items="selectedItems" :items-per-page="20">
-                <template #default="{ visibleItems }">
-                  <WishlistSelectedItem
-                    v-for="wishlistModel in visibleItems"
-                    :key="wishlistModel.id"
-                    :wishlist-item="wishlistModel"
-                    class="wit-wishlist-editor__item"
-                    @itemRemoved="toggleWishlistItem"
-                    @delete="onDelete"
-                  />
-                </template>
-              </ScrollablePagination>
+          <!--          <div class="wit-wishlist-editor__editor wit-paddings&#45;&#45;sm1 wit-padding-top&#45;&#45;sm1 wit-padding-right&#45;&#45;xs1 wit-offset-left&#45;&#45;sm1 wit-background&#45;&#45;content wit-flex wit-flex&#45;&#45;column">-->
+          <!--            <div v-if="selectedItems.length" class="wit-flex__item&#45;&#45;grow wit-flex wit-flex&#45;&#45;column wit-block&#45;&#45;full-height aaa">-->
+          <!--              <ScrollablePagination :items="selectedItems" :items-per-page="20">-->
+          <!--                <template #default="{ visibleItems }">-->
+          <!--                  <WishlistSelectedItem-->
+          <!--                    v-for="wishlistModel in visibleItems"-->
+          <!--                    :key="wishlistModel.id"-->
+          <!--                    :wishlist-item="wishlistModel"-->
+          <!--                    class="wit-wishlist-editor__item"-->
+          <!--                    @itemRemoved="toggleWishlistItem"-->
+          <!--                    @delete="onDelete"-->
+          <!--                  />-->
+          <!--                </template>-->
+          <!--              </ScrollablePagination>-->
 
-              <div class="wit-flex__item--no-shrink wit-flex wit-paddings--sm">
-                <b-button type="is-primary" class="wit-flex__item--grow1 wit-offset-right--xs" expanded @click="saveWishlistItems">
-                  Save
-                </b-button>
+          <!--              <div class="wit-flex__item&#45;&#45;no-shrink wit-flex wit-paddings&#45;&#45;sm">-->
+          <!--                <b-button type="is-primary" class="wit-flex__item&#45;&#45;grow1 wit-offset-right&#45;&#45;xs" expanded @click="saveWishlistItems">-->
+          <!--                  Save-->
+          <!--                </b-button>-->
 
-                <b-button type="is-primary is-light" class="wit-offset-right--xs" expanded @click="clearEditor">
-                  Clear editor
-                </b-button>
+          <!--                <b-button type="is-primary is-light" class="wit-offset-right&#45;&#45;xs" expanded @click="clearEditor">-->
+          <!--                  Clear editor-->
+          <!--                </b-button>-->
 
-                <v-popover ref="popover" placement="top-end">
-                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                    <i class="mdi mdi-24px mdi-dots-grid" />
-                  </b-button>
+          <!--                <v-popover ref="popover" placement="top-end">-->
+          <!--                  <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
+          <!--                    <i class="mdi mdi-24px mdi-dots-grid" />-->
+          <!--                  </b-button>-->
 
-                  <div slot="popover">
-                    <ul>
-                      <li>
-                        <b-button type="is-ghost" class="wit-color--white" @click="setPriceForAllItems">
-                          Set price for all items
-                        </b-button>
-                      </li>
-                      <!--                      <li>-->
-                      <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">-->
-                      <!--                          Remove filtered items from wishlist-->
-                      <!--                        </b-button>-->
-                      <!--                      </li>-->
-                    </ul>
-                  </div>
-                </v-popover>
-              </div>
-            </div>
+          <!--                  <div slot="popover">-->
+          <!--                    <ul>-->
+          <!--                      <li>-->
+          <!--                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="setPriceForAllItems">-->
+          <!--                          Set price for all items-->
+          <!--                        </b-button>-->
+          <!--                      </li>-->
+          <!--                      &lt;!&ndash;                      <li>&ndash;&gt;-->
+          <!--                      &lt;!&ndash;                        <b-button type="is-ghost" class="wit-color&#45;&#45;white" @click="removeFromWishlist">&ndash;&gt;-->
+          <!--                      &lt;!&ndash;                          Remove filtered items from wishlist&ndash;&gt;-->
+          <!--                      &lt;!&ndash;                        </b-button>&ndash;&gt;-->
+          <!--                      &lt;!&ndash;                      </li>&ndash;&gt;-->
+          <!--                    </ul>-->
+          <!--                  </div>-->
+          <!--                </v-popover>-->
+          <!--              </div>-->
+          <!--            </div>-->
 
-            <div v-else class="wit-flex wit-flex--center wit-block--full-height wit-paddings--xs">
-              <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top--sm" />
-            </div>
-          </div>
+          <!--            <div v-else class="wit-flex wit-flex&#45;&#45;center wit-block&#45;&#45;full-height wit-paddings&#45;&#45;xs">-->
+          <!--              <EmptyState icon="cursor-default-click-outline" :text="$t('Wishlist_SelectItemToEdit')" class="wit-padding-top&#45;&#45;sm" />-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
       </template>
 
-      <WishlistEditorPopup ref="wishlistEditor" :offers="selectedItems" @updateOfferList="selectedItems = $event" />
+      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" />
 
       <!--      <Popup ref="wishlistEditor" @submit="setGlobalPrices">-->
       <!--        <template #header>-->
@@ -368,7 +368,8 @@ export default {
         globalPrices: [],
         offers: [],
         existingOffers: [],
-        newOffers: []
+        newOffers: [],
+        offersInEditor: []
     }),
 
     computed: {
@@ -546,26 +547,28 @@ export default {
             })
         },
 
-        toggleWishlistItem (wishlistModel) {
-            if (this.isWishlistItemSelected(wishlistModel)) {
-                return this.selectedItems = this.selectedItems.filter(selectedOffer => selectedOffer.id !== wishlistModel.id)
+        toggleOffer (offerModel) {
+            if (this.isEditingOffer(offerModel)) {
+                offerModel.cancelChanges()
+                return this.offersInEditor = this.offersInEditor.filter(editingOffer => editingOffer !== offerModel)
             }
 
-            this.selectedItems.push(wishlistModel.clone())
+            offerModel.startEditing()
+            this.offersInEditor.push(offerModel)
         },
 
-        toggleItem (item) {
-            const selectedWishlistModel = this.selectedItems.find(wishlistModel => wishlistModel.item === item)
+        // toggleItem (item) {
+        //     const selectedWishlistModel = this.selectedItems.find(wishlistModel => wishlistModel.item === item)
+        //
+        //     if (selectedWishlistModel) {
+        //         return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
+        //     }
+        //
+        //     this.selectedItems.push(this.$wishlistService.createNewWishlistItem(item))
+        // },
 
-            if (selectedWishlistModel) {
-                return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
-            }
-
-            this.selectedItems.push(this.$wishlistService.createNewWishlistItem(item))
-        },
-
-        isWishlistItemSelected (wishlistModel) {
-            return this.selectedItems.some(selectedOffer => selectedOffer.id === wishlistModel.id)
+        isEditingOffer (offerModel) {
+            return this.offersInEditor.includes(offerModel)
         },
 
         isItemSelected (item) {
