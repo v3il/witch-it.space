@@ -4,6 +4,10 @@ export class BasicModel {
     originalModel = null
     changedModel = null
 
+    static create ({ rawModel }) {
+        return new this({ originalModel: rawModel })
+    }
+
     constructor ({ originalModel }) {
         this.originalModel = originalModel
     }

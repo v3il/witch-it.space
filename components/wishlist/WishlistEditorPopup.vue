@@ -117,7 +117,7 @@ export default {
         },
 
         saveOffers () {
-
+            this.$emit('submit')
         }
     }
 }

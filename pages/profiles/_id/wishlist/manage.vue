@@ -73,18 +73,18 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ScrollablePagination v-if="sortedExistingOffers.length" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="100" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <WishlistOfferView
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
+                      :is-editing="isEditingOffer(offerModel)"
                       @click="toggleOffer(offerModel)"
                       @shiftClick="toggleRange(index)"
                     >
                       <ItemPriceList :prices="offerModel.prices" />
-                      <SelectedItemOverlay v-if="isEditingOffer(offerModel)" />
                     </WishlistOfferView>
                   </Grid>
                 </template>
@@ -101,11 +101,10 @@
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
+                      :is-editing="isEditingOffer(offerModel)"
                       @click="toggleOffer(offerModel)"
                       @shiftClick="toggleRange(index)"
-                    >
-                      <SelectedItemOverlay v-if="isEditingOffer(offerModel)" />
-                    </WishlistOfferView>
+                    />
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -116,7 +115,7 @@
         </div>
       </template>
 
-      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" />
+      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />
 
       <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="() => {}">
         <div style="width: 500px;">
@@ -146,14 +145,9 @@
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
-import ItemView from '@/components/items/ItemView.vue'
-import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
-import WishlistItemView from '@/components/wishlist/WishlistItemView.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
 import Tabs from '@/components/basic/Tabs.vue'
-import ItemPrice from '@/components/items/ItemPrice.vue'
-import InfinityGrid from '@/components/basic/InfinityGrid.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
 import Grid from '@/components/basic/Grid.vue'
@@ -161,7 +155,6 @@ import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
-import SelectedItemOverlay from '@/components/items/SelectedItemOverlay.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -197,21 +190,15 @@ export default {
         WishlistFilters,
         TopNavBar,
         EmptyState,
-        ItemView,
-        WishlistSelectedItem,
-        WishlistItemView,
         TopTabs,
         Tabs,
-        ItemPrice,
-        InfinityGrid,
         ItemPriceList,
         ScrollablePagination,
         Grid,
         Popup,
         PriceEditor,
         WishlistEditorPopup,
-        WishlistOfferView,
-        SelectedItemOverlay
+        WishlistOfferView
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -240,10 +227,6 @@ export default {
     }),
 
     computed: {
-        // newOffers() {
-        //
-        // },
-
         filteredNewOffers () {
             return this.filterOffers(this.newOffers)
         },
@@ -285,30 +268,6 @@ export default {
             this.$refs.wishlistEditor.show()
         },
 
-        // clearEditor () {
-        //     this.selectedItems = []
-        // },
-
-        // setPriceForAllItems () {
-        //     this.globalPrices = [this.$priceService.createDefaultPrice()]
-        //     this.$refs.setGlobalPrice.show()
-        // },
-
-        // addGlobalPrice () {
-        //     this.globalPrices.push(this.$priceService.createDefaultPrice())
-        // },
-        //
-        // removeGlobalPrice ({ price }) {
-        //     console.log(price)
-        //     this.globalPrices = this.globalPrices.filter(p => p !== price)
-        // },
-        //
-        // setGlobalPrices () {
-        //     console.log(this.globalPrices)
-        //     this.selectedItems.forEach(offerModel => offerModel.setPrices(this.globalPrices))
-        //     this.$refs.setGlobalPrice.hide()
-        // },
-
         addItemsToEditor () {
             const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
             this.offersInEditor.push(...offers)
@@ -344,19 +303,6 @@ export default {
 
             this.$showSuccess(`Removed ${removed} items`)
         },
-
-        // async removeSelected () {
-        //     const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.selectedItems)
-        //
-        //     if (error) {
-        //         return this.$showError(error)
-        //     }
-        //
-        //     this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
-        //     this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
-        //
-        //     this.$showSuccess(`Removed ${removed} items`)
-        // },
 
         onFiltersChange (filters) {
             this.filters = filters
@@ -399,7 +345,7 @@ export default {
                     return first.name.localeCompare(second.name)
                 }
 
-                // todo: recipe last!
+                // todo: recipes last!
 
                 return 0
             })
@@ -415,60 +361,41 @@ export default {
             this.offersInEditor.push(offerModel)
         },
 
-        // toggleItem (item) {
-        //     const selectedWishlistModel = this.selectedItems.find(wishlistModel => wishlistModel.item === item)
-        //
-        //     if (selectedWishlistModel) {
-        //         return this.selectedItems = this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
-        //     }
-        //
-        //     this.selectedItems.push(this.$wishlistService.createNewWishlistItem(item))
-        // },
-
         isEditingOffer (offerModel) {
             return this.offersInEditor.includes(offerModel)
         },
 
-        // isItemSelected (item) {
-        //     return this.selectedItems.some(wishlistModel => wishlistModel.item === item)
-        // },
-
-        // isItemInWishlist (wishlistModel) {
-        //     return this.wishlistModels.includes(wishlistModel)
-        // },
-
         async saveWishlistItems () {
-            const { created, updated, error } = await this.$wishlistService.saveWishlist(this.selectedItems)
+            const { created, updated, error } = await this.$wishlistService.saveWishlist(this.offersInEditor)
 
             if (error) {
                 return this.$showError(error)
             }
 
-            const createdModels = created.map(wishlistItem => this.$wishlistService.createWishlistItem({ wishlistItem }))
-            this.wishlistModels.push(...createdModels)
+            const createdItemIds = created.map(offer => offer.itemId)
+            const createdOffers = created.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
+
+            createdOffers.forEach((createdOffer, index) => {
+                const model = this.offersInEditor.find(editingOffer => editingOffer.item.id === createdOffer.item.id)
+
+                if (model) {
+                    this.offersInEditor.splice(index, 1, createdOffer)
+                }
+
+                this.existingOffers.push(createdOffer)
+            })
 
             updated.forEach((updatedModel) => {
-                const offerModel = this.wishlistModels.find(offerModel => offerModel.id === updatedModel.id)
+                const offerModel = this.existingOffers.find(offerModel => offerModel.id === updatedModel.id)
 
                 if (offerModel) {
                     this.$wishlistService.updateWishlistItem(offerModel, updatedModel)
                 }
             })
 
-            this.selectedItems.forEach((offerModel, index) => {
-                const model = this.wishlistModels.find(wm => wm.item.id === offerModel.item.id)
+            this.newOffers = this.newOffers.filter(offer => !createdItemIds.includes(offer.item.id))
 
-                if (model) {
-                    this.selectedItems.splice(index, 1, model.clone())
-                }
-            })
-
-            // this.selectedItems = []
-
-            // this.wishlistModels = this.wishlistModels.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
-            // this.selectedItems = this.selectedItems.filter(wishlistItem => !entityIds.includes(wishlistItem.id))
-
-            this.$showSuccess(`Updated ${updated.length} items`)
+            this.$showSuccess(`Created ${created.length} items, Updated ${updated.length} items`)
 
             console.log(created, updated, error)
         },

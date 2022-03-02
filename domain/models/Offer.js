@@ -1,16 +1,6 @@
 import { BasicModel } from './BasicModel.js'
-import { Price } from './Price.js'
 
 export class Offer extends BasicModel {
-    static create ({ rawModel }) {
-        return new Offer({ originalModel: rawModel })
-    }
-
-    // constructor ({ originalModel }) {
-    //     originalModel.prices = originalModel.rawPrices.map(rawPrice => new Price(rawPrice))
-    //     super({ originalModel })
-    // }
-
     get id () {
         return this.originalModel.id
     }
