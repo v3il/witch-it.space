@@ -82,7 +82,7 @@
                       :offer-model="offerModel"
                       :is-editing="isEditingOffer(offerModel)"
                       @click="toggleOffer(offerModel)"
-                      @shiftClick="toggleRange(index)"
+                      @shiftClick="onRangeToggle(index)"
                     >
                       <ItemPriceList :prices="offerModel.prices" />
                     </WishlistOfferView>
@@ -103,7 +103,7 @@
                       :offer-model="offerModel"
                       :is-editing="isEditingOffer(offerModel)"
                       @click="toggleOffer(offerModel)"
-                      @shiftClick="toggleRange(index)"
+                      @shiftClick="onRangeToggle(index)"
                     />
                   </Grid>
                 </template>
@@ -351,14 +351,24 @@ export default {
             })
         },
 
+        addToEditing (offerModel) {
+            if (!this.isEditingOffer(offerModel)) {
+                offerModel.startEditing()
+                this.offersInEditor.push(offerModel)
+            }
+        },
+
+        removeFormEditing (offerModel) {
+            offerModel.cancelChanges()
+            return this.offersInEditor = this.offersInEditor.filter(editingOffer => editingOffer !== offerModel)
+        },
+
         toggleOffer (offerModel) {
             if (this.isEditingOffer(offerModel)) {
-                offerModel.cancelChanges()
-                return this.offersInEditor = this.offersInEditor.filter(editingOffer => editingOffer !== offerModel)
+                return this.removeFormEditing(offerModel)
             }
 
-            offerModel.startEditing()
-            this.offersInEditor.push(offerModel)
+            this.addToEditing(offerModel)
         },
 
         isEditingOffer (offerModel) {
@@ -400,18 +410,28 @@ export default {
             console.log(created, updated, error)
         },
 
-        toggleRange (clickedItemIndex) {
-            // const model = this.wishlistModels.find(wm => wm.item.id === offerModel.item.id)
+        onRangeToggle (clickedItemIndex) {
+            const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
 
-            const prevSelectedIndex = null
+            for (let i = clickedItemIndex - 1; i >= 0; i--) {
+                if (this.isEditingOffer(offers[i])) {
+                    return this.toggleRange({ from: i, to: clickedItemIndex })
+                }
+            }
 
-            // while (let i = clickedItemIndex - 1; i>= 0; i--) {
-            //     const model =this.selectedItems.filter(wishlistItem => wishlistItem !== selectedWishlistModel)
-            //
-            //
-            // }
+            for (let i = clickedItemIndex + 1; i < offers.length; i++) {
+                if (this.isEditingOffer(offers[i])) {
+                    return this.toggleRange({ from: clickedItemIndex, to: i })
+                }
+            }
+        },
 
-            console.log(clickedItemIndex)
+        toggleRange ({ from, to }) {
+            const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+
+            for (let index = from; index <= to; index++) {
+                this.addToEditing(offers[index])
+            }
         }
     }
 }
