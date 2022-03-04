@@ -1,15 +1,29 @@
 <template>
-  <v-popover ref="popover" :placement="position" @show="isContentVisible = true" @apply-hide="hideContent">
-    <slot name="trigger" />
+  <b-dropdown ref="popover" :position="popoverPosition" append-to-body class="wit-dropdown--offset-xxs">
+    <template #trigger>
+      <slot name="trigger" />
+    </template>
 
-    <div slot="popover" class="wit-popover__content">
-      <ul v-if="$slots.items && isContentVisible" @click="onClick">
+    <div class="wit-popover__content">
+      <ul v-if="$slots.items" @click="onClick">
         <slot name="items" />
       </ul>
 
-      <slot v-else v-show="isContentVisible" />
+      <slot v-else />
     </div>
-  </v-popover>
+  </b-dropdown>
+
+<!--  <v-popover ref="popover" :placement="position" @show="isContentVisible = true" @apply-hide="hideContent">-->
+<!--    <slot name="trigger" />-->
+
+<!--    <div slot="popover" class="wit-popover__content">-->
+<!--      <ul v-if="$slots.items && isContentVisible" @click="onClick">-->
+<!--        <slot name="items" />-->
+<!--      </ul>-->
+
+<!--      <slot v-else v-show="isContentVisible" />-->
+<!--    </div>-->
+<!--  </v-popover>-->
 </template>
 
 <script>
@@ -23,12 +37,10 @@ export default {
         }
     },
 
-    data: () => ({
-        isContentVisible: false
-    }),
-
-    mounted () {
-        this.$refs.popover.hide()
+    computed: {
+        popoverPosition () {
+            return this.position === 'start' ? 'is-bottom-right' : 'is-bottom-left'
+        }
     },
 
     methods: {
@@ -37,14 +49,12 @@ export default {
                 return
             }
 
-            this.$refs.popover.hide()
+            this.hide()
         },
 
-        hideContent () {
-            setTimeout(() => { this.isContentVisible = false }, 50)
+        hide () {
+            this.$refs.popover.toggle()
         }
     }
 }
 </script>
-
-<style scoped></style>

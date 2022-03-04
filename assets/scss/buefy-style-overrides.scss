@@ -54,6 +54,19 @@ body {
     color: var(--input-placeholder-color);
 }
 
+.dropdown-content {
+    $popover-bg: #2e3648;
+    $popover-border: #3a425a;
+
+    background-color: $popover-bg;
+    border-radius: var(--dropdown-content-radius);
+    box-shadow: var(--dropdown-content-shadow);
+    border: 1px solid $popover-border;
+    min-width: 200px;
+    padding-top: var(--offset-xxs);
+    padding-bottom: var(--offset-xxs);
+}
+
 .dropdown-item {
     font-size: 1rem;
 }

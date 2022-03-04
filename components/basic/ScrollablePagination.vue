@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const SCROLL_OFFSET = 400
+const SCROLL_OFFSET = 800
 
 export default {
     name: 'ScrollablePagination',

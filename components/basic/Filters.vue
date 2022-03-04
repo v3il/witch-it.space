@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-flex--justify-between1 wit-flex wit-flex--justify-end1 wit-flex--wrap1">
-    <div class="wit-flex wit-filter__filter1 wit-offset-bottom--xs wit-offset-right--xs">
+  <div class="wit-flex--justify-between1 wit-flex wit-flex--justify-end1 wit-flex--wrap">
+    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs wit-offset-right--xs">
       <b-input
         class="wit-flex__item--grow"
         :value="filters.query"
@@ -14,7 +14,7 @@
         @icon-right-click="resetFilter('query')"
       />
 
-      <Dropdown position="bottom-end">
+      <Dropdown ref="filterDropdown" position="end">
         <template #trigger>
           <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" :class="{ 'wit-indicator': hasFilterChanges }">
             <i class="mdi mdi-20px mdi-filter wit-color--muted" />
@@ -36,7 +36,7 @@
     </div>
 
     <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
-      <Dropdown position="bottom-end">
+      <Dropdown position="end">
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
             <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
@@ -46,7 +46,7 @@
 
         <template #items>
           <li v-for="(label, key) in sorts" :key="key" class="wit-transition--background">
-            <b-button type="is-ghost" class="wit-color--white" @click="updateSort({ sortBy: key })">
+            <b-button type="is-ghost" class="wit-color--white wit-flex--justify-start" expanded @click="updateSort({ sortBy: key })">
               {{ $t(label) }}
             </b-button>
           </li>
@@ -172,8 +172,6 @@ export default {
         },
 
         update (updatedFilters) {
-            console.log()
-
             this.$emit('filtersChanged', {
                 ...this.filters,
                 ...updatedFilters
@@ -198,11 +196,11 @@ export default {
 
 <style scoped lang="scss">
 .wit-filter__filter {
-    //flex: 0 1 250px;
+    flex: 0 1 250px;
     //margin-right: var(--offset-xs);
 
     @media (max-width: 600px) {
-        //flex: 0 1 100%;
+        flex: 0 1 100%;
         margin-right: 0;
         margin-bottom: var(--offset-xs);
     }

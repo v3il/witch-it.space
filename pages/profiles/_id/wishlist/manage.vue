@@ -86,7 +86,7 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="100" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <WishlistOfferView
@@ -107,7 +107,7 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedNewOffers.length" :items="sortedNewOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedNewOffers.length" :items="sortedNewOffers" :items-per-page="200" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
                     <WishlistOfferView
