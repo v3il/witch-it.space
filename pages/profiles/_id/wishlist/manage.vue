@@ -49,26 +49,39 @@
                   @sortChanged="onSortChange"
                 />
 
-                <v-popover ref="popover" placement="bottom-end">
-                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                    <i class="mdi mdi-24px mdi-dots-grid" />
-                  </b-button>
+                <Dropdown position="bottom-end">
+                  <template #trigger>
+                    <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                      <i class="mdi mdi-24px mdi-dots-grid" />
+                    </b-button>
+                  </template>
 
-                  <div slot="popover">
-                    <ul>
-                      <li>
-                        <b-button type="is-ghost" class="wit-color--white" @click="addItemsToEditor">
-                          Add filtered items to editor
-                        </b-button>
-                      </li>
-                      <li>
-                        <b-button type="is-ghost" class="wit-color--white" @click="removeFromWishlist">
-                          Remove filtered items from wishlist
-                        </b-button>
-                      </li>
-                    </ul>
-                  </div>
-                </v-popover>
+                  <template #items>
+                    <li>
+                      <b-button type="is-ghost" class="wit-color--white" @click="addItemsToEditor">
+                        Add to editor
+                      </b-button>
+                    </li>
+
+                    <li>
+                      <b-button type="is-ghost" class="wit-color--white" @click="() => {}">
+                        Set price
+                      </b-button>
+                    </li>
+
+                    <li>
+                      <b-button type="is-ghost" class="wit-color--white" @click="clearEditor">
+                        Clear selection
+                      </b-button>
+                    </li>
+
+                    <li>
+                      <b-button type="is-ghost" class="wit-color--danger" @click="removeFromWishlist">
+                        Remove from wishlist
+                      </b-button>
+                    </li>
+                  </template>
+                </Dropdown>
               </div>
             </div>
 
@@ -155,6 +168,7 @@ import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
+import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -198,7 +212,8 @@ export default {
         Popup,
         PriceEditor,
         WishlistEditorPopup,
-        WishlistOfferView
+        WishlistOfferView,
+        Dropdown
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -271,6 +286,10 @@ export default {
         addItemsToEditor () {
             const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
             this.offersInEditor.push(...offers)
+        },
+
+        clearEditor () {
+            this.offersInEditor = []
         },
 
         async removeFromWishlist () {
