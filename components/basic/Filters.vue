@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-flex--justify-between wit-flex wit-flex--justify-end wit-flex--wrap">
-    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs wit-offset-right--xs">
+  <div class="wit-flex--justify-between1 wit-flex wit-flex--justify-end1 wit-flex--wrap1">
+    <div class="wit-flex wit-filter__filter1 wit-offset-bottom--xs wit-offset-right--xs">
       <b-input
         class="wit-flex__item--grow"
         :value="filters.query"
@@ -14,36 +14,10 @@
         @icon-right-click="resetFilter('query')"
       />
 
-      <!--      <VPopover ref="filterDropdown" placement="bottom-start">-->
-      <!--        <b-button icon-right="menu-down" class="wit-flex wit-flex&#45;&#45;center wit-filter__filter-button" :class="{ 'wit-indicator': hasFilterChanges }">-->
-      <!--          <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('Filter') }}</span>-->
-      <!--        </b-button>-->
-
-      <!--        <template slot="popover">-->
-      <!--          <div class="wit-filter__filter-popup">-->
-      <!--            <div class="wit-offset-bottom&#45;&#45;md">-->
-      <!--              <slot :filterParams="filters" :update="update" :reset="resetFilter" />-->
-      <!--            </div>-->
-
-      <!--            <div class="wit-padding-top&#45;&#45;sm wit-flex wit-flex&#45;&#45;justify-end wiz-border&#45;&#45;top">-->
-      <!--              <b-button type="is-danger" @click="resetFilters">-->
-      <!--                {{ $t('Clear') }}-->
-      <!--              </b-button>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </template>-->
-      <!--      </VPopover>-->
-
-      <b-dropdown
-        ref="filterDropdown"
-        animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs"
-        position="is-bottom-right"
-      >
+      <Dropdown position="bottom-end">
         <template #trigger>
           <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" :class="{ 'wit-indicator': hasFilterChanges }">
             <i class="mdi mdi-20px mdi-filter wit-color--muted" />
-            <!--            <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('Filter') }}</span>-->
           </b-button>
         </template>
 
@@ -58,45 +32,26 @@
             </b-button>
           </div>
         </div>
-      </b-dropdown>
+      </Dropdown>
     </div>
 
     <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
-      <!--      <VPopover ref="filterDropdown" placement="bottom-start">-->
-      <!--        <b-button icon-right="menu-down" class="wit-flex wit-flex&#45;&#45;center wit-filter__sort-button">-->
-      <!--          <span class="wit-color&#45;&#45;muted wit-inline-block wit-offset-right&#45;&#45;xxs">{{ $t('SortedBy') }}:</span>-->
-      <!--          <span class="wit-color&#45;&#45;white">{{ $t(sorts[sort.sortBy]) }}</span>-->
-      <!--        </b-button>-->
-
-      <!--        <template slot="popover">-->
-      <!--          <ul>-->
-      <!--            <li v-for="(label, key) in sorts" :key="key" class="wit-transition&#45;&#45;background" @click="updateSort({ sortBy: key })">-->
-      <!--              <div class="wit-flex wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
-      <!--                {{ $t(label) }}-->
-      <!--              </div>-->
-      <!--            </li>-->
-      <!--          </ul>-->
-      <!--        </template>-->
-      <!--      </VPopover>-->
-
-      <b-dropdown
-        animation="fade150"
-        class="wit-block--full-height wit-transition--background wit-dropdown--offset-xxs"
-        position="is-bottom-left"
-      >
+      <Dropdown position="bottom-end">
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
-            <span class="wit-color--muted wit-inline-block wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
+            <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
             <span class="wit-color--white">{{ $t(sorts[sort.sortBy]) }}</span>
           </b-button>
         </template>
 
-        <b-dropdown-item v-for="(label, key) in sorts" :key="key" class="wit-transition--background" @click="updateSort({ sortBy: key })">
-          <div class="wit-flex wit-flex--align-center wit-color--white">
-            {{ $t(label) }}
-          </div>
-        </b-dropdown-item>
-      </b-dropdown>
+        <template #items>
+          <li v-for="(label, key) in sorts" :key="key" class="wit-transition--background">
+            <b-button type="is-ghost" class="wit-color--white" @click="updateSort({ sortBy: key })">
+              {{ $t(label) }}
+            </b-button>
+          </li>
+        </template>
+      </Dropdown>
 
       <b-button class="wit-filter__order-button wit-split-part--right" @click="toggleOrder">
         <div class="wit-color--muted">
@@ -111,9 +66,14 @@
 <script>
 import { debounce, isEqual } from 'lodash'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
+import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 
 export default {
     name: 'Filters',
+
+    components: {
+        Dropdown
+    },
 
     props: {
         filters: {
@@ -238,11 +198,11 @@ export default {
 
 <style scoped lang="scss">
 .wit-filter__filter {
-    flex: 0 1 250px;
+    //flex: 0 1 250px;
     //margin-right: var(--offset-xs);
 
     @media (max-width: 600px) {
-        flex: 0 1 100%;
+        //flex: 0 1 100%;
         margin-right: 0;
         margin-bottom: var(--offset-xs);
     }

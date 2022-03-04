@@ -2,12 +2,12 @@
   <v-popover ref="popover" :placement="position" @show="isContentVisible = true" @apply-hide="hideContent">
     <slot name="trigger" />
 
-    <div slot="popover">
-      <ul v-if="$slots.items" v-show="isContentVisible" @click="onClick">
+    <div slot="popover" class="wit-popover__content">
+      <ul v-if="$slots.items && isContentVisible" @click="onClick">
         <slot name="items" />
       </ul>
 
-      <slot v-else />
+      <slot v-else v-show="isContentVisible" />
     </div>
   </v-popover>
 </template>
@@ -47,6 +47,4 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

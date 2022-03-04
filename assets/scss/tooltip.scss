@@ -95,6 +95,7 @@ $popover-border: #3a425a;
             padding-bottom: var(--dropdown-content-padding-bottom);
             padding-top: var(--dropdown-content-padding-top);
             border: 1px solid $popover-border;
+            min-width: 150px;
         }
 
         .popover-arrow {
