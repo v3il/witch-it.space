@@ -1,9 +1,9 @@
 <template>
-  <v-popover ref="popover" :placement="position">
+  <v-popover ref="popover" :placement="position" @show="isContentVisible = true" @apply-hide="hideContent">
     <slot name="trigger" />
 
-    <div slot="popover" class="wit-paddings--xs1">
-      <ul v-if="$slots.items" @click="onClick">
+    <div slot="popover">
+      <ul v-if="$slots.items" v-show="isContentVisible" @click="onClick">
         <slot name="items" />
       </ul>
 
@@ -23,6 +23,14 @@ export default {
         }
     },
 
+    data: () => ({
+        isContentVisible: false
+    }),
+
+    mounted () {
+        this.$refs.popover.hide()
+    },
+
     methods: {
         onClick ({ target }) {
             if (!target.closest('li')) {
@@ -30,6 +38,10 @@ export default {
             }
 
             this.$refs.popover.hide()
+        },
+
+        hideContent () {
+            setTimeout(() => { this.isContentVisible = false }, 50)
         }
     }
 }

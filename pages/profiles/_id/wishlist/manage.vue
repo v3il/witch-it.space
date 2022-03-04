@@ -37,7 +37,7 @@
                 </template>
               </Tabs>
 
-              <div class="wit-flex wit-flex--align-start">
+              <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
                 <WishlistFilters
                   :default-filters="$options.defaultFilters"
                   :filters="filters"
