@@ -19,19 +19,19 @@
               <!--              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />-->
               <!--            </b-button>-->
 
-              <b-button
-                v-if="!wishlistItem.isNew"
-                v-tooltip="'Remove from wishlist'"
-                size="is-small"
-                type="is-ghost"
-                class="wit-paddings--none wit-offset-right--sm"
-                style="width: 20px; height: 20px;"
-                @click="$emit('delete', wishlistItem)"
-              >
-                <i class="mdi mdi-20px mdi-heart-off wit-color--danger" />
-              </b-button>
+              <!--              <b-button-->
+              <!--                v-if="!wishlistItem.isNew"-->
+              <!--                v-tooltip="'Remove from wishlist'"-->
+              <!--                size="is-small"-->
+              <!--                type="is-ghost"-->
+              <!--                class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm"-->
+              <!--                style="width: 20px; height: 20px;"-->
+              <!--                @click="$emit('delete', wishlistItem)"-->
+              <!--              >-->
+              <!--                <i class="mdi mdi-20px mdi-heart-off wit-color&#45;&#45;danger" />-->
+              <!--              </b-button>-->
 
-              <RemoveButton v-tooltip="'Remove'" @click="removeItem" />
+              <!--              <RemoveButton v-tooltip="'Remove'" @click="removeItem" />-->
 
               <!--              <b-button-->
               <!--                v-tooltip="'Remove'"-->
@@ -49,34 +49,6 @@
             </div>
           </div>
 
-          <!--          <div class="wit-flex wit-flex&#45;&#45;justify-between1 wit-block&#45;&#45;full-width">-->
-          <!--            &lt;!&ndash;          <b-button size="is-small" type="is-danger is-light">&ndash;&gt;-->
-          <!--            &lt;!&ndash;            {{ $t('Wishlist_RemoveFromWishlist') }}&ndash;&gt;-->
-          <!--            &lt;!&ndash;          </b-button>&ndash;&gt;-->
-
-          <!--            <b-button v-if="0 && !isAllPricesAdded" size="is-small" type="is-primary" @click="addPrice">-->
-          <!--              {{ $t('Wishlist_AddPrice') }}-->
-          <!--            </b-button>-->
-
-          <!--            &lt;!&ndash;          <div class="wit-flex wit-flex&#45;&#45;align-center wit-offset-left&#45;&#45;auto">&ndash;&gt;-->
-          <!--            &lt;!&ndash;            &lt;!&ndash;            <b-button v-tooltip="'Add price'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">&ndash;&gt;&ndash;&gt;-->
-          <!--            &lt;!&ndash;            &lt;!&ndash;              <i class="mdi mdi-24px mdi-database-plus wit-color&#45;&#45;primary" />&ndash;&gt;&ndash;&gt;-->
-          <!--            &lt;!&ndash;            &lt;!&ndash;            </b-button>&ndash;&gt;&ndash;&gt;-->
-
-          <!--            &lt;!&ndash;            <b-button v-tooltip="'Remove from wishlist'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm">&ndash;&gt;-->
-          <!--            &lt;!&ndash;              <i class="mdi mdi-24px mdi-heart-off wit-color&#45;&#45;danger" />&ndash;&gt;-->
-          <!--            &lt;!&ndash;            </b-button>&ndash;&gt;-->
-
-          <!--            &lt;!&ndash;            <b-button v-tooltip="'Remove'" size="is-small" type="is-ghost" class="wit-paddings&#45;&#45;none wit-offset-right&#45;&#45;sm1">&ndash;&gt;-->
-          <!--            &lt;!&ndash;              <i class="mdi mdi-24px mdi-trash-can-outline wit-color&#45;&#45;danger" />&ndash;&gt;-->
-          <!--            &lt;!&ndash;            </b-button>&ndash;&gt;-->
-
-          <!--            &lt;!&ndash;            &lt;!&ndash;            <b-button size="is-small" type="is-danger is-light" @click="removeItem">&ndash;&gt;&ndash;&gt;-->
-          <!--            &lt;!&ndash;            &lt;!&ndash;              {{ $t('Wishlist_Remove') }}&ndash;&gt;&ndash;&gt;-->
-          <!--            &lt;!&ndash;            &lt;!&ndash;            </b-button>&ndash;&gt;&ndash;&gt;-->
-          <!--            &lt;!&ndash;          </div>&ndash;&gt;-->
-          <!--          </div>-->
-
           <b-taglist>
             <b-tag v-if="wishlistItem.isNew" type="is-success">
               New
@@ -92,7 +64,7 @@
       </div>
     </div>
 
-    <div class="wit-block--full-width">
+    <div class="wit-block--full-width wit-offset-bottom--sm">
       <PriceEditor
         v-for="price in wishlistItem.prices"
         :key="price.id"
@@ -105,21 +77,41 @@
       />
     </div>
 
-    <!--    <b-button-->
-    <!--      v-if="!isAllPricesAdded"-->
-    <!--      size="is-small1"-->
-    <!--      type="is-primary is-light"-->
-    <!--      expanded-->
-    <!--      class="wit-offset-bottom&#45;&#45;sm1"-->
-    <!--      style="background: transparent; border: 1px dashed var(&#45;&#45;primary); color: var(&#45;&#45;muted-text-color);"-->
-    <!--      @click="addPrice"-->
-    <!--    >-->
-    <!--      <div class="wit-flex wit-flex&#45;&#45;center wit-color&#45;&#45;white">-->
-    <!--        <i class="mdi mdi-24px mdi-plus wit-offset-right&#45;&#45;xxs" />-->
-    <!--        &lt;!&ndash;        Price&ndash;&gt;-->
-    <!--      </div>-->
-    <!--      &lt;!&ndash;      {{ // $t('Wishlist_AddPrice') }}&ndash;&gt;-->
-    <!--    </b-button>-->
+    <div class="wit-flex wit-flex--justify-end wit-block--full-width">
+      <b-button
+        v-if="!wishlistItem.isNew"
+        size="is-small"
+        type="is-danger"
+        class="wit-offset-right--xs"
+        @click="$emit('removeOffer', wishlistItem)"
+      >
+        Remove offer
+      </b-button>
+
+      <b-button
+        size="is-small"
+        type="is-danger is-light"
+        @click="$emit('removeFromEditor', wishlistItem)"
+      >
+        Remove from editor
+      </b-button>
+    </div>
+
+    <!--        <b-button-->
+    <!--          v-if="!isAllPricesAdded"-->
+    <!--          size="is-small1"-->
+    <!--          type="is-primary is-light"-->
+    <!--          expanded-->
+    <!--          class="wit-offset-bottom&#45;&#45;sm1"-->
+    <!--          style="background: transparent; border: 1px dashed var(&#45;&#45;primary); color: var(&#45;&#45;muted-text-color);"-->
+    <!--          @click="addPrice"-->
+    <!--        >-->
+    <!--          <div class="wit-flex wit-flex&#45;&#45;center wit-color&#45;&#45;white">-->
+    <!--            <i class="mdi mdi-24px mdi-plus wit-offset-right&#45;&#45;xxs" />-->
+    <!--            &lt;!&ndash;        Price&ndash;&gt;-->
+    <!--          </div>-->
+    <!--          &lt;!&ndash;      {{ // $t('Wishlist_AddPrice') }}&ndash;&gt;-->
+    <!--        </b-button>-->
   </div>
 </template>
 

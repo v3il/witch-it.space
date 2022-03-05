@@ -3,7 +3,7 @@
     <div v-if="offers.length" class="wit-flex wit-flex--column wit-overflow--hidden">
       <ScrollablePagination :items="offers" :items-per-page="20">
         <template #default="{ visibleItems }">
-          <Grid cell-width="300px" mobile-cell-width="100%">
+          <Grid cell-width="250px" mobile-cell-width="250px">
             <WishlistSelectedItem
               v-for="wishlistModel in visibleItems"
               :key="wishlistModel.id"
