@@ -5,7 +5,7 @@
     </template>
 
     <div class="wit-popover__content">
-      <ul v-if="$slots.items" @click="onClick">
+      <ul v-if="$slots.items" class="wit-dropdown-items" @click="onClick">
         <slot name="items" />
       </ul>
 
@@ -53,7 +53,9 @@ export default {
         },
 
         hide () {
-            this.$refs.popover.toggle()
+            console.log(this.$refs.popover)
+
+            this.$refs.popover?.toggle()
         }
     }
 }

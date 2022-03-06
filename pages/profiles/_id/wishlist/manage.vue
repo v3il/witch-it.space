@@ -285,7 +285,7 @@ export default {
 
         addItemsToEditor () {
             const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
-            this.offersInEditor.push(...offers)
+            offers.forEach(offer => this.addToEditing(offer))
         },
 
         clearEditor () {

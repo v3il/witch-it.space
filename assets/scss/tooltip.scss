@@ -115,3 +115,18 @@ $popover-border: #3a425a;
         transition: opacity 0.15s;
     }
 }
+
+.wit-dropdown-items {
+    li {
+        transition: background-color var(--default-transition);
+    }
+
+    li:hover {
+        background-color: var(--body-bg);
+
+        button {
+            color: currentColor !important;
+            text-decoration: none !important;
+        }
+    }
+}

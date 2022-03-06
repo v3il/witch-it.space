@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$size: 20px;
+$size: 32px;
 
 .wit-remove-button {
     width: $size;
@@ -25,7 +25,7 @@ $size: 20px;
 .wit-remove-button__icon {
     background-color: var(--danger);
     color: var(--white);
-    border-radius: 50%;
+    border-radius: var(--offset-xxs);
     height: $size;
     width: $size;
     display: flex;
