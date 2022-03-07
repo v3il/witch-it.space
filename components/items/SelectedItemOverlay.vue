@@ -18,6 +18,7 @@ export default {
     left: 0;
     right: 0;
     background: rgb(34 39 54 / 55%);
+    z-index: 2;
 
     &__icon {
         margin: var(--offset-xxs) var(--offset-xs);

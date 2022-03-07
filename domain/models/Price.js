@@ -49,6 +49,10 @@ export class Price {
 
     setPriceType (type) {
         this._rawPrice.priceType = type
+
+        // if (type === PriceType.FIXED) {
+        //
+        // }
     }
 
     setItemCount ({ itemCount, position }) {

@@ -113,6 +113,7 @@ export default {
 
     &.wit-item-view--common {
         --bg-color: var(--item-common);
+        --color: var(--white);
     }
 
     &.wit-item-view--uncommon {

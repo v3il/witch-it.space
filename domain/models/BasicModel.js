@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { cloneDeep } from 'lodash'
 
 export class BasicModel {
     originalModel = null
@@ -13,7 +14,7 @@ export class BasicModel {
     }
 
     startEditing () {
-        this.changedModel = Vue.observable(this.originalModel)
+        this.changedModel = Vue.observable(cloneDeep(this.originalModel))
     }
 
     cancelChanges () {
@@ -21,6 +22,7 @@ export class BasicModel {
     }
 
     get hasChanges () {
-        return JSON.stringify(this.originalModel) === JSON.stringify(this.changedModel)
+        console.log(JSON.stringify(this.originalModel) === JSON.stringify(this.changedModel))
+        return JSON.stringify(this.originalModel) !== JSON.stringify(this.changedModel)
     }
 }

@@ -51,6 +51,8 @@ export class WishlistService {
         const changedOffersData = []
 
         wishlistItems.forEach((offerModel) => {
+            console.log(offerModel.isNew, offerModel.hasChanges)
+
             if (offerModel.isNew || offerModel.hasChanges) {
                 changedOffersData.push(offerModel.getData())
             }

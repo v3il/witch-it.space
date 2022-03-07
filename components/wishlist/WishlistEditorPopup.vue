@@ -1,7 +1,7 @@
 <template>
   <Popup ref="wishlistEditor" popup-title="Wishlist editor" :popup-size="$options.popupSize">
     <div v-if="offers.length" class="wit-flex wit-flex--column wit-overflow--hidden">
-      <ScrollablePagination :items="offers" :items-per-page="20">
+      <ScrollablePagination :items="offers" :items-per-page="100">
         <template #default="{ visibleItems }">
           <Grid cell-width="250px" mobile-cell-width="250px">
             <WishlistSelectedItem

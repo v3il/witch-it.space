@@ -18,7 +18,7 @@ export class Offer extends BasicModel {
     }
 
     getData () {
-        const rawPrices = this.prices.map(priceModel => priceModel.getData())
+        const rawPrices = this.changedPrices.map(priceModel => priceModel.getData())
 
         return {
             id: this.id,
