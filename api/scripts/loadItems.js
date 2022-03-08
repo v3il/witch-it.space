@@ -1,23 +1,31 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-import fs from 'fs'
+// import path from 'path'
+// import { fileURLToPath } from 'url'
+// import fs from 'fs'
 import axios from 'axios'
 import * as cheerio from 'cheerio'
 import sharp from 'sharp'
+import ImageKit from 'imagekit'
 import { Item, sequelize } from '../models/index.js'
+import { content } from './content'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const imagePath = path.join(__dirname, '../../../static/images/items')
+const imagekit = new ImageKit({
+    publicKey: 'public_gIyV+AwKgzNdUqvjfVAzge+lhIc=',
+    privateKey: 'private_cvQeg/8h5qsuBHMn5zXFI7aGpWU=',
+    urlEndpoint: 'https://ik.imagekit.io/igo1qzk1oe2z'
+});
 
-if (!fs.existsSync(imagePath)) {
-    fs.mkdirSync(imagePath)
-}
+// const __filename = fileURLToPath(import.meta.url)
+// const __dirname = path.dirname(__filename)
+// const imagePath = path.join(__dirname, '../../../static/images/items')
+
+// if (!fs.existsSync(imagePath)) {
+//     fs.mkdirSync(imagePath)
+// }
 
 (async function () {
     try {
-        const response = await loadItemsPage()
-        const $ = cheerio.load(response.data)
+        // const response = await loadItemsPage()
+        const $ = cheerio.load(content)
         const itemEls = $('.economy-item')
 
         for (const itemEl of itemEls) {
@@ -150,11 +158,22 @@ async function downloadImage (imgUrl, imageName) {
     const response = await axios.get(imgUrl, { responseType: 'arraybuffer' })
     const buffer = Buffer.from(response.data, 'utf-8')
 
-    await sharp(buffer)
+    const imageBase64 = sharp(buffer)
         .resize(150)
         .sharpen()
-        .webp()
-        .toFile(path.join(imagePath, `${imageName}.webp`))
+        .toBuffer()
+        .toString('base64')
+
+    imagekit.upload({
+        file: imageBase64,
+        fileName: `${imageName}.webp`,
+        folder: '/items',
+        useUniqueFileName: false
+    }).then((response) => {
+        console.log(`${imageName}.webp uploaded`)
+    }).catch((error) => {
+        console.log(`${imageName}.webp not uploaded`, error)
+    })
 }
 
 async function saveItem (normalizedItemData) {

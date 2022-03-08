@@ -41,6 +41,7 @@
     "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-validator": "^6.14.0",
+    "imagekit": "^3.2.5",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "lazyload-vue": "^0.1.20",

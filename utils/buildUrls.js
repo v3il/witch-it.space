@@ -1,4 +1,8 @@
 export const buildItemUrl = (itemId) => {
+    if (itemId === 900) {
+        return 'https://res.cloudinary.com/dtwlvvhcp/image/upload/v1646760833/items/900_gpxswe.webp'
+    }
+
     return `/images/items/${itemId}.webp`
 }
 
