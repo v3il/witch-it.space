@@ -9,7 +9,7 @@
       @click="onAvatarSelected(avatarId)"
     >
       <img
-        :src="`/images/avatars/${avatarId}.webp`"
+        :src="getAvatarURL(avatarId)"
         :alt="avatarId"
         class="wit-avatar-picker__img"
       >
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { buildAvatarUrl } from '@/utils/index.js'
+
 export default {
     name: 'AvatarPicker',
     avatarIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
@@ -35,6 +37,10 @@ export default {
     },
 
     methods: {
+        getAvatarURL (id) {
+            return buildAvatarUrl(id)
+        },
+
         getAvatarClasses (avatarId) {
             return {
                 active: avatarId === this.selectedAvatarId

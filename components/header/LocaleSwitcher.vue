@@ -27,14 +27,15 @@
 import { mapState } from 'vuex'
 import { Locale } from '@/store/index.js'
 import { Locales } from '@/shared/index.js'
+import { buildFlagUrl } from '@/utils/buildUrls.js'
 
 export default {
     name: 'LocaleSwitcher',
 
     locales: [
-        { value: Locales.EN, label: 'English', img: '/images/flags/us.svg' },
-        { value: Locales.UA, label: 'Українська', img: '/images/flags/ua.svg' },
-        { value: Locales.RU, label: 'Русский', img: '/images/flags/ru.svg' }
+        { value: Locales.EN, label: 'English', img: buildFlagUrl(Locales.EN) },
+        { value: Locales.UA, label: 'Українська', img: buildFlagUrl(Locales.UA) },
+        { value: Locales.RU, label: 'Русский', img: buildFlagUrl(Locales.RU) }
     ],
 
     data: () => ({

@@ -4,6 +4,10 @@ export const buildItemUrl = (itemId) => {
     return `${CDN_BASE_URL}/items/${itemId}.webp`
 }
 
+export const buildFlagUrl = (flagId) => {
+    return `${CDN_BASE_URL}/flags/${flagId}.svg`
+}
+
 export const buildAvatarUrl = (avatarId) => {
     return `${CDN_BASE_URL}/avatars/${avatarId}.webp`
 }
