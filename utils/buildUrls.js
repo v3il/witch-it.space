@@ -1,13 +1,11 @@
-export const buildItemUrl = (itemId) => {
-    if (itemId === 900) {
-        return 'https://res.cloudinary.com/dtwlvvhcp/image/upload/v1646760833/items/900_gpxswe.webp'
-    }
+const CDN_BASE_URL = 'https://ik.imagekit.io/igo1qzk1oe2z'
 
-    return `/images/items/${itemId}.webp`
+export const buildItemUrl = (itemId) => {
+    return `${CDN_BASE_URL}/items/${itemId}.webp`
 }
 
 export const buildAvatarUrl = (avatarId) => {
-    return `/images/avatars/${avatarId}.webp`
+    return `${CDN_BASE_URL}/avatars/${avatarId}.webp`
 }
 
 export const buildUserMarketUrl = (userId) => {

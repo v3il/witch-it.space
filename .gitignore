@@ -91,3 +91,4 @@ sw.*
 
 static/images/items
 assets/images/items
+/api/scripts/items.js
