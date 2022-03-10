@@ -1,26 +1,28 @@
 <template>
-  <b-dropdown
-    animation="fade150"
-    class="wit-block--full-height wit-locale-switcher wit-transition--background"
-    :class="dropdownClasses"
-    position="is-bottom-left"
-    @active-change="updateStatus"
+  <Dropdown
+    position="bottom-end"
+    class="wit-block--full-height"
   >
     <template #trigger>
-      <div class="wit-flex wit-flex--align-center wit-block--full-height">
-        <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">
-        <span class="wit-inline-block">{{ selectedLocale.label }}</span>
-        <!--        <b-icon size="is-small" class="is-size-5 wit-offset-left&#45;&#45;xs" icon="menu-down" />-->
-      </div>
+      <b-button type="is-ghost" class="wit-block--full-height wit-locale-switcher wit-transition--background">
+        <div class="wit-flex wit-flex--align-center">
+          <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">
+          <span class="wit-inline-block">{{ selectedLocale.label }}</span>
+        </div>
+      </b-button>
     </template>
 
-    <b-dropdown-item v-for="locale in $options.locales" :key="locale.value" :value="true" class="wit-transition--background" @click="onLocaleChange(locale.value)">
-      <div class="wit-flex wit-flex--align-center">
-        <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
-        <span class="wit-inline-block">{{ locale.label }}</span>
-      </div>
-    </b-dropdown-item>
-  </b-dropdown>
+    <template #items>
+      <li v-for="locale in $options.locales" :key="locale.value">
+        <b-button type="is-ghost" class="wit-color--white" @click="onLocaleChange(locale.value)">
+          <div class="wit-flex wit-flex--align-center">
+            <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
+            <span class="wit-inline-block">{{ locale.label }}</span>
+          </div>
+        </b-button>
+      </li>
+    </template>
+  </Dropdown>
 </template>
 
 <script>
@@ -28,6 +30,7 @@ import { mapState } from 'vuex'
 import { Locale } from '@/store/index.js'
 import { Locales } from '@/shared/index.js'
 import { buildFlagUrl } from '@/utils/buildUrls.js'
+import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 
 export default {
     name: 'LocaleSwitcher',
@@ -38,9 +41,9 @@ export default {
         { value: Locales.RU, label: 'Русский', img: buildFlagUrl(Locales.RU) }
     ],
 
-    data: () => ({
-        isOpen: false
-    }),
+    components: {
+        Dropdown
+    },
 
     computed: {
         ...mapState(Locale.PATH, [
@@ -49,20 +52,10 @@ export default {
 
         selectedLocale () {
             return this.$options.locales.find(({ value }) => value === this.locale)
-        },
-
-        dropdownClasses () {
-            return {
-                open: this.isOpen
-            }
         }
     },
 
     methods: {
-        updateStatus (isOpen) {
-            this.isOpen = isOpen
-        },
-
         onLocaleChange (locale) {
             if (this.locale === locale) {
                 return
