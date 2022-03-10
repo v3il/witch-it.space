@@ -1,13 +1,10 @@
 <template>
-  <Dropdown
-    position="bottom-end"
-    class="wit-block--full-height"
-  >
+  <Dropdown position="bottom-end" class="wit-block--full-height">
     <template #trigger>
       <b-button type="is-ghost" class="wit-block--full-height wit-locale-switcher wit-transition--background">
         <div class="wit-flex wit-flex--align-center">
           <img v-if="selectedLocale.img" :src="selectedLocale.img" :alt="selectedLocale.label" class="wit-offset-right--xs wit-locale-switcher__img">
-          <span class="wit-inline-block">{{ selectedLocale.label }}</span>
+          <span class="wit-line-height--xs">{{ selectedLocale.label }}</span>
         </div>
       </b-button>
     </template>
@@ -17,7 +14,7 @@
         <b-button type="is-ghost" class="wit-color--white" @click="onLocaleChange(locale.value)">
           <div class="wit-flex wit-flex--align-center">
             <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
-            <span class="wit-inline-block">{{ locale.label }}</span>
+            <span class="wit-line-height--xs">{{ locale.label }}</span>
           </div>
         </b-button>
       </li>
@@ -70,13 +67,10 @@ export default {
 
 <style scoped lang="scss">
     .wit-locale-switcher {
-        --dropdown-item-padding: var(--offset-xs) var(--offset-md);
-
         color: white;
         padding: var(--offset-sm);
         cursor: pointer;
 
-        &.open,
         &:active,
         &:focus,
         &:hover {
