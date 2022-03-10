@@ -57,29 +57,21 @@
                   </template>
 
                   <template #items>
-                    <li>
-                      <b-button type="is-ghost" class="wit-color--white" @click="addItemsToEditor">
-                        Add to editor
-                      </b-button>
-                    </li>
+                    <DropdownItem @click="addItemsToEditor">
+                      Add to editor
+                    </DropdownItem>
 
-                    <li>
-                      <b-button type="is-ghost" class="wit-color--white" @click="() => {}">
-                        Set price
-                      </b-button>
-                    </li>
+                    <DropdownItem @click="() => {}">
+                      Set price
+                    </DropdownItem>
 
-                    <li>
-                      <b-button type="is-ghost" class="wit-color--white" @click="clearEditor">
-                        Clear selection
-                      </b-button>
-                    </li>
+                    <DropdownItem @click="clearEditor">
+                      Clear selection
+                    </DropdownItem>
 
-                    <li>
-                      <b-button type="is-ghost" class="wit-color--danger" @click="removeFromWishlist">
-                        Remove from wishlist
-                      </b-button>
-                    </li>
+                    <DropdownItem @click="removeFromWishlist">
+                      Remove from wishlist
+                    </DropdownItem>
                   </template>
                 </Dropdown>
               </div>
@@ -169,6 +161,7 @@ import PriceEditor from '@/components/price/PriceEditor.vue'
 import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
+import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -213,7 +206,8 @@ export default {
         PriceEditor,
         WishlistEditorPopup,
         WishlistOfferView,
-        Dropdown
+        Dropdown,
+        DropdownItem
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {

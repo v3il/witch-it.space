@@ -10,14 +10,12 @@
     </template>
 
     <template #items>
-      <li v-for="locale in $options.locales" :key="locale.value">
-        <b-button type="is-ghost" class="wit-color--white" @click="onLocaleChange(locale.value)">
-          <div class="wit-flex wit-flex--align-center">
-            <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
-            <span class="wit-line-height--xs">{{ locale.label }}</span>
-          </div>
-        </b-button>
-      </li>
+      <DropdownItem v-for="locale in $options.locales" :key="locale.value" @click="onLocaleChange(locale.value)">
+        <div class="wit-flex wit-flex--align-center">
+          <img v-if="locale.img" :src="locale.img" :alt="locale.label" class="wit-offset-right--xs wit-locale-switcher__img">
+          <span class="wit-line-height--xs">{{ locale.label }}</span>
+        </div>
+      </DropdownItem>
     </template>
   </Dropdown>
 </template>
@@ -28,6 +26,7 @@ import { Locale } from '@/store/index.js'
 import { Locales } from '@/shared/index.js'
 import { buildFlagUrl } from '@/utils/buildUrls.js'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
+import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 
 export default {
     name: 'LocaleSwitcher',
@@ -39,7 +38,8 @@ export default {
     ],
 
     components: {
-        Dropdown
+        Dropdown,
+        DropdownItem
     },
 
     computed: {
