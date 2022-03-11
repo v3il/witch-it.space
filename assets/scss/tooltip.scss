@@ -119,6 +119,10 @@ $popover-border: #3a425a;
 .wit-dropdown-items {
     li {
         transition: background-color var(--default-transition);
+
+        button {
+            padding: var(--offset-xs) var(--offset-sm);
+        }
     }
 
     li:hover {

@@ -70,7 +70,7 @@
                     </DropdownItem>
 
                     <DropdownItem @click="removeFromWishlist">
-                      Remove from wishlist
+                      <span class="wit-color--danger">Remove from wishlist</span>
                     </DropdownItem>
                   </template>
                 </Dropdown>
