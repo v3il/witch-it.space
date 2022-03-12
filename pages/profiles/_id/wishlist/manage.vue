@@ -90,11 +90,25 @@
                       @shiftClick="onRangeToggle(index)"
                     >
                       <div class="wit-offer-controls">
-                        <IconButton icon="pencil-ruler" type="warning" circle :size="24" :disabled="isEditingOffer(offerModel)" />
+                        <IconButton
+                          icon="pencil-ruler"
+                          type="warning"
+                          circle
+                          :size="24"
+                          :disabled="isEditingOffer(offerModel)"
+                          @click="editOffer(offerModel)"
+                        />
                       </div>
 
                       <div class="wit-offer-controls wit-offer-controls--remove">
-                        <IconButton icon="close" type="danger" circle :size="24" :disabled="isEditingOffer(offerModel)" />
+                        <IconButton
+                          icon="close"
+                          type="danger"
+                          circle
+                          :size="24"
+                          :disabled="isEditingOffer(offerModel)"
+                          @click="deleteOffer(offerModel)"
+                        />
                       </div>
                       <ItemPriceList :prices="offerModel.prices" />
                     </WishlistOfferView>
@@ -146,6 +160,28 @@
         </div>
       </Popup>
 
+      <Popup ref="editOfferPopup" popup-title="Edit offer" @submit="() => {}">
+        <WishlistSelectedItem
+          v-if="editingOffer"
+          :wishlist-item="editingOffer"
+          class="wit-wishlist-editor__item wit-paddings--sm1"
+          @itemRemoved="() => {}"
+          @delete="() => {}"
+        />
+
+        <template #controlsLeft>
+          <b-button type="is-danger">
+            Remove offer
+          </b-button>
+        </template>
+
+        <template #controlsRight>
+          <b-button type="is-primary" class="wit-color--white">
+            {{ $t('Save') }}
+          </b-button>
+        </template>
+      </Popup>
+
       <b-button class="editor" type="is-primary" @click="openEditor">
         Editor ({{ offersInEditor.length }})
       </b-button>
@@ -170,6 +206,7 @@ import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import IconButton from '@/components/basic/IconButton.vue'
+import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -216,7 +253,8 @@ export default {
         WishlistOfferView,
         Dropdown,
         DropdownItem,
-        IconButton
+        IconButton,
+        WishlistSelectedItem
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -241,7 +279,8 @@ export default {
         offers: [],
         existingOffers: [],
         newOffers: [],
-        offersInEditor: []
+        offersInEditor: [],
+        editingOffer: null
     }),
 
     computed: {
@@ -455,6 +494,15 @@ export default {
             for (let index = from; index <= to; index++) {
                 this.addToEditing(offers[index])
             }
+        },
+
+        editOffer (offer) {
+            this.editingOffer = offer
+            offer.startEditing()
+            this.$refs.editOfferPopup.show()
+        },
+
+        deleteOffer (offer) {
         }
     }
 }
