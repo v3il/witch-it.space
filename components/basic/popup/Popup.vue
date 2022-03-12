@@ -1,5 +1,5 @@
 <template>
-  <vue-final-modal v-slot="{ close }" v-model="isVisible" :content-style="popupStyles">
+  <vue-final-modal ref="popup" v-model="isVisible" :content-style="popupStyles">
     <div class="wit-popup-header wit-paddings--sm">
       <h5 class="modal__title">
         {{ popupTitle }}
@@ -16,7 +16,7 @@
       </div>
 
       <div class="wit-flex">
-        <b-button @click="close">
+        <b-button @click="closePopup">
           {{ $t('Close') }}
         </b-button>
 
@@ -66,6 +66,11 @@ export default {
 
         hide () {
             this.isVisible = false
+        },
+
+        closePopup () {
+            this.hide()
+            this.$emit('popupClosed')
         }
     }
 }

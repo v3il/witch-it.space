@@ -70,7 +70,7 @@ export default {
         },
 
         getIsTradeableTag () {
-            return this.item.isTradeable ? 'Tradeable' : 'Not Tradeable'
+            return this.item.isTradable ? 'Tradeable' : 'Not Tradeable'
         },
 
         getSlotTag () {

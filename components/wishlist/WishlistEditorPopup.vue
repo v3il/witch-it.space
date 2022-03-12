@@ -74,7 +74,7 @@
 import Popup from '@/components/basic/popup/Popup.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
-import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
+import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import { PopupSizes } from '@/components/basic/popup/PopupSizes.js'
 import Grid from '@/components/basic/Grid.vue'
 

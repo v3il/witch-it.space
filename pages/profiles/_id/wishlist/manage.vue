@@ -160,27 +160,13 @@
         </div>
       </Popup>
 
-      <Popup ref="editOfferPopup" popup-title="Edit offer" @submit="() => {}">
-        <WishlistSelectedItem
-          v-if="editingOffer"
-          :wishlist-item="editingOffer"
-          class="wit-wishlist-editor__item wit-paddings--sm1"
-          @itemRemoved="() => {}"
-          @delete="() => {}"
-        />
-
-        <template #controlsLeft>
-          <b-button type="is-danger">
-            Remove offer
-          </b-button>
-        </template>
-
-        <template #controlsRight>
-          <b-button type="is-primary" class="wit-color--white">
-            {{ $t('Save') }}
-          </b-button>
-        </template>
-      </Popup>
+      <EditOfferPopup
+        ref="editOfferPopup"
+        :offer="editingOffer"
+        @deleteOffer="deleteOffer"
+        @saveChanges="() => {}"
+        @cancelChanges="cancelEditing"
+      />
 
       <b-button class="editor" type="is-primary" @click="openEditor">
         Editor ({{ offersInEditor.length }})
@@ -206,7 +192,8 @@ import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import IconButton from '@/components/basic/IconButton.vue'
-import WishlistSelectedItem from '@/components/wishlist/WishlistSelectedItem.vue'
+import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
+import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -254,7 +241,8 @@ export default {
         Dropdown,
         DropdownItem,
         IconButton,
-        WishlistSelectedItem
+        WishlistSelectedItem,
+        EditOfferPopup
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -363,6 +351,9 @@ export default {
             this.existingOffers = this.existingOffers.filter(offer => offer !== offerModel)
 
             this.$showSuccess(`Removed ${removed} items`)
+
+            this.editingOffer = null
+            this.$refs.editOfferPopup.close()
         },
 
         onFiltersChange (filters) {
@@ -499,10 +490,30 @@ export default {
         editOffer (offer) {
             this.editingOffer = offer
             offer.startEditing()
-            this.$refs.editOfferPopup.show()
+            this.$refs.editOfferPopup.open()
         },
 
-        deleteOffer (offer) {
+        async deleteOffer (offer) {
+            const { error, removed } = await this.$wishlistService.removeFromWishlist([offer])
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            const newOffer = this.$wishlistService.createNewWishlistItem(offer.item)
+
+            this.newOffers.push(newOffer)
+            this.existingOffers = this.existingOffers.filter(o => o !== offer)
+
+            this.$showSuccess(`Removed ${removed} items`)
+
+            this.editingOffer = null
+            this.$refs.editOfferPopup.close()
+        },
+
+        cancelEditing () {
+            this.editingOffer.cancelChanges()
+            this.editingOffer = null
         }
     }
 }
