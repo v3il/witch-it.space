@@ -89,6 +89,15 @@
                       @click="toggleOffer(offerModel)"
                       @shiftClick="onRangeToggle(index)"
                     >
+                      <!--                      <div class="a">-->
+                      <div class="aw">
+                        <RemoveButton2 class="a b wit-background--primary" />
+                      </div>
+
+                      <div class="aw cw">
+                        <RemoveButton2 class="a c" />
+                      </div>
+                      <!--                      </div>-->
                       <ItemPriceList :prices="offerModel.prices" />
                     </WishlistOfferView>
                   </Grid>
@@ -162,6 +171,7 @@ import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
+import RemoveButton2 from '@/components/basic/RemoveButton2.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -207,7 +217,8 @@ export default {
         WishlistEditorPopup,
         WishlistOfferView,
         Dropdown,
-        DropdownItem
+        DropdownItem,
+        RemoveButton2
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -403,6 +414,7 @@ export default {
 
                 if (model) {
                     this.offersInEditor.splice(index, 1, createdOffer)
+                    createdOffer.startEditing()
                 }
 
                 this.existingOffers.push(createdOffer)
@@ -550,5 +562,19 @@ export default {
     //    border-top: 1px solid red;
     //    margin-left: 0 !important;
     //}
+}
+
+.aw {
+    position: absolute;
+    top: 16px;
+    right: -10px;
+    padding: 4px 0 4px 4px;
+    background: #2a3042 !important;
+    z-index: 2222;
+    border-radius: 50% 0 0 50%;
+}
+
+.cw {
+    top: 44px;
 }
 </style>

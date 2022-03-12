@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import { cloneDeep } from 'lodash'
 import { BasicModel } from './BasicModel.js'
 
 export class Offer extends BasicModel {
@@ -30,6 +32,7 @@ export class Offer extends BasicModel {
     update (updatedData) {
         this.originalModel.id = updatedData.id
         this.originalModel.prices = updatedData.prices
+        this.changedModel = Vue.observable(cloneDeep(this.originalModel))
     }
 
     setPrices (prices) {
