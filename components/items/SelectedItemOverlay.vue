@@ -1,6 +1,6 @@
 <template>
-  <div class="wit-flex wit-flex--justify-end wit-selected-item-overlay">
-    <i class="mdi mdi-24px mdi-square-edit-outline wit-selected-item-overlay__icon" />
+  <div class="wit-flex wit-flex--center wit-selected-item-overlay">
+    <i class="mdi mdi-36px mdi-check-circle wit-selected-item-overlay__icon" />
   </div>
 </template>
 
@@ -21,7 +21,7 @@ export default {
     z-index: 2;
 
     &__icon {
-        margin: var(--offset-xxs) var(--offset-xs);
+        margin: var(--offset-xxs) var(--offset-xxs);
         color: var(--light-green);
     }
 }

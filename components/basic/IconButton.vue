@@ -1,5 +1,12 @@
 <template>
-  <b-button type="is-ghost" class="wit-paddings--none wit-icon-button" :style="buttonStyle" :class="buttonClasses" @click="$emit('click')">
+  <b-button
+    type="is-ghost"
+    class="wit-paddings--none wit-icon-button"
+    :style="buttonStyle"
+    :class="buttonClasses"
+    :disabled="disabled"
+    @click.stop="onClick"
+  >
     <i class="mdi mdi-18px wit-icon-button__icon" :class="iconClass" />
   </b-button>
 </template>
@@ -24,6 +31,12 @@ export default {
             type: Number,
             required: false,
             default: 18
+        },
+
+        disabled: {
+            type: Boolean,
+            required: false,
+            default: false
         },
 
         circle: {
@@ -52,6 +65,16 @@ export default {
         iconClass () {
             return `mdi-${this.icon}`
         }
+    },
+
+    methods: {
+        onClick () {
+            if (this.disabled) {
+                return
+            }
+
+            this.$emit('click')
+        }
     }
 }
 </script>
@@ -64,6 +87,12 @@ export default {
     &:hover {
         text-decoration: none;
     }
+
+    &[disabled] {
+        opacity: 0.55;
+        background: transparent;
+        border: 0;
+    }
 }
 
 .wit-icon-button__icon {
@@ -75,8 +104,6 @@ export default {
     justify-content: center;
 
     &::before {
-        //font-weight: bold;
-        //font-size: var(--text-size-xxs) !important;
         line-height: var(--size) !important;
     }
 }

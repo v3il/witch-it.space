@@ -89,19 +89,13 @@
                       @click="toggleOffer(offerModel)"
                       @shiftClick="onRangeToggle(index)"
                     >
-                      <!--                      <div class="a">-->
-                      <div class="aw">
-                        <IconButton icon="pencil-ruler" type="warning" circle :size="24" />
-
-                        <!--                        <RemoveButton2 class="a b wit-background&#45;&#45;primary" />-->
+                      <div class="wit-offer-controls">
+                        <IconButton icon="pencil-ruler" type="warning" circle :size="24" :disabled="isEditingOffer(offerModel)" />
                       </div>
 
-                      <div class="aw cw">
-                        <IconButton icon="close" type="danger" circle :size="24" />
-
-                        <!--                        <RemoveButton2 class="a c" />-->
+                      <div class="wit-offer-controls wit-offer-controls--remove">
+                        <IconButton icon="close" type="danger" circle :size="24" :disabled="isEditingOffer(offerModel)" />
                       </div>
-                      <!--                      </div>-->
                       <ItemPriceList :prices="offerModel.prices" />
                     </WishlistOfferView>
                   </Grid>
@@ -541,44 +535,19 @@ export default {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 24px;
     display: none;
-
-    .aaa {
-        display: block;
-        //position: fixed;
-        //left: 24px;
-        //top: 24px;
-        //z-index: 9998;
-        //right: 24px;
-        //bottom: 24px;
-        background-color: var(--card-bg-color);
-    }
-
-    //flex: 0 0 420px;
-    //max-width: 420px;
-    //border-radius: var(--offset-xxs);
-    //
-    //@media screen and (max-width: 1023px) {
-    //    position: fixed;
-    //    bottom: 0;
-    //    left: 0;
-    //    right: 0;
-    //    height: 100px;
-    //    border-top: 1px solid red;
-    //    margin-left: 0 !important;
-    //}
 }
 
-.aw {
+.wit-offer-controls {
     position: absolute;
     top: 16px;
     right: -10px;
-    padding: 4px 0 4px 4px;
-    background: #2a3042 !important;
-    z-index: 2222;
+    padding: var(--offset-xxs) 0 var(--offset-xxs) var(--offset-xxs);
+    background: var(--card-bg-color);
+    z-index: 3;
     border-radius: 50% 0 0 50%;
 }
 
-.cw {
+.wit-offer-controls--remove {
     top: 48px;
 }
 </style>
