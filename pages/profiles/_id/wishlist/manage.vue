@@ -91,11 +91,15 @@
                     >
                       <!--                      <div class="a">-->
                       <div class="aw">
-                        <RemoveButton2 class="a b wit-background--primary" />
+                        <IconButton icon="pencil-ruler" type="warning" circle :size="24" />
+
+                        <!--                        <RemoveButton2 class="a b wit-background&#45;&#45;primary" />-->
                       </div>
 
                       <div class="aw cw">
-                        <RemoveButton2 class="a c" />
+                        <IconButton icon="close" type="danger" circle :size="24" />
+
+                        <!--                        <RemoveButton2 class="a c" />-->
                       </div>
                       <!--                      </div>-->
                       <ItemPriceList :prices="offerModel.prices" />
@@ -171,7 +175,7 @@ import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
 import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
-import RemoveButton2 from '@/components/basic/RemoveButton2.vue'
+import IconButton from '@/components/basic/IconButton.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -218,7 +222,7 @@ export default {
         WishlistOfferView,
         Dropdown,
         DropdownItem,
-        RemoveButton2
+        IconButton
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -575,6 +579,6 @@ export default {
 }
 
 .cw {
-    top: 44px;
+    top: 48px;
 }
 </style>
