@@ -57,9 +57,9 @@
                   </template>
 
                   <template #items>
-                    <DropdownItem @click="addItemsToEditor">
-                      Add to editor
-                    </DropdownItem>
+                    <!--                    <DropdownItem @click="addItemsToEditor">-->
+                    <!--                      Add to editor-->
+                    <!--                    </DropdownItem>-->
 
                     <DropdownItem @click="() => {}">
                       Set price
@@ -85,17 +85,17 @@
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
-                      :is-editing="isEditingOffer(offerModel)"
-                      @click="toggleOffer(offerModel)"
+                      :is-editing="isSelectedExistingOffer(offerModel)"
+                      @click="toggleExistingOffer(offerModel)"
                       @shiftClick="onRangeToggle(index)"
                     >
                       <div class="wit-offer-controls">
                         <IconButton
                           icon="pencil-ruler"
-                          type="warning"
+                          type="primary"
                           circle
                           :size="24"
-                          :disabled="isEditingOffer(offerModel)"
+                          :disabled="isSelectedExistingOffer(offerModel)"
                           @click="editOffer(offerModel)"
                         />
                       </div>
@@ -106,7 +106,7 @@
                           type="danger"
                           circle
                           :size="24"
-                          :disabled="isEditingOffer(offerModel)"
+                          :disabled="isSelectedExistingOffer(offerModel)"
                           @click="deleteOffer(offerModel)"
                         />
                       </div>
@@ -141,7 +141,7 @@
         </div>
       </template>
 
-      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />
+      <!--      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />-->
 
       <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="() => {}">
         <div style="width: 500px;">
@@ -164,13 +164,13 @@
         ref="editOfferPopup"
         :offer="editingOffer"
         @deleteOffer="deleteOffer"
-        @saveChanges="() => {}"
+        @saveChanges="saveEditingOffer"
         @cancelChanges="cancelEditing"
       />
 
-      <b-button class="editor" type="is-primary" @click="openEditor">
-        Editor ({{ offersInEditor.length }})
-      </b-button>
+      <!--      <b-button class="editor" type="is-primary" @click="openEditor">-->
+      <!--        Editor ({{ offersInEditor.length }})-->
+      <!--      </b-button>-->
     </div>
   </div>
 </template>
@@ -268,7 +268,9 @@ export default {
         existingOffers: [],
         newOffers: [],
         offersInEditor: [],
-        editingOffer: null
+        editingOffer: null,
+        selectedExistingOffers: [],
+        selectedNewOffers: []
     }),
 
     computed: {
@@ -309,14 +311,26 @@ export default {
     },
 
     methods: {
-        openEditor () {
-            this.$refs.wishlistEditor.show()
+        isSelectedExistingOffer (offer) {
+            return this.selectedExistingOffers.includes(offer)
         },
 
-        addItemsToEditor () {
-            const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
-            offers.forEach(offer => this.addToEditing(offer))
+        toggleExistingOffer (offerModel) {
+            if (this.isSelectedExistingOffer(offerModel)) {
+                return this.selectedExistingOffers = this.selectedExistingOffers.filter(offer => offer !== offerModel)
+            }
+
+            this.selectedExistingOffers.push(offerModel)
         },
+
+        // openEditor () {
+        //     this.$refs.wishlistEditor.show()
+        // },
+
+        // addItemsToEditor () {
+        //     const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+        //     offers.forEach(offer => this.addToEditing(offer))
+        // },
 
         clearEditor () {
             this.offersInEditor = []
@@ -427,41 +441,41 @@ export default {
             return this.offersInEditor.includes(offerModel)
         },
 
-        async saveWishlistItems () {
-            const { created, updated, error } = await this.$wishlistService.saveWishlist(this.offersInEditor)
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const createdItemIds = created.map(offer => offer.itemId)
-            const createdOffers = created.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
-
-            createdOffers.forEach((createdOffer, index) => {
-                const model = this.offersInEditor.find(editingOffer => editingOffer.item.id === createdOffer.item.id)
-
-                if (model) {
-                    this.offersInEditor.splice(index, 1, createdOffer)
-                    createdOffer.startEditing()
-                }
-
-                this.existingOffers.push(createdOffer)
-            })
-
-            updated.forEach((updatedModel) => {
-                const offerModel = this.existingOffers.find(offerModel => offerModel.id === updatedModel.id)
-
-                if (offerModel) {
-                    this.$wishlistService.updateWishlistItem(offerModel, updatedModel)
-                }
-            })
-
-            this.newOffers = this.newOffers.filter(offer => !createdItemIds.includes(offer.item.id))
-
-            this.$showSuccess(`Created ${created.length} items, Updated ${updated.length} items`)
-
-            console.log(created, updated, error)
-        },
+        // async saveWishlistItems () {
+        //     const { created, updated, error } = await this.$wishlistService.saveWishlist(this.offersInEditor)
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const createdItemIds = created.map(offer => offer.itemId)
+        //     const createdOffers = created.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
+        //
+        //     createdOffers.forEach((createdOffer, index) => {
+        //         const model = this.offersInEditor.find(editingOffer => editingOffer.item.id === createdOffer.item.id)
+        //
+        //         if (model) {
+        //             this.offersInEditor.splice(index, 1, createdOffer)
+        //             createdOffer.startEditing()
+        //         }
+        //
+        //         this.existingOffers.push(createdOffer)
+        //     })
+        //
+        //     updated.forEach((updatedModel) => {
+        //         const offerModel = this.existingOffers.find(offerModel => offerModel.id === updatedModel.id)
+        //
+        //         if (offerModel) {
+        //             this.$wishlistService.updateWishlistItem(offerModel, updatedModel)
+        //         }
+        //     })
+        //
+        //     this.newOffers = this.newOffers.filter(offer => !createdItemIds.includes(offer.item.id))
+        //
+        //     this.$showSuccess(`Created ${created.length} items, Updated ${updated.length} items`)
+        //
+        //     console.log(created, updated, error)
+        // },
 
         onRangeToggle (clickedItemIndex) {
             const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
@@ -514,6 +528,21 @@ export default {
         cancelEditing () {
             this.editingOffer.cancelChanges()
             this.editingOffer = null
+        },
+
+        async saveEditingOffer () {
+            const { updated, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.$wishlistService.updateWishlistItem(this.editingOffer, updated[0])
+
+            this.editingOffer = null
+            this.$refs.editOfferPopup.close()
+
+            this.$showSuccess(`Updated ${updated.length} offer`)
         }
     }
 }

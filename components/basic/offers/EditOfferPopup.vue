@@ -9,7 +9,7 @@
     </template>
 
     <template #controlsRight>
-      <b-button type="is-primary" class="wit-color--white" @click="$emit('saveChanges', offer)">
+      <b-button type="is-primary" class="wit-color--white" @click="$emit('saveChanges')">
         {{ $t('Save') }}
       </b-button>
     </template>
