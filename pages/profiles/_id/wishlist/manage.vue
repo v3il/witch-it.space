@@ -178,7 +178,7 @@
       <!--        </div>-->
       <!--      </Popup>-->
 
-      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffersSize" />
+      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffers.length" @saveChanges="setMassPrices" />
 
       <EditOfferPopup
         ref="editOfferPopup"
@@ -328,7 +328,7 @@ export default {
             return this.selectedNewOffers.length > 0
         },
 
-        selectedOffersSize () {
+        selectedOffers () {
             let offers = []
 
             if (this.isWishlistMode) {
@@ -339,7 +339,7 @@ export default {
                 offers = this.hasSelectedNewOffers ? this.selectedNewOffers : this.newOffers
             }
 
-            return offers.length
+            return offers
         }
     },
 
@@ -653,6 +653,32 @@ export default {
 
         openMassPriceEditor () {
             this.$refs.massPriceEditorPopup.open()
+        },
+
+        async setMassPrices (prices) {
+            console.log(this.selectedOffers)
+
+            this.selectedOffers.forEach((offer) => {
+                const priceClone = prices.map(price => price.clone())
+                offer.setPrices(priceClone)
+            })
+
+            const { updated, error, created } = await this.$wishlistService.saveWishlist(this.selectedOffers)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.selectedOffers.forEach((offer, index) => {
+                const upd = updated[index] || created[index]
+
+                this.$wishlistService.updateWishlistItem(offer, upd)
+            })
+
+            // this.editingOffer = null
+            this.$refs.massPriceEditorPopup.close()
+
+            this.$showSuccess(`Updated ${updated.length} offers`)
         }
     }
 }

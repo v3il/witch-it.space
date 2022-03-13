@@ -11,6 +11,7 @@ export class BasicModel {
 
     constructor ({ originalModel }) {
         this.originalModel = originalModel
+        this.changedModel = Vue.observable(cloneDeep(this.originalModel))
     }
 
     startEditing () {
@@ -18,7 +19,7 @@ export class BasicModel {
     }
 
     cancelChanges () {
-        this.changedModel = null
+        // this.changedModel = null
     }
 
     get hasChanges () {

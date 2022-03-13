@@ -39,10 +39,6 @@ export class Offer extends BasicModel {
         this.changedModel = Vue.observable(cloneDeep(this.originalModel))
     }
 
-    setPrices (prices) {
-        this.originalModel.prices = prices
-    }
-
     // Changed
 
     get changedPrices () {
@@ -55,5 +51,9 @@ export class Offer extends BasicModel {
 
     removePrice (priceToRemove) {
         this.changedModel.prices = this.changedModel.prices.filter(price => price !== priceToRemove)
+    }
+
+    setPrices (prices) {
+        this.changedModel.prices = prices
     }
 }

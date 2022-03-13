@@ -10,8 +10,7 @@
       :price="price"
       :is-removable="prices.length > 1"
       class="wit-price-editor wit-block--full-width"
-      @priceTypeChanged="() => {}"
-      @priceRemoved="() => {}"
+      @priceRemoved="removePrice"
       @priceAdded="addPrice"
     />
 
@@ -25,7 +24,6 @@
 
 <script>
 import Popup from '@/components/basic/popup/Popup.vue'
-import MassPriceEditor from '@/components/price/MassPriceEditor.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 
 export default {
@@ -33,7 +31,6 @@ export default {
 
     components: {
         Popup,
-        MassPriceEditor,
         PriceEditor
     },
 
