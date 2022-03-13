@@ -65,7 +65,11 @@
                       Set price
                     </DropdownItem>
 
-                    <DropdownItem @click="clearEditor">
+                    <DropdownItem v-if="hasSelectedExistingOffers && isWishlistMode" @click="clearSelectedOffers">
+                      Clear selection
+                    </DropdownItem>
+
+                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">
                       Clear selection
                     </DropdownItem>
 
@@ -127,10 +131,21 @@
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
                       :offer-model="offerModel"
-                      :is-editing="isEditingOffer(offerModel)"
-                      @click="toggleOffer(offerModel)"
+                      :is-editing="isSelectedNewOffer(offerModel)"
+                      @click="toggleNewOffer(offerModel)"
                       @shiftClick="onRangeToggle(index)"
-                    />
+                    >
+                      <div class="wit-offer-controls">
+                        <IconButton
+                          icon="plus-thick"
+                          type="primary"
+                          circle
+                          :size="24"
+                          :disabled="isSelectedNewOffer(offerModel)"
+                          @click="addOffer(offerModel)"
+                        />
+                      </div>
+                    </WishlistOfferView>
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -164,7 +179,7 @@
         ref="editOfferPopup"
         :offer="editingOffer"
         @deleteOffer="deleteOffer"
-        @saveChanges="saveEditingOffer"
+        @saveChanges="saveOffer"
         @cancelChanges="cancelEditing"
       />
 
@@ -296,6 +311,14 @@ export default {
 
         isAllItemsMode () {
             return this.mode === Modes.ALL_ITEMS
+        },
+
+        hasSelectedExistingOffers () {
+            return this.selectedExistingOffers.length > 0
+        },
+
+        hasSelectedNewOffers () {
+            return this.selectedNewOffers.length > 0
         }
     },
 
@@ -323,6 +346,26 @@ export default {
             this.selectedExistingOffers.push(offerModel)
         },
 
+        isSelectedNewOffer (offer) {
+            return this.selectedNewOffers.includes(offer)
+        },
+
+        toggleNewOffer (offerModel) {
+            if (this.isSelectedNewOffer(offerModel)) {
+                return this.selectedNewOffers = this.selectedNewOffers.filter(offer => offer !== offerModel)
+            }
+
+            this.selectedNewOffers.push(offerModel)
+        },
+
+        clearSelectedOffers () {
+            if (this.isAllItemsMode) {
+                return this.selectedNewOffers = []
+            }
+
+            this.selectedExistingOffers = []
+        },
+
         // openEditor () {
         //     this.$refs.wishlistEditor.show()
         // },
@@ -332,9 +375,9 @@ export default {
         //     offers.forEach(offer => this.addToEditing(offer))
         // },
 
-        clearEditor () {
-            this.offersInEditor = []
-        },
+        // clearEditor () {
+        //     this.offersInEditor = []
+        // },
 
         async removeFromWishlist () {
             const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.sortedExistingOffers)
@@ -352,23 +395,23 @@ export default {
             this.$showSuccess(`Removed ${removed} items`)
         },
 
-        async onDelete (offerModel) {
-            const { error, removed } = await this.$wishlistService.removeFromWishlist([offerModel])
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const newOffer = this.$wishlistService.createNewWishlistItem(offerModel.item)
-
-            this.newOffers.push(newOffer)
-            this.existingOffers = this.existingOffers.filter(offer => offer !== offerModel)
-
-            this.$showSuccess(`Removed ${removed} items`)
-
-            this.editingOffer = null
-            this.$refs.editOfferPopup.close()
-        },
+        // async onDelete (offerModel) {
+        //     const { error, removed } = await this.$wishlistService.removeFromWishlist([offerModel])
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const newOffer = this.$wishlistService.createNewWishlistItem(offerModel.item)
+        //
+        //     this.newOffers.push(newOffer)
+        //     this.existingOffers = this.existingOffers.filter(offer => offer !== offerModel)
+        //
+        //     this.$showSuccess(`Removed ${removed} items`)
+        //
+        //     this.editingOffer = null
+        //     this.$refs.editOfferPopup.close()
+        // },
 
         onFiltersChange (filters) {
             this.filters = filters
@@ -424,18 +467,18 @@ export default {
             }
         },
 
-        removeFormEditing (offerModel) {
-            offerModel.cancelChanges()
-            return this.offersInEditor = this.offersInEditor.filter(editingOffer => editingOffer !== offerModel)
-        },
+        // removeFormEditing (offerModel) {
+        //     offerModel.cancelChanges()
+        //     return this.offersInEditor = this.offersInEditor.filter(editingOffer => editingOffer !== offerModel)
+        // },
 
-        toggleOffer (offerModel) {
-            if (this.isEditingOffer(offerModel)) {
-                return this.removeFormEditing(offerModel)
-            }
-
-            this.addToEditing(offerModel)
-        },
+        // toggleOffer (offerModel) {
+        //     if (this.isEditingOffer(offerModel)) {
+        //         return this.removeFormEditing(offerModel)
+        //     }
+        //
+        //     this.addToEditing(offerModel)
+        // },
 
         isEditingOffer (offerModel) {
             return this.offersInEditor.includes(offerModel)
@@ -543,6 +586,45 @@ export default {
             this.$refs.editOfferPopup.close()
 
             this.$showSuccess(`Updated ${updated.length} offer`)
+        },
+
+        async saveNewOffer () {
+            const { created, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
+            this.existingOffers.push(offerModel)
+
+            // createdOffers.forEach((createdOffer, index) => {
+            //     const model = this.offersInEditor.find(editingOffer => editingOffer.item.id === createdOffer.item.id)
+            //
+            //     if (model) {
+            //         this.offersInEditor.splice(index, 1, createdOffer)
+            //         createdOffer.startEditing()
+            //     }
+            //
+            //     this.existingOffers.push(createdOffer)
+            // })
+            //
+            // this.$wishlistService.updateWishlistItem(this.editingOffer, updated[0])
+
+            this.editingOffer = null
+            this.$refs.editOfferPopup.close()
+
+            this.$showSuccess(`Created ${created.length} offer`)
+        },
+
+        saveOffer () {
+            return this.isWishlistMode ? this.saveEditingOffer() : this.saveNewOffer()
+        },
+
+        addOffer (offer) {
+            this.editingOffer = offer
+            offer.startEditing()
+            this.$refs.editOfferPopup.open()
         }
     }
 }

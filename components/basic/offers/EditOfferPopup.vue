@@ -1,9 +1,9 @@
 <template>
-  <Popup ref="editOfferPopup" popup-title="Edit offer" @popupClosed="$emit('cancelChanges')">
+  <Popup ref="editOfferPopup" :popup-title="popupTitle" @popupClosed="$emit('cancelChanges')">
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
-      <b-button type="is-danger" @click="$emit('deleteOffer', offer)">
+      <b-button v-if="hasRemoveButton" type="is-danger" @click="$emit('deleteOffer', offer)">
         Remove offer
       </b-button>
     </template>
@@ -33,6 +33,16 @@ export default {
         offer: {
             validate: prop => typeof prop === 'object' || prop === null,
             required: true
+        }
+    },
+
+    computed: {
+        popupTitle () {
+            return this.offer?.isNew ? 'Add Offer' : 'Edit Offer'
+        },
+
+        hasRemoveButton () {
+            return !this.offer?.isNew
         }
     },
 
