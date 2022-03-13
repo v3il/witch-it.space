@@ -351,6 +351,8 @@ export default {
         },
 
         toggleNewOffer (offerModel) {
+            console.log(offerModel)
+
             if (this.isSelectedNewOffer(offerModel)) {
                 return this.selectedNewOffers = this.selectedNewOffers.filter(offer => offer !== offerModel)
             }
@@ -444,28 +446,40 @@ export default {
             const isAsc = order === 'asc'
 
             return Array.from(offers).sort((a, b) => {
-                const first = isAsc ? a.item : b.item
-                const second = isAsc ? b.item : a.item
+                const first = isAsc ? a : b
+                const second = isAsc ? b : a
+
+                const firstItem = first.item
+                const secondItem = second.item
+
+                const firstQuality = first.isRecipe ? firstItem.quality - 0.5 : firstItem.quality
+                const secondQuality = second.isRecipe ? secondItem.quality - 0.5 : secondItem.quality
 
                 switch (sortBy) {
                 case 'rarity':
-                    return first.quality - second.quality
-                case 'name':
-                    return first.name.localeCompare(second.name)
-                }
+                    if (firstQuality === secondQuality) {
+                        if (first.isRecipe === second.isRecipe) {
+                            return secondItem.id - firstItem.id
+                        }
 
-                // todo: recipes last!
+                        return +second.isRecipe - +first.isRecipe
+                    }
+
+                    return firstQuality - secondQuality
+                case 'name':
+                    return firstItem.name.localeCompare(secondItem.name)
+                }
 
                 return 0
             })
         },
 
-        addToEditing (offerModel) {
-            if (!this.isEditingOffer(offerModel)) {
-                offerModel.startEditing()
-                this.offersInEditor.push(offerModel)
-            }
-        },
+        // addToEditing (offerModel) {
+        //     if (!this.isEditingOffer(offerModel)) {
+        //         offerModel.startEditing()
+        //         this.offersInEditor.push(offerModel)
+        //     }
+        // },
 
         // removeFormEditing (offerModel) {
         //     offerModel.cancelChanges()
@@ -480,9 +494,9 @@ export default {
         //     this.addToEditing(offerModel)
         // },
 
-        isEditingOffer (offerModel) {
-            return this.offersInEditor.includes(offerModel)
-        },
+        // isEditingOffer (offerModel) {
+        //     return this.offersInEditor.includes(offerModel)
+        // },
 
         // async saveWishlistItems () {
         //     const { created, updated, error } = await this.$wishlistService.saveWishlist(this.offersInEditor)
@@ -598,18 +612,7 @@ export default {
             const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
             this.existingOffers.push(offerModel)
 
-            // createdOffers.forEach((createdOffer, index) => {
-            //     const model = this.offersInEditor.find(editingOffer => editingOffer.item.id === createdOffer.item.id)
-            //
-            //     if (model) {
-            //         this.offersInEditor.splice(index, 1, createdOffer)
-            //         createdOffer.startEditing()
-            //     }
-            //
-            //     this.existingOffers.push(createdOffer)
-            // })
-            //
-            // this.$wishlistService.updateWishlistItem(this.editingOffer, updated[0])
+            this.newOffers = this.newOffers.filter(offer => offer !== this.editingOffer)
 
             this.editingOffer = null
             this.$refs.editOfferPopup.close()
@@ -618,7 +621,7 @@ export default {
         },
 
         saveOffer () {
-            return this.isWishlistMode ? this.saveEditingOffer() : this.saveNewOffer()
+            return this.editingOffer.isNew ? this.saveNewOffer() : this.saveEditingOffer()
         },
 
         addOffer (offer) {

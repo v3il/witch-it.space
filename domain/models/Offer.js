@@ -19,6 +19,10 @@ export class Offer extends BasicModel {
         return !this.id
     }
 
+    get isRecipe () {
+        return this.item.slot === 'recipe'
+    }
+
     getData () {
         const rawPrices = this.changedPrices.map(priceModel => priceModel.getData())
 
