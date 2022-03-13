@@ -1,5 +1,5 @@
 <template>
-  <Popup ref="editOfferPopup" :popup-title="popupTitle" @popupClosed="$emit('cancelChanges')">
+  <Popup ref="popup" :popup-title="popupTitle" @popupClosed="$emit('cancelChanges')">
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
@@ -48,11 +48,11 @@ export default {
 
     methods: {
         open () {
-            this.$refs.editOfferPopup.show()
+            this.$refs.popup.show()
         },
 
         close () {
-            this.$refs.editOfferPopup.hide()
+            this.$refs.popup.hide()
         }
     }
 }

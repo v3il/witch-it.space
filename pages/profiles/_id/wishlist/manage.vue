@@ -61,17 +61,20 @@
                     <!--                      Add to editor-->
                     <!--                    </DropdownItem>-->
 
-                    <DropdownItem @click="() => {}">
+                    <DropdownItem @click="openMassPriceEditor">
                       Set price
                     </DropdownItem>
 
-                    <DropdownItem v-if="hasSelectedExistingOffers && isWishlistMode" @click="clearSelectedOffers">
+                    <DropdownItem
+                      v-if="(hasSelectedExistingOffers && isWishlistMode) || (hasSelectedNewOffers && isAllItemsMode)"
+                      @click="clearSelectedOffers"
+                    >
                       Clear selection
                     </DropdownItem>
 
-                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">
-                      Clear selection
-                    </DropdownItem>
+                    <!--                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">-->
+                    <!--                      Clear selection-->
+                    <!--                    </DropdownItem>-->
 
                     <DropdownItem @click="removeFromWishlist">
                       <span class="wit-color--danger">Remove from wishlist</span>
@@ -158,22 +161,24 @@
 
       <!--      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />-->
 
-      <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="() => {}">
-        <div style="width: 500px;">
-          <div class="wit-block--full-width">
-            <PriceEditor
-              v-for="price in globalPrices"
-              :key="price.id"
-              :price="price"
-              :is-removable="globalPrices.length > 1"
-              class="wit-price-editor wit-block--full-width"
-              @priceTypeChanged="() => {}"
-              @priceRemoved="() => {}"
-              @priceAdded="() => {}"
-            />
-          </div>
-        </div>
-      </Popup>
+      <!--      <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="() => {}">-->
+      <!--        <div style="width: 500px;">-->
+      <!--          <div class="wit-block&#45;&#45;full-width">-->
+      <!--            <PriceEditor-->
+      <!--              v-for="price in globalPrices"-->
+      <!--              :key="price.id"-->
+      <!--              :price="price"-->
+      <!--              :is-removable="globalPrices.length > 1"-->
+      <!--              class="wit-price-editor wit-block&#45;&#45;full-width"-->
+      <!--              @priceTypeChanged="() => {}"-->
+      <!--              @priceRemoved="() => {}"-->
+      <!--              @priceAdded="() => {}"-->
+      <!--            />-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </Popup>-->
+
+      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffersSize" />
 
       <EditOfferPopup
         ref="editOfferPopup"
@@ -209,6 +214,7 @@ import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import IconButton from '@/components/basic/IconButton.vue'
 import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
+import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -257,7 +263,8 @@ export default {
         DropdownItem,
         IconButton,
         WishlistSelectedItem,
-        EditOfferPopup
+        EditOfferPopup,
+        SetMassPricePopup
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -319,6 +326,20 @@ export default {
 
         hasSelectedNewOffers () {
             return this.selectedNewOffers.length > 0
+        },
+
+        selectedOffersSize () {
+            let offers = []
+
+            if (this.isWishlistMode) {
+                offers = this.hasSelectedExistingOffers ? this.selectedExistingOffers : this.existingOffers
+            }
+
+            if (this.isAllItemsMode) {
+                offers = this.hasSelectedNewOffers ? this.selectedNewOffers : this.newOffers
+            }
+
+            return offers.length
         }
     },
 
@@ -628,6 +649,10 @@ export default {
             this.editingOffer = offer
             offer.startEditing()
             this.$refs.editOfferPopup.open()
+        },
+
+        openMassPriceEditor () {
+            this.$refs.massPriceEditorPopup.open()
         }
     }
 }
