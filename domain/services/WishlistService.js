@@ -75,6 +75,38 @@ export class WishlistService {
         }
     }
 
+    async setMassPrice (offers, priceModels) {
+        const offerIds = offers.map(offer => offer.id)
+        const prices = priceModels.map(priceModel => priceModel.getData())
+
+        // const changedOffersData = []
+        //
+        // wishlistItems.forEach((offerModel) => {
+        //     console.log(offerModel.isNew, offerModel.hasChanges)
+        //
+        //     if (offerModel.isNew || offerModel.hasChanges) {
+        //         changedOffersData.push(offerModel.getData())
+        //     }
+        // })
+        //
+        // if (!wishlistItems.length) {
+        //     return { created: [], updated: [] }
+        // }
+
+        try {
+            const { updated } = await this.#axiosInstance.$post('/api/wishlist/set_mass_price', {
+                offerIds,
+                prices
+            })
+
+            // console.error(created, updated)
+
+            return { error: null, updated }
+        } catch (e) {
+            return { error: e.message }
+        }
+    }
+
     async removeFromWishlist (wishlistItems) {
         const entityIds = wishlistItems.reduce((ids, wishlistItem) => {
             if (wishlistItem.id) {

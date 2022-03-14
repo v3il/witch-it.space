@@ -656,24 +656,27 @@ export default {
         },
 
         async setMassPrices (prices) {
-            console.log(this.selectedOffers)
-
-            this.selectedOffers.forEach((offer) => {
-                const priceClone = prices.map(price => price.clone())
-                offer.setPrices(priceClone)
-            })
-
-            const { updated, error, created } = await this.$wishlistService.saveWishlist(this.selectedOffers)
+            const { updated, error } = await this.$wishlistService.setMassPrice(this.selectedOffers, prices)
 
             if (error) {
                 return this.$showError(error)
             }
 
-            this.selectedOffers.forEach((offer, index) => {
-                const upd = updated[index] || created[index]
+            updated.forEach((updatedOffer) => {
+                const offer = this.existingOffers.find(existingOffer => updatedOffer.id === existingOffer.id)
 
-                this.$wishlistService.updateWishlistItem(offer, upd)
+                if (offer) {
+                    this.$wishlistService.updateWishlistItem(offer, updatedOffer)
+                }
             })
+
+            console.log(updated)
+
+            // this.selectedOffers.forEach((offer, index) => {
+            //     const upd = updated[index] || created[index]
+            //
+            //     this.$wishlistService.updateWishlistItem(offer, upd)
+            // })
 
             // this.editingOffer = null
             this.$refs.massPriceEditorPopup.close()

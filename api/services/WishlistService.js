@@ -22,6 +22,37 @@ export class WishlistService {
         })
     }
 
+    async setMassPrice ({ user, offerIds, prices }) {
+        const normalizedPrices = this.#priceService.normalizeRawPrices(prices)
+
+        const offers = await user.getWishes({
+            where: { id: offerIds },
+            include: { model: Price, as: 'rawPrices' }
+        })
+
+        for (const offer of offers) {
+            await sequelize.transaction(async (transaction) => {
+                if (offer.rawPrices.length > prices.length) {
+                    await offer.rawPrices[1].destroy({ transaction })
+                }
+
+                for (let i = 0; i < normalizedPrices.length; i++) {
+                    if (offer.rawPrices[i]) {
+                        await offer.rawPrices[i].update(normalizedPrices[i], { transaction })
+                        continue
+                    }
+
+                    await Price.create({ ...normalizedPrices[i], priceValue: 0, offerId: offer.id }, { transaction })
+                }
+            })
+        }
+
+        return user.getWishes({
+            where: { id: offerIds },
+            include: { model: Price, as: 'rawPrices' }
+        })
+    }
+
     async manage (user, wishlist) {
         const updatedIds = []
         const itemsToSave = []
