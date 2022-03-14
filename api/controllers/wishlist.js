@@ -48,24 +48,16 @@ const manage = async (request, response) => {
 }
 
 const removeFromWishlist = async (request, response) => {
-    const { entityIds } = request.body
+    const { user } = request
+    const { offerIds } = request.body
     const schema = joi.array().required()
-    const { error } = schema.validate(entityIds)
+    const { error } = schema.validate(offerIds)
 
     if (error) {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
-    if (!entityIds.length) {
-        return response.send({ removed: 0 })
-    }
-
-    const removed = await Wish.destroy({
-        where: {
-            id: entityIds,
-            userId: request.user.id
-        }
-    })
+    const removed = await wishlistService.removeUserOffers({ user, offerIds })
 
     response.send({ removed })
 }

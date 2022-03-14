@@ -53,6 +53,19 @@ export class WishlistService {
         })
     }
 
+    removeUserOffers ({ user, offerIds }) {
+        if (!offerIds.length) {
+            return 0
+        }
+
+        return Wish.destroy({
+            where: {
+                id: offerIds,
+                userId: user.id
+            }
+        })
+    }
+
     async manage (user, wishlist) {
         const updatedIds = []
         const itemsToSave = []

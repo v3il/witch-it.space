@@ -108,7 +108,7 @@ export class WishlistService {
     }
 
     async removeFromWishlist (wishlistItems) {
-        const entityIds = wishlistItems.reduce((ids, wishlistItem) => {
+        const offerIds = wishlistItems.reduce((ids, wishlistItem) => {
             if (wishlistItem.id) {
                 ids.push(wishlistItem.id)
             }
@@ -117,8 +117,8 @@ export class WishlistService {
         }, [])
 
         try {
-            const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { entityIds })
-            return { removed, entityIds, error: null }
+            const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { offerIds })
+            return { removed, offerIds, error: null }
         } catch (e) {
             return { error: e.message }
         }
