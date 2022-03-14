@@ -49,8 +49,10 @@ const manage = async (request, response) => {
 
 const removeFromWishlist = async (request, response) => {
     const { entityIds } = request.body
+    const schema = joi.array().required()
+    const { error } = schema.validate(entityIds)
 
-    if (!Array.isArray(entityIds)) {
+    if (error) {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
