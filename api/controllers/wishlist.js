@@ -39,12 +39,21 @@ const setMassPrice = async (request, response) => {
     })
 }
 
-const manage = async (request, response) => {
+const massCreate = async (request, response) => {
     const { user } = request
-    const { wishlist } = request.body
-    const { created, updated } = await wishlistService.manage(user, wishlist)
+    const { offers } = request.body
+    const schema = joi.array().required()
+    const { error } = schema.validate(offers)
 
-    response.send({ created, updated })
+    if (error) {
+        throw new BadRequest(request.$t('Error_BadRequest'))
+    }
+
+    const createdOffers = await wishlistService.massCreate({ user, offers })
+
+    response.send({
+        offers: createdOffers
+    })
 }
 
 const removeFromWishlist = async (request, response) => {
@@ -64,9 +73,9 @@ const removeFromWishlist = async (request, response) => {
 
 const wishlistController = {
     getUserWishlist,
-    manage,
     removeFromWishlist,
-    setMassPrice
+    setMassPrice,
+    massCreate
 }
 
 export { wishlistController }

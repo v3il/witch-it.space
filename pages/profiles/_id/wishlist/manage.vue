@@ -178,7 +178,7 @@
       <!--        </div>-->
       <!--      </Popup>-->
 
-      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffers.length" @saveChanges="setMassPrices" />
+      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffers.length" @saveChanges="massAction" />
 
       <EditOfferPopup
         ref="editOfferPopup"
@@ -655,6 +655,10 @@ export default {
             this.$refs.massPriceEditorPopup.open()
         },
 
+        massAction (prices) {
+            this.isWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
+        },
+
         async setMassPrices (prices) {
             const { updated, error } = await this.$wishlistService.setMassPrice(this.selectedOffers, prices)
 
@@ -682,6 +686,26 @@ export default {
             this.$refs.massPriceEditorPopup.close()
 
             this.$showSuccess(`Updated ${updated.length} offers`)
+        },
+
+        async massCreate (prices) {
+            console.log(this.selectedOffers)
+
+            const copies = this.selectedOffers.map((offer) => {
+                const clone = offer.clone()
+                const priceClones = prices.map(price => price.clone())
+                clone.setPrices(priceClones)
+
+                return clone
+            })
+
+            const { offers, error } = await this.$wishlistService.massCreate(copies)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            console.log(offers)
         }
     }
 }

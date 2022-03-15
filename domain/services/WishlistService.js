@@ -79,20 +79,6 @@ export class WishlistService {
         const offerIds = offers.map(offer => offer.id)
         const prices = priceModels.map(priceModel => priceModel.getData())
 
-        // const changedOffersData = []
-        //
-        // wishlistItems.forEach((offerModel) => {
-        //     console.log(offerModel.isNew, offerModel.hasChanges)
-        //
-        //     if (offerModel.isNew || offerModel.hasChanges) {
-        //         changedOffersData.push(offerModel.getData())
-        //     }
-        // })
-        //
-        // if (!wishlistItems.length) {
-        //     return { created: [], updated: [] }
-        // }
-
         try {
             const { updated } = await this.#axiosInstance.$post('/api/wishlist/set_mass_price', {
                 offerIds,
@@ -102,6 +88,22 @@ export class WishlistService {
             // console.error(created, updated)
 
             return { error: null, updated }
+        } catch (e) {
+            return { error: e.message }
+        }
+    }
+
+    async massCreate (offers2) {
+        const off = offers2.map(o => o.getData())
+
+        try {
+            const { offers } = await this.#axiosInstance.$post('/api/wishlist/mass_create', {
+                offers: off
+            })
+
+            // console.error(created, updated)
+
+            return { error: null, offers }
         } catch (e) {
             return { error: e.message }
         }
