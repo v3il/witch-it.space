@@ -705,7 +705,17 @@ export default {
                 return this.$showError(error)
             }
 
-            console.log(offers)
+            const newOffers = offers.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
+
+            // const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
+            this.existingOffers.push(...newOffers)
+
+            this.newOffers = this.newOffers.filter(offer => !this.selectedOffers.includes(offer))
+
+            this.selectedNewOffers = []
+            this.$refs.massPriceEditorPopup.close()
+
+            this.$showSuccess(`Created ${newOffers.length} offer`)
         }
     }
 }
