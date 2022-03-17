@@ -29,7 +29,6 @@
 
 <script>
 import { buildItemUrl } from '@/utils'
-import { raritiesManager } from '@/shared'
 import SelectedItemOverlay from '@/components/items/SelectedItemOverlay.vue'
 
 export default {
@@ -72,8 +71,7 @@ export default {
 
     computed: {
         itemClass () {
-            const rarity = raritiesManager.find(this.item.rarity)
-            return `wit-item-view--${rarity.value}`
+            return `wit-item-view--${this.item.rarity}`
         },
 
         itemPreviewURL () {

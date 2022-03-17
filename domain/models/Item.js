@@ -10,12 +10,13 @@ export class Item {
         this.name = itemData.name
         this.description = itemData.description
         this.slot = itemData.slot
+        this.rarity = itemData.rarity
         this.isTradable = itemData.isTradable
         this.#originalQuality = itemData.quality
     }
 
     get quality () {
-        return this.#originalQuality
+        return this.isRecipe ? this.#originalQuality : this.#originalQuality + 0.5
     }
 
     get isRecipe () {

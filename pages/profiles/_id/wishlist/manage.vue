@@ -85,75 +85,107 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-                <template #default="{ visibleItems }">
-                  <Grid cell-width="130px" mobile-cell-width="130px">
-                    <ItemView
-                      v-for="(offerModel, index) in visibleItems"
-                      :key="offerModel.id"
-                      :item="offerModel.item"
-                      :is-selected="isSelectedExistingOffer(offerModel)"
-                      @click="toggleExistingOffer(offerModel)"
-                      @shiftClick="onRangeToggle(index)"
-                    >
-                      <div class="wit-offer-controls">
-                        <IconButton
-                          icon="pencil-ruler"
-                          type="primary"
-                          circle
-                          :size="24"
-                          :disabled="isSelectedExistingOffer(offerModel)"
-                          @click="editOffer(offerModel)"
-                        />
-                      </div>
+              <ItemsListView :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+                <template #default="{ items: offers }">
+                  <ItemView
+                    v-for="(offer, index) in offers"
+                    :key="offer.id"
+                    :item="offer.item"
+                    :is-selected="isSelectedNewOffer(offer)"
+                    @clicked="toggleNewOffer(offer)"
+                    @shiftClick="onRangeToggle(index)"
+                  >
+                    <div class="wit-offer-controls">
+                      <IconButton
+                        icon="pencil-ruler"
+                        type="primary"
+                        circle
+                        :size="24"
+                        :disabled="isSelectedExistingOffer(offer)"
+                        @click="editOffer(offer)"
+                      />
+                    </div>
 
-                      <div class="wit-offer-controls wit-offer-controls--remove">
-                        <IconButton
-                          icon="close"
-                          type="danger"
-                          circle
-                          :size="24"
-                          :disabled="isSelectedExistingOffer(offerModel)"
-                          @click="deleteOffer(offerModel)"
-                        />
-                      </div>
-                      <ItemPriceList :prices="offerModel.prices" />
-                    </ItemView>
-                  </Grid>
+                    <div class="wit-offer-controls wit-offer-controls--remove">
+                      <IconButton
+                        icon="close"
+                        type="danger"
+                        circle
+                        :size="24"
+                        :disabled="isSelectedExistingOffer(offer)"
+                        @click="deleteOffer(offer)"
+                      />
+                    </div>
+                    <ItemPriceList :prices="offer.prices" />
+                  </ItemView>
                 </template>
-              </ScrollablePagination>
+              </ItemsListView>
 
-              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
+              <!--              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
+              <!--                <template #default="{ visibleItems }">-->
+              <!--                  <Grid cell-width="130px" mobile-cell-width="130px">-->
+              <!--                    <ItemView-->
+              <!--                      v-for="(offerModel, index) in visibleItems"-->
+              <!--                      :key="offerModel.id"-->
+              <!--                      :item="offerModel.item"-->
+              <!--                      :is-selected="isSelectedExistingOffer(offerModel)"-->
+              <!--                      @click="toggleExistingOffer(offerModel)"-->
+              <!--                      @shiftClick="onRangeToggle(index)"-->
+              <!--                    >-->
+              <!--                      <div class="wit-offer-controls">-->
+              <!--                        <IconButton-->
+              <!--                          icon="pencil-ruler"-->
+              <!--                          type="primary"-->
+              <!--                          circle-->
+              <!--                          :size="24"-->
+              <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
+              <!--                          @click="editOffer(offerModel)"-->
+              <!--                        />-->
+              <!--                      </div>-->
+
+              <!--                      <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
+              <!--                        <IconButton-->
+              <!--                          icon="close"-->
+              <!--                          type="danger"-->
+              <!--                          circle-->
+              <!--                          :size="24"-->
+              <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
+              <!--                          @click="deleteOffer(offerModel)"-->
+              <!--                        />-->
+              <!--                      </div>-->
+              <!--                      <ItemPriceList :prices="offerModel.prices" />-->
+              <!--                    </ItemView>-->
+              <!--                  </Grid>-->
+              <!--                </template>-->
+              <!--              </ScrollablePagination>-->
+
+              <!--              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top&#45;&#45;sm" />-->
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedNonWishlistItems.length" :items="sortedNonWishlistItems" :items-per-page="200" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-                <template #default="{ visibleItems }">
-                  <Grid cell-width="130px" mobile-cell-width="130px">
-                    <ItemView
-                      v-for="(item, index) in visibleItems"
-                      :key="item.id"
-                      :item="item"
-                      :is-selected="isSelectedNewOffer(item)"
-                      @clicked="toggleNewOffer(item)"
-                      @shiftClick="onRangeToggle(index)"
-                    >
-                      <div class="wit-offer-controls">
-                        <IconButton
-                          icon="plus-thick"
-                          type="primary"
-                          circle
-                          :size="24"
-                          :disabled="isSelectedNewOffer(item)"
-                          @click="addOffer(item)"
-                        />
-                      </div>
-                    </ItemView>
-                  </Grid>
+              <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+                <template #default="{ items }">
+                  <ItemView
+                    v-for="(item, index) in items"
+                    :key="item.id"
+                    :item="item"
+                    :is-selected="isSelectedNewOffer(item)"
+                    @clicked="toggleNewOffer(item)"
+                    @shiftClick="onRangeToggle(index)"
+                  >
+                    <div class="wit-offer-controls">
+                      <IconButton
+                        icon="plus-thick"
+                        type="primary"
+                        circle
+                        :size="24"
+                        :disabled="isSelectedNewOffer(item)"
+                        @click="addOffer(item)"
+                      />
+                    </div>
+                  </ItemView>
                 </template>
-              </ScrollablePagination>
-
-              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
+              </ItemsListView>
             </template>
           </div>
         </div>
@@ -217,6 +249,7 @@ import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import { Offer } from '@/domain/models/index.js'
+import ItemsListView from '@/components/items/ItemsListView.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -267,7 +300,8 @@ export default {
         WishlistSelectedItem,
         EditOfferPopup,
         SetMassPricePopup,
-        ItemView
+        ItemView,
+        ItemsListView
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
