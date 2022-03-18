@@ -9,7 +9,10 @@ export class ItemsService {
     setItems (items) {
         console.log(items)
 
-        this.#items = {} // items.map(itemData => Item.create(itemData))
+        items.forEach((itemData) => {
+            this.#items[itemData.id] = Item.create(itemData)
+        })
+
         this.#primary = PRIMARY.map(id => this.getById(id))
         this.#secondary = SECONDARY.map(id => this.getById(id))
     }

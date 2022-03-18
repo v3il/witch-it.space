@@ -34,7 +34,7 @@ export class Offer extends BasicModel {
     }
 
     get isRecipe () {
-        return this.item.slot === 'recipe'
+        return false
     }
 
     getData () {

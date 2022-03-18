@@ -32,7 +32,7 @@
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
                   <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ filteredNewOffers.length }}
+                    {{ nonWishlistItems.length }}
                   </b-tag>
                 </template>
               </Tabs>
@@ -88,11 +88,11 @@
               <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
-                    <WishlistOfferView
+                    <ItemView
                       v-for="(offerModel, index) in visibleItems"
                       :key="offerModel.id"
-                      :offer-model="offerModel"
-                      :is-editing="isSelectedExistingOffer(offerModel)"
+                      :item="offerModel.item"
+                      :is-selected="isSelectedExistingOffer(offerModel)"
                       @click="toggleExistingOffer(offerModel)"
                       @shiftClick="onRangeToggle(index)"
                     >
@@ -118,7 +118,7 @@
                         />
                       </div>
                       <ItemPriceList :prices="offerModel.prices" />
-                    </WishlistOfferView>
+                    </ItemView>
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -149,26 +149,6 @@
                         />
                       </div>
                     </ItemView>
-
-                    <!--                    <WishlistOfferView-->
-                    <!--                      v-for="(offerModel, index) in visibleItems"-->
-                    <!--                      :key="offerModel.id"-->
-                    <!--                      :offer-model="offerModel"-->
-                    <!--                      :is-editing="isSelectedNewOffer(offerModel)"-->
-                    <!--                      @click="toggleNewOffer(offerModel)"-->
-                    <!--                      @shiftClick="onRangeToggle(index)"-->
-                    <!--                    >-->
-                    <!--                      <div class="wit-offer-controls">-->
-                    <!--                        <IconButton-->
-                    <!--                          icon="plus-thick"-->
-                    <!--                          type="primary"-->
-                    <!--                          circle-->
-                    <!--                          :size="24"-->
-                    <!--                          :disabled="isSelectedNewOffer(offerModel)"-->
-                    <!--                          @click="addOffer(offerModel)"-->
-                    <!--                        />-->
-                    <!--                      </div>-->
-                    <!--                    </WishlistOfferView>-->
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -236,6 +216,7 @@ import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
+import { Offer } from '@/domain/models/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -256,7 +237,7 @@ const Modes = {
 }
 
 export default {
-    name: 'WishlistEditor',
+    name: 'Manage',
 
     modes: Object.values(Modes),
     defaultFilters: { ...DEFAULT_FILTERS },
@@ -307,8 +288,8 @@ export default {
         mode: Modes.WISHLIST,
         wishlistModels: [],
         // tradableItems: [],
-        globalPrices: [],
-        offers: [],
+        // globalPrices: [],
+        // offers: [],
         existingOffers: [],
         newOffers: [],
         offersInEditor: [],
@@ -331,20 +312,22 @@ export default {
             return Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
         },
 
-        filteredNewOffers () {
-            return this.filterOffers(this.newOffers)
-        },
-
-        sortedNewOffers () {
-            return this.sortOffers(this.filteredNewOffers)
-        },
+        // filteredNewOffers () {
+        //     return this.filterOffers(this.newOffers)
+        // },
+        //
+        // sortedNewOffers () {
+        //     return this.sortOffers(this.filteredNewOffers)
+        // },
 
         filteredExistingOffers () {
-            return this.filterOffers(this.existingOffers)
+            return [] || this.existingOffers
+            // return this.filterOffers(this.existingOffers)
         },
 
         sortedExistingOffers () {
-            return this.sortOffers(this.filteredExistingOffers)
+            return [] || this.existingOffers
+            // return this.sortOffers(this.filteredExistingOffers)
         },
 
         isWishlistMode () {
@@ -380,10 +363,10 @@ export default {
 
     created () {
         this.tradableItems = this.$itemsService.getTradableItems()
-        const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
+        // const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
 
-        this.newOffers = newOffers
-        this.existingOffers = existingOffers
+        // this.newOffers = newOffers
+        this.existingOffers = this.wishlist.map(offer => Offer.create(offer))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
@@ -516,26 +499,20 @@ export default {
             const { sortBy, order } = this.sort
             const isAsc = order === 'asc'
 
-            const first = isAsc ? a : b
-            const second = isAsc ? b : a
-
-            const firstItem = first.item
-            const secondItem = second.item
-
-            const firstQuality = first.isRecipe ? firstItem.quality - 0.5 : firstItem.quality
-            const secondQuality = second.isRecipe ? secondItem.quality - 0.5 : secondItem.quality
+            const firstItem = isAsc ? a : b
+            const secondItem = isAsc ? b : a
 
             switch (sortBy) {
             case 'rarity':
-                if (firstQuality === secondQuality) {
-                    if (first.isRecipe === second.isRecipe) {
+                if (firstItem.quality === secondItem.quality) {
+                    if (firstItem.isRecipe === secondItem.isRecipe) {
                         return secondItem.id - firstItem.id
                     }
 
-                    return +second.isRecipe - +first.isRecipe
+                    return +secondItem.isRecipe - +firstItem.isRecipe
                 }
 
-                return firstQuality - secondQuality
+                return firstItem.quality - secondItem.quality
             case 'name':
                 return firstItem.name.localeCompare(secondItem.name)
             }
