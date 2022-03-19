@@ -6,7 +6,7 @@ export class Item {
     }
 
     constructor (itemData) {
-        this.id = itemData.id
+        this.id = itemData.itemId
         this.name = itemData.name
         this.description = itemData.description
         this.slot = itemData.slot

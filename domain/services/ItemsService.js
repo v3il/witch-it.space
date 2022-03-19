@@ -1,5 +1,5 @@
 import { PRIMARY, SECONDARY } from '@/shared/items/index.js'
-import { Item } from '@/api/models/index.js'
+import { Item } from '@/domain/models'
 
 export class ItemsService {
     #items = {}
@@ -10,7 +10,7 @@ export class ItemsService {
         console.log(items)
 
         items.forEach((itemData) => {
-            this.#items[itemData.id] = Item.create(itemData)
+            this.#items[itemData.itemId] = Item.create(itemData)
         })
 
         this.#primary = PRIMARY.map(id => this.getById(id))

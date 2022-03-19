@@ -64,13 +64,7 @@ export default {
     },
 
     build: {
-        transpile: ['vue-final-modal'],
-        extend (config, { isDev, isClient }) {
-            config.node = {
-                fs: 'empty',
-                net: 'empty'
-            }
-        }
+        transpile: ['vue-final-modal']
     },
 
     serverMiddleware: [

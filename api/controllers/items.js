@@ -2,11 +2,11 @@ import { Item } from '../models'
 
 const getItems = async (request, response) => {
     const itemModels = await Item.findOne({
-        // order: [
-        //     ['quality', 'DESC'],
-        //     ['id', 'ASC']
-        // ],
-        // logging: console.log
+        order: [
+            ['quality', 'DESC'],
+            ['id', 'ASC']
+        ],
+        logging: console.log
     })
 
     const items = [itemModels].map(item => item.get({ raw: true }))
