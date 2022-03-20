@@ -1,8 +1,22 @@
 import Vue from 'vue'
 import { cloneDeep } from 'lodash'
 import { BasicModel } from './BasicModel.js'
+import { Price } from '@/domain/models/Price.js'
+import { itemsService } from '@/domain/index.js'
 
 export class Offer extends BasicModel {
+    static create (offerData) {
+        offerData.prices = (offerData.rawPrices || []).map(price => Price.create({ price }))
+
+        if (offerData.item) {
+            offerData.itemId = offerData.item.id
+        } else {
+            offerData.item = itemsService.getById(offerData.itemId)
+        }
+
+        return new Offer({ originalModel: offerData })
+    }
+
     get id () {
         return this.originalModel.id
     }

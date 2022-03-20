@@ -1,3 +1,5 @@
+import { Offer } from '@/domain/models/index.js'
+
 export class WishlistService {
     #axiosInstance = null
     #itemsService = null
@@ -30,9 +32,13 @@ export class WishlistService {
     }
 
     createWishlistItem ({ wishlistItem }) {
-        wishlistItem.prices = wishlistItem.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
-        wishlistItem.item = this.#itemsService.getById(wishlistItem.itemId)
-        return this.#wishlistItemFactory.createWishlist(wishlistItem)
+        console.log(111, wishlistItem.rawModel)
+
+        return Offer.create(wishlistItem.rawModel)
+
+        // wishlistItem.prices = wishlistItem.rawPrices.map(rawPrice => this.#priceService.createPrice(rawPrice))
+        // wishlistItem.item = this.#itemsService.getById(wishlistItem.itemId)
+        // return this.#wishlistItemFactory.createWishlist(wishlistItem)
     }
 
     updateWishlistItem (offerModel, updatedData) {
@@ -130,8 +136,8 @@ export class WishlistService {
         const existingItemIds = wishlistOffers.map(offer => offer.itemId)
         const nonWishlistItems = tradableItems.filter(item => !existingItemIds.includes(item.id))
 
-        const newOffers = nonWishlistItems.map(item => this.createNewWishlistItem(item))
-        const existingOffers = wishlistOffers.map(offer => this.createWishlistItem({ wishlistItem: offer }))
+        const newOffers = nonWishlistItems.map(item => Offer.create({ item }))
+        const existingOffers = wishlistOffers.map(offer => Offer.create(offer))
 
         return { newOffers, existingOffers }
     }
