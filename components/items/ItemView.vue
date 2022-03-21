@@ -22,15 +22,22 @@
       </p>
     </div>
     <slot />
+
+    <SelectedItemOverlay v-if="isSelected" />
   </div>
 </template>
 
 <script>
 import { buildItemUrl } from '@/utils'
 import { raritiesManager } from '@/shared'
+import SelectedItemOverlay from '@/components/items/SelectedItemOverlay.vue'
 
 export default {
     name: 'ItemView',
+
+    components: {
+        SelectedItemOverlay
+    },
 
     props: {
         item: {
@@ -48,6 +55,12 @@ export default {
             required: false,
             type: Boolean,
             default: true
+        },
+
+        isSelected: {
+            required: false,
+            type: Boolean,
+            default: false
         },
 
         addTooltip: {

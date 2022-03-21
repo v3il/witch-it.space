@@ -8,13 +8,13 @@ const getItems = async (request, response) => {
         ]
     })
 
-    const itemMap = {}
+    // const itemMap = {}
+    //
+    // items.forEach((item) => {
+    //     itemMap[item.id] = item.get({ raw: true })
+    // })
 
-    items.forEach((item) => {
-        itemMap[item.id] = item.get({ raw: true })
-    })
-
-    response.send({ items: itemMap })
+    response.send({ items: items.map(item => item.get({ raw: true })) })
 }
 
 const itemsController = {

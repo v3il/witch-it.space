@@ -127,15 +127,15 @@
             </template>
 
             <template v-if="isAllItemsMode">
-              <ScrollablePagination v-if="sortedNewOffers.length" :items="sortedNewOffers" :items-per-page="200" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ScrollablePagination v-if="sortedNonWishlistItems.length" :items="sortedNonWishlistItems" :items-per-page="200" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ visibleItems }">
                   <Grid cell-width="130px" mobile-cell-width="130px">
-                    <WishlistOfferView
-                      v-for="(offerModel, index) in visibleItems"
-                      :key="offerModel.id"
-                      :offer-model="offerModel"
-                      :is-editing="isSelectedNewOffer(offerModel)"
-                      @click="toggleNewOffer(offerModel)"
+                    <ItemView
+                      v-for="(item, index) in visibleItems"
+                      :key="item.id"
+                      :item="item"
+                      :is-selected="isSelectedNewOffer(item)"
+                      @clicked="toggleNewOffer(item)"
                       @shiftClick="onRangeToggle(index)"
                     >
                       <div class="wit-offer-controls">
@@ -144,11 +144,31 @@
                           type="primary"
                           circle
                           :size="24"
-                          :disabled="isSelectedNewOffer(offerModel)"
-                          @click="addOffer(offerModel)"
+                          :disabled="isSelectedNewOffer(item)"
+                          @click="addOffer(item)"
                         />
                       </div>
-                    </WishlistOfferView>
+                    </ItemView>
+
+                    <!--                    <WishlistOfferView-->
+                    <!--                      v-for="(offerModel, index) in visibleItems"-->
+                    <!--                      :key="offerModel.id"-->
+                    <!--                      :offer-model="offerModel"-->
+                    <!--                      :is-editing="isSelectedNewOffer(offerModel)"-->
+                    <!--                      @click="toggleNewOffer(offerModel)"-->
+                    <!--                      @shiftClick="onRangeToggle(index)"-->
+                    <!--                    >-->
+                    <!--                      <div class="wit-offer-controls">-->
+                    <!--                        <IconButton-->
+                    <!--                          icon="plus-thick"-->
+                    <!--                          type="primary"-->
+                    <!--                          circle-->
+                    <!--                          :size="24"-->
+                    <!--                          :disabled="isSelectedNewOffer(offerModel)"-->
+                    <!--                          @click="addOffer(offerModel)"-->
+                    <!--                        />-->
+                    <!--                      </div>-->
+                    <!--                    </WishlistOfferView>-->
                   </Grid>
                 </template>
               </ScrollablePagination>
@@ -215,6 +235,7 @@ import IconButton from '@/components/basic/IconButton.vue'
 import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
+import ItemView from '@/components/items/ItemView.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -264,7 +285,8 @@ export default {
         IconButton,
         WishlistSelectedItem,
         EditOfferPopup,
-        SetMassPricePopup
+        SetMassPricePopup,
+        ItemView
     },
 
     async asyncData ({ $usersService, $wishlistService, route }) {
@@ -284,7 +306,7 @@ export default {
         selectedItems: [],
         mode: Modes.WISHLIST,
         wishlistModels: [],
-        tradableItems: [],
+        // tradableItems: [],
         globalPrices: [],
         offers: [],
         existingOffers: [],
@@ -296,6 +318,19 @@ export default {
     }),
 
     computed: {
+        nonWishlistItems () {
+            const itemsInWishlist = this.existingOffers.map(({ item }) => item)
+            return this.tradableItems.filter(item => !itemsInWishlist.includes(item))
+        },
+
+        filteredNonWishlistItems () {
+            return this.nonWishlistItems.filter(this.checkItem)
+        },
+
+        sortedNonWishlistItems () {
+            return Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
+        },
+
         filteredNewOffers () {
             return this.filterOffers(this.newOffers)
         },
@@ -344,8 +379,8 @@ export default {
     },
 
     created () {
-        const tradableItems = this.$itemsService.getTradableItems()
-        const { newOffers, existingOffers } = this.$wishlistService.getOffersList(tradableItems, this.wishlist)
+        this.tradableItems = this.$itemsService.getTradableItems()
+        const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
 
         this.newOffers = newOffers
         this.existingOffers = existingOffers
@@ -460,6 +495,52 @@ export default {
                     isFilteredByTradeable &&
                     isFilteredByEvent
             })
+        },
+
+        checkItem (item) {
+            const lowerCasedQuery = this.filters.query.toLowerCase()
+            const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+            const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+            const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+            const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+            const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+
+            return isFilteredByRarity &&
+                isFilteredBySlot &&
+                isFilteredByName &&
+                isFilteredByTradeable &&
+                isFilteredByEvent
+        },
+
+        sortIteration (a, b) {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            const first = isAsc ? a : b
+            const second = isAsc ? b : a
+
+            const firstItem = first.item
+            const secondItem = second.item
+
+            const firstQuality = first.isRecipe ? firstItem.quality - 0.5 : firstItem.quality
+            const secondQuality = second.isRecipe ? secondItem.quality - 0.5 : secondItem.quality
+
+            switch (sortBy) {
+            case 'rarity':
+                if (firstQuality === secondQuality) {
+                    if (first.isRecipe === second.isRecipe) {
+                        return secondItem.id - firstItem.id
+                    }
+
+                    return +second.isRecipe - +first.isRecipe
+                }
+
+                return firstQuality - secondQuality
+            case 'name':
+                return firstItem.name.localeCompare(secondItem.name)
+            }
+
+            return 0
         },
 
         sortOffers (offers) {

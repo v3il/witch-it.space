@@ -1,4 +1,5 @@
 import { PRIMARY, SECONDARY } from '@/shared/items/index.js'
+import { Item } from '@/api/models/index.js'
 
 export class ItemsService {
     #items = {}
@@ -6,7 +7,9 @@ export class ItemsService {
     #secondary = []
 
     setItems (items) {
-        this.#items = items
+        console.log(items)
+
+        this.#items = {} // items.map(itemData => Item.create(itemData))
         this.#primary = PRIMARY.map(id => this.getById(id))
         this.#secondary = SECONDARY.map(id => this.getById(id))
     }
