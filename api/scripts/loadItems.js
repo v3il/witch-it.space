@@ -25,7 +25,7 @@ const imagekit = new ImageKit({
 async function processItem (item) {
     try {
         if (item.imgUrl) {
-            await downloadImage(item.imgUrl, item.id)
+            await downloadImage(item.imgUrl, item.itemId)
         }
 
         await saveItem(item)
@@ -60,10 +60,10 @@ async function downloadImage (imgUrl, imageName) {
 }
 
 async function saveItem (normalizedItemData) {
-    const { id, ...otherProps } = normalizedItemData
+    const { itemId, ...otherProps } = normalizedItemData
 
     const itemInDb = await Item.findOne({
-        where: { id }
+        where: { itemId }
     })
 
     if (itemInDb) {

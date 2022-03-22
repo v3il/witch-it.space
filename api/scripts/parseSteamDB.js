@@ -67,7 +67,7 @@
         const typeTagValue = Object.values(rawItemData).find(value => String(value).startsWith('type:'))
         const normalizedData = {}
 
-        normalizedData.id = Number.parseInt(rawItemData.id.replaceAll('#', ''))
+        normalizedData.itemId = Number.parseInt(rawItemData.id.replaceAll('#', ''))
         normalizedData.name = rawItemData.name.replaceAll('\n', '')
         normalizedData.description = rawItemData.description
         normalizedData.quality = Number.parseInt(rawItemData.item_quality)

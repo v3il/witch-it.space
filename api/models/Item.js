@@ -2,11 +2,7 @@ const initItemModel = (sequelize, DataTypes) => {
     return sequelize.define(
         'Item',
         {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true
-            },
-
+            itemId: DataTypes.INTEGER,
             name: DataTypes.STRING,
             description: DataTypes.STRING,
             createdDate: DataTypes.DATE,
