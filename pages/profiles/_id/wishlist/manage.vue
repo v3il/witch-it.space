@@ -228,7 +228,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
+import { isEqual } from 'lodash'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
@@ -253,6 +254,7 @@ import { Offer } from '@/domain/models/index.js'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import { Quest, Wishlist } from '@/store/Types.js'
 import { StoreModules } from '@/store/index.js'
+import { state } from '@/store/wishlist.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -337,8 +339,8 @@ export default {
 
     async fetch ({ store, route }) {
         await store.dispatch(`${StoreModules.WISHLIST}/fetchWishlist`, route.params.id)
-        await store.dispatch(`${StoreModules.WISHLIST}/getFilters`, route)
-        await store.dispatch(`${StoreModules.WISHLIST}/getSorts`, route)
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
     },
 
     computed: {
@@ -347,6 +349,10 @@ export default {
             'filters',
             'sorts'
         ]),
+
+        // changedFilters (state) {
+        //     return this.$wishlistService.getChangedFilters(this.filters)
+        // },
 
         nonWishlistItems () {
             const itemsInWishlist = this.existingOffers.map(({ item }) => item)
@@ -420,6 +426,7 @@ export default {
         console.log('offers', this.offers)
         console.log('filters', this.filters)
         console.log('sorts', this.sorts)
+        // console.log('changedFilters', this.changedFilters)
         // console.log('offers2', await this.fetchWishlist(139))
 
         // this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
@@ -427,7 +434,31 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.WISHLIST, ['fetchWishlist']),
+        ...mapActions(StoreModules.WISHLIST, [
+            'fetchWishlist',
+            'updateFilters',
+            'updateSorts'
+        ]),
+
+        async onFiltersChange (filters) {
+            if (isEqual(this.filters, filters)) {
+                return
+            }
+
+            await this.updateFilters(filters)
+            this.updateRoute()
+        },
+
+        async onSortChange (sorts) {
+            if (isEqual(this.sorts, sorts)) {
+                return
+            }
+
+            await this.updateSorts(sorts)
+            this.updateRoute()
+        },
+
+        // =============================
 
         isSelectedExistingOffer (offer) {
             return this.selectedExistingOffers.includes(offer)
@@ -510,12 +541,19 @@ export default {
         //     this.$refs.editOfferPopup.close()
         // },
 
-        onFiltersChange (filters) {
-            // this.filters = filters
-        },
+        updateRoute () {
+            const changedFilters = this.$wishlistService.getChangedFilters(this.filters)
+            const changedSorts = this.$wishlistService.getChangedSorts(this.sorts)
 
-        onSortChange (sort) {
-            // this.sort = sort
+            console.error(changedFilters, changedSorts)
+
+            this.$router.replace({
+                path: this.$route.path,
+                query: {
+                    ...changedSorts,
+                    ...changedFilters
+                }
+            })
         },
 
         filterOffers (offers) {

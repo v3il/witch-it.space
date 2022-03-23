@@ -1,6 +1,6 @@
 import { Offer } from '@/domain/models/index.js'
-import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
-import { Offers } from '@/domain/models/schemes/index.js'
+import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
+import { OffersScheme } from '@/domain/models/schemes/index.js'
 
 export class WishlistService {
     #axiosInstance = null
@@ -29,11 +29,19 @@ export class WishlistService {
     }
 
     getFilters (route) {
-        return getFiltersFromRoute(route, Offers.getFiltersScheme())
+        return getFiltersFromRoute(route, OffersScheme.getDefaultFilters())
+    }
+
+    getChangedFilters (filters) {
+        return getObjectsDiff(OffersScheme.getDefaultFilters(), filters)
     }
 
     getSorts (route) {
-        return getSortFromRoute(route, Offers.getSortsScheme(), Offers.getAvailableSorts())
+        return getSortFromRoute(route, OffersScheme.getDefaultSorts(), OffersScheme.getAvailableSorts())
+    }
+
+    getChangedSorts (sorts) {
+        return getObjectsDiff(OffersScheme.getDefaultSorts(), sorts)
     }
 
     // ====================================

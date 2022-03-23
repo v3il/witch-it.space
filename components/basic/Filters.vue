@@ -67,6 +67,7 @@
 import { debounce, isEqual } from 'lodash'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
+import { OffersScheme } from '@/domain/models/schemes/index.js'
 
 export default {
     name: 'Filters',
@@ -138,30 +139,30 @@ export default {
             this.$watch('sort', this.updateUrl, { deep: true })
             this.$watch('$route', () => {
                 this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
-                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, this.sorts))
+                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts()))
             }, { deep: true })
         }
     },
 
     methods: {
         updateUrl () {
-            const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
-            const routeSort = getSortFromRoute(this.$route, this.defaultSort, this.sorts)
-
-            if (isEqual(this.filters, routeFilters) && isEqual(this.sort, routeSort)) {
-                return
-            }
-
-            const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
-            const changedSort = getObjectsDiff(this.defaultSort, this.sort)
-
-            this.$router.replace({
-                path: this.$route.path,
-                query: {
-                    ...changedSort,
-                    ...changedFilters
-                }
-            })
+            // const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
+            // const routeSort = getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts())
+            //
+            // if (isEqual(this.filters, routeFilters) && isEqual(this.sort, routeSort)) {
+            //     return
+            // }
+            //
+            // const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
+            // const changedSort = getObjectsDiff(this.defaultSort, this.sort)
+            //
+            // this.$router.replace({
+            //     path: this.$route.path,
+            //     query: {
+            //         ...changedSort,
+            //         ...changedFilters
+            //     }
+            // })
         },
 
         updateSort (updatedSort) {

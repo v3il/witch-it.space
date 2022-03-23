@@ -1,18 +1,9 @@
+import { OffersScheme } from '@/domain/models/schemes/index.js'
+
 export const state = () => ({
     offers: [],
-
-    filters: {
-        query: '',
-        rarities: [],
-        slots: [],
-        events: [],
-        hideRecipes: true
-    },
-
-    sorts: {
-        sortBy: 'rarity',
-        order: 'desc'
-    }
+    filters: OffersScheme.getDefaultFilters(),
+    sorts: OffersScheme.getDefaultSorts()
 })
 
 export const actions = {
@@ -21,13 +12,21 @@ export const actions = {
         commit('SET_OFFERS', offers)
     },
 
-    getFilters ({ commit }, route) {
+    getInitialFilters ({ commit }, route) {
         const filters = this.$wishlistService.getFilters(route)
         commit('SET_FILTERS', filters)
     },
 
-    getSorts ({ commit }, route) {
+    getInitialSorts ({ commit }, route) {
         const sorts = this.$wishlistService.getSorts(route)
+        commit('SET_SORTS', sorts)
+    },
+
+    updateFilters ({ commit }, filters) {
+        commit('SET_FILTERS', filters)
+    },
+
+    updateSorts ({ commit }, sorts) {
         commit('SET_SORTS', sorts)
     }
 }

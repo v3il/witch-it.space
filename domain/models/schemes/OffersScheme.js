@@ -1,4 +1,4 @@
-export class Offers {
+export class OffersScheme {
     static #filtersScheme = {
         query: '',
         rarities: [],
@@ -12,11 +12,11 @@ export class Offers {
         order: 'desc'
     }
 
-    static getFiltersScheme () {
+    static getDefaultFilters () {
         return this.#filtersScheme
     }
 
-    static getSortsScheme () {
+    static getDefaultSorts () {
         return this.#sortsScheme
     }
 
