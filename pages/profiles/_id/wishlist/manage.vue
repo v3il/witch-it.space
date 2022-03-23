@@ -42,7 +42,7 @@
                   :default-filters="$options.defaultFilters"
                   :filters="filters"
                   :default-sort="$options.defaultSort"
-                  :sort="sort"
+                  :sort="sorts"
                   :sorts="$options.sorts"
                   class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
                   @filtersChanged="onFiltersChange"
@@ -319,8 +319,8 @@ export default {
     },
 
     data: () => ({
-        filters: { ...DEFAULT_FILTERS },
-        sort: { ...DEFAULT_SORT },
+        // filters: { ...DEFAULT_FILTERS },
+        // sort: { ...DEFAULT_SORT },
         selectedItems: [],
         mode: Modes.WISHLIST,
         wishlistModels: [],
@@ -336,13 +336,16 @@ export default {
     }),
 
     async fetch ({ store, route }) {
-        const userId = route.params.id
-        await store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, userId)
+        await store.dispatch(`${StoreModules.WISHLIST}/fetchWishlist`, route.params.id)
+        await store.dispatch(`${StoreModules.WISHLIST}/getFilters`, route)
+        await store.dispatch(`${StoreModules.WISHLIST}/getSorts`, route)
     },
 
     computed: {
         ...mapState(StoreModules.WISHLIST, [
-            'offers'
+            'offers',
+            'filters',
+            'sorts'
         ]),
 
         nonWishlistItems () {
@@ -371,7 +374,7 @@ export default {
         },
 
         sortedExistingOffers () {
-            return this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
+            return [] // this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
         },
 
         isWishlistMode () {
@@ -414,11 +417,13 @@ export default {
         // this.newOffers = newOffers
         this.existingOffers = [] // this.wishlist.map(offer => Offer.create(offer))
 
-        // console.log('offers', this.offers)
+        console.log('offers', this.offers)
+        console.log('filters', this.filters)
+        console.log('sorts', this.sorts)
         // console.log('offers2', await this.fetchWishlist(139))
 
-        this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
+        // this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
+        // this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
 
     methods: {
@@ -506,11 +511,11 @@ export default {
         // },
 
         onFiltersChange (filters) {
-            this.filters = filters
+            // this.filters = filters
         },
 
         onSortChange (sort) {
-            this.sort = sort
+            // this.sort = sort
         },
 
         filterOffers (offers) {
@@ -547,7 +552,7 @@ export default {
         },
 
         sortIteration (a, b) {
-            const { sortBy, order } = this.sort
+            const { sortBy, order } = this.sorts
             const isAsc = order === 'asc'
 
             const firstItem = isAsc ? a : b
@@ -572,7 +577,7 @@ export default {
         },
 
         sortIteration2 (a, b) {
-            const { sortBy, order } = this.sort
+            const { sortBy, order } = this.sorts
             const isAsc = order === 'asc'
 
             const firstItem = isAsc ? a.item : b.item
@@ -597,7 +602,7 @@ export default {
         },
 
         sortOffers (offers) {
-            const { sortBy, order } = this.sort
+            const { sortBy, order } = this.sorts
             const isAsc = order === 'asc'
 
             return Array.from(offers).sort((a, b) => {

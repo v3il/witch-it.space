@@ -1,4 +1,6 @@
 import { Offer } from '@/domain/models/index.js'
+import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
+import { Offers } from '@/domain/models/schemes/index.js'
 
 export class WishlistService {
     #axiosInstance = null
@@ -25,6 +27,16 @@ export class WishlistService {
             return { error: e.message, offers: [] }
         }
     }
+
+    getFilters (route) {
+        return getFiltersFromRoute(route, Offers.getFiltersScheme())
+    }
+
+    getSorts (route) {
+        return getSortFromRoute(route, Offers.getSortsScheme(), Offers.getAvailableSorts())
+    }
+
+    // ====================================
 
     createWishlistItem ({ wishlistItem }) {
         console.log(111, wishlistItem.rawModel)
