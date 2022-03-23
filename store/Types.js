@@ -92,6 +92,6 @@ export const Wishlist = StoreWrap.wrap('wishlist', {
     },
 
     Mutations: {
-        SET_LOADING: 'setLoading'
+        SET_OFFERS: 'setOffers'
     }
 })

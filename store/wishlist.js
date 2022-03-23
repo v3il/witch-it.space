@@ -1,27 +1,36 @@
 import { Wishlist } from '@/store'
+import { wishlistService } from '@/domain/index.js'
 
 export const state = () => ({
-    isLoaded: false,
-    isLoading: false
+    offers: [],
+
+    filters: {
+        query: '',
+        rarities: [],
+        slots: [],
+        events: [],
+        hideRecipes: true
+    },
+
+    sorts: {
+        sortBy: 'rarity',
+        order: 'desc'
+    }
 })
 
 export const actions = {
-    async [Wishlist.Actions.FETCH_WISHLIST] ({ commit }) {
-        commit(Wishlist.Mutations.SET_LOADING, true)
-
-        try {
-            const response = await this.$axios.get('/api/wishlist')
-            return response.data.wishlist
-        } catch (e) {
-            return { error: e.message }
-        } finally {
-            commit(Wishlist.Mutations.SET_LOADING, false)
-        }
+    async fetchWishlist ({ commit }, userId) {
+        const { offers } = await this.$wishlistService.fetch(userId)
+        commit('SET_OFFERS', offers)
     }
 }
 
 export const mutations = {
-    [Wishlist.Mutations.SET_LOADING] (state, isLoading) {
-        state.isLoading = isLoading
+    SET_OFFERS (state, offers) {
+        state.offers = offers
+    },
+
+    SET_FILTERS (state, filters) {
+        state.filters = filters
     }
 }

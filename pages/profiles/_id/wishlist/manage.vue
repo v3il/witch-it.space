@@ -228,6 +228,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
@@ -250,6 +251,8 @@ import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import { Offer } from '@/domain/models/index.js'
 import ItemsListView from '@/components/items/ItemsListView.vue'
+import { Quest, Wishlist } from '@/store/Types.js'
+import { StoreModules } from '@/store/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -332,18 +335,27 @@ export default {
         selectedNewOffers: []
     }),
 
+    async fetch ({ store, route }) {
+        const userId = route.params.id
+        await store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, userId)
+    },
+
     computed: {
+        ...mapState(StoreModules.WISHLIST, [
+            'offers'
+        ]),
+
         nonWishlistItems () {
             const itemsInWishlist = this.existingOffers.map(({ item }) => item)
-            return this.tradableItems.filter(item => !itemsInWishlist.includes(item))
+            return [] // this.tradableItems.filter(item => !itemsInWishlist.includes(item))
         },
 
         filteredNonWishlistItems () {
-            return this.nonWishlistItems.filter(this.checkItem)
+            return [] // this.nonWishlistItems.filter(this.checkItem)
         },
 
         sortedNonWishlistItems () {
-            return Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
+            return [] // Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
         },
 
         // filteredNewOffers () {
@@ -355,13 +367,11 @@ export default {
         // },
 
         filteredExistingOffers () {
-            return [] || this.existingOffers
-            // return this.filterOffers(this.existingOffers)
+            return [] // this.existingOffers.filter(offer => this.checkItem(offer.item))
         },
 
         sortedExistingOffers () {
-            return [] || this.existingOffers
-            // return this.sortOffers(this.filteredExistingOffers)
+            return this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
         },
 
         isWishlistMode () {
@@ -395,18 +405,25 @@ export default {
         }
     },
 
-    created () {
+    async created () {
+        await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
+
         this.tradableItems = this.$itemsService.getTradableItems()
         // const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
 
         // this.newOffers = newOffers
-        this.existingOffers = this.wishlist.map(offer => Offer.create(offer))
+        this.existingOffers = [] // this.wishlist.map(offer => Offer.create(offer))
+
+        // console.log('offers', this.offers)
+        // console.log('offers2', await this.fetchWishlist(139))
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
         this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
 
     methods: {
+        ...mapActions(StoreModules.WISHLIST, ['fetchWishlist']),
+
         isSelectedExistingOffer (offer) {
             return this.selectedExistingOffers.includes(offer)
         },
@@ -535,6 +552,31 @@ export default {
 
             const firstItem = isAsc ? a : b
             const secondItem = isAsc ? b : a
+
+            switch (sortBy) {
+            case 'rarity':
+                if (firstItem.quality === secondItem.quality) {
+                    if (firstItem.isRecipe === secondItem.isRecipe) {
+                        return secondItem.id - firstItem.id
+                    }
+
+                    return +secondItem.isRecipe - +firstItem.isRecipe
+                }
+
+                return firstItem.quality - secondItem.quality
+            case 'name':
+                return firstItem.name.localeCompare(secondItem.name)
+            }
+
+            return 0
+        },
+
+        sortIteration2 (a, b) {
+            const { sortBy, order } = this.sort
+            const isAsc = order === 'asc'
+
+            const firstItem = isAsc ? a.item : b.item
+            const secondItem = isAsc ? b.item : a.item
 
             switch (sortBy) {
             case 'rarity':
