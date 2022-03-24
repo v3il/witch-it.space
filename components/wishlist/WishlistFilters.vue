@@ -1,11 +1,10 @@
 <template>
   <Filters
     :filters="filters"
-    :sort="sort"
     :default-filters="defaultFilters"
-    :default-sort="defaultSort"
-    :query-input-placeholder="$t('Items_SearchByItemName')"
+    :default-sorts="defaultSorts"
     :sorts="sorts"
+    :query-input-placeholder="$t('Items_SearchByItemName')"
     @filtersChanged="$emit('filtersChanged', $event)"
     @sortChanged="$emit('sortChanged', $event)"
   >
@@ -158,17 +157,12 @@ export default {
             type: Object
         },
 
-        sort: {
-            required: true,
-            type: Object
-        },
-
-        defaultSort: {
-            required: true,
-            type: Object
-        },
-
         sorts: {
+            required: true,
+            type: Object
+        },
+
+        defaultSorts: {
             required: true,
             type: Object
         }

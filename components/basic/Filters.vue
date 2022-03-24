@@ -40,7 +40,7 @@
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
             <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
-            <span class="wit-color--white">{{ $t(sorts[sort.sortBy]) }}</span>
+            <span class="wit-color--white">{{ $t(sorts[sorts.sortBy]) }}</span>
           </b-button>
         </template>
 
@@ -68,6 +68,7 @@ import { debounce, isEqual } from 'lodash'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { SortOrders } from '@/shared/items/index.js'
 
 export default {
     name: 'Filters',
@@ -87,12 +88,12 @@ export default {
             type: Object
         },
 
-        sort: {
+        sorts: {
             required: true,
             type: Object
         },
 
-        defaultSort: {
+        defaultSorts: {
             required: true,
             type: Object
         },
@@ -100,11 +101,6 @@ export default {
         queryInputPlaceholder: {
             required: true,
             type: String
-        },
-
-        sorts: {
-            required: true,
-            type: Object
         },
 
         storeInUrl: {
@@ -123,29 +119,42 @@ export default {
         },
 
         hasSortChanges () {
-            return !isEqual(this.sort, this.defaultSort)
+            return !isEqual(this.sorts, this.defaultSorts)
         },
 
         isAscendingOrder () {
-            return this.sort.order === 'asc'
+            return this.sorts.order === SortOrders.ASC
         }
     },
 
     created () {
         this.update = debounce(this.update, 300)
 
-        if (this.storeInUrl) {
-            this.$watch('filters', this.updateUrl, { deep: true })
-            this.$watch('sort', this.updateUrl, { deep: true })
-            this.$watch('$route', () => {
-                this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
-                this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts()))
-            }, { deep: true })
-        }
+        // if (this.storeInUrl) {
+        //     this.$watch('filters', this.updateUrl, { deep: true })
+        //     this.$watch('sort', this.updateUrl, { deep: true })
+        //     // this.$watch('$route', () => {
+        //     //     this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
+        //     //     this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts()))
+        //     // }, { deep: true })
+        // }
     },
 
     methods: {
         updateUrl () {
+            // const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
+            // const changedSorts = getObjectsDiff(this.defaultSorts, this.sorts)
+            //
+            // console.error(changedFilters, changedSorts)
+            //
+            // this.$router.replace({
+            //     path: this.$route.path,
+            //     query: {
+            //         ...changedSorts,
+            //         ...changedFilters
+            //     }
+            // })
+
             // const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
             // const routeSort = getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts())
             //
@@ -167,16 +176,22 @@ export default {
 
         updateSort (updatedSort) {
             this.$emit('sortChanged', {
-                ...this.sort,
+                ...this.sorts,
                 ...updatedSort
             })
+
+            // this.updateUrl()
         },
 
         update (updatedFilters) {
+            console.log(updatedFilters)
+
             this.$emit('filtersChanged', {
                 ...this.filters,
                 ...updatedFilters
             })
+
+            // this.updateUrl()
         },
 
         resetFilter (prop) {
@@ -189,7 +204,7 @@ export default {
         },
 
         toggleOrder () {
-            this.updateSort({ order: this.isAscendingOrder ? 'desc' : 'asc' })
+            this.updateSort({ order: this.isAscendingOrder ? SortOrders.DESC : SortOrders.ASC })
         }
     }
 }

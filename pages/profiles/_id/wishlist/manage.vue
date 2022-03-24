@@ -39,11 +39,10 @@
 
               <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
                 <WishlistFilters
-                  :default-filters="$options.defaultFilters"
+                  :default-filters="defaultFilters"
                   :filters="filters"
-                  :default-sort="$options.defaultSort"
-                  :sort="sorts"
-                  :sorts="$options.sorts"
+                  :default-sorts="defaultSorts"
+                  :sorts="sorts"
                   class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
                   @filtersChanged="onFiltersChange"
                   @sortChanged="onSortChange"
@@ -346,8 +345,15 @@ export default {
     computed: {
         ...mapState(StoreModules.WISHLIST, [
             'offers',
+            'defaultFilters',
             'filters',
+            'defaultSorts',
             'sorts'
+        ]),
+
+        ...mapGetters(StoreModules.WISHLIST, [
+            'changedFilters',
+            'changedSorts'
         ]),
 
         // changedFilters (state) {
@@ -426,6 +432,8 @@ export default {
         console.log('offers', this.offers)
         console.log('filters', this.filters)
         console.log('sorts', this.sorts)
+        console.log('sorts', this.defaultFilters)
+        console.log('sorts', this.defaultSorts)
         // console.log('changedFilters', this.changedFilters)
         // console.log('offers2', await this.fetchWishlist(139))
 
@@ -456,6 +464,16 @@ export default {
 
             await this.updateSorts(sorts)
             this.updateRoute()
+        },
+
+        updateRoute () {
+            this.$router.replace({
+                path: this.$route.path,
+                query: {
+                    ...this.changedSorts,
+                    ...this.changedFilters
+                }
+            })
         },
 
         // =============================
@@ -541,20 +559,20 @@ export default {
         //     this.$refs.editOfferPopup.close()
         // },
 
-        updateRoute () {
-            const changedFilters = this.$wishlistService.getChangedFilters(this.filters)
-            const changedSorts = this.$wishlistService.getChangedSorts(this.sorts)
-
-            console.error(changedFilters, changedSorts)
-
-            this.$router.replace({
-                path: this.$route.path,
-                query: {
-                    ...changedSorts,
-                    ...changedFilters
-                }
-            })
-        },
+        // updateRoute () {
+        //     const changedFilters = this.$wishlistService.getChangedFilters(this.filters)
+        //     const changedSorts = this.$wishlistService.getChangedSorts(this.sorts)
+        //
+        //     console.error(changedFilters, changedSorts)
+        //
+        //     this.$router.replace({
+        //         path: this.$route.path,
+        //         query: {
+        //             ...changedSorts,
+        //             ...changedFilters
+        //         }
+        //     })
+        // },
 
         filterOffers (offers) {
             return offers.filter((offerModel) => {

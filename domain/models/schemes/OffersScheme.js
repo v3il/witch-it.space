@@ -1,3 +1,5 @@
+import { SortOrders } from '@/shared/items/index.js'
+
 export class OffersScheme {
     static #filtersScheme = {
         query: '',
@@ -9,7 +11,7 @@ export class OffersScheme {
 
     static #sortsScheme = {
         sortBy: 'rarity',
-        order: 'desc'
+        order: SortOrders.DESC
     }
 
     static getDefaultFilters () {

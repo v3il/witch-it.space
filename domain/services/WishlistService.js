@@ -32,17 +32,17 @@ export class WishlistService {
         return getFiltersFromRoute(route, OffersScheme.getDefaultFilters())
     }
 
-    getChangedFilters (filters) {
-        return getObjectsDiff(OffersScheme.getDefaultFilters(), filters)
-    }
+    // getChangedFilters (filters) {
+    //     return getObjectsDiff(OffersScheme.getDefaultFilters(), filters)
+    // }
 
     getSorts (route) {
         return getSortFromRoute(route, OffersScheme.getDefaultSorts(), OffersScheme.getAvailableSorts())
     }
 
-    getChangedSorts (sorts) {
-        return getObjectsDiff(OffersScheme.getDefaultSorts(), sorts)
-    }
+    // getChangedSorts (sorts) {
+    //     return getObjectsDiff(OffersScheme.getDefaultSorts(), sorts)
+    // }
 
     // ====================================
 

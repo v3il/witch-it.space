@@ -1,10 +1,20 @@
 import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { getObjectsDiff } from '@/utils/index.js'
 
 export const state = () => ({
     offers: [],
+    defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
+    defaultSorts: OffersScheme.getDefaultSorts(),
     sorts: OffersScheme.getDefaultSorts()
 })
+
+export const getters = {
+    changedFilters: state => getObjectsDiff(state.defaultFilters, state.filters),
+    isFiltersChanged: (state, getters) => Object.keys(getters.changedFilters).length > 0,
+    changedSorts: state => getObjectsDiff(state.defaultSorts, state.sorts),
+    isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0
+}
 
 export const actions = {
     async fetchWishlist ({ commit }, userId) {
