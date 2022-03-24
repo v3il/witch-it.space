@@ -38,6 +38,16 @@ export const actions = {
 
     updateSorts ({ commit }, sorts) {
         commit('SET_SORTS', sorts)
+    },
+
+    resetFilter ({ commit }, propName) {
+        console.log('Reset', propName)
+        commit('RESET_FILTER', propName)
+    },
+
+    resetFilters ({ commit }) {
+        console.log('Reset')
+        commit('RESET_FILTERS')
     }
 }
 
@@ -52,5 +62,13 @@ export const mutations = {
 
     SET_SORTS (state, sorts) {
         state.sorts = sorts
+    },
+
+    RESET_FILTER (state, propName) {
+        state.filters[propName] = state.defaultFilters[propName]
+    },
+
+    RESET_FILTERS (state) {
+        state.filters = { ...state.defaultFilters }
     }
 }

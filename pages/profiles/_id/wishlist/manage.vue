@@ -39,13 +39,15 @@
 
               <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
                 <WishlistFilters
-                  :default-filters="defaultFilters"
                   :filters="filters"
-                  :default-sorts="defaultSorts"
+                  :is-filters-changed="isFiltersChanged"
+                  :is-sorts-changed="isSortsChanged"
                   :sorts="sorts"
                   class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
                   @filtersChanged="onFiltersChange"
                   @sortChanged="onSortChange"
+                  @resetFilter="resetFilterProp"
+                  @resetFilters="resetFilterProps"
                 />
 
                 <Dropdown position="bottom-end">
@@ -353,7 +355,9 @@ export default {
 
         ...mapGetters(StoreModules.WISHLIST, [
             'changedFilters',
-            'changedSorts'
+            'changedSorts',
+            'isFiltersChanged',
+            'isSortsChanged'
         ]),
 
         // changedFilters (state) {
@@ -420,6 +424,18 @@ export default {
         }
     },
 
+    watch: {
+        filters: {
+            deep: true,
+            handler: 'updateRoute'
+        },
+
+        sorts: {
+            deep: true,
+            handler: 'updateRoute'
+        }
+    },
+
     async created () {
         await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
 
@@ -445,7 +461,9 @@ export default {
         ...mapActions(StoreModules.WISHLIST, [
             'fetchWishlist',
             'updateFilters',
-            'updateSorts'
+            'updateSorts',
+            'resetFilter',
+            'resetFilters'
         ]),
 
         async onFiltersChange (filters) {
@@ -464,6 +482,16 @@ export default {
 
             await this.updateSorts(sorts)
             this.updateRoute()
+        },
+
+        async resetFilterProp (propName) {
+            await this.resetFilter(propName)
+            this.updateRoute()
+        },
+
+        async resetFilterProps () {
+            await this.resetFilters()
+            // this.updateRoute()
         },
 
         updateRoute () {

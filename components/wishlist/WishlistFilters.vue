@@ -1,12 +1,14 @@
 <template>
   <Filters
     :filters="filters"
-    :default-filters="defaultFilters"
-    :default-sorts="defaultSorts"
+    :is-filters-changed="isFiltersChanged"
+    :is-sorts-changed="isSortsChanged"
     :sorts="sorts"
     :query-input-placeholder="$t('Items_SearchByItemName')"
     @filtersChanged="$emit('filtersChanged', $event)"
     @sortChanged="$emit('sortChanged', $event)"
+    @resetFilter="$emit('resetFilter', $event)"
+    @resetFilters="$emit('resetFilters')"
   >
     <template #default="{ filterParams, update, reset }">
       <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs">
@@ -152,20 +154,30 @@ export default {
             type: Object
         },
 
-        defaultFilters: {
+        isFiltersChanged: {
             required: true,
-            type: Object
+            type: Boolean
         },
+
+        // defaultFilters: {
+        //     required: true,
+        //     type: Object
+        // },
 
         sorts: {
             required: true,
             type: Object
         },
 
-        defaultSorts: {
+        isSortsChanged: {
             required: true,
-            type: Object
+            type: Boolean
         }
+
+        // defaultSorts: {
+        //     required: true,
+        //     type: Object
+        // }
     }
 }
 </script>

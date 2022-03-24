@@ -16,7 +16,7 @@
 
       <Dropdown ref="filterDropdown" position="end">
         <template #trigger>
-          <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" :class="{ 'wit-indicator': hasFilterChanges }">
+          <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" :class="{ 'wit-indicator': isFiltersChanged }">
             <i class="mdi mdi-20px mdi-filter wit-color--muted" />
           </b-button>
         </template>
@@ -35,7 +35,7 @@
       </Dropdown>
     </div>
 
-    <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': hasSortChanges }">
+    <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': isSortsChanged }">
       <Dropdown position="end">
         <template #trigger>
           <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
@@ -64,10 +64,8 @@
 </template>
 
 <script>
-import { debounce, isEqual } from 'lodash'
-import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
+import { debounce } from 'lodash'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
-import { OffersScheme } from '@/domain/models/schemes/index.js'
 import { SortOrders } from '@/shared/items/index.js'
 
 export default {
@@ -83,9 +81,9 @@ export default {
             type: Object
         },
 
-        defaultFilters: {
+        isFiltersChanged: {
             required: true,
-            type: Object
+            type: Boolean
         },
 
         sorts: {
@@ -93,113 +91,48 @@ export default {
             type: Object
         },
 
-        defaultSorts: {
+        isSortsChanged: {
             required: true,
-            type: Object
+            type: Boolean
         },
 
         queryInputPlaceholder: {
             required: true,
             type: String
-        },
-
-        storeInUrl: {
-            required: false,
-            type: Boolean,
-            default: true
         }
     },
 
     computed: {
-        hasFilterChanges () {
-            const { query, ...otherProps } = this.filters
-            const { query: originalQuery, ...otherPropsOriginal } = this.defaultFilters
-
-            return !isEqual(otherPropsOriginal, otherProps)
-        },
-
-        hasSortChanges () {
-            return !isEqual(this.sorts, this.defaultSorts)
-        },
-
         isAscendingOrder () {
             return this.sorts.order === SortOrders.ASC
         }
     },
 
     created () {
-        this.update = debounce(this.update, 300)
-
-        // if (this.storeInUrl) {
-        //     this.$watch('filters', this.updateUrl, { deep: true })
-        //     this.$watch('sort', this.updateUrl, { deep: true })
-        //     // this.$watch('$route', () => {
-        //     //     this.$emit('filtersChanged', getFiltersFromRoute(this.$route, this.defaultFilters))
-        //     //     this.$emit('sortChanged', getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts()))
-        //     // }, { deep: true })
-        // }
+        this.update = debounce(this.update, 200)
     },
 
     methods: {
-        updateUrl () {
-            // const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
-            // const changedSorts = getObjectsDiff(this.defaultSorts, this.sorts)
-            //
-            // console.error(changedFilters, changedSorts)
-            //
-            // this.$router.replace({
-            //     path: this.$route.path,
-            //     query: {
-            //         ...changedSorts,
-            //         ...changedFilters
-            //     }
-            // })
-
-            // const routeFilters = getFiltersFromRoute(this.$route, this.defaultFilters)
-            // const routeSort = getSortFromRoute(this.$route, this.defaultSort, OffersScheme.getAvailableSorts())
-            //
-            // if (isEqual(this.filters, routeFilters) && isEqual(this.sort, routeSort)) {
-            //     return
-            // }
-            //
-            // const changedFilters = getObjectsDiff(this.defaultFilters, this.filters)
-            // const changedSort = getObjectsDiff(this.defaultSort, this.sort)
-            //
-            // this.$router.replace({
-            //     path: this.$route.path,
-            //     query: {
-            //         ...changedSort,
-            //         ...changedFilters
-            //     }
-            // })
-        },
-
         updateSort (updatedSort) {
             this.$emit('sortChanged', {
                 ...this.sorts,
                 ...updatedSort
             })
-
-            // this.updateUrl()
         },
 
         update (updatedFilters) {
-            console.log(updatedFilters)
-
             this.$emit('filtersChanged', {
                 ...this.filters,
                 ...updatedFilters
             })
-
-            // this.updateUrl()
         },
 
-        resetFilter (prop) {
-            this.update({ [prop]: this.defaultFilters[prop] })
+        resetFilter (propName) {
+            this.$emit('resetFilter', propName)
         },
 
         resetFilters () {
-            this.update(this.defaultFilters)
+            this.$emit('resetFilters')
             this.$refs.filterDropdown.hide()
         },
 
