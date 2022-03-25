@@ -1,0 +1,38 @@
+.wit-filter__filter {
+    flex: 0 1 250px;
+    //margin-right: var(--offset-xs);
+
+    @media (max-width: 600px) {
+        flex: 0 1 100%;
+        margin-right: 0;
+        margin-bottom: var(--offset-xs);
+    }
+}
+
+.wit-filter__order-button,
+.wit-filter__sort-button,
+.wit-filter__filter-button {
+    background-color: rgb(46, 54, 72);
+    border: var(--default-border);
+    color: var(--body-color);
+}
+
+.wit-filter__filter-button,
+.wit-filter__order-button {
+    padding: 0 var(--offset-xs);
+    //border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
+}
+
+//.wit-filter__input,
+//.wit-filter__sort-button {
+//    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+//}
+
+.wit-filter__filter-popup {
+    padding: var(--offset-sm) var(--offset-sm) var(--offset-xs);
+    min-width: 400px;
+
+    @media (max-width: 850px) {
+        min-width: 0;
+    }
+}

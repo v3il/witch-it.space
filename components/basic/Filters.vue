@@ -36,22 +36,7 @@
     </div>
 
     <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': isSortsChanged }">
-      <Dropdown position="end">
-        <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
-            <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
-            <span class="wit-color--white">{{ $t(sorts[sorts.sortBy]) }}</span>
-          </b-button>
-        </template>
-
-        <template #items>
-          <li v-for="(label, key) in sorts" :key="key" class="wit-transition--background">
-            <b-button type="is-ghost" class="wit-color--white wit-flex--justify-start" expanded @click="updateSort({ sortBy: key })">
-              {{ $t(label) }}
-            </b-button>
-          </li>
-        </template>
-      </Dropdown>
+      <slot name="sorting-dropdown" :updateSortBy="updateSortBy" />
 
       <b-button class="wit-filter__order-button wit-split-part--right" @click="toggleOrder">
         <div class="wit-color--muted">
@@ -120,6 +105,13 @@ export default {
             })
         },
 
+        updateSortBy (sortByValue) {
+            this.$emit('sortChanged', {
+                ...this.sorts,
+                sortBy: sortByValue
+            })
+        },
+
         update (updatedFilters) {
             this.$emit('filtersChanged', {
                 ...this.filters,
@@ -142,44 +134,3 @@ export default {
     }
 }
 </script>
-
-<style scoped lang="scss">
-.wit-filter__filter {
-    flex: 0 1 250px;
-    //margin-right: var(--offset-xs);
-
-    @media (max-width: 600px) {
-        flex: 0 1 100%;
-        margin-right: 0;
-        margin-bottom: var(--offset-xs);
-    }
-}
-
-.wit-filter__order-button,
-.wit-filter__sort-button,
-.wit-filter__filter-button {
-    background-color: rgb(46, 54, 72);
-    border: var(--default-border);
-    color: var(--body-color);
-}
-
-.wit-filter__filter-button,
-.wit-filter__order-button {
-    padding: 0 var(--offset-xs);
-    //border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
-}
-
-//.wit-filter__input,
-//.wit-filter__sort-button {
-//    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
-//}
-
-.wit-filter__filter-popup {
-    padding: var(--offset-sm) var(--offset-sm) var(--offset-xs);
-    min-width: 400px;
-
-    @media (max-width: 850px) {
-        min-width: 0;
-    }
-}
-</style>

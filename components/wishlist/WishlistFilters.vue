@@ -130,12 +130,35 @@
         </b-switch>
       </div>
     </template>
+
+    <template #sorting-dropdown="{ updateSortBy }">
+      <Dropdown position="end">
+        <template #trigger>
+          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
+            <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
+            <span class="wit-color--white">{{ sortByTitle }}</span>
+          </b-button>
+        </template>
+
+        <template #items>
+          <DropdownItem @click="updateSortBy('rarity')">
+            {{ $t('Items_Sort_Rarity') }}
+          </DropdownItem>
+
+          <DropdownItem @click="updateSortBy('name')">
+            {{ $t('Items_Sort_Name') }}
+          </DropdownItem>
+        </template>
+      </Dropdown>
+    </template>
   </Filters>
 </template>
 
 <script>
 import Filters from '@/components/basic/Filters.vue'
 import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
+import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
+import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 
 export default {
     name: 'WishlistFilters',
@@ -145,7 +168,9 @@ export default {
     slots: slotsManager.getAll(),
 
     components: {
-        Filters
+        Filters,
+        DropdownItem,
+        Dropdown
     },
 
     props: {
@@ -159,11 +184,6 @@ export default {
             type: Boolean
         },
 
-        // defaultFilters: {
-        //     required: true,
-        //     type: Object
-        // },
-
         sorts: {
             required: true,
             type: Object
@@ -173,35 +193,12 @@ export default {
             required: true,
             type: Boolean
         }
+    },
 
-        // defaultSorts: {
-        //     required: true,
-        //     type: Object
-        // }
+    computed: {
+        sortByTitle () {
+            return this.sorts.sortBy === 'rarity' ? this.$t('Items_Sort_Rarity') : this.$t('Items_Sort_Name')
+        }
     }
 }
 </script>
-
-<style scoped lang="scss">
-//.wit-profiles-filter {
-//    //max-width: 800px;
-//}
-//
-//.wit-profiles-filter__input-container {
-//    max-width: 350px;
-//    margin-right: var(--offset-md);
-//}
-//
-//@media screen and (max-width: 850px) {
-//    .wit-profiles-filter__container {
-//        flex-direction: column;
-//    }
-//
-//    .wit-profiles-filter__input-container {
-//        max-width: none;
-//        margin-bottom: var(--offset-sm);
-//        margin-right: 0;
-//    }
-//}
-
-</style>

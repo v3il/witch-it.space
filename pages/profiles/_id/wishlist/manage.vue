@@ -46,8 +46,8 @@
                   class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
                   @filtersChanged="onFiltersChange"
                   @sortChanged="onSortChange"
-                  @resetFilter="resetFilterProp"
-                  @resetFilters="resetFilterProps"
+                  @resetFilter="resetFilter"
+                  @resetFilters="resetFilters"
                 />
 
                 <Dropdown position="bottom-end">
@@ -466,33 +466,29 @@ export default {
             'resetFilters'
         ]),
 
-        async onFiltersChange (filters) {
+        onFiltersChange (filters) {
             if (isEqual(this.filters, filters)) {
                 return
             }
 
-            await this.updateFilters(filters)
-            this.updateRoute()
+            this.updateFilters(filters)
         },
 
-        async onSortChange (sorts) {
+        onSortChange (sorts) {
             if (isEqual(this.sorts, sorts)) {
                 return
             }
 
-            await this.updateSorts(sorts)
-            this.updateRoute()
+            this.updateSorts(sorts)
         },
 
-        async resetFilterProp (propName) {
-            await this.resetFilter(propName)
-            this.updateRoute()
-        },
-
-        async resetFilterProps () {
-            await this.resetFilters()
-            // this.updateRoute()
-        },
+        // resetFilterProp (propName) {
+        //     this.resetFilter(propName)
+        // },
+        //
+        // resetFilterProps () {
+        //     this.resetFilters()
+        // },
 
         updateRoute () {
             this.$router.replace({
