@@ -4,17 +4,25 @@ import { BasicModel } from './BasicModel.js'
 import { Price } from '@/domain/models/Price.js'
 import { itemsService } from '@/domain/index.js'
 
-export class Offer extends BasicModel {
+export class Offer {
     static create (offerData) {
-        offerData.prices = (offerData.rawPrices || []).map(price => Price.create({ price }))
+        const offer = cloneDeep(offerData)
 
-        if (offerData.item) {
-            offerData.itemId = offerData.item.id
+        offer.prices = (offer.rawPrices || []).map(price => Price.create({ price }))
+
+        if (offer.item) {
+            offer.itemId = offer.item.id
         } else {
-            offerData.item = itemsService.getById(offerData.itemId)
+            offer.item = itemsService.getById(offer.itemId)
         }
 
-        return new Offer({ originalModel: offerData })
+        return new Offer(offer)
+    }
+
+    originalModel
+
+    constructor (offerData) {
+        this.originalModel = offerData
     }
 
     get id () {

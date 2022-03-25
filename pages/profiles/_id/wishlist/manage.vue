@@ -25,14 +25,14 @@
                 <template #tab0>
                   {{ $t('Wishlist_MyWishlist') }}
                   <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ filteredExistingOffers.length }}
+                    {{ sortedOfferModels.length }}
                   </b-tag>
                 </template>
 
                 <template #tab1>
                   {{ $t('Wishlist_AllItems') }}
                   <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ nonWishlistItems.length }}
+                    {{ sortedNonWishlistItems.length }}
                   </b-tag>
                 </template>
               </Tabs>
@@ -86,7 +86,7 @@
             </div>
 
             <template v-if="isWishlistMode">
-              <ItemsListView :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <ItemsListView :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
                 <template #default="{ items: offers }">
                   <ItemView
                     v-for="(offer, index) in offers"
@@ -257,18 +257,18 @@ import { Quest, Wishlist } from '@/store/Types.js'
 import { StoreModules } from '@/store/index.js'
 import { state } from '@/store/wishlist.js'
 
-const DEFAULT_FILTERS = {
-    query: '',
-    rarities: [],
-    slots: [],
-    events: [],
-    hideRecipes: true
-}
-
-const DEFAULT_SORT = {
-    sortBy: 'rarity',
-    order: 'desc'
-}
+// const DEFAULT_FILTERS = {
+//     query: '',
+//     rarities: [],
+//     slots: [],
+//     events: [],
+//     hideRecipes: true
+// }
+//
+// const DEFAULT_SORT = {
+//     sortBy: 'rarity',
+//     order: 'desc'
+// }
 
 const Modes = {
     WISHLIST: 'wishlist',
@@ -279,13 +279,13 @@ export default {
     name: 'Manage',
 
     modes: Object.values(Modes),
-    defaultFilters: { ...DEFAULT_FILTERS },
-    defaultSort: { ...DEFAULT_SORT },
+    // defaultFilters: { ...DEFAULT_FILTERS },
+    // defaultSort: { ...DEFAULT_SORT },
 
-    sorts: {
-        rarity: 'Items_Sort_Rarity',
-        name: 'Items_Sort_Name'
-    },
+    // sorts: {
+    //     rarity: 'Items_Sort_Rarity',
+    //     name: 'Items_Sort_Name'
+    // },
 
     components: {
         WishlistFilters,
@@ -346,14 +346,16 @@ export default {
 
     computed: {
         ...mapState(StoreModules.WISHLIST, [
-            'offers',
-            'defaultFilters',
+
+            // 'defaultFilters',
             'filters',
-            'defaultSorts',
+            // 'defaultSorts',
             'sorts'
         ]),
 
         ...mapGetters(StoreModules.WISHLIST, [
+            'sortedOfferModels',
+            'sortedNonWishlistItems',
             'changedFilters',
             'changedSorts',
             'isFiltersChanged',
@@ -364,18 +366,18 @@ export default {
         //     return this.$wishlistService.getChangedFilters(this.filters)
         // },
 
-        nonWishlistItems () {
-            const itemsInWishlist = this.existingOffers.map(({ item }) => item)
-            return [] // this.tradableItems.filter(item => !itemsInWishlist.includes(item))
-        },
-
-        filteredNonWishlistItems () {
-            return [] // this.nonWishlistItems.filter(this.checkItem)
-        },
-
-        sortedNonWishlistItems () {
-            return [] // Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
-        },
+        // nonWishlistItems () {
+        //     const itemsInWishlist = this.existingOffers.map(({ item }) => item)
+        //     return [] // this.tradableItems.filter(item => !itemsInWishlist.includes(item))
+        // },
+        //
+        // filteredNonWishlistItems () {
+        //     return [] // this.nonWishlistItems.filter(this.checkItem)
+        // },
+        //
+        // sortedNonWishlistItems () {
+        //     return [] // Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
+        // },
 
         // filteredNewOffers () {
         //     return this.filterOffers(this.newOffers)
@@ -436,8 +438,8 @@ export default {
         }
     },
 
-    async created () {
-        await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
+    created () {
+        // await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
 
         this.tradableItems = this.$itemsService.getTradableItems()
         // const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
@@ -448,8 +450,8 @@ export default {
         console.log('offers', this.offers)
         console.log('filters', this.filters)
         console.log('sorts', this.sorts)
-        console.log('sorts', this.defaultFilters)
-        console.log('sorts', this.defaultSorts)
+        // console.log('sorts', this.defaultFilters)
+        // console.log('sorts', this.defaultSorts)
         // console.log('changedFilters', this.changedFilters)
         // console.log('offers2', await this.fetchWishlist(139))
 
@@ -467,19 +469,15 @@ export default {
         ]),
 
         onFiltersChange (filters) {
-            if (isEqual(this.filters, filters)) {
-                return
+            if (!isEqual(this.filters, filters)) {
+                this.updateFilters(filters)
             }
-
-            this.updateFilters(filters)
         },
 
         onSortChange (sorts) {
-            if (isEqual(this.sorts, sorts)) {
-                return
+            if (!isEqual(this.sorts, sorts)) {
+                this.updateSorts(sorts)
             }
-
-            this.updateSorts(sorts)
         },
 
         // resetFilterProp (propName) {

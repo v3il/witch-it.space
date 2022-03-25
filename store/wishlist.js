@@ -1,5 +1,8 @@
 import { OffersScheme } from '@/domain/models/schemes/index.js'
 import { getObjectsDiff } from '@/utils/index.js'
+import { Offer } from '@/domain/models/index.js'
+import { itemsService, wishlistService } from '@/domain/index.js'
+import { SortOrders } from '@/shared/items/index.js'
 
 export const state = () => ({
     offers: [],
@@ -13,7 +16,54 @@ export const getters = {
     changedFilters: state => getObjectsDiff(state.defaultFilters, state.filters),
     isFiltersChanged: (state, getters) => Object.keys(getters.changedFilters).length > 0,
     changedSorts: state => getObjectsDiff(state.defaultSorts, state.sorts),
-    isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0
+    isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0,
+
+    offerModels: (state) => {
+        return state.offers.map(offer => Offer.create(offer))
+    },
+
+    filteredOfferModels: (state, getters) => {
+        const filters = state.filters
+        return getters.offerModels.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
+    },
+
+    sortedOfferModels: (state, getters) => {
+        const { order } = state.sorts
+        const isAsc = order === SortOrders.ASC
+
+        return Array.from(getters.filteredOfferModels).sort((a, b) => {
+            const first = isAsc ? a : b
+            const second = isAsc ? b : a
+            const firstItem = first.item
+            const secondItem = second.item
+
+            return wishlistService.compareItems(firstItem, secondItem, state.sorts)
+        })
+    },
+
+    nonWishlistItems (state, getters) {
+        const tradableItems = itemsService.getTradableItems()
+        const itemsInWishlist = getters.offerModels.map(offer => offer.item)
+
+        return tradableItems.filter(item => !itemsInWishlist.includes(item))
+    },
+
+    filteredNonWishlistItems: (state, getters) => {
+        const filters = state.filters
+        return getters.nonWishlistItems.filter(item => wishlistService.checkItem(item, filters))
+    },
+
+    sortedNonWishlistItems: (state, getters) => {
+        const { order } = state.sorts
+        const isAsc = order === SortOrders.ASC
+
+        return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
+            const firstItem = isAsc ? a : b
+            const secondItem = isAsc ? b : a
+
+            return wishlistService.compareItems(firstItem, secondItem, state.sorts)
+        })
+    }
 }
 
 export const actions = {

@@ -1,6 +1,7 @@
 import { Offer } from '@/domain/models/index.js'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { SortOrders } from '@/shared/items/index.js'
 
 export class WishlistService {
     #axiosInstance = null
@@ -21,7 +22,10 @@ export class WishlistService {
     async fetch (userId) {
         try {
             const { wishlist } = await this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
-            const offers = wishlist.map(offer => Offer.create(offer))
+            const offers = wishlist/* .map((offer) => {
+                console.log(offer, Offer.create(offer))
+                return Offer.create(offer)
+            }) */
             return { error: null, offers }
         } catch (e) {
             return { error: e.message, offers: [] }
@@ -32,17 +36,45 @@ export class WishlistService {
         return getFiltersFromRoute(route, OffersScheme.getDefaultFilters())
     }
 
-    // getChangedFilters (filters) {
-    //     return getObjectsDiff(OffersScheme.getDefaultFilters(), filters)
-    // }
-
     getSorts (route) {
         return getSortFromRoute(route, OffersScheme.getDefaultSorts(), OffersScheme.getAvailableSorts())
     }
 
-    // getChangedSorts (sorts) {
-    //     return getObjectsDiff(OffersScheme.getDefaultSorts(), sorts)
-    // }
+    checkItem (item, filters) {
+        const lowerCasedQuery = filters.query.toLowerCase()
+        const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+        const isFilteredByRarity = filters.rarities.length ? filters.rarities.includes(item.rarity) : true
+        const isFilteredByEvent = filters.events.length ? filters.events.includes(item.event) : true
+        const isFilteredBySlot = filters.slots.length ? filters.slots.includes(item.slot) : true
+        const isFilteredByTradeable = filters.isOnlyTradeable ? item.isTradeable : true
+
+        return isFilteredByRarity &&
+            isFilteredBySlot &&
+            isFilteredByName &&
+            isFilteredByTradeable &&
+            isFilteredByEvent
+    }
+
+    compareItems (firstItem, secondItem, sorts) {
+        const { sortBy } = sorts
+
+        switch (sortBy) {
+        case 'rarity':
+            if (firstItem.quality === secondItem.quality) {
+                if (firstItem.isRecipe === secondItem.isRecipe) {
+                    return secondItem.id - firstItem.id
+                }
+
+                return +secondItem.isRecipe - +firstItem.isRecipe
+            }
+
+            return firstItem.quality - secondItem.quality
+        case 'name':
+            return firstItem.name.localeCompare(secondItem.name)
+        }
+
+        return 0
+    }
 
     // ====================================
 

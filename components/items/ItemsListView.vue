@@ -1,6 +1,6 @@
 <template>
   <!--  <div>-->
-  <ScrollablePagination v-if="items.length" :items="items" :items-per-page="200">
+  <ScrollablePagination v-if="items.length" :items="items" :items-per-page="150">
     <template #default="{ visibleItems }">
       <Grid cell-width="130px" mobile-cell-width="130px">
         <slot :items="visibleItems" />

@@ -11,6 +11,9 @@ export class Item {
         this.description = itemData.description
         this.slot = itemData.slot
         this.rarity = itemData.rarity
+        this.event = itemData.event
+        this.createdDate = itemData.createdDate
+        this.character = itemData.character
         this.isTradable = itemData.isTradable
         this.#originalQuality = itemData.quality
     }
