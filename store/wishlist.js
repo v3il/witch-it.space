@@ -9,7 +9,9 @@ export const state = () => ({
     defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
     defaultSorts: OffersScheme.getDefaultSorts(),
-    sorts: OffersScheme.getDefaultSorts()
+    sorts: OffersScheme.getDefaultSorts(),
+    selectedOffers: [],
+    selectedNonWishlistItems: []
 })
 
 export const getters = {
@@ -32,10 +34,8 @@ export const getters = {
         const isAsc = order === SortOrders.ASC
 
         return Array.from(getters.filteredOfferModels).sort((a, b) => {
-            const first = isAsc ? a : b
-            const second = isAsc ? b : a
-            const firstItem = first.item
-            const secondItem = second.item
+            const firstItem = isAsc ? a.item : b.item
+            const secondItem = isAsc ? b.item : a.item
 
             return wishlistService.compareItems(firstItem, secondItem, state.sorts)
         })
@@ -91,13 +91,27 @@ export const actions = {
     },
 
     resetFilter ({ commit }, propName) {
-        console.log('Reset', propName)
         commit('RESET_FILTER', propName)
     },
 
     resetFilters ({ commit }) {
-        console.log('Reset')
         commit('RESET_FILTERS')
+    },
+
+    toggleOffer ({ commit, state }, offer) {
+        if (state.selectedOffers.includes(offer)) {
+            return commit('DESELECT_OFFER', offer)
+        }
+
+        commit('SELECT_OFFER', offer)
+    },
+
+    toggleNonWishlistItem ({ commit, state }, item) {
+        if (state.selectedNonWishlistItems.includes(item)) {
+            return commit('DESELECT_ITEM', item)
+        }
+
+        commit('SELECT_ITEM', item)
     }
 }
 
@@ -120,5 +134,21 @@ export const mutations = {
 
     RESET_FILTERS (state) {
         state.filters = { ...state.defaultFilters }
+    },
+
+    SELECT_OFFER (state, offer) {
+        state.selectedOffers.push(offer)
+    },
+
+    DESELECT_OFFER (state, offerToRemove) {
+        state.selectedOffers = state.selectedOffers.filter(offer => offer !== offerToRemove)
+    },
+
+    SELECT_ITEM (state, item) {
+        state.selectedNonWishlistItems.push(item)
+    },
+
+    DESELECT_ITEM (state, itemToRemove) {
+        state.selectedNonWishlistItems = state.selectedNonWishlistItems.filter(item => item !== itemToRemove)
     }
 }

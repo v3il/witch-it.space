@@ -20,6 +20,7 @@ export class Offer {
     }
 
     originalModel
+    // isSelected
 
     constructor (offerData) {
         this.originalModel = offerData
@@ -71,17 +72,17 @@ export class Offer {
 
     // Changed
 
-    get changedPrices () {
-        return this.changedModel.prices
-    }
-
-    addPrice (price) {
-        this.changedModel.prices.push(price)
-    }
-
-    removePrice (priceToRemove) {
-        this.changedModel.prices = this.changedModel.prices.filter(price => price !== priceToRemove)
-    }
+    // get changedPrices () {
+    //     return this.changedModel.prices
+    // }
+    //
+    // addPrice (price) {
+    //     this.changedModel.prices.push(price)
+    // }
+    //
+    // removePrice (priceToRemove) {
+    //     this.changedModel.prices = this.changedModel.prices.filter(price => price !== priceToRemove)
+    // }
 
     // setPrices (prices) {
     //     this.changedModel.prices = prices

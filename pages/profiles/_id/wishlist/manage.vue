@@ -9,188 +9,188 @@
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
-      <template v-if="error">
-        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
-          <nuxt-link to="/profiles" class="wit-padding-top--xs">
-            {{ $t('Profiles_BackToProfilesList') }}
-          </nuxt-link>
-        </EmptyState>
-      </template>
+      <!--      <template v-if="error">-->
+      <!--        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top&#45;&#45;sm wit-block&#45;&#45;full-width">-->
+      <!--          <nuxt-link to="/profiles" class="wit-padding-top&#45;&#45;xs">-->
+      <!--            {{ $t('Profiles_BackToProfilesList') }}-->
+      <!--          </nuxt-link>-->
+      <!--        </EmptyState>-->
+      <!--      </template>-->
 
-      <template v-else>
-        <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
-          <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
-            <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
-              <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
-                <template #tab0>
-                  {{ $t('Wishlist_MyWishlist') }}
-                  <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ sortedOfferModels.length }}
-                  </b-tag>
+      <!--      <template v-else>-->
+      <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
+        <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
+          <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
+            <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
+              <template #tab0>
+                {{ $t('Wishlist_MyWishlist') }}
+                <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+                  {{ sortedOfferModels.length }}
+                </b-tag>
+              </template>
+
+              <template #tab1>
+                {{ $t('Wishlist_AllItems') }}
+                <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+                  {{ sortedNonWishlistItems.length }}
+                </b-tag>
+              </template>
+            </Tabs>
+
+            <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
+              <WishlistFilters
+                :filters="filters"
+                :is-filters-changed="isFiltersChanged"
+                :is-sorts-changed="isSortsChanged"
+                :sorts="sorts"
+                class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
+                @filtersChanged="onFiltersChange"
+                @sortChanged="onSortChange"
+                @resetFilter="resetFilter"
+                @resetFilters="resetFilters"
+              />
+
+              <Dropdown position="bottom-end">
+                <template #trigger>
+                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                    <i class="mdi mdi-24px mdi-dots-grid" />
+                  </b-button>
                 </template>
 
-                <template #tab1>
-                  {{ $t('Wishlist_AllItems') }}
-                  <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                    {{ sortedNonWishlistItems.length }}
-                  </b-tag>
+                <template #items>
+                  <!--                    <DropdownItem @click="addItemsToEditor">-->
+                  <!--                      Add to editor-->
+                  <!--                    </DropdownItem>-->
+
+                  <DropdownItem @click="openMassPriceEditor">
+                    Set price
+                  </DropdownItem>
+
+                  <DropdownItem
+                    v-if="(hasSelectedExistingOffers && isWishlistMode) || (hasSelectedNewOffers && isAllItemsMode)"
+                    @click="clearSelectedOffers"
+                  >
+                    Clear selection
+                  </DropdownItem>
+
+                  <!--                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">-->
+                  <!--                      Clear selection-->
+                  <!--                    </DropdownItem>-->
+
+                  <DropdownItem @click="removeFromWishlist">
+                    <span class="wit-color--danger">Remove from wishlist</span>
+                  </DropdownItem>
                 </template>
-              </Tabs>
-
-              <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
-                <WishlistFilters
-                  :filters="filters"
-                  :is-filters-changed="isFiltersChanged"
-                  :is-sorts-changed="isSortsChanged"
-                  :sorts="sorts"
-                  class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
-                  @filtersChanged="onFiltersChange"
-                  @sortChanged="onSortChange"
-                  @resetFilter="resetFilter"
-                  @resetFilters="resetFilters"
-                />
-
-                <Dropdown position="bottom-end">
-                  <template #trigger>
-                    <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                      <i class="mdi mdi-24px mdi-dots-grid" />
-                    </b-button>
-                  </template>
-
-                  <template #items>
-                    <!--                    <DropdownItem @click="addItemsToEditor">-->
-                    <!--                      Add to editor-->
-                    <!--                    </DropdownItem>-->
-
-                    <DropdownItem @click="openMassPriceEditor">
-                      Set price
-                    </DropdownItem>
-
-                    <DropdownItem
-                      v-if="(hasSelectedExistingOffers && isWishlistMode) || (hasSelectedNewOffers && isAllItemsMode)"
-                      @click="clearSelectedOffers"
-                    >
-                      Clear selection
-                    </DropdownItem>
-
-                    <!--                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">-->
-                    <!--                      Clear selection-->
-                    <!--                    </DropdownItem>-->
-
-                    <DropdownItem @click="removeFromWishlist">
-                      <span class="wit-color--danger">Remove from wishlist</span>
-                    </DropdownItem>
-                  </template>
-                </Dropdown>
-              </div>
+              </Dropdown>
             </div>
-
-            <template v-if="isWishlistMode">
-              <ItemsListView :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-                <template #default="{ items: offers }">
-                  <ItemView
-                    v-for="(offer, index) in offers"
-                    :key="offer.id"
-                    :item="offer.item"
-                    :is-selected="isSelectedNewOffer(offer)"
-                    @clicked="toggleNewOffer(offer)"
-                    @shiftClick="onRangeToggle(index)"
-                  >
-                    <div class="wit-offer-controls">
-                      <IconButton
-                        icon="pencil-ruler"
-                        type="primary"
-                        circle
-                        :size="24"
-                        :disabled="isSelectedExistingOffer(offer)"
-                        @click="editOffer(offer)"
-                      />
-                    </div>
-
-                    <div class="wit-offer-controls wit-offer-controls--remove">
-                      <IconButton
-                        icon="close"
-                        type="danger"
-                        circle
-                        :size="24"
-                        :disabled="isSelectedExistingOffer(offer)"
-                        @click="deleteOffer(offer)"
-                      />
-                    </div>
-                    <ItemPriceList :prices="offer.prices" />
-                  </ItemView>
-                </template>
-              </ItemsListView>
-
-              <!--              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
-              <!--                <template #default="{ visibleItems }">-->
-              <!--                  <Grid cell-width="130px" mobile-cell-width="130px">-->
-              <!--                    <ItemView-->
-              <!--                      v-for="(offerModel, index) in visibleItems"-->
-              <!--                      :key="offerModel.id"-->
-              <!--                      :item="offerModel.item"-->
-              <!--                      :is-selected="isSelectedExistingOffer(offerModel)"-->
-              <!--                      @click="toggleExistingOffer(offerModel)"-->
-              <!--                      @shiftClick="onRangeToggle(index)"-->
-              <!--                    >-->
-              <!--                      <div class="wit-offer-controls">-->
-              <!--                        <IconButton-->
-              <!--                          icon="pencil-ruler"-->
-              <!--                          type="primary"-->
-              <!--                          circle-->
-              <!--                          :size="24"-->
-              <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
-              <!--                          @click="editOffer(offerModel)"-->
-              <!--                        />-->
-              <!--                      </div>-->
-
-              <!--                      <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
-              <!--                        <IconButton-->
-              <!--                          icon="close"-->
-              <!--                          type="danger"-->
-              <!--                          circle-->
-              <!--                          :size="24"-->
-              <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
-              <!--                          @click="deleteOffer(offerModel)"-->
-              <!--                        />-->
-              <!--                      </div>-->
-              <!--                      <ItemPriceList :prices="offerModel.prices" />-->
-              <!--                    </ItemView>-->
-              <!--                  </Grid>-->
-              <!--                </template>-->
-              <!--              </ScrollablePagination>-->
-
-              <!--              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top&#45;&#45;sm" />-->
-            </template>
-
-            <template v-if="isAllItemsMode">
-              <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-                <template #default="{ items }">
-                  <ItemView
-                    v-for="(item, index) in items"
-                    :key="item.id"
-                    :item="item"
-                    :is-selected="isSelectedNewOffer(item)"
-                    @clicked="toggleNewOffer(item)"
-                    @shiftClick="onRangeToggle(index)"
-                  >
-                    <div class="wit-offer-controls">
-                      <IconButton
-                        icon="plus-thick"
-                        type="primary"
-                        circle
-                        :size="24"
-                        :disabled="isSelectedNewOffer(item)"
-                        @click="addOffer(item)"
-                      />
-                    </div>
-                  </ItemView>
-                </template>
-              </ItemsListView>
-            </template>
           </div>
+
+          <template v-if="isWishlistMode">
+            <ItemsListView :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <template #default="{ items: offers }">
+                <ItemView
+                  v-for="(offer, index) in offers"
+                  :key="offer.id"
+                  :item="offer.item"
+                  :is-selected="isOfferSelected(offer)"
+                  @clicked="toggleOffer(offer)"
+                  @shiftClick="onRangeToggle(index)"
+                >
+                  <div class="wit-offer-controls">
+                    <IconButton
+                      icon="pencil-ruler"
+                      type="primary"
+                      circle
+                      :size="24"
+                      :disabled="isOfferSelected(offer)"
+                      @click="editOffer(offer)"
+                    />
+                  </div>
+
+                  <div class="wit-offer-controls wit-offer-controls--remove">
+                    <IconButton
+                      icon="close"
+                      type="danger"
+                      circle
+                      :size="24"
+                      :disabled="isOfferSelected(offer)"
+                      @click="deleteOffer(offer)"
+                    />
+                  </div>
+                  <ItemPriceList :prices="offer.prices" />
+                </ItemView>
+              </template>
+            </ItemsListView>
+
+            <!--              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
+            <!--                <template #default="{ visibleItems }">-->
+            <!--                  <Grid cell-width="130px" mobile-cell-width="130px">-->
+            <!--                    <ItemView-->
+            <!--                      v-for="(offerModel, index) in visibleItems"-->
+            <!--                      :key="offerModel.id"-->
+            <!--                      :item="offerModel.item"-->
+            <!--                      :is-selected="isSelectedExistingOffer(offerModel)"-->
+            <!--                      @click="toggleExistingOffer(offerModel)"-->
+            <!--                      @shiftClick="onRangeToggle(index)"-->
+            <!--                    >-->
+            <!--                      <div class="wit-offer-controls">-->
+            <!--                        <IconButton-->
+            <!--                          icon="pencil-ruler"-->
+            <!--                          type="primary"-->
+            <!--                          circle-->
+            <!--                          :size="24"-->
+            <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
+            <!--                          @click="editOffer(offerModel)"-->
+            <!--                        />-->
+            <!--                      </div>-->
+
+            <!--                      <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
+            <!--                        <IconButton-->
+            <!--                          icon="close"-->
+            <!--                          type="danger"-->
+            <!--                          circle-->
+            <!--                          :size="24"-->
+            <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
+            <!--                          @click="deleteOffer(offerModel)"-->
+            <!--                        />-->
+            <!--                      </div>-->
+            <!--                      <ItemPriceList :prices="offerModel.prices" />-->
+            <!--                    </ItemView>-->
+            <!--                  </Grid>-->
+            <!--                </template>-->
+            <!--              </ScrollablePagination>-->
+
+            <!--              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top&#45;&#45;sm" />-->
+          </template>
+
+          <template v-if="isAllItemsMode">
+            <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+              <template #default="{ items }">
+                <ItemView
+                  v-for="(item, index) in items"
+                  :key="item.id"
+                  :item="item"
+                  :is-selected="isItemSelected(item)"
+                  @clicked="toggleNonWishlistItem"
+                  @shiftClick="onRangeToggle(index)"
+                >
+                  <div class="wit-offer-controls">
+                    <IconButton
+                      icon="plus-thick"
+                      type="primary"
+                      circle
+                      :size="24"
+                      :disabled="isItemSelected(item)"
+                      @click="addOffer(item)"
+                    />
+                  </div>
+                </ItemView>
+              </template>
+            </ItemsListView>
+          </template>
         </div>
-      </template>
+      </div>
+      <!--      </template>-->
 
       <!--      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />-->
 
@@ -310,16 +310,16 @@ export default {
         ItemsListView
     },
 
-    async asyncData ({ $usersService, $wishlistService, route }) {
-        const { profile } = await $usersService.fetch(route.params.id)
-        const { wishlist } = await $wishlistService.fetch(route.params.id)
-
-        return {
-            profile,
-            wishlist,
-            error: null
-        }
-    },
+    // async asyncData ({ $usersService, $wishlistService, route }) {
+    //     const { profile } = await $usersService.fetch(route.params.id)
+    //     const { wishlist } = await $wishlistService.fetch(route.params.id)
+    //
+    //     return {
+    //         profile,
+    //         wishlist,
+    //         error: null
+    //     }
+    // },
 
     data: () => ({
         // filters: { ...DEFAULT_FILTERS },
@@ -346,11 +346,10 @@ export default {
 
     computed: {
         ...mapState(StoreModules.WISHLIST, [
-
-            // 'defaultFilters',
             'filters',
-            // 'defaultSorts',
-            'sorts'
+            'sorts',
+            'selectedOffers',
+            'selectedNonWishlistItems'
         ]),
 
         ...mapGetters(StoreModules.WISHLIST, [
@@ -387,13 +386,13 @@ export default {
         //     return this.sortOffers(this.filteredNewOffers)
         // },
 
-        filteredExistingOffers () {
-            return [] // this.existingOffers.filter(offer => this.checkItem(offer.item))
-        },
-
-        sortedExistingOffers () {
-            return [] // this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
-        },
+        // filteredExistingOffers () {
+        //     return [] // this.existingOffers.filter(offer => this.checkItem(offer.item))
+        // },
+        //
+        // sortedExistingOffers () {
+        //     return [] // this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
+        // },
 
         isWishlistMode () {
             return this.mode === Modes.WISHLIST
@@ -409,21 +408,21 @@ export default {
 
         hasSelectedNewOffers () {
             return this.selectedNewOffers.length > 0
-        },
-
-        selectedOffers () {
-            let offers = []
-
-            if (this.isWishlistMode) {
-                offers = this.hasSelectedExistingOffers ? this.selectedExistingOffers : this.existingOffers
-            }
-
-            if (this.isAllItemsMode) {
-                offers = this.hasSelectedNewOffers ? this.selectedNewOffers : this.newOffers
-            }
-
-            return offers
         }
+
+        // selectedOffers () {
+        //     let offers = []
+        //
+        //     if (this.isWishlistMode) {
+        //         offers = this.hasSelectedExistingOffers ? this.selectedExistingOffers : this.existingOffers
+        //     }
+        //
+        //     if (this.isAllItemsMode) {
+        //         offers = this.hasSelectedNewOffers ? this.selectedNewOffers : this.newOffers
+        //     }
+        //
+        //     return offers
+        // }
     },
 
     watch: {
@@ -441,15 +440,15 @@ export default {
     created () {
         // await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
 
-        this.tradableItems = this.$itemsService.getTradableItems()
+        // this.tradableItems = this.$itemsService.getTradableItems()
         // const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
 
         // this.newOffers = newOffers
-        this.existingOffers = [] // this.wishlist.map(offer => Offer.create(offer))
+        // this.existingOffers = [] // this.wishlist.map(offer => Offer.create(offer))
 
-        console.log('offers', this.offers)
-        console.log('filters', this.filters)
-        console.log('sorts', this.sorts)
+        // console.log('offers', this.offers)
+        // console.log('filters', this.filters)
+        // console.log('sorts', this.sorts)
         // console.log('sorts', this.defaultFilters)
         // console.log('sorts', this.defaultSorts)
         // console.log('changedFilters', this.changedFilters)
@@ -465,7 +464,9 @@ export default {
             'updateFilters',
             'updateSorts',
             'resetFilter',
-            'resetFilters'
+            'resetFilters',
+            'toggleOffer',
+            'toggleNonWishlistItem'
         ]),
 
         onFiltersChange (filters) {
@@ -480,14 +481,6 @@ export default {
             }
         },
 
-        // resetFilterProp (propName) {
-        //     this.resetFilter(propName)
-        // },
-        //
-        // resetFilterProps () {
-        //     this.resetFilters()
-        // },
-
         updateRoute () {
             this.$router.replace({
                 path: this.$route.path,
@@ -496,6 +489,14 @@ export default {
                     ...this.changedFilters
                 }
             })
+        },
+
+        isOfferSelected (offer) {
+            return this.selectedOffers.includes(offer)
+        },
+
+        isItemSelected (item) {
+            return this.selectedNonWishlistItems.includes(item)
         },
 
         // =============================
@@ -596,121 +597,121 @@ export default {
         //     })
         // },
 
-        filterOffers (offers) {
-            return offers.filter((offerModel) => {
-                const { item } = offerModel
-                const lowerCasedQuery = this.filters.query.toLowerCase()
-                const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-                const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
-                const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
-                const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
-                const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+        // filterOffers (offers) {
+        //     return offers.filter((offerModel) => {
+        //         const { item } = offerModel
+        //         const lowerCasedQuery = this.filters.query.toLowerCase()
+        //         const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+        //         const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+        //         const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+        //         const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+        //         const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+        //
+        //         return isFilteredByRarity &&
+        //             isFilteredBySlot &&
+        //             isFilteredByName &&
+        //             isFilteredByTradeable &&
+        //             isFilteredByEvent
+        //     })
+        // },
+        //
+        // checkItem (item) {
+        //     const lowerCasedQuery = this.filters.query.toLowerCase()
+        //     const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
+        //     const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
+        //     const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
+        //     const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
+        //     const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
+        //
+        //     return isFilteredByRarity &&
+        //         isFilteredBySlot &&
+        //         isFilteredByName &&
+        //         isFilteredByTradeable &&
+        //         isFilteredByEvent
+        // },
 
-                return isFilteredByRarity &&
-                    isFilteredBySlot &&
-                    isFilteredByName &&
-                    isFilteredByTradeable &&
-                    isFilteredByEvent
-            })
-        },
+        // sortIteration (a, b) {
+        //     const { sortBy, order } = this.sorts
+        //     const isAsc = order === 'asc'
+        //
+        //     const firstItem = isAsc ? a : b
+        //     const secondItem = isAsc ? b : a
+        //
+        //     switch (sortBy) {
+        //     case 'rarity':
+        //         if (firstItem.quality === secondItem.quality) {
+        //             if (firstItem.isRecipe === secondItem.isRecipe) {
+        //                 return secondItem.id - firstItem.id
+        //             }
+        //
+        //             return +secondItem.isRecipe - +firstItem.isRecipe
+        //         }
+        //
+        //         return firstItem.quality - secondItem.quality
+        //     case 'name':
+        //         return firstItem.name.localeCompare(secondItem.name)
+        //     }
+        //
+        //     return 0
+        // },
+        //
+        // sortIteration2 (a, b) {
+        //     const { sortBy, order } = this.sorts
+        //     const isAsc = order === 'asc'
+        //
+        //     const firstItem = isAsc ? a.item : b.item
+        //     const secondItem = isAsc ? b.item : a.item
+        //
+        //     switch (sortBy) {
+        //     case 'rarity':
+        //         if (firstItem.quality === secondItem.quality) {
+        //             if (firstItem.isRecipe === secondItem.isRecipe) {
+        //                 return secondItem.id - firstItem.id
+        //             }
+        //
+        //             return +secondItem.isRecipe - +firstItem.isRecipe
+        //         }
+        //
+        //         return firstItem.quality - secondItem.quality
+        //     case 'name':
+        //         return firstItem.name.localeCompare(secondItem.name)
+        //     }
+        //
+        //     return 0
+        // },
 
-        checkItem (item) {
-            const lowerCasedQuery = this.filters.query.toLowerCase()
-            const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-            const isFilteredByRarity = this.filters.rarities.length ? this.filters.rarities.includes(item.rarity) : true
-            const isFilteredByEvent = this.filters.events.length ? this.filters.events.includes(item.event) : true
-            const isFilteredBySlot = this.filters.slots.length ? this.filters.slots.includes(item.slot) : true
-            const isFilteredByTradeable = this.filters.isOnlyTradeable ? item.isTradeable : true
-
-            return isFilteredByRarity &&
-                isFilteredBySlot &&
-                isFilteredByName &&
-                isFilteredByTradeable &&
-                isFilteredByEvent
-        },
-
-        sortIteration (a, b) {
-            const { sortBy, order } = this.sorts
-            const isAsc = order === 'asc'
-
-            const firstItem = isAsc ? a : b
-            const secondItem = isAsc ? b : a
-
-            switch (sortBy) {
-            case 'rarity':
-                if (firstItem.quality === secondItem.quality) {
-                    if (firstItem.isRecipe === secondItem.isRecipe) {
-                        return secondItem.id - firstItem.id
-                    }
-
-                    return +secondItem.isRecipe - +firstItem.isRecipe
-                }
-
-                return firstItem.quality - secondItem.quality
-            case 'name':
-                return firstItem.name.localeCompare(secondItem.name)
-            }
-
-            return 0
-        },
-
-        sortIteration2 (a, b) {
-            const { sortBy, order } = this.sorts
-            const isAsc = order === 'asc'
-
-            const firstItem = isAsc ? a.item : b.item
-            const secondItem = isAsc ? b.item : a.item
-
-            switch (sortBy) {
-            case 'rarity':
-                if (firstItem.quality === secondItem.quality) {
-                    if (firstItem.isRecipe === secondItem.isRecipe) {
-                        return secondItem.id - firstItem.id
-                    }
-
-                    return +secondItem.isRecipe - +firstItem.isRecipe
-                }
-
-                return firstItem.quality - secondItem.quality
-            case 'name':
-                return firstItem.name.localeCompare(secondItem.name)
-            }
-
-            return 0
-        },
-
-        sortOffers (offers) {
-            const { sortBy, order } = this.sorts
-            const isAsc = order === 'asc'
-
-            return Array.from(offers).sort((a, b) => {
-                const first = isAsc ? a : b
-                const second = isAsc ? b : a
-
-                const firstItem = first.item
-                const secondItem = second.item
-
-                const firstQuality = first.isRecipe ? firstItem.quality - 0.5 : firstItem.quality
-                const secondQuality = second.isRecipe ? secondItem.quality - 0.5 : secondItem.quality
-
-                switch (sortBy) {
-                case 'rarity':
-                    if (firstQuality === secondQuality) {
-                        if (first.isRecipe === second.isRecipe) {
-                            return secondItem.id - firstItem.id
-                        }
-
-                        return +second.isRecipe - +first.isRecipe
-                    }
-
-                    return firstQuality - secondQuality
-                case 'name':
-                    return firstItem.name.localeCompare(secondItem.name)
-                }
-
-                return 0
-            })
-        },
+        // sortOffers (offers) {
+        //     const { sortBy, order } = this.sorts
+        //     const isAsc = order === 'asc'
+        //
+        //     return Array.from(offers).sort((a, b) => {
+        //         const first = isAsc ? a : b
+        //         const second = isAsc ? b : a
+        //
+        //         const firstItem = first.item
+        //         const secondItem = second.item
+        //
+        //         const firstQuality = first.isRecipe ? firstItem.quality - 0.5 : firstItem.quality
+        //         const secondQuality = second.isRecipe ? secondItem.quality - 0.5 : secondItem.quality
+        //
+        //         switch (sortBy) {
+        //         case 'rarity':
+        //             if (firstQuality === secondQuality) {
+        //                 if (first.isRecipe === second.isRecipe) {
+        //                     return secondItem.id - firstItem.id
+        //                 }
+        //
+        //                 return +second.isRecipe - +first.isRecipe
+        //             }
+        //
+        //             return firstQuality - secondQuality
+        //         case 'name':
+        //             return firstItem.name.localeCompare(secondItem.name)
+        //         }
+        //
+        //         return 0
+        //     })
+        // },
 
         // addToEditing (offerModel) {
         //     if (!this.isEditingOffer(offerModel)) {
