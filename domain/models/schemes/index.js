@@ -1,1 +1,1 @@
-export { OffersScheme } from './OffersScheme.js'
+export { OffersScheme } from './OffersScheme'

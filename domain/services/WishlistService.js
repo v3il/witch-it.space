@@ -1,6 +1,6 @@
 import { Offer } from '@/domain/models/index.js'
 import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
-import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { OffersScheme } from '@/domain/models/schemes'
 import { SortOrders } from '@/shared/items/index.js'
 
 export class WishlistService {

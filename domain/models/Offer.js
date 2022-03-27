@@ -59,7 +59,7 @@ export class Offer {
     update (updatedData) {
         this.originalModel.id = updatedData.id
         this.originalModel.prices = updatedData.prices
-        this.changedModel = Vue.observable(cloneDeep(this.originalModel))
+        // this.changedModel = Vue.observable(cloneDeep(this.originalModel))
     }
 
     setPrices (prices) {

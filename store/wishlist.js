@@ -1,8 +1,9 @@
-import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { OffersScheme } from '@/domain/models/schemes'
 import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { itemsService, wishlistService } from '@/domain/index.js'
 import { SortOrders } from '@/shared/items/index.js'
+import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 export const state = () => ({
     offers: [],
@@ -11,7 +12,8 @@ export const state = () => ({
     defaultSorts: OffersScheme.getDefaultSorts(),
     sorts: OffersScheme.getDefaultSorts(),
     selectedOffers: [],
-    selectedNonWishlistItems: []
+    selectedNonWishlistItems: [],
+    mode: WishlistTabs.MY_WISHLIST
 })
 
 export const getters = {
@@ -19,6 +21,8 @@ export const getters = {
     isFiltersChanged: (state, getters) => Object.keys(getters.changedFilters).length > 0,
     changedSorts: state => getObjectsDiff(state.defaultSorts, state.sorts),
     isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0,
+    isMyWishlistMode: state => state.mode === WishlistTabs.MY_WISHLIST,
+    isNonWishlistItemsMode: state => state.mode === WishlistTabs.NON_WISHLIST_ITEMS,
 
     offerModels: (state) => {
         return state.offers.map(offer => Offer.create(offer))
@@ -112,6 +116,10 @@ export const actions = {
         }
 
         commit('SELECT_ITEM', item)
+    },
+
+    toggleMode ({ commit }, mode) {
+        commit('TOGGLE_MODE', mode)
     }
 }
 
@@ -150,5 +158,9 @@ export const mutations = {
 
     DESELECT_ITEM (state, itemToRemove) {
         state.selectedNonWishlistItems = state.selectedNonWishlistItems.filter(item => item !== itemToRemove)
+    },
+
+    TOGGLE_MODE (state, mode) {
+        state.mode = mode
     }
 }

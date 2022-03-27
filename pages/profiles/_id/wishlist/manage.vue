@@ -21,7 +21,7 @@
       <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
         <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
           <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
-            <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="mode = $event">
+            <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
               <template #tab0>
                 {{ $t('Wishlist_MyWishlist') }}
                 <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
@@ -67,7 +67,7 @@
                   </DropdownItem>
 
                   <DropdownItem
-                    v-if="(hasSelectedExistingOffers && isWishlistMode) || (hasSelectedNewOffers && isAllItemsMode)"
+                    v-if="(hasSelectedExistingOffers && isMyWishlistMode) || (hasSelectedNewOffers && isNonWishlistItemsMode)"
                     @click="clearSelectedOffers"
                   >
                     Clear selection
@@ -85,7 +85,7 @@
             </div>
           </div>
 
-          <template v-if="isWishlistMode">
+          <template v-if="isMyWishlistMode">
             <ItemsListView :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ items: offers }">
                 <ItemView
@@ -163,7 +163,7 @@
             <!--              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top&#45;&#45;sm" />-->
           </template>
 
-          <template v-if="isAllItemsMode">
+          <template v-if="isNonWishlistItemsMode">
             <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ items }">
                 <ItemView
@@ -255,7 +255,8 @@ import { Offer } from '@/domain/models/index.js'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import { Quest, Wishlist } from '@/store/Types.js'
 import { StoreModules } from '@/store/index.js'
-import { state } from '@/store/wishlist.js'
+// import { state, Modes } from '@/store/wishlist.js'
+import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 // const DEFAULT_FILTERS = {
 //     query: '',
@@ -270,15 +271,15 @@ import { state } from '@/store/wishlist.js'
 //     order: 'desc'
 // }
 
-const Modes = {
-    WISHLIST: 'wishlist',
-    ALL_ITEMS: 'allItems'
-}
+// const Modes = {
+//     WISHLIST: 'wishlist',
+//     ALL_ITEMS: 'allItems'
+// }
 
 export default {
     name: 'Manage',
 
-    modes: Object.values(Modes),
+    modes: WishlistTabs.values,
     // defaultFilters: { ...DEFAULT_FILTERS },
     // defaultSort: { ...DEFAULT_SORT },
 
@@ -325,7 +326,7 @@ export default {
         // filters: { ...DEFAULT_FILTERS },
         // sort: { ...DEFAULT_SORT },
         selectedItems: [],
-        mode: Modes.WISHLIST,
+        // mode: W.WISHLIST,
         wishlistModels: [],
         // tradableItems: [],
         // globalPrices: [],
@@ -346,6 +347,7 @@ export default {
 
     computed: {
         ...mapState(StoreModules.WISHLIST, [
+            'mode',
             'filters',
             'sorts',
             'selectedOffers',
@@ -353,6 +355,8 @@ export default {
         ]),
 
         ...mapGetters(StoreModules.WISHLIST, [
+            'isMyWishlistMode',
+            'isNonWishlistItemsMode',
             'sortedOfferModels',
             'sortedNonWishlistItems',
             'changedFilters',
@@ -394,13 +398,13 @@ export default {
         //     return [] // this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
         // },
 
-        isWishlistMode () {
-            return this.mode === Modes.WISHLIST
-        },
-
-        isAllItemsMode () {
-            return this.mode === Modes.ALL_ITEMS
-        },
+        // isWishlistMode () {
+        //     return this.mode === Modes.WISHLIST
+        // },
+        //
+        // isAllItemsMode () {
+        //     return this.mode === Modes.ALL_ITEMS
+        // },
 
         hasSelectedExistingOffers () {
             return this.selectedExistingOffers.length > 0
@@ -460,6 +464,7 @@ export default {
 
     methods: {
         ...mapActions(StoreModules.WISHLIST, [
+            'toggleMode',
             'fetchWishlist',
             'updateFilters',
             'updateSorts',
@@ -501,34 +506,34 @@ export default {
 
         // =============================
 
-        isSelectedExistingOffer (offer) {
-            return this.selectedExistingOffers.includes(offer)
-        },
+        // isSelectedExistingOffer (offer) {
+        //     return this.selectedExistingOffers.includes(offer)
+        // },
 
-        toggleExistingOffer (offerModel) {
-            if (this.isSelectedExistingOffer(offerModel)) {
-                return this.selectedExistingOffers = this.selectedExistingOffers.filter(offer => offer !== offerModel)
-            }
+        // toggleExistingOffer (offerModel) {
+        //     if (this.isSelectedExistingOffer(offerModel)) {
+        //         return this.selectedExistingOffers = this.selectedExistingOffers.filter(offer => offer !== offerModel)
+        //     }
+        //
+        //     this.selectedExistingOffers.push(offerModel)
+        // },
 
-            this.selectedExistingOffers.push(offerModel)
-        },
-
-        isSelectedNewOffer (offer) {
-            return this.selectedNewOffers.includes(offer)
-        },
-
-        toggleNewOffer (offerModel) {
-            console.log(offerModel)
-
-            if (this.isSelectedNewOffer(offerModel)) {
-                return this.selectedNewOffers = this.selectedNewOffers.filter(offer => offer !== offerModel)
-            }
-
-            this.selectedNewOffers.push(offerModel)
-        },
+        // isSelectedNewOffer (offer) {
+        //     return this.selectedNewOffers.includes(offer)
+        // },
+        //
+        // toggleNewOffer (offerModel) {
+        //     console.log(offerModel)
+        //
+        //     if (this.isSelectedNewOffer(offerModel)) {
+        //         return this.selectedNewOffers = this.selectedNewOffers.filter(offer => offer !== offerModel)
+        //     }
+        //
+        //     this.selectedNewOffers.push(offerModel)
+        // },
 
         clearSelectedOffers () {
-            if (this.isAllItemsMode) {
+            if (this.isNonWishlistItemsMode) {
                 return this.selectedNewOffers = []
             }
 
@@ -774,7 +779,7 @@ export default {
         // },
 
         onRangeToggle (clickedItemIndex) {
-            const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+            const offers = this.isNonWishlistItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
 
             for (let i = clickedItemIndex - 1; i >= 0; i--) {
                 if (this.isEditingOffer(offers[i])) {
@@ -790,7 +795,7 @@ export default {
         },
 
         toggleRange ({ from, to }) {
-            const offers = this.isAllItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+            const offers = this.isNonWishlistItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
 
             for (let index = from; index <= to; index++) {
                 this.addToEditing(offers[index])
@@ -874,7 +879,7 @@ export default {
         },
 
         massAction (prices) {
-            this.isWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
+            this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
         },
 
         async setMassPrices (prices) {
