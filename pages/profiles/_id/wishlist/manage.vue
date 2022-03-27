@@ -9,15 +9,6 @@
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
-      <!--      <template v-if="error">-->
-      <!--        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top&#45;&#45;sm wit-block&#45;&#45;full-width">-->
-      <!--          <nuxt-link to="/profiles" class="wit-padding-top&#45;&#45;xs">-->
-      <!--            {{ $t('Profiles_BackToProfilesList') }}-->
-      <!--          </nuxt-link>-->
-      <!--        </EmptyState>-->
-      <!--      </template>-->
-
-      <!--      <template v-else>-->
       <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
         <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
           <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
@@ -58,10 +49,6 @@
                 </template>
 
                 <template #items>
-                  <!--                    <DropdownItem @click="addItemsToEditor">-->
-                  <!--                      Add to editor-->
-                  <!--                    </DropdownItem>-->
-
                   <DropdownItem @click="openMassPriceEditor">
                     Set price
                   </DropdownItem>
@@ -72,10 +59,6 @@
                   >
                     Clear selection
                   </DropdownItem>
-
-                  <!--                    <DropdownItem v-if="hasSelectedNewOffers && isAllItemsMode" @click="clearSelectedOffers">-->
-                  <!--                      Clear selection-->
-                  <!--                    </DropdownItem>-->
 
                   <DropdownItem @click="removeFromWishlist">
                     <span class="wit-color--danger">Remove from wishlist</span>
@@ -121,46 +104,6 @@
                 </ItemView>
               </template>
             </ItemsListView>
-
-            <!--              <ScrollablePagination v-if="sortedExistingOffers.length" :items-per-page="200" :items="sortedExistingOffers" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
-            <!--                <template #default="{ visibleItems }">-->
-            <!--                  <Grid cell-width="130px" mobile-cell-width="130px">-->
-            <!--                    <ItemView-->
-            <!--                      v-for="(offerModel, index) in visibleItems"-->
-            <!--                      :key="offerModel.id"-->
-            <!--                      :item="offerModel.item"-->
-            <!--                      :is-selected="isSelectedExistingOffer(offerModel)"-->
-            <!--                      @click="toggleExistingOffer(offerModel)"-->
-            <!--                      @shiftClick="onRangeToggle(index)"-->
-            <!--                    >-->
-            <!--                      <div class="wit-offer-controls">-->
-            <!--                        <IconButton-->
-            <!--                          icon="pencil-ruler"-->
-            <!--                          type="primary"-->
-            <!--                          circle-->
-            <!--                          :size="24"-->
-            <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
-            <!--                          @click="editOffer(offerModel)"-->
-            <!--                        />-->
-            <!--                      </div>-->
-
-            <!--                      <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
-            <!--                        <IconButton-->
-            <!--                          icon="close"-->
-            <!--                          type="danger"-->
-            <!--                          circle-->
-            <!--                          :size="24"-->
-            <!--                          :disabled="isSelectedExistingOffer(offerModel)"-->
-            <!--                          @click="deleteOffer(offerModel)"-->
-            <!--                        />-->
-            <!--                      </div>-->
-            <!--                      <ItemPriceList :prices="offerModel.prices" />-->
-            <!--                    </ItemView>-->
-            <!--                  </Grid>-->
-            <!--                </template>-->
-            <!--              </ScrollablePagination>-->
-
-            <!--              <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top&#45;&#45;sm" />-->
           </template>
 
           <template v-if="isNonWishlistItemsMode">
@@ -190,26 +133,6 @@
           </template>
         </div>
       </div>
-      <!--      </template>-->
-
-      <!--      <WishlistEditorPopup ref="wishlistEditor" :offers="offersInEditor" @updateOfferList="offersInEditor = $event" @submit="saveWishlistItems" />-->
-
-      <!--      <Popup ref="setGlobalPrice" popup-title="Bulk price editor" @submit="() => {}">-->
-      <!--        <div style="width: 500px;">-->
-      <!--          <div class="wit-block&#45;&#45;full-width">-->
-      <!--            <PriceEditor-->
-      <!--              v-for="price in globalPrices"-->
-      <!--              :key="price.id"-->
-      <!--              :price="price"-->
-      <!--              :is-removable="globalPrices.length > 1"-->
-      <!--              class="wit-price-editor wit-block&#45;&#45;full-width"-->
-      <!--              @priceTypeChanged="() => {}"-->
-      <!--              @priceRemoved="() => {}"-->
-      <!--              @priceAdded="() => {}"-->
-      <!--            />-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </Popup>-->
 
       <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffers.length" @saveChanges="massAction" />
 
@@ -220,22 +143,17 @@
         @saveChanges="saveOffer"
         @cancelChanges="cancelEditing"
       />
-
-      <!--      <b-button class="editor" type="is-primary" @click="openEditor">-->
-      <!--        Editor ({{ offersInEditor.length }})-->
-      <!--      </b-button>-->
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { isEqual } from 'lodash'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
-import { getFiltersFromRoute, getSortFromRoute } from '@/utils/index.js'
 import Tabs from '@/components/basic/Tabs.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
@@ -251,42 +169,14 @@ import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
-import { Offer } from '@/domain/models/index.js'
 import ItemsListView from '@/components/items/ItemsListView.vue'
-import { Quest, Wishlist } from '@/store/Types.js'
 import { StoreModules } from '@/store/index.js'
-// import { state, Modes } from '@/store/wishlist.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
-
-// const DEFAULT_FILTERS = {
-//     query: '',
-//     rarities: [],
-//     slots: [],
-//     events: [],
-//     hideRecipes: true
-// }
-//
-// const DEFAULT_SORT = {
-//     sortBy: 'rarity',
-//     order: 'desc'
-// }
-
-// const Modes = {
-//     WISHLIST: 'wishlist',
-//     ALL_ITEMS: 'allItems'
-// }
 
 export default {
     name: 'Manage',
 
     modes: WishlistTabs.values,
-    // defaultFilters: { ...DEFAULT_FILTERS },
-    // defaultSort: { ...DEFAULT_SORT },
-
-    // sorts: {
-    //     rarity: 'Items_Sort_Rarity',
-    //     name: 'Items_Sort_Name'
-    // },
 
     components: {
         WishlistFilters,
@@ -311,26 +201,9 @@ export default {
         ItemsListView
     },
 
-    // async asyncData ({ $usersService, $wishlistService, route }) {
-    //     const { profile } = await $usersService.fetch(route.params.id)
-    //     const { wishlist } = await $wishlistService.fetch(route.params.id)
-    //
-    //     return {
-    //         profile,
-    //         wishlist,
-    //         error: null
-    //     }
-    // },
-
     data: () => ({
-        // filters: { ...DEFAULT_FILTERS },
-        // sort: { ...DEFAULT_SORT },
         selectedItems: [],
-        // mode: W.WISHLIST,
         wishlistModels: [],
-        // tradableItems: [],
-        // globalPrices: [],
-        // offers: [],
         existingOffers: [],
         newOffers: [],
         offersInEditor: [],
@@ -365,68 +238,13 @@ export default {
             'isSortsChanged'
         ]),
 
-        // changedFilters (state) {
-        //     return this.$wishlistService.getChangedFilters(this.filters)
-        // },
-
-        // nonWishlistItems () {
-        //     const itemsInWishlist = this.existingOffers.map(({ item }) => item)
-        //     return [] // this.tradableItems.filter(item => !itemsInWishlist.includes(item))
-        // },
-        //
-        // filteredNonWishlistItems () {
-        //     return [] // this.nonWishlistItems.filter(this.checkItem)
-        // },
-        //
-        // sortedNonWishlistItems () {
-        //     return [] // Array.from(this.filteredNonWishlistItems).sort(this.sortIteration)
-        // },
-
-        // filteredNewOffers () {
-        //     return this.filterOffers(this.newOffers)
-        // },
-        //
-        // sortedNewOffers () {
-        //     return this.sortOffers(this.filteredNewOffers)
-        // },
-
-        // filteredExistingOffers () {
-        //     return [] // this.existingOffers.filter(offer => this.checkItem(offer.item))
-        // },
-        //
-        // sortedExistingOffers () {
-        //     return [] // this.offers // Array.from(this.existingOffers).sort(this.sortIteration2)
-        // },
-
-        // isWishlistMode () {
-        //     return this.mode === Modes.WISHLIST
-        // },
-        //
-        // isAllItemsMode () {
-        //     return this.mode === Modes.ALL_ITEMS
-        // },
-
         hasSelectedExistingOffers () {
-            return this.selectedExistingOffers.length > 0
+            return this.selectedOffers.length > 0
         },
 
         hasSelectedNewOffers () {
-            return this.selectedNewOffers.length > 0
+            return this.selectedNonWishlistItems.length > 0
         }
-
-        // selectedOffers () {
-        //     let offers = []
-        //
-        //     if (this.isWishlistMode) {
-        //         offers = this.hasSelectedExistingOffers ? this.selectedExistingOffers : this.existingOffers
-        //     }
-        //
-        //     if (this.isAllItemsMode) {
-        //         offers = this.hasSelectedNewOffers ? this.selectedNewOffers : this.newOffers
-        //     }
-        //
-        //     return offers
-        // }
     },
 
     watch: {
@@ -439,27 +257,6 @@ export default {
             deep: true,
             handler: 'updateRoute'
         }
-    },
-
-    created () {
-        // await this.$store.dispatch(Wishlist.F.Actions.FETCH_WISHLIST, 139)
-
-        // this.tradableItems = this.$itemsService.getTradableItems()
-        // const { newOffers, existingOffers } = this.$wishlistService.getOffersList(this.tradableItems, this.wishlist)
-
-        // this.newOffers = newOffers
-        // this.existingOffers = [] // this.wishlist.map(offer => Offer.create(offer))
-
-        // console.log('offers', this.offers)
-        // console.log('filters', this.filters)
-        // console.log('sorts', this.sorts)
-        // console.log('sorts', this.defaultFilters)
-        // console.log('sorts', this.defaultSorts)
-        // console.log('changedFilters', this.changedFilters)
-        // console.log('offers2', await this.fetchWishlist(139))
-
-        // this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        // this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
     },
 
     methods: {
