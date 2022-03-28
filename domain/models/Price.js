@@ -1,9 +1,7 @@
 import { PriceType } from '@/shared/items/index.js'
 
 export class Price {
-    _rawPrice
-
-    static create ({ price }) {
+    static create (price) {
         return new Price(price)
     }
 
@@ -18,31 +16,12 @@ export class Price {
     }
 
     constructor (price) {
-        this._rawPrice = price
-    }
-
-    get id () {
-        return this._rawPrice.id
-    }
-
-    get item1Id () {
-        return this._rawPrice.itemId
-    }
-
-    get item1Count () {
-        return this._rawPrice.itemCount
-    }
-
-    get item2Id () {
-        return this._rawPrice.itemId2
-    }
-
-    get item2Count () {
-        return this._rawPrice.itemCount2
-    }
-
-    get priceType () {
-        return this._rawPrice.priceType
+        this.id = price.id
+        this.itemId = price.itemId
+        this.itemCount = price.itemCount
+        this.itemId2 = price.itemId2
+        this.itemCount2 = price.itemCount2
+        this.priceType = price.priceType
     }
 
     get isAnyPrice () {
@@ -57,50 +36,44 @@ export class Price {
         return this.priceType === PriceType.FIXED
     }
 
-    setPriceType (type) {
-        this._rawPrice.priceType = type
-
-        // if (type === PriceType.FIXED) {
-        //
-        // }
+    setPriceType (priceType) {
+        this.priceType = priceType
     }
 
     setItemCount ({ itemCount, position }) {
         const prop = position === 1 ? 'itemCount' : 'itemCount2'
-        this._rawPrice[prop] = itemCount
+        this[prop] = itemCount
     }
 
     setItemId ({ itemId, position }) {
         const prop = position === 1 ? 'itemId' : 'itemId2'
         const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-        this._rawPrice[prop] = itemId
+        this[prop] = itemId
 
-        console.log('Set', itemId, position)
-
-        if (this._rawPrice[prop2] === 0) {
-            this._rawPrice[prop2] = 1
+        if (this[prop2] === 0) {
+            this[prop2] = 1
         }
     }
 
     clearItemId ({ position }) {
         const prop = position === 1 ? 'itemId' : 'itemId2'
         const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-        this._rawPrice[prop] = 0
-        this._rawPrice[prop2] = 0
+        this[prop] = 0
+        this[prop2] = 0
     }
 
     clone () {
-        return new Price({ ...this._rawPrice })
+        return new Price(this.buildOutput())
     }
 
     buildOutput () {
         return {
             id: this.id,
             priceType: this.priceType,
-            itemId: this.item1Id,
-            itemCount: this.item1Count,
-            itemId2: this.item2Id,
-            itemCount2: this.item2Count
+            itemId: this.itemId,
+            itemCount: this.itemCount,
+            itemId2: this.itemId2,
+            itemCount2: this.itemCount2
         }
     }
 }

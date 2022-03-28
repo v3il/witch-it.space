@@ -92,11 +92,11 @@ export default {
 
     computed: {
         itemId () {
-            return this.itemPosition === 1 ? this.price.item1Id : this.price.item2Id
+            return this.itemPosition === 1 ? this.price.itemId : this.price.itemId2
         },
 
         pairedItemId () {
-            return this.itemPosition === 1 ? this.price.item2Id : this.price.item1Id
+            return this.itemPosition === 1 ? this.price.itemId2 : this.price.itemId
         },
 
         selectedItem () {

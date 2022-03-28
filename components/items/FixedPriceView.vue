@@ -1,6 +1,8 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <FixedPricePart :count="parts[0].count" :item="parts[0].item" :is-single-part="!hasTwoItems" />
+    <template v-if="parts[0]">
+      <FixedPricePart :count="parts[0].count" :item="parts[0].item" :is-single-part="!hasTwoItems" />
+    </template>
 
     <template v-if="hasTwoItems">
       <span class="wit-offset-right--xxs wit-offset-left--xxs">+</span>
@@ -33,20 +35,20 @@ export default {
 
         parts () {
             const parts = []
-            const item1 = this.$itemsService.getById(this.price.item1Id)
-            const item2 = this.$itemsService.getById(this.price.item2Id)
+            const item1 = this.$itemsService.getById(this.price.itemId)
+            const item2 = this.$itemsService.getById(this.price.itemId2)
 
             if (item1) {
                 parts.push({
                     item: item1,
-                    count: this.price.item1Count
+                    count: this.price.itemCount
                 })
             }
 
             if (item2) {
                 parts.push({
                     item: item2,
-                    count: this.price.item2Count
+                    count: this.price.itemCount2
                 })
             }
 
