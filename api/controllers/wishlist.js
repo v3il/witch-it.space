@@ -49,10 +49,10 @@ const massCreate = async (request, response) => {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
-    await wishlistService.massCreate({ user, offers })
+    const created = await wishlistService.massCreate({ user, offers })
 
     response.send({
-        success: true
+        created
     })
 }
 

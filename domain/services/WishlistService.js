@@ -81,15 +81,14 @@ export class WishlistService {
         }
     }
 
-    massCreate (offers) {
+    async massCreate (offers) {
         try {
             const offersData = offers.map(offer => offer.buildOutput())
-
-            this.#axiosInstance.$post('/api/wishlist/mass_create', {
+            const { created } = await this.#axiosInstance.$post('/api/wishlist/mass_create', {
                 offers: offersData
             })
 
-            return { success: true }
+            return { created }
         } catch (e) {
             return { error: e.message }
         }

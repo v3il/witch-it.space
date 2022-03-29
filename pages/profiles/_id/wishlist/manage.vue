@@ -188,7 +188,6 @@ export default {
     },
 
     async asyncData ({ store, route, $wishlistService }) {
-        // await store.dispatch(`${StoreModules.WISHLIST}/fetchWishlist`, route.params.id)
         await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
         await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
 

@@ -146,11 +146,11 @@ export const actions = {
             return offer
         })
 
-        const { success, error } = await wishlistService.massCreate(offersList)
+        const { created, error } = await wishlistService.massCreate(offersList)
 
-        if (success) {
+        if (!error) {
             items.forEach(item => commit('DESELECT_ITEM', item))
-            commit('ADD_OFFERS', offersList)
+            commit('ADD_OFFERS', created)
         }
 
         return { created: offersList.length, error }
@@ -163,7 +163,7 @@ export const mutations = {
     },
 
     ADD_OFFERS (state, offers) {
-        state.offerModels.push(...offers)
+        state.offerModels.push(...offers.map(offer => Offer.create(offer)))
     },
 
     SET_FILTERS (state, filters) {
