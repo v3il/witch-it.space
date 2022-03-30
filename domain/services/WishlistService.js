@@ -22,11 +22,7 @@ export class WishlistService {
     async fetch (userId) {
         try {
             const { wishlist } = await this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
-            const offers = wishlist/* .map((offer) => {
-                console.log(offer, Offer.create(offer))
-                return Offer.create(offer)
-            }) */
-            return { error: null, offers }
+            return { error: null, offers: wishlist }
         } catch (e) {
             return { error: e.message, offers: [] }
         }
@@ -74,6 +70,29 @@ export class WishlistService {
         }
 
         return 0
+    }
+
+    removeOffers (offerIds) {
+        try {
+            return this.#axiosInstance.$post('/api/wishlist/remove', { offerIds })
+        } catch (e) {
+            return { error: e.message }
+        }
+    }
+
+    massCreate (offers) {
+        // console.error(offers)
+
+        // try {
+        const offersData = offers.map(offer => offer.buildOutput())
+
+        console.error(offersData)
+        return this.#axiosInstance.$post('/api/wishlist/mass_create', {
+            offers: offersData
+        })
+        // } catch (e) {
+        //     return { error: e.message }
+        // }
     }
 
     // ====================================
@@ -146,46 +165,46 @@ export class WishlistService {
         }
     }
 
-    async massCreate (offers2) {
-        const off = offers2.map(o => o.getData())
+    // async massCreate (offers2) {
+    //     const off = offers2.map(o => o.getData())
+    //
+    //     try {
+    //         const { offers } = await this.#axiosInstance.$post('/api/wishlist/mass_create', {
+    //             offers: off
+    //         })
+    //
+    //         // console.error(created, updated)
+    //
+    //         return { error: null, offers }
+    //     } catch (e) {
+    //         return { error: e.message }
+    //     }
+    // }
 
-        try {
-            const { offers } = await this.#axiosInstance.$post('/api/wishlist/mass_create', {
-                offers: off
-            })
+    // async removeFromWishlist (wishlistItems) {
+    //     const offerIds = wishlistItems.reduce((ids, wishlistItem) => {
+    //         if (wishlistItem.id) {
+    //             ids.push(wishlistItem.id)
+    //         }
+    //
+    //         return ids
+    //     }, [])
+    //
+    //     try {
+    //         const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { offerIds })
+    //         return { removed, offerIds, error: null }
+    //     } catch (e) {
+    //         return { error: e.message }
+    //     }
+    // }
 
-            // console.error(created, updated)
-
-            return { error: null, offers }
-        } catch (e) {
-            return { error: e.message }
-        }
-    }
-
-    async removeFromWishlist (wishlistItems) {
-        const offerIds = wishlistItems.reduce((ids, wishlistItem) => {
-            if (wishlistItem.id) {
-                ids.push(wishlistItem.id)
-            }
-
-            return ids
-        }, [])
-
-        try {
-            const { removed } = await this.#axiosInstance.$post('/api/wishlist/remove', { offerIds })
-            return { removed, offerIds, error: null }
-        } catch (e) {
-            return { error: e.message }
-        }
-    }
-
-    getOffersList (tradableItems, wishlistOffers = []) {
-        const existingItemIds = wishlistOffers.map(offer => offer.itemId)
-        const nonWishlistItems = tradableItems.filter(item => !existingItemIds.includes(item.id))
-
-        const newOffers = nonWishlistItems.map(item => Offer.create({ item }))
-        const existingOffers = wishlistOffers.map(offer => Offer.create(offer))
-
-        return { newOffers, existingOffers }
-    }
+    // getOffersList (tradableItems, wishlistOffers = []) {
+    //     const existingItemIds = wishlistOffers.map(offer => offer.itemId)
+    //     const nonWishlistItems = tradableItems.filter(item => !existingItemIds.includes(item.id))
+    //
+    //     const newOffers = nonWishlistItems.map(item => Offer.create({ item }))
+    //     const existingOffers = wishlistOffers.map(offer => Offer.create(offer))
+    //
+    //     return { newOffers, existingOffers }
+    // }
 }

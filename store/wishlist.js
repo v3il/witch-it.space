@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash'
 import { OffersScheme } from '@/domain/models/schemes'
 import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
@@ -23,6 +24,8 @@ export const getters = {
     isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0,
     isMyWishlistMode: state => state.mode === WishlistTabs.MY_WISHLIST,
     isNonWishlistItemsMode: state => state.mode === WishlistTabs.NON_WISHLIST_ITEMS,
+    selectedEntities: (state, getters) => getters.isMyWishlistMode ? state.selectedOffers : state.selectedNonWishlistItems,
+    hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
 
     offerModels: (state) => {
         return state.offers.map(offer => Offer.create(offer))
@@ -68,6 +71,7 @@ export const getters = {
             return wishlistService.compareItems(firstItem, secondItem, state.sorts)
         })
     }
+
 }
 
 export const actions = {
@@ -120,6 +124,37 @@ export const actions = {
 
     toggleMode ({ commit }, mode) {
         commit('TOGGLE_MODE', mode)
+    },
+
+    clearSelectedEntities ({ commit, getters }) {
+        commit(getters.isMyWishlistMode ? 'CLEAR_SELECTED_OFFERS' : 'CLEAR_SELECTED_ITEMS')
+    },
+
+    async removeOffers ({ commit }, offers) {
+        const offersList = Array.isArray(offers) ? offers : [offers]
+        const offerIds = offersList.map(offer => offer.id)
+        const { removed, error } = await wishlistService.removeOffers(offerIds)
+
+        if (removed) {
+            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
+            commit('REMOVE_OFFER', offerIds)
+        }
+
+        return { removed, error }
+    },
+
+    async createOffers ({ commit }, { items, prices }) {
+        const itemsList = Array.isArray(items) ? items : [items]
+        const offersList = itemsList.map(item => Offer.create({ item, prices }))
+
+        const { offers, error } = await wishlistService.massCreate(offersList)
+
+        // if (removed) {
+        //     offersList.forEach(offer => commit('DESELECT_OFFER', offer))
+        //     commit('REMOVE_OFFER', offerIds)
+        // }
+
+        return { offers, error }
     }
 }
 
@@ -162,5 +197,17 @@ export const mutations = {
 
     TOGGLE_MODE (state, mode) {
         state.mode = mode
+    },
+
+    CLEAR_SELECTED_OFFERS (state) {
+        state.selectedOffers = []
+    },
+
+    CLEAR_SELECTED_ITEMS (state) {
+        state.selectedNonWishlistItems = []
+    },
+
+    REMOVE_OFFER (state, offerToRemoveIds) {
+        state.offers = state.offers.filter(offer => !offerToRemoveIds.includes(offer.id))
     }
 }

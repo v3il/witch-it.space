@@ -8,7 +8,11 @@ export class Offer {
     static create (offerData) {
         const offer = cloneDeep(offerData)
 
-        offer.prices = (offer.rawPrices || []).map(price => Price.create({ price }))
+        console.log(111, offerData)
+
+        if (!offer.prices) {
+            offer.prices = (offer.rawPrices || []).map(price => Price.create({ price }))
+        }
 
         if (offer.item) {
             offer.itemId = offer.item.id
@@ -20,7 +24,6 @@ export class Offer {
     }
 
     originalModel
-    // isSelected
 
     constructor (offerData) {
         this.originalModel = offerData
@@ -46,8 +49,8 @@ export class Offer {
         return false
     }
 
-    getData () {
-        const rawPrices = this.changedPrices.map(priceModel => priceModel.getData())
+    buildOutput () {
+        const rawPrices = this.prices.map(priceModel => priceModel.buildOutput())
 
         return {
             id: this.id,
@@ -55,6 +58,16 @@ export class Offer {
             rawPrices
         }
     }
+
+    // getData () {
+    //     const rawPrices = this.changedPrices.map(priceModel => priceModel.getData())
+    //
+    //     return {
+    //         id: this.id,
+    //         itemId: this.item.id,
+    //         rawPrices
+    //     }
+    // }
 
     update (updatedData) {
         this.originalModel.id = updatedData.id

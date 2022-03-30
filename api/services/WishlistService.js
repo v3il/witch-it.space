@@ -54,11 +54,15 @@ export class WishlistService {
     }
 
     async massCreate ({ user, offers }) {
+        console.error(JSON.stringify(offers))
+
         const o2 = offers.map(o => ({
             ...o,
             itemId: o.itemId,
             userId: user.id
         }))
+
+        console.log(JSON.stringify(o2))
 
         const created = await Wish.bulkCreate(o2, {
             include: { model: Price, as: 'rawPrices' }

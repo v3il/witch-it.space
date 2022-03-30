@@ -7,6 +7,16 @@ export class Price {
         return new Price(price)
     }
 
+    static getDefault () {
+        return new Price({
+            priceType: PriceType.ANY,
+            itemId: 0,
+            itemCount: 4,
+            itemId2: 0,
+            itemCount2: 4
+        })
+    }
+
     constructor (price) {
         this._rawPrice = price
     }
@@ -65,6 +75,8 @@ export class Price {
         const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
         this._rawPrice[prop] = itemId
 
+        console.log('Set', itemId, position)
+
         if (this._rawPrice[prop2] === 0) {
             this._rawPrice[prop2] = 1
         }
@@ -81,7 +93,7 @@ export class Price {
         return new Price({ ...this._rawPrice })
     }
 
-    getData () {
+    buildOutput () {
         return {
             id: this.id,
             priceType: this.priceType,

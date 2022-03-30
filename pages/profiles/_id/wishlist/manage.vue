@@ -41,6 +41,8 @@
                 @resetFilters="resetFilters"
               />
 
+              {{ selectedOffers.length }}
+
               <Dropdown position="bottom-end">
                 <template #trigger>
                   <b-button type="is-link" class="wit-position--relative wit-more-actions">
@@ -54,14 +56,14 @@
                   </DropdownItem>
 
                   <DropdownItem
-                    v-if="(hasSelectedExistingOffers && isMyWishlistMode) || (hasSelectedNewOffers && isNonWishlistItemsMode)"
-                    @click="clearSelectedOffers"
+                    v-if="hasSelectedEntities"
+                    @click="clearSelectedEntities"
                   >
                     Clear selection
                   </DropdownItem>
 
-                  <DropdownItem @click="removeFromWishlist">
-                    <span class="wit-color--danger">Remove from wishlist</span>
+                  <DropdownItem @click="deleteAllOffers">
+                    <span class="wit-color--danger">Remove selected offers</span>
                   </DropdownItem>
                 </template>
               </Dropdown>
@@ -134,7 +136,7 @@
         </div>
       </div>
 
-      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedOffers.length" @saveChanges="massAction" />
+      <SetMassPricePopup ref="massPriceEditorPopup" :offers-size="selectedEntities.length" @saveChanges="massAction" />
 
       <EditOfferPopup
         ref="editOfferPopup"
@@ -152,20 +154,12 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 import { isEqual } from 'lodash'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
-import EmptyState from '@/components/basic/EmptyState.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
 import Tabs from '@/components/basic/Tabs.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
-import ScrollablePagination from '@/components/basic/ScrollablePagination.vue'
-import Grid from '@/components/basic/Grid.vue'
-import Popup from '@/components/basic/popup/Popup.vue'
-import PriceEditor from '@/components/price/PriceEditor.vue'
-import WishlistEditorPopup from '@/components/wishlist/WishlistEditorPopup.vue'
-import WishlistOfferView from '@/components/wishlist/WishlistOfferView.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import IconButton from '@/components/basic/IconButton.vue'
-import WishlistSelectedItem from '@/components/wishlist/WishlistOfferEditor.vue'
 import EditOfferPopup from '@/components/basic/offers/EditOfferPopup.vue'
 import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
@@ -181,20 +175,12 @@ export default {
     components: {
         WishlistFilters,
         TopNavBar,
-        EmptyState,
         TopTabs,
         Tabs,
         ItemPriceList,
-        ScrollablePagination,
-        Grid,
-        Popup,
-        PriceEditor,
-        WishlistEditorPopup,
-        WishlistOfferView,
         Dropdown,
         DropdownItem,
         IconButton,
-        WishlistSelectedItem,
         EditOfferPopup,
         SetMassPricePopup,
         ItemView,
@@ -202,14 +188,11 @@ export default {
     },
 
     data: () => ({
-        selectedItems: [],
-        wishlistModels: [],
-        existingOffers: [],
-        newOffers: [],
-        offersInEditor: [],
-        editingOffer: null,
-        selectedExistingOffers: [],
-        selectedNewOffers: []
+        // existingOffers: [],
+        // newOffers: [],
+        editingOffer: null
+        // selectedExistingOffers: [],
+        // selectedNewOffers: []
     }),
 
     async fetch ({ store, route }) {
@@ -235,16 +218,10 @@ export default {
             'changedFilters',
             'changedSorts',
             'isFiltersChanged',
-            'isSortsChanged'
-        ]),
-
-        hasSelectedExistingOffers () {
-            return this.selectedOffers.length > 0
-        },
-
-        hasSelectedNewOffers () {
-            return this.selectedNonWishlistItems.length > 0
-        }
+            'isSortsChanged',
+            'hasSelectedEntities',
+            'selectedEntities'
+        ])
     },
 
     watch: {
@@ -268,7 +245,10 @@ export default {
             'resetFilter',
             'resetFilters',
             'toggleOffer',
-            'toggleNonWishlistItem'
+            'toggleNonWishlistItem',
+            'clearSelectedEntities',
+            'removeOffers',
+            'createOffers'
         ]),
 
         onFiltersChange (filters) {
@@ -301,41 +281,43 @@ export default {
             return this.selectedNonWishlistItems.includes(item)
         },
 
-        // =============================
+        async deleteOffer (offer) {
+            const { error, removed } = await this.removeOffers(offer)
 
-        // isSelectedExistingOffer (offer) {
-        //     return this.selectedExistingOffers.includes(offer)
-        // },
-
-        // toggleExistingOffer (offerModel) {
-        //     if (this.isSelectedExistingOffer(offerModel)) {
-        //         return this.selectedExistingOffers = this.selectedExistingOffers.filter(offer => offer !== offerModel)
-        //     }
-        //
-        //     this.selectedExistingOffers.push(offerModel)
-        // },
-
-        // isSelectedNewOffer (offer) {
-        //     return this.selectedNewOffers.includes(offer)
-        // },
-        //
-        // toggleNewOffer (offerModel) {
-        //     console.log(offerModel)
-        //
-        //     if (this.isSelectedNewOffer(offerModel)) {
-        //         return this.selectedNewOffers = this.selectedNewOffers.filter(offer => offer !== offerModel)
-        //     }
-        //
-        //     this.selectedNewOffers.push(offerModel)
-        // },
-
-        clearSelectedOffers () {
-            if (this.isNonWishlistItemsMode) {
-                return this.selectedNewOffers = []
+            if (error) {
+                return this.$showError(error)
             }
 
-            this.selectedExistingOffers = []
+            this.$showSuccess(`Removed ${removed} items`)
         },
+
+        async deleteAllOffers () {
+            const offers = this.selectedOffers.length ? this.selectedOffers : this.sortedOfferModels
+            const { error, removed } = await this.removeOffers(offers)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.$showSuccess(`Removed ${removed} items`)
+        },
+
+        massAction (prices) {
+            this.addItemsToWishlist(prices)
+            // this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
+        },
+
+        async addItemsToWishlist (prices) {
+            const { created, error } = await this.createOffers({ items: this.selectedNonWishlistItems, prices })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.$showSuccess(`Created ${1} offer`)
+        },
+
+        // =============================
 
         // openEditor () {
         //     this.$refs.wishlistEditor.show()
@@ -350,21 +332,21 @@ export default {
         //     this.offersInEditor = []
         // },
 
-        async removeFromWishlist () {
-            const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.sortedExistingOffers)
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const removedOffers = this.existingOffers.filter(offerModel => entityIds.includes(offerModel.id))
-            const newOffers = removedOffers.map(offer => this.$wishlistService.createNewWishlistItem(offer.item))
-
-            this.newOffers.push(...newOffers)
-            this.existingOffers = this.existingOffers.filter(offer => !removedOffers.includes(offer))
-
-            this.$showSuccess(`Removed ${removed} items`)
-        },
+        // async removeFromWishlist () {
+        //     const { error, entityIds, removed } = await this.$wishlistService.removeFromWishlist(this.sortedExistingOffers)
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const removedOffers = this.existingOffers.filter(offerModel => entityIds.includes(offerModel.id))
+        //     const newOffers = removedOffers.map(offer => this.$wishlistService.createNewWishlistItem(offer.item))
+        //
+        //     this.newOffers.push(...newOffers)
+        //     this.existingOffers = this.existingOffers.filter(offer => !removedOffers.includes(offer))
+        //
+        //     this.$showSuccess(`Removed ${removed} items`)
+        // },
 
         // async onDelete (offerModel) {
         //     const { error, removed } = await this.$wishlistService.removeFromWishlist([offerModel])
@@ -474,23 +456,23 @@ export default {
             this.$refs.editOfferPopup.open()
         },
 
-        async deleteOffer (offer) {
-            const { error, removed } = await this.$wishlistService.removeFromWishlist([offer])
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const newOffer = this.$wishlistService.createNewWishlistItem(offer.item)
-
-            this.newOffers.push(newOffer)
-            this.existingOffers = this.existingOffers.filter(o => o !== offer)
-
-            this.$showSuccess(`Removed ${removed} items`)
-
-            this.editingOffer = null
-            this.$refs.editOfferPopup.close()
-        },
+        // async deleteOffer (offer) {
+        //     const { error, removed } = await this.$wishlistService.removeFromWishlist([offer])
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const newOffer = this.$wishlistService.createNewWishlistItem(offer.item)
+        //
+        //     this.newOffers.push(newOffer)
+        //     this.existingOffers = this.existingOffers.filter(o => o !== offer)
+        //
+        //     this.$showSuccess(`Removed ${removed} items`)
+        //
+        //     this.editingOffer = null
+        //     this.$refs.editOfferPopup.close()
+        // },
 
         cancelEditing () {
             this.editingOffer.cancelChanges()
@@ -512,23 +494,23 @@ export default {
             this.$showSuccess(`Updated ${updated.length} offer`)
         },
 
-        async saveNewOffer () {
-            const { created, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
-            this.existingOffers.push(offerModel)
-
-            this.newOffers = this.newOffers.filter(offer => offer !== this.editingOffer)
-
-            this.editingOffer = null
-            this.$refs.editOfferPopup.close()
-
-            this.$showSuccess(`Created ${created.length} offer`)
-        },
+        // async saveNewOffer () {
+        //     const { created, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
+        //     this.existingOffers.push(offerModel)
+        //
+        //     this.newOffers = this.newOffers.filter(offer => offer !== this.editingOffer)
+        //
+        //     this.editingOffer = null
+        //     this.$refs.editOfferPopup.close()
+        //
+        //     this.$showSuccess(`Created ${created.length} offer`)
+        // },
 
         saveOffer () {
             return this.editingOffer.isNew ? this.saveNewOffer() : this.saveEditingOffer()
@@ -544,9 +526,9 @@ export default {
             this.$refs.massPriceEditorPopup.open()
         },
 
-        massAction (prices) {
-            this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
-        },
+        // massAction (prices) {
+        //     this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
+        // },
 
         async setMassPrices (prices) {
             const { updated, error } = await this.$wishlistService.setMassPrice(this.selectedOffers, prices)

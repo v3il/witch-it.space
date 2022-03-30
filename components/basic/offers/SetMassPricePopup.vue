@@ -25,6 +25,7 @@
 <script>
 import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
+import { Price } from '@/domain/models/Price'
 
 export default {
     name: 'EditOfferPopup',
@@ -49,7 +50,7 @@ export default {
 
     methods: {
         open () {
-            this.prices = [this.$priceService.createDefaultPrice()]
+            this.prices = [Price.getDefault()]
             this.$refs.popup.show()
         },
 
@@ -66,6 +67,7 @@ export default {
         },
 
         saveChanges () {
+            console.error('P', this.prices)
             this.$emit('saveChanges', this.prices)
         }
     }

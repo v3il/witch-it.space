@@ -3,15 +3,7 @@ import { PriceType } from '@/shared/items/index.js'
 
 export class PriceFactory {
     createDefaultPrice () {
-        return Price.create({
-            price: {
-                priceType: PriceType.ANY,
-                itemId: 0,
-                itemCount: 4,
-                itemId2: 0,
-                itemCount2: 4
-            }
-        })
+        return Price.getDefault()
     }
 
     createPrice (rawPrice) {
