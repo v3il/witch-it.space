@@ -54,54 +54,15 @@ export class WishlistService {
     }
 
     async massCreate ({ user, offers }) {
-        console.error(JSON.stringify(offers))
-
-        const o2 = offers.map(o => ({
-            ...o,
-            itemId: o.itemId,
+        const mappedOffers = offers.map(offer => ({
+            ...offer,
+            itemId: offer.itemId,
             userId: user.id
         }))
 
-        console.log(JSON.stringify(o2))
-
-        const created = await Wish.bulkCreate(o2, {
+        await Wish.bulkCreate(mappedOffers, {
             include: { model: Price, as: 'rawPrices' }
         })
-
-        return created
-
-        // const normalizedPrices = this.#priceService.normalizeRawPrices(prices)
-        //
-        // const created = await Wish.bulkCreate(offers, {
-        //     include: { model: Price, as: 'rawPrices' }
-        // })
-
-        // const offers = await user.getWishes({
-        //     where: { id: offerIds },
-        //     include: { model: Price, as: 'rawPrices' }
-        // })
-        //
-        // for (const offer of offers) {
-        //     await sequelize.transaction(async (transaction) => {
-        //         if (offer.rawPrices.length > prices.length) {
-        //             await offer.rawPrices[1].destroy({ transaction })
-        //         }
-        //
-        //         for (let i = 0; i < normalizedPrices.length; i++) {
-        //             if (offer.rawPrices[i]) {
-        //                 await offer.rawPrices[i].update(normalizedPrices[i], { transaction })
-        //                 continue
-        //             }
-        //
-        //             await Price.create({ ...normalizedPrices[i], priceValue: 0, offerId: offer.id }, { transaction })
-        //         }
-        //     })
-        // }
-        //
-        // return user.getWishes({
-        //     where: { id: offerIds },
-        //     include: { model: Price, as: 'rawPrices' }
-        // })
     }
 
     removeUserOffers ({ user, offerIds }) {

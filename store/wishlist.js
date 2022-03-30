@@ -147,18 +147,22 @@ export const actions = {
         const itemsList = Array.isArray(items) ? items : [items]
         const offersList = itemsList.map(item => Offer.create({ item, prices }))
 
-        const { offers, error } = await wishlistService.massCreate(offersList)
+        const { success, error } = await wishlistService.massCreate(offersList)
 
-        // if (removed) {
-        //     offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-        //     commit('REMOVE_OFFER', offerIds)
-        // }
+        if (success) {
+            items.forEach(item => commit('DESELECT_ITEM', item))
+            commit('ADD_OFFERS', offersList.map(offer => offer.buildOutput()))
+        }
 
-        return { offers, error }
+        return { created: offersList.length, error }
     }
 }
 
 export const mutations = {
+    ADD_OFFERS (state, offers) {
+        state.offers.push(...offers)
+    },
+
     SET_OFFERS (state, offers) {
         state.offers = offers
     },

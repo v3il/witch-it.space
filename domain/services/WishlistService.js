@@ -81,18 +81,17 @@ export class WishlistService {
     }
 
     massCreate (offers) {
-        // console.error(offers)
+        try {
+            const offersData = offers.map(offer => offer.buildOutput())
 
-        // try {
-        const offersData = offers.map(offer => offer.buildOutput())
+            this.#axiosInstance.$post('/api/wishlist/mass_create', {
+                offers: offersData
+            })
 
-        console.error(offersData)
-        return this.#axiosInstance.$post('/api/wishlist/mass_create', {
-            offers: offersData
-        })
-        // } catch (e) {
-        //     return { error: e.message }
-        // }
+            return { success: true }
+        } catch (e) {
+            return { error: e.message }
+        }
     }
 
     // ====================================

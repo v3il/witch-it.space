@@ -41,7 +41,7 @@
                 @resetFilters="resetFilters"
               />
 
-              {{ selectedOffers.length }}
+              {{ selectedNonWishlistItems.length }}
 
               <Dropdown position="bottom-end">
                 <template #trigger>
@@ -314,7 +314,8 @@ export default {
                 return this.$showError(error)
             }
 
-            this.$showSuccess(`Created ${1} offer`)
+            this.$refs.massPriceEditorPopup.close()
+            this.$showSuccess(`Created ${created} offer`)
         },
 
         // =============================
