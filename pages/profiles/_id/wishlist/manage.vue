@@ -236,8 +236,13 @@ export default {
         }
     },
 
+    created () {
+        this.convertOffersToModels()
+    },
+
     methods: {
         ...mapActions(StoreModules.WISHLIST, [
+            'convertOffersToModels',
             'toggleMode',
             'fetchWishlist',
             'updateFilters',

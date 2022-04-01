@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash'
 import { OffersScheme } from '@/domain/models/schemes'
 import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
@@ -8,6 +7,7 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 export const state = () => ({
     offers: [],
+    offerModels: [],
     defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
     defaultSorts: OffersScheme.getDefaultSorts(),
@@ -27,13 +27,9 @@ export const getters = {
     selectedEntities: (state, getters) => getters.isMyWishlistMode ? state.selectedOffers : state.selectedNonWishlistItems,
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
 
-    offerModels: (state) => {
-        return state.offers.map(offer => Offer.create(offer))
-    },
-
-    filteredOfferModels: (state, getters) => {
+    filteredOfferModels: (state) => {
         const filters = state.filters
-        return getters.offerModels.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
+        return state.offerModels.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
     },
 
     sortedOfferModels: (state, getters) => {
@@ -48,9 +44,9 @@ export const getters = {
         })
     },
 
-    nonWishlistItems (state, getters) {
+    nonWishlistItems (state) {
         const tradableItems = itemsService.getTradableItems()
-        const itemsInWishlist = getters.offerModels.map(offer => offer.item)
+        const itemsInWishlist = state.offerModels.map(offer => offer.item)
 
         return tradableItems.filter(item => !itemsInWishlist.includes(item))
     },
@@ -75,6 +71,10 @@ export const getters = {
 }
 
 export const actions = {
+    convertOffersToModels ({ commit }) {
+        commit('CONVERT_OFFERS')
+    },
+
     async fetchWishlist ({ commit }, userId) {
         const { offers } = await this.$wishlistService.fetch(userId)
         commit('SET_OFFERS', offers)
@@ -159,6 +159,10 @@ export const actions = {
 }
 
 export const mutations = {
+    CONVERT_OFFERS (state) {
+        state.offerModels = state.offers.map(offer => Offer.create(offer))
+    },
+
     ADD_OFFERS (state, offers) {
         state.offers.push(...offers)
     },
