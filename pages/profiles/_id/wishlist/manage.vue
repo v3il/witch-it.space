@@ -255,7 +255,8 @@ export default {
             'toggleNonWishlistItem',
             'clearSelectedEntities',
             'removeOffers',
-            'createOffers'
+            'createOffers',
+            'setMassPrices'
         ]),
 
         onFiltersChange (filters) {
@@ -310,12 +311,13 @@ export default {
         },
 
         massAction (prices) {
-            this.addItemsToWishlist(prices)
-            // this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
+            // this.addItemsToWishlist(prices)
+            this.isMyWishlistMode ? this.setMassPrices2(prices) : this.addItemsToWishlist(prices)
         },
 
         async addItemsToWishlist (prices) {
-            const { created, error } = await this.createOffers({ items: this.selectedNonWishlistItems, prices })
+            const items = this.selectedNonWishlistItems.length ? this.selectedNonWishlistItems : this.sortedNonWishlistItems
+            const { created, error } = await this.createOffers({ items, prices })
 
             if (error) {
                 return this.$showError(error)
@@ -323,6 +325,18 @@ export default {
 
             this.$refs.massPriceEditorPopup.close()
             this.$showSuccess(`Created ${created} offer`)
+        },
+
+        async setMassPrices2 (prices) {
+            const offers = this.selectedOffers.length ? this.selectedOffers : this.sortedOfferModels
+            const { created, error } = await this.setMassPrices({ offers, prices })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.$refs.massPriceEditorPopup.close()
+            this.$showSuccess(`Updated ${created} offer`)
         },
 
         // =============================
@@ -460,7 +474,7 @@ export default {
 
         editOffer (offer) {
             this.editingOffer = offer
-            offer.startEditing()
+            // offer.startEditing()
             this.$refs.editOfferPopup.open()
         },
 
@@ -483,7 +497,7 @@ export default {
         // },
 
         cancelEditing () {
-            this.editingOffer.cancelChanges()
+            // this.editingOffer.cancelChanges()
             this.editingOffer = null
         },
 
@@ -526,76 +540,76 @@ export default {
 
         addOffer (offer) {
             this.editingOffer = offer
-            offer.startEditing()
+            // offer.startEditing()
             this.$refs.editOfferPopup.open()
         },
 
         openMassPriceEditor () {
             this.$refs.massPriceEditorPopup.open()
-        },
+        }
 
         // massAction (prices) {
         //     this.isMyWishlistMode ? this.setMassPrices(prices) : this.massCreate(prices)
         // },
 
-        async setMassPrices (prices) {
-            const { updated, error } = await this.$wishlistService.setMassPrice(this.selectedOffers, prices)
+        // async setMassPrices (prices) {
+        //     const { updated, error } = await this.$wishlistService.setMassPrice(this.selectedOffers, prices)
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     updated.forEach((updatedOffer) => {
+        //         const offer = this.existingOffers.find(existingOffer => updatedOffer.id === existingOffer.id)
+        //
+        //         if (offer) {
+        //             this.$wishlistService.updateWishlistItem(offer, updatedOffer)
+        //         }
+        //     })
+        //
+        //     console.log(updated)
+        //
+        //     // this.selectedOffers.forEach((offer, index) => {
+        //     //     const upd = updated[index] || created[index]
+        //     //
+        //     //     this.$wishlistService.updateWishlistItem(offer, upd)
+        //     // })
+        //
+        //     // this.editingOffer = null
+        //     this.$refs.massPriceEditorPopup.close()
+        //
+        //     this.$showSuccess(`Updated ${updated.length} offers`)
+        // },
 
-            if (error) {
-                return this.$showError(error)
-            }
-
-            updated.forEach((updatedOffer) => {
-                const offer = this.existingOffers.find(existingOffer => updatedOffer.id === existingOffer.id)
-
-                if (offer) {
-                    this.$wishlistService.updateWishlistItem(offer, updatedOffer)
-                }
-            })
-
-            console.log(updated)
-
-            // this.selectedOffers.forEach((offer, index) => {
-            //     const upd = updated[index] || created[index]
-            //
-            //     this.$wishlistService.updateWishlistItem(offer, upd)
-            // })
-
-            // this.editingOffer = null
-            this.$refs.massPriceEditorPopup.close()
-
-            this.$showSuccess(`Updated ${updated.length} offers`)
-        },
-
-        async massCreate (prices) {
-            console.log(this.selectedOffers)
-
-            const copies = this.selectedOffers.map((offer) => {
-                const clone = offer.clone()
-                const priceClones = prices.map(price => price.clone())
-                clone.setPrices(priceClones)
-
-                return clone
-            })
-
-            const { offers, error } = await this.$wishlistService.massCreate(copies)
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            const newOffers = offers.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
-
-            // const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
-            this.existingOffers.push(...newOffers)
-
-            this.newOffers = this.newOffers.filter(offer => !this.selectedOffers.includes(offer))
-
-            this.selectedNewOffers = []
-            this.$refs.massPriceEditorPopup.close()
-
-            this.$showSuccess(`Created ${newOffers.length} offer`)
-        }
+        // async massCreate (prices) {
+        //     console.log(this.selectedOffers)
+        //
+        //     const copies = this.selectedOffers.map((offer) => {
+        //         const clone = offer.clone()
+        //         const priceClones = prices.map(price => price.clone())
+        //         clone.setPrices(priceClones)
+        //
+        //         return clone
+        //     })
+        //
+        //     const { offers, error } = await this.$wishlistService.massCreate(copies)
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     const newOffers = offers.map(offer => this.$wishlistService.createWishlistItem({ wishlistItem: offer }))
+        //
+        //     // const offerModel = this.$wishlistService.createWishlistItem({ wishlistItem: created[0] })
+        //     this.existingOffers.push(...newOffers)
+        //
+        //     this.newOffers = this.newOffers.filter(offer => !this.selectedOffers.includes(offer))
+        //
+        //     this.selectedNewOffers = []
+        //     this.$refs.massPriceEditorPopup.close()
+        //
+        //     this.$showSuccess(`Created ${newOffers.length} offer`)
+        // }
     }
 }
 </script>

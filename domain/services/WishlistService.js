@@ -94,6 +94,26 @@ export class WishlistService {
         }
     }
 
+    async setMassPrice (offers, priceModels) {
+        console.log(444, offers)
+
+        const offerIds = offers.map(offer => offer.id)
+        const prices = priceModels.map(priceModel => priceModel.buildOutput())
+
+        try {
+            const { updated } = await this.#axiosInstance.$post('/api/wishlist/set_mass_price', {
+                offerIds,
+                prices
+            })
+
+            // console.error(created, updated)
+
+            return { error: null, updated }
+        } catch (e) {
+            return { error: e.message }
+        }
+    }
+
     // ====================================
 
     createWishlistItem ({ wishlistItem }) {
@@ -141,24 +161,6 @@ export class WishlistService {
             console.error(created, updated)
 
             return { error: null, created, updated }
-        } catch (e) {
-            return { error: e.message }
-        }
-    }
-
-    async setMassPrice (offers, priceModels) {
-        const offerIds = offers.map(offer => offer.id)
-        const prices = priceModels.map(priceModel => priceModel.getData())
-
-        try {
-            const { updated } = await this.#axiosInstance.$post('/api/wishlist/set_mass_price', {
-                offerIds,
-                prices
-            })
-
-            // console.error(created, updated)
-
-            return { error: null, updated }
         } catch (e) {
             return { error: e.message }
         }

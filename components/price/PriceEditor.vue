@@ -10,7 +10,7 @@
       <div class="wit-flex wit-flex--align-center">
         <PricePart :item-position="1" :price="price" popover-position="bottom-start" @itemSelect="setItem" @itemClear="clearItem" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setItem1Count" />
+        <NumericInput :value="price.itemCount" :min="1" :max="99" @change="setItem1Count" />
       </div>
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
@@ -18,7 +18,7 @@
       <div class="wit-flex wit-flex--align-center">
         <PricePart :item-position="2" :price="price" popover-position="bottom" @itemSelect="setItem" @itemClear="clearItem" />
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setItem2Count" />
+        <NumericInput :value="price.itemCount2" :min="1" :max="99" @change="setItem2Count" />
       </div>
     </div>
   </div>

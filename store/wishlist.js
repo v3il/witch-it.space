@@ -154,6 +154,22 @@ export const actions = {
         }
 
         return { created: offersList.length, error }
+    },
+
+    async setMassPrices ({ commit }, { offers, prices }) {
+        const offersList = Array.isArray(offers) ? offers : [offers]
+        const { created, error } = await wishlistService.setMassPrice(offersList, prices)
+
+        if (!error) {
+            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
+
+            commit('SET_PRICES', {
+                offers,
+                prices
+            })
+        }
+
+        return { created: offersList.length, error }
     }
 }
 
@@ -212,5 +228,12 @@ export const mutations = {
 
     REMOVE_OFFER (state, offersToRemove) {
         state.offerModels = state.offerModels.filter(offer => !offersToRemove.includes(offer))
+    },
+
+    SET_PRICES (state, { offers, prices }) {
+        offers.forEach((offer) => {
+            const ps = prices.map(price => price.clone())
+            offer.setPrices(ps)
+        })
     }
 }

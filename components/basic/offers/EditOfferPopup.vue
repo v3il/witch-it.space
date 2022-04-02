@@ -3,7 +3,7 @@
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
-      <b-button v-if="hasRemoveButton" type="is-danger" @click="$emit('deleteOffer', offer)">
+      <b-button v-if="hasRemoveButton" type="is-danger" @click="onOfferRemove">
         Remove offer
       </b-button>
     </template>
@@ -53,6 +53,11 @@ export default {
 
         close () {
             this.$refs.popup.hide()
+        },
+
+        onOfferRemove () {
+            this.close()
+            this.$emit('deleteOffer', this.offer)
         }
     }
 }
