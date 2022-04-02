@@ -1,6 +1,4 @@
 export class Item {
-    #originalQuality
-
     static create (itemData) {
         return new Item(itemData)
     }
@@ -15,11 +13,11 @@ export class Item {
         this.createdDate = itemData.createdDate
         this.character = itemData.character
         this.isTradable = itemData.isTradable
-        this.#originalQuality = itemData.quality
+        this.originalQuality = itemData.quality
     }
 
     get quality () {
-        return this.isRecipe ? this.#originalQuality : this.#originalQuality + 0.5
+        return this.isRecipe ? this.originalQuality : this.originalQuality + 0.5
     }
 
     get isRecipe () {

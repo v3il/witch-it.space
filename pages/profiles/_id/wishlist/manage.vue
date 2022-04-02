@@ -187,6 +187,15 @@ export default {
         ItemsListView
     },
 
+    async asyncData ({ store, route, $wishlistService }) {
+        // await store.dispatch(`${StoreModules.WISHLIST}/fetchWishlist`, route.params.id)
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
+
+        const { offers } = await $wishlistService.fetch(route.params.id)
+        return { offers }
+    },
+
     data: () => ({
         // existingOffers: [],
         // newOffers: [],
@@ -194,12 +203,6 @@ export default {
         // selectedExistingOffers: [],
         // selectedNewOffers: []
     }),
-
-    async fetch ({ store, route }) {
-        await store.dispatch(`${StoreModules.WISHLIST}/fetchWishlist`, route.params.id)
-        await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
-        await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
-    },
 
     computed: {
         ...mapState(StoreModules.WISHLIST, [
@@ -237,12 +240,12 @@ export default {
     },
 
     created () {
-        this.convertOffersToModels()
+        this.saveOffers(this.offers)
     },
 
     methods: {
         ...mapActions(StoreModules.WISHLIST, [
-            'convertOffersToModels',
+            'saveOffers',
             'toggleMode',
             'fetchWishlist',
             'updateFilters',

@@ -6,7 +6,6 @@ import { SortOrders } from '@/shared/items/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 export const state = () => ({
-    offers: [],
     offerModels: [],
     defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
@@ -46,9 +45,9 @@ export const getters = {
 
     nonWishlistItems (state) {
         const tradableItems = itemsService.getTradableItems()
-        const itemsInWishlist = state.offerModels.map(offer => offer.item)
+        const itemsInWishlistIds = state.offerModels.map(offer => offer.item.id)
 
-        return tradableItems.filter(item => !itemsInWishlist.includes(item))
+        return tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
     },
 
     filteredNonWishlistItems: (state, getters) => {
@@ -71,13 +70,8 @@ export const getters = {
 }
 
 export const actions = {
-    convertOffersToModels ({ commit }) {
-        commit('CONVERT_OFFERS')
-    },
-
-    async fetchWishlist ({ commit }, userId) {
-        const { offers } = await this.$wishlistService.fetch(userId)
-        commit('SET_OFFERS', offers)
+    saveOffers ({ commit }, offers) {
+        commit('CONVERT_OFFERS', offers)
     },
 
     getInitialFilters ({ commit }, route) {
@@ -137,7 +131,7 @@ export const actions = {
 
         if (removed) {
             offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-            commit('REMOVE_OFFER', offerIds)
+            commit('REMOVE_OFFER', offersList)
         }
 
         return { removed, error }
@@ -145,13 +139,18 @@ export const actions = {
 
     async createOffers ({ commit }, { items, prices }) {
         const itemsList = Array.isArray(items) ? items : [items]
-        const offersList = itemsList.map(item => Offer.create({ item, prices }))
+        const offersList = itemsList.map((item) => {
+            const pricesClone = prices.map(price => price.clone())
+            return Offer.create({ item, prices: pricesClone })
+        })
+
+        console.log(offersList)
 
         const { success, error } = await wishlistService.massCreate(offersList)
 
         if (success) {
             items.forEach(item => commit('DESELECT_ITEM', item))
-            commit('ADD_OFFERS', offersList.map(offer => offer.buildOutput()))
+            commit('ADD_OFFERS', offersList)
         }
 
         return { created: offersList.length, error }
@@ -159,16 +158,12 @@ export const actions = {
 }
 
 export const mutations = {
-    CONVERT_OFFERS (state) {
-        state.offerModels = state.offers.map(offer => Offer.create(offer))
+    CONVERT_OFFERS (state, offers) {
+        state.offerModels = offers.map(offer => Offer.create(offer))
     },
 
     ADD_OFFERS (state, offers) {
-        state.offers.push(...offers)
-    },
-
-    SET_OFFERS (state, offers) {
-        state.offers = offers
+        state.offerModels.push(...offers)
     },
 
     SET_FILTERS (state, filters) {
@@ -215,7 +210,7 @@ export const mutations = {
         state.selectedNonWishlistItems = []
     },
 
-    REMOVE_OFFER (state, offerToRemoveIds) {
-        state.offers = state.offers.filter(offer => !offerToRemoveIds.includes(offer.id))
+    REMOVE_OFFER (state, offersToRemove) {
+        state.offerModels = state.offerModels.filter(offer => !offersToRemove.includes(offer))
     }
 }

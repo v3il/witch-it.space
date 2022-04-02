@@ -5,14 +5,14 @@ import { Price } from '@/domain/models/Price.js'
 import { itemsService } from '@/domain/index.js'
 
 export class Offer {
-    static create (offerData) {
-        const offer = cloneDeep(offerData)
+    static create (offer/* Data */) {
+        // const offer = cloneDeep(offerData)
 
-        console.log(111, offerData)
+        // console.log(111, offer)
 
-        if (!offer.prices) {
-            offer.prices = (offer.rawPrices || []).map(price => Price.create({ price }))
-        }
+        // if (!offer.prices) {
+        offer.prices = (offer.rawPrices || []).map(price => Price.create({ price }))
+        // }
 
         if (offer.item) {
             offer.itemId = offer.item.id
@@ -80,7 +80,7 @@ export class Offer {
     }
 
     clone () {
-        return new Offer({ originalModel: this.originalModel })
+        return new Offer({ ...this.originalModel })
     }
 
     // Changed
