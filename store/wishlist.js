@@ -141,10 +141,10 @@ export const actions = {
         const itemsList = Array.isArray(items) ? items : [items]
         const offersList = itemsList.map((item) => {
             const pricesClone = prices.map(price => price.clone())
-            return Offer.create({ item, prices: pricesClone })
+            const offer = Offer.create({ itemId: item.id })
+            offer.setPrices(pricesClone)
+            return offer
         })
-
-        console.log(offersList)
 
         const { success, error } = await wishlistService.massCreate(offersList)
 
