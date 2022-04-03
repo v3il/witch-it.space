@@ -1,9 +1,9 @@
 <template>
-  <Popup ref="popup" :popup-title="popupTitle" @popupClosed="$emit('cancelChanges')">
+  <Popup ref="popup" :popup-title="popupTitle" :popup-id="$options.popupId" @beforeOpen="beforeOpen">
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
-      <b-button v-if="hasRemoveButton" type="is-danger" @click="onOfferRemove">
+      <b-button v-if="!isNewOffer" type="is-danger" @click="onOfferRemove">
         Remove offer
       </b-button>
     </template>
@@ -17,36 +17,47 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Popup from '@/components/basic/popup/Popup.vue'
 import WishlistOfferEditor from '@/components/wishlist/WishlistOfferEditor.vue'
+import { StoreModules } from '@/store/index.js'
+import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 
 export default {
     name: 'EditOfferPopup',
+
+    popupId: PopupNames.MANAGE_OFFER,
 
     components: {
         Popup,
         WishlistOfferEditor
     },
 
-    props: {
-        // eslint-disable-next-line vue/require-prop-types
-        offer: {
-            validate: prop => typeof prop === 'object' || prop === null,
-            required: true
-        }
-    },
+    data: () => ({
+        offer: null
+    }),
 
     computed: {
-        popupTitle () {
-            return this.offer?.isNew ? 'Add Offer' : 'Edit Offer'
+        isNewOffer () {
+            return this.offer?.isNew
         },
 
-        hasRemoveButton () {
-            return !this.offer?.isNew
+        popupTitle () {
+            return this.isNewOffer ? 'Add Offer' : 'Edit Offer'
         }
     },
 
     methods: {
+        beforeOpen ({ offer }) {
+            this.offer = offer
+        },
+
+        ...mapActions(StoreModules.WISHLIST, [
+            'removeOffers',
+            'createOffers',
+            'setMassPrices'
+        ]),
+
         open () {
             this.$refs.popup.show()
         },

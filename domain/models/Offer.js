@@ -6,6 +6,10 @@ export class Offer {
         return new Offer(offer)
     }
 
+    static fromItem (item) {
+        return new Offer({ itemId: item.id, rawPrices: [Price.getDefault().buildOutput()] })
+    }
+
     constructor (offer) {
         this.id = offer.id
         this.item = itemsService.getById(offer.itemId)

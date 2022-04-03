@@ -19,7 +19,7 @@
         </p>
 
         <PriceEditor
-          v-for="price in offer.changedPrices"
+          v-for="price in prices"
           :key="price.id"
           :price="price"
           :is-removable="hasOnePrice"
@@ -40,6 +40,7 @@ import PriceEditor from '@/components/price/PriceEditor.vue'
 import ItemPrice from '@/components/items/ItemPrice.vue'
 import RemoveButton from '@/components/basic/RemoveButton.vue'
 import { config } from '@/shared/index.js'
+import { Price } from '@/domain/models/Price.js'
 
 export default {
     name: 'WishlistOfferEditor',
@@ -59,28 +60,36 @@ export default {
         }
     },
 
+    data: () => ({
+        prices: []
+    }),
+
     computed: {
         isAllPricesAdded () {
-            return this.offer.changedPrices.length >= config.MAX_PRICES
+            return this.prices.length >= config.MAX_PRICES
         },
 
         hasOnePrice () {
-            return this.offer.changedPrices.length > 1
+            return this.prices.length > 1
         }
+    },
+
+    mounted () {
+        this.prices = this.offer?.prices.map(price => price.clone())
     },
 
     methods: {
         onPriceTypeChanged ({ price, priceType }) {
-            this.offer.setPriceType(price, priceType)
+            price.setPriceType(priceType)
         },
 
         onPriceRemoved ({ price }) {
-            this.offer.removePrice(price)
+            this.prices = this.prices.filter(p => p !== price)
         },
 
         addPrice () {
-            const newPrice = this.$priceService.createDefaultPrice()
-            this.offer.addPrice(newPrice)
+            const newPrice = Price.getDefault()
+            this.prices.push(newPrice)
         }
     }
 }

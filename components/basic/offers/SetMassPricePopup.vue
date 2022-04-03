@@ -1,5 +1,5 @@
 <template>
-  <Popup ref="popup" popup-title="Set Prices" @popupClosed="$emit('cancelChanges')">
+  <Popup ref="popup" popup-title="Set Prices" popup-id="mass" @popupClosed="$emit('cancelChanges')">
     <p class="wit-offset-bottom--xs">
       This prices will be applied to {{ offersSize }} offers
     </p>

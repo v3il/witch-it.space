@@ -161,12 +161,8 @@ export const actions = {
         const { created, error } = await wishlistService.setMassPrice(offersList, prices)
 
         if (!error) {
-            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-
-            commit('SET_PRICES', {
-                offers,
-                prices
-            })
+            commit('DESELECT_OFFERS', offers)
+            commit('SET_PRICES', { offers, prices })
         }
 
         return { created: offersList.length, error }
@@ -204,6 +200,10 @@ export const mutations = {
 
     DESELECT_OFFER (state, offerToRemove) {
         state.selectedOffers = state.selectedOffers.filter(offer => offer !== offerToRemove)
+    },
+
+    DESELECT_OFFERS (state, offersToRemove) {
+        state.selectedOffers = state.selectedOffers.filter(offer => !offersToRemove.includes(offer))
     },
 
     SELECT_ITEM (state, item) {

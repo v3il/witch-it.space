@@ -152,6 +152,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import { isEqual } from 'lodash'
+import { $vfm } from 'vue-final-modal'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
@@ -166,6 +167,8 @@ import ItemView from '@/components/items/ItemView.vue'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import { StoreModules } from '@/store/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
+import { Offer } from '@/domain/models/index.js'
+import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 
 export default {
     name: 'Manage',
@@ -198,7 +201,8 @@ export default {
     data: () => ({
         // existingOffers: [],
         // newOffers: [],
-        editingOffer: null
+        editingOffer: null,
+        show: false
         // selectedExistingOffers: [],
         // selectedNewOffers: []
     }),
@@ -239,6 +243,7 @@ export default {
     },
 
     created () {
+        console.log(this.$vfm)
         this.saveOffers(this.offers)
     },
 
@@ -337,6 +342,31 @@ export default {
 
             this.$refs.massPriceEditorPopup.close()
             this.$showSuccess(`Updated ${created} offer`)
+        },
+
+        async saveOffer () {
+            if (this.editingOffer.isNew) {
+                const items = this.editingOffer.item
+                const prices = this.editingOffer.prices
+                const { created, error } = await this.createOffers({ items, prices })
+
+                if (error) {
+                    return this.$showError(error)
+                }
+
+                this.$refs.massPriceEditorPopup.close()
+                this.$showSuccess(`Created ${created} offer`)
+            }
+
+            return this.editingOffer.isNew ? this.addOffer() : this.saveEditingOffer()
+        },
+
+        editOffer (offer) {
+            this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: offer.clone() })
+        },
+
+        addOffer (item) {
+            this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: Offer.fromItem(item) })
         },
 
         // =============================
@@ -472,12 +502,6 @@ export default {
             }
         },
 
-        editOffer (offer) {
-            this.editingOffer = offer
-            // offer.startEditing()
-            this.$refs.editOfferPopup.open()
-        },
-
         // async deleteOffer (offer) {
         //     const { error, removed } = await this.$wishlistService.removeFromWishlist([offer])
         //
@@ -534,15 +558,9 @@ export default {
         //     this.$showSuccess(`Created ${created.length} offer`)
         // },
 
-        saveOffer () {
-            return this.editingOffer.isNew ? this.saveNewOffer() : this.saveEditingOffer()
-        },
-
-        addOffer (offer) {
-            this.editingOffer = offer
-            // offer.startEditing()
-            this.$refs.editOfferPopup.open()
-        },
+        // saveOffer () {
+        //     return this.editingOffer.isNew ? this.saveNewOffer() : this.saveEditingOffer()
+        // },
 
         openMassPriceEditor () {
             this.$refs.massPriceEditorPopup.open()

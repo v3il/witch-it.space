@@ -1,5 +1,5 @@
 <template>
-  <vue-final-modal ref="popup" v-model="isVisible" :content-style="popupStyles">
+  <vue-final-modal ref="popup" v-model="isVisible" :content-style="popupStyles" :name="popupId" @before-open="beforeOpen">
     <div class="wit-popup-header wit-paddings--sm">
       <h5 class="modal__title">
         {{ popupTitle }}
@@ -35,6 +35,11 @@ export default {
     name: 'Popup',
 
     props: {
+        popupId: {
+            required: true,
+            type: String
+        },
+
         popupTitle: {
             required: true,
             type: String
@@ -60,6 +65,10 @@ export default {
     },
 
     methods: {
+        beforeOpen (event) {
+            this.$emit('beforeOpen', event.ref.params)
+        },
+
         show () {
             this.isVisible = true
         },
