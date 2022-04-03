@@ -60,11 +60,11 @@ export default {
         }
     },
 
-    data: () => ({
-        prices: []
-    }),
-
     computed: {
+        prices () {
+            return this.offer.prices
+        },
+
         isAllPricesAdded () {
             return this.prices.length >= config.MAX_PRICES
         },
@@ -74,22 +74,17 @@ export default {
         }
     },
 
-    mounted () {
-        this.prices = this.offer?.prices.map(price => price.clone())
-    },
-
     methods: {
         onPriceTypeChanged ({ price, priceType }) {
             price.setPriceType(priceType)
         },
 
         onPriceRemoved ({ price }) {
-            this.prices = this.prices.filter(p => p !== price)
+            this.offer.removePrice(price)
         },
 
         addPrice () {
-            const newPrice = Price.getDefault()
-            this.prices.push(newPrice)
+            this.offer.addPrice(Price.getDefault())
         }
     }
 }

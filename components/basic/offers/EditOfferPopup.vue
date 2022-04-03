@@ -9,7 +9,7 @@
     </template>
 
     <template #controlsRight>
-      <b-button type="is-primary" class="wit-color--white" @click="$emit('saveChanges')">
+      <b-button type="is-primary" class="wit-color--white" @click="onSave">
         {{ $t('Save') }}
       </b-button>
     </template>
@@ -48,15 +48,32 @@ export default {
     },
 
     methods: {
-        beforeOpen ({ offer }) {
-            this.offer = offer
-        },
-
         ...mapActions(StoreModules.WISHLIST, [
             'removeOffers',
             'createOffers',
             'setMassPrices'
         ]),
+
+        beforeOpen ({ offer }) {
+            this.offer = offer
+        },
+
+        onSave () {
+            this.isNewOffer ? this.saveNewOffer() : (() => {})()
+        },
+
+        async saveNewOffer () {
+            const item = this.offer.item
+            const prices = this.offer.prices
+            const { created, error } = await this.createOffers({ items: [item], prices })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.close()
+            this.$showSuccess(`Created ${created} offer`)
+        },
 
         open () {
             this.$refs.popup.show()

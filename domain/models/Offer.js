@@ -39,6 +39,14 @@ export class Offer {
         this.prices = updatedData.prices
     }
 
+    addPrice (price) {
+        this.prices.push(price)
+    }
+
+    removePrice (priceToRemove) {
+        this.prices = this.prices.filter(price => price !== priceToRemove)
+    }
+
     setPrices (prices) {
         this.prices = prices
     }
