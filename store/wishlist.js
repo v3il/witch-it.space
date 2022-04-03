@@ -124,14 +124,18 @@ export const actions = {
         commit(getters.isMyWishlistMode ? 'CLEAR_SELECTED_OFFERS' : 'CLEAR_SELECTED_ITEMS')
     },
 
-    async removeOffers ({ commit }, offers) {
+    async removeOffers ({ commit, state }, offers) {
         const offersList = Array.isArray(offers) ? offers : [offers]
         const offerIds = offersList.map(offer => offer.id)
         const { removed, error } = await wishlistService.removeOffers(offerIds)
 
         if (removed) {
             offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-            commit('REMOVE_OFFER', offersList)
+
+            const ids = offersList.map(offer => offer.id)
+            const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
+
+            commit('REMOVE_OFFERS', off)
         }
 
         return { removed, error }
@@ -163,7 +167,7 @@ export const actions = {
         if (!error) {
             commit('DESELECT_OFFERS', offers)
 
-            const ids = offers.map(offer => offer.id)
+            const ids = offersList.map(offer => offer.id)
             const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
 
             console.log(off)
@@ -232,7 +236,7 @@ export const mutations = {
         state.selectedNonWishlistItems = []
     },
 
-    REMOVE_OFFER (state, offersToRemove) {
+    REMOVE_OFFERS (state, offersToRemove) {
         state.offerModels = state.offerModels.filter(offer => !offersToRemove.includes(offer))
     },
 

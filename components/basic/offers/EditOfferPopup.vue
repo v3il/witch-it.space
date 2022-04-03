@@ -3,7 +3,7 @@
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
-      <b-button v-if="!isNewOffer" type="is-danger" @click="onOfferRemove">
+      <b-button v-if="!isNewOffer" type="is-danger" @click="removeOffer">
         Remove offer
       </b-button>
     </template>
@@ -89,18 +89,29 @@ export default {
             this.$showSuccess(`Updated ${created} offer`)
         },
 
+        async removeOffer () {
+            const { error, removed } = await this.removeOffers(this.offer)
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.close()
+            this.$showSuccess(`Removed ${removed} items`)
+        },
+
         open () {
             this.$refs.popup.show()
         },
 
         close () {
             this.$refs.popup.hide()
-        },
-
-        onOfferRemove () {
-            this.close()
-            this.$emit('deleteOffer', this.offer)
         }
+
+        // onOfferRemove () {
+        //     this.close()
+        //     this.$emit('deleteOffer', this.offer)
+        // }
     }
 }
 </script>
