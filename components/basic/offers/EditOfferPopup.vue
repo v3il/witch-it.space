@@ -59,7 +59,7 @@ export default {
         },
 
         onSave () {
-            this.isNewOffer ? this.saveNewOffer() : (() => {})()
+            this.isNewOffer ? this.saveNewOffer() : this.saveExistingOffer()
         },
 
         async saveNewOffer () {
@@ -73,6 +73,20 @@ export default {
 
             this.close()
             this.$showSuccess(`Created ${created} offer`)
+        },
+
+        async saveExistingOffer () {
+            const { created, error } = await this.setMassPrices({
+                offers: [this.offer],
+                prices: this.offer.prices
+            })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.close()
+            this.$showSuccess(`Updated ${created} offer`)
         },
 
         open () {

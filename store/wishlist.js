@@ -156,13 +156,19 @@ export const actions = {
         return { created: offersList.length, error }
     },
 
-    async setMassPrices ({ commit }, { offers, prices }) {
+    async setMassPrices ({ commit, state }, { offers, prices }) {
         const offersList = Array.isArray(offers) ? offers : [offers]
         const { created, error } = await wishlistService.setMassPrice(offersList, prices)
 
         if (!error) {
             commit('DESELECT_OFFERS', offers)
-            commit('SET_PRICES', { offers, prices })
+
+            const ids = offers.map(offer => offer.id)
+            const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
+
+            console.log(off)
+
+            commit('SET_PRICES', { offers: off, prices })
         }
 
         return { created: offersList.length, error }

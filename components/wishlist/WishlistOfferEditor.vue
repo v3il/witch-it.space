@@ -1,9 +1,9 @@
 <template>
   <div class="wit-flex wit-flex--column1 wit-flex--align-start wit-block--full-width">
     <ItemView add-tooltip :item="offer.item" :is-title-shown="false" style="max-width: 88px;" class="wit-overflow--hidden wit-offset-right--sm wit-flex__item--no-shrink">
-      <div v-if="offer.isNew" class="new-label">
-        NEW
-      </div>
+      <!--      <div v-if="offer.isNew" class="new-label">-->
+      <!--        NEW-->
+      <!--      </div>-->
     </ItemView>
 
     <div class="wit-flex__item--grow wit-flex wit-flex--column" style="min-width: 0;">
