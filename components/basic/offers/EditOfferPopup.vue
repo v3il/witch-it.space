@@ -100,18 +100,9 @@ export default {
             this.$showSuccess(`Removed ${removed} items`)
         },
 
-        open () {
-            this.$refs.popup.show()
-        },
-
         close () {
             this.$refs.popup.hide()
         }
-
-        // onOfferRemove () {
-        //     this.close()
-        //     this.$emit('deleteOffer', this.offer)
-        // }
     }
 }
 </script>

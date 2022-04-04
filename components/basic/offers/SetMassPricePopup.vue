@@ -1,7 +1,7 @@
 <template>
-  <Popup ref="popup" popup-title="Set Prices" popup-id="mass" @popupClosed="$emit('cancelChanges')">
+  <Popup ref="popup" popup-title="Set Prices" :popup-id="$options.popupId" @beforeOpen="beforeOpen">
     <p class="wit-offset-bottom--xs">
-      This prices will be applied to {{ offersSize }} offers
+      This prices will be applied to {{ entities.length }} offers
     </p>
 
     <PriceEditor
@@ -26,29 +26,39 @@
 import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import { Price } from '@/domain/models/Price'
+import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 
 export default {
     name: 'EditOfferPopup',
+
+    popupId: PopupNames.MANAGE_PRICES,
 
     components: {
         Popup,
         PriceEditor
     },
 
-    props: {
-        offersSize: {
-            type: Number,
-            required: true
-        }
-    },
+    // props: {
+    //     offersSize: {
+    //         type: Number,
+    //         required: true
+    //     }
+    // },
 
     data () {
         return {
-            prices: []
+            prices: [],
+            entities: [],
+            existingItems: true
         }
     },
 
     methods: {
+        beforeOpen ({ entities, existingItems }) {
+            this.entities = entities
+            this.existingItems = existingItems
+        },
+
         open () {
             this.prices = [Price.getDefault()]
             this.$refs.popup.show()
