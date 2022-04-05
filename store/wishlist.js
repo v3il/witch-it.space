@@ -131,11 +131,7 @@ export const actions = {
 
         if (removed) {
             offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-
-            const ids = offersList.map(offer => offer.id)
-            const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
-
-            commit('REMOVE_OFFERS', off)
+            commit('REMOVE_OFFERS', offerIds)
         }
 
         return { removed, error }
@@ -236,8 +232,8 @@ export const mutations = {
         state.selectedNonWishlistItems = []
     },
 
-    REMOVE_OFFERS (state, offersToRemove) {
-        state.offerModels = state.offerModels.filter(offer => !offersToRemove.includes(offer))
+    REMOVE_OFFERS (state, offersToRemoveIds) {
+        state.offerModels = state.offerModels.filter(offer => !offersToRemoveIds.includes(offer.id))
     },
 
     SET_PRICES (state, { offers, prices }) {
