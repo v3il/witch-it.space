@@ -48,11 +48,11 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.WISHLIST, [
-            'removeOffers',
-            'createOffers',
-            'setMassPrices'
-        ]),
+        ...mapActions(StoreModules.WISHLIST, {
+            removeOffers: 'removeOffers',
+            createOffers: 'createOffers',
+            setMassPrices: 'setMassPrices'
+        }),
 
         beforeOpen ({ offer }) {
             this.offer = offer

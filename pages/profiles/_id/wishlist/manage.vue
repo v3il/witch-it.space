@@ -239,21 +239,21 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.WISHLIST, [
-            'saveOffers',
-            'toggleMode',
-            'fetchWishlist',
-            'updateFilters',
-            'updateSorts',
-            'resetFilter',
-            'resetFilters',
-            'toggleOffer',
-            'toggleNonWishlistItem',
-            'clearSelectedEntities',
-            'removeOffers',
-            'createOffers',
-            'setMassPrices'
-        ]),
+        ...mapActions(StoreModules.WISHLIST, {
+            saveOffers: 'saveOffers',
+            toggleMode: 'toggleMode',
+            fetchWishlist: 'fetchWishlist',
+            updateFilters: 'updateFilters',
+            updateSorts: 'updateSorts',
+            resetFilter: 'resetFilter',
+            resetFilters: 'resetFilters',
+            toggleOffer: 'toggleOffer',
+            toggleNonWishlistItem: 'toggleNonWishlistItem',
+            clearSelectedEntities: 'clearSelectedEntities',
+            removeOffers: 'removeOffers',
+            createOffers: 'createOffers',
+            setMassPrices: 'setMassPrices'
+        }),
 
         onFiltersChange (filters) {
             if (!isEqual(this.filters, filters)) {
