@@ -4,7 +4,7 @@
 
     <template #controlsLeft>
       <b-button v-if="!isNewOffer" type="is-danger" @click="removeOffer">
-        Remove offer
+        {{ $t('Delete') }}
       </b-button>
     </template>
 
@@ -43,7 +43,7 @@ export default {
         },
 
         popupTitle () {
-            return this.isNewOffer ? 'Add Offer' : 'Edit Offer'
+            return this.isNewOffer ? this.$t('AddOffer') : this.$t('EditOffer')
         }
     },
 
@@ -72,7 +72,7 @@ export default {
             }
 
             this.close()
-            this.$showSuccess(`Created ${created} offer`)
+            this.$showSuccess(this.$t('OffersCreated', [created]))
         },
 
         async saveExistingOffer () {
@@ -86,7 +86,7 @@ export default {
             }
 
             this.close()
-            this.$showSuccess(`Updated ${created} offer`)
+            this.$showSuccess(this.$t('OffersUpdated', [created]))
         },
 
         async removeOffer () {
@@ -97,7 +97,7 @@ export default {
             }
 
             this.close()
-            this.$showSuccess(`Removed ${removed} items`)
+            this.$showSuccess(this.$t('OffersRemoved', [removed]))
         },
 
         close () {

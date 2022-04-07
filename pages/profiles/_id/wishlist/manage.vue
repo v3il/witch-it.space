@@ -185,15 +185,14 @@ export default {
         await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
         await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
 
-        const { offers } = await $wishlistService.fetch(route.params.id)
-        return { offers }
+        return $wishlistService.fetch(route.params.id)
     },
 
     data: () => ({
         // existingOffers: [],
         // newOffers: [],
-        editingOffer: null,
-        show: false
+        // editingOffer: null,
+        // show: false
         // selectedExistingOffers: [],
         // selectedNewOffers: []
     }),
@@ -234,7 +233,6 @@ export default {
     },
 
     created () {
-        console.log(this.$vfm)
         this.saveOffers(this.offers)
     },
 
@@ -501,7 +499,7 @@ export default {
             for (let index = from; index <= to; index++) {
                 this.addToEditing(offers[index])
             }
-        },
+        }
 
         // async deleteOffer (offer) {
         //     const { error, removed } = await this.$wishlistService.removeFromWishlist([offer])
@@ -526,20 +524,20 @@ export default {
         //     this.editingOffer = null
         // },
 
-        async saveEditingOffer () {
-            const { updated, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            this.$wishlistService.updateWishlistItem(this.editingOffer, updated[0])
-
-            this.editingOffer = null
-            this.$refs.editOfferPopup.close()
-
-            this.$showSuccess(`Updated ${updated.length} offer`)
-        }
+        // async saveEditingOffer () {
+        //     const { updated, error } = await this.$wishlistService.saveWishlist([this.editingOffer])
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     this.$wishlistService.updateWishlistItem(this.editingOffer, updated[0])
+        //
+        //     this.editingOffer = null
+        //     this.$refs.editOfferPopup.close()
+        //
+        //     this.$showSuccess(`Updated ${updated.length} offer`)
+        // }
 
         // async saveNewOffer () {
         //     const { created, error } = await this.$wishlistService.saveWishlist([this.editingOffer])

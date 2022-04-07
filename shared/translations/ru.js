@@ -237,6 +237,13 @@ export const ru = {
     PriceType_Fixed: 'Фиксированная цена',
     PriceType_Wishlist: 'Предмет из списка желаемого',
 
+    AddOffer: 'Добавление предложения',
+    EditOffer: 'Редактирование предложения',
+
+    OffersCreated: 'Добавлено предложений: %s',
+    OffersUpdated: 'Обновлено предложений: %s',
+    OffersRemoved: 'Удалено предложений: %s',
+
     Time_NMinutesAgo: (minutes) => {
         let word = ''
         const mod = minutes % 10
