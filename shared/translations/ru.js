@@ -238,11 +238,15 @@ export const ru = {
     PriceType_Wishlist: 'Предмет из списка желаемого',
 
     AddOffer: 'Добавление предложения',
+    AddOffers: 'Добавление предложений',
     EditOffer: 'Редактирование предложения',
+    EditOffers: 'Редактирование предложений',
 
     OffersCreated: 'Добавлено предложений: %s',
     OffersUpdated: 'Обновлено предложений: %s',
     OffersRemoved: 'Удалено предложений: %s',
+
+    PriceWillBeAppliedTo: offersSize => `Данная цена будет установлена для ${OffersCounter(offersSize)}`, // todo
 
     Time_NMinutesAgo: (minutes) => {
         let word = ''
@@ -263,20 +267,22 @@ export const ru = {
     Time_LessThanAMinuteAgo: 'менее минуты назад',
     Time_Never: 'никогда',
 
-    OffersAvailable: (offersCount) => {
-        let word = ''
-        const mod = offersCount % 10
+    OffersAvailable: OffersCounter
+}
 
-        if (offersCount >= 10 && offersCount <= 19) {
-            word = 'предложений'
-        } else if (mod === 1) {
-            word = 'предложение'
-        } else if (mod >= 2 && mod <= 4) {
-            word = 'предложения'
-        } else {
-            word = 'предложений'
-        }
+function OffersCounter (offersCount) {
+    let word = ''
+    const mod = offersCount % 10
 
-        return `${offersCount} ${word}`
+    if (offersCount >= 10 && offersCount <= 19) {
+        word = 'предложений'
+    } else if (mod === 1) {
+        word = 'предложение'
+    } else if (mod >= 2 && mod <= 4) {
+        word = 'предложения'
+    } else {
+        word = 'предложений'
     }
+
+    return `${offersCount} ${word}`
 }

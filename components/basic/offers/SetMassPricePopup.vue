@@ -1,7 +1,7 @@
 <template>
-  <Popup ref="popup" popup-title="Set Prices" :popup-id="$options.popupId" @beforeOpen="beforeOpen">
+  <Popup ref="popup" :popup-title="popupTitle" :popup-id="$options.popupId" @beforeOpen="beforeOpen">
     <p class="wit-offset-bottom--xs">
-      This prices will be applied to {{ entities.length }} offers
+      {{ $t('PriceWillBeAppliedTo', [entities.length]) }}
     </p>
 
     <PriceEditor
@@ -48,6 +48,12 @@ export default {
         }
     },
 
+    computed: {
+        popupTitle () {
+            return this.existingItems ? this.$t('EditOffers') : this.$t('AddOffers')
+        }
+    },
+
     methods: {
         ...mapActions(StoreModules.WISHLIST, {
             createOffers: 'createOffers',
@@ -84,7 +90,7 @@ export default {
             }
 
             this.close()
-            this.$showSuccess(`Created ${created} offer`)
+            this.$showSuccess(this.$t('OffersCreated', [created]))
         },
 
         async saveExistingOffer () {
@@ -98,7 +104,7 @@ export default {
             }
 
             this.close()
-            this.$showSuccess(`Updated ${created} offer`)
+            this.$showSuccess(this.$t('OffersUpdated', [created]))
         }
     }
 }
