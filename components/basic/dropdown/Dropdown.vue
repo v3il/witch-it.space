@@ -12,18 +12,6 @@
       <slot v-else />
     </div>
   </b-dropdown>
-
-<!--  <v-popover ref="popover" :placement="position" @show="isContentVisible = true" @apply-hide="hideContent">-->
-<!--    <slot name="trigger" />-->
-
-<!--    <div slot="popover" class="wit-popover__content">-->
-<!--      <ul v-if="$slots.items && isContentVisible" @click="onClick">-->
-<!--        <slot name="items" />-->
-<!--      </ul>-->
-
-<!--      <slot v-else v-show="isContentVisible" />-->
-<!--    </div>-->
-<!--  </v-popover>-->
 </template>
 
 <script>
@@ -53,8 +41,6 @@ export default {
         },
 
         hide () {
-            console.log(this.$refs.popover)
-
             this.$refs.popover?.toggle()
         }
     }

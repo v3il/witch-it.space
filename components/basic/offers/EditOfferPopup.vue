@@ -1,5 +1,13 @@
 <template>
-  <Popup ref="popup" :popup-title="popupTitle" :popup-id="$options.popupId" @beforeOpen="beforeOpen">
+  <EditPopup
+    ref="popup"
+    :popup-title="popupTitle"
+    :popup-id="$options.popupId"
+    :is-submit-button-disabled="isLoading"
+    :submit-button-title="$t('Save')"
+    @beforeOpen="beforeOpen"
+    @save="onSave"
+  >
     <WishlistOfferEditor v-if="offer" :offer="offer" />
 
     <template #controlsLeft>
@@ -7,21 +15,15 @@
         {{ $t('Delete') }}
       </b-button>
     </template>
-
-    <template #controlsRight>
-      <b-button type="is-primary" class="wit-color--white" @click="onSave">
-        {{ $t('Save') }}
-      </b-button>
-    </template>
-  </Popup>
+  </EditPopup>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Popup from '@/components/basic/popup/Popup.vue'
 import WishlistOfferEditor from '@/components/wishlist/WishlistOfferEditor.vue'
 import { StoreModules } from '@/store/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
+import EditPopup from '@/components/basic/popup/EditPopup.vue'
 
 export default {
     name: 'EditOfferPopup',
@@ -29,12 +31,13 @@ export default {
     popupId: PopupNames.MANAGE_OFFER,
 
     components: {
-        Popup,
+        EditPopup,
         WishlistOfferEditor
     },
 
     data: () => ({
-        offer: null
+        offer: null,
+        isLoading: true
     }),
 
     computed: {
@@ -63,45 +66,57 @@ export default {
         },
 
         async saveNewOffer () {
+            this.isLoading = true
+
             const item = this.offer.item
             const prices = this.offer.prices
             const { created, error } = await this.createOffers({ items: [item], prices })
 
             if (error) {
-                return this.$showError(error)
+                this.$showError(error)
+            } else {
+                this.close()
+                this.$showSuccess(this.$t('OffersCreated', [created]))
             }
 
-            this.close()
-            this.$showSuccess(this.$t('OffersCreated', [created]))
+            this.isLoading = false
         },
 
         async saveExistingOffer () {
+            this.isLoading = true
+
             const { created, error } = await this.setMassPrices({
                 offers: [this.offer],
                 prices: this.offer.prices
             })
 
             if (error) {
-                return this.$showError(error)
+                this.$showError(error)
+            } else {
+                this.close()
+                this.$showSuccess(this.$t('OffersUpdated', [created]))
             }
 
-            this.close()
-            this.$showSuccess(this.$t('OffersUpdated', [created]))
+            this.isLoading = false
         },
 
         async removeOffer () {
+            this.isLoading = false
+
             const { error, removed } = await this.removeOffers(this.offer)
 
             if (error) {
-                return this.$showError(error)
+                this.$showError(error)
+            } else {
+                this.close()
+                this.$showSuccess(this.$t('OffersRemoved', [removed]))
             }
 
-            this.close()
-            this.$showSuccess(this.$t('OffersRemoved', [removed]))
+            this.isLoading = false
         },
 
         close () {
-            this.$refs.popup.hide()
+            this.$refs.popup.closePopup()
         }
     }
 }
