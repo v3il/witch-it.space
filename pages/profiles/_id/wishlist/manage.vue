@@ -306,34 +306,34 @@ export default {
             this.$showSuccess(`Removed ${removed} items`)
         },
 
-        massAction (prices) {
-            // this.addItemsToWishlist(prices)
-            this.isMyWishlistMode ? this.setMassPrices2(prices) : this.addItemsToWishlist(prices)
-        },
+        // massAction (prices) {
+        //     // this.addItemsToWishlist(prices)
+        //     this.isMyWishlistMode ? this.setMassPrices2(prices) : this.addItemsToWishlist(prices)
+        // },
 
-        async addItemsToWishlist (prices) {
-            const items = this.selectedNonWishlistItems.length ? this.selectedNonWishlistItems : this.sortedNonWishlistItems
-            const { created, error } = await this.createOffers({ items, prices })
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            this.$refs.massPriceEditorPopup.close()
-            this.$showSuccess(`Created ${created} offer`)
-        },
-
-        async setMassPrices2 (prices) {
-            const offers = this.selectedOffers.length ? this.selectedOffers : this.sortedOfferModels
-            const { created, error } = await this.setMassPrices({ offers, prices })
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            this.$refs.massPriceEditorPopup.close()
-            this.$showSuccess(`Updated ${created} offer`)
-        },
+        // async addItemsToWishlist (prices) {
+        //     const items = this.selectedNonWishlistItems.length ? this.selectedNonWishlistItems : this.sortedNonWishlistItems
+        //     const { created, error } = await this.createOffers({ items, prices })
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     this.$refs.massPriceEditorPopup.close()
+        //     this.$showSuccess(`Created ${created} offer`)
+        // },
+        //
+        // async setMassPrices2 (prices) {
+        //     const offers = this.selectedOffers.length ? this.selectedOffers : this.sortedOfferModels
+        //     const { created, error } = await this.setMassPrices({ offers, prices })
+        //
+        //     if (error) {
+        //         return this.$showError(error)
+        //     }
+        //
+        //     this.$refs.massPriceEditorPopup.close()
+        //     this.$showSuccess(`Updated ${created} offer`)
+        // },
 
         // async saveOffer () {
         //     if (this.editingOffer.isNew) {

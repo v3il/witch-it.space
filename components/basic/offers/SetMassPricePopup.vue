@@ -15,7 +15,7 @@
     />
 
     <template #controlsRight>
-      <b-button type="is-primary" class="wit-color--white" @click="saveChanges">
+      <b-button type="is-primary" class="wit-color--white" @click="onSave">
         {{ $t('Save') }}
       </b-button>
     </template>
@@ -23,10 +23,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Popup from '@/components/basic/popup/Popup.vue'
 import PriceEditor from '@/components/price/PriceEditor.vue'
 import { Price } from '@/domain/models/Price'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
+import { StoreModules } from '@/store/index.js'
 
 export default {
     name: 'EditOfferPopup',
@@ -38,13 +40,6 @@ export default {
         PriceEditor
     },
 
-    // props: {
-    //     offersSize: {
-    //         type: Number,
-    //         required: true
-    //     }
-    // },
-
     data () {
         return {
             prices: [],
@@ -54,14 +49,15 @@ export default {
     },
 
     methods: {
+        ...mapActions(StoreModules.WISHLIST, {
+            createOffers: 'createOffers',
+            setMassPrices: 'setMassPrices'
+        }),
+
         beforeOpen ({ entities, existingItems }) {
             this.entities = entities
             this.existingItems = existingItems
-        },
-
-        open () {
             this.prices = [Price.getDefault()]
-            this.$refs.popup.show()
         },
 
         close () {
@@ -69,16 +65,40 @@ export default {
         },
 
         addPrice () {
-            this.prices.push(this.$priceService.createDefaultPrice())
+            this.prices.push(Price.getDefault())
         },
 
-        removePrice (price) {
-            this.prices = this.prices.filter(p => p !== price)
+        removePrice (priceToRemove) {
+            this.prices = this.prices.filter(price => price !== priceToRemove)
         },
 
-        saveChanges () {
-            console.error('P', this.prices)
-            this.$emit('saveChanges', this.prices)
+        onSave () {
+            this.existingItems ? this.saveExistingOffer() : this.saveNewOffer()
+        },
+
+        async saveNewOffer () {
+            const { created, error } = await this.createOffers({ items: this.entities, prices: this.prices })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.close()
+            this.$showSuccess(`Created ${created} offer`)
+        },
+
+        async saveExistingOffer () {
+            const { created, error } = await this.setMassPrices({
+                offers: this.entities,
+                prices: this.prices
+            })
+
+            if (error) {
+                return this.$showError(error)
+            }
+
+            this.close()
+            this.$showSuccess(`Updated ${created} offer`)
         }
     }
 }
