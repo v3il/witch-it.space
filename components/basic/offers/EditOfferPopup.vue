@@ -37,7 +37,7 @@ export default {
 
     data: () => ({
         offer: null,
-        isLoading: true
+        isLoading: false
     }),
 
     computed: {
