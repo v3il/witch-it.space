@@ -40,27 +40,43 @@ export class Price {
         this.priceType = priceType
     }
 
-    setItemCount ({ itemCount, position }) {
-        const prop = position === 1 ? 'itemCount' : 'itemCount2'
-        this[prop] = itemCount
+    setFirstItemId (itemId) {
+        this.itemId = itemId
     }
 
-    setItemId ({ itemId, position }) {
-        const prop = position === 1 ? 'itemId' : 'itemId2'
-        const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-        this[prop] = itemId
-
-        if (this[prop2] === 0) {
-            this[prop2] = 1
-        }
+    setFirstItemCount (itemCount) {
+        this.itemCount = itemCount
     }
 
-    clearItemId ({ position }) {
-        const prop = position === 1 ? 'itemId' : 'itemId2'
-        const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-        this[prop] = 0
-        this[prop2] = 0
+    setSecondItemId (itemId) {
+        this.itemId2 = itemId
     }
+
+    setSecondItemCount (itemCount) {
+        this.itemCount2 = itemCount
+    }
+
+    // setItemCount ({ itemCount, position }) {
+    //     const prop = position === 1 ? 'itemCount' : 'itemCount2'
+    //     this[prop] = itemCount
+    // }
+    //
+    // setItemId ({ itemId, position }) {
+    //     const prop = position === 1 ? 'itemId' : 'itemId2'
+    //     const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
+    //     this[prop] = itemId
+    //
+    //     if (this[prop2] === 0) {
+    //         this[prop2] = 1
+    //     }
+    // }
+    //
+    // clearItemId ({ position }) {
+    //     const prop = position === 1 ? 'itemId' : 'itemId2'
+    //     const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
+    //     this[prop] = 0
+    //     this[prop2] = 0
+    // }
 
     clone () {
         return new Price(this.buildOutput())

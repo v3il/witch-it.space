@@ -8,17 +8,29 @@
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-position="1" :price="price" popover-position="bottom-start" @itemSelect="setItem" @itemClear="clearItem" />
+        <PricePart
+          :item-id="price.itemId"
+          :paired-item-id="price.itemId2"
+          @itemSelect="setFirstItemId"
+          @itemClear="clearFirstItemId"
+        />
+
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.itemCount" :min="1" :max="99" @change="setItem1Count" />
+        <NumericInput :value="price.itemCount" :min="1" :max="99" @change="setFirstItemCount" />
       </div>
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
       <div class="wit-flex wit-flex--align-center">
-        <PricePart :item-position="2" :price="price" popover-position="bottom" @itemSelect="setItem" @itemClear="clearItem" />
+        <PricePart
+          :item-id="price.itemId2"
+          :paired-item-id="price.itemId"
+          @itemSelect="setSecondItemId"
+          @itemClear="clearSecondItemId"
+        />
+
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.itemCount2" :min="1" :max="99" @change="setItem2Count" />
+        <NumericInput :value="price.itemCount2" :min="1" :max="99" @change="setSecondItemCount" />
       </div>
     </div>
   </div>
@@ -55,12 +67,6 @@ export default {
         }
     },
 
-    computed: {
-        isSpecificPrice () {
-            return this.price.priceType === PriceType.FIXED
-        }
-    },
-
     methods: {
         onPriceAdd () {
             this.$emit('priceAdded')
@@ -70,20 +76,28 @@ export default {
             this.$emit('priceRemoved', this.price)
         },
 
-        setItem1Count (itemCount) {
-            this.price.setItemCount({ itemCount, position: 1 })
+        setFirstItemId (itemId) {
+            this.price.setFirstItemId(itemId)
         },
 
-        setItem2Count (itemCount) {
-            this.price.setItemCount({ itemCount, position: 2 })
+        clearFirstItemId () {
+            this.price.setFirstItemId(0)
         },
 
-        setItem (eventData) {
-            this.price.setItemId(eventData)
+        setFirstItemCount (itemCount) {
+            this.price.setFirstItemCount(itemCount)
         },
 
-        clearItem (eventData) {
-            this.price.clearItemId(eventData)
+        setSecondItemId (itemId) {
+            this.price.setSecondItemId(itemId)
+        },
+
+        clearSecondItemId () {
+            this.price.setSecondItemId(0)
+        },
+
+        setSecondItemCount (itemCount) {
+            this.price.setSecondItemCount(itemCount)
         }
     }
 }

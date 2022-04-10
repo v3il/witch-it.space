@@ -70,19 +70,20 @@ export default {
     },
 
     props: {
-        price: {
+        itemId: {
             required: true,
-            type: Object
+            type: Number
         },
 
-        itemPosition: {
+        pairedItemId: {
             required: true,
             type: Number
         },
 
         popoverPosition: {
             type: String,
-            required: true
+            required: false,
+            default: 'bottom-start'
         }
     },
 
@@ -91,14 +92,6 @@ export default {
     }),
 
     computed: {
-        itemId () {
-            return this.itemPosition === 1 ? this.price.itemId : this.price.itemId2
-        },
-
-        pairedItemId () {
-            return this.itemPosition === 1 ? this.price.itemId2 : this.price.itemId
-        },
-
         selectedItem () {
             return this.$itemsService.getById(this.itemId)
         }
@@ -116,18 +109,14 @@ export default {
         },
 
         onItemSelect (item) {
-            this.$emit('itemSelect', { itemId: item.id, position: this.itemPosition })
+            this.$emit('itemSelect', item.id)
             this.$refs.popover.hide()
         },
 
         onItemClear () {
-            this.$emit('itemClear', { position: this.itemPosition })
+            this.$emit('itemClear')
             this.$refs.popover.hide()
         }
     }
 }
 </script>
-
-<style scoped>
-
-</style>
