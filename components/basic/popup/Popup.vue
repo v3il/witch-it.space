@@ -1,5 +1,12 @@
 <template>
-  <vue-final-modal ref="popup" v-model="isVisible" :content-style="popupStyles" :name="popupId" @before-open="beforeOpen">
+  <vue-final-modal
+    ref="popup"
+    v-model="isVisible"
+    :content-style="popupStyles"
+    :name="popupId"
+    :click-to-close="false"
+    @before-open="beforeOpen"
+  >
     <div class="wit-popup-header wit-paddings--sm">
       <h5 class="modal__title">
         {{ popupTitle }}

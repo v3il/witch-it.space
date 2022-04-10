@@ -67,7 +67,7 @@ export default {
         },
 
         onPriceRemove () {
-            this.$emit('priceRemoved', { price: this.price })
+            this.$emit('priceRemoved', this.price)
         },
 
         setItem1Count (itemCount) {

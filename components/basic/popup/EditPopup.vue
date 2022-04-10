@@ -13,7 +13,7 @@
     </template>
 
     <template #controlsRight>
-      <b-button type="is-primary" class="wit-color--white" :disabled="isSubmitButtonDisabled" @click="$emit('save')">
+      <b-button type="is-primary" class="wit-color--white" :disabled="isLoading" @click="$emit('save')">
         {{ submitButtonTitle }}
       </b-button>
     </template>
@@ -54,7 +54,7 @@ export default {
             default: ''
         },
 
-        isSubmitButtonDisabled: {
+        isLoading: {
             required: false,
             type: Boolean,
             default: false

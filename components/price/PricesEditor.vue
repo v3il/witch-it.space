@@ -1,11 +1,10 @@
 <template>
-  <div>
+  <div class="wit-block--full-width">
     <PriceEditor
       v-for="price in prices"
       :key="price.id"
       :price="price"
       :is-removable="prices.length > 1"
-      class="wit-price-editor wit-block--full-width"
       @priceRemoved="removePrice"
       @priceAdded="addPrice"
     />

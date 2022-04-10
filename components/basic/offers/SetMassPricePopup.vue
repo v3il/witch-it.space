@@ -3,7 +3,7 @@
     ref="popup"
     :popup-title="popupTitle"
     :popup-id="$options.popupId"
-    :is-submit-button-disabled="isLoading"
+    :is-loading="isLoading"
     :submit-button-title="$t('Save')"
     @beforeOpen="beforeOpen"
     @save="onSave"
