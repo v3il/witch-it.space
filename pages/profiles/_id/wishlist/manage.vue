@@ -1,7 +1,7 @@
 <template>
-  <div class="wit-profile">
+  <div class="wit-wishlist">
     <div class="wit-background--content">
-      <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
+      <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
         <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
           <template #tab0>
             {{ $t('Wishlist_MyWishlist') }}
@@ -61,7 +61,7 @@
       <template v-if="isMyWishlistMode">
         <!--            <VirtualScrollBar :items="sortedOfferModels" />-->
 
-        <div class="wit-flex wit-flex--wrap wit-items__item-grid">
+        <div class="wit-flex wit-flex--wrap wit-items__item-grid wit-wishlist__content">
           <ItemView
             v-for="(offer) in slicedItems"
             :key="offer.id"
@@ -731,11 +731,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-profile {
+.wit-wishlist {
     //height: calc(100vh - var(--header-height));
     //max-height: calc(100vh - var(--header-height));
     padding-left: var(--offset-sm);
     padding-right: var(--offset-sm);
+}
+
+.wit-wishlist__header {
+    position: sticky;
+    top: 0;
+    padding: var(--offset-sm);
+    background-color: inherit;
+    z-index: 10000;
+}
+
+.wit-wishlist__content {
+    padding: 0 var(--offset-sm);
 }
 
 .wit-wishlist-editor__items-container {
