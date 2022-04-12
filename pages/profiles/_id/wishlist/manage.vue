@@ -69,7 +69,9 @@
           </div>
 
           <template v-if="isMyWishlistMode">
-            <ItemsListView :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+            <VirtualScrollBar :items="sortedOfferModels" />
+
+            <ItemsListView v-if="0" :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
               <template #default="{ items: offers }">
                 <ItemView
                   v-for="(offer, index) in offers"
@@ -160,6 +162,7 @@ import { StoreModules } from '@/store/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
+import VirtualScrollBar from '@/components/basic/VirtualScrollBar.vue'
 
 export default {
     name: 'Manage',
@@ -178,7 +181,8 @@ export default {
         EditOfferPopup,
         SetMassPricePopup,
         ItemView,
-        ItemsListView
+        ItemsListView,
+        VirtualScrollBar
     },
 
     async asyncData ({ store, route, $wishlistService }) {

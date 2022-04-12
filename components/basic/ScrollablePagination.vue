@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollable-pagination wit-block--full-height" @scroll="onScroll">
+  <div class="scrollable-pagination wit-block--full-height" @scroll.passive="onScroll">
     <slot :visibleItems="visibleItems" />
   </div>
 </template>
