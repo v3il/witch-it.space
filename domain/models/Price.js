@@ -56,28 +56,6 @@ export class Price {
         this.itemCount2 = itemCount
     }
 
-    // setItemCount ({ itemCount, position }) {
-    //     const prop = position === 1 ? 'itemCount' : 'itemCount2'
-    //     this[prop] = itemCount
-    // }
-    //
-    // setItemId ({ itemId, position }) {
-    //     const prop = position === 1 ? 'itemId' : 'itemId2'
-    //     const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-    //     this[prop] = itemId
-    //
-    //     if (this[prop2] === 0) {
-    //         this[prop2] = 1
-    //     }
-    // }
-    //
-    // clearItemId ({ position }) {
-    //     const prop = position === 1 ? 'itemId' : 'itemId2'
-    //     const prop2 = position === 1 ? 'itemCount' : 'itemCount2'
-    //     this[prop] = 0
-    //     this[prop2] = 0
-    // }
-
     clone () {
         return new Price(this.buildOutput())
     }
