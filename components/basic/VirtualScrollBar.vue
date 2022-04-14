@@ -73,7 +73,7 @@ export default {
 
             itemsPerRow: 0,
 
-            __visibleItems: []
+            visibleItems1: []
         }
     },
     computed: {
