@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { throttle } from 'lodash'
 import IconButton from '@/components/basic/IconButton.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
@@ -70,7 +71,9 @@ export default {
             // Think of it as extra items just before the viewport starts and just after the viewport ends
             nodePadding: 20,
 
-            itemsPerRow: 0
+            itemsPerRow: 0,
+
+            __visibleItems: []
         }
     },
     computed: {
@@ -96,12 +99,11 @@ export default {
         },
 
         firstVisibleRow () {
-            console.log('First visible', Math.floor(this.scrollTop / 220))
             return Math.floor(this.scrollTop / this.rowHeight)
         },
 
         rowsPerScreen () {
-            return Math.ceil(this.rootHeight / this.rowHeight)
+            return 3 // Math.ceil(this.rootHeight / this.rowHeight)
         },
 
         maxItemsPerScreen () {
@@ -126,18 +128,24 @@ export default {
          Subset of items shown from the full array
          */
         visibleItems () {
-            console.error(
-                this.firstVisibleRow * this.itemsPerRow, '-',
-                this.firstVisibleRow * this.itemsPerRow + this.maxItemsPerScreen
-            )
+            const startRow = Math.max(0, this.firstVisibleRow - 1)
+
+            console.log('visible', startRow)
+
+            // console.error(
+            //     (this.firstVisibleRow - 1) * this.itemsPerRow, '-',
+            //     (this.firstVisibleRow + this.rowsPerScreen + 1) * this.itemsPerRow
+            // )
+
+            // console.log(startRow)
 
             return this.items.slice(
-                this.firstVisibleRow * this.itemsPerRow,
-                this.firstVisibleRow * this.itemsPerRow + this.maxItemsPerScreen
+                startRow * this.itemsPerRow,
+                startRow * this.itemsPerRow + this.maxItemsPerScreen
             )
         },
         itemCount () {
-            console.log('Items', this.items.length)
+            // console.log('Items', this.items.length)
             return this.items.length
         },
         /**
@@ -151,7 +159,8 @@ export default {
          */
         spacerStyle () {
             return {
-                transform: 'translateY(' + this.offsetY + 'px)'
+                transform: 'translateY(' + this.offsetY + 'px)',
+                willChange: 'transform'
             }
         },
         viewportStyle () {
@@ -169,6 +178,8 @@ export default {
         }
     },
     mounted () {
+        this.handleScroll = throttle(this.handleScroll, 1000 / 60, { trailing: true })
+
         this.$refs.root.addEventListener(
             'scroll',
             this.handleScroll,
@@ -192,6 +203,11 @@ export default {
         this.$refs.root?.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
+        onScroll () {
+            const scrollTop = this.$refs.root.scrollTop
+            const firstVisibleRow = Math.floor(this.scrollTop / this.rowHeight)
+        },
+
         handleScroll (event) {
             this.scrollTop = this.$refs.root.scrollTop
         },
