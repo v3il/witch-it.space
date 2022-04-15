@@ -1,143 +1,228 @@
 <template>
-  <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <div class="wit-font-size--sm">
-          {{ $t('MainMenu_EditWishlist') }}
-        </div>
-      </template>
-    </TopNavBar>
-
-    <div class="wit-profile wit-flex">
-      <div class="wit-flex wit-paddings--sm wit-flex__item--grow">
-        <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
-          <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
-            <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
-              <template #tab0>
-                {{ $t('Wishlist_MyWishlist') }}
-                <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                  {{ sortedOfferModels.length }}
-                </b-tag>
-              </template>
-
-              <template #tab1>
-                {{ $t('Wishlist_AllItems') }}
-                <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                  {{ sortedNonWishlistItems.length }}
-                </b-tag>
-              </template>
-            </Tabs>
-
-            <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
-              <WishlistFilters
-                :filters="filters"
-                :is-filters-changed="isFiltersChanged"
-                :is-sorts-changed="isSortsChanged"
-                :sorts="sorts"
-                class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
-                @filtersChanged="onFiltersChange"
-                @sortChanged="onSortChange"
-                @resetFilter="resetFilter"
-                @resetFilters="resetFilters"
-              />
-
-              <Dropdown position="bottom-end">
-                <template #trigger>
-                  <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                    <i class="mdi mdi-24px mdi-dots-grid" />
-                  </b-button>
-                </template>
-
-                <template #items>
-                  <DropdownItem @click="openMassPriceEditor">
-                    Set price
-                  </DropdownItem>
-
-                  <DropdownItem
-                    v-if="hasSelectedEntities"
-                    @click="clearSelectedEntities"
-                  >
-                    Clear selection
-                  </DropdownItem>
-
-                  <DropdownItem @click="deleteAllOffers">
-                    <span class="wit-color--danger">Remove selected offers</span>
-                  </DropdownItem>
-                </template>
-              </Dropdown>
-            </div>
-          </div>
-
-          <template v-if="isMyWishlistMode">
-            <VirtualScrollBar :items="sortedOfferModels" />
-
-            <ItemsListView v-if="0" :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-              <template #default="{ items: offers }">
-                <ItemView
-                  v-for="(offer, index) in offers"
-                  :key="offer.id"
-                  :item="offer.item"
-                  :is-selected="isOfferSelected(offer)"
-                  @clicked="toggleOffer(offer)"
-                  @shiftClick="onRangeToggle(index)"
-                >
-                  <div class="wit-offer-controls">
-                    <IconButton
-                      icon="pencil-ruler"
-                      type="primary"
-                      circle
-                      :size="24"
-                      :disabled="isOfferSelected(offer)"
-                      @click="editOffer(offer)"
-                    />
-                  </div>
-
-                  <div class="wit-offer-controls wit-offer-controls--remove">
-                    <IconButton
-                      icon="close"
-                      type="danger"
-                      circle
-                      :size="24"
-                      :disabled="isOfferSelected(offer)"
-                      @click="deleteOffer(offer)"
-                    />
-                  </div>
-                  <ItemPriceList :prices="offer.prices" />
-                </ItemView>
-              </template>
-            </ItemsListView>
+  <div class="wit-profile">
+    <div class="wit-background--content">
+      <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between">
+        <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
+          <template #tab0>
+            {{ $t('Wishlist_MyWishlist') }}
+            <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+              {{ sortedOfferModels.length }}
+            </b-tag>
           </template>
 
-          <template v-if="isNonWishlistItemsMode">
-            <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
-              <template #default="{ items }">
-                <ItemView
-                  v-for="(item, index) in items"
-                  :key="item.id"
-                  :item="item"
-                  :is-selected="isItemSelected(item)"
-                  @clicked="toggleNonWishlistItem"
-                  @shiftClick="onRangeToggle(index)"
-                >
-                  <div class="wit-offer-controls">
-                    <IconButton
-                      icon="plus-thick"
-                      type="primary"
-                      circle
-                      :size="24"
-                      :disabled="isItemSelected(item)"
-                      @click="addOffer(item)"
-                    />
-                  </div>
-                </ItemView>
-              </template>
-            </ItemsListView>
+          <template #tab1>
+            {{ $t('Wishlist_AllItems') }}
+            <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+              {{ sortedNonWishlistItems.length }}
+            </b-tag>
           </template>
+        </Tabs>
+
+        <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
+          <WishlistFilters
+            :filters="filters"
+            :is-filters-changed="isFiltersChanged"
+            :is-sorts-changed="isSortsChanged"
+            :sorts="sorts"
+            class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
+            @filtersChanged="onFiltersChange"
+            @sortChanged="onSortChange"
+            @resetFilter="resetFilter"
+            @resetFilters="resetFilters"
+          />
+
+          <Dropdown position="bottom-end">
+            <template #trigger>
+              <b-button type="is-link" class="wit-position--relative wit-more-actions">
+                <i class="mdi mdi-24px mdi-dots-grid" />
+              </b-button>
+            </template>
+
+            <template #items>
+              <DropdownItem @click="openMassPriceEditor">
+                Set price
+              </DropdownItem>
+
+              <DropdownItem
+                v-if="hasSelectedEntities"
+                @click="clearSelectedEntities"
+              >
+                Clear selection
+              </DropdownItem>
+
+              <DropdownItem @click="deleteAllOffers">
+                <span class="wit-color--danger">Remove selected offers</span>
+              </DropdownItem>
+            </template>
+          </Dropdown>
         </div>
       </div>
 
+      <template v-if="isMyWishlistMode">
+        <!--            <VirtualScrollBar :items="sortedOfferModels" />-->
+
+        <div class="wit-flex wit-flex--wrap wit-items__item-grid">
+          <ItemView
+            v-for="(offer) in slicedItems"
+            :key="offer.id"
+            :item="offer.item"
+            :is-selected="isOfferSelected(offer)"
+            @clicked="toggleOffer(offer)"
+            @shiftClick="onRangeToggle(index)"
+          >
+            <div class="wit-offer-controls">
+              <IconButton
+                icon="pencil-ruler"
+                type="primary"
+                circle
+                :size="24"
+                :disabled="isOfferSelected(offer)"
+                @click="editOffer(offer)"
+              />
+            </div>
+
+            <div class="wit-offer-controls wit-offer-controls--remove">
+              <IconButton
+                icon="close"
+                type="danger"
+                circle
+                :size="24"
+                :disabled="isOfferSelected(offer)"
+                @click="deleteOffer(offer)"
+              />
+            </div>
+            <ItemPriceList :prices="offer.prices" />
+          </ItemView>
+        </div>
+
+      <!--            <ItemsListView v-if="1" :items="sortedOfferModels" class="wit-wishlist-editor__items-list wit-flex__item&#45;&#45;grow">-->
+      <!--              <template #default="{ items: offers }">-->
+      <!--                <ItemView-->
+      <!--                              v-for="(offer, index) in offers"-->
+      <!--                              :key="offer.id"-->
+      <!--                              :item="offer.item"-->
+      <!--                              :is-selected="isOfferSelected(offer)"-->
+      <!--                              @clicked="toggleOffer(offer)"-->
+      <!--                              @shiftClick="onRangeToggle(index)"-->
+      <!--                >-->
+      <!--                              <div class="wit-offer-controls">-->
+      <!--                                <IconButton-->
+      <!--                                  icon="pencil-ruler"-->
+      <!--                                  type="primary"-->
+      <!--                                  circle-->
+      <!--                                  :size="24"-->
+      <!--                                  :disabled="isOfferSelected(offer)"-->
+      <!--                                  @click="editOffer(offer)"-->
+      <!--                                />-->
+      <!--                              </div>-->
+
+      <!--                              <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
+      <!--                                <IconButton-->
+      <!--                                  icon="close"-->
+      <!--                                  type="danger"-->
+      <!--                                  circle-->
+      <!--                                  :size="24"-->
+      <!--                                  :disabled="isOfferSelected(offer)"-->
+      <!--                                  @click="deleteOffer(offer)"-->
+      <!--                                />-->
+      <!--                              </div>-->
+      <!--                  &lt;!&ndash;                  <ItemPriceList :prices="offer.prices" />&ndash;&gt;-->
+      <!--                </ItemView>-->
+      <!--              </template>-->
+      <!--            </ItemsListView>-->
+      </template>
+
+      <template v-if="isNonWishlistItemsMode">
+        <ItemsListView :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+          <template #default="{ items }">
+            <ItemView
+              v-for="(item, index) in items"
+              :key="item.id"
+              :item="item"
+              :is-selected="isItemSelected(item)"
+              @clicked="toggleNonWishlistItem"
+              @shiftClick="onRangeToggle(index)"
+            >
+              <div class="wit-offer-controls">
+                <IconButton
+                  icon="plus-thick"
+                  type="primary"
+                  circle
+                  :size="24"
+                  :disabled="isItemSelected(item)"
+                  @click="addOffer(item)"
+                />
+              </div>
+            </ItemView>
+          </template>
+        </ItemsListView>
+      </template>
+
       <SetMassPricePopup />
       <EditOfferPopup />
+    </div>
+
+    <div class="wit-profile wit-flex">
+      <div class="wit-flex wit-paddings--sm1 wit-flex__item--grow">
+        <div class="wit-wishlist-editor__items-container wit-background--content wit-flex wit-flex--column">
+          <!--          <div class="wit-flex wit-flex&#45;&#45;wrap-reverse wit-flex&#45;&#45;justify-between">-->
+          <!--            <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">-->
+          <!--              <template #tab0>-->
+          <!--                {{ $t('Wishlist_MyWishlist') }}-->
+          <!--                <b-tag rounded class="wit-offset-left&#45;&#45;xxs wit-font-weight&#45;&#45;700">-->
+          <!--                  {{ sortedOfferModels.length }}-->
+          <!--                </b-tag>-->
+          <!--              </template>-->
+
+          <!--              <template #tab1>-->
+          <!--                {{ $t('Wishlist_AllItems') }}-->
+          <!--                <b-tag rounded class="wit-offset-left&#45;&#45;xxs wit-font-weight&#45;&#45;700">-->
+          <!--                  {{ sortedNonWishlistItems.length }}-->
+          <!--                </b-tag>-->
+          <!--              </template>-->
+          <!--            </Tabs>-->
+
+          <!--            <div class="wit-flex wit-flex&#45;&#45;align-start wit-padding-right&#45;&#45;xs">-->
+          <!--              <WishlistFilters-->
+          <!--                :filters="filters"-->
+          <!--                :is-filters-changed="isFiltersChanged"-->
+          <!--                :is-sorts-changed="isSortsChanged"-->
+          <!--                :sorts="sorts"-->
+          <!--                class="wit-wishlist-editor__items-filter wit-offset-bottom&#45;&#45;xs"-->
+          <!--                @filtersChanged="onFiltersChange"-->
+          <!--                @sortChanged="onSortChange"-->
+          <!--                @resetFilter="resetFilter"-->
+          <!--                @resetFilters="resetFilters"-->
+          <!--              />-->
+
+          <!--              <Dropdown position="bottom-end">-->
+          <!--                <template #trigger>-->
+          <!--                  <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
+          <!--                    <i class="mdi mdi-24px mdi-dots-grid" />-->
+          <!--                  </b-button>-->
+          <!--                </template>-->
+
+          <!--                <template #items>-->
+          <!--                  <DropdownItem @click="openMassPriceEditor">-->
+          <!--                    Set price-->
+          <!--                  </DropdownItem>-->
+
+          <!--                  <DropdownItem-->
+          <!--                    v-if="hasSelectedEntities"-->
+          <!--                    @click="clearSelectedEntities"-->
+          <!--                  >-->
+          <!--                    Clear selection-->
+          <!--                  </DropdownItem>-->
+
+          <!--                  <DropdownItem @click="deleteAllOffers">-->
+          <!--                    <span class="wit-color&#45;&#45;danger">Remove selected offers</span>-->
+          <!--                  </DropdownItem>-->
+          <!--                </template>-->
+          <!--              </Dropdown>-->
+          <!--            </div>-->
+          <!--          </div>-->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -193,6 +278,8 @@ export default {
     },
 
     data: () => ({
+        page: 2
+
         // existingOffers: [],
         // newOffers: [],
         // editingOffer: null,
@@ -201,7 +288,19 @@ export default {
         // selectedNewOffers: []
     }),
 
+    mounted () {
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - 500) {
+                this.page++
+            }
+        })
+    },
+
     computed: {
+        slicedItems () {
+            return this.sortedOfferModels.slice(0, this.page * 50)
+        },
+
         ...mapState(StoreModules.WISHLIST, [
             'mode',
             'filters',
@@ -633,8 +732,10 @@ export default {
 
 <style scoped lang="scss">
 .wit-profile {
-    height: calc(100vh - var(--header-height));
-    max-height: calc(100vh - var(--header-height));
+    //height: calc(100vh - var(--header-height));
+    //max-height: calc(100vh - var(--header-height));
+    padding-left: var(--offset-sm);
+    padding-right: var(--offset-sm);
 }
 
 .wit-wishlist-editor__items-container {
@@ -720,5 +821,19 @@ export default {
 
 .wit-offer-controls--remove {
     top: 48px;
+}
+
+// -----
+
+.wit-items__item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-column-gap: 16px;
+    justify-items: center;
+    grid-row-gap: 16px;
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
 }
 </style>

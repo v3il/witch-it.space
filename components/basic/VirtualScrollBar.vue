@@ -4,7 +4,7 @@
       <div ref="spacer" class="spacer" :style="spacerStyle">
         <!--        <div v-for="offer in visibleItems" :key="offer.id">-->
         <ItemView
-          v-for="offer in visibleItems"
+          v-for="offer in visibleItems1"
           :key="offer.id"
           :item="offer.item"
         >
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { throttle } from 'lodash'
+import { debounce, throttle } from 'lodash'
 import IconButton from '@/components/basic/IconButton.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
@@ -73,7 +73,10 @@ export default {
 
             itemsPerRow: 0,
 
-            visibleItems1: []
+            visibleItems1: [],
+            offset1: 0,
+            prevVisibleRow: -1,
+            lastIndex: -1
         }
     },
     computed: {
@@ -152,7 +155,8 @@ export default {
          The amount by which we need to translateY the items shown on the screen so that the scrollbar shows up correctly
          */
         offsetY () {
-            return this.startIndex * this.rowHeight
+            return this.offset1
+            // return this.startIndex * this.rowHeight
         },
         /**
          This is the direct list container, we apply a translateY to this
@@ -178,11 +182,20 @@ export default {
         }
     },
     mounted () {
-        this.handleScroll = throttle(this.handleScroll, 1000 / 60, { trailing: true })
+        this.onScroll = debounce(this.onScroll, 10, { trailing: true })
+
+        this.visibleItems1 = this.items.slice(
+            0,
+            this.maxItemsPerScreen
+        )
+
+        this.lastIndex = this.maxItemsPerScreen
+
+        this.onScroll()
 
         this.$refs.root.addEventListener(
             'scroll',
-            this.handleScroll,
+            this.onScroll,
             { passive: true }
         )
         // Calculate that initial row height dynamically
@@ -190,10 +203,10 @@ export default {
 
         this.rootHeight = this.$refs.root.getBoundingClientRect().height
 
-        this.rowHeight =
-            typeof largestHeight !== 'undefined' && largestHeight !== null
-                ? largestHeight
-                : 30
+        this.rowHeight = 274
+        // typeof largestHeight !== 'undefined' && largestHeight !== null
+        // ? largestHeight
+        // : 30
 
         this.itemsPerRow = this.calcItemsPerRow()
 
@@ -204,8 +217,44 @@ export default {
     },
     methods: {
         onScroll () {
+            const a = performance.now()
+
             const scrollTop = this.$refs.root.scrollTop
-            const firstVisibleRow = Math.floor(this.scrollTop / this.rowHeight)
+            const firstVisibleRow = Math.floor(scrollTop / this.rowHeight)
+
+            if (firstVisibleRow === this.prevVisibleRow) {
+                return
+            }
+
+            const startRow = Math.max(0, firstVisibleRow - 1)
+
+            // if (firstVisibleRow > this.prevVisibleRow) {
+            this.visibleItems1 = this.visibleItems1.slice(0, 48)
+            // this.visibleItems1.push(...this.items.slice(this.lastIndex + 1, this.lastIndex + 1 + this.itemsPerRow))
+            // this.lastIndex = this.lastIndex + 1 + this.itemsPerRow
+            // } else {
+            // console.log('Push')
+            // this.visibleItems1.push(...this.items.slice(0, this.itemsPerRow))
+            // }
+
+            // const vis = this.items.slice(
+            //     startRow * this.itemsPerRow,
+            //     startRow * this.itemsPerRow + this.maxItemsPerScreen
+            // )
+
+            // let startNode = Math.floor(scrollTop / (this.rowHeight))
+
+            // console.error(222, startNode)
+
+            // startNode = Math.max(0, startNode)
+
+            this.offset1 = scrollTop // startNode * this.rowHeight
+            // this.visibleItems1 = vis
+            this.prevVisibleRow = firstVisibleRow
+
+            // console.error('On scroll', vis.length)
+
+            console.log('start', performance.now() - a)
         },
 
         handleScroll (event) {

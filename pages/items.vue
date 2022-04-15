@@ -19,7 +19,9 @@
               :key="item.id"
               :item="item"
               @clicked="onItemSelected"
-            />
+            >
+              <ItemPriceList :prices="$options.prices" />
+            </ItemView>
           </div>
         </div>
       </div>
@@ -64,6 +66,8 @@ import ItemFilters from '@/components/items/ItemFilters'
 import { getObjectsDiff } from '@/utils'
 import ItemTags from '@/components/items/ItemTags'
 import TopNavBar from '@/components/header/TopNavBar.vue'
+import { Price } from '@/domain/models/index.js'
+import ItemPriceList from '@/components/items/ItemPriceList.vue'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -79,8 +83,14 @@ export default {
         ItemView,
         ItemFilters,
         ItemTags,
-        TopNavBar
+        TopNavBar,
+        ItemPriceList
     },
+
+    prices: [
+        Price.create({ itemId: 900, itemCount: 50, itemId2: 904, itemCount2: 50, priceType: 'fixed' }),
+        Price.create({ itemId: 900, itemCount: 50, itemId2: 904, itemCount2: 50, priceType: 'fixed' })
+    ],
 
     middleware: ['fetchUser'],
 

@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { throttle } from 'lodash'
+
 const SCROLL_OFFSET = 800
 
 export default {
@@ -38,6 +40,10 @@ export default {
             this.$el.scrollTo({ top: 0 })
             this.page = 1
         }
+    },
+
+    created () {
+        this.onScroll = throttle(this.onScroll, 1000 / 60)
     },
 
     methods: {
