@@ -50,7 +50,7 @@
         </b-button>
       </div>
 
-      <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs">
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs1">
         <b-dropdown
           :value="filterParams.events"
           :mobile-modal="false"
@@ -87,7 +87,7 @@
         </b-button>
       </div>
 
-      <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs">
+      <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs1">
         <b-dropdown
           :value="filterParams.slots"
           :mobile-modal="false"

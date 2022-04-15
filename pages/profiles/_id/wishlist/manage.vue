@@ -18,13 +18,13 @@
           </template>
         </Tabs>
 
-        <div class="wit-flex wit-flex--align-start wit-padding-right--xs">
+        <div class="wit-flex wit-flex--align-start wit-padding-right--xs1">
           <WishlistFilters
             :filters="filters"
             :is-filters-changed="isFiltersChanged"
             :is-sorts-changed="isSortsChanged"
             :sorts="sorts"
-            class="wit-wishlist-editor__items-filter wit-offset-bottom--xs"
+            class="wit-wishlist-editor__items-filter wit-offset-right--xs"
             @filtersChanged="onFiltersChange"
             @sortChanged="onSortChange"
             @resetFilter="resetFilter"
@@ -756,8 +756,8 @@ export default {
     padding: var(--offset-sm) var(--offset-xs);
 }
 
-.wit-wishlist-editor__items-filter,
-.wit-tabs-switcher,
+.wit-wishlist-editor__items-filter1,
+.wit-tabs-switcher1,
 .wit-more-actions {
     padding: 0 var(--offset-xs);
 }

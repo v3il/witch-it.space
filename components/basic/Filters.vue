@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex--justify-between1 wit-flex wit-flex--justify-end1 wit-flex--wrap">
-    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs wit-offset-right--xs">
+    <div class="wit-flex wit-filter__filter wit-offset-bottom--xs1 wit-offset-right--xs">
       <b-input
         class="wit-flex__item--grow"
         :value="filters.query"
@@ -35,7 +35,7 @@
       </Dropdown>
     </div>
 
-    <div class="wit-flex wit-offset-bottom--xs wit-position--relative" :class="{ 'wit-indicator': isSortsChanged }">
+    <div class="wit-flex wit-offset-bottom--xs1 wit-position--relative" :class="{ 'wit-indicator': isSortsChanged }">
       <slot name="sorting-dropdown" :updateSortBy="updateSortBy" />
 
       <b-button class="wit-filter__order-button wit-split-part--right" @click="toggleOrder">
