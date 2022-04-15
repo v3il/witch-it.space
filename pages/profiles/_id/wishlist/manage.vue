@@ -743,7 +743,7 @@ export default {
     top: 0;
     padding: var(--offset-sm);
     background-color: inherit;
-    z-index: 10000;
+    z-index: 4;
 }
 
 .wit-wishlist__content {

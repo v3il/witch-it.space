@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown ref="popover" :position="popoverPosition" append-to-body class="wit-dropdown--offset-xxs">
+  <b-dropdown ref="popover" :position="popoverPosition" append-to-body1 class="wit-dropdown--offset-xxs">
     <template #trigger>
       <slot name="trigger" />
     </template>
