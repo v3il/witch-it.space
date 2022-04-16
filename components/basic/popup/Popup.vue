@@ -5,6 +5,7 @@
     :content-style="popupStyles"
     :name="popupId"
     :click-to-close="false"
+    :lock-scroll="false"
     @before-open="beforeOpen"
   >
     <div class="wit-popup-header wit-paddings--sm">

@@ -27,13 +27,10 @@ export default {
 .wit-item-price {
     padding: var(--offset-xxs);
     background-color: var(--price-bg);
+    border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
 
     &:not(:last-child) {
         margin-bottom: 2px;
-    }
-
-    &:nth-child(2) {
-        border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
     }
 }
 </style>

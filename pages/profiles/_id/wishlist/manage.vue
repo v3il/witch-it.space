@@ -1,6 +1,6 @@
 <template>
   <div class="wit-wishlist">
-    <div class="wit-background--content">
+    <div class="wit-wishlist__background">
       <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
         <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
           <template #tab0>
@@ -565,6 +565,11 @@ export default {
         padding: 0 var(--offset-sm);
     }
 
+    .wit-wishlist__background {
+        background-color: var(--content-bg);
+        min-height: 100vh;
+    }
+
     .wit-wishlist__header {
         position: sticky;
         top: 0;
@@ -575,6 +580,7 @@ export default {
 
     .wit-wishlist__content {
         padding: 0 var(--offset-sm) var(--offset-sm);
+        height: 100%;
     }
 
     .wit-more-actions {

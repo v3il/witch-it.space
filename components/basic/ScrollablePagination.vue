@@ -1,11 +1,11 @@
 <template>
-  <div class="wit-overflow--auto wit-block--full-height">
+  <div>
     <slot :visibleItems="visibleItems" />
   </div>
 </template>
 
 <script>
-const SCROLL_OFFSET = 800
+const SCROLL_OFFSET = 500
 
 export default {
     name: 'ScrollablePagination',
