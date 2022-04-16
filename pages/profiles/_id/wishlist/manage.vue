@@ -68,7 +68,7 @@
             add-title
             add-border
             @clicked="toggleOffer(offer)"
-            @shiftClick="onRangeToggle(index)"
+            @shiftClick="onOffersRangeToggle(index)"
           >
             <div class="wit-offer-controls">
               <IconButton
@@ -106,7 +106,7 @@
             add-title
             add-border
             @clicked="toggleNonWishlistItem"
-            @shiftClick="onRangeToggle(index)"
+            @shiftClick="onItemsRangeToggle(index)"
           >
             <div class="wit-offer-controls">
               <IconButton
@@ -304,27 +304,51 @@ export default {
 
         // =============================
 
-        onRangeToggle (clickedItemIndex) {
-            const offers = this.isNonWishlistItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+        onOffersRangeToggle (clickedItemIndex) {
+            const offers = this.sortedOfferModels
 
             for (let i = clickedItemIndex - 1; i >= 0; i--) {
-                if (this.isEditingOffer(offers[i])) {
-                    return this.toggleRange({ from: i, to: clickedItemIndex })
+                if (this.isOfferSelected(offers[i])) {
+                    return this.toggleOffersRange({ from: i + 1, to: clickedItemIndex })
                 }
             }
 
             for (let i = clickedItemIndex + 1; i < offers.length; i++) {
-                if (this.isEditingOffer(offers[i])) {
-                    return this.toggleRange({ from: clickedItemIndex, to: i })
+                if (this.isOfferSelected(offers[i])) {
+                    return this.toggleOffersRange({ from: clickedItemIndex, to: i - 1 })
                 }
             }
         },
 
-        toggleRange ({ from, to }) {
-            const offers = this.isNonWishlistItemsMode ? this.sortedNewOffers : this.sortedExistingOffers
+        toggleOffersRange ({ from, to }) {
+            const offers = this.sortedOfferModels
 
             for (let index = from; index <= to; index++) {
-                this.addToEditing(offers[index])
+                this.toggleOffer(offers[index])
+            }
+        },
+
+        onItemsRangeToggle (clickedItemIndex) {
+            const items = this.sortedNonWishlistItems
+
+            for (let i = clickedItemIndex - 1; i >= 0; i--) {
+                if (this.isItemSelected(items[i])) {
+                    return this.toggleItemsRange({ from: i + 1, to: clickedItemIndex })
+                }
+            }
+
+            for (let i = clickedItemIndex + 1; i < items.length; i++) {
+                if (this.isItemSelected(items[i])) {
+                    return this.toggleItemsRange({ from: clickedItemIndex, to: i - 1 })
+                }
+            }
+        },
+
+        toggleItemsRange ({ from, to }) {
+            const items = this.sortedNonWishlistItems
+
+            for (let index = from; index <= to; index++) {
+                this.toggleNonWishlistItem(items[index])
             }
         }
     }
