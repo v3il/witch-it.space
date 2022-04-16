@@ -1,6 +1,5 @@
 <template>
-  <!--  <div>-->
-  <ScrollablePagination v-if="items.length" :items="items" :items-per-page="150">
+  <ScrollablePagination v-if="items.length" :items="items">
     <template #default="{ visibleItems }">
       <Grid cell-width="130px" mobile-cell-width="130px">
         <slot :items="visibleItems" />
@@ -9,7 +8,6 @@
   </ScrollablePagination>
 
   <EmptyState v-else icon="view-grid" :text="$t('Items_NoItems')" class="wit-padding-top--sm" />
-<!--  </div>-->
 </template>
 
 <script>

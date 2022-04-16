@@ -1,12 +1,10 @@
 <template>
-  <div class="scrollable-pagination wit-block--full-height" @scroll.passive="onScroll">
+  <div class="wit-overflow--auto wit-block--full-height">
     <slot :visibleItems="visibleItems" />
   </div>
 </template>
 
 <script>
-import { throttle } from 'lodash'
-
 const SCROLL_OFFSET = 800
 
 export default {
@@ -37,31 +35,25 @@ export default {
 
     watch: {
         items () {
-            this.$el.scrollTo({ top: 0 })
+            window.scrollTo({ top: 0 })
             this.page = 1
         }
     },
 
-    created () {
-        this.onScroll = throttle(this.onScroll, 1000 / 60)
+    mounted () {
+        window.addEventListener('scroll', this.onScroll, { passive: true })
+    },
+
+    beforeDestroy () {
+        window.removeEventListener('scroll', this.onScroll)
     },
 
     methods: {
         onScroll () {
-            if (this.$el.scrollTop >= (this.$el.scrollHeight - this.$el.offsetHeight) - SCROLL_OFFSET) {
-                this.onScrollToBottom()
+            if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - SCROLL_OFFSET) {
+                this.page++
             }
-        },
-
-        onScrollToBottom () {
-            this.page++
         }
     }
 }
 </script>
-
-<style scoped lang="scss">
-.scrollable-pagination {
-    overflow-y: auto;
-}
-</style>

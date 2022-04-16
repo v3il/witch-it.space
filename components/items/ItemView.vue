@@ -1,7 +1,7 @@
 <template>
   <div
     class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width"
-    :class="itemClass"
+    :class="itemClasses"
     @click.exact="onItemClicked"
     @click.shift="onShiftClick"
   >
@@ -17,7 +17,7 @@
         x{{ itemCount }}
       </div>
 
-      <p v-if="isTitleShown" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
+      <p v-if="addTitle" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
         {{ item.name }}
       </p>
     </div>
@@ -50,19 +50,31 @@ export default {
             type: Number
         },
 
-        isTitleShown: {
-            required: false,
-            type: Boolean,
-            default: true
-        },
-
-        isSelected: {
+        addTooltip: {
             required: false,
             type: Boolean,
             default: false
         },
 
-        addTooltip: {
+        addBorder: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        addIndicator: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        addTitle: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        isSelected: {
             required: false,
             type: Boolean,
             default: false
@@ -70,8 +82,14 @@ export default {
     },
 
     computed: {
-        itemClass () {
-            return `wit-item-view--${this.item.rarity}`
+        itemClasses () {
+            return [
+                `wit-item-view--${this.item.rarity}`,
+                {
+                    'wit-item-view--bordered': this.addBorder,
+                    'wit-item-view--indicator': this.addIndicator
+                }
+            ]
         },
 
         itemPreviewURL () {
@@ -114,7 +132,6 @@ export default {
     --bg-color: transparent;
     --color: #2e3648;
 
-    border: 2px solid var(--bg-color);
     border-radius: var(--offset-xxs);
 
     .wit-item-view__counter {
@@ -158,6 +175,10 @@ export default {
     }
 }
 
+.wit-item-view__container.wit-item-view--bordered {
+    border: 1px solid var(--bg-color);
+}
+
 .wit-item-view__title {
     padding: 0 var(--offset-xs);
     height: 36px;
@@ -173,8 +194,12 @@ export default {
     width: 100%;
     max-width: 100%;
     max-height: 100%;
-    border-radius: var(--offset-xxs);
     aspect-ratio: 1;
     min-height: 25px;
+    border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
+
+    &:last-child {
+        border-radius: var(--offset-xxs);
+    }
 }
 </style>

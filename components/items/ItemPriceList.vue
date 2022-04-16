@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-padding-left--xxs1 wit-padding-right--xxs1">
+  <div>
     <ItemPrice v-for="price in prices" :key="price.id" :price="price" class="wit-item-price" />
   </div>
 </template>
@@ -25,18 +25,15 @@ export default {
 
 <style scoped lang="scss">
 .wit-item-price {
-    padding: 5px var(--offset-xxs);
-    background-color: #3a445b;
-    //border-radius: 4px;
-    margin-bottom: 2px;
+    padding: var(--offset-xxs);
+    background-color: var(--price-bg);
 
-    //&:not(:first-child) {
-    //    padding-top: var(--offset-xs);
-    //}
+    &:not(:last-child) {
+        margin-bottom: 2px;
+    }
 
-    &:last-child {
-        margin-bottom: 0;
-        border-radius: 0 0 4px 4px;
+    &:nth-child(2) {
+        border-radius: 0 0 var(--offset-xxs) var(--offset-xxs);
     }
 }
 </style>
