@@ -62,12 +62,6 @@ export default {
             default: false
         },
 
-        addIndicator: {
-            required: false,
-            type: Boolean,
-            default: false
-        },
-
         addTitle: {
             required: false,
             type: Boolean,
@@ -86,8 +80,7 @@ export default {
             return [
                 `wit-item-view--${this.item.rarity}`,
                 {
-                    'wit-item-view--bordered': this.addBorder,
-                    'wit-item-view--indicator': this.addIndicator
+                    'wit-item-view--bordered': this.addBorder
                 }
             ]
         },

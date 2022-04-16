@@ -211,7 +211,7 @@ export const ru = {
     Wishlist_TopTabs_Orders: 'Предложения',
     Wishlist_TopTabs_Wishlist: 'Желаемое',
     Wishlist_MyWishlist: 'Мой вишлист',
-    Wishlist_AllItems: 'Все предметы',
+    Wishlist_OtherItems: 'Прочие предметы',
     Wishlist_AlreadyInWishlist: 'В списке желаемого',
     Wishlist_SelectItemToEdit: 'Выберите предмет для добавления<br>в список желаемого',
     Wishlist_RemoveFromWishlist: 'Убрать из желаемого',

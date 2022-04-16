@@ -11,20 +11,20 @@
           </template>
 
           <template #tab1>
-            {{ $t('Wishlist_AllItems') }}
+            {{ $t('Wishlist_OtherItems') }}
             <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
               {{ sortedNonWishlistItems.length }}
             </b-tag>
           </template>
         </Tabs>
 
-        <div class="wit-flex wit-flex--align-start wit-padding-right--xs1">
+        <div class="wit-flex">
           <WishlistFilters
             :filters="filters"
             :is-filters-changed="isFiltersChanged"
             :is-sorts-changed="isSortsChanged"
             :sorts="sorts"
-            class="wit-wishlist-editor__items-filter wit-offset-right--xs"
+            class="wit-offset-right--xs"
             @filtersChanged="onFiltersChange"
             @sortChanged="onSortChange"
             @resetFilter="resetFilter"
@@ -66,7 +66,6 @@
             :item="offer.item"
             :is-selected="isOfferSelected(offer)"
             add-title
-            add-indicator
             add-border
             @clicked="toggleOffer(offer)"
             @shiftClick="onRangeToggle(index)"
@@ -97,13 +96,15 @@
         </template>
       </ItemsListView>
 
-      <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist-editor__items-list wit-flex__item--grow">
+      <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__content">
         <template #default="{ items }">
           <ItemView
             v-for="(item, index) in items"
             :key="item.id"
             :item="item"
             :is-selected="isItemSelected(item)"
+            add-title
+            add-border
             @clicked="toggleNonWishlistItem"
             @shiftClick="onRangeToggle(index)"
           >
