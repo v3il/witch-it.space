@@ -12,44 +12,44 @@
   >
     <template #default="{ filterParams, update, reset }">
       <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs">
-        <RaritiesSelector :selected-rarities="filterParams.rarities" />
+        <RaritiesSelector :selected-rarities="filterParams.rarities" @update="update({ rarities: $event })" @reset="reset('rarities')" />
 
-        <b-dropdown
-          :value="filterParams.rarities"
-          :mobile-modal="false"
-          multiple
-          aria-role="list"
-          @input="update({ rarities: $event })"
-        >
-          <template #trigger>
-            <b-button
-              type="is-primary"
-              icon-right="menu-down"
-            >
-              <div v-if="filterParams.rarities.length" class="wit-flex wit-flex--align-center">
-                <p class="wit-offset-right--xs wit-font-size--xxs">
-                  {{ $t('Items_Filters_Rarity') }}:
-                </p>
-                <div v-for="rarity in filterParams.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right--xxs" :class="`wit-rarity-indicator--${rarity}`" />
-              </div>
+        <!--        <b-dropdown-->
+        <!--          :value="filterParams.rarities"-->
+        <!--          :mobile-modal="false"-->
+        <!--          multiple-->
+        <!--          aria-role="list"-->
+        <!--          @input="update({ rarities: $event })"-->
+        <!--        >-->
+        <!--          <template #trigger>-->
+        <!--            <b-button-->
+        <!--              type="is-primary"-->
+        <!--              icon-right="menu-down"-->
+        <!--            >-->
+        <!--              <div v-if="filterParams.rarities.length" class="wit-flex wit-flex&#45;&#45;align-center">-->
+        <!--                <p class="wit-offset-right&#45;&#45;xs wit-font-size&#45;&#45;xxs">-->
+        <!--                  {{ $t('Items_Filters_Rarity') }}:-->
+        <!--                </p>-->
+        <!--                <div v-for="rarity in filterParams.rarities" :key="rarity" class="wit-rarity-indicator wit-offset-right&#45;&#45;xxs" :class="`wit-rarity-indicator&#45;&#45;${rarity}`" />-->
+        <!--              </div>-->
 
-              <span v-else>
-                {{ $t('Items_Filters_AnyRarity') }}
-              </span>
-            </b-button>
-          </template>
+        <!--              <span v-else>-->
+        <!--                {{ $t('Items_Filters_AnyRarity') }}-->
+        <!--              </span>-->
+        <!--            </b-button>-->
+        <!--          </template>-->
 
-          <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">
-            <div class="wit-flex wit-flex--align-center">
-              <div class="wit-rarity-indicator wit-offset-right--xs" :class="`wit-rarity-indicator--${rarity.value}`" />
-              <span>{{ rarity.label }}</span>
-            </div>
-          </b-dropdown-item>
-        </b-dropdown>
+        <!--          <b-dropdown-item v-for="rarity in $options.rarities" :key="rarity.value" :value="rarity.value">-->
+        <!--            <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+        <!--              <div class="wit-rarity-indicator wit-offset-right&#45;&#45;xs" :class="`wit-rarity-indicator&#45;&#45;${rarity.value}`" />-->
+        <!--              <span>{{ rarity.label }}</span>-->
+        <!--            </div>-->
+        <!--          </b-dropdown-item>-->
+        <!--        </b-dropdown>-->
 
-        <b-button type="is-ghost" size="is-small" @click="reset('rarities')">
-          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
-        </b-button>
+        <!--        <b-button type="is-ghost" size="is-small" @click="reset('rarities')">-->
+        <!--          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />-->
+        <!--        </b-button>-->
       </div>
 
       <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs1">

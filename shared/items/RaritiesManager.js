@@ -23,4 +23,8 @@ export class RaritiesManager {
     getTradeable () {
         return this.#rarities.filter(rarity => rarity.isTradeable)
     }
+
+    isLightRarity (rarity) {
+        return [Rarity.RARE, Rarity.UNCOMMON].includes(rarity.value)
+    }
 }

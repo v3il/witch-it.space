@@ -1,12 +1,19 @@
 <template>
   <div>
-    <h3 class="wit-offset-bottom--xs">
-      Rarities
+    <h3 class="wit-offset-bottom--xs wit-flex wit-flex--align-baseline">
+      <span class="wit-font-size--sm">Rarities</span>
+      <p class="wit-color--muted wit-offset-left--xxs">
+        ({{ selectedRaritiesLength }}/{{ $options.rarities.length }})
+      </p>
+
+      <b-button type="is-ghost" size="is-small" @click="$emit('reset')">
+        <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
+      </b-button>
     </h3>
 
     <ul class="wis-rarities wit-flex">
       <li v-for="rarity in $options.rarities" :key="rarity.value" class="wis-rarities__item">
-        <b-button type="is-primary" class="wis-rarities__button" :class="getButtonClass(rarity)" />
+        <b-button type="is-primary" class="wis-rarities__button" :class="getButtonClass(rarity)" @click="toggleRarity(rarity)" />
       </li>
     </ul>
   </div>
@@ -27,12 +34,33 @@ export default {
         }
     },
 
+    computed: {
+        selectedRaritiesLength () {
+            return this.selectedRarities.length > 0 ? this.selectedRarities.length : this.$options.rarities.length
+        }
+    },
+
     methods: {
         getButtonClass (rarity) {
             return [
                 `wis-rarities__button--${rarity.value}`,
-                { active: this.selectedRarities.includes(rarity.value) }
+                {
+                    active: this.isSelectedRarity(rarity),
+                    light: raritiesManager.isLightRarity(rarity)
+                }
             ]
+        },
+
+        isSelectedRarity (rarity) {
+            return this.selectedRarities.includes(rarity.value)
+        },
+
+        toggleRarity (rarity) {
+            if (!this.isSelectedRarity(rarity)) {
+                return this.$emit('update', [...this.selectedRarities, rarity.value])
+            }
+
+            this.$emit('update', this.selectedRarities.filter(rarityValue => rarityValue !== rarity.value))
         }
     }
 }
@@ -53,7 +81,7 @@ export default {
     border-radius: 50%;
     padding: 0;
     background-color: var(--bg-color);
-    border: 2px solid var(--bg-color);
+    box-shadow: none !important;
 
     &:hover {
         transform: none;
@@ -61,8 +89,16 @@ export default {
         opacity: 0.8;
     }
 
-    &.active {
-        border-color: var(--light-green);
+    &.active::after {
+        content: "✓";
+        color: var(--white);
+        font-weight: bold;
+    }
+
+    &.light.active::after {
+        content: "✓";
+        color: var(--black);
+        font-weight: bold;
     }
 }
 
