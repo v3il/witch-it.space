@@ -302,8 +302,6 @@ export default {
             })
         },
 
-        // =============================
-
         onOffersRangeToggle (clickedItemIndex) {
             const offers = this.sortedOfferModels
 

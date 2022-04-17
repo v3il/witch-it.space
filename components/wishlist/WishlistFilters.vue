@@ -12,6 +12,8 @@
   >
     <template #default="{ filterParams, update, reset }">
       <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs">
+        <RaritiesSelector :selected-rarities="filterParams.rarities" />
+
         <b-dropdown
           :value="filterParams.rarities"
           :mobile-modal="false"
@@ -159,6 +161,7 @@ import Filters from '@/components/basic/Filters.vue'
 import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
+import RaritiesSelector from '@/components/basic/RaritiesSelector.vue'
 
 export default {
     name: 'WishlistFilters',
@@ -170,7 +173,8 @@ export default {
     components: {
         Filters,
         DropdownItem,
-        Dropdown
+        Dropdown,
+        RaritiesSelector
     },
 
     props: {
