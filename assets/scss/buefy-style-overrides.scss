@@ -73,11 +73,6 @@ body {
     & .dropdown-trigger button {
         width: 100%;
     }
-
-    .dropdown-menu {
-        left: 0;
-        right: auto;
-    }
 }
 
 .dropdown-item {
@@ -186,4 +181,8 @@ strong {
 
 .tag > span {
     line-height: 15px;
+}
+
+.tag.is-primary {
+    background-color: var(--primary) !important;
 }

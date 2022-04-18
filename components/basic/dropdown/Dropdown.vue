@@ -20,8 +20,9 @@ export default {
 
     props: {
         position: {
-            required: true,
-            type: String
+            required: false,
+            type: String,
+            default: null
         },
 
         hideOnItemClick: {

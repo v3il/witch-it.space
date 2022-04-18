@@ -1,16 +1,18 @@
 <template>
   <div>
-    <h3 class="wit-offset-bottom--xs wit-flex wit-flex--align-baseline">
-      {{ $t('Items_Filters_Rarity') }}
+    <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center">
+      <h3>
+        {{ $t('Items_Filters_Rarity') }}
+      </h3>
 
       <p class="wit-color--muted wit-offset-left--xxs">
         ({{ selectedRaritiesLength }}/{{ $options.rarities.length }})
       </p>
 
-      <b-button type="is-ghost" size="is-small" @click="$emit('reset')">
-        <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
+      <b-button type="is-ghost" size="is-small" class="wit-offset-left--auto" @click="$emit('reset')">
+        <b-icon size="is-small" class="is-size-5 wit-color--muted" icon="undo-variant" />
       </b-button>
-    </h3>
+    </div>
 
     <ul class="wis-rarities wit-flex">
       <li v-for="rarity in $options.rarities" :key="rarity.value" class="wis-rarities__item">

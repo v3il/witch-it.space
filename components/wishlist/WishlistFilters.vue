@@ -134,8 +134,8 @@ import Filters from '@/components/basic/Filters.vue'
 import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
-import RaritiesSelector from '@/components/basic/RaritiesSelector.vue'
-import EventsSelector from '@/components/basic/EventsSelector.vue'
+import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
+import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 
 export default {
     name: 'WishlistFilters',

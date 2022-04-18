@@ -35,6 +35,7 @@ const updateUserQuests = async (request, response) => {
         const questsData = await questsService.getUserQuestsData(user)
         response.send(questsData)
     } catch (error) {
+        console.error(error)
         throw new BadRequest(request.$t('Error_QuestsReplacingFailed'))
     }
 }
@@ -78,6 +79,7 @@ const replaceUserQuest = async (request, response) => {
         const questsData = await questsService.getUserQuestsData(user)
         response.send({ ...questsData, isSuccess: true })
     } catch (error) {
+        console.error(error)
         throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
     }
 }
@@ -121,6 +123,7 @@ const finalizeUserQuest = async (request, response) => {
         const questsData = await questsService.getUserQuestsData(user)
         response.send({ ...questsData, isSuccess: true })
     } catch (error) {
+        console.error(error)
         throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
     }
 }
