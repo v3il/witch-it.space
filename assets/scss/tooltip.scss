@@ -125,7 +125,8 @@ $popover-border: #3a425a;
         }
     }
 
-    li:hover {
+    li:hover,
+    li.active {
         background-color: var(--body-bg);
 
         button {

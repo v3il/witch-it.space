@@ -67,6 +67,19 @@ body {
     padding-bottom: var(--offset-xxs);
 }
 
+.dropdown.expanded {
+    &,
+    & .dropdown-trigger,
+    & .dropdown-trigger button {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+}
+
 .dropdown-item {
     font-size: 1rem;
 }

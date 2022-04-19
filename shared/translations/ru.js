@@ -197,6 +197,7 @@ export const ru = {
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
     Items_Filters_AnyRarity: 'Любая редкость',
     Items_Filters_Rarity: 'Редкость',
+    Items_Filters_Events: 'Событие',
     Items_Filters_EventsSelected: 'Событий выбрано: %s',
     Items_Filters_AnyEvent: 'Любое событие',
     Items_Filters_SlotsSelected: 'Слотов выбрано: %s',

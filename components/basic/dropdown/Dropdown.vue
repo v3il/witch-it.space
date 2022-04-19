@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown ref="popover" :position="popoverPosition" append-to-body1 class="wit-dropdown--offset-xxs">
+  <b-dropdown ref="popover" :position="popoverPosition" v-bind="$attrs" class="wit-dropdown--offset-xxs" :class="popoverClass">
     <template #trigger>
       <slot name="trigger" />
     </template>
@@ -22,18 +22,34 @@ export default {
         position: {
             required: true,
             type: String
+        },
+
+        hideOnItemClick: {
+            required: false,
+            type: Boolean,
+            default: true
+        },
+
+        expanded: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
 
     computed: {
         popoverPosition () {
             return this.position === 'start' ? 'is-bottom-right' : 'is-bottom-left'
+        },
+
+        popoverClass () {
+            return { expanded: this.expanded }
         }
     },
 
     methods: {
         onClick ({ target }) {
-            if (!target.closest('li')) {
+            if (!target.closest('li') || !this.hideOnItemClick) {
                 return
             }
 
