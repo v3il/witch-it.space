@@ -1,7 +1,8 @@
 <template>
   <div>
     <h3 class="wit-offset-bottom--xs wit-flex wit-flex--align-baseline">
-      <span class="wit-font-size--sm">Rarities</span>
+      {{ $t('Items_Filters_Rarity') }}
+
       <p class="wit-color--muted wit-offset-left--xxs">
         ({{ selectedRaritiesLength }}/{{ $options.rarities.length }})
       </p>

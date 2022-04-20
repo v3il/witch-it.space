@@ -94,7 +94,7 @@ export default {
     },
 
     created () {
-        this.update = debounce(this.update, 200)
+        // this.update = debounce(this.update, 200)
     },
 
     methods: {
