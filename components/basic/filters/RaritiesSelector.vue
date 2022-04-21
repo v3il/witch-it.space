@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center">
-      <h3>
+      <h3 class="wit-font-size--xsplus">
         {{ $t('Items_Filters_Rarity') }}
       </h3>
 
-      <p class="wit-color--muted wit-offset-left--xxs">
+      <p v-if="!isAllRaritiesSelected" class="wit-color--muted wit-offset-left--xs">
         ({{ selectedRaritiesLength }}/{{ $options.rarities.length }})
       </p>
 
@@ -40,6 +40,10 @@ export default {
     computed: {
         selectedRaritiesLength () {
             return this.selectedRarities.length > 0 ? this.selectedRarities.length : this.$options.rarities.length
+        },
+
+        isAllRaritiesSelected () {
+            return this.selectedRaritiesLength === this.$options.rarities.length
         }
     },
 

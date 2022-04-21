@@ -3,11 +3,11 @@
     <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center wit-flex--justify-between">
       <div class="wit-flex wit-flex--align-baseline">
         <h3 class="wit-font-size--xsplus">
-          {{ $t('Items_Filters_Events') }}
+          {{ $t('Items_Filters_Slots') }}
         </h3>
 
-        <p v-if="!isAllEventsSelected" class="wit-color--muted wit-offset-left--xs">
-          ({{ selectedEventsLength }}/{{ $options.events.length }})
+        <p v-if="!isAllSlotsSelected" class="wit-color--muted wit-offset-left--xs">
+          ({{ selectedSlotsLength }}/{{ $options.slots.length }})
         </p>
       </div>
 
@@ -27,13 +27,13 @@
 
           <template #items>
             <DropdownItem
-              v-for="event in $options.events"
-              :key="event.value"
-              :value="event.value"
-              :class="{ active: isSelectedEvent(event) }"
-              @click="toggleEvent(event)"
+              v-for="slot in $options.slots"
+              :key="slot.value"
+              :value="slot.value"
+              :class="{ active: isSelectedSlot(slot) }"
+              @click="toggleSlot(slot)"
             >
-              <span>{{ event.label }}</span>
+              <span>{{ slot.label }}</span>
             </DropdownItem>
           </template>
         </Dropdown>
@@ -45,20 +45,20 @@
     </div>
 
     <b-taglist>
-      <b-tag v-if="isAllEventsSelected" type="is-primary">
-        {{ $t('Items_Filters_AnyEvent') }}
+      <b-tag v-if="isAllSlotsSelected" type="is-primary">
+        {{ $t('Items_Filters_AnySlot') }}
       </b-tag>
 
       <template v-else>
         <b-tag
-          v-for="event in selectedEventsData"
-          :key="event.value"
+          v-for="slot in selectedSlotsData"
+          :key="slot.value"
           closable
           type="is-primary"
           class="wit-background--primary"
-          @close.stop="toggleEvent(event)"
+          @close.stop="toggleSlot(slot)"
         >
-          {{ event.label }}
+          {{ slot.label }}
         </b-tag>
       </template>
     </b-taglist>
@@ -68,12 +68,12 @@
 <script>
 import Dropdown from '../dropdown/Dropdown.vue'
 import DropdownItem from '../dropdown/DropdownItem.vue'
-import { eventsManager } from '@/shared/index.js'
+import { slotsManager } from '@/shared/index.js'
 
 export default {
     name: 'EventsSelector',
 
-    events: eventsManager.getAll(),
+    slots: slotsManager.getAll(),
 
     components: {
         Dropdown,
@@ -81,37 +81,37 @@ export default {
     },
 
     props: {
-        selectedEvents: {
+        selectedSlots: {
             required: true,
             type: Array
         }
     },
 
     computed: {
-        selectedEventsLength () {
-            return this.selectedEvents.length > 0 ? this.selectedEvents.length : this.$options.events.length
+        selectedSlotsLength () {
+            return this.selectedSlots.length > 0 ? this.selectedSlots.length : this.$options.slots.length
         },
 
-        isAllEventsSelected () {
-            return this.selectedEventsLength === this.$options.events.length
+        isAllSlotsSelected () {
+            return this.selectedSlotsLength === this.$options.slots.length
         },
 
-        selectedEventsData () {
-            return this.selectedEvents.map(eventId => eventsManager.find(eventId))
+        selectedSlotsData () {
+            return this.selectedSlots.map(slotId => slotsManager.find(slotId))
         }
     },
 
     methods: {
-        isSelectedEvent (event) {
-            return this.selectedEvents.includes(event.value)
+        isSelectedSlot (slot) {
+            return this.selectedSlots.includes(slot.value)
         },
 
-        toggleEvent (event) {
-            if (!this.isSelectedEvent(event)) {
-                return this.$emit('update', [...this.selectedEvents, event.value])
+        toggleSlot (slot) {
+            if (!this.isSelectedSlot(slot)) {
+                return this.$emit('update', [...this.selectedSlots, slot.value])
             }
 
-            this.$emit('update', this.selectedEvents.filter(eventValue => eventValue !== event.value))
+            this.$emit('update', this.selectedSlots.filter(slotValue => slotValue !== slot.value))
         }
     }
 }

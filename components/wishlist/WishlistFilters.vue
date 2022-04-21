@@ -13,91 +13,24 @@
     <template #default="{ filterParams, update, reset }">
       <RaritiesSelector
         :selected-rarities="filterParams.rarities"
-        class="wit-offset-bottom--xs"
+        class="wit-offset-bottom--sm"
         @update="update({ rarities: $event })"
         @reset="reset('rarities')"
       />
 
       <EventsSelector
         :selected-events="filterParams.events"
-        class="wit-offset-bottom--xs"
+        class="wit-offset-bottom--sm"
         @update="update({ events: $event })"
         @reset="reset('events')"
       />
 
-      <!--      <div class="wit-flex wit-flex&#45;&#45;align-center wit-offset-right&#45;&#45;sm wit-offset-bottom&#45;&#45;xs1">-->
-      <!--        <b-dropdown-->
-      <!--          :value="filterParams.events"-->
-      <!--          :mobile-modal="false"-->
-      <!--          multiple-->
-      <!--          aria-role="list"-->
-      <!--          scrollable-->
-      <!--          :max-height="250"-->
-      <!--          @input="update({ events: $event })"-->
-      <!--        >-->
-      <!--          <template #trigger>-->
-      <!--            <b-button-->
-      <!--              type="is-primary"-->
-      <!--              icon-right="menu-down"-->
-      <!--            >-->
-      <!--              <div v-if="filterParams.events.length" class="wit-flex wit-flex&#45;&#45;align-center">-->
-      <!--                <p class="wit-offset-right&#45;&#45;xs wit-font-size&#45;&#45;xxs">-->
-      <!--                  {{ $t('Items_Filters_EventsSelected', [filterParams.events.length]) }}-->
-      <!--                </p>-->
-      <!--              </div>-->
-
-      <!--              <span v-else>-->
-      <!--                {{ $t('Items_Filters_AnyEvent') }}-->
-      <!--              </span>-->
-      <!--            </b-button>-->
-      <!--          </template>-->
-
-      <!--          <b-dropdown-item v-for="event in $options.events" :key="event.value" :value="event.value">-->
-      <!--            <span>{{ event.label }}</span>-->
-      <!--          </b-dropdown-item>-->
-      <!--        </b-dropdown>-->
-
-      <!--        <b-button type="is-ghost" size="is-small" @click="reset('events')">-->
-      <!--          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />-->
-      <!--        </b-button>-->
-      <!--      </div>-->
-
-      <div class="wit-flex wit-flex--align-center wit-offset-right--sm wit-offset-bottom--xs1">
-        <b-dropdown
-          :value="filterParams.slots"
-          :mobile-modal="false"
-          multiple
-          aria-role="list"
-          scrollable
-          :max-height="250"
-          @input="update({ slots: $event })"
-        >
-          <template #trigger>
-            <b-button
-              type="is-primary"
-              icon-right="menu-down"
-            >
-              <div v-if="filterParams.slots.length" class="wit-flex wit-flex--align-center">
-                <p class="wit-offset-right--xs wit-font-size--xxs">
-                  {{ $t('Items_Filters_SlotsSelected', [filterParams.slots.length]) }}
-                </p>
-              </div>
-
-              <span v-else>
-                {{ $t('Items_Filters_AnySlot') }}
-              </span>
-            </b-button>
-          </template>
-
-          <b-dropdown-item v-for="slot in $options.slots" :key="slot.value" :value="slot.value">
-            <span>{{ slot.label }}</span>
-          </b-dropdown-item>
-        </b-dropdown>
-
-        <b-button type="is-ghost" size="is-small" @click="reset('slots')">
-          <b-icon size="is-small" class="is-size-5" icon="undo-variant" />
-        </b-button>
-      </div>
+      <SlotsSelector
+        :selected-slots="filterParams.slots"
+        class="wit-offset-bottom--sm"
+        @update="update({ slots: $event })"
+        @reset="reset('slots')"
+      />
 
       <div>
         <b-switch :value="filterParams.hideRecipes" @input="update({ hideRecipes: $event })">
@@ -136,6 +69,7 @@ import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
+import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 
 export default {
     name: 'WishlistFilters',
@@ -149,7 +83,8 @@ export default {
         DropdownItem,
         Dropdown,
         RaritiesSelector,
-        EventsSelector
+        EventsSelector,
+        SlotsSelector
     },
 
     props: {

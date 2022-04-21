@@ -201,6 +201,7 @@ export const ru = {
     Items_Filters_EventsSelected: 'Событий выбрано: %s',
     Items_Filters_AnyEvent: 'Любое событие',
     Items_Filters_SlotsSelected: 'Слотов выбрано: %s',
+    Items_Filters_Slots: 'Слот',
     Items_Filters_AnySlot: 'Любой слот',
     Items_Filters_HideRecipes: 'Скрыть рецепты',
     Items_Sort_Name: 'Название',
