@@ -1,46 +1,72 @@
 <template>
   <div class="wit-wishlist">
-    <TopNavBar />
-
-    <div class="wit-flex wit-flex--justify-between wit-flex--align-center wit-wishlist__page-header">
-      <div>
-        <h3 class="wit-font-size--sm wit-offset-bottom--xs">
+    <TopNavBar class="layout__header">
+      <template #brand>
+        <h1 class="wit-font-size--sm wit-offset-bottom--xs">
           Manage wishlist
-        </h3>
-        <p>Home > Wishlist > Manage wishlist</p>
-      </div>
+        </h1>
+      </template>
+    </TopNavBar>
 
-      <Dropdown position="bottom-end">
-        <template #trigger>
-          <b-button type="is-primary" class="wit-position--relative wit-more-action01s">
-            <div class="wit-flex wit-flex--align-center">
-              <i class="mdi mdi-16px mdi-cog wit-offset-right--xs" />
-              {{ $t('MainMenu_Settings') }}
-            </div>
-          </b-button>
-        </template>
+    <!--    <div class="wit-flex wit-flex&#45;&#45;justify-between wit-flex&#45;&#45;align-center wit-wishlist__page-header">-->
+    <!--      <div>-->
+    <!--        <h3 class="wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
+    <!--          Manage wishlist-->
+    <!--        </h3>-->
+    <!--        <p>Home > Wishlist > Manage wishlist</p>-->
+    <!--      </div>-->
 
-        <template #items>
-          <DropdownItem @click="openMassPriceEditor">
-            Set price
-          </DropdownItem>
+    <!--      <Dropdown position="bottom-end">-->
+    <!--        <template #trigger>-->
+    <!--              <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-action01s">-->
+    <!--                <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+    <!--                  <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
+    <!--                  {{ $t('MainMenu_Settings') }}-->
+    <!--                </div>-->
+    <!--              </b-button>-->
+    <!--        </template>-->
 
-          <DropdownItem
-            v-if="hasSelectedEntities"
-            @click="clearSelectedEntities"
-          >
-            Clear selection
-          </DropdownItem>
+    <!--        <template #items>-->
+    <!--          <DropdownItem @click="openMassPriceEditor">-->
+    <!--            Set price-->
+    <!--          </DropdownItem>-->
 
-          <DropdownItem @click="deleteAllOffers">
-            <span class="wit-color--danger">Remove selected offers</span>
-          </DropdownItem>
-        </template>
-      </Dropdown>
-    </div>
+    <!--          <DropdownItem-->
+    <!--            v-if="hasSelectedEntities"-->
+    <!--            @click="clearSelectedEntities"-->
+    <!--          >-->
+    <!--            Clear selection-->
+    <!--          </DropdownItem>-->
+
+    <!--          <DropdownItem @click="deleteAllOffers">-->
+    <!--            <span class="wit-color&#45;&#45;danger">Remove selected offers</span>-->
+    <!--          </DropdownItem>-->
+    <!--        </template>-->
+    <!--      </Dropdown>-->
+    <!--    </div>-->
 
     <div class="wit-wishlist__background wit-flex">
-      <div class="ababa" :class="{visible: isFiltersVisible}" @click="isFiltersVisible = false">
+      <div v-if="isFiltersVisible" class="ababa">
+        <b-button type="is-danger" class="wit-position--relative" expanded>
+          <div class="wit-flex wit-flex--align-center">
+            <!--            <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
+            Clear
+          </div>
+        </b-button>
+
+        <b-input
+          class="wit-flex__item--grow"
+          :value="filters.query"
+          maxlength="20"
+          :placeholder="$t('Items_SearchByItemName')"
+          custom-class="wit-transition"
+          :has-counter="false"
+          icon-right="close"
+          icon-right-clickable
+          @input="update({ query: $event })"
+          @icon-right-click="resetFilter('query')"
+        />
+
         <RaritiesSelector
           :selected-rarities="filters.rarities"
           class="wit-offset-bottom--xs"
@@ -103,9 +129,16 @@
 
             <Dropdown position="bottom-end">
               <template #trigger>
-                <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
+                <b-button type="is-link" class="wit-position--relative wit-more-actions expanded" :class="moreActionsButtonClass">
                   <i class="mdi mdi-20px mdi-cog" />
                 </b-button>
+
+                <!--                <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-action01s">-->
+                <!--                  <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+                <!--                    <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
+                <!--                    {{ $t('MainMenu_Settings') }}-->
+                <!--                  </div>-->
+                <!--                </b-button>-->
               </template>
 
               <template #items>
@@ -466,7 +499,7 @@ export default {
     .wit-wishlist__background {
         //background-color: var(--content-bg);
         min-height: 100vh;
-        margin: 0 var(--offset-md);
+        margin: var(--offset-sm); // var(--offset-md) 0;
         position: relative;
     }
 
@@ -474,7 +507,7 @@ export default {
         border-radius: 4px;
         width: 250px;
         background-color: var(--content-bg);
-        margin-right: 24px;
+        margin-right: var(--offset-sm);
         position: sticky;
         top: 16px;
         height: 700px;
