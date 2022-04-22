@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
     baseURL: 'https://master.witchit.com/api/v1',
     timeout: 5000,
     headers: {
-        'User-Agent': 'WitchIt/++UE4+Release-4.27-CL-0 Windows/10.0.19041.1.256.64bit',
+        'User-Agent': 'User-Agent: WitchIt/++UE4+Release-4.27-CL-0 Windows/10.0.19044.1.256.64bit',
         'Content-Type': 'application/x-www-form-urlencoded',
         Host: 'master.witchit.com',
         Accept: '*/*'

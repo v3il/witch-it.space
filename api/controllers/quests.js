@@ -28,11 +28,15 @@ const updateUserQuests = async (request, response) => {
         throw new Forbidden(translateText('Error_ActionForbidden', request.locale))
     }
 
-    const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-    await questsService.mergeUserQuests(user, newQuestsData)
+    try {
+        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+        await questsService.mergeUserQuests(user, newQuestsData)
 
-    const questsData = await questsService.getUserQuestsData(user)
-    response.send(questsData)
+        const questsData = await questsService.getUserQuestsData(user)
+        response.send(questsData)
+    } catch (error) {
+        throw new BadRequest(request.$t('Error_QuestsReplacingFailed'))
+    }
 }
 
 const replaceUserQuest = async (request, response) => {
@@ -61,20 +65,22 @@ const replaceUserQuest = async (request, response) => {
         throw new Forbidden(translateText('Error_ActionForbidden', request.locale))
     }
 
-    const isReplaced = await witchItApiService.replaceQuest({ user, quest })
+    try {
+        const isReplaced = await witchItApiService.replaceQuest({ user, quest })
 
-    if (isReplaced) {
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData, false)
+        if (isReplaced) {
+            const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+            await questsService.mergeUserQuests(user, newQuestsData, false)
 
-        const questsData = await questsService.getUserQuestsData(user)
-        return response.send({
-            ...questsData,
-            isSuccess: true
-        })
+            const questsData = await questsService.getUserQuestsData(user)
+            response.send({
+                ...questsData,
+                isSuccess: true
+            })
+        }
+    } catch (error) {
+        throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
     }
-
-    response.send({ success: false })
 }
 
 const finalizeUserQuest = async (request, response) => {
@@ -103,20 +109,22 @@ const finalizeUserQuest = async (request, response) => {
         throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
     }
 
-    const isFinalized = await witchItApiService.finalizeQuest({ user, quest })
+    try {
+        const isFinalized = await witchItApiService.finalizeQuest({ user, quest })
 
-    if (isFinalized) {
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData, false)
+        if (isFinalized) {
+            const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+            await questsService.mergeUserQuests(user, newQuestsData, false)
 
-        const questsData = await questsService.getUserQuestsData(user)
-        return response.send({
-            ...questsData,
-            isSuccess: true
-        })
+            const questsData = await questsService.getUserQuestsData(user)
+            return response.send({
+                ...questsData,
+                isSuccess: true
+            })
+        }
+    } catch (error) {
+        throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
     }
-
-    response.send({ success: false })
 }
 
 const questsController = {
