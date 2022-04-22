@@ -68,16 +68,15 @@ const replaceUserQuest = async (request, response) => {
     try {
         const isReplaced = await witchItApiService.replaceQuest({ user, quest })
 
-        if (isReplaced) {
-            const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-            await questsService.mergeUserQuests(user, newQuestsData, false)
-
-            const questsData = await questsService.getUserQuestsData(user)
-            response.send({
-                ...questsData,
-                isSuccess: true
-            })
+        if (!isReplaced) {
+            throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
         }
+
+        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+        await questsService.mergeUserQuests(user, newQuestsData, false)
+
+        const questsData = await questsService.getUserQuestsData(user)
+        response.send({ ...questsData, isSuccess: true })
     } catch (error) {
         throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
     }
@@ -112,16 +111,15 @@ const finalizeUserQuest = async (request, response) => {
     try {
         const isFinalized = await witchItApiService.finalizeQuest({ user, quest })
 
-        if (isFinalized) {
-            const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-            await questsService.mergeUserQuests(user, newQuestsData, false)
-
-            const questsData = await questsService.getUserQuestsData(user)
-            return response.send({
-                ...questsData,
-                isSuccess: true
-            })
+        if (!isFinalized) {
+            throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
         }
+
+        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
+        await questsService.mergeUserQuests(user, newQuestsData, false)
+
+        const questsData = await questsService.getUserQuestsData(user)
+        response.send({ ...questsData, isSuccess: true })
     } catch (error) {
         throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
     }
