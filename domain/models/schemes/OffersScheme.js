@@ -3,6 +3,7 @@ import { SortOrders } from '@/shared/items/index.js'
 export class OffersScheme {
     static #filtersScheme = {
         query: '',
+        character: '',
         rarities: [],
         slots: [],
         events: [],

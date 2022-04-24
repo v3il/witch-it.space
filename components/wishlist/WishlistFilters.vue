@@ -18,6 +18,13 @@
         @reset="reset('rarities')"
       />
 
+      <CharacterSelector
+        :selected-character="filterParams.character"
+        class="wit-offset-bottom--xs"
+        @update="update({ character: $event })"
+        @reset="reset('character')"
+      />
+
       <EventsSelector
         :selected-events="filterParams.events"
         class="wit-offset-bottom--xs"
@@ -64,6 +71,7 @@ import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
+import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 
 export default {
     name: 'WishlistFilters',
@@ -78,7 +86,8 @@ export default {
         Dropdown,
         RaritiesSelector,
         EventsSelector,
-        SlotsSelector
+        SlotsSelector,
+        CharacterSelector
     },
 
     props: {

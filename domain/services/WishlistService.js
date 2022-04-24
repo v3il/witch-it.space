@@ -39,17 +39,28 @@ export class WishlistService {
 
     checkItem (item, filters) {
         const lowerCasedQuery = filters.query.toLowerCase()
-        const isFilteredByName = lowerCasedQuery ? item.name.toLowerCase().includes(lowerCasedQuery) : true
-        const isFilteredByRarity = filters.rarities.length ? filters.rarities.includes(item.rarity) : true
-        const isFilteredByEvent = filters.events.length ? filters.events.includes(item.event) : true
-        const isFilteredBySlot = filters.slots.length ? filters.slots.includes(item.slot) : true
-        const isFilteredByTradeable = filters.isOnlyTradeable ? item.isTradeable : true
 
-        return isFilteredByRarity &&
-            isFilteredBySlot &&
-            isFilteredByName &&
-            isFilteredByTradeable &&
-            isFilteredByEvent
+        if (lowerCasedQuery && !item.name.toLowerCase().includes(lowerCasedQuery)) {
+            return false
+        }
+
+        if (filters.rarities.length && !filters.rarities.includes(item.rarity)) {
+            return false
+        }
+
+        if (filters.character && item.character !== filters.character) {
+            return false
+        }
+
+        if (filters.events.length && !filters.events.includes(item.event)) {
+            return false
+        }
+
+        if (filters.slots.length && !filters.slots.includes(item.slot)) {
+            return false
+        }
+
+        return true
     }
 
     compareItems (firstItem, secondItem, sorts) {
