@@ -22,7 +22,7 @@
         </template>
 
         <div class="wit-filter__filter-popup">
-          <div class="wit-offset-bottom--md">
+          <div class="wit-offset-bottom--xs1">
             <slot :filterParams="filters" :update="update" :reset="resetFilter" />
           </div>
 

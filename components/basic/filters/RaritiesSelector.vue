@@ -83,8 +83,8 @@ export default {
 .wis-rarities__button {
     --bg-color: transparent;
 
-    width: var(--offset-lg);
-    height: var(--offset-lg);
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     padding: 0;
     background-color: var(--bg-color);

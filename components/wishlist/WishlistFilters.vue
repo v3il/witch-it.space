@@ -13,14 +13,14 @@
     <template #default="{ filterParams, update, reset }">
       <RaritiesSelector
         :selected-rarities="filterParams.rarities"
-        class="wit-offset-bottom--sm"
+        class="wit-offset-bottom--xs"
         @update="update({ rarities: $event })"
         @reset="reset('rarities')"
       />
 
       <EventsSelector
         :selected-events="filterParams.events"
-        class="wit-offset-bottom--sm"
+        class="wit-offset-bottom--xs"
         @update="update({ events: $event })"
         @reset="reset('events')"
       />
@@ -31,12 +31,6 @@
         @update="update({ slots: $event })"
         @reset="reset('slots')"
       />
-
-      <div>
-        <b-switch :value="filterParams.hideRecipes" @input="update({ hideRecipes: $event })">
-          {{ $t('Items_Filters_HideRecipes') }}
-        </b-switch>
-      </div>
     </template>
 
     <template #sorting-dropdown="{ updateSortBy }">

@@ -179,6 +179,10 @@ strong {
     }
 }
 
+.tags:last-child {
+    margin-bottom: 0;
+}
+
 .tag > span {
     line-height: 15px;
 }

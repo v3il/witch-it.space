@@ -169,7 +169,7 @@ export default {
 }
 
 .wit-item-view__container.wit-item-view--bordered {
-    border: 1px solid var(--bg-color);
+    border: 2px solid var(--bg-color);
 }
 
 .wit-item-view__title {
