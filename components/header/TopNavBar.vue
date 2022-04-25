@@ -1,5 +1,5 @@
 <template>
-  <b-navbar class="wiz-header">
+  <b-navbar class="wiz-header" :class="headerClass">
     <template #brand>
       <b-navbar-item>
         <slot name="brand" />
@@ -57,10 +57,22 @@ export default {
         UserDropdown
     },
 
+    props: {
+        sticky: {
+            required: false,
+            type: Boolean,
+            default: false
+        }
+    },
+
     computed: {
         ...mapState(User.PATH, [
             User.State.USER
-        ])
+        ]),
+
+        headerClass () {
+            return { 'wiz-header--sticky': this.sticky }
+        }
     },
 
     created () {
@@ -75,6 +87,9 @@ export default {
     min-height: var(--header-height);
     height: var(--header-height);
     padding: 0 var(--offset-xs) 0 var(--offset-sm);
+}
+
+.wiz-header--sticky {
     position: sticky;
     top: 0;
 }

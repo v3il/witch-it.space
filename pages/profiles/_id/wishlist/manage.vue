@@ -1,7 +1,46 @@
 <template>
   <div class="wit-wishlist">
+    <TopNavBar />
+
+    <div class="wit-flex wit-flex--justify-between wit-flex--align-center wit-wishlist__page-header">
+      <div>
+        <h3 class="wit-font-size--sm wit-offset-bottom--xs">
+          Manage wishlist
+        </h3>
+        <p>1111</p>
+      </div>
+
+      <Dropdown position="bottom-end">
+        <template #trigger>
+          <b-button type="is-primary" class="wit-position--relative wit-more-action01s">
+            <div class="wit-flex wit-flex--align-center">
+              <i class="mdi mdi-16px mdi-cog wit-offset-right--xs" />
+              Settings
+            </div>
+          </b-button>
+        </template>
+
+        <template #items>
+          <DropdownItem @click="openMassPriceEditor">
+            Set price
+          </DropdownItem>
+
+          <DropdownItem
+            v-if="hasSelectedEntities"
+            @click="clearSelectedEntities"
+          >
+            Clear selection
+          </DropdownItem>
+
+          <DropdownItem @click="deleteAllOffers">
+            <span class="wit-color--danger">Remove selected offers</span>
+          </DropdownItem>
+        </template>
+      </Dropdown>
+    </div>
+
     <div class="wit-wishlist__background">
-      <div class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
+      <div ref="filters" class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
         <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
           <template #tab0>
             {{ $t('Wishlist_MyWishlist') }}
@@ -24,7 +63,6 @@
             :is-filters-changed="isFiltersChanged"
             :is-sorts-changed="isSortsChanged"
             :sorts="sorts"
-            class="wit-offset-right--xs"
             @filtersChanged="onFiltersChange"
             @sortChanged="onSortChange"
             @resetFilter="resetFilter"
@@ -33,8 +71,8 @@
 
           <Dropdown position="bottom-end">
             <template #trigger>
-              <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                <i class="mdi mdi-24px mdi-dots-grid" />
+              <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
+                <i class="mdi mdi-20px mdi-cog" />
               </b-button>
             </template>
 
@@ -197,7 +235,13 @@ export default {
             'isSortsChanged',
             'hasSelectedEntities',
             'selectedEntities'
-        ])
+        ]),
+
+        moreActionsButtonClass () {
+            return {
+                collapsed: !this.isSticky
+            }
+        }
     },
 
     watch: {
@@ -212,11 +256,27 @@ export default {
         }
     },
 
+    data: () => ({
+        isSticky: false
+    }),
+
     created () {
         this.saveOffers(this.offers)
     },
 
+    mounted () {
+        document.addEventListener('scroll', this.onScroll, { passive: true })
+    },
+
+    beforeDestroy () {
+        document.removeEventListener('scroll', this.onScroll)
+    },
+
     methods: {
+        onScroll () {
+            this.isSticky = this.$refs.filters.getBoundingClientRect().top === 0
+        },
+
         ...mapActions(StoreModules.WISHLIST, {
             saveOffers: 'saveOffers',
             toggleMode: 'toggleMode',
@@ -354,13 +414,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .wit-wishlist {
+    .wit-wishlist1 {
         padding: 0 var(--offset-sm);
     }
 
     .wit-wishlist__background {
         background-color: var(--content-bg);
         min-height: 100vh;
+        margin: 0 var(--offset-sm);
     }
 
     .wit-wishlist__header {
@@ -371,6 +432,10 @@ export default {
         z-index: 4;
     }
 
+    .wit-wishlist__page-header {
+        padding: var(--offset-sm);
+    }
+
     .wit-wishlist__content {
         padding: 0 var(--offset-sm) var(--offset-sm);
         height: 100%;
@@ -379,10 +444,19 @@ export default {
     .wit-more-actions {
         width: 36px;
         height: 36px;
-        padding: 0 var(--offset-xs);
-        background-color: #2e3648;
-        border: var(--default-border);
+        padding: 0; // var(--offset-xs);
+        background-color: var(--primary);
+        border: none; // var(--default-border);
         color: var(--body-color);
+        transition: width 0.3s ease, margin-right 0.3s ease;
+        will-change: width, margin-left;
+        overflow: hidden;
+        margin-left: var(--offset-xs);
+
+        &.collapsed {
+            width: 0;
+            margin-left: 0;
+        }
     }
 
     .wit-wishlist-editor__items-list {
