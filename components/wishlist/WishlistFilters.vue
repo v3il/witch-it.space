@@ -1,78 +1,62 @@
 <template>
-  <div class="wis-wishlist-filters">
-    <div class="wis-wishlist-filters__content">
-      <QueryEditor
-        :query="filters.query"
-        class="wis-wishlist-filters__search wit-offset-bottom--sm"
-        @update="update({ query: $event })"
-        @reset="reset('query')"
-      />
+  <FiltersView @reset="$emit('reset')" @close="$emit('close')">
+    <QueryEditor
+      :query="filters.query"
+      class="wis-wishlist-filters__search wit-offset-bottom--sm"
+      @update="update({ query: $event })"
+      @reset="reset('query')"
+    />
 
-      <RaritiesSelector
-        :selected-rarities="filters.rarities"
-        class="wit-offset-bottom--sm"
-        @update="update({ rarities: $event })"
-        @reset="reset('rarities')"
-      />
+    <RaritiesSelector
+      :selected-rarities="filters.rarities"
+      class="wit-offset-bottom--sm"
+      @update="update({ rarities: $event })"
+      @reset="reset('rarities')"
+    />
 
-      <CharacterSelector
-        :selected-character="filters.character"
-        class="wit-offset-bottom--sm"
-        @update="update({ character: $event })"
-        @reset="reset('character')"
-      />
+    <CharacterSelector
+      :selected-character="filters.character"
+      class="wit-offset-bottom--sm"
+      @update="update({ character: $event })"
+      @reset="reset('character')"
+    />
 
-      <EventsSelector
-        :selected-events="filters.events"
-        class="wit-offset-bottom--sm"
-        @update="update({ events: $event })"
-        @reset="reset('events')"
-      />
+    <EventsSelector
+      :selected-events="filters.events"
+      class="wit-offset-bottom--sm"
+      @update="update({ events: $event })"
+      @reset="reset('events')"
+    />
 
-      <SlotsSelector
-        :selected-slots="filters.slots"
-        class="wit-offset-bottom--sm"
-        @update="update({ slots: $event })"
-        @reset="reset('slots')"
-      />
+    <SlotsSelector
+      :selected-slots="filters.slots"
+      class="wit-offset-bottom--sm"
+      @update="update({ slots: $event })"
+      @reset="reset('slots')"
+    />
 
-      <SortsSelector
-        class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom"
-        :sorts="sorts"
-        :available-sorts="$options.availableSorts"
-        @updateOrderBy="updateOrderBy($event)"
-        @toggleOrder="toggleOrder"
-      />
-
-      <b-button type="is-danger" expanded @click="$emit('reset')">
-        {{ $t('Clear') }}
-      </b-button>
-
-      <b-button type="is-danger is-light" expanded class="wis-wishlist-filters__close wit-offset-top--xs" @click="$emit('close')">
-        {{ $t('Close') }}
-      </b-button>
-    </div>
-  </div>
+    <SortsSelector
+      class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom"
+      :sorts="sorts"
+      :available-sorts="$options.availableSorts"
+      @updateOrderBy="updateOrderBy($event)"
+      @toggleOrder="toggleOrder"
+      @resetSorts="$emit('resetSorts')"
+    />
+  </FiltersView>
 </template>
 
 <script>
-import Filters from '@/components/basic/Filters.vue'
-import { eventsManager, raritiesManager, slotsManager } from '@/shared/index.js'
-import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
-import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 import SortsSelector from '@/components/basic/filters/SortsSelector.vue'
+import FiltersView from '@/components/basic/filters/FiltersView.vue'
 
 export default {
     name: 'WishlistFilters',
-
-    rarities: raritiesManager.getTradeable(),
-    events: eventsManager.getAll(),
-    slots: slotsManager.getAll(),
 
     availableSorts: [
         { value: 'rarity', label: 'Items_Sort_Rarity' },
@@ -80,15 +64,13 @@ export default {
     ],
 
     components: {
-        Filters,
-        DropdownItem,
-        Dropdown,
         RaritiesSelector,
         EventsSelector,
         SlotsSelector,
         CharacterSelector,
         QueryEditor,
-        SortsSelector
+        SortsSelector,
+        FiltersView
     },
 
     props: {
