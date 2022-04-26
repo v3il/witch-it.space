@@ -7,7 +7,7 @@
         <h3 class="wit-font-size--sm wit-offset-bottom--xs">
           Manage wishlist
         </h3>
-        <p>1111</p>
+        <p>Home > Wishlist > Manage wishlist</p>
       </div>
 
       <Dropdown position="bottom-end">
@@ -15,7 +15,7 @@
           <b-button type="is-primary" class="wit-position--relative wit-more-action01s">
             <div class="wit-flex wit-flex--align-center">
               <i class="mdi mdi-16px mdi-cog wit-offset-right--xs" />
-              Settings
+              {{ $t('MainMenu_Settings') }}
             </div>
           </b-button>
         </template>
@@ -39,130 +39,163 @@
       </Dropdown>
     </div>
 
-    <div class="wit-wishlist__background">
-      <div ref="filters" class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
-        <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
-          <template #tab0>
-            {{ $t('Wishlist_MyWishlist') }}
-            <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-              {{ sortedOfferModels.length }}
-            </b-tag>
-          </template>
+    <div class="wit-wishlist__background wit-flex">
+      <div class="ababa" :class="{visible: isFiltersVisible}" @click="isFiltersVisible = false">
+        <RaritiesSelector
+          :selected-rarities="filters.rarities"
+          class="wit-offset-bottom--xs"
+          @update="update({ rarities: $event })"
+          @reset="reset('rarities')"
+        />
 
-          <template #tab1>
-            {{ $t('Wishlist_OtherItems') }}
-            <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-              {{ sortedNonWishlistItems.length }}
-            </b-tag>
-          </template>
-        </Tabs>
+        <CharacterSelector
+          :selected-character="filters.character"
+          class="wit-offset-bottom--xs"
+          @update="update({ character: $event })"
+          @reset="reset('character')"
+        />
 
-        <div class="wit-flex">
-          <WishlistFilters
-            :filters="filters"
-            :is-filters-changed="isFiltersChanged"
-            :is-sorts-changed="isSortsChanged"
-            :sorts="sorts"
-            @filtersChanged="onFiltersChange"
-            @sortChanged="onSortChange"
-            @resetFilter="resetFilter"
-            @resetFilters="resetFilters"
-          />
+        <EventsSelector
+          :selected-events="filters.events"
+          class="wit-offset-bottom--xs"
+          @update="update({ events: $event })"
+          @reset="reset('events')"
+        />
 
-          <Dropdown position="bottom-end">
-            <template #trigger>
-              <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
-                <i class="mdi mdi-20px mdi-cog" />
-              </b-button>
-            </template>
-
-            <template #items>
-              <DropdownItem @click="openMassPriceEditor">
-                Set price
-              </DropdownItem>
-
-              <DropdownItem
-                v-if="hasSelectedEntities"
-                @click="clearSelectedEntities"
-              >
-                Clear selection
-              </DropdownItem>
-
-              <DropdownItem @click="deleteAllOffers">
-                <span class="wit-color--danger">Remove selected offers</span>
-              </DropdownItem>
-            </template>
-          </Dropdown>
-        </div>
+        <SlotsSelector
+          :selected-slots="filters.slots"
+          class="wit-offset-bottom--sm"
+          @update="update({ slots: $event })"
+          @reset="reset('slots')"
+        />
       </div>
 
-      <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__content">
-        <template #default="{ items: offers }">
-          <ItemView
-            v-for="(offer, index) in offers"
-            :key="offer.id"
-            :item="offer.item"
-            :is-selected="isOfferSelected(offer)"
-            add-title
-            add-border
-            @clicked="toggleOffer(offer)"
-            @shiftClick="onOffersRangeToggle(index)"
-          >
-            <div class="wit-offer-controls">
-              <IconButton
-                icon="pencil-ruler"
-                type="primary"
-                circle
-                :size="24"
-                :disabled="isOfferSelected(offer)"
-                @click="editOffer(offer)"
-              />
-            </div>
+      <div class="wit-wishlist__content">
+        <div ref="filters" class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
+          <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
+            <template #tab0>
+              {{ $t('Wishlist_MyWishlist') }}
+              <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+                {{ sortedOfferModels.length }}
+              </b-tag>
+            </template>
 
-            <div class="wit-offer-controls wit-offer-controls--remove">
-              <IconButton
-                icon="close"
-                type="danger"
-                circle
-                :size="24"
-                :disabled="isOfferSelected(offer)"
-                @click="deleteOffer(offer)"
-              />
-            </div>
-            <ItemPriceList :prices="offer.prices" />
-          </ItemView>
-        </template>
-      </ItemsListView>
+            <template #tab1>
+              {{ $t('Wishlist_OtherItems') }}
+              <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
+                {{ sortedNonWishlistItems.length }}
+              </b-tag>
+            </template>
+          </Tabs>
 
-      <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__content">
-        <template #default="{ items }">
-          <ItemView
-            v-for="(item, index) in items"
-            :key="item.id"
-            :item="item"
-            :is-selected="isItemSelected(item)"
-            add-title
-            add-border
-            @clicked="toggleNonWishlistItem"
-            @shiftClick="onItemsRangeToggle(index)"
-          >
-            <div class="wit-offer-controls">
-              <IconButton
-                icon="plus-thick"
-                type="primary"
-                circle
-                :size="24"
-                :disabled="isItemSelected(item)"
-                @click="addOffer(item)"
-              />
-            </div>
-          </ItemView>
-        </template>
-      </ItemsListView>
+          <div class="wit-flex">
+            <WishlistFilters
+              :filters="filters"
+              :is-filters-changed="isFiltersChanged"
+              :is-sorts-changed="isSortsChanged"
+              :sorts="sorts"
+              @filtersChanged="onFiltersChange"
+              @sortChanged="onSortChange"
+              @resetFilter="resetFilter"
+              @resetFilters="resetFilters"
+              @open="isFiltersVisible = !isFiltersVisible"
+            />
 
-      <SetMassPricePopup />
-      <EditOfferPopup />
+            <Dropdown position="bottom-end">
+              <template #trigger>
+                <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
+                  <i class="mdi mdi-20px mdi-cog" />
+                </b-button>
+              </template>
+
+              <template #items>
+                <DropdownItem @click="openMassPriceEditor">
+                  Set price
+                </DropdownItem>
+
+                <DropdownItem
+                  v-if="hasSelectedEntities"
+                  @click="clearSelectedEntities"
+                >
+                  Clear selection
+                </DropdownItem>
+
+                <DropdownItem @click="deleteAllOffers">
+                  <span class="wit-color--danger">Remove selected offers</span>
+                </DropdownItem>
+              </template>
+            </Dropdown>
+          </div>
+        </div>
+
+        <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__content1">
+          <template #default="{ items: offers }">
+            <ItemView
+              v-for="(offer, index) in offers"
+              :key="offer.id"
+              :item="offer.item"
+              :is-selected="isOfferSelected(offer)"
+              add-title
+              add-border
+              @clicked="toggleOffer(offer)"
+              @shiftClick="onOffersRangeToggle(index)"
+            >
+              <div class="wit-offer-controls">
+                <IconButton
+                  icon="pencil-ruler"
+                  type="primary"
+                  circle
+                  :size="24"
+                  :disabled="isOfferSelected(offer)"
+                  @click="editOffer(offer)"
+                />
+              </div>
+
+              <div class="wit-offer-controls wit-offer-controls--remove">
+                <IconButton
+                  icon="close"
+                  type="danger"
+                  circle
+                  :size="24"
+                  :disabled="isOfferSelected(offer)"
+                  @click="deleteOffer(offer)"
+                />
+              </div>
+              <ItemPriceList :prices="offer.prices" />
+            </ItemView>
+          </template>
+        </ItemsListView>
+
+        <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__content1">
+          <template #default="{ items }">
+            <ItemView
+              v-for="(item, index) in items"
+              :key="item.id"
+              :item="item"
+              :is-selected="isItemSelected(item)"
+              add-title
+              add-border
+              @clicked="toggleNonWishlistItem"
+              @shiftClick="onItemsRangeToggle(index)"
+            >
+              <div class="wit-offer-controls">
+                <IconButton
+                  icon="plus-thick"
+                  type="primary"
+                  circle
+                  :size="24"
+                  :disabled="isItemSelected(item)"
+                  @click="addOffer(item)"
+                />
+              </div>
+            </ItemView>
+          </template>
+        </ItemsListView>
+      </div>
     </div>
+
+    <SetMassPricePopup />
+    <EditOfferPopup />
   </div>
 </template>
 
@@ -186,6 +219,10 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import VirtualScrollBar from '@/components/basic/VirtualScrollBar.vue'
+import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
+import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
+import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
+import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 
 export default {
     name: 'Manage',
@@ -205,7 +242,11 @@ export default {
         SetMassPricePopup,
         ItemView,
         ItemsListView,
-        VirtualScrollBar
+        VirtualScrollBar,
+        RaritiesSelector,
+        EventsSelector,
+        SlotsSelector,
+        CharacterSelector
     },
 
     async asyncData ({ store, route, $wishlistService }) {
@@ -257,7 +298,8 @@ export default {
     },
 
     data: () => ({
-        isSticky: false
+        isSticky: false,
+        isFiltersVisible: false
     }),
 
     created () {
@@ -276,6 +318,9 @@ export default {
         onScroll () {
             this.isSticky = this.$refs.filters.getBoundingClientRect().top === 0
         },
+
+        update () {},
+        reset () {},
 
         ...mapActions(StoreModules.WISHLIST, {
             saveOffers: 'saveOffers',
@@ -419,9 +464,21 @@ export default {
     }
 
     .wit-wishlist__background {
-        background-color: var(--content-bg);
+        //background-color: var(--content-bg);
         min-height: 100vh;
-        margin: 0 var(--offset-sm);
+        margin: 0 var(--offset-md);
+        position: relative;
+    }
+
+    .ababa {
+        border-radius: 4px;
+        width: 250px;
+        background-color: var(--content-bg);
+        margin-right: 24px;
+        position: sticky;
+        top: 16px;
+        height: 700px;
+        padding: 16px;
     }
 
     .wit-wishlist__header {
@@ -430,15 +487,22 @@ export default {
         padding: var(--offset-sm);
         background-color: inherit;
         z-index: 4;
+        border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
     }
 
     .wit-wishlist__page-header {
-        padding: var(--offset-sm);
+        padding: var(--offset-md);
     }
 
     .wit-wishlist__content {
-        padding: 0 var(--offset-sm) var(--offset-sm);
         height: 100%;
+        flex: 1;
+        background-color: var(--content-bg);
+        border-radius: var(--offset-xxs);
+    }
+
+    .wit-wishlist__content1 {
+        padding: 0 var(--offset-sm) var(--offset-sm);
     }
 
     .wit-more-actions {

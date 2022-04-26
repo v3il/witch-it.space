@@ -9,6 +9,7 @@
     @sortChanged="$emit('sortChanged', $event)"
     @resetFilter="$emit('resetFilter', $event)"
     @resetFilters="$emit('resetFilters')"
+    @open="$emit('open')"
   >
     <template #default="{ filterParams, update, reset }">
       <RaritiesSelector
