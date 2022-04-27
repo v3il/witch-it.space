@@ -2,21 +2,21 @@
   <div>
     <RaritiesSelector
       :selected-rarities="filters.rarities"
-      class="wit-offset-bottom--xs"
+      class="wit-offset-bottom--sm"
       @update="update({ rarities: $event })"
       @reset="reset('rarities')"
     />
 
     <CharacterSelector
       :selected-character="filters.character"
-      class="wit-offset-bottom--xs"
+      class="wit-offset-bottom--sm"
       @update="update({ character: $event })"
       @reset="reset('character')"
     />
 
     <EventsSelector
       :selected-events="filters.events"
-      class="wit-offset-bottom--xs"
+      class="wit-offset-bottom--sm"
       @update="update({ events: $event })"
       @reset="reset('events')"
     />

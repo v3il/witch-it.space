@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wit-flex wit-flex--align-baseline wit-flex--justify-between wit-offset-bottom--xs">
-      <h3 class="wit-font-size--xsplus">
+      <h3>
         {{ $t('Items_Filters_Character') }}
       </h3>
 
@@ -10,17 +10,17 @@
       </b-button>
     </div>
 
-    <Tabs :modes="$options.tabs" :selected-mode="selectedCharacter" @switch="$emit('update', $event)">
+    <Tabs :modes="$options.tabs" :selected-mode="selectedCharacter" expanded size="xs" @switch="$emit('update', $event)">
       <template #tab0>
-        Any
+        {{ $t('Items_Filters_Character_Any') }}
       </template>
 
       <template #tab1>
-        Hunter
+        {{ $t('Items_Filters_Character_Hunter') }}
       </template>
 
       <template #tab2>
-        Witch
+        {{ $t('Items_Filters_Character_Witch') }}
       </template>
     </Tabs>
   </div>

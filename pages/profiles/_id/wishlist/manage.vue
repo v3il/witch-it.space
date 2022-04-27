@@ -345,7 +345,7 @@ export default {
     },
 
     data: () => ({
-        isSticky: false,
+        // isSticky: false,
         isFiltersVisible: !false
     }),
 
@@ -353,21 +353,21 @@ export default {
         this.saveOffers(this.offers)
     },
 
-    mounted () {
-        document.addEventListener('scroll', this.onScroll, { passive: true })
-    },
-
-    beforeDestroy () {
-        document.removeEventListener('scroll', this.onScroll)
-    },
+    // mounted () {
+    //     document.addEventListener('scroll', this.onScroll, { passive: true })
+    // },
+    //
+    // beforeDestroy () {
+    //     document.removeEventListener('scroll', this.onScroll)
+    // },
 
     methods: {
-        onScroll () {
-            this.isSticky = this.$refs.filters.getBoundingClientRect().top === 0
-        },
-
-        update () {},
-        reset () {},
+        // onScroll () {
+        //     this.isSticky = this.$refs.filters.getBoundingClientRect().top === 0
+        // },
+        //
+        // update () {},
+        // reset () {},
 
         ...mapActions(StoreModules.WISHLIST, {
             saveOffers: 'saveOffers',
@@ -386,13 +386,13 @@ export default {
             updateFilter: 'updateFilter'
         }),
 
-        onFiltersChange (changedFilters) {
-            const newFilters = { ...this.filters, ...changedFilters }
-
-            if (!isEqual(this.filters, newFilters)) {
-                this.updateFilters(newFilters)
-            }
-        },
+        // onFiltersChange (changedFilters) {
+        //     const newFilters = { ...this.filters, ...changedFilters }
+        //
+        //     if (!isEqual(this.filters, newFilters)) {
+        //         this.updateFilters(newFilters)
+        //     }
+        // },
 
         onSortChange (sorts) {
             if (!isEqual(this.sorts, sorts)) {
@@ -522,7 +522,7 @@ export default {
 
     .ababa {
         border-radius: 4px;
-        width: 250px;
+        width: 275px;
         background-color: var(--content-bg);
         margin-left: var(--offset-sm);
         position: sticky;

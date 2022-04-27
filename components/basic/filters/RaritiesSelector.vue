@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center">
-      <h3 class="wit-font-size--xsplus">
+      <h3>
         {{ $t('Items_Filters_Rarity') }}
       </h3>
 

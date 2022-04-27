@@ -26,6 +26,18 @@ export default {
         selectedMode: {
             required: true,
             type: String
+        },
+
+        expanded: {
+            required: false,
+            type: Boolean,
+            default: false
+        },
+
+        size: {
+            required: false,
+            type: String,
+            default: 'sm'
         }
     },
 
@@ -35,11 +47,12 @@ export default {
         },
 
         getTabClass (mode, index) {
-            return {
+            return [{
                 active: mode === this.selectedMode,
-                'wit-split-part--left': index === 0,
-                'wit-split-part--right': index === 1
-            }
+                expanded: this.expanded,
+                first: index === 0,
+                last: index === this.modes.length - 1
+            }, `wit-tabs__button--${this.size}`]
         }
     }
 }
@@ -51,15 +64,32 @@ export default {
     color: var(--muted-text-color);
     border-color: #363e54;
     text-decoration: none !important;
+    border-radius: 0;
+
+    &.first {
+        border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+    }
+
+    &.last {
+        border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
+    }
 
     &:hover {
         color: var(--white);
     }
-}
 
-.wit-tabs__button.active {
-    background-color: var(--primary);
-    color: var(--white);
-    border-color: var(--primary);
+    &.expanded {
+        flex: 1;
+    }
+
+    &.active {
+        background-color: var(--primary);
+        color: var(--white);
+        border-color: var(--primary);
+    }
+
+    &--xs {
+        height: var(--offset-lg);
+    }
 }
 </style>

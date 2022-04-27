@@ -2,7 +2,7 @@
   <div>
     <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center wit-flex--justify-between">
       <div class="wit-flex wit-flex--align-baseline">
-        <h3 class="wit-font-size--xsplus">
+        <h3>
           {{ $t('Items_Filters_Slots') }}
         </h3>
 
