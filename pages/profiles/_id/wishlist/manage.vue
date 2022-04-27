@@ -46,56 +46,6 @@
     <!--    </div>-->
 
     <div class="wit-wishlist__background wit-flex">
-      <div v-if="isFiltersVisible" class="ababa">
-        <b-button type="is-danger" class="wit-position--relative" expanded>
-          <div class="wit-flex wit-flex--align-center">
-            <!--            <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
-            Clear
-          </div>
-        </b-button>
-
-        <b-input
-          class="wit-flex__item--grow"
-          :value="filters.query"
-          maxlength="20"
-          :placeholder="$t('Items_SearchByItemName')"
-          custom-class="wit-transition"
-          :has-counter="false"
-          icon-right="close"
-          icon-right-clickable
-          @input="update({ query: $event })"
-          @icon-right-click="resetFilter('query')"
-        />
-
-        <RaritiesSelector
-          :selected-rarities="filters.rarities"
-          class="wit-offset-bottom--xs"
-          @update="update({ rarities: $event })"
-          @reset="reset('rarities')"
-        />
-
-        <CharacterSelector
-          :selected-character="filters.character"
-          class="wit-offset-bottom--xs"
-          @update="update({ character: $event })"
-          @reset="reset('character')"
-        />
-
-        <EventsSelector
-          :selected-events="filters.events"
-          class="wit-offset-bottom--xs"
-          @update="update({ events: $event })"
-          @reset="reset('events')"
-        />
-
-        <SlotsSelector
-          :selected-slots="filters.slots"
-          class="wit-offset-bottom--sm"
-          @update="update({ slots: $event })"
-          @reset="reset('slots')"
-        />
-      </div>
-
       <div class="wit-wishlist__content">
         <div ref="filters" class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
           <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
@@ -115,21 +65,33 @@
           </Tabs>
 
           <div class="wit-flex">
-            <WishlistFilters
-              :filters="filters"
-              :is-filters-changed="isFiltersChanged"
-              :is-sorts-changed="isSortsChanged"
-              :sorts="sorts"
-              @filtersChanged="onFiltersChange"
-              @sortChanged="onSortChange"
-              @resetFilter="resetFilter"
-              @resetFilters="resetFilters"
-              @open="isFiltersVisible = !isFiltersVisible"
+            <SearchInput
+              :placeholder="$t('Items_SearchByItemName')"
+              :query="filters.query"
+              @update="updateFilters({ query: $event })"
+              @reset="resetFilter"
+              @toggle="isFiltersVisible = !isFiltersVisible"
             />
+
+            <!--                        <WishlistFilters-->
+            <!--                          :filters="filters"-->
+            <!--                          :is-filters-changed="isFiltersChanged"-->
+            <!--                          :is-sorts-changed="isSortsChanged"-->
+            <!--                          :sorts="sorts"-->
+            <!--                          @filtersChanged="onFiltersChange"-->
+            <!--                          @sortChanged="onSortChange"-->
+            <!--                          @resetFilter="resetFilter"-->
+            <!--                          @resetFilters="resetFilters"-->
+            <!--                          @open="isFiltersVisible = !isFiltersVisible"-->
+            <!--                        />-->
+
+            <!--            <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-actions expanded1">-->
+            <!--              <i class="mdi mdi-20px mdi-filter" />-->
+            <!--            </b-button>-->
 
             <Dropdown position="bottom-end">
               <template #trigger>
-                <b-button type="is-link" class="wit-position--relative wit-more-actions expanded" :class="moreActionsButtonClass">
+                <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
                   <i class="mdi mdi-20px mdi-cog" />
                 </b-button>
 
@@ -225,6 +187,56 @@
           </template>
         </ItemsListView>
       </div>
+
+      <div v-if="isFiltersVisible" class="ababa">
+        <WishlistFilters
+          :filters="filters"
+          :sorts="sorts"
+          @changeFilters="updateFilters"
+          @resetFilter="resetFilter"
+        />
+
+        <!--        <b-input-->
+        <!--          class="wit-flex__item&#45;&#45;grow"-->
+        <!--          :value="filters.query"-->
+        <!--          maxlength="20"-->
+        <!--          :placeholder="$t('Items_SearchByItemName')"-->
+        <!--          custom-class="wit-transition"-->
+        <!--          :has-counter="false"-->
+        <!--          icon-right="close"-->
+        <!--          icon-right-clickable-->
+        <!--          @input="update({ query: $event })"-->
+        <!--          @icon-right-click="resetFilter('query')"-->
+        <!--        />-->
+
+        <!--        <RaritiesSelector-->
+        <!--          :selected-rarities="filters.rarities"-->
+        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
+        <!--          @update="update({ rarities: $event })"-->
+        <!--          @reset="reset('rarities')"-->
+        <!--        />-->
+
+        <!--        <CharacterSelector-->
+        <!--          :selected-character="filters.character"-->
+        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
+        <!--          @update="update({ character: $event })"-->
+        <!--          @reset="reset('character')"-->
+        <!--        />-->
+
+        <!--        <EventsSelector-->
+        <!--          :selected-events="filters.events"-->
+        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
+        <!--          @update="update({ events: $event })"-->
+        <!--          @reset="reset('events')"-->
+        <!--        />-->
+
+        <!--        <SlotsSelector-->
+        <!--          :selected-slots="filters.slots"-->
+        <!--          class="wit-offset-bottom&#45;&#45;sm"-->
+        <!--          @update="update({ slots: $event })"-->
+        <!--          @reset="reset('slots')"-->
+        <!--        />-->
+      </div>
     </div>
 
     <SetMassPricePopup />
@@ -256,6 +268,7 @@ import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
+import SearchInput from '@/components/basic/filters/SearchInput.vue'
 
 export default {
     name: 'Manage',
@@ -279,7 +292,8 @@ export default {
         RaritiesSelector,
         EventsSelector,
         SlotsSelector,
-        CharacterSelector
+        CharacterSelector,
+        SearchInput
     },
 
     async asyncData ({ store, route, $wishlistService }) {
@@ -332,7 +346,7 @@ export default {
 
     data: () => ({
         isSticky: false,
-        isFiltersVisible: false
+        isFiltersVisible: !false
     }),
 
     created () {
@@ -368,12 +382,15 @@ export default {
             clearSelectedEntities: 'clearSelectedEntities',
             removeOffers: 'removeOffers',
             createOffers: 'createOffers',
-            setMassPrices: 'setMassPrices'
+            setMassPrices: 'setMassPrices',
+            updateFilter: 'updateFilter'
         }),
 
-        onFiltersChange (filters) {
-            if (!isEqual(this.filters, filters)) {
-                this.updateFilters(filters)
+        onFiltersChange (changedFilters) {
+            const newFilters = { ...this.filters, ...changedFilters }
+
+            if (!isEqual(this.filters, newFilters)) {
+                this.updateFilters(newFilters)
             }
         },
 
@@ -507,9 +524,9 @@ export default {
         border-radius: 4px;
         width: 250px;
         background-color: var(--content-bg);
-        margin-right: var(--offset-sm);
+        margin-left: var(--offset-sm);
         position: sticky;
-        top: 16px;
+        top: 0;
         height: 700px;
         padding: 16px;
     }
@@ -542,18 +559,21 @@ export default {
         width: 36px;
         height: 36px;
         padding: 0; // var(--offset-xs);
-        background-color: var(--primary);
-        border: none; // var(--default-border);
-        color: var(--body-color);
+        //background-color: var(--primary);
+        //border: none; // var(--default-border);
+        //color: var(--body-color);
         transition: width 0.3s ease, margin-right 0.3s ease;
         will-change: width, margin-left;
         overflow: hidden;
         margin-left: var(--offset-xs);
+        background: #2e3648;
+        border: var(--default-border);
+        color: var(--muted-text-color);
 
-        &.collapsed {
-            width: 0;
-            margin-left: 0;
-        }
+        //&.collapsed {
+        //    width: 0;
+        //    margin-left: 0;
+        //}
     }
 
     .wit-wishlist-editor__items-list {

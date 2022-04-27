@@ -1,67 +1,39 @@
 <template>
-  <Filters
-    :filters="filters"
-    :is-filters-changed="isFiltersChanged"
-    :is-sorts-changed="isSortsChanged"
-    :sorts="sorts"
-    :query-input-placeholder="$t('Items_SearchByItemName')"
-    @filtersChanged="$emit('filtersChanged', $event)"
-    @sortChanged="$emit('sortChanged', $event)"
-    @resetFilter="$emit('resetFilter', $event)"
-    @resetFilters="$emit('resetFilters')"
-    @open="$emit('open')"
-  >
-    <template #default="{ filterParams, update, reset }">
-      <RaritiesSelector
-        :selected-rarities="filterParams.rarities"
-        class="wit-offset-bottom--xs"
-        @update="update({ rarities: $event })"
-        @reset="reset('rarities')"
-      />
+  <div>
+    <RaritiesSelector
+      :selected-rarities="filters.rarities"
+      class="wit-offset-bottom--xs"
+      @update="update({ rarities: $event })"
+      @reset="reset('rarities')"
+    />
 
-      <CharacterSelector
-        :selected-character="filterParams.character"
-        class="wit-offset-bottom--xs"
-        @update="update({ character: $event })"
-        @reset="reset('character')"
-      />
+    <CharacterSelector
+      :selected-character="filters.character"
+      class="wit-offset-bottom--xs"
+      @update="update({ character: $event })"
+      @reset="reset('character')"
+    />
 
-      <EventsSelector
-        :selected-events="filterParams.events"
-        class="wit-offset-bottom--xs"
-        @update="update({ events: $event })"
-        @reset="reset('events')"
-      />
+    <EventsSelector
+      :selected-events="filters.events"
+      class="wit-offset-bottom--xs"
+      @update="update({ events: $event })"
+      @reset="reset('events')"
+    />
 
-      <SlotsSelector
-        :selected-slots="filterParams.slots"
-        class="wit-offset-bottom--sm"
-        @update="update({ slots: $event })"
-        @reset="reset('slots')"
-      />
-    </template>
+    <SlotsSelector
+      :selected-slots="filters.slots"
+      class="wit-offset-bottom--sm"
+      @update="update({ slots: $event })"
+      @reset="reset('slots')"
+    />
 
-    <template #sorting-dropdown="{ updateSortBy }">
-      <Dropdown position="end">
-        <template #trigger>
-          <b-button icon-right="menu-down" class="wit-flex wit-flex--center wit-filter__sort-button wit-split-part--left">
-            <span class="wit-color--muted wit-inline-block1 wit-offset-right--xxs">{{ $t('SortedBy') }}:</span>
-            <span class="wit-color--white">{{ sortByTitle }}</span>
-          </b-button>
-        </template>
-
-        <template #items>
-          <DropdownItem @click="updateSortBy('rarity')">
-            {{ $t('Items_Sort_Rarity') }}
-          </DropdownItem>
-
-          <DropdownItem @click="updateSortBy('name')">
-            {{ $t('Items_Sort_Name') }}
-          </DropdownItem>
-        </template>
-      </Dropdown>
-    </template>
-  </Filters>
+    <b-button type="is-danger" expanded>
+      <div class="wit-flex wit-flex--align-center">
+        Clear
+      </div>
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -97,25 +69,25 @@ export default {
             type: Object
         },
 
-        isFiltersChanged: {
-            required: true,
-            type: Boolean
-        },
-
         sorts: {
             required: true,
             type: Object
-        },
-
-        isSortsChanged: {
-            required: true,
-            type: Boolean
         }
     },
 
     computed: {
         sortByTitle () {
             return this.sorts.sortBy === 'rarity' ? this.$t('Items_Sort_Rarity') : this.$t('Items_Sort_Name')
+        }
+    },
+
+    methods: {
+        update (changedFilters) {
+            this.$emit('changeFilters', changedFilters)
+        },
+
+        reset (propName) {
+            this.$emit('resetFilter', propName)
         }
     }
 }

@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash'
 import { OffersScheme } from '@/domain/models/schemes'
 import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
@@ -84,12 +85,20 @@ export const actions = {
         commit('SET_SORTS', sorts)
     },
 
-    updateFilters ({ commit }, filters) {
-        commit('SET_FILTERS', filters)
+    updateFilters ({ commit, state }, changedFilters) {
+        const newFilters = { ...state.filters, ...changedFilters }
+
+        if (!isEqual(state.filters, newFilters)) {
+            commit('SET_FILTERS', newFilters)
+        }
     },
 
     updateSorts ({ commit }, sorts) {
         commit('SET_SORTS', sorts)
+    },
+
+    updateFilter ({ commit }, prop) {
+        commit('UPDATE_FILTER', prop)
     },
 
     resetFilter ({ commit }, propName) {
@@ -190,6 +199,10 @@ export const mutations = {
 
     SET_SORTS (state, sorts) {
         state.sorts = sorts
+    },
+
+    UPDATE_FILTER (state, prop) {
+        state.filters = { ...state.filters, ...prop }
     },
 
     RESET_FILTER (state, propName) {
