@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center">
+    <div class="wit-offset-bottom--xs wit-flex wit-flex--align-center">
       <h3>
         {{ $t('Items_Filters_Rarity') }}
       </h3>

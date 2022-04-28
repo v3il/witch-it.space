@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wit-offset-bottom--xxs wit-flex wit-flex--align-center wit-flex--justify-between">
+    <div class="wit-offset-bottom--xs wit-flex wit-flex--align-center wit-flex--justify-between">
       <div class="wit-flex wit-flex--align-baseline">
         <h3>
           {{ $t('Items_Filters_Slots') }}
