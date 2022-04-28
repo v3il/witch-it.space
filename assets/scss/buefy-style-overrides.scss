@@ -190,3 +190,7 @@ strong {
 .tag.is-primary {
     background-color: var(--primary) !important;
 }
+
+.checkbox:hover {
+    color: var(--body-color);
+}

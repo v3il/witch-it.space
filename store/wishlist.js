@@ -97,6 +97,14 @@ export const actions = {
         commit('SET_SORTS', sorts)
     },
 
+    updateOrderBy ({ commit }, orderBy) {
+        commit('UPDATE_ORDER_BY', orderBy)
+    },
+
+    toggleOrder ({ commit, state }) {
+        commit('TOGGLE_ORDER', state.sorts.order === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC)
+    },
+
     updateFilter ({ commit }, prop) {
         commit('UPDATE_FILTER', prop)
     },
@@ -105,8 +113,13 @@ export const actions = {
         commit('RESET_FILTER', propName)
     },
 
-    resetFilters ({ commit }) {
+    resetSorts ({ commit }) {
+        commit('RESET_SORTS')
+    },
+
+    resetSortsFilters ({ commit }) {
         commit('RESET_FILTERS')
+        commit('RESET_SORTS')
     },
 
     toggleOffer ({ commit, state }, offer) {
@@ -201,6 +214,14 @@ export const mutations = {
         state.sorts = sorts
     },
 
+    UPDATE_ORDER_BY (state, orderBy) {
+        state.sorts.sortBy = orderBy
+    },
+
+    TOGGLE_ORDER (state, order) {
+        state.sorts.order = order
+    },
+
     UPDATE_FILTER (state, prop) {
         state.filters = { ...state.filters, ...prop }
     },
@@ -211,6 +232,10 @@ export const mutations = {
 
     RESET_FILTERS (state) {
         state.filters = { ...state.defaultFilters }
+    },
+
+    RESET_SORTS (state) {
+        state.sorts = { ...state.defaultSorts }
     },
 
     SELECT_OFFER (state, offer) {

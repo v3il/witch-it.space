@@ -42,12 +42,12 @@
     <!--    <div class="wit-flex wit-offset-bottom&#45;&#45;xs1 wit-position&#45;&#45;relative" :class="{ 'wit-indicator': isSortsChanged }">-->
     <!--      <slot name="sorting-dropdown" :updateSortBy="updateSortBy" />-->
 
-    <!--      <b-button class="wit-filter__order-button wit-split-part&#45;&#45;right" @click="toggleOrder">-->
-    <!--        <div class="wit-color&#45;&#45;muted">-->
-    <!--          <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />-->
-    <!--          <i v-else class="mdi mdi-sort-descending mdi-20px" />-->
-    <!--        </div>-->
-    <!--      </b-button>-->
+    <!--          <b-button class="wit-filter__order-button wit-split-part&#45;&#45;right" @click="toggleOrder">-->
+    <!--            <div class="wit-color&#45;&#45;muted">-->
+    <!--              <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />-->
+    <!--              <i v-else class="mdi mdi-sort-descending mdi-20px" />-->
+    <!--            </div>-->
+    <!--          </b-button>-->
     <!--    </div>-->
   </div>
 </template>

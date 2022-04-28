@@ -91,7 +91,7 @@
 
             <Dropdown position="bottom-end">
               <template #trigger>
-                <b-button type="is-link" class="wit-position--relative wit-more-actions" :class="moreActionsButtonClass">
+                <b-button type="is-link" class="wit-position--relative wit-more-actions">
                   <i class="mdi mdi-20px mdi-cog" />
                 </b-button>
 
@@ -194,48 +194,11 @@
           :sorts="sorts"
           @changeFilters="updateFilters"
           @resetFilter="resetFilter"
+          @resetSorts="resetSorts"
+          @updateOrderBy="updateOrderBy"
+          @toggleOrder="toggleOrder"
+          @reset="resetSortsFilters"
         />
-
-        <!--        <b-input-->
-        <!--          class="wit-flex__item&#45;&#45;grow"-->
-        <!--          :value="filters.query"-->
-        <!--          maxlength="20"-->
-        <!--          :placeholder="$t('Items_SearchByItemName')"-->
-        <!--          custom-class="wit-transition"-->
-        <!--          :has-counter="false"-->
-        <!--          icon-right="close"-->
-        <!--          icon-right-clickable-->
-        <!--          @input="update({ query: $event })"-->
-        <!--          @icon-right-click="resetFilter('query')"-->
-        <!--        />-->
-
-        <!--        <RaritiesSelector-->
-        <!--          :selected-rarities="filters.rarities"-->
-        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
-        <!--          @update="update({ rarities: $event })"-->
-        <!--          @reset="reset('rarities')"-->
-        <!--        />-->
-
-        <!--        <CharacterSelector-->
-        <!--          :selected-character="filters.character"-->
-        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
-        <!--          @update="update({ character: $event })"-->
-        <!--          @reset="reset('character')"-->
-        <!--        />-->
-
-        <!--        <EventsSelector-->
-        <!--          :selected-events="filters.events"-->
-        <!--          class="wit-offset-bottom&#45;&#45;xs"-->
-        <!--          @update="update({ events: $event })"-->
-        <!--          @reset="reset('events')"-->
-        <!--        />-->
-
-        <!--        <SlotsSelector-->
-        <!--          :selected-slots="filters.slots"-->
-        <!--          class="wit-offset-bottom&#45;&#45;sm"-->
-        <!--          @update="update({ slots: $event })"-->
-        <!--          @reset="reset('slots')"-->
-        <!--        />-->
       </div>
     </div>
 
@@ -323,13 +286,13 @@ export default {
             'isSortsChanged',
             'hasSelectedEntities',
             'selectedEntities'
-        ]),
+        ])
 
-        moreActionsButtonClass () {
-            return {
-                collapsed: !this.isSticky
-            }
-        }
+        // moreActionsButtonClass () {
+        //     return {
+        //         collapsed: !this.isSticky
+        //     }
+        // }
     },
 
     watch: {
@@ -376,14 +339,17 @@ export default {
             updateFilters: 'updateFilters',
             updateSorts: 'updateSorts',
             resetFilter: 'resetFilter',
-            resetFilters: 'resetFilters',
+            resetSorts: 'resetSorts',
+            resetSortsFilters: 'resetSortsFilters',
             toggleOffer: 'toggleOffer',
             toggleNonWishlistItem: 'toggleNonWishlistItem',
             clearSelectedEntities: 'clearSelectedEntities',
             removeOffers: 'removeOffers',
             createOffers: 'createOffers',
             setMassPrices: 'setMassPrices',
-            updateFilter: 'updateFilter'
+            updateFilter: 'updateFilter',
+            toggleOrder: 'toggleOrder',
+            updateOrderBy: 'updateOrderBy'
         }),
 
         // onFiltersChange (changedFilters) {
@@ -394,20 +360,17 @@ export default {
         //     }
         // },
 
-        onSortChange (sorts) {
-            if (!isEqual(this.sorts, sorts)) {
-                this.updateSorts(sorts)
-            }
-        },
+        // onSortChange (sorts) {
+        //     if (!isEqual(this.sorts, sorts)) {
+        //         this.updateSorts(sorts)
+        //     }
+        // },
 
         updateRoute () {
             this.$router.replace({
                 path: this.$route.path,
-                query: {
-                    ...this.changedSorts,
-                    ...this.changedFilters
-                }
-            })
+                query: { ...this.changedSorts, ...this.changedFilters }
+            }).catch(e => e)
         },
 
         isOfferSelected (offer) {
@@ -521,14 +484,16 @@ export default {
     }
 
     .ababa {
-        border-radius: 4px;
+        border-radius: var(--offset-xxs);
         width: 275px;
         background-color: var(--content-bg);
         margin-left: var(--offset-sm);
         position: sticky;
-        top: 0;
-        height: 700px;
-        padding: 16px;
+        top: var(--offset-sm);
+        height: auto;
+        padding: var(--offset-sm);
+        align-self: flex-start;
+        overflow-y: auto;
     }
 
     .wit-wishlist__header {
