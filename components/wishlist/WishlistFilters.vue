@@ -1,6 +1,13 @@
 <template>
   <div class="wis-wishlist-filters">
     <div class="wis-wishlist-filters__content">
+      <QueryEditor
+        :query="filters.query"
+        class="wis-wishlist-filters__search wit-offset-bottom--sm"
+        @update="update({ query: $event })"
+        @reset="reset('query')"
+      />
+
       <RaritiesSelector
         :selected-rarities="filters.rarities"
         class="wit-offset-bottom--sm"
@@ -85,6 +92,7 @@ import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import { SortOrders } from '@/shared/items/index.js'
+import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 
 export default {
     name: 'WishlistFilters',
@@ -100,7 +108,8 @@ export default {
         RaritiesSelector,
         EventsSelector,
         SlotsSelector,
-        CharacterSelector
+        CharacterSelector,
+        QueryEditor
     },
 
     props: {
@@ -161,6 +170,7 @@ export default {
     max-height: calc(100vh - 60px - 32px);
 }
 
+.wis-wishlist-filters__search,
 .wis-wishlist-filters__close {
     display: none;
 }
@@ -189,8 +199,9 @@ export default {
         margin: 0 auto;
     }
 
+    .wis-wishlist-filters__search,
     .wis-wishlist-filters__close {
-        display: block;
+        display: flex;
     }
 }
 </style>

@@ -195,6 +195,7 @@ export const ru = {
     Profiles_Sort_Name: 'Имя',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',
+    Items_Filters_Search: 'Поиск по названию',
     Items_Filters_AnyRarity: 'Любая редкость',
     Items_Filters_Rarity: 'Редкость',
     Items_Filters_Events: 'Событие',
