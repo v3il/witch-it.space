@@ -188,18 +188,20 @@
         </ItemsListView>
       </div>
 
-      <div v-if="isFiltersVisible" class="ababa">
-        <WishlistFilters
-          :filters="filters"
-          :sorts="sorts"
-          @changeFilters="updateFilters"
-          @resetFilter="resetFilter"
-          @resetSorts="resetSorts"
-          @updateOrderBy="updateOrderBy"
-          @toggleOrder="toggleOrder"
-          @reset="resetSortsFilters"
-        />
-      </div>
+      <!--      <div v-if="isFiltersVisible" class="ababa">-->
+      <WishlistFilters
+        v-if="isFiltersVisible"
+        :filters="filters"
+        :sorts="sorts"
+        @changeFilters="updateFilters"
+        @resetFilter="resetFilter"
+        @resetSorts="resetSorts"
+        @updateOrderBy="updateOrderBy"
+        @toggleOrder="toggleOrder"
+        @reset="resetSortsFilters"
+        @close="isFiltersVisible = false"
+      />
+      <!--      </div>-->
     </div>
 
     <SetMassPricePopup />
@@ -483,18 +485,19 @@ export default {
         position: relative;
     }
 
-    .ababa {
-        border-radius: var(--offset-xxs);
-        width: 275px;
-        background-color: var(--content-bg);
-        margin-left: var(--offset-sm);
-        position: sticky;
-        top: var(--offset-sm);
-        height: auto;
-        padding: var(--offset-sm);
-        align-self: flex-start;
-        overflow-y: auto;
-    }
+    //.ababa {
+    //    border-radius: var(--offset-xxs);
+    //    width: 275px;
+    //    background-color: var(--content-bg);
+    //    margin-left: var(--offset-sm);
+    //    position: sticky;
+    //    top: var(--offset-sm);
+    //    height: auto;
+    //    padding: var(--offset-sm);
+    //    align-self: flex-start;
+    //    overflow-y: auto;
+    //    max-height: calc(100vh - 60px - 32px);
+    //}
 
     .wit-wishlist__header {
         position: sticky;

@@ -1,71 +1,77 @@
 <template>
-  <div>
-    <RaritiesSelector
-      :selected-rarities="filters.rarities"
-      class="wit-offset-bottom--sm"
-      @update="update({ rarities: $event })"
-      @reset="reset('rarities')"
-    />
+  <div class="wis-wishlist-filters">
+    <div class="wis-wishlist-filters__content">
+      <RaritiesSelector
+        :selected-rarities="filters.rarities"
+        class="wit-offset-bottom--sm"
+        @update="update({ rarities: $event })"
+        @reset="reset('rarities')"
+      />
 
-    <CharacterSelector
-      :selected-character="filters.character"
-      class="wit-offset-bottom--sm"
-      @update="update({ character: $event })"
-      @reset="reset('character')"
-    />
+      <CharacterSelector
+        :selected-character="filters.character"
+        class="wit-offset-bottom--sm"
+        @update="update({ character: $event })"
+        @reset="reset('character')"
+      />
 
-    <EventsSelector
-      :selected-events="filters.events"
-      class="wit-offset-bottom--sm"
-      @update="update({ events: $event })"
-      @reset="reset('events')"
-    />
+      <EventsSelector
+        :selected-events="filters.events"
+        class="wit-offset-bottom--sm"
+        @update="update({ events: $event })"
+        @reset="reset('events')"
+      />
 
-    <SlotsSelector
-      :selected-slots="filters.slots"
-      class="wit-offset-bottom--sm"
-      @update="update({ slots: $event })"
-      @reset="reset('slots')"
-    />
+      <SlotsSelector
+        :selected-slots="filters.slots"
+        class="wit-offset-bottom--sm"
+        @update="update({ slots: $event })"
+        @reset="reset('slots')"
+      />
 
-    <b-field class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom">
-      <div>
-        <div class="wit-offset-bottom--xs wit-flex wit-flex--align-center wit-flex--justify-between">
-          <h3>{{ $t('SortedBy') }}</h3>
+      <b-field class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom">
+        <div>
+          <div class="wit-offset-bottom--xs wit-flex wit-flex--align-center wit-flex--justify-between">
+            <h3>{{ $t('SortedBy') }}</h3>
 
-          <b-button type="is-ghost" size="is-small" @click="$emit('resetSorts')">
-            <b-icon size="is-small" class="is-size-5 wit-color--muted" icon="undo-variant" />
-          </b-button>
+            <b-button type="is-ghost" size="is-small" @click="$emit('resetSorts')">
+              <b-icon size="is-small" class="is-size-5 wit-color--muted" icon="undo-variant" />
+            </b-button>
+          </div>
+
+          <div class="wit-flex wit-flex--align-center">
+            <b-select
+              expanded
+              class="wit-flex__item--grow wit-offset-right--xs"
+              :value="sorts.sortBy"
+              @input="updateOrderBy"
+            >
+              <option value="rarity">
+                {{ $t('Items_Sort_Rarity') }}
+              </option>
+              <option value="name">
+                {{ $t('Items_Sort_Name') }}
+              </option>
+            </b-select>
+
+            <b-button class="wit-filter__order-button" @click="toggleOrder">
+              <div class="wit-color--muted">
+                <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />
+                <i v-else class="mdi mdi-sort-descending mdi-20px" />
+              </div>
+            </b-button>
+          </div>
         </div>
+      </b-field>
 
-        <div class="wit-flex wit-flex--align-center">
-          <b-select
-            expanded
-            class="wit-flex__item--grow wit-offset-right--xs"
-            :value="sorts.sortBy"
-            @input="updateOrderBy"
-          >
-            <option value="rarity">
-              {{ $t('Items_Sort_Rarity') }}
-            </option>
-            <option value="name">
-              {{ $t('Items_Sort_Name') }}
-            </option>
-          </b-select>
+      <b-button type="is-danger" expanded @click="$emit('reset')">
+        {{ $t('Clear') }}
+      </b-button>
 
-          <b-button class="wit-filter__order-button" @click="toggleOrder">
-            <div class="wit-color--muted">
-              <i v-if="isAscendingOrder" class="mdi mdi-sort-ascending mdi-20px" />
-              <i v-else class="mdi mdi-sort-descending mdi-20px" />
-            </div>
-          </b-button>
-        </div>
-      </div>
-    </b-field>
-
-    <b-button type="is-danger" expanded @click="$emit('reset')">
-      {{ $t('Clear') }}
-    </b-button>
+      <b-button type="is-danger is-light" expanded class="wis-wishlist-filters__close wit-offset-top--xs" @click="$emit('close')">
+        {{ $t('Close') }}
+      </b-button>
+    </div>
   </div>
 </template>
 
@@ -138,3 +144,68 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wis-wishlist-filters {
+    border-radius: var(--offset-xxs);
+    width: 275px;
+    background-color: var(--content-bg);
+    margin-left: var(--offset-sm);
+    position: sticky;
+    top: var(--offset-sm);
+    height: auto;
+    padding: var(--offset-sm);
+    align-self: flex-start;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px - 32px);
+}
+
+.wis-wishlist-filters__close {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .wis-wishlist-filters {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        /* bottom: 0; */
+        //max-height: none;
+        z-index: 222;
+        margin: 0;
+        width: auto;
+        /* overflow: auto; */
+        display: flex;
+        justify-content: center;
+        max-height: 100vh;
+        padding: 16px;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+        /* height: auto; */
+        overscroll-behavior: contain;
+    }
+
+    //.wis-wishlist-filters__overlay {
+    //    position: fixed;
+    //    top: 0;
+    //    left: 0;
+    //    right: 0;
+    //    bottom: 0;
+    //    background-color: rgba(0, 0, 0, 0.4);
+    //}
+
+    .wis-wishlist-filters__content {
+        width: 275px;
+        z-index: 2;
+        background-color: var(--content-bg);
+        padding: 16px;
+        border-radius: var(--offset-xxs);
+        height: 100%;
+    }
+
+    .wis-wishlist-filters__close {
+        display: block;
+    }
+}
+</style>
