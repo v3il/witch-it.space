@@ -157,6 +157,7 @@ export default {
     padding: var(--offset-sm);
     align-self: flex-start;
     overflow-y: auto;
+    overscroll-behavior: contain;
     max-height: calc(100vh - 60px - 32px);
 }
 
@@ -164,44 +165,28 @@ export default {
     display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .wis-wishlist-filters {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        /* bottom: 0; */
-        //max-height: none;
-        z-index: 222;
+        z-index: calc(var(--navbar-z) + 1);
         margin: 0;
         width: auto;
-        /* overflow: auto; */
-        display: flex;
-        justify-content: center;
+        min-height: 100vh;
         max-height: 100vh;
-        padding: 16px;
-        background-color: rgba(0, 0, 0, 0.5);
-        overflow-y: auto;
-        /* height: auto; */
-        overscroll-behavior: contain;
+        padding: var(--offset-sm);
+        background-color: rgba(0, 0, 0, 0.7);
     }
 
-    //.wis-wishlist-filters__overlay {
-    //    position: fixed;
-    //    top: 0;
-    //    left: 0;
-    //    right: 0;
-    //    bottom: 0;
-    //    background-color: rgba(0, 0, 0, 0.4);
-    //}
-
     .wis-wishlist-filters__content {
-        width: 275px;
-        z-index: 2;
+        width: 300px;
         background-color: var(--content-bg);
-        padding: 16px;
+        padding: var(--offset-sm);
         border-radius: var(--offset-xxs);
         height: 100%;
+        margin: 0 auto;
     }
 
     .wis-wishlist-filters__close {
