@@ -8,46 +8,9 @@
       </template>
     </TopNavBar>
 
-    <!--    <div class="wit-flex wit-flex&#45;&#45;justify-between wit-flex&#45;&#45;align-center wit-wishlist__page-header">-->
-    <!--      <div>-->
-    <!--        <h3 class="wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">-->
-    <!--          Manage wishlist-->
-    <!--        </h3>-->
-    <!--        <p>Home > Wishlist > Manage wishlist</p>-->
-    <!--      </div>-->
-
-    <!--      <Dropdown position="bottom-end">-->
-    <!--        <template #trigger>-->
-    <!--              <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-action01s">-->
-    <!--                <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-    <!--                  <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
-    <!--                  {{ $t('MainMenu_Settings') }}-->
-    <!--                </div>-->
-    <!--              </b-button>-->
-    <!--        </template>-->
-
-    <!--        <template #items>-->
-    <!--          <DropdownItem @click="openMassPriceEditor">-->
-    <!--            Set price-->
-    <!--          </DropdownItem>-->
-
-    <!--          <DropdownItem-->
-    <!--            v-if="hasSelectedEntities"-->
-    <!--            @click="clearSelectedEntities"-->
-    <!--          >-->
-    <!--            Clear selection-->
-    <!--          </DropdownItem>-->
-
-    <!--          <DropdownItem @click="deleteAllOffers">-->
-    <!--            <span class="wit-color&#45;&#45;danger">Remove selected offers</span>-->
-    <!--          </DropdownItem>-->
-    <!--        </template>-->
-    <!--      </Dropdown>-->
-    <!--    </div>-->
-
     <div class="wit-wishlist__background wit-flex">
       <div class="wit-wishlist__content">
-        <div ref="filters" class="wit-flex wit-flex--wrap-reverse wit-flex--justify-between wit-wishlist__header">
+        <div ref="filters" class="wit-flex wit-flex--justify-between wit-wishlist__header">
           <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
             <template #tab0>
               {{ $t('Wishlist_MyWishlist') }}
@@ -73,34 +36,11 @@
               @toggle="isFiltersVisible = !isFiltersVisible"
             />
 
-            <!--                        <WishlistFilters-->
-            <!--                          :filters="filters"-->
-            <!--                          :is-filters-changed="isFiltersChanged"-->
-            <!--                          :is-sorts-changed="isSortsChanged"-->
-            <!--                          :sorts="sorts"-->
-            <!--                          @filtersChanged="onFiltersChange"-->
-            <!--                          @sortChanged="onSortChange"-->
-            <!--                          @resetFilter="resetFilter"-->
-            <!--                          @resetFilters="resetFilters"-->
-            <!--                          @open="isFiltersVisible = !isFiltersVisible"-->
-            <!--                        />-->
-
-            <!--            <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-actions expanded1">-->
-            <!--              <i class="mdi mdi-20px mdi-filter" />-->
-            <!--            </b-button>-->
-
             <Dropdown position="bottom-end">
               <template #trigger>
                 <b-button type="is-link" class="wit-position--relative wit-more-actions">
                   <i class="mdi mdi-20px mdi-cog" />
                 </b-button>
-
-                <!--                <b-button type="is-primary" class="wit-position&#45;&#45;relative wit-more-action01s">-->
-                <!--                  <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-                <!--                    <i class="mdi mdi-16px mdi-cog wit-offset-right&#45;&#45;xs" />-->
-                <!--                    {{ $t('MainMenu_Settings') }}-->
-                <!--                  </div>-->
-                <!--                </b-button>-->
               </template>
 
               <template #items>
@@ -123,7 +63,7 @@
           </div>
         </div>
 
-        <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__content1">
+        <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__items-list">
           <template #default="{ items: offers }">
             <ItemView
               v-for="(offer, index) in offers"
@@ -161,7 +101,7 @@
           </template>
         </ItemsListView>
 
-        <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__content1">
+        <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__items-list">
           <template #default="{ items }">
             <ItemView
               v-for="(item, index) in items"
@@ -188,7 +128,6 @@
         </ItemsListView>
       </div>
 
-      <!--      <div v-if="isFiltersVisible" class="ababa">-->
       <WishlistFilters
         :is-visible="isFiltersVisible"
         :filters="filters"
@@ -201,7 +140,6 @@
         @reset="resetSortsFilters"
         @close="isFiltersVisible = false"
       />
-      <!--      </div>-->
     </div>
 
     <SetMassPricePopup />
@@ -289,12 +227,6 @@ export default {
             'hasSelectedEntities',
             'selectedEntities'
         ])
-
-        // moreActionsButtonClass () {
-        //     return {
-        //         collapsed: !this.isSticky
-        //     }
-        // }
     },
 
     watch: {
@@ -310,32 +242,16 @@ export default {
     },
 
     data: () => ({
-        // isSticky: false,
         isFiltersVisible: false
     }),
 
     created () {
-        this.saveOffers(this.offers)
+        this.storeOffers(this.offers)
     },
 
-    // mounted () {
-    //     document.addEventListener('scroll', this.onScroll, { passive: true })
-    // },
-    //
-    // beforeDestroy () {
-    //     document.removeEventListener('scroll', this.onScroll)
-    // },
-
     methods: {
-        // onScroll () {
-        //     this.isSticky = this.$refs.filters.getBoundingClientRect().top === 0
-        // },
-        //
-        // update () {},
-        // reset () {},
-
         ...mapActions(StoreModules.WISHLIST, {
-            saveOffers: 'saveOffers',
+            storeOffers: 'storeOffers',
             toggleMode: 'toggleMode',
             fetchWishlist: 'fetchWishlist',
             updateFilters: 'updateFilters',
@@ -353,20 +269,6 @@ export default {
             toggleOrder: 'toggleOrder',
             updateOrderBy: 'updateOrderBy'
         }),
-
-        // onFiltersChange (changedFilters) {
-        //     const newFilters = { ...this.filters, ...changedFilters }
-        //
-        //     if (!isEqual(this.filters, newFilters)) {
-        //         this.updateFilters(newFilters)
-        //     }
-        // },
-
-        // onSortChange (sorts) {
-        //     if (!isEqual(this.sorts, sorts)) {
-        //         this.updateSorts(sorts)
-        //     }
-        // },
 
         updateRoute () {
             this.$router.replace({
@@ -474,30 +376,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .wit-wishlist1 {
-        padding: 0 var(--offset-sm);
-    }
-
     .wit-wishlist__background {
-        //background-color: var(--content-bg);
         min-height: calc(100vh - var(--header-height));
-        margin: var(--offset-sm) var(--offset-sm) 0; // var(--offset-md) 0;
+        margin: var(--offset-sm) var(--offset-sm) 0;
         position: relative;
     }
-
-    //.ababa {
-    //    border-radius: var(--offset-xxs);
-    //    width: 275px;
-    //    background-color: var(--content-bg);
-    //    margin-left: var(--offset-sm);
-    //    position: sticky;
-    //    top: var(--offset-sm);
-    //    height: auto;
-    //    padding: var(--offset-sm);
-    //    align-self: flex-start;
-    //    overflow-y: auto;
-    //    max-height: calc(100vh - 60px - 32px);
-    //}
 
     .wit-wishlist__header {
         position: sticky;
@@ -508,29 +391,21 @@ export default {
         border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
     }
 
-    .wit-wishlist__page-header {
-        padding: var(--offset-md);
-    }
-
     .wit-wishlist__content {
-        //height: 100%;
         flex: 1;
         background-color: var(--content-bg);
         border-radius: var(--offset-xxs);
         margin-bottom: var(--offset-sm);
     }
 
-    .wit-wishlist__content1 {
+    .wit-wishlist__items-list {
         padding: 0 var(--offset-sm) var(--offset-sm);
     }
 
     .wit-more-actions {
         width: 36px;
         height: 36px;
-        padding: 0; // var(--offset-xs);
-        //background-color: var(--primary);
-        //border: none; // var(--default-border);
-        //color: var(--body-color);
+        padding: 0;
         transition: width 0.3s ease, margin-right 0.3s ease;
         will-change: width, margin-left;
         overflow: hidden;
@@ -538,15 +413,6 @@ export default {
         background: #2e3648;
         border: var(--default-border);
         color: var(--muted-text-color);
-
-        //&.collapsed {
-        //    width: 0;
-        //    margin-left: 0;
-        //}
-    }
-
-    .wit-wishlist-editor__items-list {
-        padding: 0 var(--offset-xs);
     }
 
     .wit-offer-controls {

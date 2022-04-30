@@ -71,7 +71,7 @@ export const getters = {
 }
 
 export const actions = {
-    saveOffers ({ commit }, offers) {
+    storeOffers ({ commit }, offers) {
         commit('CONVERT_OFFERS', offers)
     },
 
