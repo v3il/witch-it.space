@@ -11,19 +11,25 @@
     <div class="wit-wishlist__background wit-flex">
       <div class="wit-wishlist__content">
         <div ref="filters" class="wit-flex wit-flex--justify-between wit-wishlist__header">
-          <Tabs :modes="$options.modes" :selected-mode="mode" class="wit-tabs-switcher" @switch="toggleMode">
+          <Tabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">
             <template #tab0>
-              {{ $t('Wishlist_MyWishlist') }}
-              <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                {{ sortedOfferModels.length }}
-              </b-tag>
+              <div class="wit-flex wit-flex--align-center">
+                <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>
+                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
+                <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                  {{ sortedOfferModels.length }}
+                </b-tag>
+              </div>
             </template>
 
             <template #tab1>
-              {{ $t('Wishlist_OtherItems') }}
-              <b-tag rounded class="wit-offset-left--xxs wit-font-weight--700">
-                {{ sortedNonWishlistItems.length }}
-              </b-tag>
+              <div class="wit-flex wit-flex--align-center">
+                <span class="wis-tabs__label">{{ $t('Wishlist_OtherItems') }}</span>
+                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
+                <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                  {{ sortedNonWishlistItems.length }}
+                </b-tag>
+              </div>
             </template>
           </Tabs>
 
@@ -427,5 +433,19 @@ export default {
 
     .wit-offer-controls--remove {
         top: 48px;
+    }
+
+    .wis-tabs__icon {
+        display: none;
+    }
+
+    @media (max-width: 767.98px) {
+        .wis-tabs__icon {
+            display: block;
+        }
+
+        .wis-tabs__label {
+            display: none;
+        }
     }
 </style>

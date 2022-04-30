@@ -46,12 +46,5 @@ export default {
     grid-row-gap: var(--grid-gap);
     grid-auto-rows: max-content;
     justify-items: center;
-    //overflow-y: scroll;
-    //padding-right: var(--offset-sm);
-
-    @media screen and (max-width: 768px) {
-        justify-content: center;
-        grid-template-columns: repeat(auto-fit, minmax(var(--mobile-cell-width), var(--mobile-cell-width)));
-    }
 }
 </style>

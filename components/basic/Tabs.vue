@@ -92,4 +92,10 @@ export default {
         height: var(--offset-lg);
     }
 }
+
+@media (max-width: 1100px) {
+    .wit-tabs__button {
+        padding: var(--offset-xxs) var(--offset-xs);
+    }
+}
 </style>
