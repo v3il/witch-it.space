@@ -1,7 +1,7 @@
 <template>
-  <div class="wit-flex">
+  <div class="wit-flex wis-search-input">
     <b-input
-      class="wit-flex__item--grow"
+      class="wit-flex__item--grow wis-search-input__input"
       :value="query"
       maxlength="20"
       :placeholder="placeholder"
@@ -13,7 +13,7 @@
       @icon-right-click="$emit('reset', 'query')"
     />
 
-    <b-button class="wit-flex wit-flex--center wit-filter__filter-button wit-split-part--right" @click="$emit('toggle')">
+    <b-button class="wit-flex wit-flex--center wis-search-input__button wit-split-part--right" @click="$emit('toggle')">
       <i class="mdi mdi-20px mdi-filter wit-color--muted" />
     </b-button>
   </div>
@@ -38,10 +38,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-filter__filter-button {
+.wis-search-input__button {
     background-color: rgb(46, 54, 72);
     border: var(--default-border);
     color: var(--body-color);
     padding: 0 var(--offset-xs);
+}
+
+@media (max-width: 1100px) {
+    .wis-search-input__input {
+        display: none;
+    }
+
+    .wis-search-input__button {
+        border-radius: var(--offset-xxs);
+    }
 }
 </style>
