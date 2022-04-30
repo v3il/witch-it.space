@@ -1,5 +1,5 @@
 <template>
-  <FiltersView @reset="$emit('reset')" @close="$emit('close')">
+  <FiltersView :is-visible="isVisible" @reset="$emit('reset')" @close="$emit('close')">
     <QueryEditor
       :query="filters.query"
       class="wis-wishlist-filters__search wit-offset-bottom--sm"
@@ -36,7 +36,7 @@
     />
 
     <SortsSelector
-      class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom"
+      class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
       :sorts="sorts"
       :available-sorts="$options.availableSorts"
       @updateOrderBy="updateOrderBy($event)"
@@ -82,6 +82,11 @@ export default {
         sorts: {
             required: true,
             type: Object
+        },
+
+        isVisible: {
+            required: true,
+            type: Boolean
         }
     },
 
@@ -106,52 +111,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-wishlist-filters {
-    border-radius: var(--offset-xxs);
-    width: 275px;
-    background-color: var(--content-bg);
-    margin-left: var(--offset-sm);
-    position: sticky;
-    top: var(--offset-sm);
-    height: auto;
-    padding: var(--offset-sm);
-    align-self: flex-start;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    max-height: calc(100vh - 60px - 32px);
-}
-
-.wis-wishlist-filters__search,
-.wis-wishlist-filters__close {
+.wis-wishlist-filters__search {
     display: none;
 }
 
 @media (max-width: 1100px) {
-    .wis-wishlist-filters {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: calc(var(--navbar-z) + 1);
-        margin: 0;
-        width: auto;
-        min-height: 100vh;
-        max-height: 100vh;
-        padding: var(--offset-sm);
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .wis-wishlist-filters__content {
-        width: 300px;
-        background-color: var(--content-bg);
-        padding: var(--offset-sm);
-        border-radius: var(--offset-xxs);
-        height: 100%;
-        margin: 0 auto;
-    }
-
-    .wis-wishlist-filters__search,
-    .wis-wishlist-filters__close {
+    .wis-wishlist-filters__search {
         display: flex;
     }
 }

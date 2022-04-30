@@ -3,7 +3,7 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-offset-bottom--xs">
-          Manage wishlist
+          {{ $t('Wishlist_Manage_Title') }}
         </h1>
       </template>
     </TopNavBar>
@@ -190,7 +190,7 @@
 
       <!--      <div v-if="isFiltersVisible" class="ababa">-->
       <WishlistFilters
-        v-if="isFiltersVisible"
+        :is-visible="isFiltersVisible"
         :filters="filters"
         :sorts="sorts"
         @changeFilters="updateFilters"
@@ -311,7 +311,7 @@ export default {
 
     data: () => ({
         // isSticky: false,
-        isFiltersVisible: !false
+        isFiltersVisible: false
     }),
 
     created () {
@@ -480,8 +480,8 @@ export default {
 
     .wit-wishlist__background {
         //background-color: var(--content-bg);
-        min-height: 100vh;
-        margin: var(--offset-sm); // var(--offset-md) 0;
+        min-height: calc(100vh - var(--header-height));
+        margin: var(--offset-sm) var(--offset-sm) 0; // var(--offset-md) 0;
         position: relative;
     }
 
@@ -513,10 +513,11 @@ export default {
     }
 
     .wit-wishlist__content {
-        height: 100%;
+        //height: 100%;
         flex: 1;
         background-color: var(--content-bg);
         border-radius: var(--offset-xxs);
+        margin-bottom: var(--offset-sm);
     }
 
     .wit-wishlist__content1 {

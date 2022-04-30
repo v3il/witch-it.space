@@ -226,6 +226,7 @@ export const ru = {
     Wishlist_Remove: 'Удалить',
     Wishlist_ClearEditor: 'Очистить редактор',
     Wishlist_SetGlobalPrice: 'Установить цену',
+    Wishlist_Manage_Title: 'Редактирование вишлиста',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',
