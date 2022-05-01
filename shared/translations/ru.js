@@ -227,6 +227,10 @@ export const ru = {
     Wishlist_ClearEditor: 'Очистить редактор',
     Wishlist_SetGlobalPrice: 'Установить цену',
     Wishlist_Manage_Title: 'Редактирование вишлиста',
+    Wishlist_Manage_Deselect: 'Убрать выделение',
+    Wishlist_Manage_ChangePrices: 'Изменить цены',
+    Wishlist_Manage_AddToWishlist: 'Добавить в вишлист',
+    Wishlist_Manage_RemoveOffers: 'Удалить предложения',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

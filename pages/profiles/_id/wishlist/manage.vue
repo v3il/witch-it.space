@@ -50,19 +50,19 @@
               </template>
 
               <template #items>
-                <DropdownItem @click="openMassPriceEditor">
-                  Set price
-                </DropdownItem>
-
                 <DropdownItem
                   v-if="hasSelectedEntities"
                   @click="clearSelectedEntities"
                 >
-                  Clear selection
+                  {{ $t('Wishlist_Manage_Deselect') }}
                 </DropdownItem>
 
-                <DropdownItem @click="deleteAllOffers">
-                  <span class="wit-color--danger">Remove selected offers</span>
+                <DropdownItem @click="openMassPriceEditor">
+                  {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
+                </DropdownItem>
+
+                <DropdownItem v-if="isMyWishlistMode" @click="deleteAllOffers">
+                  <span class="wit-color--danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>
                 </DropdownItem>
               </template>
             </Dropdown>
@@ -323,9 +323,14 @@ export default {
         openMassPriceEditor () {
             const offers = this.hasSelectedEntities ? this.selectedOffers : this.sortedOfferModels
             const nonWishlistItems = this.hasSelectedEntities ? this.selectedNonWishlistItems : this.sortedNonWishlistItems
+            const entities = this.isMyWishlistMode ? offers : nonWishlistItems
+
+            if (entities.length === 1) {
+                return this.isMyWishlistMode ? this.editOffer(entities[0]) : this.addOffer(entities[0])
+            }
 
             this.$vfm.show(PopupNames.MANAGE_PRICES, {
-                entities: this.isMyWishlistMode ? offers : nonWishlistItems,
+                entities,
                 existingItems: this.isMyWishlistMode
             })
         },

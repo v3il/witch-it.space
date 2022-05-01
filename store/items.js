@@ -34,7 +34,7 @@ export const mutations = {
     [Items.Mutations.SET_ITEMS] (state, questsData) {
         const { items } = questsData
 
-        state.items = items
+        state.items = items.map(item => Object.freeze(item))
         state.isLoaded = true
     },
 
