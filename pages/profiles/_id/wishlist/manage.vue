@@ -253,6 +253,10 @@ export default {
 
     created () {
         this.storeOffers(this.offers)
+
+        if (this.error) {
+            this.$showError(this.error)
+        }
     },
 
     methods: {

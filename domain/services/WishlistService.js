@@ -21,9 +21,8 @@ export class WishlistService {
 
     async fetch (userId) {
         try {
-            const { wishlist } = await this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
-            console.log(666, wishlist)
-            return { error: null, offers: wishlist }
+            const { offers } = await this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
+            return { error: null, offers }
         } catch (e) {
             return { error: e.message, offers: [] }
         }

@@ -183,14 +183,18 @@ export const actions = {
         const { created, error } = await wishlistService.setMassPrice(offersList, prices)
 
         if (!error) {
+            console.time('Set mass2')
+
             commit('DESELECT_OFFERS', offers)
 
             const ids = offersList.map(offer => offer.id)
             const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
 
-            console.log(off)
+            // console.log(off)
 
             commit('SET_PRICES', { offers: off, prices })
+
+            console.timeEnd('Set mass2')
         }
 
         return { created: offersList.length, error }

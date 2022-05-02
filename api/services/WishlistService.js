@@ -1,4 +1,5 @@
 import { Price, sequelize, Wish } from '../models'
+import { PriceType } from '../../shared/items/PriceType.js'
 
 export class WishlistService {
     #priceService
@@ -23,6 +24,12 @@ export class WishlistService {
     }
 
     async setMassPrice ({ user, offerIds, prices }) {
+        const isValidPrices = prices.every(price => this.#priceService.isValidPrice(price))
+
+        if (!isValidPrices) {
+            throw new Error('PriceIsNotValid')
+        }
+
         const normalizedPrices = this.#priceService.normalizeRawPrices(prices)
 
         const offers = await user.getWishes({

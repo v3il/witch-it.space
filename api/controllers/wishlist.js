@@ -1,5 +1,5 @@
 import joi from 'joi'
-import { BadRequest } from '@curveball/http-errors'
+import { BadRequest, UnprocessableEntity } from '@curveball/http-errors'
 import { Wish } from '../models'
 import { wishlistService } from '../services'
 
@@ -12,11 +12,12 @@ const getUserWishlist = async (request, response) => {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
-    const wishlist = await wishlistService.getUserWishes(userId)
-
-    response.send({
-        wishlist
-    })
+    try {
+        const offers = await wishlistService.getUserWishes(userId)
+        response.send({ offers })
+    } catch (error) {
+        throw new UnprocessableEntity(request.$t('Error_WishlistFetchError'))
+    }
 }
 
 const setMassPrice = async (request, response) => {
@@ -32,11 +33,16 @@ const setMassPrice = async (request, response) => {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
-    const updated = await wishlistService.setMassPrice({ user, offerIds, prices })
+    console.time('Set mass')
 
-    response.send({
-        updated
-    })
+    try {
+        const updated = await wishlistService.setMassPrice({ user, offerIds, prices })
+        response.send({ updated })
+    } catch (e) {
+        throw new UnprocessableEntity(request.$t('Error_WishlistSetMassPriceError'))
+    }
+
+    console.timeEnd('Set mass')
 }
 
 const massCreate = async (request, response) => {

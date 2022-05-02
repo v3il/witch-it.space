@@ -6,42 +6,42 @@ export class PriceService {
     normalizeRawPrices (rawPrices) {
         const normalizedPrices = []
 
-        rawPrices.forEach((rawPrice) => {
-            if (!this.#isValidPrice(rawPrice)) {
-                return
-            }
-
-            const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
-            const isFixedPrice = priceType === PriceType.FIXED
-
-            const normalizedPrice = {
-                priceType,
-                itemId: isFixedPrice ? itemId : 0,
-                itemCount: itemId ? itemCount : 0,
-                itemId2: isFixedPrice ? itemId2 : 0,
-                itemCount2: itemId2 ? itemCount2 : 0
-            }
-
-            if (rawPrice.id) {
-                normalizedPrice.id = rawPrice.id
-            }
-
-            normalizedPrices.push(normalizedPrice)
-        })
+        // rawPrices.forEach((rawPrice) => {
+        //     if (!this.#isValidPrice(rawPrice)) {
+        //         return
+        //     }
+        //
+        //     const { priceType, itemId, itemCount, itemId2, itemCount2 } = rawPrice
+        //     const isFixedPrice = priceType === PriceType.FIXED
+        //
+        //     const normalizedPrice = {
+        //         priceType,
+        //         itemId: isFixedPrice ? itemId : 0,
+        //         itemCount: itemId ? itemCount : 0,
+        //         itemId2: isFixedPrice ? itemId2 : 0,
+        //         itemCount2: itemId2 ? itemCount2 : 0
+        //     }
+        //
+        //     if (rawPrice.id) {
+        //         normalizedPrice.id = rawPrice.id
+        //     }
+        //
+        //     normalizedPrices.push(normalizedPrice)
+        // })
 
         return normalizedPrices.slice(0, config.MAX_PRICES)
     }
 
-    #isValidPrice (rawPrice) {
-        if (!rawPrice) {
+    isValidPrice (price) {
+        if (!price) {
             return false
         }
 
-        if (rawPrice.priceType === PriceType.FIXED) {
-            return this.#isFixedPriceValid(rawPrice)
+        if (price.priceType === PriceType.FIXED) {
+            return this.#isFixedPriceValid(price)
         }
 
-        return rawPrice.priceType === PriceType.ANY || rawPrice.priceType === PriceType.WISHLIST
+        return price.priceType === PriceType.ANY || price.priceType === PriceType.WISHLIST
     }
 
     #isFixedPriceValid (rawPrice) {

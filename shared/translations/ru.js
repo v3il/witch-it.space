@@ -28,6 +28,8 @@ export const ru = {
     Error_WrongSteamAccountURL: 'Не корректная ссылка профиля Steam',
     Error_WrongSteamTradeURL: 'Не корректная ссылка обмена Steam',
     Error_WrongAvatarId: 'Не корректный аватар',
+    Error_WishlistFetchError: 'Не удалось загрузить список заказов',
+    Error_WishlistSetMassPriceError: 'Не удалось установить цены',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',
