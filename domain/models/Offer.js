@@ -14,6 +14,7 @@ export class Offer {
         this.id = offer.id
         this.item = itemsService.getById(offer.itemId)
         this.prices = (offer.rawPrices || []).map(price => Price.create(price))
+        this.isSelected = false
     }
 
     get isNew () {

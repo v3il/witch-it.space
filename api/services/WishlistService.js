@@ -30,7 +30,7 @@ export class WishlistService {
             throw new Error('PriceIsNotValid')
         }
 
-        const normalizedPrices = this.#priceService.normalizeRawPrices(prices)
+        const normalizedPrices = prices // this.#priceService.normalizeRawPrices(prices)
 
         const offers = await user.getWishes({
             where: { id: offerIds },

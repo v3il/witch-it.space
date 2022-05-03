@@ -180,21 +180,26 @@ export const actions = {
 
     async setMassPrices ({ commit, state }, { offers, prices }) {
         const offersList = Array.isArray(offers) ? offers : [offers]
-        const { created, error } = await wishlistService.setMassPrice(offersList, prices)
+        const { updated, error } = await wishlistService.setMassPrice(offersList, prices)
 
         if (!error) {
             console.time('Set mass2')
 
             commit('DESELECT_OFFERS', offers)
-
-            const ids = offersList.map(offer => offer.id)
-            const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
-
-            // console.log(off)
-
-            commit('SET_PRICES', { offers: off, prices })
+            commit('UPDATE_OFFERS', updated)
 
             console.timeEnd('Set mass2')
+
+            // console.time('Set mass2')
+            // const ids = offersList.map(offer => offer.id)
+            // const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
+            // console.timeEnd('Set mass2')
+            // // console.log(off)
+            //
+            // console.time('Set mass2')
+            // commit('SET_PRICES', { offers: off, prices })
+            //
+            // console.timeEnd('Set mass2')
         }
 
         return { created: offersList.length, error }
@@ -280,8 +285,18 @@ export const mutations = {
 
     SET_PRICES (state, { offers, prices }) {
         offers.forEach((offer) => {
+            console.time('Set mass22')
             const ps = prices.map(price => price.clone())
             offer.setPrices(ps)
+            console.timeEnd('Set mass22')
         })
+    },
+
+    UPDATE_OFFERS (state, offers) {
+        const ids = offers.map(offer => offer.id)
+        const copies = offers.map(offer => Offer.create(offer))
+
+        state.offerModels = state.offerModels.filter(offer => !ids.includes(offer.id))
+        state.offerModels.push(...copies)
     }
 }
