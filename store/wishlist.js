@@ -20,13 +20,16 @@ export const state = () => ({
 })
 
 export const getters = {
+    selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
+    selectedAvailableOffers: state => state.availableOffers.filter(offer => offer.isSelected),
+
     changedFilters: state => getObjectsDiff(state.defaultFilters, state.filters),
     isFiltersChanged: (state, getters) => Object.keys(getters.changedFilters).length > 0,
     changedSorts: state => getObjectsDiff(state.defaultSorts, state.sorts),
     isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0,
     isMyWishlistMode: state => state.mode === WishlistTabs.MY_WISHLIST,
     isNonWishlistItemsMode: state => state.mode === WishlistTabs.NON_WISHLIST_ITEMS,
-    selectedEntities: (state, getters) => getters.isMyWishlistMode ? state.selectedOffers : state.selectedNonWishlistItems,
+    selectedEntities: (state, getters) => getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
 
     filteredOfferModels: (state) => {
@@ -160,8 +163,8 @@ export const actions = {
         const { created, error } = await wishlistService.massCreate(offers)
 
         if (!error) {
-            commit('REMOVE_AVAILABLE_OFFERS', offers)
             commit('ADD_OFFERS', created)
+            commit('REMOVE_AVAILABLE_OFFERS', offers)
         }
 
         return { created: created.length, error }

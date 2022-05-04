@@ -231,7 +231,9 @@ export default {
             'isFiltersChanged',
             'isSortsChanged',
             'hasSelectedEntities',
-            'selectedEntities'
+            'selectedEntities',
+            'selectedExistingOffers',
+            'selectedAvailableOffers'
         ])
     },
 
@@ -333,8 +335,8 @@ export default {
         },
 
         openMassPriceEditor () {
-            const offers = this.hasSelectedEntities ? this.selectedOffers : this.sortedOfferModels
-            const nonWishlistItems = this.hasSelectedEntities ? this.selectedNonWishlistItems : this.sortedNonWishlistItems
+            const offers = this.hasSelectedEntities ? this.selectedExistingOffers : this.sortedOfferModels
+            const nonWishlistItems = this.hasSelectedEntities ? this.selectedAvailableOffers : this.sortedNonWishlistItems
             const entities = this.isMyWishlistMode ? offers : nonWishlistItems
 
             if (entities.length === 1) {
@@ -342,7 +344,7 @@ export default {
             }
 
             this.$vfm.show(PopupNames.MANAGE_PRICES, {
-                entities,
+                entities: entities.map(offer => offer.clone()),
                 existingItems: this.isMyWishlistMode
             })
         },

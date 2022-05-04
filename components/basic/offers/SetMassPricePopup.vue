@@ -61,6 +61,8 @@ export default {
             this.entities = entities
             this.existingItems = existingItems
             this.prices = [Price.getDefault()]
+
+            console.log(entities)
         },
 
         close () {
@@ -74,7 +76,8 @@ export default {
         async saveNewOffer () {
             this.isLoading = true
 
-            const { created, error } = await this.createOffers({ items: this.entities, prices: this.prices })
+            this.entities.forEach(offer => offer.setPrices(this.prices))
+            const { created, error } = await this.createOffers({ offers: this.entities })
 
             if (error) {
                 this.$showError(error)
