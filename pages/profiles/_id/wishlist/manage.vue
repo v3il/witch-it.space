@@ -10,7 +10,7 @@
 
     <div class="wit-wishlist__background wit-flex">
       <div class="wit-wishlist__content">
-        <div ref="filters" class="wit-flex wit-flex--justify-between wit-wishlist__header">
+        <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
           <Tabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">
             <template #tab0>
               <div class="wit-flex wit-flex--align-center">
@@ -58,7 +58,9 @@
                 </DropdownItem>
 
                 <DropdownItem @click="openMassPriceEditor">
-                  {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
+                  <span class="wit-color--success">
+                    {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
+                  </span>
                 </DropdownItem>
 
                 <DropdownItem v-if="isMyWishlistMode" @click="deleteAllOffers">
@@ -75,7 +77,7 @@
               v-for="(offer, index) in offers"
               :key="offer.id"
               :item="offer.item"
-              :is-selected="isOfferSelected(offer)"
+              :is-selected="offer.isSelected"
               add-title
               add-border
               @clicked="toggleOffer(offer)"
@@ -87,7 +89,7 @@
                   type="primary"
                   circle
                   :size="24"
-                  :disabled="isOfferSelected(offer)"
+                  :disabled="offer.isSelected"
                   @click="editOffer(offer)"
                 />
               </div>
@@ -98,7 +100,7 @@
                   type="danger"
                   circle
                   :size="24"
-                  :disabled="isOfferSelected(offer)"
+                  :disabled="offer.isSelected"
                   @click="deleteOffer(offer)"
                 />
               </div>
@@ -113,11 +115,11 @@
               v-for="(offer, index) in offers"
               :key="offer.item.id"
               :item="offer.item"
-              :is-selected="isOfferSelected(offer)"
+              :is-selected="offer.isSelected"
               add-title
               add-border
               @clicked="toggleOffer(offer)"
-              @shiftClick="onItemsRangeToggle(index)"
+              @shiftClick="onOffersRangeToggle(index)"
             >
               <div class="wit-offer-controls">
                 <IconButton
@@ -125,7 +127,7 @@
                   type="primary"
                   circle
                   :size="24"
-                  :disabled="isOfferSelected(offer)"
+                  :disabled="offer.isSelected"
                   @click="addOffer(offer)"
                 />
               </div>
@@ -155,7 +157,6 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
-import { isEqual } from 'lodash'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
@@ -216,9 +217,7 @@ export default {
         ...mapState(StoreModules.WISHLIST, [
             'mode',
             'filters',
-            'sorts',
-            'selectedOffers',
-            'selectedNonWishlistItems'
+            'sorts'
         ]),
 
         ...mapGetters(StoreModules.WISHLIST, [
@@ -282,8 +281,6 @@ export default {
             toggleNonWishlistItem: 'toggleNonWishlistItem',
             clearSelectedEntities: 'clearSelectedEntities',
             removeOffers: 'removeOffers',
-            createOffers: 'createOffers',
-            setMassPrices: 'setMassPrices',
             updateFilter: 'updateFilter',
             toggleOrder: 'toggleOrder',
             updateOrderBy: 'updateOrderBy'
@@ -296,17 +293,8 @@ export default {
             }).catch(e => e)
         },
 
-        isOfferSelected (offer) {
-            return offer.isSelected
-            // return this.selectedOffers.includes(offer)
-        },
-
-        isItemSelected (item) {
-            return this.selectedNonWishlistItems.includes(item)
-        },
-
         async deleteOffer (offer) {
-            const { error, removed } = await this.removeOffers(offer)
+            const { error, removed } = await this.removeOffers([offer])
 
             if (error) {
                 return this.$showError(error)
@@ -316,7 +304,7 @@ export default {
         },
 
         async deleteAllOffers () {
-            const offers = this.selectedOffers.length ? this.selectedOffers : this.sortedOfferModels
+            const offers = this.selectedExistingOffers.length ? this.selectedExistingOffers : this.sortedOfferModels
             const { error, removed } = await this.removeOffers(offers)
 
             if (error) {
@@ -350,50 +338,26 @@ export default {
         },
 
         onOffersRangeToggle (clickedItemIndex) {
-            const offers = this.sortedOfferModels
+            const offers = this.isMyWishlistMode ? this.sortedOfferModels : this.sortedNonWishlistItems
 
             for (let i = clickedItemIndex - 1; i >= 0; i--) {
-                if (this.isOfferSelected(offers[i])) {
+                if (offers[i].isSelected) {
                     return this.toggleOffersRange({ from: i + 1, to: clickedItemIndex })
                 }
             }
 
             for (let i = clickedItemIndex + 1; i < offers.length; i++) {
-                if (this.isOfferSelected(offers[i])) {
+                if (offers[i].isSelected) {
                     return this.toggleOffersRange({ from: clickedItemIndex, to: i - 1 })
                 }
             }
         },
 
         toggleOffersRange ({ from, to }) {
-            const offers = this.sortedOfferModels
+            const offers = this.isMyWishlistMode ? this.sortedOfferModels : this.sortedNonWishlistItems
 
             for (let index = from; index <= to; index++) {
                 this.toggleOffer(offers[index])
-            }
-        },
-
-        onItemsRangeToggle (clickedItemIndex) {
-            const items = this.sortedNonWishlistItems
-
-            for (let i = clickedItemIndex - 1; i >= 0; i--) {
-                if (this.isItemSelected(items[i])) {
-                    return this.toggleItemsRange({ from: i + 1, to: clickedItemIndex })
-                }
-            }
-
-            for (let i = clickedItemIndex + 1; i < items.length; i++) {
-                if (this.isItemSelected(items[i])) {
-                    return this.toggleItemsRange({ from: clickedItemIndex, to: i - 1 })
-                }
-            }
-        },
-
-        toggleItemsRange ({ from, to }) {
-            const items = this.sortedNonWishlistItems
-
-            for (let index = from; index <= to; index++) {
-                this.toggleNonWishlistItem(items[index])
             }
         }
     }

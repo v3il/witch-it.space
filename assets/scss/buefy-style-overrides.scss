@@ -194,3 +194,11 @@ strong {
 .checkbox:hover {
     color: var(--body-color);
 }
+
+.snackbar.is-success {
+    background-color: var(--success);
+}
+
+.snackbar.is-danger {
+    background-color: var(--danger);
+}

@@ -33,7 +33,7 @@ export default function ({ store }) {
                 const message = typeof options === 'string' ? options : options.message
 
                 this.$showNotification({
-                    type: 'error',
+                    type: 'danger',
                     message
                 })
             },

@@ -120,22 +120,7 @@ export const actions = {
     },
 
     toggleOffer ({ commit, state }, offer) {
-        console.log(offer)
         commit('TOGGLE_OFFER', offer)
-
-        // if (state.selectedOffers.includes(offer)) {
-        //     return commit('DESELECT_OFFER', offer)
-        // }
-        //
-        // commit('SELECT_OFFER', offer)
-    },
-
-    toggleNonWishlistItem ({ commit, state }, item) {
-        if (state.selectedNonWishlistItems.includes(item)) {
-            return commit('DESELECT_ITEM', item)
-        }
-
-        commit('SELECT_ITEM', item)
     },
 
     toggleMode ({ commit }, mode) {
@@ -143,7 +128,8 @@ export const actions = {
     },
 
     clearSelectedEntities ({ commit, getters }) {
-        commit(getters.isMyWishlistMode ? 'CLEAR_SELECTED_OFFERS' : 'CLEAR_SELECTED_ITEMS')
+        const offers = getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers
+        commit('DESELECT_OFFERS', offers)
     },
 
     async createOffers ({ commit }, { offers }) {
@@ -161,37 +147,23 @@ export const actions = {
         const { updated, error } = await wishlistService.setMassPrice(offers, prices)
 
         if (!error) {
-            // commit('DESELECT_OFFERS', offers)
             commit('UPDATE_OFFERS', updated)
-
-            // console.time('Set mass2')
-            // const ids = offersList.map(offer => offer.id)
-            // const off = state.existingOffers.filter(offerModel => ids.includes(offerModel.id))
-            // console.timeEnd('Set mass2')
-            // // console.log(off)
-            //
-            // console.time('Set mass2')
-            // commit('SET_PRICES', { offers: off, prices })
-            //
-            // console.timeEnd('Set mass2')
         }
 
         return { updated: updated.length, error }
     },
 
     async removeOffers ({ commit, state }, offers) {
-        const offersList = Array.isArray(offers) ? offers : [offers]
-        const offerIds = offersList.map(offer => offer.id)
+        const offerIds = offers.map(offer => offer.id)
         const { removed, error } = await wishlistService.removeOffers(offerIds)
 
         if (removed) {
-            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
             commit('REMOVE_OFFERS', offerIds)
+            commit('ADD_AVAILABLE_OFFERS', offers)
         }
 
         return { removed, error }
     }
-
 }
 
 export const mutations = {
@@ -236,49 +208,12 @@ export const mutations = {
         state.sorts = { ...state.defaultSorts }
     },
 
-    SELECT_OFFER (state, offer) {
-        state.selectedOffers.push(offer)
-    },
-
-    DESELECT_OFFER (state, offerToRemove) {
-        state.selectedOffers = state.selectedOffers.filter(offer => offer !== offerToRemove)
-    },
-
-    DESELECT_OFFERS (state, offersToRemove) {
-        state.selectedOffers = state.selectedOffers.filter(offer => !offersToRemove.includes(offer))
-    },
-
-    SELECT_ITEM (state, item) {
-        state.selectedNonWishlistItems.push(item)
-    },
-
-    DESELECT_ITEM (state, itemToRemove) {
-        state.selectedNonWishlistItems = state.selectedNonWishlistItems.filter(item => item !== itemToRemove)
-    },
-
     TOGGLE_MODE (state, mode) {
         state.mode = mode
     },
 
-    CLEAR_SELECTED_OFFERS (state) {
-        state.selectedOffers = []
-    },
-
-    CLEAR_SELECTED_ITEMS (state) {
-        state.selectedNonWishlistItems = []
-    },
-
     REMOVE_OFFERS (state, offersToRemoveIds) {
         state.existingOffers = state.existingOffers.filter(offer => !offersToRemoveIds.includes(offer.id))
-    },
-
-    SET_PRICES (state, { offers, prices }) {
-        offers.forEach((offer) => {
-            console.time('Set mass22')
-            const ps = prices.map(price => price.clone())
-            offer.setPrices(ps)
-            console.timeEnd('Set mass22')
-        })
     },
 
     UPDATE_OFFERS (state, offers) {
@@ -290,9 +225,15 @@ export const mutations = {
     },
 
     TOGGLE_OFFER (state, offer) {
-        console.log(offer.isSelected)
         offer.isSelected = !offer.isSelected
-        console.log(offer)
+    },
+
+    DESELECT_OFFERS (state, offers) {
+        offers.forEach(offer => offer.isSelected = false)
+    },
+
+    ADD_AVAILABLE_OFFERS (state, offers) {
+        state.availableOffers.push(...offers.map(offer => Offer.fromItem(offer.item)))
     },
 
     REMOVE_AVAILABLE_OFFERS (state, offers) {
