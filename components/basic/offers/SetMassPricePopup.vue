@@ -61,8 +61,6 @@ export default {
             this.entities = entities
             this.existingItems = existingItems
             this.prices = [Price.getDefault()]
-
-            console.log(entities)
         },
 
         close () {
@@ -92,7 +90,7 @@ export default {
         async saveExistingOffer () {
             this.isLoading = true
 
-            const { created, error } = await this.setMassPrices({
+            const { updated, error } = await this.setMassPrices({
                 offers: this.entities,
                 prices: this.prices
             })
@@ -101,7 +99,7 @@ export default {
                 this.$showError(error)
             } else {
                 this.close()
-                this.$showSuccess(this.$t('OffersUpdated', [created]))
+                this.$showSuccess(this.$t('OffersUpdated', [updated]))
             }
 
             this.isLoading = false

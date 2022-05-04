@@ -146,19 +146,6 @@ export const actions = {
         commit(getters.isMyWishlistMode ? 'CLEAR_SELECTED_OFFERS' : 'CLEAR_SELECTED_ITEMS')
     },
 
-    async removeOffers ({ commit, state }, offers) {
-        const offersList = Array.isArray(offers) ? offers : [offers]
-        const offerIds = offersList.map(offer => offer.id)
-        const { removed, error } = await wishlistService.removeOffers(offerIds)
-
-        if (removed) {
-            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
-            commit('REMOVE_OFFERS', offerIds)
-        }
-
-        return { removed, error }
-    },
-
     async createOffers ({ commit }, { offers }) {
         const { created, error } = await wishlistService.massCreate(offers)
 
@@ -171,16 +158,11 @@ export const actions = {
     },
 
     async setMassPrices ({ commit, state }, { offers, prices }) {
-        const offersList = Array.isArray(offers) ? offers : [offers]
-        const { updated, error } = await wishlistService.setMassPrice(offersList, prices)
+        const { updated, error } = await wishlistService.setMassPrice(offers, prices)
 
         if (!error) {
-            console.time('Set mass2')
-
-            commit('DESELECT_OFFERS', offers)
+            // commit('DESELECT_OFFERS', offers)
             commit('UPDATE_OFFERS', updated)
-
-            console.timeEnd('Set mass2')
 
             // console.time('Set mass2')
             // const ids = offersList.map(offer => offer.id)
@@ -194,8 +176,22 @@ export const actions = {
             // console.timeEnd('Set mass2')
         }
 
-        return { created: offersList.length, error }
+        return { updated: updated.length, error }
+    },
+
+    async removeOffers ({ commit, state }, offers) {
+        const offersList = Array.isArray(offers) ? offers : [offers]
+        const offerIds = offersList.map(offer => offer.id)
+        const { removed, error } = await wishlistService.removeOffers(offerIds)
+
+        if (removed) {
+            offersList.forEach(offer => commit('DESELECT_OFFER', offer))
+            commit('REMOVE_OFFERS', offerIds)
+        }
+
+        return { removed, error }
     }
+
 }
 
 export const mutations = {
