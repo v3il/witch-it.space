@@ -108,15 +108,15 @@
         </ItemsListView>
 
         <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__items-list">
-          <template #default="{ items }">
+          <template #default="{ items: offers }">
             <ItemView
-              v-for="(item, index) in items"
-              :key="item.id"
-              :item="item"
-              :is-selected="isItemSelected(item)"
+              v-for="(offer, index) in offers"
+              :key="offer.item.id"
+              :item="offer.item"
+              :is-selected="isOfferSelected(offer)"
               add-title
               add-border
-              @clicked="toggleNonWishlistItem"
+              @clicked="toggleOffer(offer)"
               @shiftClick="onItemsRangeToggle(index)"
             >
               <div class="wit-offer-controls">
@@ -125,8 +125,8 @@
                   type="primary"
                   circle
                   :size="24"
-                  :disabled="isItemSelected(item)"
-                  @click="addOffer(item)"
+                  :disabled="isOfferSelected(offer)"
+                  @click="addOffer(offer)"
                 />
               </div>
             </ItemView>
@@ -252,11 +252,18 @@ export default {
     }),
 
     created () {
-        this.storeOffers(this.offers)
-
         if (this.error) {
-            this.$showError(this.error)
+            return this.$showError(this.error)
         }
+
+        const tradableItems = this.$itemsService.getTradableItems()
+        const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
+        const nonWishlistItems = tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
+
+        this.storeOffers({
+            existingOffers: this.offers.map(offer => Offer.create(offer)),
+            availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
+        })
     },
 
     methods: {
@@ -288,7 +295,8 @@ export default {
         },
 
         isOfferSelected (offer) {
-            return this.selectedOffers.includes(offer)
+            return offer.isSelected
+            // return this.selectedOffers.includes(offer)
         },
 
         isItemSelected (item) {
@@ -320,8 +328,8 @@ export default {
             this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: offer.clone() })
         },
 
-        addOffer (item) {
-            this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: Offer.fromItem(item) })
+        addOffer (offer) {
+            this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: offer.clone() })
         },
 
         openMassPriceEditor () {

@@ -7,7 +7,9 @@ import { SortOrders } from '@/shared/items/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 export const state = () => ({
-    offerModels: [],
+    existingOffers: [],
+    availableOffers: [],
+
     defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
     defaultSorts: OffersScheme.getDefaultSorts(),
@@ -29,7 +31,7 @@ export const getters = {
 
     filteredOfferModels: (state) => {
         const filters = state.filters
-        return state.offerModels.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
+        return state.existingOffers.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
     },
 
     sortedOfferModels: (state, getters) => {
@@ -44,16 +46,9 @@ export const getters = {
         })
     },
 
-    nonWishlistItems (state) {
-        const tradableItems = itemsService.getTradableItems()
-        const itemsInWishlistIds = state.offerModels.map(offer => offer.item.id)
-
-        return tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
-    },
-
-    filteredNonWishlistItems: (state, getters) => {
+    filteredNonWishlistItems: (state) => {
         const filters = state.filters
-        return getters.nonWishlistItems.filter(item => wishlistService.checkItem(item, filters))
+        return state.availableOffers.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
     },
 
     sortedNonWishlistItems: (state, getters) => {
@@ -61,18 +56,17 @@ export const getters = {
         const isAsc = order === SortOrders.ASC
 
         return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
-            const firstItem = isAsc ? a : b
-            const secondItem = isAsc ? b : a
+            const firstItem = isAsc ? a.item : b.item
+            const secondItem = isAsc ? b.item : a.item
 
             return wishlistService.compareItems(firstItem, secondItem, state.sorts)
         })
     }
-
 }
 
 export const actions = {
-    storeOffers ({ commit }, offers) {
-        commit('CONVERT_OFFERS', offers)
+    storeOffers ({ commit }, { existingOffers, availableOffers }) {
+        commit('STORE_OFFERS', { existingOffers, availableOffers })
     },
 
     getInitialFilters ({ commit }, route) {
@@ -123,11 +117,14 @@ export const actions = {
     },
 
     toggleOffer ({ commit, state }, offer) {
-        if (state.selectedOffers.includes(offer)) {
-            return commit('DESELECT_OFFER', offer)
-        }
+        console.log(offer)
+        commit('TOGGLE_OFFER', offer)
 
-        commit('SELECT_OFFER', offer)
+        // if (state.selectedOffers.includes(offer)) {
+        //     return commit('DESELECT_OFFER', offer)
+        // }
+        //
+        // commit('SELECT_OFFER', offer)
     },
 
     toggleNonWishlistItem ({ commit, state }, item) {
@@ -159,23 +156,15 @@ export const actions = {
         return { removed, error }
     },
 
-    async createOffers ({ commit }, { items, prices }) {
-        const itemsList = Array.isArray(items) ? items : [items]
-        const offersList = itemsList.map((item) => {
-            const pricesClone = prices.map(price => price.clone())
-            const offer = Offer.create({ itemId: item.id })
-            offer.setPrices(pricesClone)
-            return offer
-        })
-
-        const { created, error } = await wishlistService.massCreate(offersList)
+    async createOffers ({ commit }, { offers }) {
+        const { created, error } = await wishlistService.massCreate(offers)
 
         if (!error) {
-            items.forEach(item => commit('DESELECT_ITEM', item))
+            commit('REMOVE_AVAILABLE_OFFERS', offers)
             commit('ADD_OFFERS', created)
         }
 
-        return { created: offersList.length, error }
+        return { created: created.length, error }
     },
 
     async setMassPrices ({ commit, state }, { offers, prices }) {
@@ -192,7 +181,7 @@ export const actions = {
 
             // console.time('Set mass2')
             // const ids = offersList.map(offer => offer.id)
-            // const off = state.offerModels.filter(offerModel => ids.includes(offerModel.id))
+            // const off = state.existingOffers.filter(offerModel => ids.includes(offerModel.id))
             // console.timeEnd('Set mass2')
             // // console.log(off)
             //
@@ -207,12 +196,13 @@ export const actions = {
 }
 
 export const mutations = {
-    CONVERT_OFFERS (state, offers) {
-        state.offerModels = offers.map(offer => Offer.create(offer))
+    STORE_OFFERS (state, { existingOffers, availableOffers }) {
+        state.existingOffers = existingOffers
+        state.availableOffers = availableOffers
     },
 
     ADD_OFFERS (state, offers) {
-        state.offerModels.push(...offers.map(offer => Offer.create(offer)))
+        state.existingOffers.push(...offers.map(offer => Offer.create(offer)))
     },
 
     SET_FILTERS (state, filters) {
@@ -280,7 +270,7 @@ export const mutations = {
     },
 
     REMOVE_OFFERS (state, offersToRemoveIds) {
-        state.offerModels = state.offerModels.filter(offer => !offersToRemoveIds.includes(offer.id))
+        state.existingOffers = state.existingOffers.filter(offer => !offersToRemoveIds.includes(offer.id))
     },
 
     SET_PRICES (state, { offers, prices }) {
@@ -296,7 +286,18 @@ export const mutations = {
         const ids = offers.map(offer => offer.id)
         const copies = offers.map(offer => Offer.create(offer))
 
-        state.offerModels = state.offerModels.filter(offer => !ids.includes(offer.id))
-        state.offerModels.push(...copies)
+        state.existingOffers = state.existingOffers.filter(offer => !ids.includes(offer.id))
+        state.existingOffers.push(...copies)
+    },
+
+    TOGGLE_OFFER (state, offer) {
+        console.log(offer.isSelected)
+        offer.isSelected = !offer.isSelected
+        console.log(offer)
+    },
+
+    REMOVE_AVAILABLE_OFFERS (state, offers) {
+        const itemIds = offers.map(offer => offer.item.id)
+        state.availableOffers = state.availableOffers.filter(({ item }) => !itemIds.includes(item.id))
     }
 }

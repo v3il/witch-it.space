@@ -70,7 +70,7 @@ export default {
 
             const item = this.offer.item
             const prices = this.offer.prices
-            const { created, error } = await this.createOffers({ items: [item], prices })
+            const { created, error } = await this.createOffers({ offers: [this.offer], prices })
 
             if (error) {
                 this.$showError(error)
