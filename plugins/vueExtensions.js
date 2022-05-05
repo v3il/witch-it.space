@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { VTooltip, VPopover } from 'v-tooltip'
 import { getTranslation } from '@/shared'
+import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 
 export default function ({ store }) {
     const $t = (textId, replacements = []) => {
@@ -48,6 +49,12 @@ export default function ({ store }) {
                 this.$showNotification({
                     type: 'success',
                     message
+                })
+            },
+
+            $showConfirm (params) {
+                return new Promise((resolve) => {
+                    this.$vfm.show(PopupNames.CONFIRM_POPUP, { ...params, resolve })
                 })
             }
         }

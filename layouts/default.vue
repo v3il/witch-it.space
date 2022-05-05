@@ -4,6 +4,7 @@
 
     <div class="layout__right">
       <Nuxt />
+      <ConfirmPopup />
     </div>
   </div>
 </template>
@@ -13,12 +14,14 @@ import { mapState } from 'vuex'
 import { User, Theme } from '@/store'
 import { getNavbarLinks } from '@/shared'
 import LeftNavBar from '@/components/sidebar/LeftNavBar.vue'
+import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 
 export default {
     name: 'Default',
 
     components: {
-        LeftNavBar
+        LeftNavBar,
+        ConfirmPopup
     },
 
     head () {

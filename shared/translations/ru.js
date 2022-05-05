@@ -74,6 +74,7 @@ export const ru = {
     Unhide: 'Показать',
     Delete: 'Удалить',
     Confirm: 'Подтвердить',
+    ConfirmAction: 'Подтвердите действие',
     Cancel: 'Отменить',
     Change: 'Изменить',
     Filter: 'Фильтр',
@@ -233,6 +234,7 @@ export const ru = {
     Wishlist_Manage_ChangePrices: 'Изменить цены',
     Wishlist_Manage_AddToWishlist: 'Добавить в вишлист',
     Wishlist_Manage_RemoveOffers: 'Удалить предложения',
+    Wishlist_ConfirmDelete: 'Вы действительно хотите удалить выбранные предложения (%s)?',
 
     UserView_SteamGuardEnabled: 'Мой аккаунт защищён Steam Guard',
     UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

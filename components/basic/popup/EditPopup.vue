@@ -5,6 +5,7 @@
     :popup-title="popupTitle"
     :popup-size="popupSize"
     @beforeOpen="$emit('beforeOpen', $event)"
+    @beforeClose="$emit('beforeClose')"
   >
     <slot />
 

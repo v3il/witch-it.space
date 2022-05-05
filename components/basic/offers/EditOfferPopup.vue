@@ -137,7 +137,16 @@ export default {
         async removeOffer () {
             this.isLoading = false
 
-            const { error, removed } = await this.removeOffers(this.offer)
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Wishlist_ConfirmDelete', [1]),
+                popupTitle: this.$t('ConfirmAction')
+            })
+
+            if (!isConfirmed) {
+                return
+            }
+
+            const { error, removed } = await this.removeOffers([this.offer])
 
             if (error) {
                 this.$showError(error)

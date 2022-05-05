@@ -120,6 +120,7 @@ export default {
 @media screen and (max-width: 1023px) {
     .wiz-header {
         padding-right: 0;
+        padding-left: 0;
     }
 
     .wit-header__locale-switcher,

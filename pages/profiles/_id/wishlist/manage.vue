@@ -179,6 +179,7 @@ import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
+import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 
 export default {
     name: 'Manage',
@@ -294,6 +295,15 @@ export default {
         },
 
         async deleteOffer (offer) {
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Wishlist_ConfirmDelete', [1]),
+                popupTitle: this.$t('ConfirmAction')
+            })
+
+            if (!isConfirmed) {
+                return
+            }
+
             const { error, removed } = await this.removeOffers([offer])
 
             if (error) {
@@ -305,6 +315,15 @@ export default {
 
         async deleteAllOffers () {
             const offers = this.selectedExistingOffers.length ? this.selectedExistingOffers : this.sortedOfferModels
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Wishlist_ConfirmDelete', [offers.length]),
+                popupTitle: this.$t('ConfirmAction')
+            })
+
+            if (!isConfirmed) {
+                return
+            }
+
             const { error, removed } = await this.removeOffers(offers)
 
             if (error) {

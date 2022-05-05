@@ -7,6 +7,7 @@
     :click-to-close="false"
     :lock-scroll="false"
     @before-open="beforeOpen"
+    @before-close="$emit('beforeClose')"
   >
     <div class="wit-popup-header wit-paddings--sm">
       <h5 class="modal__title">
