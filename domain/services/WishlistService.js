@@ -91,22 +91,12 @@ export class WishlistService {
         }
     }
 
-    async massCreate (offers) {
-        try {
-            const offersData = offers.map(offer => offer.buildOutput())
-            const { created } = await this.#axiosInstance.$post('/api/wishlist/mass_create', {
-                offers: offersData
-            })
-
-            return { created }
-        } catch (e) {
-            return { error: e.message }
-        }
+    massCreate (offers) {
+        const offersData = offers.map(offer => offer.buildOutput())
+        return this.#axiosInstance.$post('/api/wishlist/mass_create', { offers: offersData })
     }
 
     async setMassPrice (offers, priceModels) {
-        console.log(444, offers)
-
         const offerIds = offers.map(offer => offer.id)
         const prices = priceModels.map(priceModel => priceModel.buildOutput())
 
@@ -115,8 +105,6 @@ export class WishlistService {
                 offerIds,
                 prices
             })
-
-            // console.error(created, updated)
 
             return { error: null, updated }
         } catch (e) {

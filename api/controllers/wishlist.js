@@ -26,14 +26,11 @@ const setMassPrice = async (request, response) => {
     const schema = joi.array().required()
     const { error: idsError } = schema.validate(offerIds)
     const { error: pricesError } = schema.validate(prices)
+    const isValidPrices = wishlistService.isValidPrices(prices)
 
-    console.log(offerIds, prices)
-
-    if (idsError || pricesError) {
+    if (idsError || pricesError || !isValidPrices) {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
-
-    console.time('Set mass')
 
     try {
         const updated = await wishlistService.setMassPrice({ user, offerIds, prices })
@@ -41,13 +38,11 @@ const setMassPrice = async (request, response) => {
     } catch (e) {
         throw new UnprocessableEntity(request.$t('Error_WishlistSetMassPriceError'))
     }
-
-    console.timeEnd('Set mass')
 }
 
 const massCreate = async (request, response) => {
     const { user } = request
-    const { offers } = request.body
+    const { offers } = [{ itemId: 9999999 }] // request.body
     const schema = joi.array().required()
     const { error } = schema.validate(offers)
 
@@ -55,11 +50,24 @@ const massCreate = async (request, response) => {
         throw new BadRequest(request.$t('Error_BadRequest'))
     }
 
-    const created = await wishlistService.massCreate({ user, offers })
+    try {
+        const isValidOffers = await wishlistService.isValidOffers(offers, user)
 
-    response.send({
-        created
-    })
+        console.log(isValidOffers)
+
+        if (!isValidOffers) {
+            return response.status(400).send({ error: request.$t('Error_BadRequest') })
+        }
+
+        const created = await wishlistService.massCreate({ user, offers })
+
+        response.send({
+            created
+        })
+    } catch (e) {
+        console.log(333, e)
+        throw new UnprocessableEntity(request.$t('Error_WishlistSetMassPriceError'))
+    }
 }
 
 const removeFromWishlist = async (request, response) => {

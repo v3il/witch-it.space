@@ -100,20 +100,17 @@ export default {
             this.isNewOffer ? this.saveNewOffer() : this.saveExistingOffer()
         },
 
-        async saveNewOffer () {
+        saveNewOffer () {
             this.isLoading = true
             this.offer.setPrices(this.prices)
 
-            const { created, error } = await this.createOffers({ offers: [this.offer] })
-
-            if (error) {
-                this.$showError(error)
-            } else {
-                this.close()
-                this.$showSuccess(this.$t('OffersCreated', [created]))
-            }
-
-            this.isLoading = false
+            this.createOffers({ offers: [this.offer] })
+                .then(({ createdSize }) => {
+                    this.close()
+                    this.$showSuccess(this.$t('OffersCreated', [createdSize]))
+                })
+                .catch(error => this.$showError(error))
+                .finally(() => this.isLoading = false)
         },
 
         async saveExistingOffer () {

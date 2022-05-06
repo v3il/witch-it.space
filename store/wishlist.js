@@ -132,15 +132,12 @@ export const actions = {
         commit('DESELECT_OFFERS', offers)
     },
 
-    async createOffers ({ commit }, { offers }) {
-        const { created, error } = await wishlistService.massCreate(offers)
-
-        if (!error) {
+    createOffers ({ commit }, { offers }) {
+        return wishlistService.massCreate(offers).then(({ created }) => {
             commit('ADD_OFFERS', created)
             commit('REMOVE_AVAILABLE_OFFERS', offers)
-        }
-
-        return { created: created.length, error }
+            return { createdSize: created.length }
+        })
     },
 
     async setMassPrices ({ commit, state }, { offers, prices }) {

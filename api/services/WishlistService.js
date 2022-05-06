@@ -1,5 +1,4 @@
-import { Price, sequelize, Wish } from '../models'
-import { PriceType } from '../../shared/items/PriceType.js'
+import { Item, Price, sequelize, Wish } from '../models'
 
 export class WishlistService {
     #priceService
@@ -24,14 +23,6 @@ export class WishlistService {
     }
 
     async setMassPrice ({ user, offerIds, prices }) {
-        const isValidPrices = prices.every(price => this.#priceService.isValidPrice(price))
-
-        if (!isValidPrices) {
-            throw new Error('PriceIsNotValid')
-        }
-
-        const normalizedPrices = prices // this.#priceService.normalizeRawPrices(prices)
-
         const offers = await user.getWishes({
             where: { id: offerIds },
             include: { model: Price, as: 'rawPrices' }
@@ -43,13 +34,13 @@ export class WishlistService {
                     await offer.rawPrices[1].destroy({ transaction })
                 }
 
-                for (let i = 0; i < normalizedPrices.length; i++) {
+                for (let i = 0; i < prices.length; i++) {
                     if (offer.rawPrices[i]) {
-                        await offer.rawPrices[i].update(normalizedPrices[i], { transaction })
+                        await offer.rawPrices[i].update(prices[i], { transaction })
                         continue
                     }
 
-                    await Price.create({ ...normalizedPrices[i], priceValue: 0, offerId: offer.id }, { transaction })
+                    await Price.create({ ...prices[i], priceValue: 0, offerId: offer.id }, { transaction })
                 }
             })
         }
@@ -57,6 +48,29 @@ export class WishlistService {
         return user.getWishes({
             where: { id: offerIds },
             include: { model: Price, as: 'rawPrices' }
+        })
+    }
+
+    isValidPrices (prices) {
+        console.error(prices)
+
+        if (!prices.length) {
+            return false
+        }
+
+        return prices.every(price => this.#priceService.isValidPrice(price))
+    }
+
+    async isValidOffers (offers, user) {
+        const itemIds = (await Item.findAll({ attributes: ['itemId'], raw: true })).map(item => item.itemId)
+        const itemsInWishlistIds = (await user.getWishes({ attributes: ['itemId'], raw: true })).map(offer => offer.itemId)
+
+        return offers.every((offer) => {
+            console.error(JSON.stringify(offer))
+
+            return itemIds.includes(offer.itemId) &&
+                !itemsInWishlistIds.includes(offer.itemId) &&
+                this.isValidPrices(offer.rawPrices)
         })
     }
 
@@ -84,76 +98,4 @@ export class WishlistService {
             }
         })
     }
-
-    // async manage (user, wishlist) {
-    //     const updatedIds = []
-    //     const itemsToSave = []
-    //
-    //     console.clear('manage', wishlist)
-    //
-    //     const existingWishlistItems = await user.getWishes({
-    //         include: { model: Price, as: 'rawPrices' }
-    //     })
-    //
-    //     for (const wishlistItem of wishlist) {
-    //         const { id, itemId } = wishlistItem
-    //
-    //         if (!id) {
-    //             const existingByItemId = existingWishlistItems.find(existingItem => existingItem.itemId === itemId)
-    //
-    //             if (existingByItemId) {
-    //                 continue
-    //             }
-    //
-    //             itemsToSave.push({
-    //                 itemId,
-    //                 userId: user.id,
-    //                 rawPrices: this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
-    //             })
-    //
-    //             console.log('Create')
-    //
-    //             continue
-    //         }
-    //
-    //         const existingModel = existingWishlistItems.find(existingItem => existingItem.id === id)
-    //
-    //         if (!existingModel) {
-    //             continue
-    //         }
-    //
-    //         await sequelize.transaction(async (transaction) => {
-    //             const removedPrices = existingModel.rawPrices
-    //                 .filter(existingPrice => !wishlistItem.rawPrices.some(rawPrice => rawPrice.id === existingPrice.id))
-    //
-    //             await Price.destroy({
-    //                 transaction,
-    //                 where: { id: removedPrices.map(existingPrice => existingPrice.id) }
-    //             })
-    //
-    //             const normalizedPrices = this.#priceService.normalizeRawPrices(wishlistItem.rawPrices)
-    //
-    //             for (const price of normalizedPrices) {
-    //                 await Price.upsert({
-    //                     ...price,
-    //                     offerId: existingModel.id
-    //                 }, { returning: true, transaction })
-    //             }
-    //
-    //             updatedIds.push(existingModel.id)
-    //         })
-    //     }
-    //
-    //     const created = await Wish.bulkCreate(itemsToSave, {
-    //         include: { model: Price, as: 'rawPrices' }
-    //     })
-    //
-    //     const updated = await Wish.findAll({
-    //         where: { id: updatedIds },
-    //         order: [[{ model: Price, as: 'rawPrices' }, 'id', 'ASC']],
-    //         include: { model: Price, as: 'rawPrices' }
-    //     })
-    //
-    //     return { created, updated }
-    // }
 }
