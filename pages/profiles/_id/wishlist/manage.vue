@@ -255,7 +255,7 @@ export default {
 
     created () {
         if (this.error) {
-            return this.$showError(this.error)
+            return
         }
 
         const tradableItems = this.$itemsService.getTradableItems()
@@ -266,6 +266,12 @@ export default {
             existingOffers: this.offers.map(offer => Offer.create(offer)),
             availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
         })
+    },
+
+    mounted () {
+        if (this.error) {
+            this.$showError(this.error)
+        }
     },
 
     methods: {
@@ -304,13 +310,7 @@ export default {
                 return
             }
 
-            const { error, removed } = await this.removeOffers([offer])
-
-            if (error) {
-                return this.$showError(error)
-            }
-
-            this.$showSuccess(`Removed ${removed} items`)
+            this._deleteOffers([offer])
         },
 
         async deleteAllOffers () {
@@ -324,13 +324,15 @@ export default {
                 return
             }
 
-            const { error, removed } = await this.removeOffers(offers)
+            this._deleteOffers(offers)
+        },
 
-            if (error) {
-                return this.$showError(error)
-            }
-
-            this.$showSuccess(`Removed ${removed} items`)
+        _deleteOffers (offers) {
+            this.removeOffers(offers)
+                .then(({ removedOffersCount }) => {
+                    this.$showSuccess(this.$t('OffersRemoved', [removedOffersCount]))
+                })
+                .catch(this.$showError)
         },
 
         editOffer (offer) {

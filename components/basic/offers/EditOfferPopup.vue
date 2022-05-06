@@ -105,30 +105,24 @@ export default {
             this.offer.setPrices(this.prices)
 
             this.createOffers({ offers: [this.offer] })
-                .then(({ createdSize }) => {
+                .then(({ createdOffersSize }) => {
                     this.close()
-                    this.$showSuccess(this.$t('OffersCreated', [createdSize]))
+                    this.$showSuccess(this.$t('OffersCreated', [createdOffersSize]))
                 })
-                .catch(error => this.$showError(error))
+                .catch(this.$showError)
                 .finally(() => this.isLoading = false)
         },
 
-        async saveExistingOffer () {
+        saveExistingOffer () {
             this.isLoading = true
 
-            const { updated, error } = await this.setMassPrices({
-                offers: [this.offer],
-                prices: this.prices
-            })
-
-            if (error) {
-                this.$showError(error)
-            } else {
-                this.close()
-                this.$showSuccess(this.$t('OffersUpdated', [updated]))
-            }
-
-            this.isLoading = false
+            this.setMassPrices({ offers: [this.offer], prices: this.prices })
+                .then(({ updatedOffersSize }) => {
+                    this.close()
+                    this.$showSuccess(this.$t('OffersUpdated', [updatedOffersSize]))
+                })
+                .catch(this.$showError)
+                .finally(() => this.isLoading = false)
         },
 
         async removeOffer () {
@@ -143,16 +137,13 @@ export default {
                 return
             }
 
-            const { error, removed } = await this.removeOffers([this.offer])
-
-            if (error) {
-                this.$showError(error)
-            } else {
-                this.close()
-                this.$showSuccess(this.$t('OffersRemoved', [removed]))
-            }
-
-            this.isLoading = false
+            this.removeOffers([this.offer])
+                .then(({ removedOffersCount }) => {
+                    this.close()
+                    this.$showSuccess(this.$t('OffersRemoved', [removedOffersCount]))
+                })
+                .catch(this.$showError)
+                .finally(() => this.isLoading = false)
         },
 
         close () {

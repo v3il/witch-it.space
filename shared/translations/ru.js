@@ -30,6 +30,7 @@ export const ru = {
     Error_WrongAvatarId: 'Не корректный аватар',
     Error_WishlistFetchError: 'Не удалось загрузить список заказов',
     Error_WishlistSetMassPriceError: 'Не удалось установить цены',
+    Error_CantDoTheAction: 'Не удалось выполнить действие',
 
     Success_QuestReplacing: 'Квест заменён',
     Success_QuestFinalization: 'Награда за квест получена',

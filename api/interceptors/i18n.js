@@ -11,5 +11,13 @@ export const i18n = (request, response, next) => {
         return translateText(textId, request.locale)
     }
 
+    response.emitBadRequest = function (error = request.$t('Error_BadRequest')) {
+        this.status(400).send({ error })
+    }
+
+    response.emitUnprocessableEntity = function (error = request.$t('Error_CantDoTheAction')) {
+        this.status(422).send({ error })
+    }
+
     next()
 }

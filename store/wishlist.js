@@ -133,33 +133,31 @@ export const actions = {
     },
 
     createOffers ({ commit }, { offers }) {
-        return wishlistService.massCreate(offers).then(({ created }) => {
-            commit('ADD_OFFERS', created)
+        return wishlistService.massCreate(offers).then(({ createdOffers }) => {
+            commit('ADD_OFFERS', createdOffers)
             commit('REMOVE_AVAILABLE_OFFERS', offers)
-            return { createdSize: created.length }
+            return { createdOffersSize: createdOffers.length }
         })
     },
 
-    async setMassPrices ({ commit, state }, { offers, prices }) {
-        const { updated, error } = await wishlistService.setMassPrice(offers, prices)
+    setMassPrices ({ commit, state }, { offers, prices }) {
+        return wishlistService.setMassPrice(offers, prices).then(({ updatedOffers }) => {
+            console.error(updatedOffers)
 
-        if (!error) {
-            commit('UPDATE_OFFERS', updated)
-        }
-
-        return { updated: updated.length, error }
+            commit('UPDATE_OFFERS', updatedOffers)
+            return { updatedOffersSize: updatedOffers.length }
+        })
     },
 
-    async removeOffers ({ commit, state }, offers) {
+    removeOffers ({ commit, state }, offers) {
         const offerIds = offers.map(offer => offer.id)
-        const { removed, error } = await wishlistService.removeOffers(offerIds)
 
-        if (removed) {
-            commit('REMOVE_OFFERS', offerIds)
-            commit('ADD_AVAILABLE_OFFERS', offers)
-        }
-
-        return { removed, error }
+        return wishlistService.removeOffers(offerIds)
+            .then((responseData) => {
+                commit('REMOVE_OFFERS', offerIds)
+                commit('ADD_AVAILABLE_OFFERS', offers)
+                return responseData
+            })
     }
 }
 
