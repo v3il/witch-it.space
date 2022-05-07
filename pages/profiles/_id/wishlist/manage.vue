@@ -159,7 +159,6 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
-import TopTabs from '@/components/header/TopTabs.vue'
 import Tabs from '@/components/basic/Tabs.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
@@ -173,13 +172,7 @@ import { StoreModules } from '@/store/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
-import VirtualScrollBar from '@/components/basic/VirtualScrollBar.vue'
-import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
-import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
-import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
-import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
-import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 
 export default {
     name: 'Manage',
@@ -189,7 +182,6 @@ export default {
     components: {
         WishlistFilters,
         TopNavBar,
-        TopTabs,
         Tabs,
         ItemPriceList,
         Dropdown,
@@ -199,11 +191,6 @@ export default {
         SetMassPricePopup,
         ItemView,
         ItemsListView,
-        VirtualScrollBar,
-        RaritiesSelector,
-        EventsSelector,
-        SlotsSelector,
-        CharacterSelector,
         SearchInput
     },
 
@@ -228,10 +215,7 @@ export default {
             'sortedNonWishlistItems',
             'changedFilters',
             'changedSorts',
-            'isFiltersChanged',
-            'isSortsChanged',
             'hasSelectedEntities',
-            'selectedEntities',
             'selectedExistingOffers',
             'selectedAvailableOffers'
         ])
@@ -278,19 +262,17 @@ export default {
         ...mapActions(StoreModules.WISHLIST, {
             storeOffers: 'storeOffers',
             toggleMode: 'toggleMode',
-            fetchWishlist: 'fetchWishlist',
             updateFilters: 'updateFilters',
             updateSorts: 'updateSorts',
             resetFilter: 'resetFilter',
             resetSorts: 'resetSorts',
             resetSortsFilters: 'resetSortsFilters',
             toggleOffer: 'toggleOffer',
-            toggleNonWishlistItem: 'toggleNonWishlistItem',
             clearSelectedEntities: 'clearSelectedEntities',
             removeOffers: 'removeOffers',
-            updateFilter: 'updateFilter',
             toggleOrder: 'toggleOrder',
-            updateOrderBy: 'updateOrderBy'
+            updateOrderBy: 'updateOrderBy',
+            selectOffers: 'selectOffers'
         }),
 
         updateRoute () {
@@ -363,22 +345,14 @@ export default {
 
             for (let i = clickedItemIndex - 1; i >= 0; i--) {
                 if (offers[i].isSelected) {
-                    return this.toggleOffersRange({ from: i + 1, to: clickedItemIndex })
+                    return this.selectOffers({ from: i + 1, to: clickedItemIndex })
                 }
             }
 
             for (let i = clickedItemIndex + 1; i < offers.length; i++) {
                 if (offers[i].isSelected) {
-                    return this.toggleOffersRange({ from: clickedItemIndex, to: i - 1 })
+                    return this.selectOffers({ from: clickedItemIndex, to: i - 1 })
                 }
-            }
-        },
-
-        toggleOffersRange ({ from, to }) {
-            const offers = this.isMyWishlistMode ? this.sortedOfferModels : this.sortedNonWishlistItems
-
-            for (let index = from; index <= to; index++) {
-                this.toggleOffer(offers[index])
             }
         }
     }

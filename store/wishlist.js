@@ -9,24 +9,19 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 export const state = () => ({
     existingOffers: [],
     availableOffers: [],
+    mode: WishlistTabs.MY_WISHLIST,
 
     defaultFilters: OffersScheme.getDefaultFilters(),
     filters: OffersScheme.getDefaultFilters(),
     defaultSorts: OffersScheme.getDefaultSorts(),
-    sorts: OffersScheme.getDefaultSorts(),
-    selectedOffers: [],
-    selectedNonWishlistItems: [],
-    mode: WishlistTabs.MY_WISHLIST
+    sorts: OffersScheme.getDefaultSorts()
 })
 
 export const getters = {
     selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
     selectedAvailableOffers: state => state.availableOffers.filter(offer => offer.isSelected),
-
     changedFilters: state => getObjectsDiff(state.defaultFilters, state.filters),
-    isFiltersChanged: (state, getters) => Object.keys(getters.changedFilters).length > 0,
     changedSorts: state => getObjectsDiff(state.defaultSorts, state.sorts),
-    isSortsChanged: (state, getters) => Object.keys(getters.changedSorts).length > 0,
     isMyWishlistMode: state => state.mode === WishlistTabs.MY_WISHLIST,
     isNonWishlistItemsMode: state => state.mode === WishlistTabs.NON_WISHLIST_ITEMS,
     selectedEntities: (state, getters) => getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
@@ -102,10 +97,6 @@ export const actions = {
         commit('TOGGLE_ORDER', state.sorts.order === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC)
     },
 
-    updateFilter ({ commit }, prop) {
-        commit('UPDATE_FILTER', prop)
-    },
-
     resetFilter ({ commit }, propName) {
         commit('RESET_FILTER', propName)
     },
@@ -121,6 +112,11 @@ export const actions = {
 
     toggleOffer ({ commit, state }, offer) {
         commit('TOGGLE_OFFER', offer)
+    },
+
+    selectOffers ({ commit, getters }, { from, to }) {
+        const offers = getters.isMyWishlistMode ? getters.sortedOfferModels : getters.sortedNonWishlistItems
+        commit('SELECT_OFFERS', { from, to, offers })
     },
 
     toggleMode ({ commit }, mode) {
@@ -142,8 +138,6 @@ export const actions = {
 
     setMassPrices ({ commit, state }, { offers, prices }) {
         return wishlistService.setMassPrice(offers, prices).then(({ updatedOffers }) => {
-            console.error(updatedOffers)
-
             commit('UPDATE_OFFERS', updatedOffers)
             return { updatedOffersSize: updatedOffers.length }
         })
@@ -219,14 +213,6 @@ export const mutations = {
         state.existingOffers.push(...copies)
     },
 
-    TOGGLE_OFFER (state, offer) {
-        offer.isSelected = !offer.isSelected
-    },
-
-    DESELECT_OFFERS (state, offers) {
-        offers.forEach(offer => offer.isSelected = false)
-    },
-
     ADD_AVAILABLE_OFFERS (state, offers) {
         state.availableOffers.push(...offers.map(offer => Offer.fromItem(offer.item)))
     },
@@ -234,5 +220,19 @@ export const mutations = {
     REMOVE_AVAILABLE_OFFERS (state, offers) {
         const itemIds = offers.map(offer => offer.item.id)
         state.availableOffers = state.availableOffers.filter(({ item }) => !itemIds.includes(item.id))
+    },
+
+    TOGGLE_OFFER (state, offer) {
+        offer.isSelected = !offer.isSelected
+    },
+
+    SELECT_OFFERS (state, { from, to, offers }) {
+        for (let index = from; index <= to; index++) {
+            offers[index].isSelected = true
+        }
+    },
+
+    DESELECT_OFFERS (state, offers) {
+        offers.forEach(offer => offer.isSelected = false)
     }
 }

@@ -21,4 +21,6 @@ export const actions = {
 
 export const mutations = {}
 
+export const strict = false
+
 export { Theme, User, Locale, Root, Items, Wishlist, StoreModules }
