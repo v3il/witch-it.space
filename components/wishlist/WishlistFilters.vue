@@ -96,7 +96,7 @@ export default {
         ...mapActions(StoreModules.FILTERS, {
             mergeFilters: 'mergeFilters',
             updateFilters: 'updateFilters',
-            resetFilter: 'resetFilter',
+            resetFilterParam: 'resetFilterParam',
             resetSorts: 'resetSorts',
             resetSortsAndFilters: 'resetSortsAndFilters',
             toggleSortOrder: 'toggleSortOrder',
@@ -108,7 +108,7 @@ export default {
         },
 
         reset (propName) {
-            this.resetFilter(propName)
+            this.resetFilterParam(propName)
         },
 
         updateOrderBy (orderBy) {

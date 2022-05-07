@@ -1,83 +1,97 @@
-import { isEqual } from 'lodash'
-import { getObjectsDiff } from '@/utils/index.js'
-import { WishlistTabs } from '@/domain/models/tabs/index.js'
-import { wishlistService } from '@/domain/index.js'
+import { getFiltersFromRoute, getObjectsDiff, getSortFromRoute } from '@/utils/index.js'
 import { SortOrders } from '@/shared/items/index.js'
 
 export const state = () => ({
-    filtersManager: {}
+    defaultFilters: {},
+    filters: {},
+    defaultSorts: {},
+    sorts: {},
+    availableSorts: []
 })
 
-export const getters = {
-    filters: state => state.filtersManager.filters,
-    sorts: state => state.filtersManager.sorts,
-    changedFilters: state => state.filtersManager.changedFilters,
-    changedSorts: state => state.filtersManager.changedSorts
-}
-
 export const actions = {
-    setFiltersManager ({ commit, state }, filtersManager) {
-        console.error(filtersManager)
-        commit('SET_FILTERS_MANAGER', filtersManager)
+    setData ({ commit, state }, params) {
+        commit('SET_DATA', params)
     },
 
     toggleOrderBy ({ commit }, orderBy) {
         commit('UPDATE_ORDER_BY', orderBy)
+        commit('UPDATE_URL')
     },
 
     toggleSortOrder ({ commit }) {
         commit('TOGGLE_ORDER')
+        commit('UPDATE_URL')
     },
 
     mergeFilters ({ commit, state }, changedFilters) {
         commit('MERGE_FILTERS', changedFilters)
+        commit('UPDATE_URL')
     },
 
-    // resetFilterParam ({ commit }, propName) {
-    //     commit('RESET_FILTER_PARAM', propName)
-    // },
+    resetFilterParam ({ commit }, propName) {
+        commit('RESET_FILTER_PARAM', propName)
+    },
 
     resetFilters ({ commit }) {
         commit('RESET_FILTERS')
+        commit('UPDATE_URL')
     },
 
     resetSorts ({ commit }) {
         commit('RESET_SORTS')
+        commit('UPDATE_URL')
     },
 
     resetSortsAndFilters ({ commit }) {
         commit('RESET_FILTERS')
         commit('RESET_SORTS')
+        commit('UPDATE_URL')
     }
 }
 
 export const mutations = {
-    SET_FILTERS_MANAGER (state, filtersManager) {
-        state.filtersManager = filtersManager
+    SET_DATA (state, { defaultFilters, defaultSorts, availableSorts }) {
+        const currentRoute = this.$router.currentRoute
+
+        state.defaultSorts = defaultSorts
+        state.defaultFilters = defaultFilters
+        state.availableSorts = availableSorts
+        state.filters = getFiltersFromRoute(currentRoute, defaultFilters)
+        state.sorts = getSortFromRoute(currentRoute, defaultSorts, availableSorts)
     },
 
     UPDATE_ORDER_BY (state, orderBy) {
-        state.filtersManager.updateOrderBy(orderBy)
+        state.sorts.order = orderBy
     },
 
     TOGGLE_ORDER (state) {
-        state.filtersManager.toggleOrder()
+        state.sorts.sortBy = state.sorts.sortBy === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC
     },
 
     MERGE_FILTERS (state, changedFilters) {
-        console.log(state.filtersManager)
-        state.filtersManager.mergeFilters(changedFilters)
+        state.filters = { ...state.filters, ...changedFilters }
     },
 
     RESET_FILTER_PARAM (state, propName) {
-        state.filtersManager.resetFiltersParam(propName)
+        state.filters = { ...state.filters, [propName]: state.defaultFilters[propName] }
     },
 
     RESET_FILTERS (state) {
-        state.filtersManager.resetFilters()
+        state.filters = { ...state.defaultFilters }
     },
 
     RESET_SORTS (state) {
-        state.filtersManager.resetSorts()
+        state.sorts = { ...state.defaultSorts }
+    },
+
+    UPDATE_URL (state) {
+        const path = this.$router.currentRoute.path
+        const changedFilters = getObjectsDiff(state.defaultFilters, state.filters)
+        const changedSorts = getObjectsDiff(state.defaultSorts, state.sorts)
+        const searchParams = new URLSearchParams({ ...changedSorts, ...changedFilters })
+        const newURL = path + (searchParams ? `?${searchParams.toString()}` : '')
+
+        window.history.replaceState({}, '', newURL)
     }
 }

@@ -172,6 +172,7 @@ import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFilters } from '@/domain/models/filters/ItemsFilters.js'
+import { OffersScheme } from '@/domain/models/schemes/index.js'
 
 export default {
     name: 'Manage',
@@ -193,7 +194,13 @@ export default {
         SearchInput
     },
 
-    asyncData ({ route, $wishlistService }) {
+    async asyncData ({ route, $wishlistService, store }) {
+        await store.dispatch(`${StoreModules.FILTERS}/setData`, {
+            defaultFilters: OffersScheme.getDefaultFilters(),
+            defaultSorts: OffersScheme.getDefaultSorts(),
+            availableSorts: OffersScheme.getAvailableSorts()
+        })
+
         return $wishlistService.fetch(route.params.id)
     },
 
@@ -209,19 +216,20 @@ export default {
             'selectedAvailableOffers'
         ]),
 
-        ...mapGetters(StoreModules.FILTERS, ['filters', 'sorts', 'changedFilters', 'changedSorts'])
+        ...mapState(StoreModules.FILTERS, ['filters', 'sorts']),
+        ...mapGetters(StoreModules.FILTERS, ['changedFilters', 'changedSorts'])
     },
 
     data: () => ({
         isFiltersVisible: false
     }),
 
-    async created () {
+    created () {
         if (this.error) {
             return
         }
 
-        await this.$store.dispatch(`${StoreModules.FILTERS}/setFiltersManager`, ItemsFilters.create(this.$route))
+        // await this.$store.dispatch(`${StoreModules.FILTERS}/setFiltersManager`, ItemsFilters.create(this.$route))
 
         const tradableItems = this.$itemsService.getTradableItems()
         const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
