@@ -33,6 +33,8 @@ export class WishlistService {
     }
 
     checkItem (item, filters) {
+        console.error(filters)
+
         const lowerCasedQuery = filters.query.toLowerCase()
 
         if (lowerCasedQuery && !item.name.toLowerCase().includes(lowerCasedQuery)) {
@@ -59,6 +61,8 @@ export class WishlistService {
     }
 
     compareItems (firstItem, secondItem, sorts) {
+        console.error(sorts)
+
         const { sortBy } = sorts
 
         switch (sortBy) {

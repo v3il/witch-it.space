@@ -1,5 +1,5 @@
 <template>
-  <FiltersView :is-visible="isVisible" @reset="$emit('reset')" @close="$emit('close')">
+  <FiltersView :is-visible="isVisible" @reset="resetSortsAndFilters" @close="$emit('close')">
     <QueryEditor
       :query="filters.query"
       class="wis-wishlist-filters__search wit-offset-bottom--sm"
@@ -41,12 +41,13 @@
       :available-sorts="$options.availableSorts"
       @updateOrderBy="updateOrderBy($event)"
       @toggleOrder="toggleOrder"
-      @resetSorts="$emit('resetSorts')"
+      @resetSorts="resetSortParams"
     />
   </FiltersView>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
@@ -54,6 +55,7 @@ import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 import SortsSelector from '@/components/basic/filters/SortsSelector.vue'
 import FiltersView from '@/components/basic/filters/FiltersView.vue'
+import { StoreModules } from '@/store/index.js'
 
 export default {
     name: 'WishlistFilters',
@@ -91,20 +93,34 @@ export default {
     },
 
     methods: {
+        ...mapActions(StoreModules.FILTERS, {
+            mergeFilters: 'mergeFilters',
+            updateFilters: 'updateFilters',
+            resetFilter: 'resetFilter',
+            resetSorts: 'resetSorts',
+            resetSortsAndFilters: 'resetSortsAndFilters',
+            toggleSortOrder: 'toggleSortOrder',
+            toggleOrderBy: 'toggleOrderBy'
+        }),
+
         update (changedFilters) {
-            this.$emit('changeFilters', changedFilters)
+            this.mergeFilters(changedFilters)
         },
 
         reset (propName) {
-            this.$emit('resetFilter', propName)
+            this.resetFilter(propName)
         },
 
         updateOrderBy (orderBy) {
-            this.$emit('updateOrderBy', orderBy)
+            this.toggleOrderBy(orderBy)
         },
 
         toggleOrder () {
-            this.$emit('toggleOrder')
+            this.toggleSortOrder()
+        },
+
+        resetSortParams () {
+            this.resetSorts()
         }
     }
 }

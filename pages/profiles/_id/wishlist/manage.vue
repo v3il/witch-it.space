@@ -41,7 +41,7 @@
             <SearchInput
               :placeholder="$t('Items_SearchByItemName')"
               :query="filters.query"
-              @update="updateFilters({ query: $event })"
+              @update="mergeFilters({ query: $event })"
               @reset="resetFilter"
               @toggle="isFiltersVisible = !isFiltersVisible"
             />
@@ -144,12 +144,6 @@
         :is-visible="isFiltersVisible"
         :filters="filters"
         :sorts="sorts"
-        @changeFilters="updateFilters"
-        @resetFilter="resetFilter"
-        @resetSorts="resetSorts"
-        @updateOrderBy="updateOrderBy"
-        @toggleOrder="toggleOrder"
-        @reset="resetSortsFilters"
         @close="isFiltersVisible = false"
       />
     </div>
@@ -177,6 +171,7 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
+import { ItemsFilters } from '@/domain/models/filters/ItemsFilters.js'
 
 export default {
     name: 'Manage',
@@ -198,53 +193,35 @@ export default {
         SearchInput
     },
 
-    async asyncData ({ store, route, $wishlistService }) {
-        await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
-        await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
-
+    asyncData ({ route, $wishlistService }) {
         return $wishlistService.fetch(route.params.id)
     },
 
     computed: {
-        ...mapState(StoreModules.WISHLIST, [
-            'mode',
-            'filters',
-            'sorts'
-        ]),
-
+        ...mapState(StoreModules.WISHLIST, ['mode']),
         ...mapGetters(StoreModules.WISHLIST, [
             'isMyWishlistMode',
             'isNonWishlistItemsMode',
             'sortedOfferModels',
             'sortedNonWishlistItems',
-            'changedFilters',
-            'changedSorts',
             'hasSelectedEntities',
             'selectedExistingOffers',
             'selectedAvailableOffers'
-        ])
-    },
+        ]),
 
-    watch: {
-        filters: {
-            deep: true,
-            handler: 'updateRoute'
-        },
-
-        sorts: {
-            deep: true,
-            handler: 'updateRoute'
-        }
+        ...mapGetters(StoreModules.FILTERS, ['filters', 'sorts', 'changedFilters', 'changedSorts'])
     },
 
     data: () => ({
         isFiltersVisible: false
     }),
 
-    created () {
+    async created () {
         if (this.error) {
             return
         }
+
+        await this.$store.dispatch(`${StoreModules.FILTERS}/setFiltersManager`, ItemsFilters.create(this.$route))
 
         const tradableItems = this.$itemsService.getTradableItems()
         const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
@@ -266,28 +243,22 @@ export default {
         ...mapActions(StoreModules.WISHLIST, {
             storeOffers: 'storeOffers',
             toggleMode: 'toggleMode',
+            toggleOffer: 'toggleOffer',
+            clearSelectedEntities: 'clearSelectedEntities',
+            removeOffers: 'removeOffers',
+            selectOffers: 'selectOffers'
+        }),
+
+        ...mapActions(StoreModules.FILTERS, {
+            mergeFilters: 'mergeFilters',
             updateFilters: 'updateFilters',
             updateSorts: 'updateSorts',
             resetFilter: 'resetFilter',
             resetSorts: 'resetSorts',
-            resetSortsFilters: 'resetSortsFilters',
-            toggleOffer: 'toggleOffer',
-            clearSelectedEntities: 'clearSelectedEntities',
-            removeOffers: 'removeOffers',
+            resetSortsAndFilters: 'resetSortsAndFilters',
             toggleOrder: 'toggleOrder',
-            updateOrderBy: 'updateOrderBy',
-            selectOffers: 'selectOffers'
+            updateOrderBy: 'updateOrderBy'
         }),
-
-        updateRoute () {
-            const searchParams = new URLSearchParams({ ...this.changedSorts, ...this.changedFilters })
-
-            console.error(searchParams.toString())
-
-            const newURL = this.$route.path + (searchParams ? `?${searchParams.toString()}` : '')
-
-            window.history.replaceState({}, '', newURL)
-        },
 
         async deleteOffer (offer) {
             const isConfirmed = await this.$showConfirm({

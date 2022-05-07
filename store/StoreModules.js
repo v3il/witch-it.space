@@ -1,4 +1,5 @@
 export const StoreModules = Object.freeze({
     WISHLIST: 'wishlist',
-    USER: 'user'
+    USER: 'user',
+    FILTERS: 'filters'
 })
