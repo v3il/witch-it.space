@@ -48,7 +48,7 @@ export default {
     padding: var(--offset-sm);
     max-height: calc(100vh - 60px - 32px);
     position: fixed;
-    top: 72px;
+    top: 76px;
     right: var(--offset-sm);
     z-index: calc(var(--navbar-z) + 1);
     margin: 0;
