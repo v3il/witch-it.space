@@ -11,7 +11,7 @@ const getUserWishlist = (request, response) => {
     }
 
     wishlistService.getUserWishes(userId)
-        .then(offers => response.send({ offers }))
+        .then(({ offers, profile }) => response.send({ offers, profile }))
         .catch(() => response.emitUnprocessableEntity(request.$t('Error_WishlistFetchError')))
 }
 

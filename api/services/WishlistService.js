@@ -1,4 +1,5 @@
-import { Item, Price, sequelize, Wish } from '../models'
+import { Item, Price, sequelize, Wish, User } from '../models'
+import { userService } from '../services/index.js'
 
 export class WishlistService {
     #priceService
@@ -8,7 +9,9 @@ export class WishlistService {
     }
 
     async getUserWishes (userId) {
-        return await Wish.findAll({
+        const profile = await userService.getById(userId)
+
+        const offers = await Wish.findAll({
             where: { userId },
 
             order: [
@@ -20,6 +23,8 @@ export class WishlistService {
                 as: 'rawPrices'
             }
         })
+
+        return { profile: userService.toObject(profile), offers }
     }
 
     async setMassPrice ({ user, offerIds, prices }) {

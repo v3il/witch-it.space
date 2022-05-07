@@ -2,7 +2,7 @@ import { isEqual } from 'lodash'
 import { OffersScheme } from '@/domain/models/schemes'
 import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
-import { itemsService, wishlistService } from '@/domain/index.js'
+import { wishlistService } from '@/domain/index.js'
 import { SortOrders } from '@/shared/items/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 

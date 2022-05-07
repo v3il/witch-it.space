@@ -8,32 +8,32 @@
       </template>
 
       <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
-          <template #tab0>
-            {{ $t('Wishlist_TopTabs_Orders') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ marketSize }}</span>
-          </template>
+        <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">-->
+        <!--          <template #tab0>-->
+        <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
+        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ marketSize }}</span>-->
+        <!--          </template>-->
 
-          <template #tab1>
-            {{ $t('Wishlist_TopTabs_Wishlist') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ wishlistSize }}</span>
-          </template>
-        </TopTabs>
+        <!--          <template #tab1>-->
+        <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
+        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlistSize }}</span>-->
+        <!--          </template>-->
+        <!--        </TopTabs>-->
       </template>
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
-      <template v-if="error">
-        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
-          <nuxt-link to="/profiles" class="wit-padding-top--xs">
-            {{ $t('Profiles_BackToProfilesList') }}
-          </nuxt-link>
-        </EmptyState>
-      </template>
+      <!--      <template v-if="error">-->
+      <!--        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top&#45;&#45;sm wit-block&#45;&#45;full-width">-->
+      <!--          <nuxt-link to="/profiles" class="wit-padding-top&#45;&#45;xs">-->
+      <!--            {{ $t('Profiles_BackToProfilesList') }}-->
+      <!--          </nuxt-link>-->
+      <!--        </EmptyState>-->
+      <!--      </template>-->
 
-      <template v-else>
+      <template>
         <div class="wit-offset-right--md wit-profile__user">
-          <UserView v-if="profile" :profile="profile" :mode="userViewMode" hide-stat-buttons />
+          <!--          <UserView v-if="profile" :profile="profile" :mode="userViewMode" hide-stat-buttons />-->
         </div>
 
         <div class="wit-flex__item--grow">
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import UserView from '@/components/user/UserView.vue'
 import ItemView from '@/components/items/ItemView'
 import ItemFilters from '@/components/items/ItemFilters'
@@ -164,7 +164,8 @@ import Card from '@/components/basic/Card.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import TopTabs from '@/components/header/TopTabs.vue'
-import { User } from '@/store/index.js'
+import { StoreModules, User } from '@/store/index.js'
+import { Offer } from '@/domain/models/index.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -190,25 +191,54 @@ export default {
         TopTabs
     },
 
-    // middleware: ['fetchUser'],
+    /* async */ asyncData ({ store, route, $wishlistService }) {
+        // await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
+        // await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
 
-    async asyncData ({ app: { $usersService, $wishlistService }, route }) {
-        const { profile } = await $usersService.fetch(route.params.id)
-        const { wishlist } = await $wishlistService.fetch(route.params.id)
-        return { profile, wishlist, error: null }
+        return $wishlistService.fetch(route.params.id)
     },
 
     data: () => ({
-        mode: Modes.WISHLIST
+        isFiltersVisible: false
     }),
 
+    watch: {
+        filters: {
+            deep: true,
+            handler: 'updateRoute'
+        },
+
+        sorts: {
+            deep: true,
+            handler: 'updateRoute'
+        }
+    },
+
     computed: {
+        ...mapState(StoreModules.WISHLIST, [
+            // 'mode',
+            'filters',
+            'sorts'
+        ]),
+
+        ...mapGetters(StoreModules.WISHLIST, [
+            'isMyWishlistMode',
+            'isNonWishlistItemsMode',
+            'sortedOfferModels',
+            'sortedNonWishlistItems',
+            'changedFilters',
+            'changedSorts',
+            'hasSelectedEntities',
+            'selectedExistingOffers',
+            'selectedAvailableOffers'
+        ]),
+
         ...mapState(User.PATH, [
             User.State.USER
         ]),
 
         isMyProfile () {
-            return this.user.id === this.profile.id
+            return this.user.id === this.profile?.id || 1
         },
 
         userViewMode () {
@@ -224,25 +254,53 @@ export default {
         }
     },
 
-    watch: {
-        $route: {
-            immediate: true,
+    created () {
+        if (this.error) {
+            return
+        }
 
-            handler (route) {
-                this.mode = route.fullPath.includes('wishlist') ? Modes.WISHLIST : Modes.MARKET
-            }
+        this.storeOffers({
+            existingOffers: this.offers.map(offer => Offer.create(offer)),
+            availableOffers: []
+        })
+    },
+
+    mounted () {
+        if (this.error) {
+            this.$showError(this.error)
         }
     },
+
+    // watch: {
+    //     $route: {
+    //         immediate: true,
+    //
+    //         handler (route) {
+    //             this.mode = route.fullPath.includes('wishlist') ? Modes.WISHLIST : Modes.MARKET
+    //         }
+    //     }
+    // },
 
     // async created () {
     //     await this.$itemsService.fetch()
     // },
 
     methods: {
-        onModeChange (mode) {
-            const route = mode === Modes.MARKET ? buildUserMarketUrl(this.profile.id) : buildUserWishlistUrl(this.profile.id)
-            this.$router.push(route)
-        }
+        ...mapActions(StoreModules.WISHLIST, {
+            storeOffers: 'storeOffers',
+            toggleMode: 'toggleMode',
+            updateFilters: 'updateFilters',
+            updateSorts: 'updateSorts',
+            resetFilter: 'resetFilter',
+            resetSorts: 'resetSorts',
+            resetSortsFilters: 'resetSortsFilters',
+            toggleOffer: 'toggleOffer',
+            clearSelectedEntities: 'clearSelectedEntities',
+            removeOffers: 'removeOffers',
+            toggleOrder: 'toggleOrder',
+            updateOrderBy: 'updateOrderBy',
+            selectOffers: 'selectOffers'
+        })
     }
 }
 </script>
