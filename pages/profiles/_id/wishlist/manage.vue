@@ -166,7 +166,7 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
-import { OffersScheme } from '@/domain/models/schemes/index.js'
+import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 
 export default {
     name: 'Manage',
@@ -190,9 +190,9 @@ export default {
 
     async asyncData ({ route, $wishlistService, store }) {
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
-            defaultFilters: OffersScheme.getDefaultFilters(),
-            defaultSorts: OffersScheme.getDefaultSorts(),
-            availableSorts: OffersScheme.getAvailableSorts()
+            defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
+            defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
+            availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
         return $wishlistService.fetch(route.params.id)

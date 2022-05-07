@@ -1,6 +1,6 @@
 import { SortOrders } from '@/shared/items/index.js'
 
-export class OffersScheme {
+export class ItemsFiltersScheme {
     static #filtersScheme = {
         query: '',
         character: '',

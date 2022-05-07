@@ -1,1 +1,1 @@
-export { OffersScheme } from './OffersScheme'
+export { ItemsFiltersScheme } from './ItemsFiltersScheme.js'
