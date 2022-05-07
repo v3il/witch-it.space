@@ -21,5 +21,5 @@ export const buildUserWishlistUrl = (userId) => {
 }
 
 export const buildRarityFilterUrl = (userId, rarity) => {
-    return `${buildUserMarketUrl(userId)}?rarity=${rarity}`
+    return `${buildUserWishlistUrl(userId)}?rarity=${rarity}`
 }

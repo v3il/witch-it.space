@@ -3,10 +3,7 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <NuxtLink to="/profiles/139/wishlist" class="wit-offset-right--xs">
-            <i class="mdi mdi-24px mdi-chevron-left wit-color--white" />
-          </NuxtLink>
-
+          <BackButton to="/profiles/139/wishlist" class="wit-offset-right--xs" />
           {{ $t('Wishlist_Manage_Title') }}
         </h1>
       </template>
@@ -167,6 +164,7 @@ import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
+import BackButton from '@/components/basic/BackButton.vue'
 
 export default {
     name: 'Manage',
@@ -185,7 +183,8 @@ export default {
         SetMassPricePopup,
         ItemView,
         ItemsListView,
-        SearchInput
+        SearchInput,
+        BackButton
     },
 
     async asyncData ({ route, $wishlistService, store }) {
