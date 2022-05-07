@@ -31,6 +31,7 @@ export const actions = {
 
     resetFilterParam ({ commit }, propName) {
         commit('RESET_FILTER_PARAM', propName)
+        commit('UPDATE_URL')
     },
 
     resetFilters ({ commit }) {
@@ -62,11 +63,11 @@ export const mutations = {
     },
 
     UPDATE_ORDER_BY (state, orderBy) {
-        state.sorts.order = orderBy
+        state.sorts.sortBy = orderBy
     },
 
     TOGGLE_ORDER (state) {
-        state.sorts.sortBy = state.sorts.sortBy === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC
+        state.sorts.order = state.sorts.order === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC
     },
 
     MERGE_FILTERS (state, changedFilters) {
@@ -90,7 +91,7 @@ export const mutations = {
         const changedFilters = getObjectsDiff(state.defaultFilters, state.filters)
         const changedSorts = getObjectsDiff(state.defaultSorts, state.sorts)
         const searchParams = new URLSearchParams({ ...changedSorts, ...changedFilters })
-        const newURL = path + (searchParams ? `?${searchParams.toString()}` : '')
+        const newURL = path + (Array.from(searchParams).length ? `?${searchParams.toString()}` : '')
 
         window.history.replaceState({}, '', newURL)
     }

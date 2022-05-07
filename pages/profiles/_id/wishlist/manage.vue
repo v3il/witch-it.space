@@ -140,10 +140,7 @@
         </ItemsListView>
       </div>
 
-      <WishlistFilters
-        :is-visible="isFiltersVisible"
-        @close="isFiltersVisible = false"
-      />
+      <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />
     </div>
 
     <SetMassPricePopup />

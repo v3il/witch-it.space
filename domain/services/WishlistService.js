@@ -1,3 +1,5 @@
+import { SortOrders } from '@/shared/items/index.js'
+
 export class WishlistService {
     #axiosInstance = null
     #itemsService = null
@@ -21,7 +23,8 @@ export class WishlistService {
             }))
     }
 
-    checkItem (item, filters) {
+    checkOffer (offer, filters) {
+        const { item } = offer
         const lowerCasedQuery = filters.query.toLowerCase()
 
         if (lowerCasedQuery && !item.name.toLowerCase().includes(lowerCasedQuery)) {
@@ -47,8 +50,11 @@ export class WishlistService {
         return true
     }
 
-    compareItems (firstItem, secondItem, sorts) {
-        const { sortBy } = sorts
+    compareOffers (a, b, sorts) {
+        const { sortBy, order } = sorts
+        const isAsc = order === SortOrders.ASC
+        const firstItem = isAsc ? a.item : b.item
+        const secondItem = isAsc ? b.item : a.item
 
         switch (sortBy) {
         case 'rarity':

@@ -1,20 +1,11 @@
-import { isEqual } from 'lodash'
-import { OffersScheme } from '@/domain/models/schemes'
-import { getObjectsDiff } from '@/utils/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { wishlistService } from '@/domain/index.js'
-import { SortOrders } from '@/shared/items/index.js'
 import { WishlistTabs } from '@/domain/models/tabs/index.js'
 
 export const state = () => ({
     existingOffers: [],
     availableOffers: [],
     mode: WishlistTabs.MY_WISHLIST
-
-    // defaultFilters: OffersScheme.getDefaultFilters(),
-    // filters: OffersScheme.getDefaultFilters(),
-    // defaultSorts: OffersScheme.getDefaultSorts(),
-    // sorts: OffersScheme.getDefaultSorts()
 })
 
 export const getters = {
@@ -27,35 +18,27 @@ export const getters = {
 
     filteredOfferModels: (state, getters, rootState) => {
         const filters = rootState.filters.filters
-        return state.existingOffers.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
+        return state.existingOffers.filter(offer => wishlistService.checkOffer(offer, filters))
     },
 
     sortedOfferModels: (state, getters, rootState) => {
         const sorts = rootState.filters.sorts
-        const isAsc = sorts.order === SortOrders.ASC
 
         return Array.from(getters.filteredOfferModels).sort((a, b) => {
-            const firstItem = isAsc ? a.item : b.item
-            const secondItem = isAsc ? b.item : a.item
-
-            return wishlistService.compareItems(firstItem, secondItem, sorts)
+            return wishlistService.compareOffers(a, b, sorts)
         })
     },
 
     filteredNonWishlistItems: (state, getters, rootState) => {
         const filters = rootState.filters.filters
-        return state.availableOffers.filter(offerModel => wishlistService.checkItem(offerModel.item, filters))
+        return state.availableOffers.filter(offer => wishlistService.checkOffer(offer, filters))
     },
 
     sortedNonWishlistItems: (state, getters, rootState) => {
         const sorts = rootState.filters.sorts
-        const isAsc = sorts.order === SortOrders.ASC
 
         return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
-            const firstItem = isAsc ? a.item : b.item
-            const secondItem = isAsc ? b.item : a.item
-
-            return wishlistService.compareItems(firstItem, secondItem, sorts)
+            return wishlistService.compareOffers(a, b, sorts)
         })
     }
 }
@@ -64,49 +47,6 @@ export const actions = {
     storeOffers ({ commit }, { existingOffers, availableOffers }) {
         commit('STORE_OFFERS', { existingOffers, availableOffers })
     },
-
-    // getInitialFilters ({ commit }, route) {
-    //     const filters = this.$wishlistService.getFilters(route)
-    //     commit('SET_FILTERS', filters)
-    // },
-    //
-    // getInitialSorts ({ commit }, route) {
-    //     const sorts = this.$wishlistService.getSorts(route)
-    //     commit('SET_SORTS', sorts)
-    // },
-
-    // updateFilters ({ commit, state }, changedFilters) {
-    //     const newFilters = { ...state.filters, ...changedFilters }
-    //
-    //     if (!isEqual(state.filters, newFilters)) {
-    //         commit('SET_FILTERS', newFilters)
-    //     }
-    // },
-    //
-    // updateSorts ({ commit }, sorts) {
-    //     commit('SET_SORTS', sorts)
-    // },
-    //
-    // updateOrderBy ({ commit }, orderBy) {
-    //     commit('UPDATE_ORDER_BY', orderBy)
-    // },
-    //
-    // toggleOrder ({ commit, state }) {
-    //     commit('TOGGLE_ORDER', state.sorts.order === SortOrders.ASC ? SortOrders.DESC : SortOrders.ASC)
-    // },
-    //
-    // resetFilter ({ commit }, propName) {
-    //     commit('RESET_FILTER', propName)
-    // },
-    //
-    // resetSorts ({ commit }) {
-    //     commit('RESET_SORTS')
-    // },
-    //
-    // resetSortsFilters ({ commit }) {
-    //     commit('RESET_FILTERS')
-    //     commit('RESET_SORTS')
-    // },
 
     toggleOffer ({ commit, state }, offer) {
         commit('TOGGLE_OFFER', offer)
