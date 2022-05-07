@@ -13,7 +13,7 @@ export const getFiltersFromRoute = (route, defaultFilters) => {
         }
 
         if (Array.isArray(value)) {
-            return { ...filters, [key]: Array.isArray(valueFromUrl) ? valueFromUrl : [valueFromUrl] }
+            return { ...filters, [key]: valueFromUrl.split(',') }
         }
 
         return { ...filters, [key]: valueFromUrl }

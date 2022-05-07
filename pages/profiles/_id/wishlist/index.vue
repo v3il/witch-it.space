@@ -191,9 +191,9 @@ export default {
         TopTabs
     },
 
-    /* async */ asyncData ({ store, route, $wishlistService }) {
-        // await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
-        // await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
+    async  asyncData ({ store, route, $wishlistService }) {
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialFilters`, route)
+        await store.dispatch(`${StoreModules.WISHLIST}/getInitialSorts`, route)
 
         return $wishlistService.fetch(route.params.id)
     },
@@ -202,24 +202,24 @@ export default {
         isFiltersVisible: false
     }),
 
-    watch: {
-        filters: {
-            deep: true,
-            handler: 'updateRoute'
-        },
-
-        sorts: {
-            deep: true,
-            handler: 'updateRoute'
-        }
-    },
+    // watch: {
+    //     filters: {
+    //         deep: true,
+    //         handler: 'updateRoute'
+    //     },
+    //
+    //     sorts: {
+    //         deep: true,
+    //         handler: 'updateRoute'
+    //     }
+    // },
 
     computed: {
-        ...mapState(StoreModules.WISHLIST, [
-            // 'mode',
-            'filters',
-            'sorts'
-        ]),
+        // ...mapState(StoreModules.WISHLIST, [
+        //     // 'mode',
+        //     'filters',
+        //     'sorts'
+        // ]),
 
         ...mapGetters(StoreModules.WISHLIST, [
             'isMyWishlistMode',

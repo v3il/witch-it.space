@@ -2,7 +2,11 @@
   <div class="wit-wishlist">
     <TopNavBar class="layout__header">
       <template #brand>
-        <h1 class="wit-font-size--sm wit-offset-bottom--xs">
+        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
+          <NuxtLink to="/profiles/139/wishlist" class="wit-offset-right--xs">
+            <i class="mdi mdi-24px mdi-chevron-left wit-color--white" />
+          </NuxtLink>
+
           {{ $t('Wishlist_Manage_Title') }}
         </h1>
       </template>
@@ -276,10 +280,13 @@ export default {
         }),
 
         updateRoute () {
-            this.$router.replace({
-                path: this.$route.path,
-                query: { ...this.changedSorts, ...this.changedFilters }
-            }).catch(e => e)
+            const searchParams = new URLSearchParams({ ...this.changedSorts, ...this.changedFilters })
+
+            console.error(searchParams.toString())
+
+            const newURL = this.$route.path + (searchParams ? `?${searchParams.toString()}` : '')
+
+            window.history.replaceState({}, '', newURL)
         },
 
         async deleteOffer (offer) {
