@@ -42,7 +42,7 @@
               :placeholder="$t('Items_SearchByItemName')"
               :query="filters.query"
               @update="mergeFilters({ query: $event })"
-              @reset="resetFilter"
+              @reset="resetFilterParam"
               @toggle="isFiltersVisible = !isFiltersVisible"
             />
 
@@ -142,8 +142,6 @@
 
       <WishlistFilters
         :is-visible="isFiltersVisible"
-        :filters="filters"
-        :sorts="sorts"
         @close="isFiltersVisible = false"
       />
     </div>
@@ -171,7 +169,6 @@ import { WishlistTabs } from '@/domain/models/tabs/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
-import { ItemsFilters } from '@/domain/models/filters/ItemsFilters.js'
 import { OffersScheme } from '@/domain/models/schemes/index.js'
 
 export default {
@@ -205,19 +202,16 @@ export default {
     },
 
     computed: {
+        ...mapState(StoreModules.FILTERS, ['filters']),
         ...mapState(StoreModules.WISHLIST, ['mode']),
         ...mapGetters(StoreModules.WISHLIST, [
             'isMyWishlistMode',
-            'isNonWishlistItemsMode',
             'sortedOfferModels',
             'sortedNonWishlistItems',
             'hasSelectedEntities',
             'selectedExistingOffers',
             'selectedAvailableOffers'
-        ]),
-
-        ...mapState(StoreModules.FILTERS, ['filters', 'sorts']),
-        ...mapGetters(StoreModules.FILTERS, ['changedFilters', 'changedSorts'])
+        ])
     },
 
     data: () => ({
@@ -228,8 +222,6 @@ export default {
         if (this.error) {
             return
         }
-
-        // await this.$store.dispatch(`${StoreModules.FILTERS}/setFiltersManager`, ItemsFilters.create(this.$route))
 
         const tradableItems = this.$itemsService.getTradableItems()
         const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
@@ -259,13 +251,7 @@ export default {
 
         ...mapActions(StoreModules.FILTERS, {
             mergeFilters: 'mergeFilters',
-            updateFilters: 'updateFilters',
-            updateSorts: 'updateSorts',
-            resetFilter: 'resetFilter',
-            resetSorts: 'resetSorts',
-            resetSortsAndFilters: 'resetSortsAndFilters',
-            toggleOrder: 'toggleOrder',
-            updateOrderBy: 'updateOrderBy'
+            resetFilterParam: 'resetFilterParam'
         }),
 
         async deleteOffer (offer) {

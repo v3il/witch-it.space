@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
@@ -76,20 +76,14 @@ export default {
     },
 
     props: {
-        filters: {
-            required: true,
-            type: Object
-        },
-
-        sorts: {
-            required: true,
-            type: Object
-        },
-
         isVisible: {
             required: true,
             type: Boolean
         }
+    },
+
+    computed: {
+        ...mapState(StoreModules.FILTERS, ['filters', 'sorts'])
     },
 
     methods: {
