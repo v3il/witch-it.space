@@ -1,18 +1,18 @@
 import { Offer } from '@/domain/models/index.js'
 import { wishlistService } from '@/domain/index.js'
-import { WishlistTabs } from '@/domain/models/tabs/index.js'
+import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 
 export const state = () => ({
     existingOffers: [],
     availableOffers: [],
-    mode: WishlistTabs.MY_WISHLIST
+    mode: ManageWishlistTabs.MY_WISHLIST
 })
 
 export const getters = {
     selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
     selectedAvailableOffers: state => state.availableOffers.filter(offer => offer.isSelected),
-    isMyWishlistMode: state => state.mode === WishlistTabs.MY_WISHLIST,
-    isNonWishlistItemsMode: state => state.mode === WishlistTabs.NON_WISHLIST_ITEMS,
+    isMyWishlistMode: state => state.mode === ManageWishlistTabs.MY_WISHLIST,
+    isNonWishlistItemsMode: state => state.mode === ManageWishlistTabs.NON_WISHLIST_ITEMS,
     selectedEntities: (state, getters) => getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
 

@@ -1,17 +1,23 @@
 <template>
   <div class="wis-user-icons wit-flex wit-flex--center">
-    <b-tooltip
+    <!--    <b-tooltip-->
+    <!--          v-for="icon in visibleIcons"-->
+    <!--          :key="icon.id"-->
+    <!--      :label="$t(icon.tooltipText)"-->
+    <!--      class="wis-user-icon"-->
+    <!--      :class="[`wis-user-icon&#45;&#45;${iconSize}`, icon.iconColorClass]"-->
+    <!--      square-->
+    <!--    >-->
+    <div
       v-for="icon in visibleIcons"
       :key="icon.id"
-      :label="$t(icon.tooltipText)"
-      class="wis-user-icon"
+      v-tooltip="$t(icon.tooltipText)"
+      class="wit-flex wit-flex--center wit-block--full-height wis-user-icon"
       :class="[`wis-user-icon--${iconSize}`, icon.iconColorClass]"
-      square
     >
-      <div class="wit-flex wit-flex--center wit-block--full-height">
-        <i class="mdi" :class="[icon.iconClass, iconSizeClass]" />
-      </div>
-    </b-tooltip>
+      <i class="mdi" :class="[icon.iconClass, iconSizeClass]" />
+    </div>
+    <!--    </b-tooltip>-->
   </div>
 </template>
 
@@ -128,6 +134,7 @@ $icon-size: 12px;
 .wis-user-icon {
     border: 2px solid var(--color);
     border-radius: 50%;
+    position: relative;
 
     .mdi {
         color: var(--color);

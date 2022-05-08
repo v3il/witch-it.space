@@ -244,7 +244,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-user-view {
-    padding: 0 var(--offset-md);
+    //padding: 0 var(--offset-md);
     border-radius: var(--offset-xxs);
 }
 

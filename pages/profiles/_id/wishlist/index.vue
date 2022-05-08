@@ -35,7 +35,7 @@
       <template>
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
-            <Tabs :modes="$options.modes" :selected-mode="'myWishlist'" @switch="() => {}">
+            <Tabs :modes="$options.sidebarTabs" :selected-mode="sidebarSelectedTab" @switch="() => {}">
               <template #tab0>
                 <div class="wit-flex wit-flex--align-center">
                   <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>
@@ -114,11 +114,38 @@
           </ItemsListView>
         </div>
 
-        <div class="wit-offset-left--sm wit-profile__user">
-          <UserView v-if="profile" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
-        </div>
+        <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
+          <Tabs
+            :modes="$options.sidebarTabs"
+            :selected-mode="sidebarSelectedTab"
+            expanded
+            class="wit-offset-bottom--xs"
+            @switch="sidebarSelectedTab = $event"
+          >
+            <template #tab0>
+              <div class="wit-flex wit-flex--align-center">
+                <i class="mdi mdi-16px mdi-account wit-offset-right--xs" />
+                <span class="wis-tabs__label">{{ $t('Profile') }}</span>
+              </div>
+            </template>
 
-        <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />
+            <template #tab1>
+              <div class="wit-flex wit-flex--align-center">
+                <i class="mdi mdi-16px mdi-filter wit-offset-right--xs" />
+                <span class="wis-tabs__label">{{ $t('Filters') }}</span>
+              </div>
+            </template>
+          </Tabs>
+
+          <UserView v-if="profile && isProfileTabSelected" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
+          <WishlistFilters v-else />
+        </SidebarPanel>
+
+        <!--        <div class="wit-offset-left&#45;&#45;sm wit-profile__user">-->
+        <!--          -->
+        <!--        </div>-->
+
+        <!--        <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />-->
 
         <!--        <div class="wit-flex__item&#45;&#45;grow">-->
         <!--          <div>-->
@@ -257,9 +284,11 @@ import ItemsListView from '@/components/items/ItemsListView.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
-import { WishlistTabs } from '@/domain/models/tabs/index.js'
+// import { WishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import Tabs from '@/components/basic/Tabs.vue'
 import BackButton from '@/components/basic/BackButton.vue'
+import SidebarPanel from '@/components/basic/SidebarPanel.vue'
+import { WishlistListSidebarTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 
 const DEFAULT_FILTERS = {
     query: '',
@@ -276,7 +305,8 @@ const Modes = {
 }
 
 export default {
-    modes: WishlistTabs.values,
+    // modes: WishlistTabs.values,
+    sidebarTabs: WishlistListSidebarTabs.values,
 
     components: {
         UserView,
@@ -291,7 +321,8 @@ export default {
         DropdownItem,
         Dropdown,
         Tabs,
-        BackButton
+        BackButton,
+        SidebarPanel
     },
 
     async asyncData ({ route, $wishlistService, store }) {
@@ -305,7 +336,8 @@ export default {
     },
 
     data: () => ({
-        isFiltersVisible: false
+        isFiltersVisible: false,
+        sidebarSelectedTab: WishlistListSidebarTabs.PROFILE
     }),
 
     // watch: {
@@ -344,6 +376,10 @@ export default {
 
         wishlistSize () {
             return this.profile?.userStat.wishlistSize ?? 0
+        },
+
+        isProfileTabSelected () {
+            return this.sidebarSelectedTab === WishlistListSidebarTabs.PROFILE
         }
     },
 

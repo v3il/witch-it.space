@@ -40,7 +40,7 @@ export default {
     border-radius: var(--offset-xxs);
     width: 300px;
     background-color: var(--content-bg);
-    padding: var(--offset-sm) var(--offset-xs) var(--offset-sm) var(--offset-sm);
+    padding: var(--offset-sm) var(--offset-xxs) var(--offset-sm) var(--offset-sm);
     max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
     margin-left: var(--offset-sm);
     position: sticky;
@@ -59,7 +59,7 @@ export default {
     padding-right: var(--offset-sm);
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
     .wis-sidebar-panel {
         top: var(--offset-sm);
         bottom: var(--offset-sm);

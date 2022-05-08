@@ -161,7 +161,7 @@ import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import { StoreModules } from '@/store/index.js'
-import { WishlistTabs } from '@/domain/models/tabs/index.js'
+import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
@@ -172,7 +172,7 @@ import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 export default {
     name: 'Manage',
 
-    modes: WishlistTabs.values,
+    modes: ManageWishlistTabs.values,
 
     components: {
         WishlistFilters,
