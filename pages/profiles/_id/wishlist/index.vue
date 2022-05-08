@@ -33,10 +33,6 @@
       <!--      </template>-->
 
       <template>
-        <div class="wit-offset-right--sm wit-profile__user">
-          <UserView v-if="profile" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
-        </div>
-
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
             <Tabs :modes="$options.modes" :selected-mode="'myWishlist'" @switch="() => {}">
@@ -116,6 +112,10 @@
               </ItemView>
             </template>
           </ItemsListView>
+        </div>
+
+        <div class="wit-offset-left--sm wit-profile__user">
+          <UserView v-if="profile" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
         </div>
 
         <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />
@@ -410,6 +410,8 @@ export default {
 
 .wit-profile__user {
     flex: 0 0 300px;
+    position: sticky;
+    top: 0;
 }
 </style>
 

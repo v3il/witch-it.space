@@ -1,5 +1,5 @@
 <template>
-  <FiltersView :is-visible="isVisible" @reset="resetSortsAndFilters" @close="$emit('close')">
+  <div>
     <QueryEditor
       :query="filters.query"
       class="wis-wishlist-filters__search wit-offset-bottom--sm"
@@ -43,7 +43,11 @@
       @toggleOrder="toggleOrder"
       @resetSorts="resetSortParams"
     />
-  </FiltersView>
+
+    <b-button type="is-danger" expanded @click="resetSortsAndFilters">
+      {{ $t('Clear') }}
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -54,7 +58,6 @@ import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 import SortsSelector from '@/components/basic/filters/SortsSelector.vue'
-import FiltersView from '@/components/basic/filters/FiltersView.vue'
 import { StoreModules } from '@/store/index.js'
 
 export default {
@@ -71,15 +74,7 @@ export default {
         SlotsSelector,
         CharacterSelector,
         QueryEditor,
-        SortsSelector,
-        FiltersView
-    },
-
-    props: {
-        isVisible: {
-            required: true,
-            type: Boolean
-        }
+        SortsSelector
     },
 
     computed: {

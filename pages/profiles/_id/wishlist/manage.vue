@@ -137,7 +137,9 @@
         </ItemsListView>
       </div>
 
-      <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />
+      <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
+        <WishlistFilters />
+      </SidebarPanel>
     </div>
 
     <SetMassPricePopup />
@@ -165,6 +167,7 @@ import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import BackButton from '@/components/basic/BackButton.vue'
+import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 
 export default {
     name: 'Manage',
@@ -184,7 +187,8 @@ export default {
         ItemView,
         ItemsListView,
         SearchInput,
-        BackButton
+        BackButton,
+        SidebarPanel
     },
 
     async asyncData ({ route, $wishlistService, store }) {
