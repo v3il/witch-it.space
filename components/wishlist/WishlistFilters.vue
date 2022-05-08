@@ -120,7 +120,7 @@ export default {
     display: none;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .wis-wishlist-filters__search {
         display: flex;
     }

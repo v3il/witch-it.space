@@ -5,7 +5,7 @@
       :value="query"
       maxlength="20"
       :placeholder="placeholder"
-      custom-class="wit-transition wit-split-part--left"
+      custom-class="wit-transition"
       :has-counter="false"
       icon-right="close"
       icon-right-clickable
@@ -13,7 +13,7 @@
       @icon-right-click="$emit('reset', 'query')"
     />
 
-    <b-button class="wit-flex wit-flex--center wis-search-input__button wit-split-part--right" @click="$emit('toggle')">
+    <b-button class="wit-flex wit-flex--center wis-search-input__button" @click="$emit('toggle')">
       <i class="mdi mdi-20px mdi-filter wit-color--muted" />
     </b-button>
   </div>
@@ -43,14 +43,16 @@ export default {
     border: var(--default-border);
     color: var(--body-color);
     padding: 0 var(--offset-xs);
+    display: none;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
     .wis-search-input__input {
         display: none;
     }
 
     .wis-search-input__button {
+        display: flex;
         border-radius: var(--offset-xxs);
     }
 }

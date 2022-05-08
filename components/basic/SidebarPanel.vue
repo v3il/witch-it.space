@@ -1,6 +1,6 @@
 <template>
   <div class="wis-sidebar-panel" :class="panelClasses">
-    <b-button v-if="isVisible" type="is-primary" class="wis-sidebar-panel__open" @click="close">
+    <b-button v-if="isVisible" type="is-danger" class="wis-sidebar-panel__open" @click="close">
       <i class="mdi mdi-20px mdi-close" />
     </b-button>
 
@@ -40,8 +40,7 @@ export default {
     border-radius: var(--offset-xxs);
     width: 300px;
     background-color: var(--content-bg);
-    //height: auto;
-    padding: var(--offset-sm);
+    padding: var(--offset-sm) var(--offset-xs) var(--offset-sm) var(--offset-sm);
     max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
     margin-left: var(--offset-sm);
     position: sticky;
@@ -49,25 +48,18 @@ export default {
 }
 
 .wis-sidebar-panel__open {
-    background-color: var(--content-bg) !important;
-    border: var(--default-border) !important;
-    border-right: transparent;
-    color: var(--body-color);
-    padding: var(--offset-xs);
-    position: absolute;
-    top: 20px;
-    left: -38px;
-    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
-    //box-shadow: -2px 0 11px 3px rgb(0 0 0 / 40%) !important;
+    display: none;
 }
 
 .wis-sidebar-panel__content {
+    position: relative;
     overscroll-behavior: contain;
     height: 100%;
     overflow-y: auto;
+    padding-right: var(--offset-sm);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1199px) {
     .wis-sidebar-panel {
         top: var(--offset-sm);
         bottom: var(--offset-sm);
@@ -75,41 +67,45 @@ export default {
         height: calc(100vh - var(--offset-lg));
         max-height: calc(100vh - var(--offset-lg));
         padding: var(--offset-sm) var(--offset-xs) var(--offset-sm) var(--offset-sm);
-        //
-        position: fixed;
-        //top: 76px;
-        //right: var(--offset-sm);
         z-index: calc(var(--navbar-z) + 1);
         margin: 0;
         transition: transform var(--default-transition);
         transform: translateX(calc(100% + 16px));
+        position: fixed;
+    }
+
+    .wis-sidebar-panel__open {
+        display: flex;
+        background-color: var(--content-bg) !important;
+        padding: var(--offset-xs);
+        position: absolute;
+        top: 16px;
+        right: 300px;
+        border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
     }
 
     .wis-sidebar-panel.open {
         transform: translateX(0);
-        box-shadow: -6px 0 11px 3px rgb(0 0 0 / 70%);
-
-        //&::before {
-        //    content: "";
-        //    display: block;
-        //    position: fixed;
-        //    top: 0;
-        //    bottom: 0;
-        //    left: 0;
-        //    right: 0;
-        //    background-color: rgba(0, 0, 0, 0.5);
-        //}
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        width: auto;
+        height: 100vh;
+        max-height: 100vh;
+        padding: 0;
 
         .wis-sidebar-panel__open {
-            background-color: var(--primary) !important;
+            background-color: var(--danger) !important;
         }
     }
 
     .wis-sidebar-panel__content {
         background-color: var(--content-bg);
-        border-radius: var(--offset-xxs);
-        height: 100%;
-        padding-right: var(--offset-xs);
+        width: 300px;
+        padding: var(--offset-sm);
+        margin-left: auto;
     }
 }
 </style>
