@@ -124,14 +124,14 @@
           >
             <template #tab0>
               <div class="wit-flex wit-flex--align-center">
-                <i class="mdi mdi-16px mdi-account wit-offset-right--xs" />
+                <i class="mdi mdi-20px mdi-account wit-offset-right--xxs" />
                 <span class="wis-tabs__label">{{ $t('Profile') }}</span>
               </div>
             </template>
 
             <template #tab1>
               <div class="wit-flex wit-flex--align-center">
-                <i class="mdi mdi-16px mdi-filter wit-offset-right--xs" />
+                <i class="mdi mdi-20px mdi-filter wit-offset-right--xxs" />
                 <span class="wis-tabs__label">{{ $t('Filters') }}</span>
               </div>
             </template>

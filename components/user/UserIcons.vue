@@ -1,5 +1,5 @@
 <template>
-  <div class="wis-user-icons wit-flex wit-flex--center">
+  <div class="wis-user-icons wit-flex1 wit-flex--column1 wit-block--full-width">
     <!--    <b-tooltip-->
     <!--          v-for="icon in visibleIcons"-->
     <!--          :key="icon.id"-->
@@ -9,13 +9,13 @@
     <!--      square-->
     <!--    >-->
     <div
-      v-for="icon in visibleIcons"
+      v-for="icon in icons"
       :key="icon.id"
-      v-tooltip="$t(icon.tooltipText)"
-      class="wit-flex wit-flex--center wit-block--full-height wis-user-icon"
-      :class="[`wis-user-icon--${iconSize}`, icon.iconColorClass]"
+      class="wit-flex wit-flex--align-center wit-block--full-height1 wis-user-icon wit-offset-bottom--xs"
+      :class="[]"
     >
-      <i class="mdi" :class="[icon.iconClass, iconSizeClass]" />
+      <i class="mdi mdi-20px" :class="[icon.iconClass, icon.iconColorClass]" />
+      <span class="wit-offset-left--xs wit-line-height--sm">{{ $t(icon.label) }}</span>
     </div>
     <!--    </b-tooltip>-->
   </div>
@@ -35,28 +35,28 @@ export default {
             required: false,
             type: Number,
             default: 18
-        },
-
-        showMainOnly: {
-            required: false,
-            type: Boolean,
-            default: false
         }
+
+        // showMainOnly: {
+        //     required: false,
+        //     type: Boolean,
+        //     default: false
+        // }
     },
 
     computed: {
         iconSizeClass () {
-            return `mdi-${this.iconSize}px`
-        },
-
-        visibleIcons () {
-            return this.icons.filter(icon => icon.isVisible)
+            return `mdi-${this.iconSize}px1`
         }
+
+        // visibleIcons () {
+        //     return this.icons.filter(icon => icon.isVisible)
+        // }
     },
 
     created () {
         this.icons = [
-            this.getSteamGuardIcon(),
+            // this.getSteamGuardIcon(),
             this.getIsStrictRarityIcon(),
             this.getWorkingWithSteamGuardedIcon(),
             this.getBargainIcon(),
@@ -70,10 +70,9 @@ export default {
 
             return {
                 id: 1,
-                iconClass: 'mdi-shield-check',
-                iconColorClass: isGuarded ? 'wis-user-icon--success' : 'wis-user-icon--error',
-                tooltipText: isGuarded ? 'UserView_SteamGuardEnabled' : 'UserView_SteamGuardDisabled',
-                isVisible: true
+                iconClass: 'mdi-shield-check' || this.getIconClass(isGuarded),
+                iconColorClass: this.getIconColorClass(isGuarded),
+                label: 'UserView_SteamGuardEnabled'
             }
         },
 
@@ -82,10 +81,9 @@ export default {
 
             return {
                 id: 2,
-                iconClass: 'mdi-swap-vertical-circle',
-                iconColorClass: switchRarities ? 'wis-user-icon--success' : 'wis-user-icon--warning',
-                tooltipText: switchRarities ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled',
-                isVisible: !this.showMainOnly
+                iconClass: /* 'mdi-swap-vertical-circle' || */ this.getIconClass(switchRarities),
+                iconColorClass: this.getIconColorClass(switchRarities),
+                label: switchRarities ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
             }
         },
 
@@ -94,10 +92,9 @@ export default {
 
             return {
                 id: 3,
-                iconClass: 'mdi-shield-off',
-                iconColorClass: tradeWithGuardedOnly ? 'wis-user-icon--warning' : 'wis-user-icon--success',
-                tooltipText: tradeWithGuardedOnly ? 'UserView_TradingOnlyGuarded' : 'UserView_TradingAnyUser',
-                isVisible: !this.showMainOnly
+                iconClass: /* 'mdi-shield-off' || */ this.getIconClass(tradeWithGuardedOnly),
+                iconColorClass: this.getIconColorClass(tradeWithGuardedOnly),
+                label: 'UserView_TradingAnyUser'
             }
         },
 
@@ -106,10 +103,9 @@ export default {
 
             return {
                 id: 4,
-                iconClass: 'mdi-database-arrow-down',
-                iconColorClass: discountAvailable ? 'wis-user-icon--success' : 'wis-user-icon--warning',
-                tooltipText: discountAvailable ? 'UserView_BargainAvailable' : 'UserView_BargainNotAvailable',
-                isVisible: !this.showMainOnly
+                iconClass: 'mdi-database-arrow-down' || this.getIconClass(discountAvailable),
+                iconColorClass: this.getIconColorClass(discountAvailable),
+                label: 'UserView_BargainAvailable'
             }
         },
 
@@ -118,11 +114,18 @@ export default {
 
             return {
                 id: 5,
-                iconClass: 'mdi-numeric-1-box-multiple',
-                iconColorClass: tradeDuplicatesOnly ? 'wis-user-icon--warning' : 'wis-user-icon--success',
-                tooltipText: tradeDuplicatesOnly ? 'UserView_TradingOnlyDupes' : 'UserView_TradingAnyItem',
-                isVisible: !this.showMainOnly
+                iconClass: 'mdi-alert-box' || this.getIconClass(tradeDuplicatesOnly),
+                iconColorClass: this.getIconColorClass(tradeDuplicatesOnly),
+                label: 'UserView_TradingAnyItem'
             }
+        },
+
+        getIconClass (isEnabled) {
+            return isEnabled ? 'mdi-check' : 'mdi-close'
+        },
+
+        getIconColorClass (isEnabled) {
+            return isEnabled ? 'wis-user-icon--success' : 'wis-user-icon--error'
         }
     }
 }
@@ -132,54 +135,60 @@ export default {
 $icon-size: 12px;
 
 .wis-user-icon {
-    border: 2px solid var(--color);
-    border-radius: 50%;
-    position: relative;
-
     .mdi {
+        position: relative;
+        //border: 2px solid var(--color);
+        //border-radius: 50%;
         color: var(--color);
+        flex-shrink: 0;
+        //box-sizing: content-box;
+        //padding: 8px;
     }
 
-    &.wis-user-icon--18 {
-        width: 36px;
-        height: 36px;
-    }
+    //&.wis-user-icon--18 {
+    //    width: 36px;
+    //    height: 36px;
+    //}
 
-    &.wis-user-icon--success {
+    .wis-user-icon--success {
         --color: var(--green-400);
     }
 
-    &.wis-user-icon--error {
+    .wis-user-icon--error {
         --color: var(--danger);
-    }
 
-    &.wis-user-icon--warning {
-        --color: var(--warning);
-    }
-
-    &.wis-user-icon--warning,
-    &.wis-user-icon--error {
-        &::after {
-            background: var(--color);
-            content: "!";
-            display: flex;
-            position: absolute;
-            width: $icon-size;
-            height: $icon-size;
-            top: -4px;
-            right: -2px;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            font-size: $icon-size;
-            line-height: $icon-size;
-            color: #2a3042;
-            font-weight: bold;
+        & + span {
+            color: var(--danger);
         }
     }
 
-    &:not(:last-child) {
-        margin-right: var(--offset-sm);
+    .wis-user-icon--warning {
+        --color: var(--warning);
     }
+
+    //.wis-user-icon--warning,
+    //.wis-user-icon--error {
+    //    &::after {
+    //        background: var(--color);
+    //        content: "!";
+    //        display: flex;
+    //        position: absolute;
+    //        width: $icon-size;
+    //        height: $icon-size;
+    //        top: -4px;
+    //        right: -2px;
+    //        border-radius: 50%;
+    //        align-items: center;
+    //        justify-content: center;
+    //        font-size: $icon-size;
+    //        line-height: $icon-size;
+    //        color: #2a3042;
+    //        font-weight: bold;
+    //    }
+    //}
+
+    //&:not(:last-child) {
+    //    margin-right: var(--offset-sm);
+    //}
 }
 </style>

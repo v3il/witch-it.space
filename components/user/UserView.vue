@@ -1,6 +1,6 @@
 <template>
   <div class="wis-user-view wit-background--content wit-position--relative">
-    <div class="wis-user-view__section">
+    <div class="wis-user-view__section wit-flex wit-flex--align-center">
       <img
         :src="avatarUrl"
         alt="Avatar"
@@ -8,39 +8,110 @@
         :style="avatarStyles"
       >
 
-      <h5 class="wit-font-size--sm wit-text--overflow wit-text--center" :class="titleOffsetClass">
-        {{ profile.displayName }}
-      </h5>
+      <div class="wit-offset-left--sm" style="min-width: 0;">
+        <h5 class="wit-font-size--sm wit-text--overflow wit-text--center1 wit-offset-bottom--xs" :class="titleOffsetClass">
+          {{ profile.displayName }}
+        </h5>
 
-      <div v-if="!hideStatButtons" class="wit-offset-bottom--sm">
-        <div class="wit-flex wit-block--full-width">
-          <b-button
-            type="is-link"
-            tag="router-link"
-            :to="marketUrl"
-            class="wis-user-view__stat-button"
-          >
-            <div class="wit-flex wit-flex--column">
-              <span class="wit-font-weight--700">{{ profile.userStat.marketSize }}</span>
-              <span class="wit-color--muted">{{ $t('Profiles_StatButtonOrders') }}</span>
-            </div>
-          </b-button>
+        <!--        <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+        <!--          <b-button-->
+        <!--            :disabled="!steamProfileURL"-->
+        <!--            type="is-ghost"-->
+        <!--            tag="a"-->
+        <!--            :href="steamProfileURL"-->
+        <!--            target="_blank"-->
+        <!--            class="wis-user-view__stat-button1 wit-paddings&#45;&#45;none"-->
+        <!--          >-->
+        <!--            <div class="wit-flex wit-flex&#45;&#45;column1 wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
+        <!--              <i class="mdi mdi-steam mdi-18px wit-offset-right&#45;&#45;xxs" />-->
+        <!--              <span class="wit-color&#45;&#45;muted1">Steam</span>-->
+        <!--            </div>-->
+        <!--          </b-button>-->
 
-          <b-button
-            type="is-link"
-            tag="router-link"
-            :to="wishlistUrl"
-            class="wis-user-view__stat-button"
-          >
-            <div class="wit-flex wit-flex--column">
-              <span class="wit-font-weight--700">{{ profile.userStat.wishlistSize }}</span>
-              <span class="wit-color--muted">{{ $t('Profiles_StatButtonWishlist') }}</span>
-            </div>
-          </b-button>
-        </div>
+        <!--          <span class="wit-inline-block wit-offset-right&#45;&#45;xs wit-offset-left&#45;&#45;xs wit-color&#45;&#45;muted">&bull;</span>-->
+
+        <!--          <b-button-->
+        <!--            :disabled="!discordURL"-->
+        <!--            type="is-ghost"-->
+        <!--            tag="a"-->
+        <!--            :href="discordURL"-->
+        <!--            target="_blank"-->
+        <!--            class="wis-user-view__stat-button1 wit-paddings&#45;&#45;none"-->
+        <!--          >-->
+        <!--            <div class="wit-flex wit-flex&#45;&#45;column1 wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
+        <!--              <i class="mdi mdi-discord mdi-18px wit-offset-right&#45;&#45;xxs" />-->
+        <!--              <span class="wit-color&#45;&#45;muted1">Discord</span>-->
+        <!--            </div>-->
+        <!--          </b-button>-->
+        <!--        </div>-->
+
+        <p class="wit-flex wit-flex--align-center">
+          <i class="mdi mdi-shield-check mdi-18px wit-offset-right--xxs" />
+          Steam Guard
+        </p>
       </div>
 
-      <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />
+      <!--      <div v-if="!hideStatButtons" class="wit-offset-bottom&#45;&#45;sm">-->
+      <!--        <div class="wit-flex wit-block&#45;&#45;full-width">-->
+      <!--          <b-button-->
+      <!--            type="is-link"-->
+      <!--            tag="router-link"-->
+      <!--            :to="marketUrl"-->
+      <!--            class="wis-user-view__stat-button"-->
+      <!--          >-->
+      <!--            <div class="wit-flex wit-flex&#45;&#45;column">-->
+      <!--              <span class="wit-font-weight&#45;&#45;700">{{ profile.userStat.marketSize }}</span>-->
+      <!--              <span class="wit-color&#45;&#45;muted">{{ $t('Profiles_StatButtonOrders') }}</span>-->
+      <!--            </div>-->
+      <!--          </b-button>-->
+
+      <!--          <b-button-->
+      <!--            type="is-link"-->
+      <!--            tag="router-link"-->
+      <!--            :to="wishlistUrl"-->
+      <!--            class="wis-user-view__stat-button"-->
+      <!--          >-->
+      <!--            <div class="wit-flex wit-flex&#45;&#45;column">-->
+      <!--              <span class="wit-font-weight&#45;&#45;700">{{ profile.userStat.wishlistSize }}</span>-->
+      <!--              <span class="wit-color&#45;&#45;muted">{{ $t('Profiles_StatButtonWishlist') }}</span>-->
+      <!--            </div>-->
+      <!--          </b-button>-->
+      <!--        </div>-->
+      <!--    </div>-->
+
+    <!--      <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />-->
+    </div>
+
+    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs">
+      <div class="wit-flex wit-block--full-width">
+        <b-button
+          :disabled="!steamProfileURL"
+          type="is-link"
+          tag="a"
+          :href="steamProfileURL"
+          target="_blank"
+          class="wis-user-view__stat-button"
+        >
+          <div class="wit-flex wit-flex--column1 wit-flex--align-center">
+            <i class="mdi mdi-steam mdi-20px" />
+            <span class="wit-color--muted">Steam</span>
+          </div>
+        </b-button>
+
+        <b-button
+          :disabled="!discordURL"
+          type="is-link"
+          tag="a"
+          :href="discordURL"
+          target="_blank"
+          class="wis-user-view__stat-button"
+        >
+          <div class="wit-flex wit-flex--colum1n wit-flex--align-center">
+            <i class="mdi mdi-discord mdi-20px" />
+            <span class="wit-color--muted">Discord</span>
+          </div>
+        </b-button>
+      </div>
     </div>
 
     <div v-if="!hideTradeButton" class="wis-user-view__section">
@@ -55,38 +126,6 @@
       >
         {{ $t('UserView_SendTradeOffer') }}
       </b-button>
-    </div>
-
-    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs">
-      <div class="wit-flex wit-block--full-width">
-        <b-button
-          :disabled="!steamProfileURL"
-          type="is-link"
-          tag="a"
-          :href="steamProfileURL"
-          target="_blank"
-          class="wis-user-view__stat-button"
-        >
-          <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <i class="mdi mdi-steam mdi-20px" />
-            <span class="wit-color--muted">Steam</span>
-          </div>
-        </b-button>
-
-        <b-button
-          :disabled="!discordURL"
-          type="is-link"
-          tag="a"
-          :href="discordURL"
-          target="_blank"
-          class="wis-user-view__stat-button"
-        >
-          <div class="wit-flex wit-flex--column wit-flex--align-center">
-            <i class="mdi mdi-discord mdi-20px" />
-            <span class="wit-color--muted">Discord</span>
-          </div>
-        </b-button>
-      </div>
     </div>
 
     <div v-if="note && !hideNote" class="wis-user-view__section">
@@ -196,8 +235,8 @@ export default {
 
         titleOffsetClass () {
             return {
-                'wit-offset-top--xs wit-offset-bottom--xs': this.avatarSize <= 50,
-                'wit-offset-top--sm wit-offset-bottom--sm': this.avatarSize > 50
+                'wit-offset-top--xs1 wit-offset-bottom--xs1': this.avatarSize <= 50,
+                'wit-offset-top--sm1 wit-offset-bottom--sm1': this.avatarSize > 50
             }
         },
 
@@ -264,8 +303,8 @@ export default {
     border-radius: var(--offset-xxs);
     width: var(--avatar-size);
     height: var(--avatar-size);
-    margin-left: auto;
-    margin-right: auto;
+    //margin-left: auto;
+    //margin-right: auto;
     display: block;
 }
 
