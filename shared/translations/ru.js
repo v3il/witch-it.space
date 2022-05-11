@@ -245,7 +245,7 @@ export const ru = {
     // UserView_MaterialsReplacementDisabled: 'Принимаю материалы только указанного типа',
     UserView_SendTradeOffer: 'Предложение обмена',
     UserView_NoteTitle: 'Описание',
-    UserView_TradingAnyUser: 'Обмениваюсь с пользователями без Steam Guard',
+    UserView_TradingAnyUser: 'Обмениваюсь с игроками без Steam Guard',
     // UserView_TradingOnlyGuarded: 'Обмениваюсь только с пользователями со Steam Guard',
     UserView_BargainAvailable: 'Готов предоставить скидку',
     // UserView_BargainNotAvailable: 'Не предоставляю скидки, окончательная цена',

@@ -9,45 +9,14 @@
       >
 
       <div class="wit-offset-left--sm" style="min-width: 0;">
-        <h5 class="wit-font-size--sm wit-text--overflow wit-text--center1 wit-offset-bottom--xs" :class="titleOffsetClass">
-          {{ profile.displayName }}
+        <h5 class="wit-font-size--sm wit-text--overflow wit-text--center1 wit-offset-bottom--xs wit-flex" :class="titleOffsetClass">
+          <span class="wit-flex__item--grow1">{{ profile.displayName }}</span>
+          <i class="mdi mdi-shield-check mdi-16px wit-offset-left--xs wit-flex__item--no-shrink wit-color--success" />
         </h5>
 
-        <!--        <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-        <!--          <b-button-->
-        <!--            :disabled="!steamProfileURL"-->
-        <!--            type="is-ghost"-->
-        <!--            tag="a"-->
-        <!--            :href="steamProfileURL"-->
-        <!--            target="_blank"-->
-        <!--            class="wis-user-view__stat-button1 wit-paddings&#45;&#45;none"-->
-        <!--          >-->
-        <!--            <div class="wit-flex wit-flex&#45;&#45;column1 wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
-        <!--              <i class="mdi mdi-steam mdi-18px wit-offset-right&#45;&#45;xxs" />-->
-        <!--              <span class="wit-color&#45;&#45;muted1">Steam</span>-->
-        <!--            </div>-->
-        <!--          </b-button>-->
-
-        <!--          <span class="wit-inline-block wit-offset-right&#45;&#45;xs wit-offset-left&#45;&#45;xs wit-color&#45;&#45;muted">&bull;</span>-->
-
-        <!--          <b-button-->
-        <!--            :disabled="!discordURL"-->
-        <!--            type="is-ghost"-->
-        <!--            tag="a"-->
-        <!--            :href="discordURL"-->
-        <!--            target="_blank"-->
-        <!--            class="wis-user-view__stat-button1 wit-paddings&#45;&#45;none"-->
-        <!--          >-->
-        <!--            <div class="wit-flex wit-flex&#45;&#45;column1 wit-flex&#45;&#45;align-center wit-color&#45;&#45;white">-->
-        <!--              <i class="mdi mdi-discord mdi-18px wit-offset-right&#45;&#45;xxs" />-->
-        <!--              <span class="wit-color&#45;&#45;muted1">Discord</span>-->
-        <!--            </div>-->
-        <!--          </b-button>-->
-        <!--        </div>-->
-
-        <p class="wit-flex wit-flex--align-center">
-          <i class="mdi mdi-shield-check mdi-18px wit-offset-right--xxs" />
-          Steam Guard
+        <p class="wit-flex wit-flex--align-center wit-color--muted">
+          <!--          <i class="mdi mdi-timer mdi-18px wit-offset-right&#45;&#45;xxs" />-->
+          Wishlist updated: Few seconds ago
         </p>
       </div>
 
@@ -82,7 +51,7 @@
     <!--      <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />-->
     </div>
 
-    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs">
+    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs wis-user-view__section1">
       <div class="wit-flex wit-block--full-width">
         <b-button
           :disabled="!steamProfileURL"
@@ -93,7 +62,7 @@
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--column1 wit-flex--align-center">
-            <i class="mdi mdi-steam mdi-20px" />
+            <i class="mdi mdi-steam mdi-20px wit-offset-right--xs" />
             <span class="wit-color--muted">Steam</span>
           </div>
         </b-button>
@@ -107,7 +76,7 @@
           class="wis-user-view__stat-button"
         >
           <div class="wit-flex wit-flex--colum1n wit-flex--align-center">
-            <i class="mdi mdi-discord mdi-20px" />
+            <i class="mdi mdi-discord mdi-20px wit-offset-right--xs" />
             <span class="wit-color--muted">Discord</span>
           </div>
         </b-button>
@@ -128,6 +97,10 @@
       </b-button>
     </div>
 
+    <div v-if="!hideIcons" class="wis-user-view__section">
+      <UserIcons :profile="profile" />
+    </div>
+
     <div v-if="note && !hideNote" class="wis-user-view__section">
       <h5 class="wit-font-weight--700 wit-font-size--xs wit-offset-bottom--xs">
         {{ $t('UserView_NoteTitle') }}
@@ -136,10 +109,6 @@
       <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
         {{ note }}
       </p>
-    </div>
-
-    <div v-if="!hideIcons" class="wis-user-view__section">
-      <UserIcons :profile="profile" />
     </div>
   </div>
 </template>
@@ -197,7 +166,7 @@ export default {
         avatarSize: {
             required: false,
             type: Number,
-            default: 75
+            default: 60
         },
 
         mode: {
@@ -291,7 +260,7 @@ export default {
     padding: var(--offset-sm) 0;
 
     &:not(:last-child) {
-        border-bottom: 1px solid var(--user-view-border);
+        border-bottom: var(--default-border);
     }
 }
 
@@ -309,7 +278,7 @@ export default {
 }
 
 .wis-user-view__stat-button {
-    padding: var(--offset-xxs) var(--offset-xs);
+    padding: var(--offset-xs) var(--offset-xs);
     height: auto;
     transition: background-color var(--default-transition);
     flex: 1 0 50%;

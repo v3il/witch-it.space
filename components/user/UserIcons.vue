@@ -14,8 +14,8 @@
       class="wit-flex wit-flex--align-center wit-block--full-height1 wis-user-icon wit-offset-bottom--xs"
       :class="[]"
     >
-      <i class="mdi mdi-20px" :class="[icon.iconClass, icon.iconColorClass]" />
-      <span class="wit-offset-left--xs wit-line-height--sm">{{ $t(icon.label) }}</span>
+      <i class="mdi mdi-18px wit-flex wit-flex--center" :class="[icon.iconClass, icon.iconColorClass]" />
+      <span class="wit-offset-left--sm wit-line-height--sm">{{ $t(icon.label) }}</span>
     </div>
     <!--    </b-tooltip>-->
   </div>
@@ -83,7 +83,7 @@ export default {
                 id: 2,
                 iconClass: /* 'mdi-swap-vertical-circle' || */ this.getIconClass(switchRarities),
                 iconColorClass: this.getIconColorClass(switchRarities),
-                label: switchRarities ? 'UserView_MaterialsReplacementEnabled' : 'UserView_MaterialsReplacementDisabled'
+                label: 'UserView_MaterialsReplacementEnabled'
             }
         },
 
@@ -103,7 +103,7 @@ export default {
 
             return {
                 id: 4,
-                iconClass: 'mdi-database-arrow-down' || this.getIconClass(discountAvailable),
+                iconClass: /* 'mdi-database-arrow-down' || */ this.getIconClass(discountAvailable),
                 iconColorClass: this.getIconColorClass(discountAvailable),
                 label: 'UserView_BargainAvailable'
             }
@@ -114,8 +114,8 @@ export default {
 
             return {
                 id: 5,
-                iconClass: 'mdi-alert-box' || this.getIconClass(tradeDuplicatesOnly),
-                iconColorClass: this.getIconColorClass(tradeDuplicatesOnly),
+                iconClass: /* 'mdi-progress-alert' || */ this.getIconClass(!tradeDuplicatesOnly),
+                iconColorClass: this.getIconColorClass(!tradeDuplicatesOnly),
                 label: 'UserView_TradingAnyItem'
             }
         },
@@ -125,24 +125,26 @@ export default {
         },
 
         getIconColorClass (isEnabled) {
-            return isEnabled ? 'wis-user-icon--success' : 'wis-user-icon--error'
+            return isEnabled ? 'wis-user-icon--success' : 'wis-user-icon--warning'
         }
     }
 }
 </script>
 
 <style scoped lang="scss">
-$icon-size: 12px;
+$icon-size: 10px;
 
 .wis-user-icon {
     .mdi {
         position: relative;
-        //border: 2px solid var(--color);
-        //border-radius: 50%;
+        border: 2px solid var(--color);
+        border-radius: 50%;
         color: var(--color);
         flex-shrink: 0;
         //box-sizing: content-box;
-        //padding: 8px;
+        padding: 4px;
+        width: 32px;
+        height: 32px;
     }
 
     //&.wis-user-icon--18 {
@@ -151,7 +153,7 @@ $icon-size: 12px;
     //}
 
     .wis-user-icon--success {
-        --color: var(--green-400);
+        --color: var(--green-300);
     }
 
     .wis-user-icon--error {
@@ -163,32 +165,29 @@ $icon-size: 12px;
     }
 
     .wis-user-icon--warning {
-        --color: var(--warning);
+        --color: var(--yellow-400);
     }
 
-    //.wis-user-icon--warning,
-    //.wis-user-icon--error {
-    //    &::after {
-    //        background: var(--color);
-    //        content: "!";
-    //        display: flex;
-    //        position: absolute;
-    //        width: $icon-size;
-    //        height: $icon-size;
-    //        top: -4px;
-    //        right: -2px;
-    //        border-radius: 50%;
-    //        align-items: center;
-    //        justify-content: center;
-    //        font-size: $icon-size;
-    //        line-height: $icon-size;
-    //        color: #2a3042;
-    //        font-weight: bold;
-    //    }
-    //}
-
-    //&:not(:last-child) {
-    //    margin-right: var(--offset-sm);
-    //}
+    .wis-user-icon--warning,
+    .wis-user-icon--error {
+        &::after {
+            background: var(--color);
+            content: "!";
+            display: flex;
+            position: absolute;
+            width: $icon-size;
+            height: $icon-size;
+            top: -3px;
+            right: -2px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: $icon-size;
+            line-height: $icon-size;
+            color: #2a3042;
+            font-weight: bold;
+            font-style: normal;
+        }
+    }
 }
 </style>
