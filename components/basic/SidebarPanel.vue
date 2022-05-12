@@ -61,9 +61,9 @@ export default {
 
 @media (max-width: 1200px) {
     .wis-sidebar-panel {
-        top: var(--offset-sm);
-        bottom: var(--offset-sm);
-        right: 0;
+        //top: var(--offset-sm);
+        //bottom: var(--offset-sm);
+        //right: 0;
         height: calc(100vh - var(--offset-lg));
         max-height: calc(100vh - var(--offset-lg));
         padding: var(--offset-sm) var(--offset-xs) var(--offset-sm) var(--offset-sm);
@@ -72,6 +72,10 @@ export default {
         transition: transform var(--default-transition);
         transform: translateX(calc(100% + 16px));
         position: fixed;
+        top: 0;
+        bottom: 0;
+        //left: 0;
+        right: 0;
     }
 
     .wis-sidebar-panel__open {
@@ -86,15 +90,12 @@ export default {
 
     .wis-sidebar-panel.open {
         transform: translateX(0);
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
         background-color: rgba(0, 0, 0, 0.7);
         width: auto;
         height: 100vh;
         max-height: 100vh;
         padding: 0;
+        left: 0;
 
         .wis-sidebar-panel__open {
             background-color: var(--danger) !important;

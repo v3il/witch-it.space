@@ -68,7 +68,10 @@ const removeFromWishlist = (request, response) => {
 
     wishlistService.removeUserOffers({ user, offerIds })
         .then(removedOffersCount => response.send({ removedOffersCount }))
-        .catch(() => response.emitUnprocessableEntity())
+        .catch((e) => {
+            console.log(e)
+            response.emitUnprocessableEntity()
+        })
 }
 
 export const wishlistController = {

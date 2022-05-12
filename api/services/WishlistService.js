@@ -50,6 +50,8 @@ export class WishlistService {
             })
         }
 
+        await userService.setWishlistUpdateTime(user)
+
         return user.getWishes({
             where: { id: offerIds },
             include: { model: Price, as: 'rawPrices' }
@@ -79,22 +81,26 @@ export class WishlistService {
         })
     }
 
-    massCreate ({ user, offers }) {
+    async massCreate ({ user, offers }) {
         const mappedOffers = offers.map(offer => ({
             ...offer,
             itemId: offer.itemId,
             userId: user.id
         }))
 
+        await userService.setWishlistUpdateTime(user)
+
         return Wish.bulkCreate(mappedOffers, {
             include: { model: Price, as: 'rawPrices' }
         })
     }
 
-    removeUserOffers ({ user, offerIds }) {
+    async removeUserOffers ({ user, offerIds }) {
         if (!offerIds.length) {
             return 0
         }
+
+        await userService.setWishlistUpdateTime(user)
 
         return Wish.destroy({
             where: {

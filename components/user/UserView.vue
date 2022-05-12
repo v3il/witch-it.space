@@ -14,9 +14,8 @@
           <i class="mdi mdi-shield-check mdi-16px wit-offset-left--xs wit-flex__item--no-shrink wit-color--success" />
         </h5>
 
-        <p class="wit-flex wit-flex--align-center wit-color--muted">
-          <!--          <i class="mdi mdi-timer mdi-18px wit-offset-right&#45;&#45;xxs" />-->
-          Wishlist updated: Few seconds ago
+        <p class="wit-flex wit-flex--align-center wit-color--muted wit-line-height--sm">
+          {{ $t('Wishlist_LastUpdate', [formattedLastUpdate]) }}
         </p>
       </div>
 
@@ -239,6 +238,12 @@ export default {
 
         note () {
             return this.isMarketMode ? this.profile.settings.marketNote : this.profile.settings.wishlistNote
+        },
+
+        formattedLastUpdate () {
+            return this.profile.wishlistUpdateTime
+                ? Date.fromTimestamp(this.profile.wishlistUpdateTime).humanizeTimeDiff()
+                : this.$t('Time_Never')
         }
     },
 

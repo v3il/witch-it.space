@@ -1,5 +1,6 @@
 import { genSalt, hash } from 'bcrypt'
 import { User, UserSettings, UserStat } from '../models'
+import { getCurrentTimestamp } from '../util/index.js'
 
 const EXCLUDED_ATTRIBUTES = ['password']
 const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
@@ -70,5 +71,11 @@ export class UserService {
                 }
             }
         ]
+    }
+
+    setWishlistUpdateTime (user) {
+        return user.update({
+            wishlistUpdateTime: getCurrentTimestamp()
+        })
     }
 }

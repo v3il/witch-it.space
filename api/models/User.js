@@ -51,6 +51,11 @@ const initUserModel = (sequelize, DataTypes) => {
             inventorySyncTime: {
                 type: DataTypes.DATE,
                 defaultValue: null
+            },
+
+            wishlistUpdateTime: {
+                type: DataTypes.INTEGER,
+                defaultValue: null
             }
         },
         {}
