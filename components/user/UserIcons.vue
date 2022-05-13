@@ -11,7 +11,7 @@
     <div
       v-for="icon in icons"
       :key="icon.id"
-      class="wit-flex wit-flex--align-center wit-block--full-height1 wis-user-icon wit-offset-bottom--xs"
+      class="wit-flex wit-flex--align-center wit-block--full-height1 wis-user-icon"
       :class="[]"
     >
       <i class="mdi mdi-18px wit-flex wit-flex--center" :class="[icon.iconClass, icon.iconColorClass]" />
@@ -145,6 +145,10 @@ $icon-size: 10px;
         padding: 4px;
         width: 32px;
         height: 32px;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: var(--offset-xs);
     }
 
     //&.wis-user-icon--18 {

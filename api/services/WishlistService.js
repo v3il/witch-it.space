@@ -11,6 +11,10 @@ export class WishlistService {
     async getUserWishes (userId) {
         const profile = await userService.getById(userId)
 
+        if (!profile) {
+            return { profile: null, offers: [] }
+        }
+
         const offers = await Wish.findAll({
             where: { userId },
 

@@ -7,6 +7,15 @@ export const ManageWishlistTabs = Object.freeze({
     }
 })
 
+export const WishlistListTabs = Object.freeze({
+    MARKET: 'market',
+    WISHLIST: 'wishlist',
+
+    get values () {
+        return [WishlistListTabs.MARKET, WishlistListTabs.WISHLIST]
+    }
+})
+
 export const WishlistListSidebarTabs = Object.freeze({
     PROFILE: 'profile',
     FILTERS: 'filters',

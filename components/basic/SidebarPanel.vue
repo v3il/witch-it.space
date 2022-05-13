@@ -4,6 +4,8 @@
       <i class="mdi mdi-20px mdi-close" />
     </b-button>
 
+    <slot name="actions" />
+
     <div class="wis-sidebar-panel__content">
       <slot />
     </div>
@@ -42,7 +44,7 @@ export default {
     background-color: var(--content-bg);
     padding: var(--offset-sm) var(--offset-xxs) var(--offset-sm) var(--offset-sm);
     max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
-    margin-left: var(--offset-sm);
+    margin-left: var(--offset-md);
     position: sticky;
     top: var(--offset-sm);
 }

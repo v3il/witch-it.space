@@ -83,8 +83,11 @@ export const ru = {
     SortedBy: 'Сортировка',
     Close: 'Закрыть',
     Save: 'Сохранить',
+    Edit: 'Редактировать',
     Profile: 'Профиль',
     Filters: 'Фильтры',
+    Market: 'Предложения',
+    Wishlist: 'Список желаемого',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
@@ -197,7 +200,7 @@ export const ru = {
     Profiles_BackToProfilesList: 'Вернуться ко всем профилям',
 
     Profiles_Sort_Market: 'Маркет',
-    Profiles_Sort_Wishlist: 'Желаемое',
+    Profiles_Sort_Wishlist: 'Вишлист',
     Profiles_Sort_Name: 'Имя',
 
     Items_Filters_SearchPlaceholder: 'Поиск предмета по названию',

@@ -4,56 +4,35 @@
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
           <BackButton to="/profiles" class="wit-offset-right--xs" />
-          {{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}
+          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}</span>
+          <span v-else>{{ $t('MainMenu_MyWishlist') }}</span>
         </h1>
-      </template>
-
-      <template #topMenu>
-        <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">-->
-        <!--          <template #tab0>-->
-        <!--            {{ $t('Wishlist_TopTabs_Orders') }}-->
-        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ marketSize }}</span>-->
-        <!--          </template>-->
-
-        <!--          <template #tab1>-->
-        <!--            {{ $t('Wishlist_TopTabs_Wishlist') }}-->
-        <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlistSize }}</span>-->
-        <!--          </template>-->
-        <!--        </TopTabs>-->
       </template>
     </TopNavBar>
 
     <div class="wit-profile wit-flex">
-      <!--      <template v-if="error">-->
-      <!--        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top&#45;&#45;sm wit-block&#45;&#45;full-width">-->
-      <!--          <nuxt-link to="/profiles" class="wit-padding-top&#45;&#45;xs">-->
-      <!--            {{ $t('Profiles_BackToProfilesList') }}-->
-      <!--          </nuxt-link>-->
-      <!--        </EmptyState>-->
-      <!--      </template>-->
-
-      <template>
+      <template v-if="profile">
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
-            <Tabs :modes="$options.sidebarTabs" :selected-mode="sidebarSelectedTab" @switch="() => {}">
+            <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
               <template #tab0>
-                <div class="wit-flex wit-flex--align-center">
-                  <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>
+                <NuxtLink to="/profiles/139" class="wit-flex wit-flex--align-center wis-color--inherit">
+                  <span class="wis-tabs__label">{{ $t('Market') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ marketSize }}
                   </b-tag>
-                </div>
+                </NuxtLink>
               </template>
 
               <template #tab1>
-                <div class="wit-flex wit-flex--align-center">
-                  <span class="wis-tabs__label">{{ $t('Wishlist_OtherItems') }}</span>
+                <NuxtLink to="/profiles/139/wishlist" class="wit-flex wit-flex--align-center wis-color--inherit">
+                  <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ wishlistSize }}
                   </b-tag>
-                </div>
+                </NuxtLink>
               </template>
             </Tabs>
 
@@ -66,36 +45,9 @@
                 @toggle="isFiltersVisible = !isFiltersVisible"
               />
 
-              <b-button v-if="isMyProfile" type="is-success" tag="nuxt-link" :to="$route.fullPath + '/manage'">
-                Manage
+              <b-button v-if="isMyProfile" type="is-primary" tag="nuxt-link" :to="$route.fullPath + '/manage'" class="wit-offset-left--xs">
+                {{ $t('Edit') }}
               </b-button>
-
-              <!--              <Dropdown position="bottom-end">-->
-              <!--                <template #trigger>-->
-              <!--                  <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
-              <!--                    <i class="mdi mdi-20px mdi-cog" />-->
-              <!--                  </b-button>-->
-              <!--                </template>-->
-
-              <!--                <template #items>-->
-              <!--                  <DropdownItem-->
-              <!--                    v-if="hasSelectedEntities"-->
-              <!--                    @click="clearSelectedEntities"-->
-              <!--                  >-->
-              <!--                    {{ $t('Wishlist_Manage_Deselect') }}-->
-              <!--                  </DropdownItem>-->
-
-              <!--                  <DropdownItem @click="openMassPriceEditor">-->
-              <!--                    <span class="wit-color&#45;&#45;success">-->
-              <!--                      {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}-->
-              <!--                    </span>-->
-              <!--                  </DropdownItem>-->
-
-              <!--                  <DropdownItem v-if="isMyWishlistMode" @click="deleteAllOffers">-->
-              <!--                    <span class="wit-color&#45;&#45;danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>-->
-              <!--                  </DropdownItem>-->
-              <!--                </template>-->
-              <!--              </Dropdown>-->
             </div>
           </div>
 
@@ -118,146 +70,36 @@
           <Tabs
             :modes="$options.sidebarTabs"
             :selected-mode="sidebarSelectedTab"
-            expanded
-            class="wit-offset-bottom--xs"
+            expanded1
+            class="wit-offset-bottom--sm"
             @switch="sidebarSelectedTab = $event"
           >
             <template #tab0>
               <div class="wit-flex wit-flex--align-center">
-                <i class="mdi mdi-20px mdi-account wit-offset-right--xxs" />
+                <i class="mdi mdi-20px mdi-chevron-left wit-offset-right--xxs wis-tabs__icon2" />
                 <span class="wis-tabs__label">{{ $t('Profile') }}</span>
               </div>
             </template>
 
             <template #tab1>
               <div class="wit-flex wit-flex--align-center">
-                <i class="mdi mdi-20px mdi-filter wit-offset-right--xxs" />
                 <span class="wis-tabs__label">{{ $t('Filters') }}</span>
+                <i class="mdi mdi-20px mdi-chevron-right wit-offset-left--xxs wis-tabs__icon2" />
               </div>
             </template>
           </Tabs>
 
-          <UserView v-if="profile && isProfileTabSelected" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
+          <UserView v-if="isProfileTabSelected" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
           <WishlistFilters v-else />
         </SidebarPanel>
+      </template>
 
-        <!--        <div class="wit-offset-left&#45;&#45;sm wit-profile__user">-->
-        <!--          -->
-        <!--        </div>-->
-
-        <!--        <WishlistFilters :is-visible="isFiltersVisible" @close="isFiltersVisible = false" />-->
-
-        <!--        <div class="wit-flex__item&#45;&#45;grow">-->
-        <!--          <div>-->
-        <!--            &lt;!&ndash;    <TopNavBar class="layout__header">&ndash;&gt;-->
-        <!--            &lt;!&ndash;      <template #brand>&ndash;&gt;-->
-        <!--            &lt;!&ndash;        <nuxt-link to="/profiles">&ndash;&gt;-->
-        <!--            &lt;!&ndash;          Profiles&ndash;&gt;-->
-        <!--            &lt;!&ndash;        </nuxt-link>&ndash;&gt;-->
-        <!--            &lt;!&ndash;      </template>&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;      <template #topMenu>&ndash;&gt;-->
-        <!--            &lt;!&ndash;        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="redirectToWishlist">&ndash;&gt;-->
-        <!--            &lt;!&ndash;          <template #tab0>&ndash;&gt;-->
-        <!--            &lt;!&ndash;            {{ $t('Wishlist_TopTabs_Orders') }}&ndash;&gt;-->
-        <!--            &lt;!&ndash;          </template>&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;          <template #tab1>&ndash;&gt;-->
-        <!--            &lt;!&ndash;            {{ $t('Wishlist_TopTabs_Wishlist') }}&ndash;&gt;-->
-        <!--            &lt;!&ndash;            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ wishlist.length }}</span>&ndash;&gt;-->
-        <!--            &lt;!&ndash;          </template>&ndash;&gt;-->
-        <!--            &lt;!&ndash;        </TopTabs>&ndash;&gt;-->
-        <!--            &lt;!&ndash;      </template>&ndash;&gt;-->
-        <!--            &lt;!&ndash;    </TopNavBar>&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;            <div class="wit-items wit-flex">&ndash;&gt;-->
-        <!--            &lt;!&ndash;              wishlist&ndash;&gt;-->
-
-        <!--                                  <b-button v-if="isMyProfile" type="is-success" tag="nuxt-link" :to="$route.fullPath + '/manage'">-->
-        <!--                                    Manage-->
-        <!--                                  </b-button>-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;      <div style="flex-basis: 350px;" class="wit-offset-right&#45;&#45;md">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;        <UserView v-if="user" :profile="user">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;          &lt;!&ndash; todo &ndash;&gt;&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;          <template #note>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;            <h5 class="wit-font-weight&#45;&#45;700 wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;xs">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;              {{ $t('UserView_NoteTitle') }}&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;            </h5>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;            <p class="wit-line-height&#45;&#45;md wit-color&#45;&#45;muted">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;              {{ user.wishlistNote }}&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;            </p>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;          </template>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;        </UserView>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;      </div>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;              <div class="wit-flex__item&#45;&#45;grow">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <div class="wit-flex wit-offset-bottom&#45;&#45;md wit-flex&#45;&#45;justify-center">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  <div style="flex-basis: 500px; padding-left: 16px; padding-right: 16px;" class="wit-padding-le">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    <div class="wit-offset-bottom&#45;&#45;xs">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                        Add items&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      </b-button>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="() => {}">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                        Manage&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      </b-button>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    </div>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    <b-button type="is-success" class="wit-transition wit-offset-right&#45;&#45;xxs" @click="areFiltersVisible = !areFiltersVisible">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      Filters&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    </b-button>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </div>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <ItemFilters v-if="areFiltersVisible" :filters-data="filters" class="wit-flex__item&#45;&#45;grow wit-offset-bottom&#45;&#45;md" @change="() => {}" @reset="() => {}" />&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <Card>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  <div class="wit-flex wit-flex&#45;&#45;wrap wit-items__item-grid">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    <WishlistItemView&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      v-for="item in wishlist"&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      :key="item.id"&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      :wishlist-item="item"&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      @clicked.stop&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    />&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </Card>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;              </div>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;              <div v-if="selectedItem" class="wit-items__sidebar">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <div class="wit-offset-bottom&#45;&#45;sm wit-flex">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  <ItemView :item="selectedItem" :is-title-shown="false" class="wit-offset-right&#45;&#45;sm wit-flex__item&#45;&#45;no-shrink wit-items__selected-item-view" />&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  <div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    <h4 class="wit-offset-bottom&#45;&#45;sm wit-font-size&#45;&#45;sm">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                      {{ selectedItem.name }}&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    </h4>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                    <ItemTags :item="selectedItem" />&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  </div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </div>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <p class="wit-offset-bottom&#45;&#45;sm">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  In stock: 10&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </p>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <b-button type="is-primary" class="wit-transition">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  Create offer&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </b-button>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <b-button type="is-primary" class="wit-transition">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  Wishlist item&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </b-button>&ndash;&gt;&ndash;&gt;-->
-
-        <!--            &lt;!&ndash;              &lt;!&ndash;                <b-button type="is-primary is-light" class="wit-transition" @click="selectedItem = null">&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                  Close&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;                </b-button>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;              </div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;              &lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
-        <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-        <!--          </div>-->
-        <!--        </div>-->
+      <template v-else>
+        <EmptyState :text="$t('Profiles_ProfileNotFound')" icon="account-remove" class="wit-padding-top--sm wit-block--full-width">
+          <nuxt-link to="/profiles" class="wit-padding-top--xs">
+            {{ $t('Profiles_BackToProfilesList') }}
+          </nuxt-link>
+        </EmptyState>
       </template>
     </div>
   </div>
@@ -267,14 +109,8 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import UserView from '@/components/user/UserView.vue'
 import ItemView from '@/components/items/ItemView'
-import ItemFilters from '@/components/items/ItemFilters'
-import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
-import ItemTags from '@/components/items/ItemTags'
-import WishlistItemView from '@/components/wishlist/WishlistItemView'
-import Card from '@/components/basic/Card.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
-import TopTabs from '@/components/header/TopTabs.vue'
 import { StoreModules, User } from '@/store/index.js'
 import { Offer } from '@/domain/models/index.js'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
@@ -282,47 +118,29 @@ import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
-import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
-import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
-// import { WishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import Tabs from '@/components/basic/Tabs.vue'
 import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
-import { WishlistListSidebarTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
-
-const DEFAULT_FILTERS = {
-    query: '',
-    rarities: [],
-    isOnlyTradeable: false,
-    isOnlyOwned: false,
-    slots: [],
-    events: []
-}
-
-const Modes = {
-    MARKET: 'market',
-    WISHLIST: 'wishlist'
-}
+import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
+import IconButton from '@/components/basic/IconButton.vue'
 
 export default {
-    // modes: WishlistTabs.values,
+    tabs: WishlistListTabs.values,
     sidebarTabs: WishlistListSidebarTabs.values,
 
     components: {
         UserView,
         TopNavBar,
         EmptyState,
-        TopTabs,
         SearchInput,
         WishlistFilters,
         ItemsListView,
         ItemView,
         ItemPriceList,
-        DropdownItem,
-        Dropdown,
         Tabs,
         BackButton,
-        SidebarPanel
+        SidebarPanel,
+        IconButton
     },
 
     async asyncData ({ route, $wishlistService, store }) {
@@ -337,20 +155,9 @@ export default {
 
     data: () => ({
         isFiltersVisible: false,
+        selectedTab: WishlistListTabs.WISHLIST,
         sidebarSelectedTab: WishlistListSidebarTabs.PROFILE
     }),
-
-    // watch: {
-    //     filters: {
-    //         deep: true,
-    //         handler: 'updateRoute'
-    //     },
-    //
-    //     sorts: {
-    //         deep: true,
-    //         handler: 'updateRoute'
-    //     }
-    // },
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
@@ -363,11 +170,7 @@ export default {
         ]),
 
         isMyProfile () {
-            return this.user.id === this.profile?.id || 1
-        },
-
-        userViewMode () {
-            return this.mode === Modes.MARKET ? 'market' : 'wishlist'
+            return this.user.id === this.profile?.id
         },
 
         marketSize () {
@@ -384,7 +187,9 @@ export default {
     },
 
     created () {
-        if (this.error) {
+        console.log(this.profile, this.offers)
+
+        if (!this.profile) {
             return
         }
 
@@ -394,24 +199,10 @@ export default {
         })
     },
 
-    mounted () {
-        if (this.error) {
-            this.$showError(this.error)
-        }
-    },
-
-    // watch: {
-    //     $route: {
-    //         immediate: true,
-    //
-    //         handler (route) {
-    //             this.mode = route.fullPath.includes('wishlist') ? Modes.WISHLIST : Modes.MARKET
-    //         }
+    // mounted () {
+    //     if (!this.profile) {
+    //         this.$showError(this.error)
     //     }
-    // },
-
-    // async created () {
-    //     await this.$itemsService.fetch()
     // },
 
     methods: {
@@ -422,18 +213,6 @@ export default {
 
         ...mapActions(StoreModules.WISHLIST, {
             storeOffers: 'storeOffers'
-            // toggleMode: 'toggleMode',
-            // updateFilters: 'updateFilters',
-            // updateSorts: 'updateSorts',
-            // resetFilter: 'resetFilter',
-            // resetSorts: 'resetSorts',
-            // resetSortsFilters: 'resetSortsFilters',
-            // toggleOffer: 'toggleOffer',
-            // clearSelectedEntities: 'clearSelectedEntities',
-            // removeOffers: 'removeOffers',
-            // toggleOrder: 'toggleOrder',
-            // updateOrderBy: 'updateOrderBy',
-            // selectOffers: 'selectOffers'
         })
     }
 }
@@ -449,9 +228,7 @@ export default {
     position: sticky;
     top: 0;
 }
-</style>
 
-<style scoped lang="scss">
 .wit-wishlist__background {
     min-height: calc(100vh - var(--header-height));
     margin: var(--offset-sm) var(--offset-sm) 0;
@@ -494,11 +271,11 @@ export default {
 .wit-offer-controls {
     position: absolute;
     top: 16px;
-    right: -10px;
-    padding: var(--offset-xxs) 0 var(--offset-xxs) var(--offset-xxs);
-    background: var(--card-bg-color);
+    left: -16px;
+    padding: var(--offset-xxs) var(--offset-xxs) var(--offset-xxs) 0;
+    background: var(--body-bg);
     z-index: 3;
-    border-radius: 50% 0 0 50%;
+    border-radius: 0 50% 50% 0;
 }
 
 .wit-offer-controls--remove {
@@ -507,6 +284,14 @@ export default {
 
 .wis-tabs__icon {
     display: none;
+}
+
+.wis-tabs__icon2 {
+    align-self: flex-end;
+}
+
+.wis-tabs__label {
+    height: var(--offset-md);
 }
 
 @media (max-width: 767.98px) {

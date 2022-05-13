@@ -1,6 +1,6 @@
 <template>
   <div class="wis-user-view wit-background--content wit-position--relative">
-    <div class="wis-user-view__section wit-flex wit-flex--align-center">
+    <div class="wis-user-view__section wit-flex wit-flex--align-center wit-padding-top--none">
       <img
         :src="avatarUrl"
         alt="Avatar"
@@ -14,40 +14,10 @@
           <i class="mdi mdi-shield-check mdi-16px wit-offset-left--xs wit-flex__item--no-shrink wit-color--success" />
         </h5>
 
-        <p class="wit-flex wit-flex--align-center wit-color--muted wit-line-height--sm">
+        <p class="wit-color--muted wit-line-height--sm">
           {{ $t('Wishlist_LastUpdate', [formattedLastUpdate]) }}
         </p>
       </div>
-
-      <!--      <div v-if="!hideStatButtons" class="wit-offset-bottom&#45;&#45;sm">-->
-      <!--        <div class="wit-flex wit-block&#45;&#45;full-width">-->
-      <!--          <b-button-->
-      <!--            type="is-link"-->
-      <!--            tag="router-link"-->
-      <!--            :to="marketUrl"-->
-      <!--            class="wis-user-view__stat-button"-->
-      <!--          >-->
-      <!--            <div class="wit-flex wit-flex&#45;&#45;column">-->
-      <!--              <span class="wit-font-weight&#45;&#45;700">{{ profile.userStat.marketSize }}</span>-->
-      <!--              <span class="wit-color&#45;&#45;muted">{{ $t('Profiles_StatButtonOrders') }}</span>-->
-      <!--            </div>-->
-      <!--          </b-button>-->
-
-      <!--          <b-button-->
-      <!--            type="is-link"-->
-      <!--            tag="router-link"-->
-      <!--            :to="wishlistUrl"-->
-      <!--            class="wis-user-view__stat-button"-->
-      <!--          >-->
-      <!--            <div class="wit-flex wit-flex&#45;&#45;column">-->
-      <!--              <span class="wit-font-weight&#45;&#45;700">{{ profile.userStat.wishlistSize }}</span>-->
-      <!--              <span class="wit-color&#45;&#45;muted">{{ $t('Profiles_StatButtonWishlist') }}</span>-->
-      <!--            </div>-->
-      <!--          </b-button>-->
-      <!--        </div>-->
-      <!--    </div>-->
-
-    <!--      <ProfileScale :scale-data="profileScaleData" @click="onScaleClick" />-->
     </div>
 
     <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section--xs wis-user-view__section1">
@@ -105,7 +75,7 @@
         {{ $t('UserView_NoteTitle') }}
       </h5>
 
-      <p class="wit-line-height--md wit-color--muted" style="white-space: pre-line; margin-top: -1em;">
+      <p class="wit-line-height--md" style="white-space: pre-line; margin-top: -1em;">
         {{ note }}
       </p>
     </div>
@@ -263,6 +233,10 @@ export default {
 
 .wis-user-view__section {
     padding: var(--offset-sm) 0;
+
+    &:first-child {
+        padding-top: 0;
+    }
 
     &:not(:last-child) {
         border-bottom: var(--default-border);
