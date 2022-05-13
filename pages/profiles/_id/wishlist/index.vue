@@ -5,18 +5,18 @@
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
           <BackButton to="/profiles" class="wit-offset-right--xs" />
           <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}</span>
-          <span v-else>{{ $t('MainMenu_MyWishlist') }}</span>
+          <span v-else>{{ $t('Error') }}</span>
         </h1>
       </template>
     </TopNavBar>
 
-    <div class="wit-profile wit-flex">
+    <div class="wit-wishlist wit-flex">
       <template v-if="profile">
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
             <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
               <template #tab0>
-                <NuxtLink to="/profiles/139" class="wit-flex wit-flex--align-center wis-color--inherit">
+                <NuxtLink :to="marketURL" class="wit-flex wit-flex--align-center wis-color--inherit">
                   <span class="wis-tabs__label">{{ $t('Market') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
@@ -26,13 +26,13 @@
               </template>
 
               <template #tab1>
-                <NuxtLink to="/profiles/139/wishlist" class="wit-flex wit-flex--align-center wis-color--inherit">
+                <div class="wit-flex wit-flex--align-center">
                   <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ wishlistSize }}
                   </b-tag>
-                </NuxtLink>
+                </div>
               </template>
             </Tabs>
 
@@ -45,8 +45,14 @@
                 @toggle="isFiltersVisible = !isFiltersVisible"
               />
 
-              <b-button v-if="isMyProfile" type="is-primary" tag="nuxt-link" :to="$route.fullPath + '/manage'" class="wit-offset-left--xs">
-                {{ $t('Edit') }}
+              <b-button
+                v-if="isMyProfile"
+                type="is-primary"
+                tag="nuxt-link"
+                :to="manageWishlistURL"
+                class="wit-offset-left--xs wit-paddings--xs"
+              >
+                <i class="mdi mdi-20px mdi-pencil" />
               </b-button>
             </div>
           </div>
@@ -89,7 +95,7 @@
             </template>
           </Tabs>
 
-          <UserView v-if="isProfileTabSelected" :profile="profile" :mode="'wishlist'" hide-stat-buttons1 />
+          <UserView v-if="isProfileTabSelected" :profile="profile" :mode="'wishlist'" />
           <WishlistFilters v-else />
         </SidebarPanel>
       </template>
@@ -123,6 +129,8 @@ import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
+import { buildUserMarketUrl } from '@/utils/index.js'
+import { buildUserManageWishlistUrl } from '@/utils/buildUrls.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -183,12 +191,18 @@ export default {
 
         isProfileTabSelected () {
             return this.sidebarSelectedTab === WishlistListSidebarTabs.PROFILE
+        },
+
+        manageWishlistURL () {
+            return buildUserManageWishlistUrl(this.profile.id)
+        },
+
+        marketURL () {
+            return buildUserMarketUrl(this.profile.id)
         }
     },
 
     created () {
-        console.log(this.profile, this.offers)
-
         if (!this.profile) {
             return
         }
@@ -198,12 +212,6 @@ export default {
             availableOffers: []
         })
     },
-
-    // mounted () {
-    //     if (!this.profile) {
-    //         this.$showError(this.error)
-    //     }
-    // },
 
     methods: {
         ...mapActions(StoreModules.FILTERS, {
@@ -219,20 +227,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-profile {
+.wit-wishlist {
     padding: var(--offset-sm);
-}
-
-.wit-profile__user {
-    flex: 0 0 300px;
-    position: sticky;
-    top: 0;
-}
-
-.wit-wishlist__background {
-    min-height: calc(100vh - var(--header-height));
-    margin: var(--offset-sm) var(--offset-sm) 0;
-    position: relative;
 }
 
 .wit-wishlist__header {
@@ -253,33 +249,6 @@ export default {
 
 .wit-wishlist__items-list {
     padding: 0 var(--offset-sm) var(--offset-sm);
-}
-
-.wit-more-actions {
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    transition: width 0.3s ease, margin-right 0.3s ease;
-    will-change: width, margin-left;
-    overflow: hidden;
-    margin-left: var(--offset-xs);
-    background: #2e3648;
-    border: var(--default-border);
-    color: var(--muted-text-color);
-}
-
-.wit-offer-controls {
-    position: absolute;
-    top: 16px;
-    left: -16px;
-    padding: var(--offset-xxs) var(--offset-xxs) var(--offset-xxs) 0;
-    background: var(--body-bg);
-    z-index: 3;
-    border-radius: 0 50% 50% 0;
-}
-
-.wit-offer-controls--remove {
-    top: 48px;
 }
 
 .wis-tabs__icon {

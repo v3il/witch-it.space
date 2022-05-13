@@ -20,6 +20,10 @@ export const buildUserWishlistUrl = (userId) => {
     return `/profiles/${userId}/wishlist`
 }
 
+export const buildUserManageWishlistUrl = (userId) => {
+    return `/profiles/${userId}/wishlist/manage`
+}
+
 export const buildRarityFilterUrl = (userId, rarity) => {
     return `${buildUserWishlistUrl(userId)}?rarity=${rarity}`
 }

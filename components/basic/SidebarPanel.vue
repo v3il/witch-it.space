@@ -85,9 +85,11 @@ export default {
         background-color: var(--content-bg) !important;
         padding: var(--offset-xs);
         position: absolute;
-        top: 16px;
-        right: 300px;
-        border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
+        bottom: 16px;
+        right: 310px;
+        border-radius: 50%;
+        height: 36px;
+        width: 36px;
     }
 
     .wis-sidebar-panel.open {

@@ -88,6 +88,7 @@ export const ru = {
     Filters: 'Фильтры',
     Market: 'Предложения',
     Wishlist: 'Список желаемого',
+    Error: 'Ошибка',
 
     Quests_Play40Rounds_B: 'Сыграть 40 раундов Mobification',
     Quests_Play8Rounds_B: 'Сыграть 8 раундов Mobification',
