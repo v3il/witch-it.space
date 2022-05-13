@@ -9,13 +9,14 @@
       >
 
       <div class="wit-offset-left--sm" style="min-width: 0;">
-        <h5 class="wit-font-size--sm wit-text--overflow wit-text--center1 wit-offset-bottom--xs wit-flex" :class="titleOffsetClass">
+        <h5 class="wit-font-size--sm wit-text--overflow wit-text--center1 wit-offset-bottom--xxs wit-flex" :class="titleOffsetClass">
           <span class="wit-flex__item--grow1">{{ profile.displayName }}</span>
           <i class="mdi mdi-shield-check mdi-16px wit-offset-left--xs wit-flex__item--no-shrink wit-color--success" />
         </h5>
 
-        <p class="wit-color--muted wit-line-height--sm">
-          {{ $t('Wishlist_LastUpdate', [formattedLastUpdate]) }}
+        <p v-tooltip="$t('Wishlist_LastUpdate')" class="wit-color--muted wit-line-height--sm wit-flex wit-flex--align-center">
+          <i class="mdi mdi-update mdi-18px wit-offset-right--xxs" />
+          {{ formattedLastUpdate }}
         </p>
       </div>
     </div>
@@ -239,7 +240,7 @@ export default {
     }
 
     &:not(:last-child) {
-        border-bottom: var(--default-border);
+        border-bottom: 1px solid var(--user-view-border);
     }
 }
 

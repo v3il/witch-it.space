@@ -241,7 +241,7 @@ export const ru = {
     Wishlist_Manage_AddToWishlist: 'Добавить в вишлист',
     Wishlist_Manage_RemoveOffers: 'Удалить предложения',
     Wishlist_ConfirmDelete: 'Вы действительно хотите удалить выбранные предложения (%s)?',
-    Wishlist_LastUpdate: 'Обновлено: %s',
+    Wishlist_LastUpdate: 'Последнее обновление',
 
     UserView_SteamGuardEnabled: 'Аккаунт защищён Steam Guard',
     // UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

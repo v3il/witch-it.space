@@ -44,7 +44,7 @@ export default {
     background-color: var(--content-bg);
     padding: var(--offset-sm) var(--offset-xxs) var(--offset-sm) var(--offset-sm);
     max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
-    margin-left: var(--offset-md);
+    margin-left: var(--offset-sm);
     position: sticky;
     top: var(--offset-sm);
 }
