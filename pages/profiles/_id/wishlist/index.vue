@@ -129,8 +129,7 @@ import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
-import { buildUserMarketUrl } from '@/utils/index.js'
-import { buildUserManageWishlistUrl } from '@/utils/buildUrls.js'
+import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -182,11 +181,11 @@ export default {
         },
 
         marketSize () {
-            return this.profile?.userStat.marketSize ?? 0
+            return this.profile.userStat.marketSize ?? 0
         },
 
         wishlistSize () {
-            return this.profile?.userStat.wishlistSize ?? 0
+            return this.profile.userStat.wishlistSize ?? 0
         },
 
         isProfileTabSelected () {

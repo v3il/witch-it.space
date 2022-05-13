@@ -33,6 +33,7 @@ export const extractUserPublicData = (user) => {
         isTradingOnlyDups: user.isTradingOnlyDups,
         areRecipesHidden: user.areRecipesHidden,
         wishlistUpdateTime: user.wishlistUpdateTime,
+        marketUpdateTime: user.marketUpdateTime,
         isVerified
     }
 }
@@ -61,6 +62,7 @@ export const extractOtherUsersPublicData = (user) => {
         isTradingOnlyDups: user.isTradingOnlyDups,
         areRecipesHidden: user.areRecipesHidden,
         wishlistUpdateTime: user.wishlistUpdateTime,
+        marketUpdateTime: user.marketUpdateTime,
         isVerified
     }
 }
