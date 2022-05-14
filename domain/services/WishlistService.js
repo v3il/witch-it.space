@@ -18,9 +18,7 @@ export class WishlistService {
 
     fetch (userId) {
         return this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
-            .catch(error => ({
-                error: { message: error.message }
-            }))
+            .catch(() => ({ profile: null, offers: [] }))
     }
 
     checkOffer (offer, filters) {

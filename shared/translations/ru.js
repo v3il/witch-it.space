@@ -86,7 +86,7 @@ export const ru = {
     Edit: 'Редактировать',
     Profile: 'Профиль',
     Filters: 'Фильтры',
-    Market: 'Предложения',
+    Market: 'Список предложений',
     Wishlist: 'Список желаемого',
     Error: 'Ошибка',
 

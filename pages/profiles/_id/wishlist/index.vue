@@ -177,7 +177,7 @@ export default {
         ]),
 
         isMyProfile () {
-            return this.user.id === this.profile?.id
+            return this.user.id === this.profile.id
         },
 
         marketSize () {
