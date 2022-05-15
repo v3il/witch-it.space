@@ -1,3 +1,5 @@
 export { User } from './User'
 export { Quest } from './Quest'
 export { Wish } from './Wish'
+export { Price } from './Price'
+export { Item } from './Item'

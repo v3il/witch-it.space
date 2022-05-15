@@ -1,7 +1,7 @@
 import axios from 'axios'
 import sharp from 'sharp'
 import ImageKit from 'imagekit'
-import { Item, sequelize } from '../models/index.js'
+import { Item } from '../models/index.js'
 import { items } from './items'
 
 const imagekit = new ImageKit({
@@ -16,7 +16,7 @@ const imagekit = new ImageKit({
             await processItem(item)
         }
 
-        await sequelize.close()
+        // await sequelize.close()
     } catch (e) {
         console.error(e)
     }
@@ -28,7 +28,9 @@ async function processItem (item) {
             await downloadImage(item.imgUrl, item.itemId)
         }
 
-        await saveItem(item)
+        const { imgUrl, ...propsToStore } = item
+
+        await saveItem(propsToStore)
 
         console.log(`Item "${item.name}" successfully processed`)
     } catch (e) {
@@ -61,14 +63,11 @@ async function downloadImage (imgUrl, imageName) {
 
 async function saveItem (normalizedItemData) {
     const { itemId, ...otherProps } = normalizedItemData
-
-    const itemInDb = await Item.findOne({
-        where: { itemId }
-    })
+    const itemInDb = await Item.query().findById(itemId)
 
     if (itemInDb) {
-        return itemInDb.update(otherProps)
+        return Item.query().patch(otherProps).findById(itemId)
     }
 
-    return Item.create(normalizedItemData)
+    return Item.query().insert(normalizedItemData)
 }
