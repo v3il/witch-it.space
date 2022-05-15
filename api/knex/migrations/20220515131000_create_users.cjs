@@ -27,7 +27,7 @@ exports.up = function(knex) {
         table.timestamp('wishlistUpdateTime').defaultTo(null);
         table.timestamp('marketUpdateTime').defaultTo(null);
         table.timestamp('createdAt').defaultTo(knex.fn.now());
-        table.timestamp('updatedAt').defaultTo(knex.fn.now());
+        table.timestamp('updatedAt').defaultTo(null);
     })
 };
 

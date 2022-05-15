@@ -11,7 +11,7 @@ exports.up = function(knex) {
         table.integer('progress');
         table.integer('userId').references('id').inTable('users');
         table.timestamp('createdAt').defaultTo(knex.fn.now());
-        table.timestamp('updatedAt').defaultTo(knex.fn.now());
+        table.timestamp('updatedAt').defaultTo(null);
     })
 };
 
