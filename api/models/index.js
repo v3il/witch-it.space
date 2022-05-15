@@ -39,20 +39,20 @@ try {
     const Item = initItemModel(sequelize, DataTypes)
     const Wish = initWishModel(sequelize, DataTypes)
     const Price = initPriceModel(sequelize, DataTypes)
-    const UserSettings = initUserSettingsModel(sequelize, DataTypes)
-    const UserStat = initUserStatModel(sequelize, DataTypes)
+    // const UserSettings = initUserSettingsModel(sequelize, DataTypes)
+    // const UserStat = initUserStatModel(sequelize, DataTypes)
 
     User.hasMany(Quest)
     User.hasMany(Wish)
-    User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings', onDelete: 'CASCADE' })
-    User.hasOne(UserStat, { foreignKey: 'userId', as: 'userStat', onDelete: 'CASCADE' })
+    // User.hasOne(UserSettings, { foreignKey: 'userId', as: 'settings', onDelete: 'CASCADE' })
+    // User.hasOne(UserStat, { foreignKey: 'userId', as: 'userStat', onDelete: 'CASCADE' })
     Wish.hasMany(Price, { foreignKey: 'offerId', as: 'rawPrices', onDelete: 'CASCADE' })
 
     Quest.belongsTo(User, { foreignKey: 'userId' })
     Wish.belongsTo(User, { foreignKey: 'userId' })
     Price.belongsTo(Wish, { foreignKey: 'offerId' })
-    UserSettings.belongsTo(User, { foreignKey: 'userId', as: 'settings' })
-    UserStat.belongsTo(User, { foreignKey: 'userId', as: 'userStat' })
+    // UserSettings.belongsTo(User, { foreignKey: 'userId', as: 'settings' })
+    // UserStat.belongsTo(User, { foreignKey: 'userId', as: 'userStat' })
 
     db.sequelize = sequelize
     db.User = User
@@ -60,8 +60,8 @@ try {
     db.Item = Item
     db.Wish = Wish
     db.Price = Price
-    db.UserSettings = UserSettings
-    db.UserStat = UserStat
+    // db.UserSettings = UserSettings
+    // db.UserStat = UserStat
 
     sequelize.sync({ alter: true })
 
@@ -77,7 +77,7 @@ export const Quest = db.Quest
 export const Item = db.Item
 export const Wish = db.Wish
 export const Price = db.Price
-export const UserSettings = db.UserSettings
-export const UserStat = db.UserStat
+// export const UserSettings = db.UserSettings
+// export const UserStat = db.UserStat
 export const sequelize = db.sequelize
 export const Sequelize = Seq

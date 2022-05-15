@@ -3,8 +3,8 @@ import { User, UserSettings, UserStat } from '../models'
 import { getCurrentTimestamp } from '../util/index.js'
 
 const EXCLUDED_ATTRIBUTES = ['password']
-const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
-const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
+// const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
+// const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 
 export class UserService {
     getById (id, { excludeAttrs } = { excludeAttrs: true }) {
@@ -13,7 +13,7 @@ export class UserService {
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: this._getIncludes(excludeAttrs),
+            // include: this._getIncludes(excludeAttrs),
             benchmark: true
             // logging: console.log
         }
@@ -27,7 +27,7 @@ export class UserService {
             attributes: {
                 exclude: EXCLUDED_ATTRIBUTES
             },
-            include: this._getIncludes(),
+            // include: this._getIncludes(),
             benchmark: true
             // logging: console.log
         }
@@ -46,7 +46,7 @@ export class UserService {
             settings: {},
             userStat: {}
         }, {
-            include: this._getIncludes()
+            // include: this._getIncludes()
         })
     }
 
@@ -54,24 +54,24 @@ export class UserService {
         return user.get({ plain: true })
     }
 
-    _getIncludes (excludeAttrs = true) {
-        return [
-            {
-                model: UserSettings,
-                as: 'settings',
-                attributes: {
-                    exclude: excludeAttrs ? USER_SETTINGS_EXCLUDED_ATTRIBUTES : []
-                }
-            },
-            {
-                model: UserStat,
-                as: 'userStat',
-                attributes: {
-                    exclude: excludeAttrs ? USER_STAT_EXCLUDED_ATTRIBUTES : []
-                }
-            }
-        ]
-    }
+    // _getIncludes (excludeAttrs = true) {
+    //     return [
+    //         {
+    //             model: UserSettings,
+    //             as: 'settings',
+    //             attributes: {
+    //                 exclude: excludeAttrs ? USER_SETTINGS_EXCLUDED_ATTRIBUTES : []
+    //             }
+    //         },
+    //         {
+    //             model: UserStat,
+    //             as: 'userStat',
+    //             attributes: {
+    //                 exclude: excludeAttrs ? USER_STAT_EXCLUDED_ATTRIBUTES : []
+    //             }
+    //         }
+    //     ]
+    // }
 
     setWishlistUpdateTime (user) {
         return user.update({

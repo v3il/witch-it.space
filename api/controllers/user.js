@@ -10,7 +10,6 @@ import {
 } from '../../shared'
 import { updateUserToken } from '../controllers/auth/signInUser'
 import { userService } from '../services'
-import { UserSettings } from '../models/index.js'
 
 const getCurrentUser = async (request, response) => {
     const { id } = request.user
@@ -135,14 +134,7 @@ const updateSettings = async (request, response) => {
         displayName,
         steamTradeLink,
         avatarId,
-        isGuardProtected: !!isGuardProtected
-    }
-
-    if (password) {
-        updateData.password = await userService.encryptPassword(password)
-    }
-
-    await user.settings.update({
+        isGuardProtected: !!isGuardProtected,
         switchRarities: !!switchRarities,
         tradeWithGuardedOnly: !!tradeWithGuardedOnly,
         discountAvailable: !!discountAvailable,
@@ -150,13 +142,27 @@ const updateSettings = async (request, response) => {
         hideRecipes: !!hideRecipes,
         wishlistNote,
         marketNote
-    })
+    }
 
-    await user.update(updateData, {
+    if (password) {
+        updateData.password = await userService.encryptPassword(password)
+    }
+
+    // await user.settings.update({
+    //     switchRarities: !!switchRarities,
+    //     tradeWithGuardedOnly: !!tradeWithGuardedOnly,
+    //     discountAvailable: !!discountAvailable,
+    //     tradeDuplicatesOnly: !!tradeDuplicatesOnly,
+    //     hideRecipes: !!hideRecipes,
+    //     wishlistNote,
+    //     marketNote
+    // })
+
+    await user.update(updateData/*, {
         include: [
             UserSettings
         ]
-    })
+    } */)
 
     updateUserToken({ response, user })
 }

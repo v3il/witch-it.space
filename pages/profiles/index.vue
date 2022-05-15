@@ -24,24 +24,24 @@
 
     <main class="wis-profiles">
       <Card>
-        <Filters
-          ref="filters"
-          :filters="filters"
-          :sort="sort"
-          :default-filters="$options.defaultFilters"
-          :default-sort="$options.defaultSort"
-          :query-input-placeholder="$t('Profiles_SearchByUsername')"
-          :sorts="$options.sorts"
-          class="wit-offset-bottom--xxs"
-          @filtersChanged="onFiltersChange"
-          @sortChanged="onSortChange"
-        >
-          <template #default="{ filterParams, update }">
-            <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">
-              {{ $t('Profiles_SteamGuardedOnly') }}
-            </b-switch>
-          </template>
-        </Filters>
+        <!--        <Filters-->
+        <!--          ref="filters"-->
+        <!--          :filters="filters"-->
+        <!--          :sort="sort"-->
+        <!--          :default-filters="$options.defaultFilters"-->
+        <!--          :default-sort="$options.defaultSort"-->
+        <!--          :query-input-placeholder="$t('Profiles_SearchByUsername')"-->
+        <!--          :sorts="$options.sorts"-->
+        <!--          class="wit-offset-bottom&#45;&#45;xxs"-->
+        <!--          @filtersChanged="onFiltersChange"-->
+        <!--          @sortChanged="onSortChange"-->
+        <!--        >-->
+        <!--          <template #default="{ filterParams, update }">-->
+        <!--            <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">-->
+        <!--              {{ $t('Profiles_SteamGuardedOnly') }}-->
+        <!--            </b-switch>-->
+        <!--          </template>-->
+        <!--        </Filters>-->
 
         <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
           <div v-for="profile in sortedProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
@@ -172,7 +172,7 @@ export default {
         }
 
         this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, this.$options.sorts)
+        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, [])
     },
 
     methods: {

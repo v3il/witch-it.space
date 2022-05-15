@@ -61,6 +61,51 @@ const initUserModel = (sequelize, DataTypes) => {
             marketUpdateTime: {
                 type: DataTypes.INTEGER,
                 defaultValue: null
+            },
+
+            marketSize: {
+                type: DataTypes.INTEGER,
+                defaultValue: 0
+            },
+
+            wishlistSize: {
+                type: DataTypes.INTEGER,
+                defaultValue: 0
+            },
+
+            marketNote: {
+                type: DataTypes.TEXT,
+                defaultValue: ''
+            },
+
+            wishlistNote: {
+                type: DataTypes.TEXT,
+                defaultValue: ''
+            },
+
+            switchRarities: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
+
+            tradeWithGuardedOnly: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
+            discountAvailable: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
+            },
+
+            tradeDuplicatesOnly: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true
+            },
+
+            hideRecipes: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false
             }
         },
         {}

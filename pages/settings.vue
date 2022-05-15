@@ -110,11 +110,11 @@ export default {
         this.settings.isGuardProtected = this.user.isGuardProtected
         this.settings.avatarId = this.user.avatarId
 
-        this.settings.switchRarities = this.user.settings.switchRarities
-        this.settings.tradeWithGuardedOnly = this.user.settings.tradeWithGuardedOnly
-        this.settings.discountAvailable = this.user.settings.discountAvailable
-        this.settings.tradeDuplicatesOnly = this.user.settings.tradeDuplicatesOnly
-        this.settings.hideRecipes = this.user.settings.hideRecipes
+        this.settings.switchRarities = this.user.switchRarities
+        this.settings.tradeWithGuardedOnly = this.user.tradeWithGuardedOnly
+        this.settings.discountAvailable = this.user.discountAvailable
+        this.settings.tradeDuplicatesOnly = this.user.tradeDuplicatesOnly
+        this.settings.hideRecipes = this.user.hideRecipes
         this.settings.marketNote = this.user.marketNote ?? ''
         this.settings.wishlistNote = this.user.wishlistNote ?? ''
     },
