@@ -1,12 +1,7 @@
-const initWishModel = (sequelize, DataTypes) => {
-    return sequelize.define(
-        'Wish',
-        {
-            itemId: DataTypes.INTEGER,
-            itemCount: DataTypes.INTEGER
-        },
-        { timestamps: true }
-    )
-}
+import { BaseModel } from './BaseModel'
 
-export { initWishModel }
+export class Wish extends BaseModel {
+    static get tableName () {
+        return 'wishes'
+    }
+}
