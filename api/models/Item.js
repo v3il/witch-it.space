@@ -1,21 +1,7 @@
-const initItemModel = (sequelize, DataTypes) => {
-    return sequelize.define(
-        'Item',
-        {
-            itemId: DataTypes.INTEGER,
-            name: DataTypes.STRING,
-            description: DataTypes.STRING,
-            createdDate: DataTypes.DATE,
-            quality: DataTypes.INTEGER,
-            rarity: DataTypes.STRING,
-            character: DataTypes.STRING,
-            slot: DataTypes.STRING,
-            type: DataTypes.STRING,
-            event: DataTypes.STRING,
-            isTradable: DataTypes.BOOLEAN
-        },
-        {}
-    )
-}
+import { BaseModel } from './BaseModel'
 
-export { initItemModel }
+export class Item extends BaseModel {
+    static get tableName () {
+        return 'items'
+    }
+}
