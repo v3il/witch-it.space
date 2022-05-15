@@ -12,7 +12,7 @@ export const authorized = async (request, response, next) => {
         throwError(errorText)
     }
 
-    const userModel = await User.findOne({ where: { id: user.id } })
+    const userModel = await User.query().findById(user.id)
 
     if (!userModel) {
         throwError(errorText)

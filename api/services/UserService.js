@@ -7,18 +7,8 @@ const EXCLUDED_ATTRIBUTES = ['password']
 // const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
 
 export class UserService {
-    getById (id, { excludeAttrs } = { excludeAttrs: true }) {
-        const params = {
-            where: { id },
-            attributes: {
-                exclude: EXCLUDED_ATTRIBUTES
-            },
-            // include: this._getIncludes(excludeAttrs),
-            benchmark: true
-            // logging: console.log
-        }
-
-        return User.findOne(params)
+    getById (id) {
+        return User.query().findById(id)
     }
 
     getPublicProfiles () {
