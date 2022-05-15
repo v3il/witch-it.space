@@ -1,5 +1,5 @@
 import { genSalt, hash } from 'bcrypt'
-import { User, UserSettings, UserStat } from '../models'
+import { User } from '../models'
 import { getCurrentTimestamp } from '../util/index.js'
 
 const EXCLUDED_ATTRIBUTES = ['password']

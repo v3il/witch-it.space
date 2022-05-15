@@ -4,6 +4,11 @@ export class User extends BaseModel {
     static get tableName () {
         return 'users'
     }
+
+    getPublicData () {
+        const { password, ...publicData } = this
+        return publicData
+    }
 }
 
 // const initUserModel = (sequelize, DataTypes) => {

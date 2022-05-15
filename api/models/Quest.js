@@ -1,18 +1,26 @@
-const initQuestModel = (sequelize, DataTypes) => {
-    return sequelize.define(
-        'Quest',
-        {
-            questTask: DataTypes.STRING,
-            questType: DataTypes.STRING,
-            globalId: DataTypes.INTEGER,
-            localId: DataTypes.INTEGER,
-            rewardId: DataTypes.INTEGER,
-            rewardCount: DataTypes.INTEGER,
-            objective: DataTypes.INTEGER,
-            progress: DataTypes.INTEGER
-        },
-        { timestamps: true }
-    )
+import { BaseModel } from './BaseModel'
+
+export class Quest extends BaseModel {
+    static get tableName () {
+        return 'quests'
+    }
 }
 
-export { initQuestModel }
+// const initQuestModel = (sequelize, DataTypes) => {
+//     return sequelize.define(
+//         'Quest',
+//         {
+//             questTask: DataTypes.STRING,
+//             questType: DataTypes.STRING,
+//             globalId: DataTypes.INTEGER,
+//             localId: DataTypes.INTEGER,
+//             rewardId: DataTypes.INTEGER,
+//             rewardCount: DataTypes.INTEGER,
+//             objective: DataTypes.INTEGER,
+//             progress: DataTypes.INTEGER
+//         },
+//         { timestamps: true }
+//     )
+// }
+//
+// export { initQuestModel }

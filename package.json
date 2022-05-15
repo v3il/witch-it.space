@@ -14,7 +14,9 @@
     "lint": "yarn lint:js && yarn lint:style",
     "test": "jest",
     "scripts:items": "node --experimental-modules --es-module-specifier-resolution=node --inspect ./api/scripts/loadItems.js",
-    "scripts:items2": "node --experimental-modules --es-module-specifier-resolution=node --inspect .\\api\\scripts\\items\\loadItems.js"
+    "scripts:items2": "node --experimental-modules --es-module-specifier-resolution=node --inspect .\\api\\scripts\\items\\loadItems.js",
+    "cm": "knex --knexfile knexfile.cjs migrate:make",
+    "mi": "knex --knexfile knexfile.cjs migrate:latest"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",

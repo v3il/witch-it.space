@@ -11,10 +11,9 @@ import {
 import { updateUserToken } from '../controllers/auth/signInUser'
 import { userService } from '../services'
 
-const getCurrentUser = async (request, response) => {
-    const { id } = request.user
-    const user = await userService.getById(id)
-    const parsedUser = user ? userService.toObject(user) : null
+const getCurrentUser = (request, response) => {
+    const { user } = request
+    const parsedUser = user ? user.getPublicData() : null
 
     response.send({ user: parsedUser })
 }
@@ -27,12 +26,12 @@ const changeUserLocale = async (request, response) => {
         throw new BadRequest(translateText('Error_LocaleIsNotSupported', request.locale))
     }
 
-    const { id } = request.user
-    const user = await userService.getById(id)
+    const { user } = request
+    // const user = await userService.getById(id)
 
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
-    }
+    // if (!user) {
+    //     throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    // }
 
     await user.update({
         locale
