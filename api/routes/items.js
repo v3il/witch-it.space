@@ -4,6 +4,6 @@ import { createAsyncRouter } from '../util'
 
 const itemsRouter = createAsyncRouter()
 
-itemsRouter.get('/', authorized, itemsController.getItems)
+itemsRouter.get('/', /* authorized, */ itemsController.getItems)
 
 export { itemsRouter }

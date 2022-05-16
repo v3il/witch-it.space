@@ -60,7 +60,7 @@ export default {
         TopNavBar
     },
 
-    middleware: ['fetchUser'],
+    middleware: ['isAuthorized'],
 
     data: () => ({
         mode: Modes.ACCOUNT,

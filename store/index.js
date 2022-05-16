@@ -9,13 +9,21 @@ export const actions = {
         await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
         await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
         await app.store.dispatch(User.F.Actions.FETCH_USER) // todo: Fix
-        await app.store.dispatch(Items.F.Actions.FETCH_ITEMS)
 
-        $itemsService.setItems(app.store.state.items.items)
+        const isAuthorized = app.store.getters['user/isAuthorized']
+
+        if (isAuthorized) {
+            await app.store.dispatch(Items.F.Actions.FETCH_ITEMS)
+            $itemsService.setItems(app.store.state.items.items)
+        }
     },
 
     nuxtClientInit ({ commit }, { store, $itemsService }) {
-        $itemsService.setItems(store.state.items.items)
+        const isAuthorized = store.getters['user/isAuthorized']
+
+        if (isAuthorized) {
+            $itemsService.setItems(store.state.items.items)
+        }
     }
 }
 

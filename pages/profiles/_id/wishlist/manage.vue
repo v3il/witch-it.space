@@ -214,6 +214,8 @@ export default {
         ])
     },
 
+    middleware: ['isAuthorized'],
+
     data: () => ({
         isFiltersVisible: false
     }),

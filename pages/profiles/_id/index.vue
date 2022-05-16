@@ -150,6 +150,8 @@ export default {
         IconButton
     },
 
+    middleware: ['isAuthorized'],
+
     async asyncData ({ route, $wishlistService, store }) {
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),

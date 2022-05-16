@@ -92,7 +92,7 @@ export default {
         Price.create({ itemId: 900, itemCount: 50, itemId2: 904, itemCount2: 50, priceType: 'fixed' })
     ],
 
-    middleware: ['fetchUser'],
+    middleware: ['isAuthorized'],
 
     data: () => ({
         items: [],

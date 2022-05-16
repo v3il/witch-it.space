@@ -1,6 +1,5 @@
 import { BadRequest } from '@curveball/http-errors'
 import { compare } from 'bcrypt'
-import { Op } from 'sequelize'
 import { translateText } from '../../util'
 import { User } from '../../models'
 import { userService } from '../../services'
@@ -14,10 +13,10 @@ const login = async (request, response) => {
 
     const savedUser = await User.findOne({
         where: {
-            login,
-            password: {
-                [Op.ne]: null
-            }
+            login
+            // password: {
+            //     [Op.ne]: null
+            // }
         }
     })
 

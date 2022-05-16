@@ -43,7 +43,7 @@ export default {
         TopNavBar
     },
 
-    middleware: ['fetchUser'],
+    middleware: ['isAuthorized'],
 
     computed: {
         ...mapGetters(User.PATH, [

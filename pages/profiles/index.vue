@@ -108,7 +108,7 @@ export default {
         EmptyState
     },
 
-    middleware: ['fetchUser'],
+    middleware: ['isAuthorized'],
 
     async asyncData ({ app: { $usersService } }) {
         const { error, profiles } = await $usersService.fetchAll()

@@ -9,6 +9,8 @@ export const state = () => ({
 })
 
 export const getters = {
+    isAuthorized: state => !!state.user,
+
     [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
         return !!user?.steamId
     },
@@ -48,7 +50,7 @@ export const actions = {
         } catch (e) {
             // console.error('User error')
             commit(User.Mutations.SET_USER, null)
-            throw e
+            // throw e
         }
     },
 
