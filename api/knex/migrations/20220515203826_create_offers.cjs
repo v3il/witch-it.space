@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('offers', table => {
+    return knex.schema.createTableIfNotExists('offers', table => {
         table.increments();
         table.string('type');
         table.integer('itemId');

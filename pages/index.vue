@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    middleware: ['fetchUser'],
+    middleware: ['isAuthorized'],
 
     data: () => ({
         user: null

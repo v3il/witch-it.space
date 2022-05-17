@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('quests', table => {
+    return knex.schema.createTableIfNotExists('quests', table => {
         table.increments();
         table.string('questTask');
         table.string('questType');

@@ -11,6 +11,10 @@ export class UserService {
         return User.query().findById(id)
     }
 
+    getByDiscordId (discordId) {
+        return User.query().select().where({ discordId })[0]
+    }
+
     getPublicProfiles () {
         const params = {
             where: { isPublic: true },
@@ -30,18 +34,12 @@ export class UserService {
         return hash(password, salt)
     }
 
-    async createUser (userData) {
-        return await User.create({
-            ...userData,
-            settings: {},
-            userStat: {}
-        }, {
-            // include: this._getIncludes()
-        })
+    createUser (userData) {
+        return User.query().insertAndFetch(userData)
     }
 
     toObject (user) {
-        return user.get({ plain: true })
+        return user.getPublicData()
     }
 
     // _getIncludes (excludeAttrs = true) {

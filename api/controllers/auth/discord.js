@@ -47,7 +47,7 @@ const authUsingDiscordCallback = async (request, response) => {
     let user
 
     if (userFromCookies) {
-        user = await User.findOne({ where: { id: userFromCookies.id } })
+        user = await userService.getById(userFromCookies.id)
 
         if (!user) {
             return response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
@@ -59,7 +59,7 @@ const authUsingDiscordCallback = async (request, response) => {
     }
 
     if (!user) {
-        user = await User.findOne({ where: { discordId } })
+        user = await userService.getByDiscordId(discordId)
     }
 
     if (!user) {

@@ -3,8 +3,12 @@ import { config, Routes, Cookies } from '../../../shared'
 import { userService } from '../../services/index.js'
 
 const getUserData = (user) => {
-    const userPublicData = userService.toObject(user)
+    // console.log(111, user.query().update)
+
+    const userPublicData = { id: user.id, $r: Math.random(), $d: Date.now() }
     const token = generateToken(userPublicData)
+
+    console.log(111, userPublicData)
 
     return { userPublicData, token }
 }
