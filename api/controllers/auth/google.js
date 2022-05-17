@@ -1,8 +1,6 @@
 import qs from 'qs'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { getUserFromCookies } from '../../util'
-import { User } from '../../models'
 import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
@@ -45,23 +43,7 @@ const authUsingGoogleCallback = async (request, response) => {
         )
 
     const { id: googleId, name } = googleUser
-    const userFromCookies = await getUserFromCookies(request)
-
-    let user
-
-    if (userFromCookies) {
-        user = await User.findOne({ where: { id: userFromCookies.id } })
-
-        if (!user) {
-            return response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
-        }
-
-        await user.update({ googleId })
-    }
-
-    if (!user) {
-        user = await User.findOne({ where: { googleId } })
-    }
+    let user = await userService.getByGoogleId(googleId)
 
     if (!user) {
         user = await userService.createUser({

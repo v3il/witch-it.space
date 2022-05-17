@@ -1,7 +1,5 @@
 import SteamAuth from 'node-steam-openid'
 import { config, Routes } from '../../../shared'
-import { getUserFromCookies } from '../../util'
-import { User } from '../../models'
 import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
@@ -24,23 +22,8 @@ const authUsingSteam = async (request, response) => {
 const authUsingSteamCallback = async (request, response) => {
     const steamUser = await steam.authenticate(request)
     const { steamid: steamId, username } = steamUser
-    const userFromCookies = await getUserFromCookies(request)
 
-    let user
-
-    if (userFromCookies) {
-        user = await User.findOne({ where: { id: userFromCookies.id } })
-
-        if (!user) {
-            return response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
-        }
-
-        await user.update({ steamId })
-    }
-
-    if (!user) {
-        user = await User.findOne({ where: { steamId } })
-    }
+    let user = await userService.getBySteamId(steamId)
 
     if (!user) {
         user = await userService.createUser({

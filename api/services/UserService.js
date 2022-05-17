@@ -16,6 +16,16 @@ export class UserService {
         return users[0]
     }
 
+    async getByGoogleId (googleId) {
+        const users = await User.query().where('googleId', googleId)
+        return users[0]
+    }
+
+    async getBySteamId (steamId) {
+        const users = await User.query().where('steamId', steamId)
+        return users[0]
+    }
+
     getPublicProfiles () {
         const params = {
             where: { isPublic: true },

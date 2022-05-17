@@ -1,8 +1,6 @@
 import qs from 'qs'
 import { axiosInstance } from '../../axios'
 import { config, Routes } from '../../../shared'
-import { getUserFromCookies } from '../../util'
-import { User } from '../../models'
 import { userService } from '../../services/index.js'
 import { signInUser } from './signInUser'
 
