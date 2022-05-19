@@ -1,4 +1,4 @@
-import { genSalt, hash } from 'bcrypt'
+import { compare, genSalt, hash } from 'bcrypt'
 import { User } from '../models'
 import { getCurrentTimestamp } from '../util/index.js'
 
@@ -26,6 +26,16 @@ export class UserService {
         return users[0]
     }
 
+    async getByLogin (login) {
+        const users = await User.query().where('login', login)
+        return users[0]
+    }
+
+    async getByLoginWithPassword (login) {
+        const users = await User.query().where('login', login).whereNotNull('password')
+        return users[0]
+    }
+
     getPublicProfiles () {
         const params = {
             where: { isPublic: true },
@@ -43,6 +53,10 @@ export class UserService {
     async encryptPassword (password) {
         const salt = await genSalt(3)
         return hash(password, salt)
+    }
+
+    checkPasswords (enteredPassword, userPassword) {
+        return compare(enteredPassword, userPassword)
     }
 
     createUser (userData) {

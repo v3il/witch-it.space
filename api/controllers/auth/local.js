@@ -1,33 +1,31 @@
-import { BadRequest } from '@curveball/http-errors'
-import { compare } from 'bcrypt'
-import { translateText } from '../../util'
-import { User } from '../../models'
+import joi from 'joi'
 import { userService } from '../../services'
 import { signInUser } from './signInUser'
 
 const login = async (request, response) => {
-    const requestBody = { login: '', password: '', ...request.body }
+    const loginSchema = joi.string().min(4).required()
+    const passwordSchema = joi.string().min(6).required()
+    const { error: loginError } = loginSchema.validate(request.body.login)
+    const { error: passwordError } = passwordSchema.validate(request.body.password)
 
-    const login = requestBody.login.toString().trim()
-    const password = requestBody.password.toString().trim()
-
-    const savedUser = await User.findOne({
-        where: {
-            login
-            // password: {
-            //     [Op.ne]: null
-            // }
-        }
-    })
-
-    if (!savedUser) {
-        throw new BadRequest(translateText('Error_NoUserWithLogin', request.locale))
+    if (loginError || passwordError) {
+        return request.emitBadRequest(request.$t('Error_NoUserWithLogin'))
     }
 
-    const isCorrectPassword = await compare(password, savedUser.password)
+    const login = request.body.login.toString().trim()
+    const password = request.body.password.toString().trim()
+    const savedUser = await userService.getByLoginWithPassword(login)
+
+    console.error(666, savedUser)
+
+    if (!savedUser) {
+        return request.emitBadRequest(request.$t('Error_NoUserWithLogin'))
+    }
+
+    const isCorrectPassword = await userService.checkPasswords(password, savedUser.password)
 
     if (!isCorrectPassword) {
-        throw new BadRequest(translateText('Error_WrongPassword', request.locale))
+        return request.emitBadRequest(request.$t('Error_WrongPassword'))
     }
 
     signInUser({
@@ -37,23 +35,21 @@ const login = async (request, response) => {
 }
 
 const register = async (request, response) => {
-    const requestBody = { login: '', password: '', ...request.body }
+    const loginSchema = joi.string().min(4).required()
+    const passwordSchema = joi.string().min(6).required()
+    const { error: loginError } = loginSchema.validate(request.body.login)
+    const { error: passwordError } = passwordSchema.validate(request.body.password)
 
-    const login = requestBody.login.toString().trim()
-    const password = requestBody.password.toString().trim()
-
-    if (login.length < 4) {
-        throw new BadRequest(translateText('Error_InvalidLogin', request.locale))
+    if (loginError || passwordError) {
+        return request.emitBadRequest()
     }
 
-    if (password.length < 6) {
-        throw new BadRequest(translateText('Error_InvalidPassword', request.locale))
-    }
+    const login = request.body.login.toString().trim()
+    const password = request.body.password.toString().trim()
+    const userWithSameLogin = await userService.getByLogin(login)
 
-    const usersWithSameLogin = await User.findAll({ where: { login } })
-
-    if (usersWithSameLogin.length) {
-        throw new BadRequest(translateText('Error_NotUniqueLogin', request.locale))
+    if (userWithSameLogin) {
+        return request.emitBadRequest(request.$t('Error_NotUniqueLogin'))
     }
 
     const encryptedPassword = await userService.encryptPassword(password)

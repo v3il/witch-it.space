@@ -1,24 +1,28 @@
 import { Forbidden } from '@curveball/http-errors'
 import { getUserFromCookies } from '../util'
-import { User } from '../models/index.js'
+import { userService } from '../services/index.js'
 
 export const authorized = async (request, response, next) => {
-    console.time('Fetch user')
+    console.time('Get user from cookies')
 
     const user = await getUserFromCookies(request)
     const errorText = request.$t('Error_ActionForbidden')
+
+    console.timeEnd('Get user from cookies')
 
     if (!user) {
         throwError(errorText)
     }
 
-    const userModel = await User.query().findById(user.id)
+    console.time('Fetch user')
+
+    const userModel = await userService.getById(user.id)
+
+    console.timeEnd('Fetch user')
 
     if (!userModel) {
         throwError(errorText)
     }
-
-    console.timeEnd('Fetch user')
 
     request.user = userModel
     next()
