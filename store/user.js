@@ -29,34 +29,55 @@ export const getters = {
 }
 
 export const actions = {
-    async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
-        try {
-            const { data } = await this.$axios.get('/api/user')
+    fetchUser ({ commit }) {
+        console.error(2)
 
-            if (!data) {
-                return
-            }
-
-            const { user } = data
-
-            // console.log('Fetched', user)
-
-            commit(User.Mutations.SET_USER, user)
-
-            await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
-            await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
-
-            // console.log('Set')
-        } catch (e) {
-            // console.error('User error')
-            commit(User.Mutations.SET_USER, null)
-            // throw e
-        }
+        return this.$axios.$get('/api/user')
+            .then(({ user }) => {
+                console.error('Fetch2', user)
+                commit('SET_USER', user)
+            })
     },
 
-    [User.Actions.LOGIN] ({ commit, dispatch }, credentials) {
+    login ({ dispatch, getters }, credentials) {
+        console.error(1, getters)
+
         return this.$axios.post('/api/auth/login', credentials)
+            .then(() => dispatch('fetchUser'))
+            // .then(() => getters.isAuthorized)
     },
+
+    // async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
+    //     console.log(3)
+    //
+    //     try {
+    //         const { data } = await this.$axios.get('/api/user')
+    //
+    //         if (!data) {
+    //             return
+    //         }
+    //
+    //         const { user } = data
+    //
+    //         // console.log('Fetched', user)
+    //
+    //         commit(User.Mutations.SET_USER, user)
+    //
+    //         await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
+    //         await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
+    //
+    //         // console.log('Set')
+    //     } catch (e) {
+    //         // console.error('User error')
+    //         commit(User.Mutations.SET_USER, null)
+    //         // throw e
+    //     }
+    // },
+
+    // [User.Actions.LOGIN] ({ commit, dispatch }, credentials) {
+    //     return this.$axios.post('/api/auth/login', credentials)
+    //         .then(dispatch('user/fetchUser'))
+    // },
 
     [User.Actions.AUTH_USING_SOCIALS] ({ commit, dispatch }, socialNetworkName) {
         return new Promise((resolve, reject) => {
@@ -122,6 +143,10 @@ export const actions = {
 }
 
 export const mutations = {
+    SET_USER (state, user) {
+        state.user = user
+    },
+
     [User.Mutations.SET_USER] (state, user) {
         state.user = user
     },

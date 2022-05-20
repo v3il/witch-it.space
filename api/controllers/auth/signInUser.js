@@ -21,7 +21,7 @@ export const signInUser = ({ user, response }) => {
     const { token } = getUserData(user)
     setCookieToken(token, response)
 
-    response.redirect(Routes.AUTH_RESULT)
+    response.send(200)
 }
 
 export const updateUserToken = ({ user, response }) => {

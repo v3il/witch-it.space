@@ -16,8 +16,6 @@ const login = async (request, response) => {
     const password = request.body.password.toString().trim()
     const savedUser = await userService.getByLoginWithPassword(login)
 
-    console.error(666, savedUser)
-
     if (!savedUser) {
         return request.emitBadRequest(request.$t('Error_NoUserWithLogin'))
     }

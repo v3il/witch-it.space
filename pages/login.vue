@@ -61,8 +61,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 import Socials from '@/components/auth/Socials'
-import { User } from '@/store'
+import { StoreModules, User } from '@/store'
 import { Routes } from '@/shared'
 import { validateLogin, validatePassword } from '@/shared/validators'
 import TopNavBar from '@/components/header/TopNavBar.vue'
@@ -80,8 +81,18 @@ export default {
         password: ''
     }),
 
+    computed: {
+        ...mapGetters(StoreModules.USER, [
+            'isAuthorized'
+        ])
+    },
+
     methods: {
-        async onSubmit () {
+        ...mapActions(StoreModules.USER, {
+            authLocal: 'login'
+        }),
+
+        onSubmit () {
             const loginError = validateLogin(this.login)
 
             if (loginError) {
@@ -94,16 +105,19 @@ export default {
                 return this.$showError(this.$t(passwordError))
             }
 
-            try {
-                await this.$store.dispatch(User.F.Actions.LOGIN, {
-                    login: this.login,
-                    password: this.password
-                })
+            const credentials = { login: this.login, password: this.password }
 
-                await this.$router.replace(Routes.MAIN)
-            } catch (error) {
-                this.$showError(error.message)
-            }
+            this.authLocal(credentials)
+                .then(() => this.$router.replace(Routes.MAIN))
+                .catch(error => this.$showError(error.message))
+
+            // try {
+            //     await this.login(credentials)
+            //
+            //     await this.$router.replace(Routes.MAIN)
+            // } catch (error) {
+            //     this.$showError(error.message)
+            // }
         },
 
         async authUsingSocials (socialName) {
