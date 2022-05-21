@@ -39,7 +39,7 @@
               </b-field>
 
               <div class="wit-flex wit-flex--center wit-flex--justify-between">
-                <Socials @socialClicked="authUsingSocials" />
+                <Socials @socialClicked="onAuthUsingSocials" />
 
                 <b-button type="is-primary" native-type="submit" class="wit-transition">
                   {{ $t('Register_RegisterButtonTitle') }}
@@ -80,6 +80,8 @@ export default {
         TopNavBar
     },
 
+    middleware: ['returnToApp'],
+
     data: () => ({
         login: '',
         password: '',
@@ -88,7 +90,8 @@ export default {
 
     methods: {
         ...mapActions(StoreModules.USER, {
-            register: 'register'
+            register: 'register',
+            authUsingSocials: 'authUsingSocials'
         }),
 
         onSubmit () {
@@ -115,15 +118,10 @@ export default {
                 .catch(error => this.$showError(error.message))
         },
 
-        async authUsingSocials (socialName) {
-            try {
-                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-                await this.$router.replace(Routes.MAIN)
-            } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
-                }
-            }
+        onAuthUsingSocials (socialName) {
+            this.authUsingSocials(socialName)
+                .then(() => this.$router.replace(Routes.MAIN))
+                .catch(error => error && this.$showError(error.message))
         }
     }
 }

@@ -17,11 +17,15 @@ const setCookieToken = (token, response) => {
     })
 }
 
-export const signInUser = ({ user, response }) => {
+export const signInUser = ({ user, response, isSocial }) => {
     const { token } = getUserData(user)
     setCookieToken(token, response)
 
-    response.send(200)
+    if (isSocial) {
+        response.redirect(Routes.AUTH_RESULT)
+    } else {
+        response.send(200)
+    }
 }
 
 export const updateUserToken = ({ user, response }) => {

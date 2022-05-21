@@ -1,13 +1,11 @@
-import { Theme, User, Root, Locale, Items, Wishlist } from '@/store/Types'
-import { Cookies, Routes } from '~/shared'
+import { Items, Locale, Root, Theme, User, Wishlist } from '@/store/Types'
+import { Cookies } from '~/shared'
 import { StoreModules } from '@/store/StoreModules.js'
 
 export const state = () => ({})
 
 export const actions = {
-    async nuxtServerInit ({ commit }, { app, $itemsService, redirect }) {
-        console.error('NSI')
-
+    async nuxtServerInit ({ commit }, { app, $itemsService }) {
         await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
         await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
 
@@ -15,24 +13,9 @@ export const actions = {
             .then(() => app.store.dispatch(Items.F.Actions.FETCH_ITEMS))
             .then(() => $itemsService.setItems(app.store.state.items.items))
             .catch(console.error)
-
-        // await app.store.dispatch(Items.F.Actions.FETCH_ITEMS)
-
-        // .then(() => app.store.dispatch(Items.F.Actions.FETCH_ITEMS))
-        // .then(() => $itemsService.setItems(app.store.state.items.items))
-
-        // const isAuthorized = false // app.store.getters['user/isAuthorized']
-        //
-        // if (isAuthorized) {
-        //
-        // }
     },
 
     nuxtClientInit ({ commit }, { store, $itemsService }) {
-        console.error('NCI')
-
-        console.error(store)
-
         const isAuthorized = store.getters['user/isAuthorized']
 
         if (isAuthorized) {

@@ -28,7 +28,8 @@ const login = async (request, response) => {
 
     signInUser({
         response,
-        user: savedUser
+        user: savedUser,
+        isSocial: false
     })
 }
 
@@ -62,7 +63,8 @@ const register = async (request, response) => {
 
     signInUser({
         user,
-        response
+        response,
+        isSocial: false
     })
 }
 

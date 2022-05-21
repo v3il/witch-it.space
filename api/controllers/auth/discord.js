@@ -53,7 +53,8 @@ const authUsingDiscordCallback = async (request, response) => {
 
     signInUser({
         user,
-        response
+        response,
+        isSocial: true
     })
 }
 

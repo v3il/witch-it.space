@@ -44,39 +44,7 @@ export const actions = {
             .then(() => dispatch('fetchUser'))
     },
 
-    // async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
-    //     console.log(3)
-    //
-    //     try {
-    //         const { data } = await this.$axios.get('/api/user')
-    //
-    //         if (!data) {
-    //             return
-    //         }
-    //
-    //         const { user } = data
-    //
-    //         // console.log('Fetched', user)
-    //
-    //         commit(User.Mutations.SET_USER, user)
-    //
-    //         await dispatch(Theme.F.Actions.SET_THEME, user.theme, { root: true })
-    //         await dispatch(Locale.F.Actions.SET_LOCALE, user.locale, { root: true })
-    //
-    //         // console.log('Set')
-    //     } catch (e) {
-    //         // console.error('User error')
-    //         commit(User.Mutations.SET_USER, null)
-    //         // throw e
-    //     }
-    // },
-
-    // [User.Actions.LOGIN] ({ commit, dispatch }, credentials) {
-    //     return this.$axios.post('/api/auth/login', credentials)
-    //         .then(dispatch('user/fetchUser'))
-    // },
-
-    [User.Actions.AUTH_USING_SOCIALS] ({ commit, dispatch }, socialNetworkName) {
+    authUsingSocials ({ commit, dispatch }, socialNetworkName) {
         return new Promise((resolve, reject) => {
             const authWindow = openWindow(`/api/auth/${socialNetworkName}`, {
                 tagName: AUTH_WINDOW_TARGET
@@ -87,9 +55,9 @@ export const actions = {
                     clearInterval(intervalId)
                     reject(null)
                 }
-            }, 1000)
+            }, 500)
 
-            const handler = async ({ origin, data }) => {
+            const handler = ({ origin, data }) => {
                 if (origin !== config.SERVER_ORIGIN || !data.authResult) {
                     return
                 }
@@ -97,19 +65,13 @@ export const actions = {
                 const { error } = data.authResult
 
                 authWindow?.close()
-                error ? reject(new Error(error)) : resolve()
                 window.removeEventListener('message', handler, false)
-
-                await dispatch(User.Actions.FETCH_USER)
+                error ? reject(new Error(error)) : resolve()
             }
 
             window.addEventListener('message', handler, false)
-        })
+        }).then(() => dispatch('fetchUser'))
     },
-
-    // [User.Actions.REGISTER] ({ commit, dispatch }, credentials) {
-    //     return this.$axios.post('/api/auth/register', credentials)
-    // },
 
     [User.Actions.LOGOUT] ({ commit }) {
         return this.$axios.post('/api/auth/logout')
