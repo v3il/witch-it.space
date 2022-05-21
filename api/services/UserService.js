@@ -11,8 +11,9 @@ export class UserService {
         return User.query().findById(id)
     }
 
-    getByDiscordId (discordId) {
-        return User.query().select().where({ discordId })[0]
+    async getByDiscordId (discordId) {
+        const users = await User.query().where('discordId', discordId)
+        return users[0]
     }
 
     getPublicProfiles () {

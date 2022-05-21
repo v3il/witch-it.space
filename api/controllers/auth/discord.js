@@ -42,25 +42,7 @@ const authUsingDiscordCallback = async (request, response) => {
     })
 
     const { id: discordId, username } = userData
-    const userFromCookies = await getUserFromCookies(request)
-
-    let user
-
-    if (userFromCookies) {
-        user = await userService.getById(userFromCookies.id)
-
-        if (!user) {
-            return response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
-        }
-
-        await user.update({
-            discordId
-        })
-    }
-
-    if (!user) {
-        user = await userService.getByDiscordId(discordId)
-    }
+    let user = await userService.getByDiscordId(discordId)
 
     if (!user) {
         user = await userService.createUser({
