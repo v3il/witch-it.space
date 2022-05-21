@@ -81,12 +81,6 @@ export default {
         password: ''
     }),
 
-    computed: {
-        ...mapGetters(StoreModules.USER, [
-            'isAuthorized'
-        ])
-    },
-
     methods: {
         ...mapActions(StoreModules.USER, {
             authLocal: 'login'
@@ -110,14 +104,6 @@ export default {
             this.authLocal(credentials)
                 .then(() => this.$router.replace(Routes.MAIN))
                 .catch(error => this.$showError(error.message))
-
-            // try {
-            //     await this.login(credentials)
-            //
-            //     await this.$router.replace(Routes.MAIN)
-            // } catch (error) {
-            //     this.$showError(error.message)
-            // }
         },
 
         async authUsingSocials (socialName) {

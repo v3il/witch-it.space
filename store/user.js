@@ -30,21 +30,18 @@ export const getters = {
 
 export const actions = {
     fetchUser ({ commit }) {
-        console.error(2)
-
         return this.$axios.$get('/api/user')
-            .then(({ user }) => {
-                console.error('Fetch2', user)
-                commit('SET_USER', user)
-            })
+            .then(({ user }) => commit('SET_USER', user))
     },
 
-    login ({ dispatch, getters }, credentials) {
-        console.error(1, getters)
-
+    login ({ dispatch }, credentials) {
         return this.$axios.post('/api/auth/login', credentials)
             .then(() => dispatch('fetchUser'))
-            // .then(() => getters.isAuthorized)
+    },
+
+    register ({ dispatch }, credentials) {
+        return this.$axios.post('/api/auth/register', credentials)
+            .then(() => dispatch('fetchUser'))
     },
 
     // async [User.Actions.FETCH_USER] ({ commit, dispatch }) {
@@ -110,9 +107,9 @@ export const actions = {
         })
     },
 
-    [User.Actions.REGISTER] ({ commit, dispatch }, credentials) {
-        return this.$axios.post('/api/auth/register', credentials)
-    },
+    // [User.Actions.REGISTER] ({ commit, dispatch }, credentials) {
+    //     return this.$axios.post('/api/auth/register', credentials)
+    // },
 
     [User.Actions.LOGOUT] ({ commit }) {
         return this.$axios.post('/api/auth/logout')

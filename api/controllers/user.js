@@ -13,6 +13,9 @@ import { userService } from '../services'
 
 const getCurrentUser = (request, response) => {
     const { user } = request
+
+    console.error(65656, user)
+
     const parsedUser = user ? user.getPublicData() : null
 
     response.send({ user: parsedUser })

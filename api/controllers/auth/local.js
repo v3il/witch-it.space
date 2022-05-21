@@ -9,7 +9,7 @@ const login = async (request, response) => {
     const { error: passwordError } = passwordSchema.validate(request.body.password)
 
     if (loginError || passwordError) {
-        return request.emitBadRequest(request.$t('Error_NoUserWithLogin'))
+        return response.emitBadRequest(request.$t('Error_NoUserWithLogin'))
     }
 
     const login = request.body.login.toString().trim()
@@ -17,13 +17,13 @@ const login = async (request, response) => {
     const savedUser = await userService.getByLoginWithPassword(login)
 
     if (!savedUser) {
-        return request.emitBadRequest(request.$t('Error_NoUserWithLogin'))
+        return response.emitBadRequest(request.$t('Error_NoUserWithLogin'))
     }
 
     const isCorrectPassword = await userService.checkPasswords(password, savedUser.password)
 
     if (!isCorrectPassword) {
-        return request.emitBadRequest(request.$t('Error_WrongPassword'))
+        return response.emitBadRequest(request.$t('Error_WrongPassword'))
     }
 
     signInUser({
@@ -39,7 +39,7 @@ const register = async (request, response) => {
     const { error: passwordError } = passwordSchema.validate(request.body.password)
 
     if (loginError || passwordError) {
-        return request.emitBadRequest()
+        return response.emitBadRequest()
     }
 
     const login = request.body.login.toString().trim()
@@ -47,7 +47,7 @@ const register = async (request, response) => {
     const userWithSameLogin = await userService.getByLogin(login)
 
     if (userWithSameLogin) {
-        return request.emitBadRequest(request.$t('Error_NotUniqueLogin'))
+        return response.emitBadRequest(request.$t('Error_NotUniqueLogin'))
     }
 
     const encryptedPassword = await userService.encryptPassword(password)

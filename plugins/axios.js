@@ -1,15 +1,11 @@
-import { Routes } from '@/shared'
 import { User } from '@/store'
 
-export default function ({ $axios, store, route }) {
+export default function ({ $axios, store }) {
     $axios.onError((error) => {
         const { logout, error: errorText } = error.response.data
-        const isAuthorized = store.user.getters.isAuthorized
+        const isAuthorized = store.getters['user/isAuthorized']
 
-        console.error(isAuthorized)
-
-        if (logout) {
-            console.error(route)
+        if (logout && isAuthorized) {
             return store.dispatch(User.F.Actions.LOGOUT)
         }
 
