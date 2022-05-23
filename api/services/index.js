@@ -18,7 +18,7 @@ const axiosInstance = axios.create({
 })
 
 export const witchItApiService = new WitchItApiService({ axiosInstance })
-export const questsService = new QuestsService(items)
+export const questsService = new QuestsService({ witchItApiService })
 export const userService = new UserService()
 export const priceService = new PriceService()
 export const wishlistService = new WishlistService({ priceService })

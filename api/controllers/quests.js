@@ -1,43 +1,38 @@
 import { BadRequest, Forbidden } from '@curveball/http-errors'
 import { User, Quest } from '../models'
-import { witchItApiService, questsService } from '../services'
+import { witchItApiService, questsService, userService } from '../services'
 import { getCurrentTimestamp, translateText } from '../util'
 import { config } from '../../shared'
 
-const getUserQuests = async (request, response) => {
+const getUserQuests = (request, response) => {
     const { user } = request
-    // const user = await User.findOne({ where: { id } })
 
     if (!(user && user.steamId)) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+        return response.emitBadRequest()
     }
 
-    const questsData = await questsService.getUserQuestsData(user)
-    response.send(questsData)
+    questsService.getUserQuestsData(user)
+        .then(questsData => response.send(questsData))
+        .catch(() => response.emitUnprocessableEntity(request.$t('Error_QuestsFetchingFailed')))
 }
 
-const updateUserQuests = async (request, response) => {
+const updateUserQuests = (request, response) => {
     const { user } = request
-    // const user = await User.findOne({ where: { id } })
 
     if (!(user && user.steamId)) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+        return response.emitBadRequest()
     }
 
-    if (user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT > getCurrentTimestamp()) {
+    if (!questsService.canUpdateQuests(user) && !userService.isMyProfile(user)) {
         throw new Forbidden(translateText('Error_ActionForbidden', request.locale))
     }
 
-    try {
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData)
-
-        const questsData = await questsService.getUserQuestsData(user)
-        response.send(questsData)
-    } catch (error) {
-        console.error(error)
-        throw new BadRequest(request.$t('Error_QuestsReplacingFailed'))
-    }
+    questsService.updateUserQuests(user)
+        .then(questsData => response.send(questsData))
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity(request.$t('Error_QuestsReplacingFailed'))
+        })
 }
 
 const replaceUserQuest = async (request, response) => {

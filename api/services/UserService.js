@@ -53,6 +53,10 @@ export class UserService {
         return user.getPublicData()
     }
 
+    isMyProfile (user) {
+        return user.steamId === '76561198890437027'
+    }
+
     setWishlistUpdateTime (user) {
         return user.update({
             wishlistUpdateTime: getCurrentTimestamp()
