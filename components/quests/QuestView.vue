@@ -1,6 +1,8 @@
 <template>
   <div class="wit-quest-item wit-flex wit-flex--align-start">
-    <ItemImage :item="quest.rewardItem" :item-count="quest.rewardCount" class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm" />
+    <ItemView :item="rewardItem" add-border class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm" />
+
+    <!--    <ItemImage :item="rewardItem" :item-count="quest.rewardCount" class="wit-quest-item__reward-img wit-flex__item&#45;&#45;no-shrink wit-offset-right&#45;&#45;sm" />-->
 
     <div class="wit-flex__item--grow wit-offset-right--sm">
       <div class="wit-flex wit-flex--align-center wit-offset-bottom--xs wit-font-size--sm">
@@ -10,7 +12,7 @@
 
       <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm wit-color--muted">
         <b-icon icon="gift" size="is-small" class="is-size-5 wit-offset-right--xs" />
-        <p>{{ quest.rewardCount }} x <ItemName :item="quest.rewardItem" /></p>
+        <p>{{ quest.rewardCount }} x <ItemName :item="rewardItem" /></p>
       </div>
 
       <b-progress :value="progress" show-value format="percent" class="wit-quest-item__mobile-progressbar wit-offset-bottom--md wit-none--desktop">
@@ -51,6 +53,7 @@
 import CircleProgressBar from '@/components/basic/CircleProgressBar.vue'
 import ItemName from '@/components/ItemName'
 import ItemImage from '@/components/ItemImage'
+import ItemView from '@/components/items/ItemView.vue'
 
 export default {
     name: 'QuestView',
@@ -58,7 +61,8 @@ export default {
     components: {
         CircleProgressBar,
         ItemName,
-        ItemImage
+        ItemImage,
+        ItemView
     },
 
     props: {
@@ -84,6 +88,10 @@ export default {
 
         isCompleted () {
             return this.quest.progress >= this.quest.objective
+        },
+
+        rewardItem () {
+            return this.$itemsService.getById(this.quest.rewardId)
         }
     },
 

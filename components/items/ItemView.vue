@@ -118,7 +118,8 @@ export default {
     color: var(--white);
     padding: var(--offset-xxs);
     border-bottom-left-radius: var(--offset-xxs);
-    font-weight: bold;
+    font-size: 12px;
+    //font-weight: bold;
 }
 
 .wit-item-view__container {

@@ -1,4 +1,4 @@
-import { Quest, sequelize } from '../models'
+import { Quest } from '../models'
 import { getCurrentTimestamp } from '../util'
 
 export class QuestsService {
@@ -7,6 +7,8 @@ export class QuestsService {
     // }
 
     async getUserQuestsData (user) {
+        console.error(user.$query)
+
         const userQuests = await this.#getUserQuests(user)
         const mappedQuests = this.#mapQuests(userQuests)
 
@@ -63,22 +65,22 @@ export class QuestsService {
 
                     // Update existing quest
                     if (userQuest.progress !== +quest.objective1Val) {
-                        await Quest.query(trx).findById(userQuest.id).patch({
+                        await userQuest.$query(trx).patch({
                             progress: quest.objective1Val
                         })
                     }
                 }
 
-                // const userData = {
-                //     canReplaceWeeklyQuests,
-                //     canReplaceDailyQuests
-                // }
-                //
-                // if (updateTime) {
-                //     userData.questsUpdateTimestamp = getCurrentTimestamp()
-                // }
-                //
-                // await user.update(userData, { transaction })
+                const userData = {
+                    canReplaceWeeklyQuests,
+                    canReplaceDailyQuests
+                }
+
+                if (updateTime) {
+                    userData.questsUpdateTimestamp = getCurrentTimestamp()
+                }
+
+                await user.$query(trx).patch(userData)
 
                 // Here you can use the transaction.
 

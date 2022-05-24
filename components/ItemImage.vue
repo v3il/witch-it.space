@@ -1,20 +1,28 @@
 <template>
   <div class="wit-position--relative" :class="itemClass">
-    <img
-      :src="item.iconUrl"
-      :alt="item.name"
-      :title="item.name"
-      class="wit-item-image__image"
-    >
-    <div v-if="itemCount" class="wit-item-image__counter wit-font-size--xxs wit-none--mobile">
-      x{{ itemCount }}
-    </div>
+    <ItemView :item="item" class="wit-item-image__image" add-border :item-count="itemCount" />
+    <!--    <img-->
+    <!--      v-tooltip="item.name"-->
+    <!--      :src="imageSrc"-->
+    <!--      :alt="item.name"-->
+    <!--      class="wit-item-image__image"-->
+    <!--    >-->
+    <!--    <div v-if="itemCount" class="wit-item-image__counter wit-font-size&#45;&#45;xxs wit-none&#45;&#45;mobile">-->
+    <!--      x{{ itemCount }}-->
+    <!--    </div>-->
   </div>
 </template>
 
 <script>
+import { buildItemUrl } from '@/utils/index.js'
+import ItemView from '@/components/items/ItemView.vue'
+
 export default {
     name: 'ItemName',
+
+    components: {
+        ItemView
+    },
 
     props: {
         item: {
@@ -35,6 +43,10 @@ export default {
                 veryrare: 'wit-item-image--very-rare',
                 whimsical: 'wit-item-image--whimsical'
             }[this.item.tagRarity]
+        },
+
+        imageSrc () {
+            return buildItemUrl(this.item.id)
         }
     }
 }

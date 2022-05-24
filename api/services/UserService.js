@@ -2,10 +2,6 @@ import { compare, genSalt, hash } from 'bcrypt'
 import { User } from '../models'
 import { getCurrentTimestamp } from '../util/index.js'
 
-const EXCLUDED_ATTRIBUTES = ['password']
-// const USER_SETTINGS_EXCLUDED_ATTRIBUTES = ['id', 'userId']
-// const USER_STAT_EXCLUDED_ATTRIBUTES = ['id', 'userId']
-
 export class UserService {
     getById (id) {
         return User.query().findById(id)
@@ -56,25 +52,6 @@ export class UserService {
     toObject (user) {
         return user.getPublicData()
     }
-
-    // _getIncludes (excludeAttrs = true) {
-    //     return [
-    //         {
-    //             model: UserSettings,
-    //             as: 'settings',
-    //             attributes: {
-    //                 exclude: excludeAttrs ? USER_SETTINGS_EXCLUDED_ATTRIBUTES : []
-    //             }
-    //         },
-    //         {
-    //             model: UserStat,
-    //             as: 'userStat',
-    //             attributes: {
-    //                 exclude: excludeAttrs ? USER_STAT_EXCLUDED_ATTRIBUTES : []
-    //             }
-    //         }
-    //     ]
-    // }
 
     setWishlistUpdateTime (user) {
         return user.update({
