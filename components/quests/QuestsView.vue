@@ -1,20 +1,33 @@
 <template>
   <div>
-    <div class="quests__header wit-flex wit-flex--justify-end wit-flex--align-center wit-offset-bottom--sm wit-flex--wrap-reverse">
-      <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs">
-        {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
-      </p>
+    <b-notification
+      type="is-warning is-light1"
+      aria-close-label="Close notification"
+      role="alert"
+      class="wit-offset-bottom--lg"
+    >
+      {{ $t('Quests_Note') }}
+    </b-notification>
 
-      <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
-        {{ $t('Quests_UpdateQuests') }}
-      </b-button>
-    </div>
+    <Card class="wit-offset-bottom--sm">
+      <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
+        <p class="wit-offset-bottom--sm1 wit-text--right">
+          {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
+        </p>
 
-    <p class="wit-offset-bottom--sm wit-text--right">
-      {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
-    </p>
+        <div>
+          <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs">
+            {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
+          </p>
 
-    <div class="wit-flex wit-flex--wrap wit-flex--align-start">
+          <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
+            {{ $t('Quests_UpdateQuests') }}
+          </b-button>
+        </div>
+      </div>
+    </Card>
+
+    <div class="wit-flex wit-flex--wrap wit-flex--align-start" style="margin: 0 -8px;">
       <Card class="wit-offset-bottom--md wit-quests__column">
         <template #title>
           <h2 class="wit-font-size--sm wit-offset-bottom--sm">
@@ -141,24 +154,39 @@ export default {
             this.formatLastUpdate()
         },
 
-        replaceQuest (quest) {
+        async replaceQuest (quest) {
             const questTask = this.$t(`Quests_${quest.questTask}`)
 
-            showPopup(this, {
-                title: this.$t('Quests_ReplaceQuestTitle'),
-                message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
-                confirmText: this.$t('Confirm'),
-                cancelText: this.$t('Cancel'),
-                onConfirm: async () => {
-                    const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
-
-                    if (error || !isSuccess) {
-                        return this.$showError({ message: this.$t('Error_QuestReplacingFailed') })
-                    }
-
-                    return this.$showSuccess({ message: this.$t('Success_QuestReplacing') })
-                }
+            const isConfirmed = await this.$showConfirm({
+                popupTitle: this.$t('Quests_ReplaceQuestTitle'),
+                content: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>`
             })
+
+            if (!isConfirmed) {
+                return
+            }
+
+            this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+                .then(({ isSuccess }) => {
+                    this.$showSuccess(this.$t('OffersRemoved', [isSuccess]))
+                })
+                .catch(this.$showError)
+
+            // showPopup(this, {
+            //     title: this.$t('Quests_ReplaceQuestTitle'),
+            //     message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
+            //     confirmText: this.$t('Confirm'),
+            //     cancelText: this.$t('Cancel'),
+            //     onConfirm: async () => {
+            //         const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
+            //
+            //         if (error || !isSuccess) {
+            //             return this.$showError({ message: this.$t('Error_QuestReplacingFailed') })
+            //         }
+            //
+            //         return this.$showSuccess({ message: this.$t('Success_QuestReplacing') })
+            //     }
+            // })
         },
 
         finalizeQuest (quest) {
@@ -229,7 +257,7 @@ export default {
     padding: 16px 0;
 
     &:not(:last-child) {
-        border-bottom: 1px solid var(--quest-divider-color);
+        border-bottom: var(--default-border);
     }
 }
 

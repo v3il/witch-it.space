@@ -113,7 +113,7 @@ export const ru = {
     Quests_Win3Rounds_A: 'Выиграть 3 раунда Hide and Seek',
     Quests_Win15Rounds_A: 'Выиграть 15 раундов Hide and Seek',
 
-    Quests_UpdateQuests: 'Обновить данные квестов',
+    Quests_UpdateQuests: 'Обновить квесты',
     Quests_UpdateAvailableIn: 'Следующее обновление доступно через: %s',
     Quests_WeeklyQuestsTitle: 'Еженедельные квесты',
     Quests_DailyQuestsTitle: 'Ежедневные квесты',
@@ -121,7 +121,7 @@ export const ru = {
     Quests_GetReward: 'Получить награду',
     Quests_LastUpdate: 'Последнее обновление: %s',
     Quests_NoQuests: 'Нет активных квестов',
-    Quests_WannaReplaceQuest: 'Вы действительно хотите заменить этот квест?',
+    Quests_WannaReplaceQuest: 'Вы действительно хотите заменить этот квест? Это действие нельзя отменить!',
     Quests_UndoneAction: 'Это действие нельзя отменить!',
     Quests_ReplaceQuestTitle: 'Замена квеста',
     Quests_ReplaceQuestConfirmButtonTitle: 'Заменить',

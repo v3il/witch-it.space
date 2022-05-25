@@ -6,19 +6,19 @@
           {{ $t('MainMenu_Quests') }}
         </div>
 
-        <b-dropdown
-          animation="fade150"
-          class="wit-block--full-height wiz-background--transparent wit-offset-left--xs"
-          position="is-bottom-right"
-        >
-          <template #trigger>
-            <b-icon class="is-size-5 wit-color--muted wit-flex wit-block--full-height" icon="help-box" />
-          </template>
+        <!--        <b-dropdown-->
+        <!--          animation="fade150"-->
+        <!--          class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent wit-offset-left&#45;&#45;xs"-->
+        <!--          position="is-bottom-right"-->
+        <!--        >-->
+        <!--          <template #trigger>-->
+        <!--            <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
+        <!--          </template>-->
 
-          <div class="wit-paddings--xs">
-            {{ $t('Quests_Note') }}
-          </div>
-        </b-dropdown>
+        <!--          <div class="wit-paddings&#45;&#45;xs">-->
+        <!--            {{ $t('Quests_Note') }}-->
+        <!--          </div>-->
+        <!--        </b-dropdown>-->
       </template>
     </TopNavBar>
 
@@ -55,7 +55,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-quests {
-    padding: var(--offset-xxlg) var(--offset-sm);
+    padding: var(--offset-md);
     max-width: 1200px;
     margin: 0 auto;
 }

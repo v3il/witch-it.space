@@ -76,7 +76,7 @@ export class QuestsService {
             }
 
             if (updateTime) {
-                userData.questsUpdateTimestamp = 1 || getCurrentTimestamp()
+                userData.questsUpdateTimestamp = getCurrentTimestamp()
             }
 
             await user.$query(trx).patchAndFetch(userData)

@@ -14,7 +14,7 @@
       <!--      </div>-->
 
       <b-progress :value="progress" show-value format="percent" class="wit-quest-item__mobile-progressbar wit-offset-bottom--md1 wit-none--desktop1">
-        <p class="wit-color--dark wit-font-weight--700">
+        <p class="wit-color--dark wit-font-weight--700 wit-font-size--xxs">
           {{ quest.progress }} / {{ quest.objective }} ({{ progress.toFixed() }}%)
         </p>
       </b-progress>
