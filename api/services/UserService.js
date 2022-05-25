@@ -37,17 +37,7 @@ export class UserService {
     }
 
     getPublicProfiles () {
-        const params = {
-            where: { isPublic: true },
-            attributes: {
-                exclude: EXCLUDED_ATTRIBUTES
-            },
-            // include: this._getIncludes(),
-            benchmark: true
-            // logging: console.log
-        }
-
-        return User.findAll(params)
+        return User.query().where('isPublic', true)
     }
 
     async encryptPassword (password) {

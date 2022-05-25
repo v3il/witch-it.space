@@ -5,8 +5,8 @@ import { getCurrentTimestamp, translateText } from '../util'
 import { config } from '../../shared'
 
 const getUserQuests = async (request, response) => {
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const { user } = request
+    // const user = await User.findOne({ where: { id } })
 
     if (!(user && user.steamId)) {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
@@ -17,8 +17,8 @@ const getUserQuests = async (request, response) => {
 }
 
 const updateUserQuests = async (request, response) => {
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const { user } = request
+    // const user = await User.findOne({ where: { id } })
 
     if (!(user && user.steamId)) {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))

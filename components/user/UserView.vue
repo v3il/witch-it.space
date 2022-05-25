@@ -208,7 +208,7 @@ export default {
         },
 
         note () {
-            return this.isMarketMode ? this.profile.settings.marketNote : this.profile.settings.wishlistNote
+            return this.isMarketMode ? this.profile.marketNote : this.profile.wishlistNote
         },
 
         formattedLastUpdate () {

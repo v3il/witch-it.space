@@ -73,10 +73,10 @@ export const actions = {
         }).then(() => dispatch('fetchUser'))
     },
 
-    [User.Actions.LOGOUT] ({ commit }) {
-        return this.$axios.post('/api/auth/logout')
+    logout ({ commit }) {
+        return this.$axios.$post('/api/auth/logout')
+            .then(() => commit('SET_USER', null))
             .then(() => this.$router.replace(Routes.LOGIN))
-            .then(() => commit(User.Mutations.SET_USER, null))
     },
 
     [User.Actions.DISCONNECT_SOCIAL] ({ commit }, social) {

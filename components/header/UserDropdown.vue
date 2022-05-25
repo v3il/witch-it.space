@@ -22,7 +22,7 @@
         </nuxt-link>
       </DropdownItem>
 
-      <DropdownItem @click="logout">
+      <DropdownItem @click="onLogout">
         <div class="wit-flex wit-flex--align-center wit-color--danger">
           <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="logout-variant" />
           <span>{{ $t('Logout') }}</span>
@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { User } from '@/store/index.js'
+import { mapActions, mapState } from 'vuex'
+import { StoreModules, User } from '@/store/index.js'
 import { buildAvatarUrl } from '@/utils/index.js'
 import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
@@ -58,8 +58,12 @@ export default {
     },
 
     methods: {
-        logout () {
-            this.$store.dispatch(User.F.Actions.LOGOUT).catch(this.$showError)
+        ...mapActions(StoreModules.USER, {
+            logout: 'logout'
+        }),
+
+        onLogout () {
+            this.logout().catch(this.$showError)
         }
     }
 }

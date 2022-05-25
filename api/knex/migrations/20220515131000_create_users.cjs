@@ -19,7 +19,7 @@ exports.up = function(knex) {
         table.boolean('canReplaceDailyQuests').defaultTo(false);
         table.boolean('canReplaceWeeklyQuests').defaultTo(false);
         table.boolean('isGuardProtected').defaultTo(false);
-        table.boolean('isPublic').defaultTo(false);
+        table.boolean('isPublic').defaultTo(true);
         table.boolean('switchRarities').defaultTo(false);
         table.boolean('tradeWithGuardedOnly').defaultTo(false);
         table.boolean('discountAvailable').defaultTo(false);

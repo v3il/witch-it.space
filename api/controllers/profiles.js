@@ -2,7 +2,7 @@ import { userService } from '../services'
 
 const getProfiles = async (request, response) => {
     const users = await userService.getPublicProfiles()
-    const profiles = users.map(user => userService.toObject(user))
+    const profiles = users.map(user => user.getPublicData())
 
     response.send({ profiles })
 }

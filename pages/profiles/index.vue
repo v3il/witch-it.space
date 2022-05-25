@@ -167,12 +167,14 @@ export default {
     },
 
     created () {
+        this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
+        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, [])
+    },
+
+    mounted () {
         if (this.error) {
             this.$showError(this.error)
         }
-
-        this.filters = getFiltersFromRoute(this.$route, this.$options.defaultFilters)
-        this.sort = getSortFromRoute(this.$route, this.$options.defaultSort, [])
     },
 
     methods: {
