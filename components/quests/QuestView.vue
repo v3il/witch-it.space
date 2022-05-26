@@ -48,7 +48,7 @@
         style="padding: 0 8px;"
         @click="onQuestReplace"
       >
-        <i class="mdi mdi-refresh-circle mdi-18px" />
+        <i class="mdi mdi-refresh mdi-18px" />
 
         <!--        <div class="wit-flex wit-flex&#45;&#45;center">-->
         <!--          <b-icon icon="refresh-circle" size="is-small" class="is-size-5 wit-offset-right&#45;&#45;none" />-->

@@ -4,7 +4,7 @@
       type="is-warning is-light1"
       aria-close-label="Close notification"
       role="alert"
-      class="wit-offset-bottom--lg"
+      class="wit-offset-bottom--md"
     >
       {{ $t('Quests_Note') }}
     </b-notification>
@@ -15,10 +15,11 @@
           {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
         </p>
 
-        <div>
-          <p v-if="!isUpdateAvailable" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs">
-            {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}
-          </p>
+        <div class="wit-position--relative">
+          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs counter">
+            {{ timeToNextUpdate }}
+            <!--            {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}-->
+          </b-tag>
 
           <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
             {{ $t('Quests_UpdateQuests') }}
@@ -264,5 +265,14 @@ export default {
 .wit-quests__column {
     flex: 1 1 450px;
     margin: 0 var(--offset-xs);
+}
+
+.counter {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    margin: 0;
+    z-index: 2;
+    font-weight: bold;
 }
 </style>
