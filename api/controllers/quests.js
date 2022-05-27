@@ -1,4 +1,5 @@
 import { BadRequest, Forbidden } from '@curveball/http-errors'
+import joi from 'joi'
 import { User, Quest } from '../models'
 import { witchItApiService, questsService, userService } from '../services'
 import { getCurrentTimestamp, translateText } from '../util'
@@ -13,7 +14,10 @@ const getUserQuests = (request, response) => {
 
     questsService.getUserQuestsData(user)
         .then(questsData => response.send(questsData))
-        .catch(() => response.emitUnprocessableEntity(request.$t('Error_QuestsFetchingFailed')))
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity(request.$t('Error_QuestsFetchingFailed'))
+        })
 }
 
 const updateUserQuests = (request, response) => {
@@ -29,98 +33,65 @@ const updateUserQuests = (request, response) => {
 
     questsService.updateUserQuests(user)
         .then(questsData => response.send(questsData))
-        .catch((e) => {
-            console.error(e)
-            response.emitUnprocessableEntity(request.$t('Error_QuestsReplacingFailed'))
-        })
+        .catch(() => response.emitUnprocessableEntity(request.$t('Error_QuestsReplacingFailed')))
 }
 
 const replaceUserQuest = async (request, response) => {
     const { questId } = request.body
+    const schema = joi.number().min(0).required()
+    const { error } = schema.validate(questId)
 
-    if (!questId) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    if (error) {
+        return response.emitBadRequest()
     }
 
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const { user } = request
 
     if (!(user && user.steamId)) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+        return response.emitBadRequest()
     }
 
-    const quest = await Quest.findOne({
-        where: { id: questId }
-    })
+    const quest = await questsService.getUserQuestById(user.id, questId)
 
     if (!quest) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+        throw new Forbidden(request.$t('Error_ActionForbidden'))
     }
 
-    if (quest.userId !== user.id) {
-        throw new Forbidden(translateText('Error_ActionForbidden', request.locale))
-    }
-
-    try {
-        const isReplaced = await witchItApiService.replaceQuest({ user, quest })
-
-        if (!isReplaced) {
-            throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
-        }
-
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData, false)
-
-        const questsData = await questsService.getUserQuestsData(user)
-        response.send({ ...questsData, isSuccess: true })
-    } catch (error) {
-        console.error(error)
-        throw new BadRequest(request.$t('Error_QuestReplacingFailed'))
-    }
+    questsService.replaceUserQuest(user, quest)
+        .then(questsData => response.send(questsData))
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity(request.$t('Error_QuestReplacingFailed'))
+        })
 }
 
 const finalizeUserQuest = async (request, response) => {
     const { questId } = request.body
+    const schema = joi.number().min(0).required()
+    const { error } = schema.validate(questId)
 
-    if (!questId) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+    if (error) {
+        return response.emitBadRequest()
     }
 
-    const { id } = request.user
-    const user = await User.findOne({ where: { id } })
+    const { user } = request
 
     if (!(user && user.steamId)) {
         throw new BadRequest(translateText('Error_BadRequest', request.locale))
     }
 
-    const quest = await Quest.findOne({
-        where: { id: questId }
-    })
+    const quest = await questsService.getUserQuestById(user.id, questId)
 
     if (!quest) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
+        throw new Forbidden(request.$t('Error_ActionForbidden'))
     }
 
-    if (quest.userId !== user.id) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
-    }
-
-    try {
-        const isFinalized = await witchItApiService.finalizeQuest({ user, quest })
-
-        if (!isFinalized) {
-            throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
-        }
-
-        const newQuestsData = await witchItApiService.loadUserData(user.steamId)
-        await questsService.mergeUserQuests(user, newQuestsData, false)
-
-        const questsData = await questsService.getUserQuestsData(user)
-        response.send({ ...questsData, isSuccess: true })
-    } catch (error) {
-        console.error(error)
-        throw new BadRequest(request.$t('Error_QuestFinalizationFailed'))
-    }
+    questsService.finalizeUserQuest(user, quest)
+        .then(questsData => response.send(questsData))
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity(request.$t('Error_QuestFinalizationFailed'))
+        })
 }
 
 const questsController = {

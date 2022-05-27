@@ -1,6 +1,6 @@
 import { BadRequest } from '@curveball/http-errors'
 import { Quest } from '../models'
-import { getCurrentTimestamp } from '../util'
+import { getCurrentTimestamp, translateText } from '../util'
 import { config } from '../../shared/index.js'
 
 export class QuestsService {
@@ -76,7 +76,7 @@ export class QuestsService {
             }
 
             if (updateTime) {
-                userData.questsUpdateTimestamp = getCurrentTimestamp()
+                userData.questsUpdateTimestamp = 1 || getCurrentTimestamp()
             }
 
             await user.$query(trx).patch(userData)
@@ -85,11 +85,44 @@ export class QuestsService {
         })
     }
 
+    async replaceUserQuest (user, quest) {
+        const isReplaced = await this.#witchItApiService.replaceQuest({ user, quest })
+
+        if (!isReplaced) {
+            throw new BadRequest(translateText('Error_QuestReplacingFailed'))
+        }
+
+        const newQuestsData = await this.#witchItApiService.loadUserData(user.steamId)
+        await this.updateUserQuests(user, newQuestsData, false)
+
+        const questsData = await this.getUserQuestsData(user)
+        return { ...questsData, isSuccess: true }
+    }
+
+    async finalizeUserQuest (user, quest) {
+        const isFinalized = await this.#witchItApiService.finalizeQuest({ user, quest })
+
+        if (!isFinalized) {
+            throw new BadRequest(translateText('Error_QuestFinalizationFailed'))
+        }
+
+        const newQuestsData = await this.#witchItApiService.loadUserData(user.steamId)
+        await this.updateUserQuests(user, newQuestsData, false)
+
+        const questsData = await this.getUserQuestsData(user)
+        return { ...questsData, isSuccess: true }
+    }
+
+    async getUserQuestById (userId, questId) {
+        const quests = await Quest.query().select().where('id', questId).where('userId', userId)
+        return quests[0]
+    }
+
     canUpdateQuests (user) {
         return user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT <= getCurrentTimestamp()
     }
 
     #getUserQuests (user) {
-        return Quest.query().select().where('userId', user.id)
+        return Quest.query().select().where('userId', user.id).orderBy('createdAt', 'asc')
     }
 }
