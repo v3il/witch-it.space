@@ -117,9 +117,9 @@ export default {
     top: 0;
     right: 0;
     color: var(--white);
-    padding: var(--offset-xxs);
+    padding: 2px var(--offset-xxs);
     border-bottom-left-radius: var(--offset-xxs);
-    font-size: 12px;
+    font-size: 11px;
     //font-weight: bold;
 }
 

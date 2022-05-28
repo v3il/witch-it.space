@@ -14,13 +14,17 @@
       {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
     </p>
 
-    <div class="quests__body">
-      <Card class="wit-offset-bottom--md">
+    <div class="wit-flex wit-flex--wrap wit-flex--align-start">
+      <Card class="wit-offset-bottom--md wit-quests__column">
         <template #title>
-          {{ $t('Quests_WeeklyQuestsTitle') }}
+          <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+            {{ $t('Quests_WeeklyQuestsTitle') }}
+          </h2>
         </template>
 
-        <Loader v-if="isLoading" />
+        <div v-if="isLoading" class="wit-padding-top--md wit-padding-bottom--md">
+          <Loader />
+        </div>
 
         <template v-else-if="weeklyQuests.length">
           <QuestView
@@ -37,12 +41,16 @@
         <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
       </Card>
 
-      <Card>
+      <Card class="wit-quests__column">
         <template #title>
-          {{ $t('Quests_DailyQuestsTitle') }}
+          <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+            {{ $t('Quests_DailyQuestsTitle') }}
+          </h2>
         </template>
 
-        <Loader v-if="isLoading" />
+        <div v-if="isLoading" class="wit-padding-top--md wit-padding-bottom--md">
+          <Loader />
+        </div>
 
         <template v-else-if="dailyQuests.length">
           <QuestView
@@ -223,5 +231,10 @@ export default {
     &:not(:last-child) {
         border-bottom: 1px solid var(--quest-divider-color);
     }
+}
+
+.wit-quests__column {
+    flex: 1 1 450px;
+    margin: 0 var(--offset-xs);
 }
 </style>

@@ -1,9 +1,8 @@
 <template>
   <div class="wit-card wit-flex" :class="cardClass" @click="onClick">
     <div class="wit-card-body">
-      <h4 v-if="$slots.title" class="wit-card-title wit-font-family--secondary wit-font-weight--600" :class="titleOffsetClass">
-        <slot name="title" />
-      </h4>
+      <slot v-if="$slots.title" name="title" />
+
       <div v-if="$slots.description" class="wit-offset-bottom--sm wit-color--muted wit-line-height--sm">
         <slot name="description" />
       </div>

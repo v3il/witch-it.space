@@ -153,6 +153,10 @@
     padding-bottom: var(--offset-sm);
 }
 
+.wit-padding-bottom--md {
+    padding-bottom: var(--offset-md);
+}
+
 .wit-padding-top--none {
     padding-top: 0;
 }
@@ -167,6 +171,10 @@
 
 .wit-padding-top--sm {
     padding-top: var(--offset-sm);
+}
+
+.wit-padding-top--md {
+    padding-top: var(--offset-md);
 }
 
 .wit-padding-left--xs {

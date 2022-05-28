@@ -28,8 +28,6 @@ export class QuestsService {
     }
 
     async updateUserQuests (user, questsData, updateTime = true) {
-        console.error(333, user.steamId)
-
         const newQuestsData = await this.#witchItApiService.loadUserData(user.steamId)
         const { quests, canReplaceDailyQuests, canReplaceWeeklyQuests } = newQuestsData
         const userQuests = await this.#getUserQuests(user)
@@ -45,31 +43,31 @@ export class QuestsService {
             for (const quest of quests) {
                 const userQuest = userQuests.find(userQuest => quest.id === userQuest.globalId)
 
-                // Add new quest
-                if (!userQuest) {
-                    const [rewardId, rewardCount] = quest.rewardVal.split('x')
-
-                    await Quest.query(trx).insert({
-                        rewardId,
-                        rewardCount,
-                        questTask: quest.name,
-                        questType: quest.type,
-                        globalId: quest.id,
-                        localId: quest.questId,
-                        objective: quest.objective1Max,
-                        progress: quest.objective1Val,
-                        userId: user.id
-                    })
+                // Update existing quest
+                if (userQuest) {
+                    if (userQuest.progress !== +quest.objective1Val) {
+                        await userQuest.$query(trx).patch({
+                            progress: quest.objective1Val
+                        })
+                    }
 
                     continue
                 }
 
-                // Update existing quest
-                if (userQuest.progress !== +quest.objective1Val) {
-                    await userQuest.$query(trx).patch({
-                        progress: quest.objective1Val
-                    })
-                }
+                // Add new quest
+                const [rewardId, rewardCount] = quest.rewardVal.split('x')
+
+                await Quest.query(trx).insert({
+                    rewardId,
+                    rewardCount,
+                    questTask: quest.name,
+                    questType: quest.type,
+                    globalId: quest.id,
+                    localId: quest.questId,
+                    objective: quest.objective1Max,
+                    progress: quest.objective1Val,
+                    userId: user.id
+                })
             }
 
             const userData = {
