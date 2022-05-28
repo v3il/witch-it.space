@@ -4,6 +4,7 @@ import { User, Quest } from '../models'
 import { witchItApiService, questsService, userService } from '../services'
 import { getCurrentTimestamp, translateText } from '../util'
 import { config } from '../../shared'
+import { logger } from '../logger.js'
 
 const getUserQuests = (request, response) => {
     const { user } = request
@@ -15,7 +16,7 @@ const getUserQuests = (request, response) => {
     questsService.getUserQuestsData(user)
         .then(questsData => response.send(questsData))
         .catch((e) => {
-            console.error(e)
+            logger.error('Fetch quests error', user.id, e.message)
             response.emitUnprocessableEntity(request.$t('Error_QuestsFetchingFailed'))
         })
 }
@@ -33,7 +34,10 @@ const updateUserQuests = (request, response) => {
 
     questsService.updateUserQuests(user)
         .then(questsData => response.send(questsData))
-        .catch(() => response.emitUnprocessableEntity(request.$t('Error_QuestsReplacingFailed')))
+        .catch((e) => {
+            logger.error('Update quests error', user.id, e.message)
+            response.emitUnprocessableEntity(request.$t('Error_QuestsReplacingFailed'))
+        })
 }
 
 const replaceUserQuest = async (request, response) => {
@@ -60,7 +64,7 @@ const replaceUserQuest = async (request, response) => {
     questsService.replaceUserQuest(user, quest)
         .then(questsData => response.send(questsData))
         .catch((e) => {
-            console.error(e)
+            logger.error('Replace quests error', user.id, e.message)
             response.emitUnprocessableEntity(request.$t('Error_QuestReplacingFailed'))
         })
 }
@@ -89,7 +93,7 @@ const finalizeUserQuest = async (request, response) => {
     questsService.finalizeUserQuest(user, quest)
         .then(questsData => response.send(questsData))
         .catch((e) => {
-            console.error(e)
+            logger.error('Finalize quests error', user.id, e.message)
             response.emitUnprocessableEntity(request.$t('Error_QuestFinalizationFailed'))
         })
 }

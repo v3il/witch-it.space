@@ -96,6 +96,7 @@ export default {
 
     methods: {
         onItemClicked () {
+            console.error(this.item)
             this.$emit('clicked', this.item)
         },
 

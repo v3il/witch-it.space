@@ -28,13 +28,15 @@ export class QuestsService {
     }
 
     async updateUserQuests (user, questsData, updateTime = true) {
+        console.error(333, user.steamId)
+
         const newQuestsData = await this.#witchItApiService.loadUserData(user.steamId)
         const { quests, canReplaceDailyQuests, canReplaceWeeklyQuests } = newQuestsData
         const userQuests = await this.#getUserQuests(user)
         const questsToRemove = userQuests.filter(userQuest => !quests.some(quest => quest.id === userQuest.globalId))
         const questsToRemoveIds = questsToRemove.map(quest => quest.id)
 
-        return Quest.transaction(async (trx) => {
+        const result = await Quest.transaction(async (trx) => {
             // Remove replaced quests from DB
             if (questsToRemoveIds.length) {
                 await Quest.query(trx).delete().where('id', 'in', questsToRemoveIds)
@@ -79,10 +81,10 @@ export class QuestsService {
                 userData.questsUpdateTimestamp = 1 || getCurrentTimestamp()
             }
 
-            await user.$query(trx).patch(userData)
-
-            return this.getUserQuestsData(user)
+            await user.$query(trx).patchAndFetch(userData)
         })
+
+        return this.getUserQuestsData(user)
     }
 
     async replaceUserQuest (user, quest) {
