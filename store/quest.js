@@ -16,13 +16,37 @@ export const getters = {
 }
 
 export const actions = {
-    fetchQuests ({ commit }) {
+    fetchUserQuests ({ commit }) {
         commit('SET_LOADING', true)
 
         return questsService.fetch()
             .then(data => commit('SET_DATA', data))
             .finally(() => commit('SET_LOADING', false))
     },
+
+    updateUserQuests ({ commit }) {
+        commit('SET_LOADING', true)
+
+        return questsService.update()
+            .then(data => commit('SET_DATA', data))
+            .finally(() => commit('SET_LOADING', false))
+    },
+
+    replaceUserQuest ({ commit }, questId) {
+        commit('SET_LOADING', true)
+
+        return questsService.replaceQuest(questId)
+            .then(data => commit('SET_DATA', data))
+            .finally(() => commit('SET_LOADING', false))
+    },
+
+    finalizeUserQuest ({ commit }, questId) {
+        commit('SET_LOADING', true)
+
+        return questsService.finalizeQuest(questId)
+            .then(data => commit('SET_DATA', data))
+            .finally(() => commit('SET_LOADING', false))
+    }
 
     // async [Quest.Actions.FETCH_QUESTS] ({ commit, state }) {
     //     if (state.isLoaded) {
@@ -42,47 +66,47 @@ export const actions = {
     //     }
     // },
 
-    async [Quest.Actions.UPDATE_QUESTS] ({ commit }) {
-        commit(Quest.Mutations.SET_LOADING, true)
+    // async [Quest.Actions.UPDATE_QUESTS] ({ commit }) {
+    //     commit(Quest.Mutations.SET_LOADING, true)
+    //
+    //     try {
+    //         const response = await this.$axios.post('/api/quests/update')
+    //         commit(Quest.Mutations.SET_DATA, response.data)
+    //         return { isSuccess: true }
+    //     } catch (e) {
+    //         return { error: e.message }
+    //     } finally {
+    //         commit(Quest.Mutations.SET_LOADING, false)
+    //     }
+    // },
 
-        try {
-            const response = await this.$axios.post('/api/quests/update')
-            commit(Quest.Mutations.SET_DATA, response.data)
-            return { isSuccess: true }
-        } catch (e) {
-            return { error: e.message }
-        } finally {
-            commit(Quest.Mutations.SET_LOADING, false)
-        }
-    },
+    // async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
+    //     try {
+    //         const response = await this.$axios.post('/api/quests/replace', { questId })
+    //
+    //         if (response.data.isSuccess) {
+    //             commit(Quest.Mutations.SET_DATA, response.data)
+    //         }
+    //
+    //         return { isSuccess: response.data.isSuccess }
+    //     } catch (e) {
+    //         return { error: e.message }
+    //     }
+    // },
 
-    async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
-        try {
-            const response = await this.$axios.post('/api/quests/replace', { questId })
-
-            if (response.data.isSuccess) {
-                commit(Quest.Mutations.SET_DATA, response.data)
-            }
-
-            return { isSuccess: response.data.isSuccess }
-        } catch (e) {
-            return { error: e.message }
-        }
-    },
-
-    async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
-        try {
-            const response = await this.$axios.post('/api/quests/finalize', { questId })
-
-            if (response.data.isSuccess) {
-                commit(Quest.Mutations.SET_DATA, response.data)
-            }
-
-            return { isSuccess: response.data.isSuccess }
-        } catch (e) {
-            return { error: e.message }
-        }
-    }
+    // async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
+    //     try {
+    //         const response = await this.$axios.post('/api/quests/finalize', { questId })
+    //
+    //         if (response.data.isSuccess) {
+    //             commit(Quest.Mutations.SET_DATA, response.data)
+    //         }
+    //
+    //         return { isSuccess: response.data.isSuccess }
+    //     } catch (e) {
+    //         return { error: e.message }
+    //     }
+    // }
 }
 
 export const mutations = {

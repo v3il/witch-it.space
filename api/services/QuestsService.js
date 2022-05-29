@@ -31,7 +31,7 @@ export class QuestsService {
         const questsToRemove = userQuests.filter(userQuest => !quests.some(quest => quest.id === userQuest.globalId))
         const questsToRemoveIds = questsToRemove.map(quest => quest.id)
 
-        const result = await Quest.transaction(async (trx) => {
+        await Quest.transaction(async (trx) => {
             // Remove replaced quests from DB
             if (questsToRemoveIds.length) {
                 await Quest.query(trx).delete().where('id', 'in', questsToRemoveIds)
@@ -76,7 +76,7 @@ export class QuestsService {
                 userData.questsUpdateTimestamp = getCurrentTimestamp()
             }
 
-            await user.$query(trx).patchAndFetch(userData)
+            await user.$query(trx).patch(userData)
         })
 
         return this.getUserQuestsData(user)

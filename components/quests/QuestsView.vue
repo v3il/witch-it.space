@@ -136,7 +136,7 @@ export default {
     },
 
     created () {
-        this.updateQuests()
+        this.fetchUserQuests().catch(this.$showError)
 
         // const { error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
         //
@@ -157,11 +157,14 @@ export default {
 
     methods: {
         ...mapActions(StoreModules.QUESTS, {
-            fetchQuests: 'fetchQuests'
+            fetchUserQuests: 'fetchUserQuests',
+            updateUserQuests: 'updateUserQuests',
+            replaceUserQuest: 'replaceUserQuest',
+            finalizeUserQuest: 'finalizeUserQuest'
         }),
 
         updateQuests () {
-            return this.fetchQuests().catch(this.$showError)
+            return this.updateUserQuests().catch(this.$showError)
 
             // const { error } = await this.fetchQuests() $store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
             //
@@ -185,47 +188,26 @@ export default {
                 return
             }
 
-            this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
-                .then(({ isSuccess }) => {
-                    this.$showSuccess(this.$t('OffersRemoved', [isSuccess]))
-                })
-                .catch(this.$showError)
-
-            // showPopup(this, {
-            //     title: this.$t('Quests_ReplaceQuestTitle'),
-            //     message: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_UndoneAction')}`,
-            //     confirmText: this.$t('Confirm'),
-            //     cancelText: this.$t('Cancel'),
-            //     onConfirm: async () => {
-            //         const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.REPLACE_QUEST, quest.id)
-            //
-            //         if (error || !isSuccess) {
-            //             return this.$showError({ message: this.$t('Error_QuestReplacingFailed') })
-            //         }
-            //
-            //         return this.$showSuccess({ message: this.$t('Success_QuestReplacing') })
-            //     }
-            // })
+            this.replaceUserQuest(quest.id)
+                .then(() => this.$showSuccess(this.$t('Success_QuestReplacing')))
+                .catch(() => this.$showError({ message: this.$t('Error_QuestReplacingFailed') }))
         },
 
-        finalizeQuest (quest) {
+        async finalizeQuest (quest) {
             const questTask = this.$t(`Quests_${quest.questTask}`)
 
-            showPopup(this, {
-                title: this.$t('Quests_FinalizeQuestTitle'),
-                message: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>${this.$t('Quests_FinalizeQuestNote')}`,
-                confirmText: this.$t('Quests_FinalizeQuestConfirmButtonTitle'),
-                cancelText: this.$t('Quests_CancelButtonTitle'),
-                onConfirm: async () => {
-                    const { isSuccess, error } = await this.$store.dispatch(Quest.F.Actions.FINALIZE_QUEST, quest.id)
-
-                    if (error || !isSuccess) {
-                        return this.$showError({ message: this.$t('Error_QuestFinalizationFailed') })
-                    }
-
-                    return this.$showSuccess({ message: this.$t('Success_QuestFinalization') })
-                }
+            const isConfirmed = await this.$showConfirm({
+                popupTitle: this.$t('Quests_FinalizeQuestTitle'),
+                content: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>`
             })
+
+            if (!isConfirmed) {
+                return
+            }
+
+            this.finalizeUserQuest(quest.id)
+                .then(() => this.$showSuccess(this.$t('Success_QuestFinalization')))
+                .catch(() => this.$showError({ message: this.$t('Error_QuestFinalizationFailed') }))
         },
 
         setTimer () {

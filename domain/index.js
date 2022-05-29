@@ -3,8 +3,8 @@ import { wishlistItemFactory, priceFactory } from './factories'
 
 export const itemsService = new ItemsService()
 export const usersService = new UsersService()
+export const questsService = new QuestsService()
 export const priceService = new PriceService({ priceFactory })
-export const questsService = new QuestsService({ priceFactory })
 export const wishlistService = new WishlistService({
     itemsService,
     wishlistItemFactory,
