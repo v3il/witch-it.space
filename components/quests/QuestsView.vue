@@ -9,7 +9,7 @@
       {{ $t('Quests_Note') }}
     </b-notification>
 
-    <Card class="wit-offset-bottom--sm">
+    <Card class="wit-offset-bottom--sm" vertical-paddings="sm">
       <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
         <p class="wit-offset-bottom--sm1 wit-text--right">
           {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}

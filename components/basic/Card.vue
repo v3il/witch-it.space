@@ -22,7 +22,13 @@ export default {
             type: String
         },
 
-        paddings: {
+        verticalPaddings: {
+            required: false,
+            default: 'md',
+            type: String
+        },
+
+        horizontalPaddings: {
             required: false,
             default: 'md',
             type: String
@@ -33,7 +39,8 @@ export default {
         cardClass () {
             return [
                 this.type,
-                `wit-card--${this.paddings}`
+                `wit-card--horizontal-${this.horizontalPaddings}`,
+                `wit-card--vertical-${this.verticalPaddings}`
             ]
         },
 
@@ -73,12 +80,36 @@ export default {
     //}
 }
 
-.wit-card--md .wit-card-body {
-    padding: var(--offset-md);
+// todo: refactor
+
+.wit-card--horizontal-md .wit-card-body {
+    padding-left: var(--offset-md);
+    padding-right: var(--offset-md);
 }
 
-.wit-card--xs .wit-card-body {
-    padding: var(--offset-xs);
+.wit-card--vertical-md .wit-card-body {
+    padding-top: var(--offset-md);
+    padding-bottom: var(--offset-md);
+}
+
+.wit-card--horizontal-sm .wit-card-body {
+    padding-left: var(--offset-sm);
+    padding-right: var(--offset-sm);
+}
+
+.wit-card--vertical-sm .wit-card-body {
+    padding-top: var(--offset-sm);
+    padding-bottom: var(--offset-sm);
+}
+
+.wit-card--horizontal-xs .wit-card-body {
+    padding-left: var(--offset-xs);
+    padding-right: var(--offset-xs);
+}
+
+.wit-card--vertical-xs .wit-card-body {
+    padding-top: var(--offset-xs);
+    padding-bottom: var(--offset-xs);
 }
 
 .wit-card-title {
