@@ -11,16 +11,13 @@ export class QuestsService {
     }
 
     async getUserQuestsData (user) {
-        const userQuests = await this.#getUserQuests(user)
-        const weeklyQuests = userQuests.filter(quest => quest.questType === 'Weekly')
-        const dailyQuests = userQuests.filter(quest => quest.questType === 'Daily')
+        const quests = await this.#getUserQuests(user)
         const canReplaceWeeklyQuests = user.canReplaceWeeklyQuests
         const canReplaceDailyQuests = user.canReplaceDailyQuests
         const questsUpdateTimestamp = user.questsUpdateTimestamp
 
         return {
-            weeklyQuests,
-            dailyQuests,
+            quests,
             canReplaceWeeklyQuests,
             canReplaceDailyQuests,
             questsUpdateTimestamp

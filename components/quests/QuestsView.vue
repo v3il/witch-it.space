@@ -1,10 +1,10 @@
 <template>
   <div>
     <b-notification
-      type="is-warning is-light1"
+      type="is-info is-ligh1t"
       aria-close-label="Close notification"
       role="alert"
-      class="wit-offset-bottom--md"
+      class="wit-offset-bottom--sm"
     >
       {{ $t('Quests_Note') }}
     </b-notification>
@@ -52,7 +52,9 @@
           />
         </template>
 
-        <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
+        <div v-else class="wit-padding-top--md wit-padding-bottom--md">
+          <EmptyState :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
+        </div>
       </Card>
 
       <Card class="wit-quests__column">
@@ -78,14 +80,16 @@
           />
         </template>
 
-        <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
+        <div v-else class="wit-padding-top--md wit-padding-bottom--md">
+          <EmptyState :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
+        </div>
       </Card>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import QuestView from '@/components/quests/QuestView'
 import { config } from '@/shared'
 import { Quest } from '@/store/Types'
@@ -93,6 +97,7 @@ import Card from '@/components/basic/Card.vue'
 import EmptyState from '@/components/basic/EmptyState.vue'
 import Loader from '@/components/basic/Loader.vue'
 import { showPopup } from '@/utils'
+import { StoreModules } from '@/store/index.js'
 
 export default {
     name: 'QuestsView',
@@ -115,27 +120,34 @@ export default {
     },
 
     computed: {
-        ...mapState(Quest.PATH, [
-            'weeklyQuests',
-            'dailyQuests',
+        ...mapState(StoreModules.QUESTS, [
+            // 'weeklyQuests',
+            // 'dailyQuests',
             'isLoading',
             'canReplaceDailyQuests',
             'canReplaceWeeklyQuests',
             'questsUpdateTimestamp'
+        ]),
+
+        ...mapGetters(StoreModules.QUESTS, [
+            'weeklyQuests',
+            'dailyQuests'
         ])
     },
 
-    async created () {
-        const { error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
+    created () {
+        this.updateQuests()
 
-        if (error) {
-            return this.$showError({ message: this.$t('Error_QuestsFetchingFailed') })
-        }
-
-        this.setTimer()
-        this.formatLastUpdate()
-
-        this.$eventBus.$on('localeChanged', this.formatLastUpdate)
+        // const { error } = await this.$store.dispatch(Quest.F.Actions.FETCH_QUESTS)
+        //
+        // if (error) {
+        //     return this.$showError({ message: this.$t('Error_QuestsFetchingFailed') })
+        // }
+        //
+        // this.setTimer()
+        // this.formatLastUpdate()
+        //
+        // this.$eventBus.$on('localeChanged', this.formatLastUpdate)
     },
 
     destroyed () {
@@ -144,15 +156,21 @@ export default {
     },
 
     methods: {
-        async updateQuests () {
-            const { error } = await this.$store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
+        ...mapActions(StoreModules.QUESTS, {
+            fetchQuests: 'fetchQuests'
+        }),
 
-            if (error) {
-                return this.$showError({ message: error })
-            }
+        updateQuests () {
+            return this.fetchQuests().catch(this.$showError)
 
-            this.setTimer()
-            this.formatLastUpdate()
+            // const { error } = await this.fetchQuests() $store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
+            //
+            // if (error) {
+            //     return this.$showError({ message: error })
+            // }
+            //
+            // this.setTimer()
+            // this.formatLastUpdate()
         },
 
         async replaceQuest (quest) {
