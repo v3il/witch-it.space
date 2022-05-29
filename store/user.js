@@ -1,6 +1,6 @@
-import { Locale, Theme, User } from '@/store'
+import { User } from '@/store'
 import { openWindow } from '@/utils'
-import { Routes, config } from '@/shared'
+import { config, Routes } from '@/shared'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -10,6 +10,7 @@ export const state = () => ({
 
 export const getters = {
     isAuthorized: state => !!state.user,
+    isMyProfile: state => state.user?.steamId === '76561198890437027',
 
     [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
         return !!user?.steamId

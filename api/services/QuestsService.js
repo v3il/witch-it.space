@@ -1,7 +1,7 @@
 import { BadRequest } from '@curveball/http-errors'
 import { Quest } from '../models'
-import { getCurrentTimestamp, translateText } from '../util'
-import { config } from '../../shared/index.js'
+import { translateText } from '../util'
+import { config, getCurrentTimestamp } from '../../shared/index.js'
 
 export class QuestsService {
     #witchItApiService
@@ -116,6 +116,7 @@ export class QuestsService {
     }
 
     canUpdateQuests (user) {
+        console.log(user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT, getCurrentTimestamp())
         return user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT <= getCurrentTimestamp()
     }
 

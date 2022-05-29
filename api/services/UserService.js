@@ -1,6 +1,6 @@
 import { compare, genSalt, hash } from 'bcrypt'
 import { User } from '../models'
-import { getCurrentTimestamp } from '../util/index.js'
+import { getCurrentTimestamp } from '../../shared'
 
 export class UserService {
     getById (id) {

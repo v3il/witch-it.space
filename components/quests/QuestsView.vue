@@ -1,24 +1,19 @@
 <template>
   <div>
-    <b-notification
-      type="is-info is-ligh1t"
-      aria-close-label="Close notification"
-      role="alert"
-      class="wit-offset-bottom--sm"
-    >
+    <b-notification type="is-info" class="wit-offset-bottom--sm">
       {{ $t('Quests_Note') }}
     </b-notification>
 
     <Card class="wit-offset-bottom--sm" vertical-paddings="sm">
       <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
         <p class="wit-offset-bottom--sm1 wit-text--right">
-          {{ $t('Quests_LastUpdate', [formattedLastUpdate]) }}
+          <span class="wit-color--muted">{{ $t('Quests_LastUpdate') }}</span>
+          {{ formattedLastUpdate || $t('Time_Never') }}
         </p>
 
         <div class="wit-position--relative">
-          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-color--warning wit-offset-bottom--xs wit-offset-top--xs counter">
+          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="counter">
             {{ timeToNextUpdate }}
-            <!--            {{ $t('Quests_UpdateAvailableIn', [timeToNextUpdate]) }}-->
           </b-tag>
 
           <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
@@ -29,61 +24,25 @@
     </Card>
 
     <div class="wit-flex wit-flex--wrap wit-flex--align-start" style="margin: 0 -8px;">
-      <Card class="wit-offset-bottom--md wit-quests__column">
-        <template #title>
-          <h2 class="wit-font-size--sm wit-offset-bottom--sm">
-            {{ $t('Quests_WeeklyQuestsTitle') }}
-          </h2>
-        </template>
+      <QuestsColumn
+        class="wit-offset-bottom--md wit-quests__column"
+        :title="$t('Quests_WeeklyQuestsTitle')"
+        :quests="weeklyQuests"
+        :is-loading="isLoading"
+        :can-replace-quests="canReplaceWeeklyQuests"
+        @replace="replaceQuest"
+        @finalize="finalizeQuest"
+      />
 
-        <div v-if="isLoading" class="wit-padding-top--md wit-padding-bottom--md">
-          <Loader />
-        </div>
-
-        <template v-else-if="weeklyQuests.length">
-          <QuestView
-            v-for="quest in weeklyQuests"
-            :key="quest.id"
-            :quest="quest"
-            class="wit-quest-view"
-            :can-replace="canReplaceWeeklyQuests"
-            @replace="replaceQuest"
-            @finalize="finalizeQuest"
-          />
-        </template>
-
-        <div v-else class="wit-padding-top--md wit-padding-bottom--md">
-          <EmptyState :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
-        </div>
-      </Card>
-
-      <Card class="wit-quests__column">
-        <template #title>
-          <h2 class="wit-font-size--sm wit-offset-bottom--sm">
-            {{ $t('Quests_DailyQuestsTitle') }}
-          </h2>
-        </template>
-
-        <div v-if="isLoading" class="wit-padding-top--md wit-padding-bottom--md">
-          <Loader />
-        </div>
-
-        <template v-else-if="dailyQuests.length">
-          <QuestView
-            v-for="quest in dailyQuests"
-            :key="quest.id"
-            class="wit-quest-view"
-            :quest="quest"
-            :can-replace="canReplaceDailyQuests"
-            @replace="replaceQuest"
-            @finalize="finalizeQuest"
-          />
-        </template>
-
-        <div v-else class="wit-padding-top--md wit-padding-bottom--md">
-          <EmptyState :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
-        </div>
-      </Card>
+      <QuestsColumn
+        class="wit-quests__column"
+        :title="$t('Quests_DailyQuestsTitle')"
+        :quests="dailyQuests"
+        :is-loading="isLoading"
+        :can-replace-quests="canReplaceWeeklyQuests"
+        @replace="replaceQuest"
+        @finalize="finalizeQuest"
+      />
     </div>
   </div>
 </template>
@@ -98,26 +57,28 @@ import EmptyState from '@/components/basic/EmptyState.vue'
 import Loader from '@/components/basic/Loader.vue'
 import { showPopup } from '@/utils'
 import { StoreModules } from '@/store/index.js'
+import QuestsColumn from '@/components/quests/QuestsColumn.vue'
 
 export default {
     name: 'QuestsView',
 
     components: {
-        QuestView,
+        // QuestView,
         Card,
-        EmptyState,
-        Loader
+        // EmptyState,
+        // Loader,
+        QuestsColumn
     },
 
-    data () {
-        return {
-            isUpdateAvailable: true,
-            timeToNextUpdate: '00:00',
-            formattedLastUpdate: this.$t('Time_LessThanAMinuteAgo'),
-            intervalId: 0,
-            lastUpdateTimeoutId: 0
-        }
-    },
+    // data () {
+    //     return {
+    // isUpdateAvailable: true,
+    // timeToNextUpdate: '00:00',
+    // formattedLastUpdate: this.$t('Time_LessThanAMinuteAgo'),
+    // intervalId: 0,
+    // lastUpdateTimeoutId: 0
+    // }
+    // },
 
     computed: {
         ...mapState(StoreModules.QUESTS, [
@@ -126,7 +87,10 @@ export default {
             'isLoading',
             'canReplaceDailyQuests',
             'canReplaceWeeklyQuests',
-            'questsUpdateTimestamp'
+            'questsUpdateTimestamp',
+            'timeToNextUpdate',
+            'isUpdateAvailable',
+            'formattedLastUpdate'
         ]),
 
         ...mapGetters(StoreModules.QUESTS, [
@@ -150,10 +114,10 @@ export default {
         // this.$eventBus.$on('localeChanged', this.formatLastUpdate)
     },
 
-    destroyed () {
-        this.stopTimer()
-        clearTimeout(this.lastUpdateTimeoutId)
-    },
+    // destroyed () {
+    //     this.stopTimer()
+    //     clearTimeout(this.lastUpdateTimeoutId)
+    // },
 
     methods: {
         ...mapActions(StoreModules.QUESTS, {
@@ -165,15 +129,6 @@ export default {
 
         updateQuests () {
             return this.updateUserQuests().catch(this.$showError)
-
-            // const { error } = await this.fetchQuests() $store.dispatch(Quest.F.Actions.UPDATE_QUESTS)
-            //
-            // if (error) {
-            //     return this.$showError({ message: error })
-            // }
-            //
-            // this.setTimer()
-            // this.formatLastUpdate()
         },
 
         async replaceQuest (quest) {
@@ -208,47 +163,47 @@ export default {
             this.finalizeUserQuest(quest.id)
                 .then(() => this.$showSuccess(this.$t('Success_QuestFinalization')))
                 .catch(() => this.$showError({ message: this.$t('Error_QuestFinalizationFailed') }))
-        },
-
-        setTimer () {
-            this.intervalId = setInterval(this.updateTimer, 1000)
-            this.updateTimer()
-        },
-
-        stopTimer () {
-            clearInterval(this.intervalId)
-        },
-
-        updateTimer () {
-            const nextUpdate = this.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT
-            const diff = nextUpdate - Math.floor(Date.now() / 1000)
-
-            this.isUpdateAvailable = diff <= 0
-
-            if (this.isUpdateAvailable) {
-                this.timeToNextUpdate = '00:00'
-                return this.stopTimer()
-            }
-
-            const seconds = diff % 60
-            const minutes = Math.floor((diff - seconds) / 60)
-
-            this.timeToNextUpdate = `${this.formatNumber(minutes)}:${this.formatNumber(seconds)}`
-        },
-
-        formatNumber (number) {
-            return number < 10 ? `0${number}` : number
-        },
-
-        formatLastUpdate () {
-            if (!this.questsUpdateTimestamp) {
-                return this.formattedLastUpdate = this.$t('Time_Never')
-            }
-
-            clearTimeout(this.lastUpdateTimeoutId)
-            this.lastUpdateTimeoutId = setTimeout(this.formatLastUpdate, 10 * 1000)
-            this.formattedLastUpdate = Date.fromTimestamp(this.questsUpdateTimestamp).humanizeTimeDiff()
         }
+
+        // setTimer () {
+        //     this.intervalId = setInterval(this.updateTimer, 1000)
+        //     this.updateTimer()
+        // },
+        //
+        // stopTimer () {
+        //     clearInterval(this.intervalId)
+        // },
+        //
+        // updateTimer () {
+        //     const nextUpdate = this.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT
+        //     const diff = nextUpdate - Math.floor(Date.now() / 1000)
+        //
+        //     this.isUpdateAvailable = diff <= 0
+        //
+        //     if (this.isUpdateAvailable) {
+        //         this.timeToNextUpdate = '00:00'
+        //         return this.stopTimer()
+        //     }
+        //
+        //     const seconds = diff % 60
+        //     const minutes = Math.floor((diff - seconds) / 60)
+        //
+        //     this.timeToNextUpdate = `${this.formatNumber(minutes)}:${this.formatNumber(seconds)}`
+        // },
+        //
+        // formatNumber (number) {
+        //     return number < 10 ? `0${number}` : number
+        // },
+        //
+        // formatLastUpdate () {
+        //     if (!this.questsUpdateTimestamp) {
+        //         return this.formattedLastUpdate = this.$t('Time_Never')
+        //     }
+        //
+        //     clearTimeout(this.lastUpdateTimeoutId)
+        //     this.lastUpdateTimeoutId = setTimeout(this.formatLastUpdate, 10 * 1000)
+        //     this.formattedLastUpdate = Date.fromTimestamp(this.questsUpdateTimestamp).humanizeTimeDiff()
+        // }
     }
 }
 </script>
@@ -269,8 +224,8 @@ export default {
 
 .counter {
     position: absolute;
-    top: -20px;
-    right: -10px;
+    top: -12px;
+    right: -12px;
     margin: 0;
     z-index: 2;
     font-weight: bold;

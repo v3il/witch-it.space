@@ -1,9 +1,7 @@
 import { BadRequest, Forbidden } from '@curveball/http-errors'
 import joi from 'joi'
-import { User, Quest } from '../models'
-import { witchItApiService, questsService, userService } from '../services'
-import { getCurrentTimestamp, translateText } from '../util'
-import { config } from '../../shared'
+import { questsService, userService } from '../services'
+import { translateText } from '../util'
 import { logger } from '../logger.js'
 
 const getUserQuests = (request, response) => {

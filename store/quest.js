@@ -1,5 +1,6 @@
-import { Quest } from '@/store/Types'
 import { questsService } from '@/domain/index.js'
+import { config, getCurrentTimestamp } from '@/shared'
+import { formatNumber } from '@/utils'
 
 export const state = () => ({
     quests: [],
@@ -7,7 +8,13 @@ export const state = () => ({
     isLoading: false,
     canReplaceDailyQuests: true,
     canReplaceWeeklyQuests: true,
-    questsUpdateTimestamp: 0
+    questsUpdateTimestamp: 0,
+    intervalId: 0,
+    isUpdateAvailable: false,
+    timeToNextUpdate: '00:00',
+
+    lastUpdateIntervalId: 0,
+    formattedLastUpdate: null
 })
 
 export const getters = {
@@ -16,19 +23,27 @@ export const getters = {
 }
 
 export const actions = {
-    fetchUserQuests ({ commit }) {
+    fetchUserQuests ({ commit, rootGetters }) {
         commit('SET_LOADING', true)
 
         return questsService.fetch()
-            .then(data => commit('SET_DATA', data))
+            .then((data) => {
+                commit('SET_DATA', data)
+                commit('SET_TIMER', rootGetters['user/isMyProfile'])
+                commit('SET_LAST_UPDATE_TIMER')
+            })
             .finally(() => commit('SET_LOADING', false))
     },
 
-    updateUserQuests ({ commit }) {
+    updateUserQuests ({ commit, rootGetters }) {
         commit('SET_LOADING', true)
 
         return questsService.update()
-            .then(data => commit('SET_DATA', data))
+            .then((data) => {
+                commit('SET_DATA', data)
+                commit('SET_TIMER', rootGetters['user/isMyProfile'])
+                commit('SET_LAST_UPDATE_TIMER')
+            })
             .finally(() => commit('SET_LOADING', false))
     },
 
@@ -47,66 +62,6 @@ export const actions = {
             .then(data => commit('SET_DATA', data))
             .finally(() => commit('SET_LOADING', false))
     }
-
-    // async [Quest.Actions.FETCH_QUESTS] ({ commit, state }) {
-    //     if (state.isLoaded) {
-    //         return { error: null }
-    //     }
-    //
-    //     commit(Quest.Mutations.SET_LOADING, true)
-    //
-    //     try {
-    //         const response = await this.$axios.get('/api/quests')
-    //         commit(Quest.Mutations.SET_DATA, response.data)
-    //         return { isSuccess: true }
-    //     } catch (e) {
-    //         return { error: e.message }
-    //     } finally {
-    //         commit(Quest.Mutations.SET_LOADING, false)
-    //     }
-    // },
-
-    // async [Quest.Actions.UPDATE_QUESTS] ({ commit }) {
-    //     commit(Quest.Mutations.SET_LOADING, true)
-    //
-    //     try {
-    //         const response = await this.$axios.post('/api/quests/update')
-    //         commit(Quest.Mutations.SET_DATA, response.data)
-    //         return { isSuccess: true }
-    //     } catch (e) {
-    //         return { error: e.message }
-    //     } finally {
-    //         commit(Quest.Mutations.SET_LOADING, false)
-    //     }
-    // },
-
-    // async [Quest.Actions.REPLACE_QUEST] ({ commit }, questId) {
-    //     try {
-    //         const response = await this.$axios.post('/api/quests/replace', { questId })
-    //
-    //         if (response.data.isSuccess) {
-    //             commit(Quest.Mutations.SET_DATA, response.data)
-    //         }
-    //
-    //         return { isSuccess: response.data.isSuccess }
-    //     } catch (e) {
-    //         return { error: e.message }
-    //     }
-    // },
-
-    // async [Quest.Actions.FINALIZE_QUEST] ({ commit }, questId) {
-    //     try {
-    //         const response = await this.$axios.post('/api/quests/finalize', { questId })
-    //
-    //         if (response.data.isSuccess) {
-    //             commit(Quest.Mutations.SET_DATA, response.data)
-    //         }
-    //
-    //         return { isSuccess: response.data.isSuccess }
-    //     } catch (e) {
-    //         return { error: e.message }
-    //     }
-    // }
 }
 
 export const mutations = {
@@ -122,5 +77,44 @@ export const mutations = {
         state.canReplaceDailyQuests = canReplaceDailyQuests
         state.questsUpdateTimestamp = questsUpdateTimestamp
         state.isLoaded = true
+    },
+
+    SET_TIMER (state, isMyProfile) {
+        clearInterval(state.intervalId)
+
+        const handler = () => {
+            const nextUpdate = state.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT
+            const diff = nextUpdate - getCurrentTimestamp()
+
+            state.isUpdateAvailable = isMyProfile ? true : diff <= 0
+
+            if (state.isUpdateAvailable) {
+                state.timeToNextUpdate = '00:00'
+                return clearInterval(state.intervalId)
+            }
+
+            const seconds = diff % 60
+            const minutes = Math.floor((diff - seconds) / 60)
+
+            state.timeToNextUpdate = `${formatNumber(minutes)}:${formatNumber(seconds)}`
+        }
+
+        handler()
+        state.intervalId = setInterval(handler, 1000)
+    },
+
+    SET_LAST_UPDATE_TIMER (state) {
+        if (!state.questsUpdateTimestamp) {
+            return
+        }
+
+        clearInterval(state.lastUpdateIntervalId)
+
+        const handler = () => {
+            state.formattedLastUpdate = Date.fromTimestamp(state.questsUpdateTimestamp).humanizeTimeDiff()
+        }
+
+        handler()
+        state.lastUpdateIntervalId = setInterval(handler, 1000)
     }
 }

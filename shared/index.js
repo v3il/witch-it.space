@@ -4,6 +4,7 @@ export { Cookies } from './Cookies'
 export { config, Themes, Locales } from './config'
 export { ru, ua, en } from './translations'
 export { getNavbarLinks } from './getNavbarLinks'
+export { getCurrentTimestamp } from './getCurrentTimestamp'
 export { validateSteamTradeURL, validateLogin, validatePassword, validateDisplayName, validateAvatarId } from './validators'
 
 export const getTranslation = (lngSet, textId, replacements = []) => {

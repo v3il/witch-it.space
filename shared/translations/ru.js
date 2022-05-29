@@ -119,7 +119,7 @@ export const ru = {
     Quests_DailyQuestsTitle: 'Ежедневные квесты',
     Quests_UpdateQuest: 'Заменить',
     Quests_GetReward: 'Получить награду',
-    Quests_LastUpdate: 'Последнее обновление: %s',
+    Quests_LastUpdate: 'Последнее обновление:',
     Quests_NoQuests: 'Нет активных квестов',
     Quests_WannaReplaceQuest: 'Вы действительно хотите заменить этот квест? Это действие нельзя отменить!',
     Quests_UndoneAction: 'Это действие нельзя отменить!',
