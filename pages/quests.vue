@@ -55,7 +55,7 @@ export default {
 
 <style scoped lang="scss">
 .wit-quests {
-    padding: var(--offset-md);
+    padding: var(--offset-sm);
     max-width: 1200px;
     margin: 0 auto;
 }

@@ -7,8 +7,6 @@ export class ItemsService {
     #secondary = []
 
     setItems (items) {
-        console.log('Set', items.length, Object.values(this.#items).length)
-
         items.forEach((itemData) => {
             this.#items[itemData.itemId] = Item.create(itemData)
         })

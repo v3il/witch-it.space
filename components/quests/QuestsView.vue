@@ -1,22 +1,22 @@
 <template>
   <div>
-    <b-notification type="is-info" class="wit-offset-bottom--sm">
+    <b-notification type="is-info" class="wit-offset-bottom--sm wit-line-height--md">
       {{ $t('Quests_Note') }}
     </b-notification>
 
-    <Card class="wit-offset-bottom--sm" vertical-paddings="sm">
+    <Card class="wit-offset-bottom--sm" vertical-paddings="xs">
       <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
-        <p class="wit-offset-bottom--sm1 wit-text--right">
+        <p class="wit-offset-right--sm wit-padding-top--xs wit-padding-bottom--xs">
           <span class="wit-color--muted">{{ $t('Quests_LastUpdate') }}</span>
           {{ formattedLastUpdate || $t('Time_Never') }}
         </p>
 
-        <div class="wit-position--relative">
+        <div class="wit-position--relative wit-padding-top--xs wit-padding-bottom--xs">
           <b-tag v-if="!isUpdateAvailable" type="is-warning" class="counter">
             {{ timeToNextUpdate }}
           </b-tag>
 
-          <b-button type="is-primary" class="wit-transition wit-offset-left--sm" :disabled="!isUpdateAvailable" @click="updateQuests">
+          <b-button type="is-primary" class="wit-transition" :disabled="!isUpdateAvailable" @click="updateQuests">
             {{ $t('Quests_UpdateQuests') }}
           </b-button>
         </div>
@@ -39,7 +39,7 @@
         :title="$t('Quests_DailyQuestsTitle')"
         :quests="dailyQuests"
         :is-loading="isLoading"
-        :can-replace-quests="canReplaceWeeklyQuests"
+        :can-replace-quests="canReplaceDailyQuests"
         @replace="replaceQuest"
         @finalize="finalizeQuest"
       />
@@ -209,13 +209,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-quest-view {
-    padding: 16px 0;
-
-    &:not(:last-child) {
-        border-bottom: var(--default-border);
-    }
-}
+//.wit-quest-view {
+//    padding: 16px 0;
+//
+//    &:not(:last-child) {
+//        border-bottom: var(--default-border);
+//    }
+//}
 
 .wit-quests__column {
     flex: 1 1 450px;
@@ -224,7 +224,7 @@ export default {
 
 .counter {
     position: absolute;
-    top: -12px;
+    top: -4px;
     right: -12px;
     margin: 0;
     z-index: 2;
