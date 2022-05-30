@@ -23,6 +23,11 @@ const authUsingSteamCallback = async (request, response) => {
     const steamUser = await steam.authenticate(request)
     const { steamid: steamId, username } = steamUser
 
+    if (request.user) {
+        await request.user.$query().patch({ steamId })
+        return response.redirect(Routes.AUTH_RESULT)
+    }
+
     let user = await userService.getBySteamId(steamId)
 
     if (!user) {

@@ -12,8 +12,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { User } from '@/store'
+import { StoreModules, User } from '@/store'
+import { Routes } from '@/shared/index.js'
 
 export default {
     name: 'ConnectSteam',
@@ -23,14 +25,12 @@ export default {
     },
 
     methods: {
-        async connectSteam () {
-            try {
-                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, 'steam')
-            } catch (error) {
-                if (error) {
-                    this.$showError(error.message)
-                }
-            }
+        ...mapActions(StoreModules.USER, {
+            authUsingSocials: 'authUsingSocials'
+        }),
+
+        connectSteam () {
+            this.authUsingSocials('steam').catch(error => error && this.$showError(error.message))
         }
     }
 }

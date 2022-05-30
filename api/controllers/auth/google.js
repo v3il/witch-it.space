@@ -43,6 +43,12 @@ const authUsingGoogleCallback = async (request, response) => {
         )
 
     const { id: googleId, name } = googleUser
+
+    if (request.user) {
+        await request.user.$query().patch({ googleId })
+        return response.redirect(Routes.AUTH_RESULT)
+    }
+
     let user = await userService.getByGoogleId(googleId)
 
     if (!user) {

@@ -40,6 +40,12 @@ const authUsingDiscordCallback = async (request, response) => {
     })
 
     const { id: discordId, username } = userData
+
+    if (request.user) {
+        await request.user.$query().patch({ discordId })
+        return response.redirect(Routes.AUTH_RESULT)
+    }
+
     let user = await userService.getByDiscordId(discordId)
 
     if (!user) {
