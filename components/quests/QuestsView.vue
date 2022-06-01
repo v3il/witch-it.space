@@ -16,7 +16,13 @@
             {{ timeToNextUpdate }}
           </b-tag>
 
-          <b-button type="is-primary" class="wit-transition wis-quests__button" :disabled="!isUpdateAvailable" expanded @click="updateQuests">
+          <b-button
+            type="is-primary"
+            class="wit-transition wis-quests__button"
+            :disabled="!isUpdateAvailable"
+            expanded
+            @click="updateQuests"
+          >
             {{ $t('Quests_UpdateQuests') }}
           </b-button>
         </div>

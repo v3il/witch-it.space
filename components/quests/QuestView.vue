@@ -1,6 +1,12 @@
 <template>
   <div class="wit-quest-item wit-flex wit-flex--align-start">
-    <ItemView :item="rewardItem" add-border :item-count="quest.rewardCount" class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm" />
+    <ItemView
+      :item="rewardItem"
+      add-border
+      add-tooltip
+      :item-count="quest.rewardCount"
+      class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm"
+    />
 
     <div class="wit-flex__item--grow wit-offset-right--md">
       <div class="wit-flex wit-flex--align-baseline wit-offset-bottom--sm">
