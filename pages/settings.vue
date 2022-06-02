@@ -2,27 +2,28 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        <div class="wit-font-size--sm">
+        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
+          <BackButton to="/" class="wit-offset-right--xs" />
           {{ $t('MainMenu_Settings') }}
-        </div>
+        </h1>
       </template>
 
-      <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">
-          <template #tab0>
-            {{ $t('Wishlist_TopTabs_Account') }}
-          </template>
+      <!--      <template #topMenu>-->
+      <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">-->
+      <!--          <template #tab0>-->
+      <!--            {{ $t('Wishlist_TopTabs_Account') }}-->
+      <!--          </template>-->
 
-          <template #tab1>
-            {{ $t('Wishlist_TopTabs_Market') }}
-          </template>
-        </TopTabs>
-      </template>
+      <!--          <template #tab1>-->
+      <!--            {{ $t('Wishlist_TopTabs_Market') }}-->
+      <!--          </template>-->
+      <!--        </TopTabs>-->
+      <!--      </template>-->
     </TopNavBar>
 
     <div class="wit-settings">
-      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" />
-      <StickyPanel @update="updateSettings" />
+      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
+      <StickyPanel class="wit-offset-bottom--sm1" @update="updateSettings" />
 
       <div class="wit-offset-bottom--xlg">
         <nuxt-child :user="user" :settings="settings" @settingsChange="onSettingsChange" />
@@ -43,6 +44,7 @@ import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileM
 import StickyPanel from '@/components/settings/StickyPanel'
 import { Routes } from '@/shared'
 import TopNavBar from '@/components/header/TopNavBar.vue'
+import BackButton from '@/components/basic/BackButton.vue'
 
 const Modes = {
     ACCOUNT: 'account',
@@ -57,7 +59,8 @@ export default {
         DangerZone,
         NotVerifiedProfileMessage,
         StickyPanel,
-        TopNavBar
+        TopNavBar,
+        BackButton
     },
 
     middleware: ['isAuthorized'],

@@ -3,7 +3,7 @@
     :title="$t('Settings_NotVerifiedAccountTitle')"
     type="is-danger"
     :closable="false"
-    class="wis-settings-message wit-line-height--md wit-offset-bottom--none"
+    class="wis-settings-message wit-line-height--md wit-offset-bottom--none1"
     aria-close-label="Close message"
   >
     <p class="wit-color--white wit-offset-bottom--xs" v-html="$t('Settings_NotVerifiedAccountMessage')" />
