@@ -65,6 +65,10 @@
     background-color: #222736;
     border: 1px solid #f14668;
 
+    .message-header {
+        font-weight: normal;
+    }
+
     .message-body {
         color: var(--red-400);
     }
