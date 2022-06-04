@@ -2,23 +2,10 @@
   <div>
     <TopNavBar class="layout__header">
       <template #brand>
-        <div class="wit-font-size--sm">
+        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
+          <BackButton to="/" class="wit-offset-right--xs" />
           {{ $t('MainMenu_Quests') }}
-        </div>
-
-        <!--        <b-dropdown-->
-        <!--          animation="fade150"-->
-        <!--          class="wit-block&#45;&#45;full-height wiz-background&#45;&#45;transparent wit-offset-left&#45;&#45;xs"-->
-        <!--          position="is-bottom-right"-->
-        <!--        >-->
-        <!--          <template #trigger>-->
-        <!--            <b-icon class="is-size-5 wit-color&#45;&#45;muted wit-flex wit-block&#45;&#45;full-height" icon="help-box" />-->
-        <!--          </template>-->
-
-        <!--          <div class="wit-paddings&#45;&#45;xs">-->
-        <!--            {{ $t('Quests_Note') }}-->
-        <!--          </div>-->
-        <!--        </b-dropdown>-->
+        </h1>
       </template>
     </TopNavBar>
 
@@ -32,22 +19,24 @@
 <script>
 import { mapGetters } from 'vuex'
 import ConnectSteam from '@/components/quests/ConnectSteam'
-import { User } from '@/store'
+import { StoreModules, User } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
 import TopNavBar from '@/components/header/TopNavBar.vue'
+import BackButton from '@/components/basic/BackButton.vue'
 
 export default {
     components: {
         ConnectSteam,
         QuestsView,
-        TopNavBar
+        TopNavBar,
+        BackButton
     },
 
     middleware: ['isAuthorized'],
 
     computed: {
-        ...mapGetters(User.PATH, [
-            User.Getters.IS_STEAM_CONNECTED
+        ...mapGetters(StoreModules.USER, [
+            'isSteamConnected'
         ])
     }
 }
@@ -56,7 +45,7 @@ export default {
 <style scoped lang="scss">
 .wit-quests {
     padding: var(--offset-sm);
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
 }
 </style>

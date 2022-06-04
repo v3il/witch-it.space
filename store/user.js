@@ -11,10 +11,11 @@ export const state = () => ({
 export const getters = {
     isAuthorized: state => !!state.user,
     isMyProfile: state => state.user?.steamId === '76561198890437027',
+    isSteamConnected: state => !!state.user?.steamId,
 
-    [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
-        return !!user?.steamId
-    },
+    // [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
+    //     return !!user?.steamId
+    // },
 
     [User.Getters.IS_DISCORD_CONNECTED] ({ user }) {
         return !!user?.discordId

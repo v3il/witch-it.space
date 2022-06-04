@@ -23,7 +23,7 @@
       </div>
     </Card>
 
-    <div class="wit-flex wit-flex--wrap wit-flex--align-start" style="margin: 0 -8px;">
+    <div class="wit-flex1 wit-flex--wrap wit-flex--align-start" style="margin: 0 -8px;">
       <QuestsColumn
         class="wit-offset-bottom--md wit-quests__column"
         :title="$t('Quests_WeeklyQuestsTitle')"
