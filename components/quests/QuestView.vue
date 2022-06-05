@@ -4,8 +4,9 @@
 
     <div class="wit-flex__item--grow wit-offset-right--md">
       <div class="wit-flex wit-flex--align-baseline wit-offset-bottom--sm">
-        <!--        <i class="mdi mdi-bullseye-arrow mdi-18px wit-offset-right&#45;&#45;xs" />-->
-        <p>{{ $t(`Quests_${quest.questTask}`) }}</p>
+        <p class="wit-line-height--sm">
+          {{ $t(`Quests_${quest.questTask}`) }}
+        </p>
       </div>
 
       <b-progress :value="progress" show-value format="percent" class="wit-quest-item__mobile-progressbar">
@@ -15,13 +16,12 @@
       </b-progress>
     </div>
 
-    <div class="wit-flex wit-flex--align-self-center">
+    <div class="wit-flex wit-flex--align-self-center wit-quest__action-container">
       <b-button
         v-if="isCompleted"
         v-tooltip="$t('Quests_GetReward')"
         type="is-success"
-        class="wit-transition"
-        style="padding: 0 8px;"
+        class="wit-transition wit-quest__action-button"
         @click="onQuestFinalize"
       >
         <i class="mdi mdi-gift mdi-18px" />
@@ -31,9 +31,8 @@
         v-else
         v-tooltip="$t('Quests_UpdateQuest')"
         type="is-danger"
-        class="wit-transition"
+        class="wit-transition wit-quest__action-button"
         :disabled="!canBeReplaced"
-        style="padding: 0 8px;"
         @click="onQuestReplace"
       >
         <i class="mdi mdi-refresh mdi-18px" />
@@ -110,5 +109,19 @@ export default {
 
 .wit-quest-item__reward-img {
     width: 56px;
+}
+
+.wit-quest__action-button {
+    padding: 0 var(--offset-xs);
+}
+
+@media (max-width: 600px) {
+    .wit-quest-item__reward-img {
+        width: 48px;
+    }
+
+    .wit-quest__action-container {
+        align-self: flex-start;
+    }
 }
 </style>

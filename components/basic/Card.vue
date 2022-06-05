@@ -85,11 +85,21 @@ export default {
 .wit-card--horizontal-md .wit-card-body {
     padding-left: var(--offset-md);
     padding-right: var(--offset-md);
+
+    @media (max-width: 878px) {
+        padding-left: var(--offset-sm);
+        padding-right: var(--offset-sm);
+    }
 }
 
 .wit-card--vertical-md .wit-card-body {
     padding-top: var(--offset-md);
     padding-bottom: var(--offset-md);
+
+    @media (max-width: 878px) {
+        padding-top: var(--offset-sm);
+        padding-bottom: var(--offset-sm);
+    }
 }
 
 .wit-card--horizontal-sm .wit-card-body {

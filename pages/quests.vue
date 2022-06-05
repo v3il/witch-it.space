@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import ConnectSteam from '@/components/quests/ConnectSteam'
-import { StoreModules, User } from '@/store'
+import { StoreModules } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import BackButton from '@/components/basic/BackButton.vue'

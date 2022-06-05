@@ -1,4 +1,4 @@
-import { itemsService, usersService, wishlistService, priceService, questsService } from '@/domain'
+import { itemsService, usersService, wishlistService, priceService, questsService, localStorageService } from '@/domain'
 
 export default function ({ $axios }, inject) {
     usersService.setAxios($axios)
@@ -9,4 +9,5 @@ export default function ({ $axios }, inject) {
     inject('itemsService', itemsService)
     inject('wishlistService', wishlistService)
     inject('usersService', usersService)
+    inject('localStorageService', localStorageService)
 }
