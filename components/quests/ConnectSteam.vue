@@ -1,10 +1,10 @@
 <template>
   <Card>
-    <div class="wit-flex wit-flex--column wit-flex--center">
-      <p class="wit-offset-bottom--sm wit-text--center wit-color--orange">
+    <div class="wit-flex wit-flex--column wit-flex--center wit-connect-steam">
+      <p class="wit-offset-bottom--md wit-text--center wit-color--warning">
         {{ $t('Quests_ConnectSteamWarning') }}
       </p>
-      <b-button type="is-link" icon-left="steam" @click="connectSteam">
+      <b-button type="is-primary" @click="connectSteam">
         {{ $t('Quests_ConnectSteamButtonTitle') }}
       </b-button>
     </div>
@@ -14,8 +14,7 @@
 <script>
 import { mapActions } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { StoreModules, User } from '@/store'
-import { Routes } from '@/shared/index.js'
+import { StoreModules } from '@/store'
 
 export default {
     name: 'ConnectSteam',
@@ -35,3 +34,9 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wit-connect-steam {
+    min-height: 150px;
+}
+</style>
