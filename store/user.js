@@ -10,24 +10,11 @@ export const state = () => ({
 
 export const getters = {
     isAuthorized: state => !!state.user,
-    isMyProfile: state => state.user?.steamId === '76561198890437027',
-    isSteamConnected: state => !!state.user?.steamId,
-
-    // [User.Getters.IS_STEAM_CONNECTED] ({ user }) {
-    //     return !!user?.steamId
-    // },
-
-    [User.Getters.IS_DISCORD_CONNECTED] ({ user }) {
-        return !!user?.discordId
-    },
-
-    [User.Getters.IS_GOOGLE_CONNECTED] ({ user }) {
-        return !!user?.googleId
-    },
-
-    [User.Getters.IS_VERIFIED] ({ user }) {
-        return !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink
-    }
+    isMyProfile: ({ user }) => user?.steamId === '76561198890437027',
+    isSteamConnected: ({ user }) => !!user?.steamId,
+    isDiscordConnected: ({ user }) => !!user?.discordId,
+    isGoogleConnected: ({ user }) => !!user?.googleId,
+    isVerified: ({ user }) => !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink
 }
 
 export const actions = {
@@ -108,9 +95,9 @@ export const mutations = {
         state.user = user
     },
 
-    [User.Mutations.SET_USER] (state, user) {
-        state.user = user
-    },
+    // [User.Mutations.SET_USER] (state, user) {
+    //     state.user = user
+    // },
 
     [User.Mutations.UPDATE_USER_DATA] (state, data) {
         state.user = { ...state.user, ...data }

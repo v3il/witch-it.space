@@ -46,13 +46,13 @@ import { Routes } from '@/shared'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import BackButton from '@/components/basic/BackButton.vue'
 
-const Modes = {
-    ACCOUNT: 'account',
-    MARKET: 'market'
-}
+// const Modes = {
+//     ACCOUNT: 'account',
+//     MARKET: 'market'
+// }
 
 export default {
-    modes: Object.values(Modes),
+    // modes: Object.values(Modes),
 
     components: {
         TopTabs,
@@ -66,7 +66,7 @@ export default {
     middleware: ['isAuthorized'],
 
     data: () => ({
-        mode: Modes.ACCOUNT,
+        // mode: Modes.ACCOUNT,
 
         settings: {
             login: '',
@@ -96,15 +96,15 @@ export default {
         ])
     },
 
-    watch: {
-        $route: {
-            immediate: true,
-
-            handler (route) {
-                this.mode = route.fullPath === Routes.SETTINGS ? Modes.ACCOUNT : Modes.MARKET
-            }
-        }
-    },
+    // watch: {
+    //     $route: {
+    //         immediate: true,
+    //
+    //         handler (route) {
+    //             this.mode = route.fullPath === Routes.SETTINGS ? Modes.ACCOUNT : Modes.MARKET
+    //         }
+    //     }
+    // },
 
     created () {
         this.settings.login = this.user.login ?? ''
@@ -175,12 +175,12 @@ export default {
             } catch (error) {
                 this.$showError(error)
             }
-        },
-
-        onModeChange (mode) {
-            const route = mode === Modes.ACCOUNT ? Routes.SETTINGS : Routes.SETTINGS_MARKET
-            this.$router.push(route)
         }
+
+        // onModeChange (mode) {
+        //     const route = mode === Modes.ACCOUNT ? Routes.SETTINGS : Routes.SETTINGS_MARKET
+        //     this.$router.push(route)
+        // }
     }
 }
 </script>
@@ -188,7 +188,7 @@ export default {
 <style scoped lang="scss">
 .wit-settings {
     padding: var(--offset-sm);
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
 }
 

@@ -4,7 +4,6 @@
     type="is-danger"
     :closable="false"
     class="wis-settings-message wit-line-height--md"
-    aria-close-label="Close message"
   >
     <p class="wit-color--white wit-offset-bottom--xs" v-html="$t('Settings_NotVerifiedAccountMessage')" />
 
