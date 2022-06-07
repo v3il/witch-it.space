@@ -2,7 +2,9 @@
   <div>
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        {{ $t('Settings_ProfileSettingsAndAppearance') }}
+        <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+          {{ $t('Settings_ProfileSettingsAndAppearance') }}
+        </h2>
       </template>
 
       <b-field class="wit-offset-bottom--sm">
@@ -10,10 +12,12 @@
           <p class="wit-offset-bottom--xs">
             {{ $t('Login_LoginInputTitle') }}
           </p>
+
           <p v-if="!hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
             {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
+
         <b-input
           :value="accountSettings.login"
           disabled
@@ -28,13 +32,16 @@
           <p class="wit-offset-bottom--xs">
             {{ $t('Login_PasswordInputTitle') }}
           </p>
+
           <p v-if="hasLocalProfile" class="wit-color--warning wit-font-size--xxs">
             {{ $t('Settings_PasswordFieldHint') }}
           </p>
+
           <p v-else class="wit-color--warning wit-font-size--xxs">
             {{ $t('Settings_NotSetWhenOauth') }}
           </p>
         </template>
+
         <b-input
           :value="accountSettings.password"
           type="password"
@@ -64,7 +71,9 @@
 
     <Card class="wit-offset-bottom--sm">
       <template #title>
-        {{ $t('Settings_SteamSettings') }}
+        <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+          {{ $t('Settings_SteamSettings') }}
+        </h2>
       </template>
 
       <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm" :type="tradeUrlFieldType">

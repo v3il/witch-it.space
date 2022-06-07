@@ -1,7 +1,9 @@
 <template>
   <Card>
     <template #title>
-      {{ $t('Settings_SocialNetworks') }}
+      <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+        {{ $t('Settings_SocialNetworks') }}
+      </h2>
     </template>
 
     <template #description>
@@ -10,10 +12,12 @@
 
     <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
       <div class="wit-flex__item--grow">
-        <strong class="wit-block wit-offset-bottom--xs">Steam</strong>
+        <span class="wit-block wit-offset-bottom--xs">Steam</span>
+
         <p v-if="isSteamConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
+
         <p v-else class="wit-color--warning">
           {{ $t('Settings_ProfileIsNotConnected') }}
         </p>
@@ -30,10 +34,12 @@
 
     <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
       <div class="wit-flex__item--grow">
-        <strong class="wit-block wit-offset-bottom--xs">Discord</strong>
+        <span class="wit-block wit-offset-bottom--xs">Discord</span>
+
         <p v-if="isDiscordConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
+
         <p v-else class="wit-color--warning">
           {{ $t('Settings_ProfileIsNotConnected') }}
         </p>
@@ -50,10 +56,12 @@
 
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <strong class="wit-block wit-offset-bottom--xs">Google</strong>
+        <span class="wit-block wit-offset-bottom--xs">Google</span>
+
         <p v-if="isGoogleConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
         </p>
+
         <p v-else class="wit-color--warning">
           {{ $t('Settings_ProfileIsNotConnected') }}
         </p>

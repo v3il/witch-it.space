@@ -11,9 +11,11 @@
       <li v-if="!isSteamConnected">
         {{ $t('Settings_NotVerifiedAccountTask1') }}
       </li>
+
       <li v-if="!isDiscordConnected">
         {{ $t('Settings_NotVerifiedAccountTask2') }}
       </li>
+
       <li v-if="!profile.steamTradeLink">
         {{ $t('Settings_NotVerifiedAccountTask3') }}
       </li>
@@ -23,7 +25,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { User } from '@/store/index.js'
+import { StoreModules } from '@/store/index.js'
 
 export default {
     name: 'NotVerifiedProfileMessage',
@@ -36,9 +38,9 @@ export default {
     },
 
     computed: {
-        ...mapGetters(User.PATH, [
-            User.Getters.IS_STEAM_CONNECTED,
-            User.Getters.IS_DISCORD_CONNECTED
+        ...mapGetters(StoreModules.USER, [
+            'isSteamConnected',
+            'isDiscordConnected'
         ])
     }
 }

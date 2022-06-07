@@ -21,9 +21,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { StoreModules } from '@/store/index.js'
 import Tabs from '@/components/basic/Tabs'
 import { Routes } from '@/shared/index.js'
 
@@ -48,25 +46,7 @@ export default {
         }
     },
 
-    // data: () => ({
-    //     activeTab: Modes.ACCOUNT
-    // }),
-    //
-    // watch: {
-    //     $route: {
-    //         immediate: true,
-    //
-    //         handler (route) {
-    //             this.activeTab = route.fullPath === Routes.SETTINGS ? Modes.ACCOUNT : Modes.MARKET
-    //         }
-    //     }
-    // },
-
     methods: {
-        // ...mapActions(StoreModules.SETTINGS, {
-        //     setActiveTab: 'setActiveTab'
-        // }),
-
         onModeChange (mode) {
             if (this.activeTab === mode) {
                 return
@@ -87,8 +67,6 @@ export default {
     border-bottom: 16px solid #222736;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    /*background: var(--body-bg);*/
-    /*padding: var(--offset-sm) 0;*/
 }
 
 .wit-settings__tabs-container {

@@ -1,15 +1,19 @@
 <template>
   <Card type="error">
     <template #title>
-      {{ $t('Settings_DangerZone') }}
+      <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+        {{ $t('Settings_DangerZone') }}
+      </h2>
     </template>
 
     <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
       <div class="wit-flex__item--grow">
-        <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</strong>
+        <span class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</span>
+
         <p v-if="isPublicProfile" class="wit-color--success">
           {{ $t('Settings_ProfileIsVisible') }}
         </p>
+
         <p v-else class="wit-color--warning">
           {{ $t('Settings_ProfileIsHidden') }}
         </p>
@@ -22,7 +26,8 @@
 
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <strong class="wit-block wit-offset-bottom--xs">{{ $t('Settings_DeleteProfile') }}</strong>
+        <span class="wit-block wit-offset-bottom--xs">{{ $t('Settings_DeleteProfile') }}</span>
+
         <p class="wit-color--danger">
           {{ $t('Settings_DeleteProfileHint') }}
         </p>
