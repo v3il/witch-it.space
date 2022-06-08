@@ -72,4 +72,12 @@ export class UserService {
 
         return user.$query().patch({ [prop]: null })
     }
+
+    toggleProfileVisibility (user, isPublic) {
+        return user.$query().patch({ isPublic })
+    }
+
+    deleteUser (user) {
+        return user.$query().delete()
+    }
 }

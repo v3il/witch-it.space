@@ -69,7 +69,7 @@ const disconnectSocial = (request, response) => {
     const { error } = schema.validate(socialName)
 
     if (error) {
-        return response.emitForbidden()
+        return response.emitBadRequest()
     }
 
     userService.disconnectSocial(request.user, socialName)
@@ -155,34 +155,40 @@ const updateSettings = async (request, response) => {
     updateUserToken({ response, user })
 }
 
-const toggleProfile = async (request, response) => {
+const toggleProfile = (request, response) => {
     const { isPublic } = request.body
-    const { id } = request.user
-    const user = await userService.getById(id)
+    const schema = joi.bool().required()
+    const { error } = schema.validate(isPublic)
 
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    if (error) {
+        return response.emitBadRequest()
     }
 
-    await user.update({
-        isPublic: !!isPublic
-    })
-
-    updateUserToken({ response, user })
+    userService.toggleProfileVisibility(request.user, isPublic)
+        .then(() => response.send({ success: true }))
+        .catch(() => response.emitBadRequest())
 }
 
-const removeProfile = async (request, response) => {
-    const { id } = request.user
-    const user = await userService.getById(id)
+const removeProfile = (request, response) => {
+    userService.deleteUser(request.user)
+        .then(() => {
+            response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
+            request.user = null
+            response.send({ success: true })
+        })
+        .catch(() => response.emitBadRequest())
 
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
-    }
-
-    await user.destroy()
-    response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
-    request.user = null
-    response.sendStatus(200)
+    // const { id } = request.user
+    // const user = await userService.getById(id)
+    //
+    // if (!user) {
+    //     throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    // }
+    //
+    // await user.destroy()
+    // response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
+    // request.user = null
+    // response.sendStatus(200)
 }
 
 const getById = async (request, response) => {

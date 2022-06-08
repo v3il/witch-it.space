@@ -19,7 +19,7 @@
         </p>
       </div>
 
-      <b-button :type="toggleButtonType" class="wit-font-weight--700" @click="toggleProfile">
+      <b-button :type="toggleButtonType" class="wit-font-weight--700" @click="toggleProfileVisibility">
         {{ $t('Change') }}
       </b-button>
     </div>
@@ -41,8 +41,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { User } from '@/store'
+import { StoreModules, User } from '@/store'
 import { showPopup } from '@/utils'
 
 export default {
@@ -70,46 +71,45 @@ export default {
     },
 
     methods: {
-        toggleProfile () {
+        ...mapActions(StoreModules.USER, {
+            deleteProfile: 'deleteProfile',
+            toggleProfile: 'toggleProfile'
+        }),
+
+        toggleProfileVisibility () {
             this.isPublicProfile ? this.makeProfilePrivate() : this.makeProfilePublic()
         },
 
-        async makeProfilePublic () {
-            try {
-                await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, true)
-                this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-            } catch (error) {
-                this.$showError(error)
+        makeProfilePublic () {
+            this.toggleProfile(true)
+                .then(() => this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged')))
+                .catch(this.$showError)
+        },
+
+        async makeProfilePrivate () {
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Settings_WannaMakePrivate'),
+                popupTitle: this.$t('Settings_MakePrivatePopupTitle')
+            })
+
+            if (!isConfirmed) {
+                return
             }
+
+            this.toggleProfile(false)
+                .then(() => this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged')))
+                .catch(this.$showError)
         },
 
-        makeProfilePrivate () {
-            showPopup(this, {
-                title: this.$t('Settings_MakePrivatePopupTitle'),
-                message: this.$t('Settings_WannaMakePrivate'),
-                confirmText: this.$t('Confirm'),
-                cancelText: this.$t('Cancel'),
-                onConfirm: async () => {
-                    try {
-                        await this.$store.dispatch(User.F.Actions.TOGGLE_PROFILE, false)
-                        this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged'))
-                    } catch (error) {
-                        this.$showError(error)
-                    }
-                }
+        async deleteProfile () {
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Settings_WannaRemoveProfile'),
+                popupTitle: this.$t('Settings_RemoveProfileTitle')
             })
-        },
 
-        deleteProfile () {
-            showPopup(this, {
-                title: this.$t('Settings_RemoveProfileTitle'),
-                message: this.$t('Settings_WannaRemoveProfile'),
-                confirmText: this.$t('Confirm'),
-                cancelText: this.$t('Cancel'),
-                onConfirm: () => {
-                    this.$store.dispatch(User.F.Actions.REMOVE_PROFILE).catch(this.$showError)
-                }
-            })
+            if (isConfirmed) {
+                this.toggleProfile(false).catch(this.$showError)
+            }
         }
     }
 }

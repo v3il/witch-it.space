@@ -78,15 +78,15 @@ export const actions = {
             .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
     },
 
-    [User.Actions.TOGGLE_PROFILE] ({ commit }, isPublic) {
-        return this.$axios.post('/api/user/toggle', { isPublic })
-            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
+    toggleProfile ({ commit }, isPublic) {
+        return this.$axios.$post('/api/user/toggle', { isPublic })
+            .then(() => commit('SET_PROFILE_VISIBILITY', isPublic))
     },
 
-    [User.Actions.REMOVE_PROFILE] ({ commit }) {
-        return this.$axios.post('/api/user/remove')
+    deleteProfile ({ commit }) {
+        return this.$axios.$post('/api/user/remove')
             .then(() => this.$router.replace(Routes.LOGIN))
-            .then(() => commit(User.Mutations.SET_USER, null))
+            .then(() => commit('SET_USER', null))
     }
 }
 
@@ -103,6 +103,10 @@ export const mutations = {
         }[socialName]
 
         state.user[prop] = null
+    },
+
+    SET_PROFILE_VISIBILITY (state, isPublic) {
+        state.user.isPublic = isPublic
     },
 
     // [User.Mutations.SET_USER] (state, user) {
