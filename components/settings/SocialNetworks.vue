@@ -108,16 +108,14 @@ export default {
 
     methods: {
         ...mapActions(StoreModules.USER, {
+            authUsingSocials: 'authUsingSocials',
             disconnectSocial: 'disconnectSocial'
         }),
 
-        async connectSocial (socialName) {
-            try {
-                await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
-                this.$showSuccess(this.$t('Settings_AccountConnected'))
-            } catch (error) {
-                this.$showError(error)
-            }
+        connectSocial (socialName) {
+            this.authUsingSocials(socialName)
+                .then(() => this.$showSuccess(this.$t('Settings_AccountConnected')))
+                .catch(this.$showError)
         },
 
         async onDisconnectSocial (socialName) {
@@ -133,21 +131,6 @@ export default {
             this.disconnectSocial(socialName)
                 .then(() => this.$showSuccess(this.$t('Settings_AccountDisconnected')))
                 .catch(this.$showError)
-
-            // showPopup(this, {
-            //     title: this.$t('Settings_DisconnectSocialTitle'),
-            //     message: this.$t('Settings_WannaDisconnectSocial'),
-            //     confirmText: this.$t('Confirm'),
-            //     cancelText: this.$t('Cancel'),
-            //     onConfirm: async () => {
-            //         try {
-            //             await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-            //             this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-            //         } catch (error) {
-            //             this.$showError(error)
-            //         }
-            //     }
-            // })
         }
     }
 }
