@@ -23,7 +23,7 @@
         </p>
       </div>
 
-      <b-button v-if="isSteamConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('steam')">
+      <b-button v-if="isSteamConnected" type="is-danger is-light" class="wit-font-weight--700" @click="onDisconnectSocial('steam')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -45,7 +45,7 @@
         </p>
       </div>
 
-      <b-button v-if="isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('discord')">
+      <b-button v-if="isDiscordConnected" type="is-danger is-light" class="wit-font-weight--700" @click="onDisconnectSocial('discord')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -67,7 +67,7 @@
         </p>
       </div>
 
-      <b-button v-if="isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700" @click="disconnectSocial('google')">
+      <b-button v-if="isGoogleConnected" type="is-danger is-light" class="wit-font-weight--700" @click="onDisconnectSocial('google')">
         {{ $t('Settings_Disconnect') }}
       </b-button>
 
@@ -79,9 +79,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { User } from '@/store'
+import { StoreModules, User } from '@/store'
 import { showPopup } from '@/utils'
 
 export default {
@@ -99,14 +99,18 @@ export default {
     },
 
     computed: {
-        ...mapGetters(User.PATH, [
-            User.Getters.IS_STEAM_CONNECTED,
-            User.Getters.IS_DISCORD_CONNECTED,
-            User.Getters.IS_GOOGLE_CONNECTED
+        ...mapGetters(StoreModules.USER, [
+            'isSteamConnected',
+            'isDiscordConnected',
+            'isGoogleConnected'
         ])
     },
 
     methods: {
+        ...mapActions(StoreModules.USER, {
+            disconnectSocial: 'disconnectSocial'
+        }),
+
         async connectSocial (socialName) {
             try {
                 await this.$store.dispatch(User.F.Actions.AUTH_USING_SOCIALS, socialName)
@@ -116,21 +120,34 @@ export default {
             }
         },
 
-        disconnectSocial (socialName) {
-            showPopup(this, {
-                title: this.$t('Settings_DisconnectSocialTitle'),
-                message: this.$t('Settings_WannaDisconnectSocial'),
-                confirmText: this.$t('Confirm'),
-                cancelText: this.$t('Cancel'),
-                onConfirm: async () => {
-                    try {
-                        await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
-                        this.$showSuccess(this.$t('Settings_AccountDisconnected'))
-                    } catch (error) {
-                        this.$showError(error)
-                    }
-                }
+        async onDisconnectSocial (socialName) {
+            const isConfirmed = await this.$showConfirm({
+                content: this.$t('Settings_WannaDisconnectSocial'),
+                popupTitle: this.$t('Settings_DisconnectSocialTitle')
             })
+
+            if (!isConfirmed) {
+                return
+            }
+
+            this.disconnectSocial(socialName)
+                .then(() => this.$showSuccess(this.$t('Settings_AccountDisconnected')))
+                .catch(this.$showError)
+
+            // showPopup(this, {
+            //     title: this.$t('Settings_DisconnectSocialTitle'),
+            //     message: this.$t('Settings_WannaDisconnectSocial'),
+            //     confirmText: this.$t('Confirm'),
+            //     cancelText: this.$t('Cancel'),
+            //     onConfirm: async () => {
+            //         try {
+            //             await this.$store.dispatch(User.F.Actions.DISCONNECT_SOCIAL, socialName)
+            //             this.$showSuccess(this.$t('Settings_AccountDisconnected'))
+            //         } catch (error) {
+            //             this.$showError(error)
+            //         }
+            //     }
+            // })
         }
     }
 }

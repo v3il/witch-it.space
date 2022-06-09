@@ -1,4 +1,5 @@
 import { BadRequest, NotFound } from '@curveball/http-errors'
+import joi from 'joi'
 import { translateText } from '../util'
 import {
     config,
@@ -62,30 +63,18 @@ const changeUserTheme = async (request, response) => {
     response.sendStatus(200)
 }
 
-const disconnectSocial = async (request, response) => {
-    const { social } = request.body
-    const { id } = request.user
-    const user = await userService.getById(id)
+const disconnectSocial = (request, response) => {
+    const { socialName } = request.body
+    const schema = joi.string().required().allow('steam', 'discord', 'google')
+    const { error } = schema.validate(socialName)
 
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    if (error) {
+        return response.emitForbidden()
     }
 
-    const prop = {
-        steam: 'steamId',
-        discord: 'discordId',
-        google: 'googleId'
-    }[social]
-
-    if (!prop) {
-        throw new BadRequest(translateText('Error_BadRequest', request.locale))
-    }
-
-    await user.update({
-        [prop]: ''
-    })
-
-    updateUserToken({ response, user })
+    userService.disconnectSocial(request.user, socialName)
+        .then(() => response.send({ success: true }))
+        .catch(() => response.emitBadRequest())
 }
 
 const updateSettings = async (request, response) => {

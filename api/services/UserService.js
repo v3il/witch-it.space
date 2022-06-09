@@ -62,4 +62,14 @@ export class UserService {
             wishlistUpdateTime: getCurrentTimestamp()
         })
     }
+
+    disconnectSocial (user, socialName) {
+        const prop = {
+            steam: 'steamId',
+            discord: 'discordId',
+            google: 'googleId'
+        }[socialName]
+
+        return user.$query().patch({ [prop]: null })
+    }
 }

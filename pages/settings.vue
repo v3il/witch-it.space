@@ -7,23 +7,11 @@
           {{ $t('MainMenu_Settings') }}
         </h1>
       </template>
-
-      <!--      <template #topMenu>-->
-      <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="onModeChange">-->
-      <!--          <template #tab0>-->
-      <!--            {{ $t('Wishlist_TopTabs_Account') }}-->
-      <!--          </template>-->
-
-      <!--          <template #tab1>-->
-      <!--            {{ $t('Wishlist_TopTabs_Market') }}-->
-      <!--          </template>-->
-      <!--        </TopTabs>-->
-      <!--      </template>-->
     </TopNavBar>
 
     <div class="wit-settings">
-      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
       <StickyPanel class="wit-offset-bottom--sm1" @update="updateSettings" />
+      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
 
       <div class="wit-offset-bottom--xlg">
         <nuxt-child :user="user" :settings="settings" @settingsChange="onSettingsChange" />
@@ -96,16 +84,6 @@ export default {
         ])
     },
 
-    // watch: {
-    //     $route: {
-    //         immediate: true,
-    //
-    //         handler (route) {
-    //             this.mode = route.fullPath === Routes.SETTINGS ? Modes.ACCOUNT : Modes.MARKET
-    //         }
-    //     }
-    // },
-
     created () {
         this.settings.login = this.user.login ?? ''
         this.settings.displayName = this.user.displayName ?? ''
@@ -176,11 +154,6 @@ export default {
                 this.$showError(error)
             }
         }
-
-        // onModeChange (mode) {
-        //     const route = mode === Modes.ACCOUNT ? Routes.SETTINGS : Routes.SETTINGS_MARKET
-        //     this.$router.push(route)
-        // }
     }
 }
 </script>

@@ -15,6 +15,10 @@ export const i18n = (request, response, next) => {
         this.status(400).send({ error })
     }
 
+    response.emitForbidden = function (error = request.$t('Error_ActionForbidden')) {
+        this.status(403).send({ error })
+    }
+
     response.emitUnprocessableEntity = function (error = request.$t('Error_CantDoTheAction')) {
         this.status(422).send({ error })
     }

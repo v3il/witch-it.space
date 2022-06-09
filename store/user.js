@@ -68,9 +68,9 @@ export const actions = {
             .then(() => this.$router.replace(Routes.LOGIN))
     },
 
-    [User.Actions.DISCONNECT_SOCIAL] ({ commit }, social) {
-        return this.$axios.post('/api/user/disconnect', { social })
-            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
+    disconnectSocial ({ commit }, socialName) {
+        return this.$axios.$post('/api/user/disconnect', { socialName })
+            .then(() => commit('DISCONNECT_SOCIAL', socialName))
     },
 
     [User.Actions.UPDATE_SETTINGS] ({ commit }, settings) {
@@ -93,6 +93,16 @@ export const actions = {
 export const mutations = {
     SET_USER (state, user) {
         state.user = user
+    },
+
+    DISCONNECT_SOCIAL (state, socialName) {
+        const prop = {
+            steam: 'steamId',
+            discord: 'discordId',
+            google: 'googleId'
+        }[socialName]
+
+        state.user[prop] = null
     },
 
     // [User.Mutations.SET_USER] (state, user) {
