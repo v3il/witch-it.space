@@ -3,7 +3,7 @@
     <div class="wit-card-body">
       <slot v-if="$slots.title" name="title" />
 
-      <div v-if="$slots.description" class="wit-offset-bottom--sm wit-color--muted wit-line-height--sm">
+      <div v-if="$slots.description" class="wit-offset-bottom--sm wit-color--muted wit-line-height--md">
         <slot name="description" />
       </div>
       <slot />

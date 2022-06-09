@@ -6,7 +6,7 @@ exports.up = function(knex) {
         table.integer('item2Id');
         table.integer('item2Count');
         table.integer('priceValue');
-        table.integer('offerId').references('id').inTable('offers');
+        table.integer('offerId').references('id').inTable('offers').onDelete('CASCADE');
         table.timestamp('createdAt').defaultTo(knex.fn.now());
         table.timestamp('updatedAt').defaultTo(null);
     })

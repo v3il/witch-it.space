@@ -16,7 +16,7 @@
         {{ $t('Settings_NotVerifiedAccountTask2') }}
       </li>
 
-      <li v-if="!profile.steamTradeLink">
+      <li v-if="!tradeLink">
         {{ $t('Settings_NotVerifiedAccountTask3') }}
       </li>
     </ul>
@@ -41,7 +41,11 @@ export default {
         ...mapGetters(StoreModules.USER, [
             'isSteamConnected',
             'isDiscordConnected'
-        ])
+        ]),
+
+        tradeLink () {
+            return this.profile?.steamTradeLink
+        }
     }
 }
 </script>

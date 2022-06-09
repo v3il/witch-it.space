@@ -14,7 +14,8 @@ export const getters = {
     isSteamConnected: ({ user }) => !!user?.steamId,
     isDiscordConnected: ({ user }) => !!user?.discordId,
     isGoogleConnected: ({ user }) => !!user?.googleId,
-    isVerified: ({ user }) => !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink
+    isVerified: ({ user }) => !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink,
+    isPublic: ({ user }) => user?.isPublic
 }
 
 export const actions = {
@@ -64,8 +65,8 @@ export const actions = {
 
     logout ({ commit }) {
         return this.$axios.$post('/api/auth/logout')
-            .then(() => commit('SET_USER', null))
-            .then(() => this.$router.replace(Routes.LOGIN))
+            .then(() => this.$router.replace(Routes.LOGIN + '?logout')
+                .then(() => commit('SET_USER', null)))
     },
 
     disconnectSocial ({ commit }, socialName) {
@@ -83,10 +84,8 @@ export const actions = {
             .then(() => commit('SET_PROFILE_VISIBILITY', isPublic))
     },
 
-    deleteProfile ({ commit }) {
-        return this.$axios.$post('/api/user/remove')
-            .then(() => this.$router.replace(Routes.LOGIN))
-            .then(() => commit('SET_USER', null))
+    deleteProfile ({ dispatch }) {
+        return this.$axios.$post('/api/user/remove').then(() => dispatch('logout'))
     }
 }
 
@@ -108,10 +107,6 @@ export const mutations = {
     SET_PROFILE_VISIBILITY (state, isPublic) {
         state.user.isPublic = isPublic
     },
-
-    // [User.Mutations.SET_USER] (state, user) {
-    //     state.user = user
-    // },
 
     [User.Mutations.UPDATE_USER_DATA] (state, data) {
         state.user = { ...state.user, ...data }

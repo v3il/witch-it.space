@@ -162,7 +162,7 @@ export const ru = {
     Settings_PasswordFieldHint: 'Оставьте поле пустым, если не хотите изменять пароль',
     Settings_DisplayNameFieldHint: 'От 2 до 20 символов',
     Settings_DisconnectSocialTitle: 'Отвязать сервис',
-    Settings_WannaDisconnectSocial: `<p class="wit-line-height--md">Вы действительно хотите отвязать сторонний сервис от своего аккаунта ${APP_NAME}?<br>Вы больше не сможете войти в свой профиль используя этот сервис. Также некоторые функции сайта могут стать недоступными</p>`,
+    Settings_WannaDisconnectSocial: `Вы действительно хотите отвязать сторонний сервис от своего аккаунта ${APP_NAME}?<br>Вы больше не сможете войти в свой профиль используя этот сервис. Также некоторые функции сайта могут стать недоступными`,
     Settings_ConnectSocialDescription: `Привязка аккаунта стороннего сервиса к аккаунту ${APP_NAME} позволит вам входить на сайт с любого устройства используя аккаунт стороннего сервиса`,
     Settings_DisconnectSocialConfirmButtonTitle: 'Отвязать',
     Settings_ProfileIsPublic: 'Профиль активен',

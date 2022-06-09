@@ -16,7 +16,7 @@ const imagekit = new ImageKit({
             await processItem(item)
         }
 
-        // await sequelize.close()
+        process.exit(0)
     } catch (e) {
         console.error(e)
     }

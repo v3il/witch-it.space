@@ -176,19 +176,10 @@ const removeProfile = (request, response) => {
             request.user = null
             response.send({ success: true })
         })
-        .catch(() => response.emitBadRequest())
-
-    // const { id } = request.user
-    // const user = await userService.getById(id)
-    //
-    // if (!user) {
-    //     throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
-    // }
-    //
-    // await user.destroy()
-    // response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
-    // request.user = null
-    // response.sendStatus(200)
+        .catch((e) => {
+            console.error(e)
+            response.emitBadRequest()
+        })
 }
 
 const getById = async (request, response) => {

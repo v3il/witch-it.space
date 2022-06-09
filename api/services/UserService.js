@@ -78,6 +78,6 @@ export class UserService {
     }
 
     deleteUser (user) {
-        return user.$query().delete()
+        return user.$query().del()
     }
 }

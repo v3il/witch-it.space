@@ -8,7 +8,7 @@
     @beforeClose="beforeClose"
     @save="onSave"
   >
-    <div v-html="content" />
+    <div class="wit-line-height--md" v-html="content" />
   </EditPopup>
 </template>
 

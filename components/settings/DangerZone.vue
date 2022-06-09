@@ -10,7 +10,7 @@
       <div class="wit-flex__item--grow">
         <span class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</span>
 
-        <p v-if="isPublicProfile" class="wit-color--success">
+        <p v-if="isPublic" class="wit-color--success">
           {{ $t('Settings_ProfileIsVisible') }}
         </p>
 
@@ -33,7 +33,7 @@
         </p>
       </div>
 
-      <b-button type="is-danger" class="wit-font-weight--700" @click="deleteProfile">
+      <b-button type="is-danger" class="wit-font-weight--700" @click="onDeleteProfile">
         {{ $t('Delete') }}
       </b-button>
     </div>
@@ -41,10 +41,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import Card from '@/components/basic/Card.vue'
-import { StoreModules, User } from '@/store'
-import { showPopup } from '@/utils'
+import { StoreModules } from '@/store'
 
 export default {
     name: 'DangerZone',
@@ -61,12 +60,12 @@ export default {
     },
 
     computed: {
-        isPublicProfile () {
-            return this.profile.isPublic
-        },
+        ...mapGetters(StoreModules.USER, [
+            'isPublic'
+        ]),
 
         toggleButtonType () {
-            return this.isPublicProfile ? 'is-warning' : 'is-success'
+            return this.isPublic ? 'is-warning' : 'is-success'
         }
     },
 
@@ -77,7 +76,7 @@ export default {
         }),
 
         toggleProfileVisibility () {
-            this.isPublicProfile ? this.makeProfilePrivate() : this.makeProfilePublic()
+            this.isPublic ? this.makeProfilePrivate() : this.makeProfilePublic()
         },
 
         makeProfilePublic () {
@@ -101,14 +100,14 @@ export default {
                 .catch(this.$showError)
         },
 
-        async deleteProfile () {
+        async onDeleteProfile () {
             const isConfirmed = await this.$showConfirm({
                 content: this.$t('Settings_WannaRemoveProfile'),
                 popupTitle: this.$t('Settings_RemoveProfileTitle')
             })
 
             if (isConfirmed) {
-                this.toggleProfile(false).catch(this.$showError)
+                this.deleteProfile().catch(this.$showError)
             }
         }
     }
