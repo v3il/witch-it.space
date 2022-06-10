@@ -1,15 +1,7 @@
 import { BadRequest, NotFound } from '@curveball/http-errors'
 import joi from 'joi'
 import { translateText } from '../util'
-import {
-    config,
-    Cookies,
-    validateAvatarId,
-    validateDisplayName,
-    validatePassword,
-    validateSteamTradeURL
-} from '../../shared'
-import { updateUserToken } from '../controllers/auth/signInUser'
+import { config, Cookies } from '../../shared'
 import { userService } from '../services'
 
 const getCurrentUser = (request, response) => {
@@ -154,7 +146,6 @@ const removeProfile = (request, response) => {
     userService.deleteUser(request.user)
         .then(() => {
             response.cookie(Cookies.TOKEN, '', { expires: new Date(0) })
-            request.user = null
             response.send({ success: true })
         })
         .catch(() => response.emitBadRequest())

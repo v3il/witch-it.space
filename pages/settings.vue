@@ -13,9 +13,11 @@
       <StickyPanel @update="triggerSettingsUpdate" />
       <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
 
-      <div class="wit-offset-bottom--xlg">
-        <nuxt-child :user="user" :settings="settings" @settingsChange="onSettingsChange" />
-      </div>
+      <AccountSettings :profile="user" :account-settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+      <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
+      <MarketSettings :market-settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+      <NoteEditor :content="settings.marketNote" label="Market" class="wit-offset-bottom--sm" @input="settings.marketNote = $event" />
+      <NoteEditor :content="settings.wishlistNote" label="Wishlist" class="wit-offset-bottom--xlg" @input="settings.wishlistNote = $event" />
 
       <DangerZone :profile="user" />
     </div>
@@ -32,6 +34,10 @@ import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileM
 import StickyPanel from '@/components/settings/StickyPanel'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import BackButton from '@/components/basic/BackButton.vue'
+import AccountSettings from '@/components/settings/AccountSettings.vue'
+import SocialNetworks from '@/components/settings/SocialNetworks.vue'
+import MarketSettings from '@/components/settings/MarketSettings.vue'
+import NoteEditor from '@/components/settings/NoteEditor.vue'
 
 export default {
     components: {
@@ -40,7 +46,11 @@ export default {
         NotVerifiedProfileMessage,
         StickyPanel,
         TopNavBar,
-        BackButton
+        BackButton,
+        NoteEditor,
+        AccountSettings,
+        SocialNetworks,
+        MarketSettings
     },
 
     middleware: ['isAuthorized'],

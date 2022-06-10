@@ -148,9 +148,9 @@ export default {
 
                 switch (sortBy) {
                 case 'market':
-                    return first.userStat.marketSize - second.userStat.marketSize
+                    return first.marketSize - second.marketSize
                 case 'wishlist':
-                    return first.userStat.wishlistSize - second.userStat.wishlistSize
+                    return first.wishlistSize - second.wishlistSize
                 case 'name':
                     return first.displayName.localeCompare(second.displayName)
                 }

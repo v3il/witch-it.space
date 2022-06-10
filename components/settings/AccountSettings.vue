@@ -69,7 +69,7 @@
       </b-field>
     </Card>
 
-    <Card class="wit-offset-bottom--sm">
+    <Card>
       <template #title>
         <h2 class="wit-font-size--sm wit-offset-bottom--sm">
           {{ $t('Settings_SteamSettings') }}

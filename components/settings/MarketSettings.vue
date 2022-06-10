@@ -1,7 +1,9 @@
 <template>
-  <Card class="wit-offset-bottom--sm">
+  <Card>
     <template #title>
-      {{ $t('Settings_Preferences') }}
+      <h2 class="wit-font-size--sm wit-offset-bottom--sm">
+        {{ $t('Settings_Preferences') }}
+      </h2>
     </template>
 
     <b-switch :value="marketSettings.switchRarities" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ switchRarities: $event })">
@@ -16,12 +18,8 @@
       {{ $t('Settings_DiscountAvailable') }}
     </b-switch>
 
-    <b-switch :value="marketSettings.tradeDuplicatesOnly" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ tradeDuplicatesOnly: $event })">
+    <b-switch :value="marketSettings.tradeDuplicatesOnly" class="wit-block--full-width" @input="emitEvent({ tradeDuplicatesOnly: $event })">
       {{ $t('Settings_TradeDuplicatesOnly') }}
-    </b-switch>
-
-    <b-switch :value="marketSettings.hideRecipes" class="wit-offset-bottom--sm wit-block--full-width wiz-border--top wit-padding-top--sm" @input="emitEvent({ hideRecipes: $event })">
-      {{ $t('Settings_HideRecipes') }}
     </b-switch>
   </Card>
 </template>
@@ -53,7 +51,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

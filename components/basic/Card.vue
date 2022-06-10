@@ -24,7 +24,7 @@ export default {
 
         verticalPaddings: {
             required: false,
-            default: 'md',
+            default: 'sm',
             type: String
         },
 
