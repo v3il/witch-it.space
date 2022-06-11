@@ -1,6 +1,7 @@
-import { User } from '@/store'
+import { Items, User } from '@/store'
 import { openWindow } from '@/utils'
 import { config, Routes } from '@/shared'
+import { itemsService } from '@/domain/index.js'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -19,9 +20,11 @@ export const getters = {
 }
 
 export const actions = {
-    fetchUser ({ commit }) {
+    fetchUser ({ commit, dispatch }) {
         return this.$axios.$get('/api/user')
             .then(({ user }) => commit('SET_USER', user))
+            .then(() => dispatch('items/fetchItems', {}, { root: true }))
+            .catch(e => console.error('Fetch user failed', e))
     },
 
     login ({ dispatch }, credentials) {

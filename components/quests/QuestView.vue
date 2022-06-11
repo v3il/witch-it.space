@@ -89,6 +89,7 @@ export default {
         },
 
         rewardItem () {
+            console.error(this.quest, this.$itemsService.getById(this.quest.rewardId))
             return this.$itemsService.getById(this.quest.rewardId)
         }
     },

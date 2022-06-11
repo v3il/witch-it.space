@@ -1,44 +1,20 @@
-import { Items } from '@/store/Types'
-
 export const state = () => ({
-    items: {},
-    isLoaded: false,
-    isLoading: false
+    items: {}
 })
 
 export const actions = {
-    async [Items.Actions.FETCH_ITEMS] ({ commit, state }) {
-        if (state.isLoaded) {
-            return { error: null }
-        }
-
-        commit(Items.Mutations.SET_LOADING, true)
-
-        try {
-            const response = await this.$axios.get('/api/items')
-            commit(Items.Mutations.SET_ITEMS, response.data)
-            return { isSuccess: true }
-        } catch (e) {
-            return { error: e.message }
-        } finally {
-            commit(Items.Mutations.SET_LOADING, false)
-        }
-    },
-
-    [Items.Actions.GET_BY_ID] ({ state }, id) {
-        return state.items[String(id)]
+    fetchItems ({ commit }) {
+        return this.$axios.$get('/api/items')
+            .then(({ items }) => {
+                commit('SET_ITEMS', items)
+                this.$itemsService.setItems(items)
+            })
+            .catch(console.error)
     }
 }
 
 export const mutations = {
-    [Items.Mutations.SET_ITEMS] (state, questsData) {
-        const { items } = questsData
-
+    SET_ITEMS (state, items) {
         state.items = items.map(item => Object.freeze(item))
-        state.isLoaded = true
-    },
-
-    [Items.Mutations.SET_LOADING] (state, isLoading) {
-        state.isLoading = isLoading
     }
 }
