@@ -10,15 +10,13 @@
     </TopNavBar>
 
     <div class="wit-settings">
+      <!--      <StickyPanel @update="triggerSettingsUpdate" />-->
       <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
-
       <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
       <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
       <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
       <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
-
-      <DangerZone :profile="user" />
-
+      <DangerZone :profile="user" class="wit-offset-bottom--sm" />
       <StickyPanel @update="triggerSettingsUpdate" />
     </div>
   </div>
