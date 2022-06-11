@@ -80,4 +80,8 @@ export class UserService {
     deleteUser (user) {
         return user.$query().del()
     }
+
+    updateUserSettings (user, settings) {
+        return user.$query().patch(settings)
+    }
 }

@@ -1,7 +1,6 @@
-import { Items, User } from '@/store'
+import { User } from '@/store'
 import { openWindow } from '@/utils'
 import { config, Routes } from '@/shared'
-import { itemsService } from '@/domain/index.js'
 
 const AUTH_WINDOW_TARGET = 'AuthWindow'
 
@@ -77,9 +76,9 @@ export const actions = {
             .then(() => commit('DISCONNECT_SOCIAL', socialName))
     },
 
-    [User.Actions.UPDATE_SETTINGS] ({ commit }, settings) {
-        return this.$axios.post('/api/user/settings', settings)
-            .then(({ data }) => commit(User.Mutations.SET_USER, data.user))
+    updateSettings ({ commit }, settings) {
+        return this.$axios.$post('/api/user/settings', settings)
+            .then(() => commit('UPDATE_USER_DATA', settings))
     },
 
     toggleProfile ({ commit }, isPublic) {
@@ -111,7 +110,7 @@ export const mutations = {
         state.user.isPublic = isPublic
     },
 
-    [User.Mutations.UPDATE_USER_DATA] (state, data) {
+    UPDATE_USER_DATA (state, data) {
         state.user = { ...state.user, ...data }
     }
 }

@@ -88,34 +88,27 @@ const updateSettings = async (request, response) => {
         tradeWithGuardedOnly,
         discountAvailable,
         tradeDuplicatesOnly,
-        hideRecipes,
         wishlistNote,
         marketNote
     } = request.body
 
-    const errors = []
+    const passwordSchema = joi.string().min(6)
+    const displayNameSchema = joi.string().required().min(2).max(20)
+    const steamTradeURLSchema = joi.string().required().pattern(/^https:\/\/steamcommunity.com\/tradeoffer\/new.*$/)
+    const avatarIdSchema = joi.number().integer().required().min(1).max(11)
+
+    const errors = [
+        displayNameSchema.validate(displayName),
+        steamTradeURLSchema.validate(steamTradeLink),
+        avatarIdSchema.validate(avatarId)
+    ]
 
     if (password) {
-        errors.push(validatePassword(password))
+        errors.push(passwordSchema.validate(password))
     }
 
-    errors.push(
-        validateDisplayName(displayName),
-        validateSteamTradeURL(steamTradeLink),
-        validateAvatarId(avatarId)
-    )
-
-    const firstError = errors.find(error => error !== null)
-
-    if (firstError) {
-        throw new BadRequest(translateText(firstError, request.locale))
-    }
-
-    const { id } = request.user
-    const user = await userService.getById(id, { excludeAttrs: false })
-
-    if (!user) {
-        throw new BadRequest(translateText('Error_ActionForbidden', request.locale))
+    if (errors.some(result => !!result.error)) {
+        return response.emitBadRequest()
     }
 
     const updateData = {
@@ -127,7 +120,6 @@ const updateSettings = async (request, response) => {
         tradeWithGuardedOnly: !!tradeWithGuardedOnly,
         discountAvailable: !!discountAvailable,
         tradeDuplicatesOnly: !!tradeDuplicatesOnly,
-        hideRecipes: !!hideRecipes,
         wishlistNote,
         marketNote
     }
@@ -136,23 +128,12 @@ const updateSettings = async (request, response) => {
         updateData.password = await userService.encryptPassword(password)
     }
 
-    // await user.settings.update({
-    //     switchRarities: !!switchRarities,
-    //     tradeWithGuardedOnly: !!tradeWithGuardedOnly,
-    //     discountAvailable: !!discountAvailable,
-    //     tradeDuplicatesOnly: !!tradeDuplicatesOnly,
-    //     hideRecipes: !!hideRecipes,
-    //     wishlistNote,
-    //     marketNote
-    // })
-
-    await user.update(updateData/*, {
-        include: [
-            UserSettings
-        ]
-    } */)
-
-    updateUserToken({ response, user })
+    userService.updateUserSettings(request.user, updateData)
+        .then(() => response.send({ success: true }))
+        .catch((e) => {
+            console.error(e)
+            response.emitBadRequest()
+        })
 }
 
 const toggleProfile = (request, response) => {
@@ -176,10 +157,7 @@ const removeProfile = (request, response) => {
             request.user = null
             response.send({ success: true })
         })
-        .catch((e) => {
-            console.error(e)
-            response.emitBadRequest()
-        })
+        .catch(() => response.emitBadRequest())
 }
 
 const getById = async (request, response) => {

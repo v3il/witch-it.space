@@ -1,7 +1,7 @@
 <template>
   <Card class="wit-settings__sticky-panel">
     <div class="wit-flex wit-flex--justify-between">
-      <div class="wit-settings__tabs-container">
+      <div class="wit-settings__tabs-container wit-offset-right--sm">
         <Tabs :modes="$options.modes" :selected-mode="activeTab" expanded @switch="onModeChange">
           <template #tab0>
             {{ $t('Wishlist_TopTabs_Account') }}

@@ -10,7 +10,7 @@
     </TopNavBar>
 
     <div class="wit-settings">
-      <StickyPanel class="wit-offset-bottom--sm1" @update="updateSettings" />
+      <StickyPanel @update="triggerSettingsUpdate" />
       <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
 
       <div class="wit-offset-bottom--xlg">
@@ -23,25 +23,17 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
-import { User } from '@/store'
+import { mapActions, mapGetters, mapState } from 'vuex'
+import { StoreModules } from '@/store'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import TopTabs from '@/components/header/TopTabs.vue'
 import DangerZone from '@/components/settings/DangerZone'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'
-import { Routes } from '@/shared'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import BackButton from '@/components/basic/BackButton.vue'
 
-// const Modes = {
-//     ACCOUNT: 'account',
-//     MARKET: 'market'
-// }
-
 export default {
-    // modes: Object.values(Modes),
-
     components: {
         TopTabs,
         DangerZone,
@@ -54,8 +46,6 @@ export default {
     middleware: ['isAuthorized'],
 
     data: () => ({
-        // mode: Modes.ACCOUNT,
-
         settings: {
             login: '',
             password: '',
@@ -68,19 +58,18 @@ export default {
             onlyGuarded: false,
             isBargainAvailable: false,
             isTradingOnlyDups: false,
-            areRecipesHidden: false,
             marketNote: '',
             wishlistNote: ''
         }
     }),
 
     computed: {
-        ...mapState(User.PATH, [
-            User.State.USER
+        ...mapState(StoreModules.USER, [
+            'user'
         ]),
 
-        ...mapGetters(User.PATH, [
-            User.Getters.IS_VERIFIED
+        ...mapGetters(StoreModules.USER, [
+            'isVerified'
         ])
     },
 
@@ -95,12 +84,15 @@ export default {
         this.settings.tradeWithGuardedOnly = this.user.tradeWithGuardedOnly
         this.settings.discountAvailable = this.user.discountAvailable
         this.settings.tradeDuplicatesOnly = this.user.tradeDuplicatesOnly
-        this.settings.hideRecipes = this.user.hideRecipes
         this.settings.marketNote = this.user.marketNote ?? ''
         this.settings.wishlistNote = this.user.wishlistNote ?? ''
     },
 
     methods: {
+        ...mapActions(StoreModules.USER, {
+            updateSettings: 'updateSettings'
+        }),
+
         onSettingsChange (settings) {
             this.settings = settings
         },
@@ -109,7 +101,7 @@ export default {
             this.marketSettings = marketSettings
         },
 
-        async updateSettings () {
+        triggerSettingsUpdate () {
             const errors = []
 
             if (this.settings.password) {
@@ -127,32 +119,29 @@ export default {
                 return this.$showError(this.$t(firstError))
             }
 
-            try {
-                const data = {
-                    displayName: this.settings.displayName,
-                    steamTradeLink: this.settings.steamTradeLink,
-                    isGuardProtected: this.settings.isGuardProtected,
-                    avatarId: this.settings.avatarId,
-                    switchRarities: this.settings.switchRarities,
-                    tradeWithGuardedOnly: this.settings.tradeWithGuardedOnly,
-                    discountAvailable: this.settings.discountAvailable,
-                    tradeDuplicatesOnly: this.settings.tradeDuplicatesOnly,
-                    hideRecipes: this.settings.hideRecipes,
-                    marketNote: this.settings.marketNote,
-                    wishlistNote: this.settings.wishlistNote
-                }
-
-                if (this.settings.password) {
-                    data.password = this.settings.password
-                }
-
-                await this.$store.dispatch(User.F.Actions.UPDATE_SETTINGS, data)
-                this.$showSuccess(this.$t('Settings_SettingsUpdated'))
-
-                this.settings.password = ''
-            } catch (error) {
-                this.$showError(error)
+            const settings = {
+                displayName: this.settings.displayName,
+                steamTradeLink: this.settings.steamTradeLink,
+                isGuardProtected: this.settings.isGuardProtected,
+                avatarId: this.settings.avatarId,
+                switchRarities: this.settings.switchRarities,
+                tradeWithGuardedOnly: this.settings.tradeWithGuardedOnly,
+                discountAvailable: this.settings.discountAvailable,
+                tradeDuplicatesOnly: this.settings.tradeDuplicatesOnly,
+                marketNote: this.settings.marketNote,
+                wishlistNote: this.settings.wishlistNote
             }
+
+            if (this.settings.password) {
+                settings.password = this.settings.password
+            }
+
+            this.updateSettings(settings)
+                .then(() => {
+                    this.$showSuccess(this.$t('Settings_SettingsUpdated'))
+                    this.settings.password = ''
+                })
+                .catch(this.$showError)
         }
     }
 }
@@ -164,5 +153,4 @@ export default {
     max-width: 850px;
     margin: 0 auto;
 }
-
 </style>
