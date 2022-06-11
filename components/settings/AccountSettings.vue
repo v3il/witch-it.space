@@ -19,7 +19,7 @@
         </template>
 
         <b-input
-          :value="accountSettings.login"
+          :value="settings.login"
           disabled
           type="text"
           :placeholder="$t('Login_LoginInputPlaceholder')"
@@ -43,7 +43,7 @@
         </template>
 
         <b-input
-          :value="accountSettings.password"
+          :value="settings.password"
           type="password"
           autocomplete="new-password"
           :disabled="!hasLocalProfile"
@@ -55,7 +55,7 @@
 
       <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm" :message="$t('Settings_DisplayNameFieldHint')">
         <b-input
-          :value="accountSettings.displayName"
+          :value="settings.displayName"
           maxlength="20"
           has-counter
           :placeholder="$t('Settings_DisplayNamePlaceholder')"
@@ -65,7 +65,7 @@
       </b-field>
 
       <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
-        <AvatarPicker :selected-avatar-id="accountSettings.avatarId" @change="onAvatarChange" />
+        <AvatarPicker :selected-avatar-id="settings.avatarId" @change="onAvatarChange" />
       </b-field>
     </Card>
 
@@ -77,12 +77,12 @@
       </template>
 
       <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--sm" :type="tradeUrlFieldType">
-        <b-input :value="accountSettings.steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" @input="onTradeLinkChange" />
+        <b-input :value="settings.steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" @input="onTradeLinkChange" />
       </b-field>
 
       <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
-        <b-switch :value="accountSettings.isGuardProtected" @input="onGuardChange">
-          {{ accountSettings.isGuardProtected ? $t('Yes') : $t('No') }}
+        <b-switch :value="settings.isGuardProtected" @input="onGuardChange">
+          {{ settings.isGuardProtected ? $t('Yes') : $t('No') }}
         </b-switch>
       </b-field>
     </Card>
@@ -102,7 +102,7 @@ export default {
     },
 
     props: {
-        accountSettings: {
+        settings: {
             required: true,
             type: Object
         },
@@ -146,7 +146,7 @@ export default {
 
         _emitEvent (changedSettings) {
             this.$emit('change', {
-                ...this.accountSettings,
+                ...this.settings,
                 ...changedSettings
             })
         }

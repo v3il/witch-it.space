@@ -10,16 +10,16 @@
     </TopNavBar>
 
     <div class="wit-settings">
-      <StickyPanel @update="triggerSettingsUpdate" />
       <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
 
-      <AccountSettings :profile="user" :account-settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+      <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
       <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
-      <MarketSettings :market-settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-      <NoteEditor :content="settings.marketNote" label="Market" class="wit-offset-bottom--sm" @input="settings.marketNote = $event" />
-      <NoteEditor :content="settings.wishlistNote" label="Wishlist" class="wit-offset-bottom--xlg" @input="settings.wishlistNote = $event" />
+      <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+      <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
 
       <DangerZone :profile="user" />
+
+      <StickyPanel @update="triggerSettingsUpdate" />
     </div>
   </div>
 </template>
@@ -38,6 +38,7 @@ import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 import MarketSettings from '@/components/settings/MarketSettings.vue'
 import NoteEditor from '@/components/settings/NoteEditor.vue'
+import NotesEditor from '@/components/settings/NotesEditor.vue'
 
 export default {
     components: {
@@ -50,7 +51,8 @@ export default {
         NoteEditor,
         AccountSettings,
         SocialNetworks,
-        MarketSettings
+        MarketSettings,
+        NotesEditor
     },
 
     middleware: ['isAuthorized'],

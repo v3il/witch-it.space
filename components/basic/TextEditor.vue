@@ -1,7 +1,5 @@
 <template>
-  <b-field>
-    <b-input :value="content" maxlength="200" type="textarea" @input="$emit('input', $event)" />
-  </b-field>
+  <b-input :value="content" maxlength="200" type="textarea" @input="$emit('input', $event)" />
 </template>
 
 <script>

@@ -6,19 +6,19 @@
       </h2>
     </template>
 
-    <b-switch :value="marketSettings.switchRarities" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ switchRarities: $event })">
+    <b-switch :value="settings.switchRarities" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ switchRarities: $event })">
       {{ $t('Settings_SwitchRarities') }}
     </b-switch>
 
-    <b-switch :value="marketSettings.tradeWithGuardedOnly" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ tradeWithGuardedOnly: $event })">
+    <b-switch :value="settings.tradeWithGuardedOnly" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ tradeWithGuardedOnly: $event })">
       {{ $t('Settings_TradeWithGuardedOnly') }}
     </b-switch>
 
-    <b-switch :value="marketSettings.discountAvailable" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ discountAvailable: $event })">
+    <b-switch :value="settings.discountAvailable" class="wit-offset-bottom--sm wit-block--full-width" @input="emitEvent({ discountAvailable: $event })">
       {{ $t('Settings_DiscountAvailable') }}
     </b-switch>
 
-    <b-switch :value="marketSettings.tradeDuplicatesOnly" class="wit-block--full-width" @input="emitEvent({ tradeDuplicatesOnly: $event })">
+    <b-switch :value="settings.tradeDuplicatesOnly" class="wit-block--full-width" @input="emitEvent({ tradeDuplicatesOnly: $event })">
       {{ $t('Settings_TradeDuplicatesOnly') }}
     </b-switch>
   </Card>
@@ -35,7 +35,7 @@ export default {
     },
 
     props: {
-        marketSettings: {
+        settings: {
             required: true,
             type: Object
         }
@@ -44,7 +44,7 @@ export default {
     methods: {
         emitEvent (changedSettings) {
             this.$emit('change', {
-                ...this.marketSettings,
+                ...this.settings,
                 ...changedSettings
             })
         }
