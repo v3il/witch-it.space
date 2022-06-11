@@ -4,7 +4,7 @@
       {{ $t('Quests_Note') }}
     </b-notification>
 
-    <Card class="wit-offset-bottom--sm" vertical-paddings="xs">
+    <Card class="wit-offset-bottom--md" vertical-paddings="xs">
       <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
         <p class="wit-offset-right--sm wit-padding-top--xs wit-padding-bottom--xs wis-quests__last-update">
           <span class="wit-color--muted">{{ $t('Quests_LastUpdate') }}</span>
@@ -30,7 +30,7 @@
     </Card>
 
     <QuestsColumn
-      class="wit-offset-bottom--md"
+      class="wit-offset-bottom--sm"
       :title="$t('Quests_WeeklyQuestsTitle')"
       :quests="weeklyQuests"
       :is-loading="isLoading"

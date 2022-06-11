@@ -23,10 +23,8 @@ export default {
 <style scoped>
 .wit-settings__sticky-panel {
     position: sticky;
-    bottom: 0;
+    top: 0;
     z-index: 2;
-    box-shadow: 0 -5px 12px 8px #222736;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    box-shadow: 0 5px 12px 8px #222736;
 }
 </style>
