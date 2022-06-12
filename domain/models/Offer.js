@@ -7,13 +7,13 @@ export class Offer {
     }
 
     static fromItem (item) {
-        return new Offer({ itemId: item.id, rawPrices: [Price.getDefault().buildOutput()] })
+        return new Offer({ itemId: item.id, prices: [Price.getDefault().buildOutput()] })
     }
 
     constructor (offer) {
         this.id = offer.id
         this.item = itemsService.getById(offer.itemId)
-        this.prices = (offer.rawPrices || []).map(price => Price.create(price))
+        this.prices = (offer.prices || []).map(price => Price.create(price))
         this.isSelected = false
     }
 

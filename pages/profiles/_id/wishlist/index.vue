@@ -159,6 +159,10 @@ export default {
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
+        const d = await $wishlistService.fetch(route.params.id)
+
+        console.log(d)
+
         return $wishlistService.fetch(route.params.id)
     },
 
@@ -183,11 +187,11 @@ export default {
         },
 
         marketSize () {
-            return this.profile.userStat.marketSize ?? 0
+            return this.profile.marketSize ?? 0
         },
 
         wishlistSize () {
-            return this.profile.userStat.wishlistSize ?? 0
+            return this.profile.wishlistSize ?? 0
         },
 
         isProfileTabSelected () {

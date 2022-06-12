@@ -183,11 +183,11 @@ export default {
         },
 
         marketSize () {
-            return this.profile.userStat.marketSize ?? 0
+            return this.profile.marketSize ?? 0
         },
 
         wishlistSize () {
-            return this.profile.userStat.wishlistSize ?? 0
+            return this.profile.wishlistSize ?? 0
         },
 
         isProfileTabSelected () {

@@ -8,19 +8,19 @@ export class Price {
     static getDefault () {
         return new Price({
             priceType: PriceType.ANY,
-            itemId: 0,
-            itemCount: 4,
-            itemId2: 0,
-            itemCount2: 4
+            item1Id: 0,
+            item1Count: 4,
+            item2Id: 0,
+            item2Count: 4
         })
     }
 
     constructor (price) {
         this.id = price.id
-        this.itemId = price.itemId
-        this.itemCount = price.itemCount
-        this.itemId2 = price.itemId2
-        this.itemCount2 = price.itemCount2
+        this.item1Id = price.item1Id
+        this.item1Count = price.item1Count
+        this.item2Id = price.item2Id
+        this.item2Count = price.item2Count
         this.priceType = price.priceType
     }
 
@@ -64,10 +64,10 @@ export class Price {
         return {
             id: this.id,
             priceType: this.priceType,
-            itemId: this.itemId,
-            itemCount: this.itemCount,
-            itemId2: this.itemId2,
-            itemCount2: this.itemCount2
+            item1Id: this.item1Id,
+            item1Count: this.item1Count,
+            item1Id2: this.item2Id,
+            item1Count2: this.item2Count
         }
     }
 }

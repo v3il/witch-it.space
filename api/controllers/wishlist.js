@@ -12,7 +12,10 @@ const getUserWishlist = (request, response) => {
 
     wishlistService.getUserWishes(userId)
         .then(({ offers, profile }) => response.send({ offers, profile }))
-        .catch(() => response.emitUnprocessableEntity(request.$t('Error_WishlistFetchError')))
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity(request.$t('Error_WishlistFetchError'))
+        })
 }
 
 const massCreate = async (request, response) => {

@@ -1,4 +1,4 @@
-import { Item, Price, sequelize, Wish, User } from '../models'
+import { Item, Price, Offer } from '../models'
 import { userService } from '../services/index.js'
 
 export class WishlistService {
@@ -15,18 +15,27 @@ export class WishlistService {
             return { profile: null, offers: [] }
         }
 
-        const offers = await Wish.findAll({
-            where: { userId },
+        const offers = await Offer.query()
+            .where('userId', userId)
+            .withGraphFetched('prices')
 
-            order: [
-                [{ model: Price, as: 'rawPrices' }, 'id', 'ASC']
-            ],
+        // const userOffers = Offer.query().where('userId', userId)
+        // const offers = await Offer.relatedQuery('prices')
+        //     .for(userOffers)
+        //     .orderBy('id')
 
-            include: {
-                model: Price,
-                as: 'rawPrices'
-            }
-        })
+        // const offers = await Offer.findAll({
+        //     where: { userId },
+        //
+        //     order: [
+        //         [{ model: Price, as: 'rawPrices' }, 'id', 'ASC']
+        //     ],
+        //
+        //     include: {
+        //         model: Price,
+        //         as: 'rawPrices'
+        //     }
+        // })
 
         return { profile: userService.toObject(profile), offers }
     }
@@ -38,20 +47,20 @@ export class WishlistService {
         })
 
         for (const offer of offers) {
-            await sequelize.transaction(async (transaction) => {
-                if (offer.rawPrices.length > prices.length) {
-                    await offer.rawPrices[1].destroy({ transaction })
-                }
-
-                for (let i = 0; i < prices.length; i++) {
-                    if (offer.rawPrices[i]) {
-                        await offer.rawPrices[i].update(prices[i], { transaction })
-                        continue
-                    }
-
-                    await Price.create({ ...prices[i], priceValue: 0, offerId: offer.id }, { transaction })
-                }
-            })
+            // await sequelize.transaction(async (transaction) => {
+            //     if (offer.rawPrices.length > prices.length) {
+            //         await offer.rawPrices[1].destroy({ transaction })
+            //     }
+            //
+            //     for (let i = 0; i < prices.length; i++) {
+            //         if (offer.rawPrices[i]) {
+            //             await offer.rawPrices[i].update(prices[i], { transaction })
+            //             continue
+            //         }
+            //
+            //         await Price.create({ ...prices[i], priceValue: 0, offerId: offer.id }, { transaction })
+            //     }
+            // })
         }
 
         await userService.setWishlistUpdateTime(user)
@@ -94,7 +103,7 @@ export class WishlistService {
 
         await userService.setWishlistUpdateTime(user)
 
-        return Wish.bulkCreate(mappedOffers, {
+        return Offer.bulkCreate(mappedOffers, {
             include: { model: Price, as: 'rawPrices' }
         })
     }
@@ -106,7 +115,7 @@ export class WishlistService {
 
         await userService.setWishlistUpdateTime(user)
 
-        return Wish.destroy({
+        return Offer.destroy({
             where: {
                 id: offerIds,
                 userId: user.id

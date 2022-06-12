@@ -35,20 +35,20 @@ export default {
 
         parts () {
             const parts = []
-            const item1 = this.$itemsService.getById(this.price.itemId)
-            const item2 = this.$itemsService.getById(this.price.itemId2)
+            const item1 = this.$itemsService.getById(this.price.item1Id)
+            const item2 = this.$itemsService.getById(this.price.item2Id)
 
             if (item1) {
                 parts.push({
                     item: item1,
-                    count: this.price.itemCount
+                    count: this.price.item1Count
                 })
             }
 
             if (item2) {
                 parts.push({
                     item: item2,
-                    count: this.price.itemCount2
+                    count: this.price.item2Count
                 })
             }
 

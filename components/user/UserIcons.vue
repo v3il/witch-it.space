@@ -77,7 +77,7 @@ export default {
         },
 
         getIsStrictRarityIcon () {
-            const switchRarities = this.profile.settings.switchRarities
+            const switchRarities = this.profile.switchRarities
 
             return {
                 id: 2,
@@ -88,7 +88,7 @@ export default {
         },
 
         getWorkingWithSteamGuardedIcon () {
-            const tradeWithGuardedOnly = this.profile.settings.tradeWithGuardedOnly
+            const tradeWithGuardedOnly = this.profile.tradeWithGuardedOnly
 
             return {
                 id: 3,
@@ -99,7 +99,7 @@ export default {
         },
 
         getBargainIcon () {
-            const discountAvailable = this.profile.settings.discountAvailable
+            const discountAvailable = this.profile.discountAvailable
 
             return {
                 id: 4,
@@ -110,7 +110,7 @@ export default {
         },
 
         getIsTradingDupsIcon () {
-            const tradeDuplicatesOnly = this.profile.settings.tradeDuplicatesOnly
+            const tradeDuplicatesOnly = this.profile.tradeDuplicatesOnly
 
             return {
                 id: 5,

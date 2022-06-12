@@ -180,7 +180,7 @@ export default {
         },
 
         profileScaleData () {
-            const stat = this.profile.userStat
+            const stat = this.profile
 
             if (this.isMarketMode) {
                 return {
