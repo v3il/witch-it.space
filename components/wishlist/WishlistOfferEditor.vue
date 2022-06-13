@@ -20,6 +20,8 @@
           I offer:
         </p>
 
+        {{ offer.prices }}
+
         <PricesEditor :prices="offer.prices" @update="onPricesUpdate" />
       </div>
     </div>

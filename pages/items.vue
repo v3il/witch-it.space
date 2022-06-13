@@ -88,8 +88,8 @@ export default {
     },
 
     prices: [
-        Price.create({ itemId: 900, itemCount: 50, itemId2: 904, itemCount2: 50, priceType: 'fixed' }),
-        Price.create({ itemId: 900, itemCount: 50, itemId2: 904, itemCount2: 50, priceType: 'fixed' })
+        Price.create({ item1Id: 900, item1Count: 50, item2Id: 904, item2Count: 50, priceType: 'fixed' }),
+        Price.create({ item1Id: 900, item1Count: 50, item2Id: 904, item2Count: 50, priceType: 'fixed' })
     ],
 
     middleware: ['isAuthorized'],

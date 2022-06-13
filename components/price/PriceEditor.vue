@@ -1,5 +1,7 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
+    {{ price }}
+
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
       <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
       <AddButton v-if="!isRemovable" v-tooltip="'Add price'" class="wit-offset-left--xs" @click="onPriceAdd" />
@@ -9,28 +11,28 @@
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
       <div class="wit-flex wit-flex--align-center">
         <PricePart
-          :item-id="price.itemId"
-          :paired-item-id="price.itemId2"
+          :item-id="price.item1Id"
+          :paired-item-id="price.item2Id"
           @itemSelect="setFirstItemId"
           @itemClear="clearFirstItemId"
         />
 
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.itemCount" :min="1" :max="99" @change="setFirstItemCount" />
+        <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setFirstItemCount" />
       </div>
 
       <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
 
       <div class="wit-flex wit-flex--align-center">
         <PricePart
-          :item-id="price.itemId2"
-          :paired-item-id="price.itemId"
+          :item-id="price.item2Id"
+          :paired-item-id="price.item1Id"
           @itemSelect="setSecondItemId"
           @itemClear="clearSecondItemId"
         />
 
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.itemCount2" :min="1" :max="99" @change="setSecondItemCount" />
+        <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setSecondItemCount" />
       </div>
     </div>
   </div>

@@ -26,12 +26,12 @@ export class Offer {
     }
 
     buildOutput () {
-        const rawPrices = this.prices.map(priceModel => priceModel.buildOutput())
+        const prices = this.prices.map(priceModel => priceModel.buildOutput())
 
         return {
             id: this.id,
             itemId: this.item.id,
-            rawPrices
+            prices
         }
     }
 

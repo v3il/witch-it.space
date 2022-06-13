@@ -41,19 +41,19 @@ export class Price {
     }
 
     setFirstItemId (itemId) {
-        this.itemId = itemId
+        this.item1Id = itemId
     }
 
     setFirstItemCount (itemCount) {
-        this.itemCount = itemCount
+        this.item1Count = itemCount
     }
 
     setSecondItemId (itemId) {
-        this.itemId2 = itemId
+        this.item2Id = itemId
     }
 
     setSecondItemCount (itemCount) {
-        this.itemCount2 = itemCount
+        this.item2Count = itemCount
     }
 
     clone () {
@@ -66,8 +66,8 @@ export class Price {
             priceType: this.priceType,
             item1Id: this.item1Id,
             item1Count: this.item1Count,
-            item1Id2: this.item2Id,
-            item1Count2: this.item2Count
+            item2Id: this.item2Id,
+            item2Count: this.item2Count
         }
     }
 }

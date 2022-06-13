@@ -292,6 +292,8 @@ export default {
         },
 
         editOffer (offer) {
+            console.error(offer.clone())
+
             this.$vfm.show(PopupNames.MANAGE_OFFER, { offer: offer.clone() })
         },
 

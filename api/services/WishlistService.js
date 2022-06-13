@@ -1,4 +1,4 @@
-import { Item, Price, Offer } from '../models'
+import { Item, Price, Offer, Quest } from '../models'
 import { userService } from '../services/index.js'
 
 export class WishlistService {
@@ -19,56 +19,38 @@ export class WishlistService {
             .where('userId', userId)
             .withGraphFetched('prices')
 
-        // const userOffers = Offer.query().where('userId', userId)
-        // const offers = await Offer.relatedQuery('prices')
-        //     .for(userOffers)
-        //     .orderBy('id')
-
-        // const offers = await Offer.findAll({
-        //     where: { userId },
-        //
-        //     order: [
-        //         [{ model: Price, as: 'rawPrices' }, 'id', 'ASC']
-        //     ],
-        //
-        //     include: {
-        //         model: Price,
-        //         as: 'rawPrices'
-        //     }
-        // })
-
-        return { profile: userService.toObject(profile), offers }
+        return { profile: profile.getPublicData(), offers }
     }
 
     async setMassPrice ({ user, offerIds, prices }) {
-        const offers = await user.getWishes({
-            where: { id: offerIds },
-            include: { model: Price, as: 'rawPrices' }
+        const offers = await Offer.query()
+            .where('userId', user.id)
+            .where('id', 'in', offerIds)
+            .withGraphFetched('prices')
+
+        await Offer.transaction(async (trx) => {
+            for (const offer of offers) {
+                if (offer.prices.length > prices.length) {
+                    await offer.prices[1].$query(trx).del()
+                }
+
+                for (let i = 0; i < prices.length; i++) {
+                    if (offer.prices[i]) {
+                        await offer.prices[i].$query(trx).patch(prices[i])
+                        continue
+                    }
+
+                    await Price.query(trx).insert({ ...prices[i], priceValue: 0, offerId: offer.id })
+                }
+            }
+
+            await userService.setWishlistUpdateTime(user)
         })
 
-        for (const offer of offers) {
-            // await sequelize.transaction(async (transaction) => {
-            //     if (offer.rawPrices.length > prices.length) {
-            //         await offer.rawPrices[1].destroy({ transaction })
-            //     }
-            //
-            //     for (let i = 0; i < prices.length; i++) {
-            //         if (offer.rawPrices[i]) {
-            //             await offer.rawPrices[i].update(prices[i], { transaction })
-            //             continue
-            //         }
-            //
-            //         await Price.create({ ...prices[i], priceValue: 0, offerId: offer.id }, { transaction })
-            //     }
-            // })
-        }
-
-        await userService.setWishlistUpdateTime(user)
-
-        return user.getWishes({
-            where: { id: offerIds },
-            include: { model: Price, as: 'rawPrices' }
-        })
+        return Offer.query()
+            .where('userId', user.id)
+            .where('id', 'in', offerIds)
+            .withGraphFetched('prices')
     }
 
     isValidPrices (prices) {
