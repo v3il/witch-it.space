@@ -5,6 +5,7 @@ import { profilesRouter } from './profiles'
 import { questsRouter } from './quests'
 import { itemsRouter } from './items'
 import { wishlistRouter } from './wishlist'
+import { marketRouter } from './market'
 import { errorsHandler } from './errorsHandler'
 
 const rootRouter = createAsyncRouter()
@@ -15,5 +16,6 @@ rootRouter.use('/profiles', profilesRouter)
 rootRouter.use('/quests', questsRouter)
 rootRouter.use('/items', itemsRouter)
 rootRouter.use('/wishlist', wishlistRouter)
+rootRouter.use('/market', marketRouter)
 
 export { rootRouter, errorsHandler }

@@ -1,7 +1,7 @@
 import joi from 'joi'
 import { marketService } from '../services'
 
-const getUserWishlist = (request, response) => {
+const getUserOffers = (request, response) => {
     const { userId } = request.query
     const schema = joi.number().integer().greater(0).required()
     const { error } = schema.validate(userId)
@@ -69,7 +69,7 @@ const massUpdate = (request, response) => {
         })
 }
 
-const removeFromWishlist = (request, response) => {
+const massRemove = (request, response) => {
     const { user } = request
     const { offerIds } = request.body
     const schema = joi.array().required()
@@ -87,9 +87,9 @@ const removeFromWishlist = (request, response) => {
         })
 }
 
-export const wishlistController = {
-    getUserWishlist,
-    removeFromWishlist,
+export const marketController = {
+    getUserOffers,
+    massRemove,
     massUpdate,
     massCreate
 }
