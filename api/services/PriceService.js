@@ -45,18 +45,18 @@ export class PriceService {
     }
 
     #isFixedPriceValid (rawPrice) {
-        const { itemId, itemCount, itemId2, itemCount2 } = rawPrice
-        const hasValidItems = [itemId, itemId2].some(itemId => AVAILABLE.includes(itemId))
+        const { item1Id, item1Count, item2Id, item2Count } = rawPrice
+        const hasValidItems = [item1Id, item2Id].some(itemId => AVAILABLE.includes(itemId))
 
         if (!hasValidItems) {
             return false
         }
 
         const itemCountSchema = joi.number().integer().greater(0).less(config.MAX_PRICE_VALUE)
-        const count1Validation = itemCountSchema.validate(itemCount)
-        const count2Validation = itemCountSchema.validate(itemCount2)
-        const isValidItem1 = AVAILABLE.includes(itemId) && !count1Validation.error
-        const isValidItem2 = AVAILABLE.includes(itemId2) && !count2Validation.error
+        const count1Validation = itemCountSchema.validate(item1Count)
+        const count2Validation = itemCountSchema.validate(item2Count)
+        const isValidItem1 = AVAILABLE.includes(item1Id) && !count1Validation.error
+        const isValidItem2 = AVAILABLE.includes(item2Id) && !count2Validation.error
 
         // console.log(`${itemId} * ${itemCount} + ${itemId2} * ${itemCount2} = ${isValidItem1}, ${isValidItem2}`)
 

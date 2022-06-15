@@ -46,18 +46,27 @@ const massCreate = async (request, response) => {
 const massUpdate = (request, response) => {
     const { user } = request
     const { offerIds, prices } = request.body
+
+    console.error(offerIds, prices)
+
     const schema = joi.array().required()
     const { error: idsError } = schema.validate(offerIds)
     const { error: pricesError } = schema.validate(prices)
     const isValidPrices = wishlistService.isValidPrices(prices)
 
+    console.error(isValidPrices)
+
     if (idsError || pricesError || !isValidPrices) {
+        console.error(1)
         return response.emitBadRequest()
     }
 
     wishlistService.setMassPrice({ user, offerIds, prices })
         .then(updatedOffers => response.send({ updatedOffers }))
-        .catch(() => response.emitUnprocessableEntity())
+        .catch((e) => {
+            console.error(e)
+            response.emitUnprocessableEntity()
+        })
 }
 
 const removeFromWishlist = (request, response) => {
