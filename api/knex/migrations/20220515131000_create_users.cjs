@@ -25,8 +25,8 @@ exports.up = function(knex) {
         table.boolean('discountAvailable').defaultTo(false);
         table.boolean('tradeDuplicatesOnly').defaultTo(true);
         table.timestamp('inventorySyncTime').defaultTo(null);
-        table.timestamp('wishlistUpdateTime').defaultTo(null);
-        table.timestamp('marketUpdateTime').defaultTo(null);
+        table.integer('wishlistUpdateTime').defaultTo(null);
+        table.integer('marketUpdateTime').defaultTo(null);
         table.timestamp('createdAt').defaultTo(knex.fn.now());
         table.timestamp('updatedAt').defaultTo(null);
     })

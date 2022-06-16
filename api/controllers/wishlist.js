@@ -38,6 +38,7 @@ const massCreate = async (request, response) => {
         const createdOffers = await wishlistService.massCreate({ user, offers })
         response.send({ createdOffers })
     } catch (e) {
+        console.error(e)
         response.emitUnprocessableEntity()
     }
 }

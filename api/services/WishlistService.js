@@ -15,18 +15,23 @@ export class WishlistService {
             return { profile: null, offers: [] }
         }
 
-        const offers = await Offer.query()
-            .where('userId', userId)
-            .withGraphFetched('prices')
+        const offers = await this.#getUserWishes({ userId })
 
         return { profile: profile.getPublicData(), offers }
     }
 
+    #getUserWishes ({ userId, offerIds }, attrs = []) {
+        let builder = Offer.query().select(...attrs).where('userId', userId)
+
+        if (offerIds) {
+            builder = builder.whereIn('id', offerIds)
+        }
+
+        return builder.withGraphFetched('prices')
+    }
+
     async setMassPrice ({ user, offerIds, prices }) {
-        const offers = await Offer.query()
-            .where('userId', user.id)
-            .where('id', 'in', offerIds)
-            .withGraphFetched('prices')
+        const offers = await this.#getUserWishes({ userId: user.id, offerIds })
 
         await Offer.transaction(async (trx) => {
             for (const offer of offers) {
@@ -47,15 +52,10 @@ export class WishlistService {
             await userService.setWishlistUpdateTime(user)
         })
 
-        return Offer.query()
-            .where('userId', user.id)
-            .where('id', 'in', offerIds)
-            .withGraphFetched('prices')
+        return this.#getUserWishes({ userId: user.id, offerIds })
     }
 
     isValidPrices (prices) {
-        console.error(prices)
-
         if (!prices.length) {
             return false
         }
@@ -64,15 +64,15 @@ export class WishlistService {
     }
 
     async isValidOffers (offers, user) {
-        const itemIds = (await Item.findAll({ attributes: ['itemId'], raw: true })).map(item => item.itemId)
-        const itemsInWishlistIds = (await user.getWishes({ attributes: ['itemId'], raw: true })).map(offer => offer.itemId)
+        const itemIds = (await Item.query().select('itemId')).map(item => item.itemId)
+        const itemsInWishlistIds = (await this.#getUserWishes({ userId: user.id }, ['itemId'])).map(offer => offer.itemId)
+
+        console.log(itemIds.slice(0, 5), itemsInWishlistIds.slice(0, 5))
 
         return offers.every((offer) => {
-            console.error(JSON.stringify(offer))
-
             return itemIds.includes(offer.itemId) &&
                 !itemsInWishlistIds.includes(offer.itemId) &&
-                this.isValidPrices(offer.rawPrices)
+                this.isValidPrices(offer.prices)
         })
     }
 
@@ -85,9 +85,11 @@ export class WishlistService {
 
         await userService.setWishlistUpdateTime(user)
 
-        return Offer.bulkCreate(mappedOffers, {
-            include: { model: Price, as: 'rawPrices' }
-        })
+        return Offer.query().insertGraphAndFetch(mappedOffers)
+
+        // .bulkCreate(mappedOffers, {
+        //     include: { model: Price, as: 'rawPrices' }
+        // })
     }
 
     async removeUserOffers ({ user, offerIds }) {

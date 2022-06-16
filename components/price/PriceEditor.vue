@@ -1,7 +1,5 @@
 <template>
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
-    {{ price }}
-
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
       <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
       <AddButton v-if="!isRemovable" v-tooltip="'Add price'" class="wit-offset-left--xs" @click="onPriceAdd" />

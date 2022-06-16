@@ -76,7 +76,7 @@
           <Tabs
             :modes="$options.sidebarTabs"
             :selected-mode="sidebarSelectedTab"
-            expanded1
+            expanded
             class="wit-offset-bottom--sm"
             @switch="sidebarSelectedTab = $event"
           >

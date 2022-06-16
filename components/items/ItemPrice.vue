@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ price }}
     <AnyPriceView v-if="price.isAnyPrice" :price="price" />
     <FixedPriceView v-if="price.isFixedPrice" :price="price" />
     <WishlistPriceView v-if="price.isWishlistPrice" :price="price" />

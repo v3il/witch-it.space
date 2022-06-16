@@ -58,8 +58,8 @@ export class UserService {
     }
 
     setWishlistUpdateTime (user) {
-        return user.update({
-            wishlistUpdateTime: getCurrentTimestamp()
+        return user.$query().patch({
+            wishlistUpdateTime: new Date()
         })
     }
 
