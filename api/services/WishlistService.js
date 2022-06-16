@@ -67,8 +67,6 @@ export class WishlistService {
         const itemIds = (await Item.query().select('itemId')).map(item => item.itemId)
         const itemsInWishlistIds = (await this.#getUserWishes({ userId: user.id }, ['itemId'])).map(offer => offer.itemId)
 
-        console.log(itemIds.slice(0, 5), itemsInWishlistIds.slice(0, 5))
-
         return offers.every((offer) => {
             return itemIds.includes(offer.itemId) &&
                 !itemsInWishlistIds.includes(offer.itemId) &&
@@ -86,10 +84,6 @@ export class WishlistService {
         await userService.setWishlistUpdateTime(user)
 
         return Offer.query().insertGraphAndFetch(mappedOffers)
-
-        // .bulkCreate(mappedOffers, {
-        //     include: { model: Price, as: 'rawPrices' }
-        // })
     }
 
     async removeUserOffers ({ user, offerIds }) {
@@ -99,11 +93,6 @@ export class WishlistService {
 
         await userService.setWishlistUpdateTime(user)
 
-        return Offer.destroy({
-            where: {
-                id: offerIds,
-                userId: user.id
-            }
-        })
+        return Offer.query().where('userId', user.id).whereIn('id', offerIds).del()
     }
 }
