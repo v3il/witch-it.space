@@ -5,8 +5,8 @@ import { createAsyncRouter } from '../util'
 const wishlistRouter = createAsyncRouter()
 
 wishlistRouter.get('/', authorized, wishlistController.getUserOffers)
-wishlistRouter.post('/mass_create', authorized, wishlistController.massCreate)
-wishlistRouter.post('/mass_update', authorized, wishlistController.massUpdate)
+wishlistRouter.post('/create', authorized, wishlistController.massCreate)
+wishlistRouter.post('/update', authorized, wishlistController.massUpdate)
 wishlistRouter.post('/remove', authorized, wishlistController.massRemove)
 
 export { wishlistRouter }

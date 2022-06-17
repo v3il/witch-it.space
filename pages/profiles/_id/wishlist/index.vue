@@ -159,10 +159,6 @@ export default {
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
-        const d = await $wishlistService.fetch(route.params.id)
-
-        console.log(d)
-
         return $wishlistService.fetch(route.params.id)
     },
 
@@ -174,7 +170,7 @@ export default {
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
-        ...mapGetters(StoreModules.WISHLIST, [
+        ...mapGetters(StoreModules.OFFERS, [
             'sortedOfferModels'
         ]),
 
@@ -224,7 +220,7 @@ export default {
             resetFilterParam: 'resetFilterParam'
         }),
 
-        ...mapActions(StoreModules.WISHLIST, {
+        ...mapActions(StoreModules.OFFERS, {
             storeOffers: 'storeOffers'
         })
     }

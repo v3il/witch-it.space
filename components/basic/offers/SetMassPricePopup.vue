@@ -52,7 +52,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.WISHLIST, {
+        ...mapActions(StoreModules.OFFERS, {
             createOffers: 'createOffers',
             setMassPrices: 'setMassPrices'
         }),

@@ -85,7 +85,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.WISHLIST, {
+        ...mapActions(StoreModules.OFFERS, {
             removeOffers: 'removeOffers',
             createOffers: 'createOffers',
             setMassPrices: 'setMassPrices'

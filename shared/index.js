@@ -1,6 +1,7 @@
 export { raritiesManager, eventsManager, slotsManager } from './items'
 export { Routes } from './Routes'
 export { Cookies } from './Cookies'
+export { OfferTypes } from './OfferTypes'
 export { config, Themes, Locales } from './config'
 export { ru, ua, en } from './translations'
 export { getNavbarLinks } from './getNavbarLinks'

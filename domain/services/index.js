@@ -1,6 +1,6 @@
 export { ItemsService } from './ItemsService'
 export { UsersService } from './UsersService'
-export { WishlistService } from './WishlistService'
+export { OffersService } from './OffersService'
 export { PriceService } from './PriceService'
 export { QuestsService } from './QuestsService'
 export { LocalStorageService } from './LocalStorageService'

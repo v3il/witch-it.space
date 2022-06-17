@@ -4,7 +4,7 @@
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
           <BackButton to="/profiles" class="wit-offset-right--xs" />
-          <span v-if="profile">{{ profile.displayName }} - {{ $t('Market') }}</span>
+          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyMarket') }}</span>
           <span v-else>{{ $t('Error') }}</span>
         </h1>
       </template>
@@ -16,23 +16,23 @@
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
             <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
               <template #tab0>
-                <div class="wit-flex wit-flex--align-center">
+                <NuxtLink :to="marketURL" class="wit-flex wit-flex--align-center wis-color--inherit">
                   <span class="wis-tabs__label">{{ $t('Market') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ marketSize }}
                   </b-tag>
-                </div>
+                </NuxtLink>
               </template>
 
               <template #tab1>
-                <NuxtLink :to="wishlistURL" class="wit-flex wit-flex--align-center wis-color--inherit">
+                <div class="wit-flex wit-flex--align-center">
                   <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
                   <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
                   <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                     {{ wishlistSize }}
                   </b-tag>
-                </NuxtLink>
+                </div>
               </template>
             </Tabs>
 
@@ -76,7 +76,7 @@
           <Tabs
             :modes="$options.sidebarTabs"
             :selected-mode="sidebarSelectedTab"
-            expanded
+            expanded1
             class="wit-offset-bottom--sm"
             @switch="sidebarSelectedTab = $event"
           >
@@ -129,7 +129,7 @@ import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
-import { buildUserMarketUrl, buildUserManageWishlistUrl, buildUserWishlistUrl } from '@/utils/index.js'
+import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -164,13 +164,13 @@ export default {
 
     data: () => ({
         isFiltersVisible: false,
-        selectedTab: WishlistListTabs.MARKET,
+        selectedTab: WishlistListTabs.WISHLIST,
         sidebarSelectedTab: WishlistListSidebarTabs.PROFILE
     }),
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
-        ...mapGetters(StoreModules.WISHLIST, [
+        ...mapGetters(StoreModules.OFFERS, [
             'sortedOfferModels'
         ]),
 
@@ -198,8 +198,8 @@ export default {
             return buildUserManageWishlistUrl(this.profile.id)
         },
 
-        wishlistURL () {
-            return buildUserWishlistUrl(this.profile.id)
+        marketURL () {
+            return buildUserMarketUrl(this.profile.id)
         }
     },
 
@@ -220,7 +220,7 @@ export default {
             resetFilterParam: 'resetFilterParam'
         }),
 
-        ...mapActions(StoreModules.WISHLIST, {
+        ...mapActions(StoreModules.OFFERS, {
             storeOffers: 'storeOffers'
         })
     }

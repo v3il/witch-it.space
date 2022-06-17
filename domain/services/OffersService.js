@@ -1,15 +1,18 @@
 import { SortOrders } from '@/shared/items/index.js'
+import { OfferTypes } from '@/shared/index.js'
 
-export class WishlistService {
+export class OffersService {
     #axiosInstance = null
     #itemsService = null
     #priceService = null
+    #offersType = null
     #wishlistItemFactory = null
 
-    constructor ({ itemsService, wishlistItemFactory, priceService }) {
+    constructor ({ itemsService, wishlistItemFactory, priceService, offersType }) {
         this.#itemsService = itemsService
         this.#wishlistItemFactory = wishlistItemFactory
         this.#priceService = priceService
+        this.#offersType = offersType
     }
 
     setAxios (axiosInstance) {
@@ -17,7 +20,7 @@ export class WishlistService {
     }
 
     fetch (userId) {
-        return this.#axiosInstance.$get(`/api/wishlist?userId=${userId}`)
+        return this.#axiosInstance.$get(this.#buildURL(`?userId=${userId}`))
             .catch(() => ({ profile: null, offers: [] }))
     }
 
@@ -72,19 +75,24 @@ export class WishlistService {
         return 0
     }
 
-    removeOffers (offerIds) {
-        return this.#axiosInstance.$post('/api/wishlist/remove', { offerIds })
-    }
-
     massCreate (offers) {
         const offersData = offers.map(offer => offer.buildOutput())
-        return this.#axiosInstance.$post('/api/wishlist/mass_create', { offers: offersData })
+        return this.#axiosInstance.$post(this.#buildURL('/create'), { offers: offersData })
     }
 
     setMassPrice (offers, priceModels) {
         const offerIds = offers.map(offer => offer.id)
         const prices = priceModels.map(priceModel => priceModel.buildOutput())
 
-        return this.#axiosInstance.$post('/api/wishlist/mass_update', { offerIds, prices })
+        return this.#axiosInstance.$post(this.#buildURL('/update'), { offerIds, prices })
+    }
+
+    removeOffers (offerIds) {
+        return this.#axiosInstance.$post(this.#buildURL('/remove'), { offerIds })
+    }
+
+    #buildURL (url) {
+        const base = this.#offersType === OfferTypes.MARKET ? '/api/market' : '/api/wishlist'
+        return base + url
     }
 }
