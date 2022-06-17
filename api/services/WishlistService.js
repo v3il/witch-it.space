@@ -1,5 +1,6 @@
-import { Item, Price, Offer, Quest } from '../models'
+import { Item, Offer, Price } from '../models'
 import { userService } from '../services/index.js'
+import { OfferTypes } from '../enum'
 
 export class WishlistService {
     #priceService
@@ -18,16 +19,6 @@ export class WishlistService {
         const offers = await this.#getUserWishes({ userId })
 
         return { profile: profile.getPublicData(), offers }
-    }
-
-    #getUserWishes ({ userId, offerIds }, attrs = []) {
-        let builder = Offer.query().select(...attrs).where('userId', userId)
-
-        if (offerIds) {
-            builder = builder.whereIn('id', offerIds)
-        }
-
-        return builder.withGraphFetched('prices')
     }
 
     async setMassPrice ({ user, offerIds, prices }) {
@@ -49,7 +40,7 @@ export class WishlistService {
                 }
             }
 
-            await userService.setWishlistUpdateTime(user)
+            await this.#updateWishlistData(user)
         })
 
         return this.#getUserWishes({ userId: user.id, offerIds })
@@ -78,12 +69,14 @@ export class WishlistService {
         const mappedOffers = offers.map(offer => ({
             ...offer,
             itemId: offer.itemId,
-            userId: user.id
+            userId: user.id,
+            type: OfferTypes.WISHLIST
         }))
 
-        await userService.setWishlistUpdateTime(user)
+        const createdOffers = await Offer.query().insertGraphAndFetch(mappedOffers)
+        await this.#updateWishlistData(user)
 
-        return Offer.query().insertGraphAndFetch(mappedOffers)
+        return createdOffers
     }
 
     async removeUserOffers ({ user, offerIds }) {
@@ -91,8 +84,34 @@ export class WishlistService {
             return 0
         }
 
-        await userService.setWishlistUpdateTime(user)
+        const removed = await Offer.query().where('userId', user.id).whereIn('id', offerIds).del()
+        await this.#updateWishlistData(user)
 
-        return Offer.query().where('userId', user.id).whereIn('id', offerIds).del()
+        return removed
+    }
+
+    async #updateWishlistData (user) {
+        const wishlistSize = await this.#getUserWishesCount(user.id)
+        await userService.updateWishlistData(user, wishlistSize)
+    }
+
+    #getUserWishes ({ userId, offerIds }, attrs = []) {
+        let builder = Offer.query().select(...attrs).where({
+            userId,
+            type: OfferTypes.WISHLIST
+        })
+
+        if (offerIds) {
+            builder = builder.whereIn('id', offerIds)
+        }
+
+        return builder.withGraphFetched('prices')
+    }
+
+    #getUserWishesCount (userId) {
+        return Offer.query().where({
+            userId,
+            type: OfferTypes.WISHLIST
+        }).resultSize()
     }
 }

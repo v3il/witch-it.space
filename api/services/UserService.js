@@ -57,8 +57,11 @@ export class UserService {
         return user.steamId === '76561198890437027'
     }
 
-    setWishlistUpdateTime (user) {
+    updateWishlistData (user, wishlistSize) {
+        console.error(wishlistSize)
+
         return user.$query().patch({
+            wishlistSize,
             wishlistUpdateTime: new Date()
         })
     }
