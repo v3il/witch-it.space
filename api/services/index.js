@@ -1,5 +1,5 @@
 import axios from 'axios'
-import items from '../../shared/items111.json'
+import { OfferTypes } from '../enum'
 import { WitchItApiService } from './WitchItApiService'
 import { QuestsService } from './QuestsService'
 import { UserService } from './UserService'
@@ -21,4 +21,5 @@ export const witchItApiService = new WitchItApiService({ axiosInstance })
 export const questsService = new QuestsService({ witchItApiService })
 export const userService = new UserService()
 export const priceService = new PriceService()
-export const wishlistService = new WishlistService({ priceService })
+export const marketService = new WishlistService({ priceService, offersType: OfferTypes.MARKET })
+export const wishlistService = new WishlistService({ priceService, offersType: OfferTypes.WISHLIST })

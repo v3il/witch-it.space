@@ -1,12 +1,13 @@
 import { Item, Offer, Price } from '../models'
 import { userService } from '../services/index.js'
-import { OfferTypes } from '../enum'
 
 export class WishlistService {
     #priceService
+    #offersType
 
-    constructor ({ priceService }) {
+    constructor ({ priceService, offersType }) {
         this.#priceService = priceService
+        this.#offersType = offersType
     }
 
     async getUserWishes (userId) {
@@ -70,7 +71,7 @@ export class WishlistService {
             ...offer,
             itemId: offer.itemId,
             userId: user.id,
-            type: OfferTypes.WISHLIST
+            type: this.#offersType
         }))
 
         const createdOffers = await Offer.query().insertGraphAndFetch(mappedOffers)
@@ -98,7 +99,7 @@ export class WishlistService {
     #getUserWishes ({ userId, offerIds }, attrs = []) {
         let builder = Offer.query().select(...attrs).where({
             userId,
-            type: OfferTypes.WISHLIST
+            type: this.#offersType
         })
 
         if (offerIds) {
@@ -111,7 +112,7 @@ export class WishlistService {
     #getUserWishesCount (userId) {
         return Offer.query().where({
             userId,
-            type: OfferTypes.WISHLIST
+            type: this.#offersType
         }).resultSize()
     }
 }
