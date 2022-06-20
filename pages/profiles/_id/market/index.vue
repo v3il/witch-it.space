@@ -152,14 +152,14 @@ export default {
 
     middleware: ['isAuthorized'],
 
-    async asyncData ({ route, $wishlistService, store }) {
+    async asyncData ({ route, $marketService, store }) {
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
-        return $wishlistService.fetch(route.params.id)
+        return $marketService.fetch(route.params.id)
     },
 
     data: () => ({

@@ -54,7 +54,7 @@ export class UserService {
     }
 
     isMyProfile (user) {
-        return user.steamId === '76561198890437027'
+        return ['76561198890437027', '76561198965865000'].includes(user.steamId)
     }
 
     updateWishlistData (user, wishlistSize) {

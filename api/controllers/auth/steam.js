@@ -53,7 +53,7 @@ const steamAuthController = {
             await authUsingSteamCallback(request, response)
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.error(e)
+            console.error(111, e)
             response.redirect(`${Routes.AUTH_RESULT}?error=Error_AuthFailed`)
         }
     }

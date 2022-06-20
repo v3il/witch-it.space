@@ -1,11 +1,13 @@
 import { Offer } from '@/domain/models/index.js'
-import { wishlistService } from '@/domain/index.js'
+import { wishlistService, marketService } from '@/domain/index.js'
 import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
+import { OfferTypes } from '@/shared/index.js'
 
 export const state = () => ({
     existingOffers: [],
     availableOffers: [],
-    mode: ManageWishlistTabs.MY_WISHLIST
+    mode: ManageWishlistTabs.MY_WISHLIST,
+    offersType: OfferTypes.MARKET
 })
 
 export const getters = {
@@ -15,30 +17,31 @@ export const getters = {
     isNonWishlistItemsMode: state => state.mode === ManageWishlistTabs.NON_WISHLIST_ITEMS,
     selectedEntities: (state, getters) => getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
+    service: state => state.offersType === OfferTypes.MARKET ? marketService : wishlistService,
 
     filteredOfferModels: (state, getters, rootState) => {
         const filters = rootState.filters.filters
-        return state.existingOffers.filter(offer => wishlistService.checkOffer(offer, filters))
+        return state.existingOffers.filter(offer => getters.service.checkOffer(offer, filters))
     },
 
     sortedOfferModels: (state, getters, rootState) => {
         const sorts = rootState.filters.sorts
 
         return Array.from(getters.filteredOfferModels).sort((a, b) => {
-            return wishlistService.compareOffers(a, b, sorts)
+            return getters.service.compareOffers(a, b, sorts)
         })
     },
 
     filteredNonWishlistItems: (state, getters, rootState) => {
         const filters = rootState.filters.filters
-        return state.availableOffers.filter(offer => wishlistService.checkOffer(offer, filters))
+        return state.availableOffers.filter(offer => getters.service.checkOffer(offer, filters))
     },
 
     sortedNonWishlistItems: (state, getters, rootState) => {
         const sorts = rootState.filters.sorts
 
         return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
-            return wishlistService.compareOffers(a, b, sorts)
+            return getters.service.compareOffers(a, b, sorts)
         })
     }
 }
@@ -66,25 +69,25 @@ export const actions = {
         commit('DESELECT_OFFERS', offers)
     },
 
-    createOffers ({ commit }, { offers }) {
-        return wishlistService.massCreate(offers).then(({ createdOffers }) => {
+    createOffers ({ commit, getters }, { offers }) {
+        return getters.service.massCreate(offers).then(({ createdOffers }) => {
             commit('ADD_OFFERS', createdOffers)
             commit('REMOVE_AVAILABLE_OFFERS', offers)
             return { createdOffersSize: createdOffers.length }
         })
     },
 
-    setMassPrices ({ commit, state }, { offers, prices }) {
-        return wishlistService.setMassPrice(offers, prices).then(({ updatedOffers }) => {
+    setMassPrices ({ commit, state, getters }, { offers, prices }) {
+        return getters.service.setMassPrice(offers, prices).then(({ updatedOffers }) => {
             commit('UPDATE_OFFERS', updatedOffers)
             return { updatedOffersSize: updatedOffers.length }
         })
     },
 
-    removeOffers ({ commit, state }, offers) {
+    removeOffers ({ commit, state, getters }, offers) {
         const offerIds = offers.map(offer => offer.id)
 
-        return wishlistService.removeOffers(offerIds)
+        return getters.service.removeOffers(offerIds)
             .then((responseData) => {
                 commit('REMOVE_OFFERS', offerIds)
                 commit('ADD_AVAILABLE_OFFERS', offers)
