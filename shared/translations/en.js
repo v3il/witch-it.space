@@ -225,88 +225,60 @@ export const en = {
     Items_SearchByItemName: 'Item search',
     Items_NoItems: 'No Items',
 
-    Wishlist_TopTabs_Orders: 'Предложения',
-    Wishlist_TopTabs_Wishlist: 'Желаемое',
-    Wishlist_MyWishlist: 'Мой вишлист',
-    Wishlist_OtherItems: 'Прочие предметы',
-    Wishlist_AlreadyInWishlist: 'В списке желаемого',
-    Wishlist_SelectItemToEdit: 'Выберите предмет для добавления<br>в список желаемого',
-    Wishlist_RemoveFromWishlist: 'Убрать из желаемого',
-    Wishlist_AddPrice: 'Добавить цену',
-    Wishlist_Remove: 'Удалить',
-    Wishlist_ClearEditor: 'Очистить редактор',
-    Wishlist_SetGlobalPrice: 'Установить цену',
-    Wishlist_Manage_Title: 'Редактирование вишлиста',
-    Wishlist_Manage_Deselect: 'Убрать выделение',
-    Wishlist_Manage_ChangePrices: 'Изменить цены',
-    Wishlist_Manage_AddToWishlist: 'Добавить в вишлист',
-    Wishlist_Manage_RemoveOffers: 'Удалить предложения',
-    Wishlist_ConfirmDelete: 'Вы действительно хотите удалить выбранные предложения (%s)?',
-    Wishlist_LastUpdate: 'Последнее обновление',
+    Wishlist_TopTabs_Orders: 'Offers',
+    Wishlist_TopTabs_Wishlist: 'Wishlist',
+    Wishlist_MyWishlist: 'My wishlist',
+    Wishlist_OtherItems: 'Other items',
+    Wishlist_AlreadyInWishlist: 'In wishlist',
+    Wishlist_SelectItemToEdit: 'Select an item to add<br>to your wishlist',
+    Wishlist_RemoveFromWishlist: 'Remove from wishlist',
+    Wishlist_AddPrice: 'Add price',
+    Wishlist_Remove: 'Remove',
+    Wishlist_ClearEditor: 'Clear Editor',
+    Wishlist_SetGlobalPrice: 'Set price',
+    Wishlist_Manage_Title: 'Wishlist editing',
+    Wishlist_Manage_Deselect: 'Remove selection',
+    Wishlist_Manage_ChangePrices: 'Change prices',
+    Wishlist_Manage_AddToWishlist: 'Add to wishlist',
+    Wishlist_Manage_RemoveOffers: 'Delete offers',
+    Wishlist_ConfirmDelete: 'Are you sure you want to delete the selected offers (%s)?',
+    Wishlist_LastUpdate: 'Last update',
 
-    UserView_SteamGuardEnabled: 'Аккаунт защищён Steam Guard',
+    UserView_SteamGuardEnabled: 'Account protected by Steam Guard',
     // UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',
-    UserView_MaterialsReplacementEnabled: 'Принимаю материалы другой редкости',
+    UserView_MaterialsReplacementEnabled: 'I accept materials of other rarity',
     // UserView_MaterialsReplacementDisabled: 'Принимаю материалы только указанного типа',
-    UserView_SendTradeOffer: 'Предложение обмена',
-    UserView_NoteTitle: 'Описание',
-    UserView_TradingAnyUser: 'Обмениваюсь с игроками без Steam Guard',
+    UserView_SendTradeOffer: 'Trade offer',
+    UserView_NoteTitle: 'Description',
+    UserView_TradingAnyUser: 'Trading with players without Steam Guard',
     // UserView_TradingOnlyGuarded: 'Обмениваюсь только с пользователями со Steam Guard',
-    UserView_BargainAvailable: 'Готов предоставить скидку',
+    UserView_BargainAvailable: 'Ready for a discount',
     // UserView_BargainNotAvailable: 'Не предоставляю скидки, окончательная цена',
-    UserView_TradingOnlyDupes: 'Обмениваю только предметы-дубликаты',
-    UserView_TradingAnyItem: 'Обмениваю предметы в единичном экземпляре',
+    UserView_TradingOnlyDupes: 'I only exchange duplicate items',
+    UserView_TradingAnyItem: 'I exchange items in a single copy',
 
-    PriceType_Any: 'Любое предложение',
-    PriceType_Fixed: 'Фиксированная цена',
-    PriceType_Wishlist: 'Предмет из списка желаемого',
+    PriceType_Any: 'Any offer',
+    PriceType_Fixed: 'Fixed price',
+    PriceType_Wishlist: 'Item from wishlist',
 
-    AddOffer: 'Добавление предложения',
-    AddOffers: 'Добавление предложений',
-    EditOffer: 'Редактирование предложения',
-    EditOffers: 'Редактирование предложений',
+    AddOffer: 'Adding an offer',
+    AddOffers: 'Adding offers',
+    EditOffer: 'Editing an offer',
+    EditOffers: 'Editing offers',
 
-    OffersCreated: 'Добавлено предложений: %s',
-    OffersUpdated: 'Обновлено предложений: %s',
-    OffersRemoved: 'Удалено предложений: %s',
+    OffersCreated: 'Offers added: %s',
+    OffersUpdated: 'Updated offers: %s',
+    OffersRemoved: 'Offers removed: %s',
 
-    PriceWillBeAppliedTo: offersSize => `Данная цена будет установлена для ${OffersCounter(offersSize)}`, // todo
+    PriceWillBeAppliedTo: offersSize => `This price will be set for ${OffersCounter(offersSize)}`,
+    Time_NMinutesAgo: minutes => `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`,
 
-    Time_NMinutesAgo: (minutes) => {
-        let word = ''
-        const mod = minutes % 10
-
-        if (minutes >= 10 && minutes <= 19) {
-            word = 'минут'
-        } else if (mod === 1) {
-            word = 'минуту'
-        } else if (mod >= 2 && mod <= 4) {
-            word = 'минуты'
-        } else {
-            word = 'минут'
-        }
-
-        return `${minutes} ${word} назад`
-    },
-    Time_LessThanAMinuteAgo: 'менее минуты назад',
-    Time_Never: 'никогда',
+    Time_LessThanAMinuteAgo: 'less than a minute ago',
+    Time_Never: 'never',
 
     OffersAvailable: OffersCounter
 }
 
 function OffersCounter (offersCount) {
-    let word = ''
-    const mod = offersCount % 10
-
-    if (offersCount >= 10 && offersCount <= 19) {
-        word = 'предложений'
-    } else if (mod === 1) {
-        word = 'предложение'
-    } else if (mod >= 2 && mod <= 4) {
-        word = 'предложения'
-    } else {
-        word = 'предложений'
-    }
-
-    return `${offersCount} ${word}`
+    return `${offersCount} ${offersCount === 1 ? 'offer' : 'offers'}`
 }
