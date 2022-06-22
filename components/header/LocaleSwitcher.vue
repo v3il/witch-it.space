@@ -32,9 +32,9 @@ export default {
     name: 'LocaleSwitcher',
 
     locales: [
-        { value: Locales.EN, label: 'English', img: buildFlagUrl(Locales.EN) },
-        { value: Locales.UA, label: 'Українська', img: buildFlagUrl(Locales.UA) },
-        { value: Locales.RU, label: 'Русский', img: buildFlagUrl(Locales.RU) }
+        { value: Locales.EN, label: 'English', img: buildFlagUrl(Locales.EN) }
+        // { value: Locales.UA, label: 'Українська', img: buildFlagUrl(Locales.UA) }
+        // { value: Locales.RU, label: 'Русский', img: buildFlagUrl(Locales.RU) }
     ],
 
     components: {

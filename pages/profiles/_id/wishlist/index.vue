@@ -76,7 +76,7 @@
           <Tabs
             :modes="$options.sidebarTabs"
             :selected-mode="sidebarSelectedTab"
-            expanded1
+            expanded
             class="wit-offset-bottom--sm"
             @switch="sidebarSelectedTab = $event"
           >
@@ -130,6 +130,7 @@ import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
+import { OfferTypes } from '@/shared/index.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -153,6 +154,8 @@ export default {
     middleware: ['isAuthorized'],
 
     async asyncData ({ route, $wishlistService, store }) {
+        await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
+
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),

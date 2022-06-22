@@ -168,6 +168,7 @@ import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
+import { OfferTypes } from '@/shared/index.js'
 
 export default {
     name: 'Manage',
@@ -192,6 +193,8 @@ export default {
     },
 
     async asyncData ({ route, $wishlistService, store }) {
+        await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
+
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),

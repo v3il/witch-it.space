@@ -130,6 +130,7 @@ import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
+import { OfferTypes } from '@/shared/index.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -153,6 +154,8 @@ export default {
     middleware: ['isAuthorized'],
 
     async asyncData ({ route, $marketService, store }) {
+        await store.dispatch('offers/setOffersType', OfferTypes.MARKET)
+
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
@@ -164,7 +167,7 @@ export default {
 
     data: () => ({
         isFiltersVisible: false,
-        selectedTab: WishlistListTabs.WISHLIST,
+        selectedTab: WishlistListTabs.MARKET,
         sidebarSelectedTab: WishlistListSidebarTabs.PROFILE
     }),
 

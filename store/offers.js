@@ -7,7 +7,7 @@ export const state = () => ({
     existingOffers: [],
     availableOffers: [],
     mode: ManageWishlistTabs.MY_WISHLIST,
-    offersType: OfferTypes.MARKET
+    offersType: OfferTypes.WISHLIST
 })
 
 export const getters = {
@@ -47,6 +47,10 @@ export const getters = {
 }
 
 export const actions = {
+    setOffersType ({ commit }, type) {
+        commit('SET_OFFERS_TYPE', type)
+    },
+
     storeOffers ({ commit }, { existingOffers, availableOffers }) {
         commit('STORE_OFFERS', { existingOffers, availableOffers })
     },
@@ -97,6 +101,10 @@ export const actions = {
 }
 
 export const mutations = {
+    SET_OFFERS_TYPE (type) {
+        state.offersType = type
+    },
+
     STORE_OFFERS (state, { existingOffers, availableOffers }) {
         state.existingOffers = existingOffers
         state.availableOffers = availableOffers

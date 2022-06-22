@@ -13,8 +13,6 @@ export class OffersService {
         this.#wishlistItemFactory = wishlistItemFactory
         this.#priceService = priceService
         this.#offersType = offersType
-
-        console.error(offersType)
     }
 
     setAxios (axiosInstance) {
@@ -22,8 +20,6 @@ export class OffersService {
     }
 
     fetch (userId) {
-        console.error(this.#offersType)
-
         return this.#axiosInstance.$get(this.#buildURL(`?userId=${userId}`))
             .catch(() => ({ profile: null, offers: [] }))
     }

@@ -168,6 +168,7 @@ import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
+import { OfferTypes } from '@/shared/index.js'
 
 export default {
     name: 'Manage',
@@ -191,14 +192,16 @@ export default {
         SidebarPanel
     },
 
-    async asyncData ({ route, $wishlistService, store }) {
+    async asyncData ({ route, $marketService, store }) {
+        await store.dispatch('offers/setOffersType', OfferTypes.MARKET)
+
         await store.dispatch(`${StoreModules.FILTERS}/setData`, {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
-        return $wishlistService.fetch(route.params.id)
+        return $marketService.fetch(route.params.id)
     },
 
     computed: {
