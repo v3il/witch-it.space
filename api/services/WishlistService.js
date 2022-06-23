@@ -1,5 +1,6 @@
 import { Item, Offer, Price } from '../models'
 import { userService } from '../services/index.js'
+import { OfferTypes } from '../../shared'
 
 export class WishlistService {
     #priceService
@@ -92,8 +93,13 @@ export class WishlistService {
     }
 
     async #updateWishlistData (user) {
-        const wishlistSize = await this.#getUserWishesCount(user.id)
-        await userService.updateWishlistData(user, wishlistSize)
+        const offersCount = await this.#getUserOffersCount(user.id)
+
+        if (this.#offersType === OfferTypes.MARKET) {
+            await userService.updateMarketData(user, offersCount)
+        } else {
+            await userService.updateWishlistData(user, offersCount)
+        }
     }
 
     #getUserWishes ({ userId, offerIds }, attrs = []) {
@@ -109,7 +115,7 @@ export class WishlistService {
         return builder.withGraphFetched('prices')
     }
 
-    #getUserWishesCount (userId) {
+    #getUserOffersCount (userId) {
         return Offer.query().where({
             userId,
             type: this.#offersType

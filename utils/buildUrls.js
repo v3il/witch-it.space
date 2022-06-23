@@ -16,6 +16,10 @@ export const buildUserMarketUrl = (userId) => {
     return `/profiles/${userId}/market`
 }
 
+export const buildUserManageMarketUrl = (userId) => {
+    return `/profiles/${userId}/market/manage`
+}
+
 export const buildUserWishlistUrl = (userId) => {
     return `/profiles/${userId}/wishlist`
 }

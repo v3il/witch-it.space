@@ -49,7 +49,7 @@
                 v-if="isMyProfile"
                 type="is-primary"
                 tag="nuxt-link"
-                :to="manageWishlistURL"
+                :to="manageMarketURL"
                 class="wit-offset-left--xs wit-paddings--xs"
               >
                 <i class="mdi mdi-20px mdi-pencil" />
@@ -131,6 +131,7 @@ import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/
 import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
 import { OfferTypes } from '@/shared/index.js'
+import { buildUserManageMarketUrl } from '@/utils/buildUrls.js'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -197,8 +198,8 @@ export default {
             return this.sidebarSelectedTab === WishlistListSidebarTabs.PROFILE
         },
 
-        manageWishlistURL () {
-            return buildUserManageWishlistUrl(this.profile.id)
+        manageMarketURL () {
+            return buildUserManageMarketUrl(this.profile.id)
         },
 
         marketURL () {

@@ -228,6 +228,7 @@ export const en = {
     Wishlist_TopTabs_Orders: 'Offers',
     Wishlist_TopTabs_Wishlist: 'Wishlist',
     Wishlist_MyWishlist: 'My wishlist',
+    Wishlist_MyMarket: 'My market',
     Wishlist_OtherItems: 'Other items',
     Wishlist_AlreadyInWishlist: 'In wishlist',
     Wishlist_SelectItemToEdit: 'Select an item to add<br>to your wishlist',

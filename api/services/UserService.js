@@ -58,11 +58,20 @@ export class UserService {
     }
 
     updateWishlistData (user, wishlistSize) {
-        console.error(wishlistSize)
+        console.error('wl', wishlistSize)
 
         return user.$query().patch({
             wishlistSize,
             wishlistUpdateTime: new Date()
+        })
+    }
+
+    updateMarketData (user, marketSize) {
+        console.error('market', marketSize)
+
+        return user.$query().patch({
+            marketSize,
+            marketUpdateTime: new Date()
         })
     }
 

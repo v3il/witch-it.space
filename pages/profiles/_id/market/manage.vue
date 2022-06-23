@@ -15,7 +15,7 @@
           <Tabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">
             <template #tab0>
               <div class="wit-flex wit-flex--align-center">
-                <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>
+                <span class="wis-tabs__label">{{ $t('Wishlist_MyMarket') }}</span>
                 <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
                 <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
                   {{ sortedOfferModels.length }}
