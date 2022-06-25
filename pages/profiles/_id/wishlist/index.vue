@@ -3,7 +3,6 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <BackButton to="/profiles" class="wit-offset-right--xs" />
           <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}</span>
           <span v-else>{{ $t('Error') }}</span>
         </h1>
@@ -125,11 +124,10 @@ import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import Tabs from '@/components/basic/Tabs.vue'
-import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import IconButton from '@/components/basic/IconButton.vue'
-import { buildUserMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
+import { buildUserManageWishlistUrl, buildUserMarketUrl } from '@/utils/index.js'
 import { OfferTypes } from '@/shared/index.js'
 
 export default {
@@ -146,7 +144,6 @@ export default {
         ItemView,
         ItemPriceList,
         Tabs,
-        BackButton,
         SidebarPanel,
         IconButton
     },

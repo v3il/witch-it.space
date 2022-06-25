@@ -3,7 +3,7 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <BackButton to="/profiles/139/wishlist" class="wit-offset-right--xs" />
+          <BackButton :to="wishlistURL" class="wit-offset-right--xs" />
           {{ $t('Wishlist_Manage_Title') }}
         </h1>
       </template>
@@ -169,6 +169,7 @@ import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { OfferTypes } from '@/shared/index.js'
+import { buildUserWishlistUrl } from '@/utils/index.js'
 
 export default {
     name: 'Manage',
@@ -206,6 +207,7 @@ export default {
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
+        ...mapState(StoreModules.USER, ['user']),
         ...mapState(StoreModules.OFFERS, ['mode']),
         ...mapGetters(StoreModules.OFFERS, [
             'isMyWishlistMode',
@@ -214,7 +216,11 @@ export default {
             'hasSelectedEntities',
             'selectedExistingOffers',
             'selectedAvailableOffers'
-        ])
+        ]),
+
+        wishlistURL () {
+            return buildUserWishlistUrl(this.user.id)
+        }
     },
 
     middleware: ['isAuthorized'],

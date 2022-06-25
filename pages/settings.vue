@@ -3,7 +3,6 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <BackButton to="/" class="wit-offset-right--xs" />
           {{ $t('MainMenu_Settings') }}
         </h1>
       </template>
@@ -30,7 +29,6 @@ import DangerZone from '@/components/settings/DangerZone'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
 import StickyPanel from '@/components/settings/StickyPanel'
 import TopNavBar from '@/components/header/TopNavBar.vue'
-import BackButton from '@/components/basic/BackButton.vue'
 import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 import MarketSettings from '@/components/settings/MarketSettings.vue'
@@ -44,7 +42,6 @@ export default {
         NotVerifiedProfileMessage,
         StickyPanel,
         TopNavBar,
-        BackButton,
         NoteEditor,
         AccountSettings,
         SocialNetworks,

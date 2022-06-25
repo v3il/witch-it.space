@@ -3,7 +3,6 @@
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <BackButton to="/" class="wit-offset-right--xs" />
           {{ $t('MainMenu_Quests') }}
         </h1>
       </template>
@@ -22,14 +21,12 @@ import ConnectSteam from '@/components/quests/ConnectSteam'
 import { StoreModules } from '@/store'
 import QuestsView from '@/components/quests/QuestsView'
 import TopNavBar from '@/components/header/TopNavBar.vue'
-import BackButton from '@/components/basic/BackButton.vue'
 
 export default {
     components: {
         ConnectSteam,
         QuestsView,
-        TopNavBar,
-        BackButton
+        TopNavBar
     },
 
     middleware: ['isAuthorized'],
