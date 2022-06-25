@@ -25,9 +25,9 @@
     </template>
 
     <template #end>
-      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings--none wiz-background--transparent">
-        <LocaleSwitcher />
-      </b-navbar-item>
+      <!--      <b-navbar-item tag="div" class="wit-header__locale-switcher wit-paddings&#45;&#45;none wiz-background&#45;&#45;transparent">-->
+      <!--        <LocaleSwitcher />-->
+      <!--      </b-navbar-item>-->
 
       <b-navbar-item tag="div" class="wit-header__theme-switcher wit-paddings--none wiz-background--transparent">
         <ThemeSwitcher />

@@ -35,6 +35,8 @@
           </Tabs>
 
           <div class="wit-flex">
+            {{ $store.state['offers/offersType'] }}
+
             <SearchInput
               :placeholder="$t('Items_SearchByItemName')"
               :query="filters.query"

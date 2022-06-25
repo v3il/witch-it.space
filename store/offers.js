@@ -7,7 +7,7 @@ export const state = () => ({
     existingOffers: [],
     availableOffers: [],
     mode: ManageWishlistTabs.MY_WISHLIST,
-    offersType: OfferTypes.WISHLIST
+    offersType: ''
 })
 
 export const getters = {
@@ -101,7 +101,7 @@ export const actions = {
 }
 
 export const mutations = {
-    SET_OFFERS_TYPE (type) {
+    SET_OFFERS_TYPE (state, type) {
         state.offersType = type
     },
 
