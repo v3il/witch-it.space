@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wit-flex wit-flex--column wit-offers-page">
     <TopNavBar class="layout__header">
       <template #brand>
         <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
@@ -9,7 +9,7 @@
       </template>
     </TopNavBar>
 
-    <div class="wit-wishlist wit-flex">
+    <div class="wit-wishlist wit-flex wit-flex__item--grow">
       <template v-if="profile">
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
@@ -51,7 +51,8 @@
                 :to="manageWishlistURL"
                 class="wit-offset-left--xs wit-paddings--xs"
               >
-                <i class="mdi mdi-20px mdi-pencil" />
+                Manage
+                <!--                <i class="mdi mdi-20px mdi-pencil" />-->
               </b-button>
             </div>
           </div>
@@ -71,7 +72,7 @@
           </ItemsListView>
         </div>
 
-        <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
+        <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start" @close="isFiltersVisible = false">
           <Tabs
             :modes="$options.sidebarTabs"
             :selected-mode="sidebarSelectedTab"
@@ -228,6 +229,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wit-offers-page {
+    min-height: 100vh;
+}
+
 .wit-wishlist {
     padding: var(--offset-sm);
 }
@@ -245,7 +250,6 @@ export default {
     flex: 1;
     background-color: var(--content-bg);
     border-radius: var(--offset-xxs);
-    margin-bottom: var(--offset-sm);
 }
 
 .wit-wishlist__items-list {
