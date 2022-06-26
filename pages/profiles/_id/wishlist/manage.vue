@@ -229,6 +229,10 @@ export default {
         isFiltersVisible: false
     }),
 
+    setup () {
+        console.error('Setup')
+    },
+
     created () {
         if (this.error) {
             return
