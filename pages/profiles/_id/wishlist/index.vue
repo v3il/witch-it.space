@@ -11,118 +11,80 @@
 
     <div class="wit-wishlist wit-flex wit-flex__item--grow">
       <template v-if="profile">
-        <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-right--sm" @close="isFiltersVisible = false">
-          <!--          <Tabs-->
-          <!--            :modes="$options.sidebarTabs"-->
-          <!--            :selected-mode="sidebarSelectedTab"-->
-          <!--            expanded-->
-          <!--            class="wit-offset-bottom&#45;&#45;sm"-->
-          <!--            @switch="sidebarSelectedTab = $event"-->
-          <!--          >-->
-          <!--            <template #tab0>-->
-          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-          <!--                <i class="mdi mdi-20px mdi-chevron-left wit-offset-right&#45;&#45;xxs wis-tabs__icon2" />-->
-          <!--                <span class="wis-tabs__label">{{ $t('Profile') }}</span>-->
-          <!--              </div>-->
-          <!--            </template>-->
+        <div class="wit-flex wit-flex__item--grow wit-flex--wrap">
+          <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-right--sm" @close="isFiltersVisible = false">
+            <UserView :profile="profile" :mode="'wishlist'" />
+          </SidebarPanel>
 
-          <!--            <template #tab1>-->
-          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-          <!--                <span class="wis-tabs__label">{{ $t('Filters') }}</span>-->
-          <!--                <i class="mdi mdi-20px mdi-chevron-right wit-offset-left&#45;&#45;xxs wis-tabs__icon2" />-->
-          <!--              </div>-->
-          <!--            </template>-->
-          <!--          </Tabs>-->
+          <div class="wit-wishlist__content1 wit-flex__item--grow" style="flex-basis: 500px;">
+            <div class="wit-offset-bottom--sm wit-wishlist__content wit-paddings--sm">
+              <CompactUserView :profile="profile" mode="wishlist" />
+            </div>
 
-          <UserView :profile="profile" :mode="'wishlist'" />
-          <!--          <WishlistFilters v-else />-->
-        </SidebarPanel>
+            <div class="wit-wishlist__content">
+              <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
+                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
+                  <template #tab0>
+                    <NuxtLink :to="marketURL" class="wit-flex wit-flex--align-center wis-color--inherit">
+                      <span class="wis-tabs__label">{{ $t('Market') }}</span>
+                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
+                      <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                        {{ marketSize }}
+                      </b-tag>
+                    </NuxtLink>
+                  </template>
 
-        <div class="wit-wishlist__content wit-flex__item--grow">
-          <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
-            <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
-              <template #tab0>
-                <NuxtLink :to="marketURL" class="wit-flex wit-flex--align-center wis-color--inherit">
-                  <span class="wis-tabs__label">{{ $t('Market') }}</span>
-                  <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
-                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                    {{ marketSize }}
-                  </b-tag>
-                </NuxtLink>
-              </template>
+                  <template #tab1>
+                    <div class="wit-flex wit-flex--align-center">
+                      <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
+                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
+                      <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
+                        {{ wishlistSize }}
+                      </b-tag>
+                    </div>
+                  </template>
+                </Tabs>
 
-              <template #tab1>
-                <div class="wit-flex wit-flex--align-center">
-                  <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
-                  <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
-                  <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                    {{ wishlistSize }}
-                  </b-tag>
+                <div class="wit-flex">
+                  <SearchInput
+                    :placeholder="$t('Items_SearchByItemName')"
+                    :query="filters.query"
+                    @update="mergeFilters({ query: $event })"
+                    @reset="resetFilterParam"
+                    @toggle="isFiltersVisible = !isFiltersVisible"
+                  />
+
+                  <b-button
+                    v-if="isMyProfile"
+                    type="is-primary"
+                    tag="nuxt-link"
+                    :to="manageWishlistURL"
+                    class="wit-offset-left--xs wit-paddings--xs"
+                  >
+                    Manage
+                  <!--                <i class="mdi mdi-20px mdi-pencil" />-->
+                  </b-button>
                 </div>
-              </template>
-            </Tabs>
+              </div>
 
-            <div class="wit-flex">
-              <SearchInput
-                :placeholder="$t('Items_SearchByItemName')"
-                :query="filters.query"
-                @update="mergeFilters({ query: $event })"
-                @reset="resetFilterParam"
-                @toggle="isFiltersVisible = !isFiltersVisible"
-              />
-
-              <b-button
-                v-if="isMyProfile"
-                type="is-primary"
-                tag="nuxt-link"
-                :to="manageWishlistURL"
-                class="wit-offset-left--xs wit-paddings--xs"
-              >
-                Manage
-                <!--                <i class="mdi mdi-20px mdi-pencil" />-->
-              </b-button>
+              <ItemsListView :items="sortedOfferModels" class="wit-wishlist__items-list">
+                <template #default="{ items: offers }">
+                  <ItemView
+                    v-for="(offer) in offers"
+                    :key="offer.id"
+                    :item="offer.item"
+                    add-title
+                    add-border
+                  >
+                    <ItemPriceList :prices="offer.prices" />
+                  </ItemView>
+                </template>
+              </ItemsListView>
             </div>
           </div>
-
-          <ItemsListView :items="sortedOfferModels" class="wit-wishlist__items-list">
-            <template #default="{ items: offers }">
-              <ItemView
-                v-for="(offer) in offers"
-                :key="offer.id"
-                :item="offer.item"
-                add-title
-                add-border
-              >
-                <ItemPriceList :prices="offer.prices" />
-              </ItemView>
-            </template>
-          </ItemsListView>
         </div>
 
         <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-left--sm" @close="isFiltersVisible = false">
-          <!--          <Tabs-->
-          <!--            :modes="$options.sidebarTabs"-->
-          <!--            :selected-mode="sidebarSelectedTab"-->
-          <!--            expanded-->
-          <!--            class="wit-offset-bottom&#45;&#45;sm"-->
-          <!--            @switch="sidebarSelectedTab = $event"-->
-          <!--          >-->
-          <!--            <template #tab0>-->
-          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-          <!--                <i class="mdi mdi-20px mdi-chevron-left wit-offset-right&#45;&#45;xxs wis-tabs__icon2" />-->
-          <!--                <span class="wis-tabs__label">{{ $t('Profile') }}</span>-->
-          <!--              </div>-->
-          <!--            </template>-->
-
-          <!--            <template #tab1>-->
-          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
-          <!--                <span class="wis-tabs__label">{{ $t('Filters') }}</span>-->
-          <!--                <i class="mdi mdi-20px mdi-chevron-right wit-offset-left&#45;&#45;xxs wis-tabs__icon2" />-->
-          <!--              </div>-->
-          <!--            </template>-->
-          <!--          </Tabs>-->
-
-          <!--          <UserView v-if="isProfileTabSelected" :profile="profile" :mode="'wishlist'" />-->
           <WishlistFilters />
         </SidebarPanel>
       </template>
@@ -157,6 +119,7 @@ import { WishlistListSidebarTabs, WishlistListTabs } from '@/pages/profiles/_id/
 import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserManageWishlistUrl, buildUserMarketUrl } from '@/utils/index.js'
 import { OfferTypes } from '@/shared/index.js'
+import CompactUserView from '@/components/user/CompactUserView.vue'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -173,7 +136,8 @@ export default {
         ItemPriceList,
         Tabs,
         SidebarPanel,
-        IconButton
+        IconButton,
+        CompactUserView
     },
 
     middleware: ['isAuthorized'],

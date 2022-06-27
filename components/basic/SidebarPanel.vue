@@ -18,7 +18,7 @@ export default {
 
     props: {
         isVisible: {
-            required: true,
+            required: false,
             type: Boolean
         }
     },
