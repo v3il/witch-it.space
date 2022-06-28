@@ -1,6 +1,17 @@
 /* stylelint-disable */
 
 .body--dark {
+    // New 2
+
+    --dark-blue: #0F172A;
+    --dark-gray: #1E293B;
+
+    --border-color: rgba(241, 245, 249, 0.12);
+    --secondary-button-bg: rgb(51, 65, 85);
+    --primary-button-bg: #4f46e5;
+
+    // New 2
+
     --gray-100: #323a4e;
     --gray-200: #32394e;
     --gray-300: #2e3648;
@@ -20,7 +31,7 @@
     --light: var(--gray-200);
     --dark: var(--gray-800);
 
-    --body-bg: #222736;
+    --body-bg: var(--dark-blue);
     --body-color: var(--gray-400);
     --label-color: var(--gray-400);
 
@@ -54,7 +65,7 @@
 
     --muted-text-color: var(--gray-500);
 
-    --card-bg-color: var(--content-bg);
+    --card-bg-color: var(--dark-gray);
     --card-border-color: var(--gray-300);
     --card-box-shadow-color: rgb(18 38 63 / 3%);
 
@@ -80,11 +91,5 @@
     --left-navbar-bg: var(--content-background);
 
     --user-view-border: #36394c;
-
-    // New 2
-
-    --content-background: #0F172A;
-    --border-color: rgba(241, 245, 249, 0.12);
-    --card-background: #1E293B;
 
 }

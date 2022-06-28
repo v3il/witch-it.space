@@ -189,6 +189,10 @@
     padding-left: var(--offset-sm);
 }
 
+.wit-padding-left--lg {
+    padding-left: var(--offset-lg);
+}
+
 .wit-padding-right--xs {
     padding-right: var(--offset-xs);
 }
@@ -199,4 +203,8 @@
 
 .wit-padding-right--sm {
     padding-right: var(--offset-sm);
+}
+
+.wit-padding-right--lg {
+    padding-right: var(--offset-lg);
 }
