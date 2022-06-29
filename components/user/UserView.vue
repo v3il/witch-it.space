@@ -212,9 +212,16 @@ export default {
         },
 
         formattedLastUpdate () {
-            return this.profile.wishlistUpdateTime
-                ? Date.fromTimestamp(this.profile.wishlistUpdateTime).humanizeTimeDiff()
-                : this.$t('Time_Never')
+            const updateTime = this.isMarketMode ? this.profile.marketUpdateTime : this.profile.wishlistUpdateTime
+
+            if (!updateTime) {
+                return this.$t('Time_Never')
+            }
+
+            const date = new Date(updateTime).toLocaleDateString()
+            const time = new Date(updateTime).toLocaleTimeString()
+
+            return date + ' ' + time
         }
     },
 
