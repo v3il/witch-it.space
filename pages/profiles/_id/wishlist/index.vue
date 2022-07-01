@@ -12,7 +12,7 @@
     <UserHeader />
 
     <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
-      <OfferTabs class="wit-offset-bottom--md" />
+      <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
     </div>
 
     <div class="wit-wishlist wit-flex wit-flex__item--grow wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width">
@@ -23,9 +23,9 @@
           <!--          </SidebarPanel>-->
 
           <div class="wit-wishlist__content1 wit-flex__item--grow" style="flex-basis: 500px;">
-            <div class="wit-offset-bottom--sm wit-wishlist__content wit-paddings--sm">
-              <CompactUserView :profile="profile" mode="wishlist" />
-            </div>
+            <!--            <div class="wit-offset-bottom&#45;&#45;sm wit-wishlist__content wit-paddings&#45;&#45;sm">-->
+            <!--              <CompactUserView :profile="profile" mode="wishlist" />-->
+            <!--            </div>-->
 
             <div class="wit-wishlist__content">
               <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
@@ -128,10 +128,13 @@ import { OfferTypes } from '@/shared/index.js'
 import CompactUserView from '@/components/user/CompactUserView.vue'
 import UserHeader from '@/components/offers/UserHeader.vue'
 import OfferTabs from '@/components/offers/OfferTabs.vue'
+import { OfferTabModes } from '@/domain'
 
 export default {
     tabs: WishlistListTabs.values,
     sidebarTabs: WishlistListSidebarTabs.values,
+
+    selectedTab: OfferTabModes.WISHLIST,
 
     components: {
         UserView,

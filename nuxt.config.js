@@ -49,6 +49,7 @@ export default {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources',
+        '@nuxtjs/composition-api/module',
         'nuxt-buefy',
         'cookie-universal-nuxt'
     ],

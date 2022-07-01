@@ -43,6 +43,10 @@ export default {
 
     methods: {
         switchMode (mode) {
+            if (mode === this.selectedMode) {
+                return
+            }
+
             this.$emit('switch', mode)
         },
 

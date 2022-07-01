@@ -2,6 +2,8 @@ import { ItemsService, UsersService, OffersService, PriceService, QuestsService,
 import { wishlistItemFactory, priceFactory } from './factories'
 import { OfferTypes } from '@/shared/index.js'
 
+export * from './enums'
+
 export const itemsService = new ItemsService()
 export const usersService = new UsersService()
 export const questsService = new QuestsService()

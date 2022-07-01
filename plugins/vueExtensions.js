@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueCompositionAPI from '@vue/composition-api'
 import { VTooltip, VPopover } from 'v-tooltip'
 import { getTranslation } from '@/shared'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
@@ -9,8 +8,6 @@ export default function ({ store }) {
         const lngSet = store.getters['locale/lngSet']
         return getTranslation(lngSet, textId, replacements)
     }
-
-    Vue.use(VueCompositionAPI)
 
     VTooltip.options.container = 'body'
     VTooltip.options.defaultBoundariesElement = 'body'
