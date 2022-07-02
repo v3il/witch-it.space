@@ -1,29 +1,27 @@
 <template>
   <Tabs :modes="offerTabs" :selected-mode="selectedTab" @switch="onTabSwitch">
     <template #tab0>
-      <!--      <NuxtLink :to="'/'" class="wit-flex wit-flex&#45;&#45;align-center wis-color&#45;&#45;inherit">-->
       <span class="wis-tabs__label">{{ $t('Market') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
         {{ 10 }}
       </b-tag>
-      <!--      </NuxtLink>-->
     </template>
 
     <template #tab1>
-      <!--      <div class="wit-flex wit-flex&#45;&#45;align-center">-->
       <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
         {{ 99 }}
       </b-tag>
-      <!--      </div>-->
     </template>
   </Tabs>
 </template>
 
 <script>
-import { useRouter, useRoute } from '@nuxtjs/composition-api'
+import { useContext, useRouter, computed, useStore } from '@nuxtjs/composition-api'
 import Tabs from '@/components/basic/Tabs.vue'
 import { OfferTabModes } from '@/domain'
+import { buildUserMarketUrl, buildUserWishlistUrl } from '~/utils/index.js'
+import { StoreModules } from '~/store/index.js'
 
 export default {
     name: 'OfferTabs',
@@ -41,11 +39,15 @@ export default {
 
     setup () {
         const router = useRouter()
-
+        const store = useStore()
         const offerTabs = OfferTabModes.values
 
+        // const { isMyWishlistMode } = useNamespacedGetters(StoreModules.OFFERS, ['isMyWishlistMode'])
+
+        console.error(store.getters.offer)
+
         const onTabSwitch = (selectedTab) => {
-            console.error(router)
+            router.push(selectedTab === OfferTabModes.MARKET ? buildUserMarketUrl(22) : buildUserWishlistUrl(22))
         }
 
         return {

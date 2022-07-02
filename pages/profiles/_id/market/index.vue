@@ -250,7 +250,7 @@ export default {
 }
 
 .wit-wishlist__items-list {
-    padding: 0 var(--offset-sm) var(--offset-sm);
+    padding: var(--offset-md);
 }
 
 .wis-tabs__icon {

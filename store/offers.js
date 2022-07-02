@@ -7,7 +7,8 @@ export const state = () => ({
     existingOffers: [],
     availableOffers: [],
     mode: ManageWishlistTabs.MY_WISHLIST,
-    offersType: ''
+    offersType: '',
+    profile: {}
 })
 
 export const getters = {
@@ -53,6 +54,10 @@ export const actions = {
 
     storeOffers ({ commit }, { existingOffers, availableOffers }) {
         commit('STORE_OFFERS', { existingOffers, availableOffers })
+    },
+
+    setProfile ({ commit }, profile) {
+        commit('SET_PROFILE', profile)
     },
 
     toggleOffer ({ commit, state }, offer) {
@@ -108,6 +113,10 @@ export const mutations = {
     STORE_OFFERS (state, { existingOffers, availableOffers }) {
         state.existingOffers = existingOffers
         state.availableOffers = availableOffers
+    },
+
+    SET_PROFILE (state, profile) {
+        state.profile = profile
     },
 
     ADD_OFFERS (state, offers) {

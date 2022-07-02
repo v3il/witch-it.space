@@ -65,7 +65,9 @@ export default {
     },
 
     build: {
-        transpile: ['vue-final-modal']
+        transpile: [
+            'vue-final-modal'
+        ]
     },
 
     serverMiddleware: [

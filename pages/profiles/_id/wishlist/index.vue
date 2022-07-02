@@ -28,50 +28,50 @@
             <!--            </div>-->
 
             <div class="wit-wishlist__content">
-              <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
-                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
-                  <template #tab0>
-                    <NuxtLink :to="marketURL" class="wit-flex wit-flex--align-center wis-color--inherit">
-                      <span class="wis-tabs__label">{{ $t('Market') }}</span>
-                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
-                      <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                        {{ marketSize }}
-                      </b-tag>
-                    </NuxtLink>
-                  </template>
+              <!--              <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->
+              <!--                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">-->
+              <!--                  <template #tab0>-->
+              <!--                    <NuxtLink :to="marketURL" class="wit-flex wit-flex&#45;&#45;align-center wis-color&#45;&#45;inherit">-->
+              <!--                      <span class="wis-tabs__label">{{ $t('Market') }}</span>-->
+              <!--                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>-->
+              <!--                      <b-tag rounded class="wit-offset-left&#45;&#45;xs wit-font-weight&#45;&#45;700">-->
+              <!--                        {{ marketSize }}-->
+              <!--                      </b-tag>-->
+              <!--                    </NuxtLink>-->
+              <!--                  </template>-->
 
-                  <template #tab1>
-                    <div class="wit-flex wit-flex--align-center">
-                      <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
-                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
-                      <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                        {{ wishlistSize }}
-                      </b-tag>
-                    </div>
-                  </template>
-                </Tabs>
+              <!--                  <template #tab1>-->
+              <!--                    <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+              <!--                      <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>-->
+              <!--                      <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>-->
+              <!--                      <b-tag rounded class="wit-offset-left&#45;&#45;xs wit-font-weight&#45;&#45;700">-->
+              <!--                        {{ wishlistSize }}-->
+              <!--                      </b-tag>-->
+              <!--                    </div>-->
+              <!--                  </template>-->
+              <!--                </Tabs>-->
 
-                <div class="wit-flex">
-                  <SearchInput
-                    :placeholder="$t('Items_SearchByItemName')"
-                    :query="filters.query"
-                    @update="mergeFilters({ query: $event })"
-                    @reset="resetFilterParam"
-                    @toggle="isFiltersVisible = !isFiltersVisible"
-                  />
+              <!--                <div class="wit-flex">-->
+              <!--                  <SearchInput-->
+              <!--                    :placeholder="$t('Items_SearchByItemName')"-->
+              <!--                    :query="filters.query"-->
+              <!--                    @update="mergeFilters({ query: $event })"-->
+              <!--                    @reset="resetFilterParam"-->
+              <!--                    @toggle="isFiltersVisible = !isFiltersVisible"-->
+              <!--                  />-->
 
-                  <b-button
-                    v-if="isMyProfile"
-                    type="is-primary"
-                    tag="nuxt-link"
-                    :to="manageWishlistURL"
-                    class="wit-offset-left--xs wit-paddings--xs"
-                  >
-                    Manage
-                  <!--                <i class="mdi mdi-20px mdi-pencil" />-->
-                  </b-button>
-                </div>
-              </div>
+              <!--                  <b-button-->
+              <!--                    v-if="isMyProfile"-->
+              <!--                    type="is-primary"-->
+              <!--                    tag="nuxt-link"-->
+              <!--                    :to="manageWishlistURL"-->
+              <!--                    class="wit-offset-left&#45;&#45;xs wit-paddings&#45;&#45;xs"-->
+              <!--                  >-->
+              <!--                    Manage-->
+              <!--                  &lt;!&ndash;                <i class="mdi mdi-20px mdi-pencil" />&ndash;&gt;-->
+              <!--                  </b-button>-->
+              <!--                </div>-->
+              <!--              </div>-->
 
               <ItemsListView :items="sortedOfferModels" class="wit-wishlist__items-list">
                 <template #default="{ items: offers }">
@@ -208,10 +208,12 @@ export default {
         }
     },
 
-    created () {
+    async created () {
         if (!this.profile) {
             return
         }
+
+        await this.setProfile(this.profile)
 
         this.storeOffers({
             existingOffers: this.offers.map(offer => Offer.create(offer)),
@@ -226,7 +228,8 @@ export default {
         }),
 
         ...mapActions(StoreModules.OFFERS, {
-            storeOffers: 'storeOffers'
+            storeOffers: 'storeOffers',
+            setProfile: 'setProfile'
         })
     }
 }
@@ -252,12 +255,12 @@ export default {
 
 .wit-wishlist__content {
     flex: 1;
-    background-color: var(--content-bg);
-    border-radius: var(--offset-xxs);
+    background-color: var(--card-bg-color);
+    border-radius: var(--offset-sm);
 }
 
 .wit-wishlist__items-list {
-    padding: 0 var(--offset-sm) var(--offset-sm);
+    padding: var(--offset-md);
 }
 
 .wis-tabs__icon {
