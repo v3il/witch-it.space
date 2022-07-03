@@ -3,14 +3,14 @@
     <template #tab0>
       <span class="wis-tabs__label">{{ $t('Market') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
-        {{ 10 }}
+        {{ marketSize }}
       </b-tag>
     </template>
 
     <template #tab1>
       <span class="wis-tabs__label">{{ $t('Wishlist') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
-        {{ 99 }}
+        {{ wishlistSize }}
       </b-tag>
     </template>
   </Tabs>
@@ -42,9 +42,13 @@ export default {
         const store = useStore()
         const offerTabs = OfferTabModes.values
 
+        const marketSize = computed(() => store.getters['offers/marketSize'])
+        const wishlistSize = computed(() => store.getters['offers/wishlistSize'])
+
         // const { isMyWishlistMode } = useNamespacedGetters(StoreModules.OFFERS, ['isMyWishlistMode'])
 
-        console.error(store.getters.offer)
+        console.error(store.getters['offers/marketSize'])
+        console.error(store.getters['offers/wishlistSize'])
 
         const onTabSwitch = (selectedTab) => {
             router.push(selectedTab === OfferTabModes.MARKET ? buildUserMarketUrl(22) : buildUserWishlistUrl(22))
@@ -52,6 +56,8 @@ export default {
 
         return {
             offerTabs,
+            marketSize,
+            wishlistSize,
             onTabSwitch
         }
     }

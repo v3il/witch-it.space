@@ -12,6 +12,8 @@ export const state = () => ({
 })
 
 export const getters = {
+    marketSize: state => state.profile.marketSize ?? 0,
+    wishlistSize: state => state.profile.wishlistSize ?? 0,
     selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
     selectedAvailableOffers: state => state.availableOffers.filter(offer => offer.isSelected),
     isMyWishlistMode: state => state.mode === ManageWishlistTabs.MY_WISHLIST,

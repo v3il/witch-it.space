@@ -39,10 +39,10 @@ export default {
 
 <style scoped lang="scss">
 .wis-sidebar-panel {
-    border-radius: var(--offset-xxs);
+    border-radius: var(--offset-sm);
     width: 300px;
     background-color: var(--card-bg-color);
-    padding: var(--offset-sm) var(--offset-xxs) var(--offset-sm) var(--offset-sm);
+    padding: var(--offset-md) var(--offset-xs) var(--offset-md) var(--offset-md);
     max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
     position: sticky;
     top: var(--offset-sm);
