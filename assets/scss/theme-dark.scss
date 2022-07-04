@@ -5,9 +5,15 @@
 
     --dark-blue: #0F172A;
     --dark-gray: #1E293B;
+    --primary-color: #4f46e5;
+    --primary-light: #C7D2FE;
+    --accent-dark: #1E293B;
+    --accent-light: #CBD5E1;
+    --error-dark: #DC2626;
+    --error-light: #F87171;
 
     --border-color: rgba(241, 245, 249, 0.12);
-    --secondary-button-bg: rgb(51, 65, 85);
+    --secondary-button-bg: #2E3A4C;
     --primary-button-bg: #4f46e5;
 
     // New 2
@@ -22,7 +28,7 @@
     --gray-800: #eff2f7;
     --gray-900: #f8f9fa;
 
-    --primary: var(--blue);
+    --primary: var(--primary-color);
     --secondary: var(--gray-600);
     --success: var(--green);
     --info: var(--cyan);

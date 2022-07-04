@@ -1,8 +1,12 @@
 <template>
   <div class="wit-flex wit-flex--column">
-    <div class="wit-flex wit-flex--center wis-logo-wrap">
+    <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-logo-wrapper">
       <Logo class="wis-logo" />
-      <Notifications />
+
+      <div class="wit-flex wit-flex--align-center">
+        <Notifications class="wit-offset-right--xsm" />
+        <UserDropdown />
+      </div>
     </div>
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
@@ -27,13 +31,15 @@ import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store/index.js'
 import Logo from '@/components/sidebar/Logo.vue'
 import Notifications from '@/components/sidebar/Notifications.vue'
+import UserDropdown from '@/components/sidebar/UserDropdown.vue'
 
 export default {
     name: 'LeftNavBar',
 
     components: {
         Logo,
-        Notifications
+        Notifications,
+        UserDropdown
     },
 
     props: {
@@ -64,13 +70,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-logo-wrap {
-    //height: 64px;
-    //width: 60px;
+.wis-logo-wrapper {
+    padding: var(--offset-sm) var(--offset-sm) var(--offset-sm) var(--offset-md);
 }
 
 .wis-logo {
-    width: 55px;
+    width: 48px;
+    height: auto;
 }
 
 .wit-link {
