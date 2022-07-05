@@ -1,13 +1,6 @@
 <template>
   <div class="wit-flex wit-flex--column">
-    <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-logo-wrapper">
-      <Logo class="wis-logo" />
-
-      <div class="wit-flex wit-flex--align-center">
-        <Notifications class="wit-offset-right--xsm" />
-        <UserDropdown />
-      </div>
-    </div>
+    <Header />
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
       <b-button
@@ -29,17 +22,16 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store/index.js'
-import Logo from '@/components/sidebar/Logo.vue'
-import Notifications from '@/components/sidebar/Notifications.vue'
-import UserDropdown from '@/components/sidebar/UserDropdown.vue'
+import Logo from '@/components/sidebar/components/Logo.vue'
+import Notifications from '@/components/sidebar/components/Notifications.vue'
+import UserDropdown from '@/components/sidebar/components/UserDropdown.vue'
+import Header from '@/components/sidebar/Header.vue'
 
 export default {
     name: 'LeftNavBar',
 
     components: {
-        Logo,
-        Notifications,
-        UserDropdown
+        Header
     },
 
     props: {
@@ -70,14 +62,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-logo-wrapper {
-    padding: var(--offset-sm) var(--offset-sm) var(--offset-sm) var(--offset-md);
-}
-
-.wis-logo {
-    width: 48px;
-    height: auto;
-}
 
 .wit-link {
     border-radius: 0;
