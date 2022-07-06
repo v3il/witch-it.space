@@ -89,6 +89,10 @@ export const en = {
     Market: 'Market',
     Wishlist: 'Wishlist',
     Error: 'Error',
+    Verified: 'Verified',
+    NotVerified: 'Not Verified',
+    Public: 'Public',
+    Private: 'Private',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 40 rounds of Mobification',

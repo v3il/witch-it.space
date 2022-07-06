@@ -1,6 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--column">
     <Header />
+    <UserView />
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
       <b-button
@@ -22,16 +23,15 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store/index.js'
-import Logo from '@/components/sidebar/components/Logo.vue'
-import Notifications from '@/components/sidebar/components/Notifications.vue'
-import UserDropdown from '@/components/sidebar/components/UserDropdown.vue'
 import Header from '@/components/sidebar/Header.vue'
+import UserView from '@/components/sidebar/UserView.vue'
 
 export default {
     name: 'LeftNavBar',
 
     components: {
-        Header
+        Header,
+        UserView
     },
 
     props: {
