@@ -1,12 +1,12 @@
 <template>
   <div>
     <TopNavBar class="layout__header">
-      <template #brand>
-        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyMarket') }}</span>
-          <span v-else>{{ $t('Error') }}</span>
-        </h1>
-      </template>
+      <!--      <template #brand>-->
+      <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
+      <!--          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyMarket') }}</span>-->
+      <!--          <span v-else>{{ $t('Error') }}</span>-->
+      <!--        </h1>-->
+      <!--      </template>-->
     </TopNavBar>
 
     <UserHeader />

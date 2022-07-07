@@ -1,7 +1,8 @@
 <template>
   <div class="wit-flex wit-flex--column">
     <Header />
-    <UserView />
+    <UserView class="wit-offset-bottom--md" />
+    <UserPagesNavigation class="wit-offset-bottom--md" />
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
       <b-button
@@ -25,13 +26,15 @@ import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store/index.js'
 import Header from '@/components/sidebar/Header.vue'
 import UserView from '@/components/sidebar/UserView.vue'
+import UserPagesNavigation from '@/components/sidebar/components/Navigation.vue'
 
 export default {
     name: 'LeftNavBar',
 
     components: {
         Header,
-        UserView
+        UserView,
+        UserPagesNavigation
     },
 
     props: {
