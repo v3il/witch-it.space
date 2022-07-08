@@ -74,6 +74,10 @@
     }
 }
 
+.mdi {
+    display: inline-flex;
+}
+
 .mdi-20px::before {
     font-size: 20px !important;
     line-height: 22px !important;

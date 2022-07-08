@@ -5,20 +5,20 @@
     </h3>
 
     <ul>
-      <NavigationItem v-for="link in links" :key="link.to" :icon="link.icon" :label="link.label" :to="link.to" />
+      <NavigationItem
+        v-for="link in links"
+        :key="link.to"
+        :icon="link.icon"
+        :label="link.label"
+        :to="link.to"
+        class="wit-offset-bottom--xxs"
+      />
     </ul>
   </div>
 </template>
 
 <script>
-import { computed, useStore } from '@nuxtjs/composition-api'
 import NavigationItem from '@/components/sidebar/components/NavigationItem.vue'
-import {
-    buildUserMarketUrl,
-    buildUserWishlistUrl,
-    buildUserManageMarketUrl,
-    buildUserManageWishlistUrl
-} from '@/utils/index.js'
 
 export default {
     name: 'Navigation',
@@ -36,20 +36,6 @@ export default {
             type: String
         }
     }
-
-    // setup () {
-    //     const store = useStore()
-    //     const userId = computed(() => store.state.user.user.id)
-    //
-    //     const links = computed(() => [
-    //         { icon: 'shopping-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId) },
-    //         { icon: 'clipboard-edit-outline', label: 'MainMenu_ManageMarket', to: buildUserManageMarketUrl(userId) },
-    //         { icon: 'heart-multiple-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId) },
-    //         { icon: 'clipboard-edit-outline', label: 'MainMenu_ManageWishlist', to: buildUserManageWishlistUrl(userId) }
-    //     ])
-    //
-    //     return { links }
-    // }
 }
 </script>
 

@@ -95,6 +95,8 @@ export const en = {
     NotVerified: 'Not Verified',
     Public: 'Public',
     Private: 'Private',
+    UserDashboardsTitle: 'Your Dashboards',
+    AppPagesTitle: 'Application',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 40 rounds of Mobification',

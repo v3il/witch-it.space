@@ -32,14 +32,10 @@ export default {
 
     setup (props) {
         const route = useRoute()
-
         const iconClass = computed(() => `mdi-${props.icon}`)
         const itemClasses = computed(() => ({ active: route.value.path === props.to }))
 
-        return {
-            iconClass,
-            itemClasses
-        }
+        return { iconClass, itemClasses }
     }
 }
 </script>
