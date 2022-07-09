@@ -25,11 +25,10 @@ export default {
 
 <style scoped lang="scss">
 .wis-sidebar-header {
-    padding: var(--offset-sm) var(--offset-sm) var(--offset-sm) var(--offset-md);
+    padding: var(--offset-sm);
 }
 
 .wis-sidebar-header__logo {
-    width: 48px;
-    height: auto;
+    height: 64px;
 }
 </style>
