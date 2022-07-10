@@ -11,6 +11,33 @@
 
     <div class="wit-wishlist wit-flex wit-flex__item--grow">
       <template v-if="profile">
+        <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-right--sm" @close="isFiltersVisible = false">
+          <!--          <Tabs-->
+          <!--            :modes="$options.sidebarTabs"-->
+          <!--            :selected-mode="sidebarSelectedTab"-->
+          <!--            expanded-->
+          <!--            class="wit-offset-bottom&#45;&#45;sm"-->
+          <!--            @switch="sidebarSelectedTab = $event"-->
+          <!--          >-->
+          <!--            <template #tab0>-->
+          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+          <!--                <i class="mdi mdi-20px mdi-chevron-left wit-offset-right&#45;&#45;xxs wis-tabs__icon2" />-->
+          <!--                <span class="wis-tabs__label">{{ $t('Profile') }}</span>-->
+          <!--              </div>-->
+          <!--            </template>-->
+
+          <!--            <template #tab1>-->
+          <!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+          <!--                <span class="wis-tabs__label">{{ $t('Filters') }}</span>-->
+          <!--                <i class="mdi mdi-20px mdi-chevron-right wit-offset-left&#45;&#45;xxs wis-tabs__icon2" />-->
+          <!--              </div>-->
+          <!--            </template>-->
+          <!--          </Tabs>-->
+
+          <UserView :profile="profile" :mode="'wishlist'" />
+          <!--          <WishlistFilters v-else />-->
+        </SidebarPanel>
+
         <div class="wit-wishlist__content wit-flex__item--grow">
           <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
             <Tabs :modes="$options.tabs" :selected-mode="selectedTab">
