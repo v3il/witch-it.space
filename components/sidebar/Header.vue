@@ -29,6 +29,7 @@ export default {
 }
 
 .wis-sidebar-header__logo {
-    height: 64px;
+    height: 56px;
+    transform: rotate(-8deg);
 }
 </style>
