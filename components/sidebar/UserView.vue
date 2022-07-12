@@ -49,7 +49,7 @@ export default {
 
     .wis-user-view__avatar {
         width: 96px;
-        border-radius: 8px;
+        border-radius: var(--offset-sm);
         margin-bottom: var(--offset-md);
     }
 

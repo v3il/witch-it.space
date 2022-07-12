@@ -1,11 +1,11 @@
 <template>
   <div class="wis-user-card">
     <div class="wit-flex wit-flex--align-center wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
-      <img src="https://ik.imagekit.io/igo1qzk1oe2z/avatars/9.webp" alt="" style="width: 64px; height: 64px; border-radius: 4px;">
+      <img :src="userAvatarUrl" alt="" style="width: 64px; height: 64px; border-radius: 8px;">
 
       <div class="wit-offset-left--sm wit-flex__item--grow">
         <h1 style="letter-spacing: -0.9px; font-size: 36px; line-height: 49.5px;">
-          !D's wishlist
+          {{ userName }}'s wishlist
         </h1>
 
         <p style="color: rgb(148, 163, 184); line-height: 24px;" class="wit-flex wit-flex--align-center">
@@ -30,11 +30,23 @@
 </template>
 
 <script>
+import { computed, useStore } from '@nuxtjs/composition-api'
+import { buildAvatarUrl } from '@/utils/index.js'
+
 export default {
     name: 'UserHeader',
 
-    setup (props) {
+    setup () {
+        const store = useStore()
 
+        const user = computed(() => store.state.user.user)
+        const userAvatarUrl = computed(() => buildAvatarUrl(user.value.avatarId))
+        const userName = computed(() => user.value.displayName)
+
+        return {
+            userAvatarUrl,
+            userName
+        }
     }
 }
 </script>
