@@ -1,5 +1,5 @@
 <template>
-  <div class="wis-user-view wit-background--content wit-position--relative">
+  <div class="wis-user-view wit-background--content wit-position--relative wit-flex wit-flex--align-center">
     <div class="wis-user-view__section wit-flex wit-flex--align-center wit-padding-top--none">
       <img
         :src="avatarUrl"
@@ -14,46 +14,14 @@
           <i class="mdi mdi-shield-check mdi-16px wit-offset-left--xs wit-flex__item--no-shrink wit-color--success" />
         </h5>
 
-        <p v-tooltip="$t('Wishlist_LastUpdate')" class="wit-color--muted wit-line-height--sm wit-flex wit-flex--align-center">
-          <i class="mdi mdi-update mdi-18px wit-offset-right--xxs" />
-          {{ formattedLastUpdate }}
-        </p>
+        <!--        <p v-tooltip="$t('Wishlist_LastUpdate')" class="wit-color&#45;&#45;muted wit-line-height&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
+        <!--          <i class="mdi mdi-update mdi-18px wit-offset-right&#45;&#45;xxs" />-->
+        <!--          {{ formattedLastUpdate }}-->
+        <!--        </p>-->
       </div>
     </div>
 
-    <!--    <div v-if="!hideSocialButtons" class="wis-user-view__section wis-user-view__section&#45;&#45;xs wis-user-view__section1">-->
-    <!--      <div class="wit-flex wit-block&#45;&#45;full-width">-->
-    <!--        <b-button-->
-    <!--          :disabled="!steamProfileURL"-->
-    <!--          type="is-link"-->
-    <!--          tag="a"-->
-    <!--          :href="steamProfileURL"-->
-    <!--          target="_blank"-->
-    <!--          class="wis-user-view__stat-button"-->
-    <!--        >-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;column1 wit-flex&#45;&#45;align-center">-->
-    <!--            <i class="mdi mdi-steam mdi-20px wit-offset-right&#45;&#45;xs" />-->
-    <!--            <span class="wit-color&#45;&#45;muted">Steam</span>-->
-    <!--          </div>-->
-    <!--        </b-button>-->
-
-    <!--        <b-button-->
-    <!--          :disabled="!discordURL"-->
-    <!--          type="is-link"-->
-    <!--          tag="a"-->
-    <!--          :href="discordURL"-->
-    <!--          target="_blank"-->
-    <!--          class="wis-user-view__stat-button"-->
-    <!--        >-->
-    <!--          <div class="wit-flex wit-flex&#45;&#45;colum1n wit-flex&#45;&#45;align-center">-->
-    <!--            <i class="mdi mdi-discord mdi-20px wit-offset-right&#45;&#45;xs" />-->
-    <!--            <span class="wit-color&#45;&#45;muted">Discord</span>-->
-    <!--          </div>-->
-    <!--        </b-button>-->
-    <!--      </div>-->
-    <!--  </div>-->
-
-    <div v-if="!hideTradeButton" class="wis-user-view__section">
+    <div class="wis-user-view__section wit-offset-left--sm">
       <b-button
         type="is-primary"
         tag="a"
@@ -237,28 +205,34 @@ export default {
 .wis-user-view {
     //padding: 0 var(--offset-md);
     border-radius: var(--offset-xxs);
+    //position: fixed;
+    //left: 50%;
+    //bottom: 16px;
+    //z-index: 2;
+    //transform: translateX(-50%);
+    //box-shadow: 0px 1px 7px 2px #222736;
 }
 
 .wis-user-view__section {
-    padding: var(--offset-sm) 0;
+    //padding: var(--offset-sm) 0;
 
-    &:first-child {
-        padding-top: 0;
-    }
+    //&:first-child {
+    //    padding-top: 0;
+    //}
 
-    &:not(:last-child) {
-        border-bottom: 1px solid var(--user-view-border);
-    }
+    //&:not(:last-child) {
+    //    border-bottom: 1px solid var(--user-view-border);
+    //}
 }
 
-.wis-user-view__section--xs {
-    padding: var(--offset-xxs) 0;
-}
+//.wis-user-view__section--xs {
+//    padding: var(--offset-xxs) 0;
+//}
 
 .wis-user-view__avatar {
     border-radius: var(--offset-xxs);
-    width: var(--avatar-size);
-    height: var(--avatar-size);
+    width: 48px;
+    height: 48px;
     //margin-left: auto;
     //margin-right: auto;
     display: block;

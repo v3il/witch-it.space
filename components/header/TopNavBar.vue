@@ -83,10 +83,11 @@ export default {
 
 <style scoped lang="scss">
 .wiz-header {
-    background-color: var(--header-bg);
+    background-color: var(--content-background);
     min-height: var(--header-height);
     height: var(--header-height);
     padding: 0 var(--offset-xs) 0 var(--offset-sm);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .wiz-header--sticky {

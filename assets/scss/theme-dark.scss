@@ -77,8 +77,14 @@
 
     // New
 
-    --left-navbar-bg: #2a3142;
+    --left-navbar-bg: var(--content-background);
 
     --user-view-border: #36394c;
+
+    // New 2
+
+    --content-background: #0F172A;
+    --border-color: rgba(241, 245, 249, 0.12);
+    --card-background: #1E293B;
 
 }

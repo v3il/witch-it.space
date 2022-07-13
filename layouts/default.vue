@@ -56,6 +56,7 @@ export default {
         position: fixed;
         width: var(--left-navbar-width);
         background: var(--left-navbar-bg);
+        border-right: 1px solid var(--border-color);
         height: 100vh;
     }
 

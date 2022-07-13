@@ -9,12 +9,16 @@
       </template>
     </TopNavBar>
 
+    <div class="wis-user-card">
+      1
+    </div>
+
     <div class="wit-wishlist wit-flex wit-flex__item--grow">
       <template v-if="profile">
         <div class="wit-flex wit-flex__item--grow wit-flex--wrap">
-          <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-right--sm" @close="isFiltersVisible = false">
-            <UserView :profile="profile" :mode="'wishlist'" />
-          </SidebarPanel>
+          <!--          <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex&#45;&#45;align-self-start wit-offset-right&#45;&#45;sm" @close="isFiltersVisible = false">-->
+          <!--            <UserView :profile="profile" :mode="'wishlist'" />-->
+          <!--          </SidebarPanel>-->
 
           <div class="wit-wishlist__content1 wit-flex__item--grow" style="flex-basis: 500px;">
             <div class="wit-offset-bottom--sm wit-wishlist__content wit-paddings--sm">
@@ -220,6 +224,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wis-user-card {
+    background-color: var(--card-background);
+    height: 300px;
+    border-bottom: 1px solid var(--border-color);
+}
+
 .wit-offers-page {
     min-height: 100vh;
 }
