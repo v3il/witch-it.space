@@ -12,10 +12,10 @@
     <UserHeader />
 
     <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
-      <OfferTabs />
+      <OfferTabs class="wit-offset-bottom--md" />
     </div>
 
-    <div class="wit-wishlist wit-flex wit-flex__item--grow">
+    <div class="wit-wishlist wit-flex wit-flex__item--grow wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width">
       <template v-if="profile">
         <div class="wit-flex wit-flex__item--grow wit-flex--wrap">
           <!--          <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex&#45;&#45;align-self-start wit-offset-right&#45;&#45;sm" @close="isFiltersVisible = false">-->
@@ -235,7 +235,7 @@ export default {
 }
 
 .wit-wishlist {
-    padding: var(--offset-sm);
+    //padding: var(--offset-sm) 0;
 }
 
 .wit-wishlist__header {

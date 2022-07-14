@@ -1,11 +1,11 @@
 <template>
-  <div class="wit-flex">
+  <div class="wit-flex wit-flex--justify-center">
     <b-button
       v-for="(mode, index) in modes"
       :key="mode"
       type="is-ghost"
-      class="wit-tabs__button"
       :class="getTabClass(mode, index)"
+      class="wis-btn--rounded wit-offset-right--xs"
       @click="switchMode(mode)"
     >
       <slot :name="`tab${index}`" />
@@ -46,13 +46,10 @@ export default {
             this.$emit('switch', mode)
         },
 
-        getTabClass (mode, index) {
-            return [{
-                active: mode === this.selectedMode,
-                expanded: this.expanded,
-                first: index === 0,
-                last: index === this.modes.length - 1
-            }, `wit-tabs__button--${this.size}`]
+        getTabClass (mode) {
+            return {
+                'is-secondary': mode === this.selectedMode
+            }
         }
     }
 }

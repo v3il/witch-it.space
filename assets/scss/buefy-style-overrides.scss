@@ -204,48 +204,27 @@ strong {
 }
 
 .button.wis-btn--rounded {
-    align-items: center;
-    background-image: none;
-    border-bottom-color: rgb(255, 255, 255);
-    border-bottom-style: none;
-    border-bottom-width: 0;
-    border-left-color: rgb(255, 255, 255);
-    border-left-style: none;
-    border-left-width: 0;
-    border-right-color: rgb(255, 255, 255);
-    border-right-style: none;
-    border-right-width: 0;
-    border-top-color: rgb(255, 255, 255);
     border-radius: 9999px;
-    border-top-style: none;
-    border-top-width: 0;
+    border: none;
     box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 0, rgba(0, 0, 0, 0.14) 0 0 0 0, rgba(0, 0, 0, 0.12) 0 0 0 0;
-    box-sizing: border-box;
     color: var(--white);
     cursor: pointer;
-    display: flex;
-    font-size: 14px;
-    font-stretch: 100%;
-    font-style: normal;
     font-weight: 500;
     height: 40px;
-    justify-content: center;
-    letter-spacing: normal;
-    line-height: 14px;
-    margin: 0;
     max-height: 40px;
     min-height: 40px;
     min-width: 64px;
-    outline: rgb(255, 255, 255) none 0;
-    overflow-x: visible;
-    overflow-y: visible;
+    outline: var(--white) none 0;
     padding: 0 20px;
-    text-align: center;
     user-select: none;
-    vertical-align: baseline;
     white-space: nowrap;
     font-family: var(--font-family-primary);
     transition: background-color var(--default-transition);
+
+    &:hover {
+        text-decoration: none;
+        color: var(--white);
+    }
 
     & > span {
         display: flex;
@@ -257,7 +236,6 @@ strong {
 
         &:hover {
             background-color: #2e3a4c;
-            color: var(--white);
         }
     }
 
@@ -266,7 +244,6 @@ strong {
 
         &:hover {
             background-color: #473fce;
-            color: var(--white);
         }
     }
 }

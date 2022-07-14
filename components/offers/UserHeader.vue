@@ -1,6 +1,6 @@
 <template>
   <div class="wis-user-card">
-    <div class="wit-flex wit-flex--align-center wis-block--max-width wit-offset-left--auto wit-offset-right--auto">
+    <div class="wit-flex wit-flex--align-center wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
       <img src="https://ik.imagekit.io/igo1qzk1oe2z/avatars/9.webp" alt="" style="width: 64px; height: 64px; border-radius: 4px;">
 
       <div class="wit-offset-left--sm wit-flex__item--grow">
@@ -14,7 +14,7 @@
         </p>
       </div>
 
-      <div class="wit-flex wit-flex__item--no-shrink">
+      <div class="wit-flex wit-flex__item--no-shrink wit-offset-top--sm wit-offset-bottom--sm">
         <b-button type="is-secondary" class="wit-offset-right--xs wis-btn--rounded">
           <i class="mdi mdi-email mdi-18px wit-offset-right--xs" />
           Message
