@@ -12,6 +12,7 @@ export const state = () => ({
 })
 
 export const getters = {
+    profile: state => state.profile,
     marketSize: state => state.profile.marketSize ?? 0,
     wishlistSize: state => state.profile.wishlistSize ?? 0,
     selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
