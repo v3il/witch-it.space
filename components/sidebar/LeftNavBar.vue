@@ -2,6 +2,7 @@
   <div class="wit-flex wit-flex--column">
     <div class="wit-flex wit-flex--center wis-logo-wrap">
       <Logo class="wis-logo" />
+      <Notifications />
     </div>
 
     <div class="wit-flex wit-flex--column wit-flex--justify-center wit-block--full-height">
@@ -25,12 +26,14 @@
 import { mapGetters, mapState } from 'vuex'
 import { User } from '@/store/index.js'
 import Logo from '@/components/sidebar/Logo.vue'
+import Notifications from '@/components/sidebar/Notifications.vue'
 
 export default {
     name: 'LeftNavBar',
 
     components: {
-        Logo
+        Logo,
+        Notifications
     },
 
     props: {
@@ -62,8 +65,8 @@ export default {
 
 <style scoped lang="scss">
 .wis-logo-wrap {
-    height: 64px;
-    width: 60px;
+    //height: 64px;
+    //width: 60px;
 }
 
 .wis-logo {
