@@ -4,21 +4,6 @@
     <UserView class="wit-offset-bottom--md" />
     <Navigation :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
     <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
-
-    <!--    <div class="wit-flex wit-flex&#45;&#45;column wit-flex&#45;&#45;justify-center wit-block&#45;&#45;full-height">-->
-    <!--      <b-button-->
-    <!--        v-for="link in links"-->
-    <!--        :key="link.to"-->
-    <!--        type="is-ghost"-->
-    <!--        class="is-large wit-transition wit-link"-->
-    <!--        :to="link.to"-->
-    <!--        tag="nuxt-link"-->
-    <!--      >-->
-    <!--        <div class="wit-link__icon-container wit-position&#45;&#45;relative" :class="getLinkClass(link)">-->
-    <!--          <b-icon class="is-size-5 wit-color&#45;&#45;Y400" :icon="link.icon" />-->
-    <!--        </div>-->
-    <!--      </b-button>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -48,20 +33,23 @@ export default {
 
     setup () {
         const store = useStore()
-        const userId = computed(() => store.state.user.user.id)
+        const user = computed(() => store.state.user.user)
+        const userId = computed(() => user.value.id)
+        const marketSize = computed(() => user.value.marketSize)
+        const wishlistSize = computed(() => user.value.wishlistSize)
 
         const userLinks = computed(() => [
-            { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value) },
+            { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: marketSize.value },
             { icon: 'store-cog-outline', label: 'MainMenu_ManageMarket', to: buildUserManageMarketUrl(userId.value) },
-            { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value) },
+            { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value), badge: wishlistSize.value },
             { icon: 'heart-cog-outline', label: 'MainMenu_ManageWishlist', to: buildUserManageWishlistUrl(userId.value) }
         ])
 
         const appLinks = computed(() => [
             { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES },
             { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS },
-            { icon: 'file-tree', label: 'MainMenu_Quests', to: Routes.QUESTS },
-            { icon: 'cog', label: 'MainMenu_Settings', to: Routes.SETTINGS }
+            { icon: 'file-tree-outline', label: 'MainMenu_Quests', to: Routes.QUESTS },
+            { icon: 'cog-outline', label: 'MainMenu_Settings', to: Routes.SETTINGS }
         ])
 
         return { userLinks, appLinks }

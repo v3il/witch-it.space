@@ -1,8 +1,12 @@
 <template>
   <li class="wis-navigation-item" :class="itemClasses">
-    <NuxtLink :to="to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
+    <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
       <i class="mdi mdi-24px wit-offset-right--sm" :class="iconClass" />
-      <span>{{ $t(label) }}</span>
+      <span>{{ $t(link.label) }}</span>
+
+      <span v-if="link.badge" class="wis-navigation-item__tag wit-offset-left--auto">
+        {{ link.badge }}
+      </span>
     </NuxtLink>
   </li>
 </template>
@@ -14,26 +18,16 @@ export default {
     name: 'NavigationItem',
 
     props: {
-        icon: {
+        link: {
             required: true,
-            type: String
-        },
-
-        label: {
-            required: true,
-            type: String
-        },
-
-        to: {
-            required: true,
-            type: String
+            type: Object
         }
     },
 
     setup (props) {
         const route = useRoute()
-        const iconClass = computed(() => `mdi-${props.icon}`)
-        const itemClasses = computed(() => ({ active: route.value.path === props.to }))
+        const iconClass = computed(() => `mdi-${props.link.icon}`)
+        const itemClasses = computed(() => ({ active: route.value.path === props.link.to }))
 
         return { iconClass, itemClasses }
     }
@@ -42,7 +36,7 @@ export default {
 
 <style scoped lang="scss">
     .wis-navigation-item {
-        --opacity: 0.6;
+        --opacity: 0.8;
 
         position: relative;
         display: flex;
@@ -67,5 +61,20 @@ export default {
         width: 100%;
         opacity: var(--opacity);
         color: var(--white);
+    }
+
+    .wis-navigation-item__tag {
+        font-weight: 600;
+        font-size: 10px;
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+        color: #000;
+        background-color: rgb(45 212 191);
+        border-radius: 9999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //width: 16px;
+        height: 20px;
     }
 </style>

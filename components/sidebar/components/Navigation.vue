@@ -8,9 +8,7 @@
       <NavigationItem
         v-for="link in links"
         :key="link.to"
-        :icon="link.icon"
-        :label="link.label"
-        :to="link.to"
+        :link="link"
         class="wit-offset-bottom--xxs"
       />
     </ul>
