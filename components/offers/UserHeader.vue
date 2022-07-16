@@ -5,7 +5,7 @@
 
       <div class="wit-offset-left--sm wit-flex__item--grow">
         <h1 style="letter-spacing: -0.9px; font-size: 36px; line-height: 49.5px;">
-          Welcome to Brian's market!
+          !D's wishlist
         </h1>
 
         <p style="color: rgb(148, 163, 184); line-height: 24px;" class="wit-flex wit-flex--align-center">
@@ -31,7 +31,11 @@
 
 <script>
 export default {
-    name: 'UserHeader'
+    name: 'UserHeader',
+
+    setup (props) {
+
+    }
 }
 </script>
 

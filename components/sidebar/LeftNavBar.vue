@@ -64,7 +64,6 @@ export default {
 .wis-logo-wrap {
     height: 64px;
     width: 60px;
-    border-bottom: 2px solid var(--header-bg);
 }
 
 .wis-logo {

@@ -9,6 +9,12 @@
       </template>
     </TopNavBar>
 
+    <UserHeader />
+
+    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
+      <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
+    </div>
+
     <div class="wit-wishlist wit-flex">
       <template v-if="profile">
         <div class="wit-wishlist__content wit-flex__item--grow">
@@ -130,10 +136,15 @@ import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserWishlistUrl } from '@/utils/index.js'
 import { OfferTypes } from '@/shared/index.js'
 import { buildUserManageMarketUrl } from '@/utils/buildUrls.js'
+import UserHeader from '~/components/offers/UserHeader.vue'
+import OfferTabs from '~/components/offers/OfferTabs.vue'
+import { OfferTabModes } from '~/domain/index.js'
 
 export default {
     tabs: WishlistListTabs.values,
     sidebarTabs: WishlistListSidebarTabs.values,
+
+    selectedTab: OfferTabModes.MARKET,
 
     components: {
         UserView,
@@ -146,7 +157,9 @@ export default {
         ItemPriceList,
         Tabs,
         SidebarPanel,
-        IconButton
+        IconButton,
+        UserHeader,
+        OfferTabs
     },
 
     middleware: ['isAuthorized'],
