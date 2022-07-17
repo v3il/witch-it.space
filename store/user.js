@@ -10,7 +10,7 @@ export const state = () => ({
 
 export const getters = {
     isAuthorized: state => !!state.user,
-    isMyProfile: ({ user }) => ['76561198890437027', '76561198965865000'].includes(user?.steamId),
+    isMyProfile: ({ user }) => ['76561198890437027', '76561198965865000', '76561199095727689'].includes(user?.steamId),
     isSteamConnected: ({ user }) => !!user?.steamId,
     isDiscordConnected: ({ user }) => !!user?.discordId,
     isGoogleConnected: ({ user }) => !!user?.googleId,

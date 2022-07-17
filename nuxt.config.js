@@ -50,11 +50,9 @@ export default {
         '@nuxtjs/pwa',
         '@nuxtjs/style-resources',
         '@nuxtjs/composition-api/module',
-        'nuxt-buefy',
         'cookie-universal-nuxt',
 
         ['nuxt-buefy', {
-            defaultIconPack: 'fas',
             materialDesignIconsHRef: 'https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css'
         }]
     ],

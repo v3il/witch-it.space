@@ -89,7 +89,7 @@ export default {
         },
 
         rewardItem () {
-            return this.$itemsService.getById(this.quest.rewardId)
+            return this.$itemsService.getById(this.quest.rewardId) ?? {}
         }
     },
 

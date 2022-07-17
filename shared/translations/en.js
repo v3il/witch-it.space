@@ -99,7 +99,7 @@ export const en = {
     AppPagesTitle: 'Application',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
-    Quests_Play8Rounds_B: 'Play 40 rounds of Mobification',
+    Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',
     Quests_Win3Rounds_B: 'Win 3 rounds of Mobification',
     Quests_Win15Rounds_B: 'Win 15 rounds of Mobification',
     Quests_Win5Rounds_D: 'Win 5 rounds of Imposturous',

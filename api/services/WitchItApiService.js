@@ -46,6 +46,8 @@ export class WitchItApiService {
         const weeklyQuests = quests.filter(quest => quest.type === 'Weekly')
         const dailyQuests = quests.filter(quest => quest.type === 'Daily')
 
+        console.error(quests)
+
         return {
             weeklyQuests,
             dailyQuests
