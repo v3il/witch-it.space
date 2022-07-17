@@ -56,7 +56,7 @@
       <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--sm" :message="$t('Settings_DisplayNameFieldHint')">
         <b-input
           :value="settings.displayName"
-          maxlength="20"
+          maxlength="15"
           has-counter
           :placeholder="$t('Settings_DisplayNamePlaceholder')"
           custom-class="wit-transition"

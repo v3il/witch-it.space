@@ -3,11 +3,13 @@ import { VTooltip, VPopover } from 'v-tooltip'
 import { getTranslation } from '@/shared'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 
-export default function ({ store }) {
-    const $t = (textId, replacements = []) => {
+export default function ({ store }, inject) {
+    const translate = (textId, replacements = []) => {
         const lngSet = store.getters['locale/lngSet']
         return getTranslation(lngSet, textId, replacements)
     }
+
+    inject('t', translate)
 
     VTooltip.options.container = 'body'
     VTooltip.options.defaultBoundariesElement = 'body'
@@ -20,7 +22,7 @@ export default function ({ store }) {
 
     Vue.mixin({
         methods: {
-            $t,
+            // $t,
 
             $showNotification (options) {
                 this.$eventBus.$emit('showNotification', options)

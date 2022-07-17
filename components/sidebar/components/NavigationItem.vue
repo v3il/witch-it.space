@@ -1,8 +1,10 @@
 <template>
   <li class="wis-navigation-item" :class="itemClasses">
     <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
-      <i class="mdi mdi-24px wit-offset-right--sm" :class="iconClass" />
-      <span>{{ $t(link.label) }}</span>
+      <div class="wis-navigation-item__label-wrap">
+        <i class="mdi mdi-24px wit-offset-right--sm" :class="iconClass" />
+        <span>{{ $t(link.label) }}</span>
+      </div>
 
       <span v-if="link.badge" class="wis-navigation-item__tag wit-offset-left--auto">
         {{ link.badge }}
@@ -57,9 +59,14 @@ export default {
         }
     }
 
+    .wis-navigation-item__label-wrap {
+        display: flex;
+        align-items: center;
+        opacity: var(--opacity);
+    }
+
     .wis-navigation-item__link {
         width: 100%;
-        opacity: var(--opacity);
         color: var(--white);
     }
 

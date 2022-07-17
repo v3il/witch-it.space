@@ -85,7 +85,7 @@ const updateSettings = async (request, response) => {
     } = request.body
 
     const passwordSchema = joi.string().min(6)
-    const displayNameSchema = joi.string().required().min(2).max(20)
+    const displayNameSchema = joi.string().required().min(2).max(15)
     const steamTradeURLSchema = joi.string().required().pattern(/^https:\/\/steamcommunity.com\/tradeoffer\/new.*$/)
     const avatarIdSchema = joi.number().integer().required().min(1).max(11)
 

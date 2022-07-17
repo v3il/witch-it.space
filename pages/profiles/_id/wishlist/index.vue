@@ -9,7 +9,7 @@
       <!--      </template>-->
     </TopNavBar>
 
-    <UserHeader />
+    <UserHeader :mode="$options.selectedTab" />
 
     <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
