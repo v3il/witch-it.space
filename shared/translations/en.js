@@ -97,6 +97,8 @@ export const en = {
     Private: 'Private',
     UserDashboardsTitle: 'Your Dashboards',
     AppPagesTitle: 'Application',
+    Message: 'Message',
+    SendTradeOffer: 'Send a trade offer',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',
@@ -252,6 +254,13 @@ export const en = {
     Wishlist_Manage_RemoveOffers: 'Delete offers',
     Wishlist_ConfirmDelete: 'Are you sure you want to delete the selected offers (%s)?',
     Wishlist_LastUpdate: 'Last update',
+
+    UserHeader_MarketTitle: '%s\'s market',
+    UserHeader_WishlistTitle: '%s\'s wishlist',
+    UserHeader_ManageMarket: 'Manage market',
+    UserHeader_ManageWishlist: 'Manage wishlist',
+    UserHeader_DiscordIsNotConnected: 'Discord is not connected',
+    UserHeader_TradeLinkIsNotProvided: 'Trade link is not provided',
 
     UserView_SteamGuardEnabled: 'Account protected by Steam Guard',
     // UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',

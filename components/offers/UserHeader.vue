@@ -4,9 +4,7 @@
       <img :src="userAvatarUrl" alt="" style="width: 64px; height: 64px; border-radius: 8px;">
 
       <div class="wit-offset-left--sm wit-flex__item--grow">
-        <h1 style="letter-spacing: -0.9px; font-size: 32px; line-height: 49.5px;">
-          {{ userName }}'s {{ mode }}
-        </h1>
+        <HeaderTitle :mode="mode" :profile-name="profileName" />
 
         <p style="color: rgb(148, 163, 184); line-height: 24px;" class="wit-flex wit-flex--align-center">
           <i class="mdi mdi-bell mdi-18px wit-offset-right--xs" />
@@ -14,32 +12,34 @@
         </p>
       </div>
 
-      <div class="wit-flex wit-flex__item--no-shrink wit-offset-top--sm wit-offset-bottom--sm">
-        <b-button v-if="isOwnUserProfile" type="is-primary" class="wis-btn--rounded" tag="nuxt-link" :to="manageButtonUrl">
-          <i class="mdi mdi-18px wit-offset-right--xs" :class="manageButtonIconClass" />
-          Manage {{ mode }}
-        </b-button>
+      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />
 
-        <template v-else>
-          <b-button
-            v-tooltip="'Discord is not connected'"
-            type="is-secondary"
-            class="wit-offset-right--xs wis-btn--rounded"
-            tag="a"
-            target="_blank"
-            :href="discordUrl"
-            :disabled="!isDiscordConnected"
-          >
-            <i class="mdi mdi-discord mdi-18px wit-offset-right--xs" />
-            Message
-          </b-button>
+      <!--      <div class="wit-flex wit-flex__item&#45;&#45;no-shrink wit-offset-top&#45;&#45;sm wit-offset-bottom&#45;&#45;sm">-->
+      <!--        <b-button v-if="isOwnUserProfile" type="is-primary" class="wis-btn&#45;&#45;rounded" tag="nuxt-link" :to="manageButtonUrl">-->
+      <!--          <i class="mdi mdi-18px wit-offset-right&#45;&#45;xs" :class="manageButtonIconClass" />-->
+      <!--          Manage {{ mode }}-->
+      <!--        </b-button>-->
 
-          <b-button type="is-primary" class="wis-btn--rounded">
-            <i class="mdi mdi-format-vertical-align-center mdi-18px wit-offset-right--xs" />
-            Send a trade offer
-          </b-button>
-        </template>
-      </div>
+      <!--        <template v-else>-->
+      <!--          <b-button-->
+      <!--            v-tooltip="'Discord is not connected'"-->
+      <!--            type="is-secondary"-->
+      <!--            class="wit-offset-right&#45;&#45;xs wis-btn&#45;&#45;rounded"-->
+      <!--            tag="a"-->
+      <!--            target="_blank"-->
+      <!--            :href="discordUrl"-->
+      <!--            :disabled="!isDiscordConnected"-->
+      <!--          >-->
+      <!--            <i class="mdi mdi-discord mdi-18px wit-offset-right&#45;&#45;xs" />-->
+      <!--            Message-->
+      <!--          </b-button>-->
+
+      <!--          <b-button type="is-primary" class="wis-btn&#45;&#45;rounded">-->
+      <!--            <i class="mdi mdi-format-vertical-align-center mdi-18px wit-offset-right&#45;&#45;xs" />-->
+      <!--            Send a trade offer-->
+      <!--          </b-button>-->
+      <!--        </template>-->
+      <!--      </div>-->
     </div>
   </div>
 </template>
@@ -48,9 +48,15 @@
 import { computed, useContext, useStore } from '@nuxtjs/composition-api'
 import { buildAvatarUrl, buildUserManageMarketUrl, buildUserManageWishlistUrl } from '@/utils/index.js'
 import { OfferTabModes } from '@/domain/index.js'
+import { HeaderTitle, HeaderActions } from '@/components/offers/header'
 
 export default {
     name: 'UserHeader',
+
+    components: {
+        HeaderTitle,
+        HeaderActions
+    },
 
     props: {
         mode: {
@@ -69,20 +75,11 @@ export default {
 
         const isMarket = computed(() => props.mode === OfferTabModes.MARKET)
         const authorizedUser = computed(() => store.state.user.user)
-        const isOwnUserProfile = computed(() => false && authorizedUser.value.id === profile.value.id)
-
         const profile = computed(() => store.state.offers.profile)
+
+        const isOwnUserProfile = computed(() => authorizedUser.value.id === profile.value.id)
         const userAvatarUrl = computed(() => buildAvatarUrl(profile.value.avatarId))
-        const userName = computed(() => profile.value.displayName)
-
-        const isDiscordConnected = computed(() => false && profile.value.discordId)
-        const discordUrl = computed(() => `discord:///channels/@me/${profile.value.discordId}`)
-
-        const manageButtonIconClass = computed(() => isMarket.value ? 'mdi-store-cog-outline' : 'mdi-heart-cog-outline')
-
-        const manageButtonUrl = computed(() => {
-            return isMarket.value ? buildUserManageMarketUrl(profile.value.id) : buildUserManageWishlistUrl(profile.value.id)
-        })
+        const profileName = computed(() => profile.value.displayName)
 
         const formattedLastUpdate = computed(() => {
             const updateTime = isMarket.value ? profile.value.marketUpdateTime : profile.value.wishlistUpdateTime
@@ -99,13 +96,10 @@ export default {
 
         return {
             userAvatarUrl,
-            userName,
+            profileName,
             isOwnUserProfile,
-            manageButtonIconClass,
-            formattedLastUpdate,
-            manageButtonUrl,
-            isDiscordConnected,
-            discordUrl
+            profile,
+            formattedLastUpdate
         }
     }
 }
@@ -116,6 +110,6 @@ export default {
     background-color: var(--dark-gray);
     //height: 300px;
     border-bottom: 1px solid var(--border-color);
-    padding: 48px 32px;
+    padding: 40px 32px;
 }
 </style>
