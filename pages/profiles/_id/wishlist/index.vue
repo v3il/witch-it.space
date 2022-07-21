@@ -28,6 +28,10 @@
             <!--            </div>-->
 
             <div class="wit-wishlist__content">
+              <button style="z-index: 22222222222222;" @click="isFiltersVisible = !isFiltersVisible;">
+                aaaa
+              </button>
+
               <!--              <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->
               <!--                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">-->
               <!--                  <template #tab0>-->
@@ -90,7 +94,7 @@
           </div>
         </div>
 
-        <SidebarPanel :is-visible="isFiltersVisible" class="wit-flex--align-self-start wit-offset-left--sm" @close="isFiltersVisible = false">
+        <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
           <WishlistFilters />
         </SidebarPanel>
       </template>
