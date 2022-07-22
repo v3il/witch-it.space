@@ -3,7 +3,8 @@
     <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
 
     <div class="layout__right">
-      <Nuxt />
+      <TopNavBar />
+      <Nuxt class="wit-flex__item--grow" />
       <ConfirmPopup />
     </div>
   </div>
@@ -15,13 +16,15 @@ import { User, Theme } from '@/store'
 import { getNavbarLinks } from '@/shared'
 import LeftNavBar from '@/components/sidebar/LeftNavBar.vue'
 import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
+import TopNavBar from '@/components/header/TopNavBar.vue'
 
 export default {
     name: 'Default',
 
     components: {
         LeftNavBar,
-        ConfirmPopup
+        ConfirmPopup,
+        TopNavBar
     },
 
     head () {
@@ -58,6 +61,16 @@ export default {
         background: var(--left-navbar-bg);
         border-right: 1px solid var(--border-color);
         height: 100vh;
+    }
+
+    .layout,
+    .layout__right {
+        min-height: 100vh;
+    }
+
+    .layout__right {
+        display: flex;
+        flex-direction: column;
     }
 
     .layout__left + .layout__right {

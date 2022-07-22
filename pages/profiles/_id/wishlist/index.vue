@@ -13,8 +13,6 @@
 
     <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
-
-      <NotFound />
     </div>
 
     <div class="wit-wishlist wit-flex wit-flex__item--grow wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width">
@@ -131,7 +129,6 @@ import CompactUserView from '@/components/user/CompactUserView.vue'
 import UserHeader from '@/components/offers/UserHeader.vue'
 import OfferTabs from '@/components/offers/OfferTabs.vue'
 import { OfferTabModes } from '@/domain'
-import { NotFound } from '@/components/basic'
 
 export default {
     tabs: WishlistListTabs.values,
@@ -153,8 +150,7 @@ export default {
         IconButton,
         CompactUserView,
         UserHeader,
-        OfferTabs,
-        NotFound
+        OfferTabs
     },
 
     middleware: ['isAuthorized'],
@@ -168,7 +164,7 @@ export default {
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
-        return error({ statusCode: 404, message: 'Test' })
+        return error({ statusCode: 404, linkTitle: 'Back to Profiles', linkUrl: '/profiles' })
 
         // return $wishlistService.fetch(route.params.id)
     },

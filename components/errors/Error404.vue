@@ -1,28 +1,40 @@
 <template>
   <div class="wis-not-found">
-    <NotFoundImage class="wis-not-found__image" />
+    <Error404Image class="wis-not-found__image" />
 
     <h1 class="wis-not-found__title">
-      Ooops... 404!
+      {{ $t('Error404_Title') }}
     </h1>
 
     <p class="wis-not-found__subtitle">
-      The page you requested could not be found.
+      {{ $t('Error404_Subtitle') }}
     </p>
 
-    <nuxt-link to="/profiles">
-      Back to Dashboard
+    <nuxt-link class="wis-not-found__link" :to="linkUrl">
+      {{ linkTitle }}
     </nuxt-link>
   </div>
 </template>
 
 <script>
-import NotFoundImage from '@/components/basic/notFound/NotFoundImage.vue'
+import Error404Image from '@/components/errors/Error404Image.vue'
 
 export default {
     name: 'NotFound',
 
-    components: { NotFoundImage }
+    components: { Error404Image },
+
+    props: {
+        linkTitle: {
+            required: true,
+            type: String
+        },
+
+        linkUrl: {
+            required: true,
+            type: String
+        }
+    }
 }
 </script>
 
@@ -35,7 +47,7 @@ export default {
 }
 
 .wis-not-found__image {
-    max-width: 48rem;
+    max-width: 40rem;
     margin-bottom: 6rem;
 }
 
@@ -45,6 +57,7 @@ export default {
     font-size: 3rem;
     line-height: 1;
     font-weight: 800;
+    text-align: center;
 }
 
 .wis-not-found__subtitle {
@@ -53,11 +66,26 @@ export default {
     letter-spacing: -0.025em;
     font-size: 1.125rem;
     color: rgb(148, 163, 184);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.wis-not-found__link {
+    font-weight: 500;
+    text-decoration: underline;
 }
 
 @media (max-width: 600px) {
     .wis-not-found__image {
         margin-bottom: 3rem;
+    }
+
+    .wis-not-found__title {
+        font-size: 2rem;
+    }
+
+    .wis-not-found__subtitle {
+        font-size: 1rem;
     }
 }
 </style>

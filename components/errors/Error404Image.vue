@@ -11,12 +11,6 @@
 
 <script>
 export default {
-    name: 'NotFoundImage'
+    name: 'Error404Image'
 }
 </script>
-
-<style scoped lang="scss">
-svg {
-    max-width: 840px;
-}
-</style>

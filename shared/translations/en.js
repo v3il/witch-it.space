@@ -262,6 +262,9 @@ export const en = {
     UserHeader_DiscordIsNotConnected: 'Discord is not connected',
     UserHeader_TradeLinkIsNotProvided: 'Trade link is not provided',
 
+    Error404_Title: 'Ooops... 404!',
+    Error404_Subtitle: 'The page you requested could not be found.',
+
     UserView_SteamGuardEnabled: 'Account protected by Steam Guard',
     // UserView_SteamGuardDisabled: 'Мой аккаунт не защищён Steam Guard',
     UserView_MaterialsReplacementEnabled: 'I accept materials of other rarity',
