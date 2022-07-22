@@ -22,7 +22,7 @@
       :href="tradeButtonLink"
       :disabled="!tradeButtonLink"
     >
-      <i class="mdi mdi-format-vertical-align-center mdi-18px wit-offset-right--xs" />
+      <i class="mdi mdi-briefcase-arrow-left-right mdi-18px wit-offset-right--xs" />
       {{ $t('SendTradeOffer') }}
     </b-button>
   </div>

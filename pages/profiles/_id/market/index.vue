@@ -11,7 +11,7 @@
 
     <UserHeader :mode="$options.selectedTab" />
 
-    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
+    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md wit-padding-bottom--md">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
     </div>
 

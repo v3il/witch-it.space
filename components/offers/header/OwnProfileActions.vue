@@ -1,6 +1,6 @@
 <template>
   <b-button type="is-primary" class="wis-btn--rounded" tag="nuxt-link" :to="buttonUrl">
-    <i class="mdi mdi-18px wit-offset-right--xs" :class="buttonIconClass" />
+    <i class="mdi mdi-18px wit-offset-right--xs mdi-cog" />
     {{ buttonTitle }}
   </b-button>
 </template>
@@ -29,8 +29,6 @@ export default {
         const { $t } = useContext()
         const isMarket = computed(() => props.mode === OfferTabModes.MARKET)
 
-        const buttonIconClass = computed(() => isMarket.value ? 'mdi-store-cog-outline' : 'mdi-heart-cog-outline')
-
         const buttonTitle = computed(() => {
             return isMarket.value ? $t('UserHeader_ManageMarket') : $t('UserHeader_ManageWishlist')
         })
@@ -41,7 +39,7 @@ export default {
                 : buildUserManageWishlistUrl(props.profile.id)
         })
 
-        return { buttonIconClass, buttonTitle, buttonUrl }
+        return { buttonTitle, buttonUrl }
     }
 }
 </script>
