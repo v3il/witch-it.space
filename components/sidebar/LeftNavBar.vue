@@ -1,7 +1,6 @@
 <template>
   <div class="wit-flex wit-flex--column">
     <Header />
-    <UserView class="wit-offset-bottom--md" />
     <Navigation :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
     <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
   </div>
@@ -12,7 +11,6 @@ import { mapGetters, mapState } from 'vuex'
 import { computed, useStore } from '@nuxtjs/composition-api'
 import { User } from '@/store/index.js'
 import Header from '@/components/sidebar/Header.vue'
-import UserView from '@/components/sidebar/UserView.vue'
 import Navigation from '@/components/sidebar/components/Navigation.vue'
 import {
     buildUserManageMarketUrl,
@@ -27,7 +25,6 @@ export default {
 
     components: {
         Header,
-        UserView,
         Navigation
     },
 

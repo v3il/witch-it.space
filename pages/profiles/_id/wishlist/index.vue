@@ -1,13 +1,13 @@
 <template>
   <div class="wit-flex wit-flex--column wit-offers-page">
-    <TopNavBar class="layout__header">
-      <!--      <template #brand>-->
-      <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
-      <!--          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}</span>-->
-      <!--          <span v-else>{{ $t('Error') }}</span>-->
-      <!--        </h1>-->
-      <!--      </template>-->
-    </TopNavBar>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      &lt;!&ndash;      <template #brand>&ndash;&gt;-->
+    <!--      &lt;!&ndash;        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">&ndash;&gt;-->
+    <!--      &lt;!&ndash;          <span v-if="profile">{{ profile.displayName }} - {{ $t('MainMenu_MyWishlist') }}</span>&ndash;&gt;-->
+    <!--      &lt;!&ndash;          <span v-else>{{ $t('Error') }}</span>&ndash;&gt;-->
+    <!--      &lt;!&ndash;        </h1>&ndash;&gt;-->
+    <!--      &lt;!&ndash;      </template>&ndash;&gt;-->
+    <!--    </TopNavBar>-->
 
     <UserHeader :mode="$options.selectedTab" />
 
@@ -164,9 +164,9 @@ export default {
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
         })
 
-        return error({ statusCode: 404, linkTitle: 'Back to Profiles', linkUrl: '/profiles' })
+        // return error({ statusCode: 404, linkTitle: 'Back to Profiles', linkUrl: '/profiles' })
 
-        // return $wishlistService.fetch(route.params.id)
+        return $wishlistService.fetch(route.params.id)
     },
 
     data: () => ({

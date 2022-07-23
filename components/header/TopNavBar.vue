@@ -33,6 +33,11 @@
         <ThemeSwitcher />
       </b-navbar-item>
 
+      <b-navbar-item tag="div" class="wit-header__theme-switcher wit-paddings--none wiz-background--transparent">
+        <Notifications class="wit-offset-right--xsm" />
+        <!--        <UserDropdown />-->
+      </b-navbar-item>
+
       <b-navbar-item v-if="user" tag="div" class="wit-header__user-dropdown wit-paddings--none wiz-background--transparent">
         <UserDropdown class="wit-offset-left--none" />
       </b-navbar-item>
@@ -47,6 +52,7 @@ import LocaleSwitcher from '@/components/header/LocaleSwitcher.vue'
 import { User } from '@/store/index.js'
 import UserDropdown from '@/components/header/UserDropdown.vue'
 import { getNavbarLinks } from '@/shared/index.js'
+import Notifications from '@/components/header/Notifications.vue'
 
 export default {
     name: 'TopNavBar',
@@ -54,7 +60,8 @@ export default {
     components: {
         ThemeSwitcher,
         LocaleSwitcher,
-        UserDropdown
+        UserDropdown,
+        Notifications
     },
 
     props: {

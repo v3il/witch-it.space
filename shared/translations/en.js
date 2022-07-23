@@ -95,8 +95,8 @@ export const en = {
     NotVerified: 'Not Verified',
     Public: 'Public',
     Private: 'Private',
-    UserDashboardsTitle: 'Your Dashboards',
-    AppPagesTitle: 'Application',
+    UserDashboardsTitle: 'Your Offers',
+    AppPagesTitle: 'Other Pages',
     Message: 'Message',
     SendTradeOffer: 'Send a trade offer',
 

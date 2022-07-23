@@ -1,35 +1,29 @@
 <template>
   <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-sidebar-header">
     <Logo class="wis-sidebar-header__logo" />
-
-    <div class="wit-flex wit-flex--align-center">
-      <Notifications class="wit-offset-right--xsm" />
-      <UserDropdown />
-    </div>
   </div>
 </template>
 
 <script>
-import { Logo, UserDropdown, Notifications } from './components'
+import { Logo } from './components'
 
 export default {
     name: 'Header',
 
     components: {
-        Logo,
-        Notifications,
-        UserDropdown
+        Logo
     }
 }
 </script>
 
 <style scoped lang="scss">
 .wis-sidebar-header {
-    padding: var(--offset-sm);
+    padding: var(--offset-md) var(--offset-md) 0;
+    height: 5rem;
+    margin-bottom: 32px;
 }
 
 .wis-sidebar-header__logo {
-    height: 56px;
-    transform: rotate(-8deg);
+    height: 64px;
 }
 </style>

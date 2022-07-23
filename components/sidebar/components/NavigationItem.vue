@@ -2,7 +2,7 @@
   <li class="wis-navigation-item" :class="itemClasses">
     <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
       <div class="wis-navigation-item__label-wrap">
-        <i class="mdi mdi-24px wit-offset-right--sm" :class="iconClass" />
+        <i class="mdi mdi-24px wit-offset-right--sm wis-navigation-item__icon" :class="iconClass" />
         <span>{{ $t(link.label) }}</span>
       </div>
 
@@ -38,7 +38,8 @@ export default {
 
 <style scoped lang="scss">
     .wis-navigation-item {
-        --opacity: 0.8;
+        --text-opacity: 0.8;
+        --icon-opacity: 0.6;
 
         position: relative;
         display: flex;
@@ -53,16 +54,21 @@ export default {
 
         &.active,
         &:hover {
-            --opacity: 1;
+            --text-opacity: 1;
+            --icon-opacity: 1;
 
             background-color: #2c3344;
         }
     }
 
+    .wis-navigation-item__icon {
+        opacity: var(--icon-opacity);
+    }
+
     .wis-navigation-item__label-wrap {
         display: flex;
         align-items: center;
-        opacity: var(--opacity);
+        opacity: var(--text-opacity);
     }
 
     .wis-navigation-item__link {
@@ -81,7 +87,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
-        //width: 16px;
         height: 20px;
     }
 </style>
