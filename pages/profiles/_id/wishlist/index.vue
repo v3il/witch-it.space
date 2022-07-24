@@ -28,9 +28,7 @@
             <!--            </div>-->
 
             <div class="wit-wishlist__content">
-              <button style="z-index: 22222222222222;" @click="isFiltersVisible = !isFiltersVisible;">
-                aaaa
-              </button>
+              <Search :search-query="filters.query" @openFilters="isFiltersVisible = true" @search="mergeFilters({query: $event})" />
 
               <!--              <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->
               <!--                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">-->
@@ -95,7 +93,7 @@
         </div>
 
         <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
-          <WishlistFilters />
+          <WishlistFilters @reset="isFiltersVisible = false" />
         </SidebarPanel>
       </template>
 
@@ -130,8 +128,7 @@ import IconButton from '@/components/basic/IconButton.vue'
 import { buildUserManageWishlistUrl, buildUserMarketUrl } from '@/utils/index.js'
 import { OfferTypes } from '@/shared/index.js'
 import CompactUserView from '@/components/user/CompactUserView.vue'
-import UserHeader from '@/components/offers/UserHeader.vue'
-import OfferTabs from '@/components/offers/OfferTabs.vue'
+import { UserHeader, OfferTabs, Search } from '@/components/offers'
 import { OfferTabModes } from '@/domain'
 
 export default {
@@ -154,7 +151,8 @@ export default {
         IconButton,
         CompactUserView,
         UserHeader,
-        OfferTabs
+        OfferTabs,
+        Search
     },
 
     middleware: ['isAuthorized'],
@@ -247,7 +245,7 @@ export default {
 }
 
 .wit-wishlist {
-    //padding: var(--offset-sm) 0;
+    //padding: 0 var(--offset-md) 0;
 }
 
 .wit-wishlist__header {
@@ -266,7 +264,7 @@ export default {
 }
 
 .wit-wishlist__items-list {
-    padding: var(--offset-md);
+    padding: 0 var(--offset-md) var(--offset-md);
 }
 
 .wis-tabs__icon {

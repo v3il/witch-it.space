@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-flex wit-flex--justify-center">
+  <div class="wit-flex wit-flex--justify-center1">
     <b-button
       v-for="(mode, index) in modes"
       :key="mode"

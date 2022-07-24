@@ -1,5 +1,5 @@
 <template>
-  <Tabs :modes="offerTabs" :selected-mode="selectedTab" @switch="onTabSwitch">
+  <Tabs :modes="offerTabs" :selected-mode="selectedTab" class="wit-flex--justify-center" @switch="onTabSwitch">
     <template #tab0>
       <span>{{ $t('Market') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">

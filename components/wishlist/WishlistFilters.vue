@@ -44,7 +44,7 @@
       @resetSorts="resetSortParams"
     />
 
-    <b-button type="is-danger" expanded @click="resetSortsAndFilters">
+    <b-button type="is-danger" expanded @click="fullReset">
       {{ $t('Clear') }}
     </b-button>
   </div>
@@ -110,6 +110,11 @@ export default {
 
         resetSortParams () {
             this.resetSorts()
+        },
+
+        fullReset () {
+            this.resetSortsAndFilters()
+            this.$emit('reset')
         }
     }
 }

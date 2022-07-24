@@ -262,6 +262,9 @@ export const en = {
     UserHeader_DiscordIsNotConnected: 'Discord is not connected',
     UserHeader_TradeLinkIsNotProvided: 'Trade link is not provided',
 
+    Offers_FilterItems: 'More filters',
+    Offers_SearchItem: 'Search item by name',
+
     Error404_Title: 'Ooops... 404!',
     Error404_Subtitle: 'The page you requested could not be found.',
 

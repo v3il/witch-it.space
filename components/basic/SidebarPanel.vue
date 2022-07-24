@@ -4,31 +4,28 @@
       <div v-if="isVisible" class="wis-sidebar-panel__overlay" @click.self="close" />
     </transition>
 
-    <!--    <transition name="slide">-->
-    <div class="aaa">
-      {{ isVisible }}
+    <div class="wis-sidebar-panel__drawer">
+      <div class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
+        <h2 class="wit-flex wit-flex--align-center wis-sidebar-panel__title">
+          <i class="mdi mdi-filter mdi-24px wit-offset-right--xsm" />
+          {{ $t('Filter') }}
+        </h2>
 
-      <div class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary">
-        <h2>Filter</h2>
-        <i class="mdi mdi-close mdi-24px" @clikc="close" />
+        <b-button type="is-ghost" class="wis-sidebar-panel__close" @click="close">
+          <i class="mdi mdi-close mdi-24px" />
+        </b-button>
       </div>
-
-      <b-button v-if="isVisible" type="is-danger" class="wis-sidebar-panel__open" @click="close">
-        <i class="mdi mdi-20px mdi-close" />
-      </b-button>
-
-      <slot name="actions" />
 
       <div class="wis-sidebar-panel__content">
         <slot />
-        <slot />
       </div>
     </div>
-    <!--    </transition>-->
   </div>
 </template>
 
 <script>
+import { computed } from '@nuxtjs/composition-api'
+
 export default {
     name: 'SidebarPanel',
 
@@ -39,23 +36,11 @@ export default {
         }
     },
 
-    computed: {
-        panelClasses () {
-            return { open: this.isVisible }
-        }
-    },
+    setup (props, { emit }) {
+        const panelClasses = computed(() => ({ open: props.isVisible }))
+        const close = () => emit('close')
 
-    // mounted () {
-    //     setTimeout(() => {
-    //         // eslint-disable-next-line vue/no-mutating-props
-    //         this.isVisible = true
-    //     }, 2000)
-    // },
-
-    methods: {
-        close () {
-            this.$emit('close')
-        }
+        return { panelClasses, close }
     }
 }
 </script>
@@ -67,36 +52,42 @@ export default {
     z-index: 22222;
     top: 0;
     bottom: 0;
-    //background-color: var(--card-bg-color);
-    //padding: var(--offset-md) var(--offset-xs) var(--offset-md) var(--offset-md);
-    //max-height: calc(100vh - var(--navbar-height) - var(--offset-sm) * 2);
-    //position: sticky;
-    //top: var(--offset-sm);
 }
 
-.aaa {
+.wis-sidebar-panel__drawer {
     z-index: 999;
     position: fixed;
     top: 0;
     bottom: 0;
     right: 0;
-    width: 400px;
+    max-width: 400px;
+    width: 100%;
     overflow-y: auto;
     overscroll-behavior: contain;
     background-color: rgba(30, 41, 59, 1);
     transform: translateX(100%);
     transition: transform var(--default-transition);
-    //&::-webkit-scrollbar {
-    //    width: 8px;
-    //    height: 8px;
-    //    background-color: #0000;
-    //}
-    //
-    //&::-webkit-scrollbar-thumb {
-    //    border: 2px solid transparent;
-    //    border-radius: 20px;
-    //    box-shadow: inset 0 0 0 20px #0000003d;
-    //}
+}
+
+.wis-sidebar-panel__header {
+    padding: 0 24px;
+    height: 5rem;
+}
+
+.wis-sidebar-panel__title {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    font-size: 1.25rem;
+}
+
+.wis-sidebar-panel__close {
+    padding: 8px;
+    color: white;
+    text-decoration: none !important;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 .wis-sidebar-panel__overlay {
@@ -108,82 +99,16 @@ export default {
     z-index: 299;
     opacity: 1;
     background-color: #0009;
+    cursor: pointer;
 }
 
 .wis-sidebar-panel.open {
-    .aaa {
+    .wis-sidebar-panel__drawer {
         transform: translateX(0);
     }
 }
 
-.wis-sidebar-panel__open {
-    display: none;
-}
-
 .wis-sidebar-panel__content {
-    position: relative;
-    overscroll-behavior: contain;
-    height: 100%;
-    //overflow-y: auto;
-    padding-right: var(--offset-sm);
+    padding: 24px;
 }
-
-@media (max-width: 600px) {
-    .aaa {
-        width: 100%;
-    }
-}
-
-//@media (max-width: 1200px) {
-//    .wis-sidebar-panel {
-//        //top: var(--offset-sm);
-//        //bottom: var(--offset-sm);
-//        //right: 0;
-//        height: calc(100vh - var(--offset-lg));
-//        max-height: calc(100vh - var(--offset-lg));
-//        padding: var(--offset-sm) var(--offset-xs) var(--offset-sm) var(--offset-sm);
-//        z-index: calc(var(--navbar-z) + 1);
-//        margin: 0;
-//        transition: transform var(--default-transition);
-//        transform: translateX(calc(100% + 16px));
-//        position: fixed;
-//        top: 0;
-//        bottom: 0;
-//        //left: 0;
-//        right: 0;
-//    }
-//
-//    .wis-sidebar-panel__open {
-//        display: flex;
-//        background-color: var(--content-bg) !important;
-//        padding: var(--offset-xs);
-//        position: absolute;
-//        bottom: 16px;
-//        right: 310px;
-//        border-radius: 50%;
-//        height: 36px;
-//        width: 36px;
-//    }
-//
-//    .wis-sidebar-panel.open {
-//        transform: translateX(0);
-//        background-color: rgba(0, 0, 0, 0.7);
-//        width: auto;
-//        height: 100vh;
-//        max-height: 100vh;
-//        padding: 0;
-//        left: 0;
-//
-//        .wis-sidebar-panel__open {
-//            background-color: var(--danger) !important;
-//        }
-//    }
-//
-//    .wis-sidebar-panel__content {
-//        background-color: var(--content-bg);
-//        width: 300px;
-//        padding: var(--offset-sm);
-//        margin-left: auto;
-//    }
-//}
 </style>
