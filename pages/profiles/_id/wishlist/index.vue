@@ -28,7 +28,12 @@
             <!--            </div>-->
 
             <div class="wit-wishlist__content">
-              <Search :search-query="filters.query" @openFilters="isFiltersVisible = true" @search="mergeFilters({query: $event})" />
+              <Search
+                :search-query="filters.query"
+                @open="isFiltersVisible = true"
+                @search="mergeFilters({ query: $event })"
+                @reset="resetFilterParam('query')"
+              />
 
               <!--              <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->
               <!--                <Tabs :modes="$options.tabs" :selected-mode="selectedTab">-->

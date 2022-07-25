@@ -29,6 +29,7 @@ body {
 
     & + .icon.is-right {
         display: none;
+        right: 4px;
     }
 
     & + .icon.is-left {
@@ -51,7 +52,7 @@ body {
     }
 
     & + .icon.is-left .mdi::before,
-    & + .icon.is-right .mdi::before {
+    & + * + .icon.is-right .mdi::before {
         font-size: 20px;
         line-height: 20px;
     }

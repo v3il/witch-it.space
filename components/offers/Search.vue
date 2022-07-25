@@ -5,9 +5,12 @@
       maxlength="15"
       :has-counter="false"
       icon="magnify"
+      icon-right="close"
+      icon-right-clickable
       :placeholder="$t('Offers_SearchItem')"
       custom-class="wit-transition rounded"
-      class="wit-offset-right--xs wis-offers-search__input"
+      class="wit-offset-right--xs wis-offers-search__input wis-input"
+      @icon-right-click="resetSearch"
       @input="triggerSearch"
     />
 
@@ -32,10 +35,11 @@ export default {
     },
 
     setup (_, { emit }) {
-        const openFilters = () => emit('openFilters')
+        const openFilters = () => emit('open')
+        const resetSearch = () => emit('reset')
         const triggerSearch = debounce(value => emit('search', value), 250)
 
-        return { openFilters, triggerSearch }
+        return { openFilters, triggerSearch, resetSearch }
     }
 }
 </script>
