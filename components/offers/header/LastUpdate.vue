@@ -1,6 +1,6 @@
 <template>
   <p class="wis-user-card__last-update wit-color--muted">
-    <i class="mdi mdi-bell mdi-18px wit-offset-right--xs" />
+    <i class="mdi mdi-update mdi-18px wit-offset-right--xs" />
     <span class="wit-text--overflow">{{ $t('Wishlist_LastUpdate') }}: {{ formattedLastUpdate }}</span>
   </p>
 </template>
