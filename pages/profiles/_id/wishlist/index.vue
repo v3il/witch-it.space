@@ -11,6 +11,10 @@
 
     <UserHeader :mode="$options.selectedTab" />
 
+    <transition name="fade150">
+      <UserHeader v-if="isStickyHeaderVisible" :mode="$options.selectedTab" compact />
+    </transition>
+
     <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-padding-top--md">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="$options.selectedTab" />
     </div>
@@ -115,6 +119,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
+import { onDeactivated, onMounted, ref } from '@nuxtjs/composition-api'
 import UserView from '@/components/user/UserView.vue'
 import ItemView from '@/components/items/ItemView'
 import TopNavBar from '@/components/header/TopNavBar.vue'
@@ -228,6 +233,22 @@ export default {
             existingOffers: this.offers.map(offer => Offer.create(offer)),
             availableOffers: []
         })
+    },
+
+    setup () {
+        const isStickyHeaderVisible = ref(false)
+
+        const scrollHandler = () => isStickyHeaderVisible.value = window.scrollY > 600 && window.innerWidth > 770
+
+        onMounted(() => {
+            window.addEventListener('scroll', scrollHandler, { passive: true })
+        })
+
+        onDeactivated(() => {
+            window.removeEventListener('scroll', scrollHandler)
+        })
+
+        return { isStickyHeaderVisible }
     },
 
     methods: {

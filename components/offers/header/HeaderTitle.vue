@@ -1,5 +1,5 @@
 <template>
-  <h1 class="wis-user-card__title wit-text--overflow">
+  <h1 class="wis-user-card__title wit-text--overflow" :class="titleClasses">
     {{ title }}
   </h1>
 </template>
@@ -20,12 +20,18 @@ export default {
         mode: {
             required: true,
             type: String
+        },
+
+        compact: {
+            required: true,
+            type: Boolean
         }
     },
 
     setup (props) {
         const { $t } = useContext()
         const profileName = computed(() => props.profile.displayName)
+        const titleClasses = computed(() => ({ compact: props.compact }))
 
         const title = computed(() => {
             return props.mode === OfferTabModes.MARKET
@@ -33,7 +39,7 @@ export default {
                 : $t('UserHeader_WishlistTitle', [profileName.value])
         })
 
-        return { title }
+        return { title, titleClasses }
     }
 }
 </script>
@@ -43,6 +49,11 @@ export default {
     letter-spacing: -1px;
     font-size: 32px;
     line-height: 50px;
+
+    &.compact {
+        font-size: 20px;
+        line-height: 36px;
+    }
 
     @media (max-width: 769px) {
         letter-spacing: -0.025em;

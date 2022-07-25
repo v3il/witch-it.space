@@ -1,11 +1,11 @@
 <template>
-  <div class="wis-user-card">
+  <div class="wis-user-card" :class="panelClasses">
     <div class="wit-flex wit-flex--align-center wis-block--max-width wis-user-card__container wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
       <div class="wit-flex wit-flex--align-center wit-flex__item--grow">
         <UserAvatar :user="profile" class="wis-user-card__avatar" />
 
         <div class="wit-offset-left--sm wit-flex__item--grow" style="min-width: 0;">
-          <HeaderTitle :mode="mode" :profile="profile" />
+          <HeaderTitle :compact="compact" :mode="mode" :profile="profile" />
           <LastUpdate :mode="mode" :profile="profile" />
         </div>
       </div>
@@ -34,17 +34,25 @@ export default {
         mode: {
             required: true,
             type: String
+        },
+
+        compact: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
 
-    setup () {
+    setup (props) {
         const store = useStore()
 
         const authorizedUser = computed(() => store.state.user.user)
         const profile = computed(() => store.state.offers.profile)
         const isOwnUserProfile = computed(() => authorizedUser.value.id === profile.value.id)
 
-        return { isOwnUserProfile, profile }
+        const panelClasses = computed(() => ({ compact: props.compact }))
+
+        return { isOwnUserProfile, profile, panelClasses }
     }
 }
 </script>
@@ -60,6 +68,18 @@ export default {
     width: 64px;
     height: 64px;
     border-radius: 8px;
+}
+
+.wis-user-card.compact {
+    position: sticky;
+    top: 0;
+    z-index: 22;
+    padding: 8px 24px;
+
+    .wis-user-card__avatar {
+        width: 48px;
+        height: 48px;
+    }
 }
 
 @media (max-width: 769px) {
