@@ -6,6 +6,7 @@
       <TopNavBar />
       <Nuxt class="wit-flex__item--grow" />
       <ConfirmPopup />
+      <ScrollToTopButton />
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@ import { getNavbarLinks } from '@/shared'
 import LeftNavBar from '@/components/sidebar/LeftNavBar.vue'
 import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
+import ScrollToTopButton from '@/components/ScrollToTopButton.vue'
 
 export default {
     name: 'Default',
@@ -24,7 +26,8 @@ export default {
     components: {
         LeftNavBar,
         ConfirmPopup,
-        TopNavBar
+        TopNavBar,
+        ScrollToTopButton
     },
 
     head () {
