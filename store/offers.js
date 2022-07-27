@@ -7,7 +7,7 @@ export const state = () => ({
     existingOffers: [],
     availableOffers: [],
     mode: ManageWishlistTabs.MY_WISHLIST,
-    offersType: '',
+    offersType: OfferTypes.WISHLIST,
     profile: {}
 })
 

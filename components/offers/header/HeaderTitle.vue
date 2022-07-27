@@ -30,7 +30,7 @@ export default {
 
     setup (props) {
         const { $t } = useContext()
-        const profileName = computed(() => props.profile.displayName)
+        const profileName = computed(() => props.profile.displayName ?? '')
         const titleClasses = computed(() => ({ compact: props.compact }))
 
         const title = computed(() => {
