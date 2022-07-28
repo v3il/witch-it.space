@@ -64,7 +64,7 @@ export default {
 .wit-card {
     flex-direction: column;
     background-color: var(--card-bg-color);
-    border-radius: var(--offset-xxs);
+    border-radius: 16px;
     box-shadow: 0 0.75rem 1.5rem var(--card-box-shadow-color);
 
     &.error {
