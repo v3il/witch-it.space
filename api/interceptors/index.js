@@ -1,3 +1,3 @@
 export { i18n } from './i18n'
 export { authorized } from './authorized'
-export { optionalAuthorized } from './optionalAuthorized'
+export { fetchUser } from './fetchUser.js'

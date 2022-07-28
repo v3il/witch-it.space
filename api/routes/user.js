@@ -1,10 +1,10 @@
 import { userController } from '../controllers'
-import { authorized } from '../interceptors'
+import { authorized, fetchUser } from '../interceptors'
 import { createAsyncRouter } from '../util'
 
 const userRouter = createAsyncRouter()
 
-userRouter.get('/', /* authorized, */ userController.getCurrentUser)
+userRouter.get('/', fetchUser, userController.getCurrentUser)
 userRouter.get('/:id', authorized, userController.getById)
 userRouter.post('/locale', authorized, userController.changeUserLocale)
 userRouter.post('/theme', authorized, userController.changeUserTheme)

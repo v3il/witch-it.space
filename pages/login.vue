@@ -1,13 +1,5 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <div class="wit-font-size--sm">
-          {{ $t('MainMenu_Login') }}
-        </div>
-      </template>
-    </TopNavBar>
-
     <div class="wit-flex wit-flex--center login-page">
       <div class="login-page__container">
         <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
@@ -61,19 +53,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import Socials from '@/components/auth/Socials'
-import { StoreModules, User } from '@/store'
+import { StoreModules } from '@/store'
 import { Routes } from '@/shared'
 import { validateLogin, validatePassword } from '@/shared/validators'
-import TopNavBar from '@/components/header/TopNavBar.vue'
 
 export default {
     year: new Date().getFullYear(),
 
     components: {
-        Socials,
-        TopNavBar
+        Socials
     },
 
     middleware: ['returnToApp'],

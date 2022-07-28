@@ -68,8 +68,6 @@ export default {
 
         const { offers, profile } = await $marketService.fetch(route.params.id)
 
-        console.error(offers, profile)
-
         if (!profile) {
             return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
         }
