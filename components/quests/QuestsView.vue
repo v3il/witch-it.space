@@ -12,9 +12,9 @@
     <!--        </p>-->
 
     <!--        <div class="wit-position&#45;&#45;relative wit-padding-top&#45;&#45;xs wit-padding-bottom&#45;&#45;xs wis-quests__button-container">-->
-    <!--          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">-->
-    <!--            {{ timeToNextUpdate }}-->
-    <!--          </b-tag>-->
+    <!--              <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">-->
+    <!--                {{ timeToNextUpdate }}-->
+    <!--              </b-tag>-->
 
     <!--          <b-button-->
     <!--            type="is-primary"-->
@@ -29,9 +29,8 @@
     <!--      </div>-->
     <!--    </Card>-->
 
-    <QuestsColumn
-      class="wit-offset-bottom--sm"
-      :title="$t('Quests_WeeklyQuestsTitle')"
+    <QuestsGrid
+      class="wit-offset-bottom--lg"
       :quests="weeklyQuests"
       :is-loading="isLoading"
       :can-replace-quests="canReplaceWeeklyQuests"
@@ -39,8 +38,7 @@
       @finalize="finalizeQuest"
     />
 
-    <QuestsColumn
-      :title="$t('Quests_DailyQuestsTitle')"
+    <QuestsGrid
       :quests="dailyQuests"
       :is-loading="isLoading"
       :can-replace-quests="canReplaceDailyQuests"
@@ -62,6 +60,7 @@ import { showPopup } from '@/utils'
 import { StoreModules } from '@/store/index.js'
 import QuestsColumn from '@/components/quests/QuestsColumn.vue'
 import { localStorageService } from '@/domain/index.js'
+import { QuestsGrid } from '@/components/quests'
 
 const QUESTS_BANNER_KEY = 'QuestsBannerHidden'
 
@@ -70,7 +69,8 @@ export default {
 
     components: {
         Card,
-        QuestsColumn
+        QuestsColumn,
+        QuestsGrid
     },
 
     data: () => ({

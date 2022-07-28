@@ -1,5 +1,5 @@
 <template>
-  <div class="wis-user-card" :class="panelClasses">
+  <HeaderPanel :compact="compact" :class="panelClasses">
     <div class="wit-flex wit-flex--align-center wis-block--max-width wis-user-card__container wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
       <div class="wit-flex wit-flex--align-center wit-flex__item--grow">
         <UserAvatar :user="profile" class="wis-user-card__avatar" />
@@ -12,13 +12,14 @@
 
       <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />
     </div>
-  </div>
+  </HeaderPanel>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
 import { HeaderActions, HeaderTitle, LastUpdate } from '@/components/offers/header'
 import { UserAvatar } from '@/components/user'
+import { HeaderPanel } from '@/components/basic'
 
 export default {
     name: 'UserHeader',
@@ -27,7 +28,8 @@ export default {
         HeaderTitle,
         HeaderActions,
         LastUpdate,
-        UserAvatar
+        UserAvatar,
+        HeaderPanel
     },
 
     props: {
@@ -58,24 +60,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-user-card {
-    background-color: var(--dark-gray);
-    border-bottom: 1px solid var(--border-color);
-    padding: 40px 32px;
-}
-
 .wis-user-card__avatar {
     width: 64px;
     height: 64px;
     border-radius: 8px;
 }
 
-.wis-user-card.compact {
-    position: sticky;
-    top: 0;
-    z-index: 22;
-    padding: 8px 24px;
-
+.compact {
     .wis-user-card__avatar {
         width: 48px;
         height: 48px;
@@ -83,10 +74,6 @@ export default {
 }
 
 @media (max-width: 769px) {
-    .wis-user-card {
-        padding: 24px;
-    }
-
     .wis-user-card__avatar {
         width: 48px;
         height: 48px;

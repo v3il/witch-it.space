@@ -6,8 +6,6 @@ export const actions = {
     fetchItems ({ commit }) {
         return this.$axios.$get('/api/items')
             .then(({ items }) => {
-                console.error(items)
-
                 commit('SET_ITEMS', items)
                 this.$itemsService.setItems(items)
             })
