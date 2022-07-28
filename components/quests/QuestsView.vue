@@ -1,33 +1,33 @@
 <template>
   <div>
-    <b-notification v-if="!isBannerHidden" type="is-info" class="wit-offset-bottom--sm wit-line-height--md" @close="onBannerClose">
-      {{ $t('Quests_Note') }}
-    </b-notification>
+    <!--    <b-notification v-if="!isBannerHidden" type="is-info" class="wit-offset-bottom&#45;&#45;sm wit-line-height&#45;&#45;md" @close="onBannerClose">-->
+    <!--      {{ $t('Quests_Note') }}-->
+    <!--    </b-notification>-->
 
-    <Card class="wit-offset-bottom--md" vertical-paddings="xs">
-      <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
-        <p class="wit-offset-right--sm wit-padding-top--xs wit-padding-bottom--xs wis-quests__last-update">
-          <span class="wit-color--muted">{{ $t('Quests_LastUpdate') }}</span>
-          {{ formattedLastUpdate || $t('Time_Never') }}
-        </p>
+    <!--    <Card class="wit-offset-bottom&#45;&#45;md" vertical-paddings="xs">-->
+    <!--      <div class="quests__header wit-flex wit-flex&#45;&#45;justify-between wit-flex&#45;&#45;align-center wit-flex&#45;&#45;wrap-reverse">-->
+    <!--        <p class="wit-offset-right&#45;&#45;sm wit-padding-top&#45;&#45;xs wit-padding-bottom&#45;&#45;xs wis-quests__last-update">-->
+    <!--          <span class="wit-color&#45;&#45;muted">{{ $t('Quests_LastUpdate') }}</span>-->
+    <!--          {{ formattedLastUpdate || $t('Time_Never') }}-->
+    <!--        </p>-->
 
-        <div class="wit-position--relative wit-padding-top--xs wit-padding-bottom--xs wis-quests__button-container">
-          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">
-            {{ timeToNextUpdate }}
-          </b-tag>
+    <!--        <div class="wit-position&#45;&#45;relative wit-padding-top&#45;&#45;xs wit-padding-bottom&#45;&#45;xs wis-quests__button-container">-->
+    <!--          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">-->
+    <!--            {{ timeToNextUpdate }}-->
+    <!--          </b-tag>-->
 
-          <b-button
-            type="is-primary"
-            class="wit-transition wis-quests__button"
-            :disabled="!isUpdateAvailable"
-            expanded
-            @click="updateQuests"
-          >
-            {{ $t('Quests_UpdateQuests') }}
-          </b-button>
-        </div>
-      </div>
-    </Card>
+    <!--          <b-button-->
+    <!--            type="is-primary"-->
+    <!--            class="wit-transition wis-quests__button"-->
+    <!--            :disabled="!isUpdateAvailable"-->
+    <!--            expanded-->
+    <!--            @click="updateQuests"-->
+    <!--          >-->
+    <!--            {{ $t('Quests_UpdateQuests') }}-->
+    <!--          </b-button>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </Card>-->
 
     <QuestsColumn
       class="wit-offset-bottom--sm"
@@ -99,7 +99,7 @@ export default {
     },
 
     mounted () {
-        this.isBannerHidden = this.$localStorageService.get(QUESTS_BANNER_KEY) === true
+        this.isBannerHidden = false // this.$localStorageService.get(QUESTS_BANNER_KEY) === true
     },
 
     methods: {
