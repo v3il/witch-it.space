@@ -23,6 +23,7 @@
 
 <script>
 import { debounce } from 'lodash'
+import { useStore } from '@nuxtjs/composition-api'
 
 export default {
     name: 'Search',
@@ -35,9 +36,14 @@ export default {
     },
 
     setup (_, { emit }) {
+        const store = useStore()
+
         const openFilters = () => emit('open')
-        const resetSearch = () => emit('reset')
-        const triggerSearch = debounce(value => emit('search', value), 250)
+        const resetSearch = () => store.dispatch('filters/resetFilterParam', 'query')
+
+        const triggerSearch = debounce((query) => {
+            store.dispatch('filters/mergeFilters', { query })
+        }, 250)
 
         return { openFilters, triggerSearch, resetSearch }
     }

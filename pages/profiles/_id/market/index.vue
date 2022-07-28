@@ -7,15 +7,9 @@
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        <template v-if="sortedOfferModels.length">
-          <Search
-            :search-query="filters.query"
-            @open="isFiltersVisible = true"
-            @search="mergeFilters({ query: $event })"
-            @reset="resetFilterParam('query')"
-          />
-
-          <OffersList :sorted-offers="sortedOfferModels" />
+        <template v-if="sortedOffers.length">
+          <Search :search-query="filters.query" @open="isFiltersVisible = true" />
+          <OffersList :sorted-offers="sortedOffers" />
         </template>
 
         <OffersEmptyState v-else />
@@ -29,8 +23,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import { StoreModules } from '@/store/index.js'
 import { SidebarPanel } from '@/components/basic'
 import { OffersEmptyState, OffersFilter, OffersList, OfferTabs, Search, UserHeader } from '@/components/offers'
 import { useOffersPage } from '@/composables'
@@ -49,27 +41,16 @@ export default {
 
     middleware: ['isAuthorized'],
 
-    computed: {
-        ...mapState(StoreModules.FILTERS, ['filters']),
-        ...mapGetters(StoreModules.OFFERS, ['sortedOfferModels'])
-    },
-
     setup () {
-        const { offersType, isFiltersVisible, isStickyHeaderVisible } = useOffersPage(OfferTypes.MARKET)
+        const {
+            offersType,
+            isFiltersVisible,
+            isStickyHeaderVisible,
+            filters,
+            sortedOffers
+        } = useOffersPage(OfferTypes.MARKET)
 
-        return { offersType, isFiltersVisible, isStickyHeaderVisible }
-    },
-
-    methods: {
-        ...mapActions(StoreModules.FILTERS, {
-            mergeFilters: 'mergeFilters',
-            resetFilterParam: 'resetFilterParam'
-        }),
-
-        ...mapActions(StoreModules.OFFERS, {
-            storeOffers: 'storeOffers',
-            setProfile: 'setProfile'
-        })
+        return { offersType, isFiltersVisible, isStickyHeaderVisible, filters, sortedOffers }
     }
 }
 </script>

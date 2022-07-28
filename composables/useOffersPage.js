@@ -1,4 +1,4 @@
-import { ref, useContext, useFetch, useRoute, useStore } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, useFetch, useRoute, useStore } from '@nuxtjs/composition-api'
 import { StoreModules } from '@/store/index.js'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Offer } from '@/domain/models/index.js'
@@ -29,8 +29,11 @@ export const useOffersPage = (offersType) => {
         })
     })
 
+    const filters = computed(() => store.state.filters.filters)
+    const sortedOffers = computed(() => store.getters['offers/sortedOfferModels'])
+
     const isFiltersVisible = ref(false)
     const { isStickyHeaderVisible } = useStickyUserHeader()
 
-    return { isStickyHeaderVisible, isFiltersVisible, offersType }
+    return { isStickyHeaderVisible, isFiltersVisible, offersType, filters, sortedOffers }
 }
