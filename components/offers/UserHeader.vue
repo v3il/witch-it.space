@@ -48,7 +48,7 @@ export default {
 
         const authorizedUser = computed(() => store.state.user.user)
         const profile = computed(() => store.state.offers.profile)
-        const isOwnUserProfile = computed(() => authorizedUser.value.id === profile.value.id)
+        const isOwnUserProfile = computed(() => authorizedUser.value?.id === profile.value.id)
 
         const panelClasses = computed(() => ({ compact: props.compact }))
 

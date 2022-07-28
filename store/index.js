@@ -14,11 +14,11 @@ export const actions = {
     },
 
     nuxtClientInit ({ commit }, { store, $itemsService }) {
-        const isAuthorized = store.getters['user/isAuthorized']
+        // const isAuthorized = store.getters['user/isAuthorized']
 
-        if (isAuthorized) {
-            $itemsService.setItems(store.state.items.items)
-        }
+        // if (isAuthorized) {
+        $itemsService.setItems(store.state.items.items)
+        // }
     }
 }
 

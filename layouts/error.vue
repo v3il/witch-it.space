@@ -1,6 +1,6 @@
 <template>
   <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-block--full-width wit-flex wit-flex--center">
-    <Error404 class="wit-block--full-width" :link-title="error.linkTitle" :link-url="error.linkUrl" />
+    <Error404 class="wit-block--full-width" :link-title="error.linkTitle ?? ''" :link-url="error.linkUrl ?? ''" />
   </div>
 </template>
 

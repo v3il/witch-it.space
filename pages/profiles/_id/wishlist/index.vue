@@ -42,7 +42,7 @@ export default {
         OffersEmptyState
     },
 
-    middleware: ['isAuthorized'],
+    // middleware: ['isAuthorized'],
 
     setup () {
         const {

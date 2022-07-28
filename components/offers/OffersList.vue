@@ -33,6 +33,10 @@ export default {
             required: true,
             type: Array
         }
+    },
+
+    created () {
+        console.log(this.sortedOffers)
     }
 }
 </script>
