@@ -1,26 +1,26 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <div class="wit-font-size--sm">
-          {{ $t('MainMenu_Profiles') }}
-        </div>
-      </template>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <div class="wit-font-size&#45;&#45;sm">-->
+    <!--          {{ $t('MainMenu_Profiles') }}-->
+    <!--        </div>-->
+    <!--      </template>-->
 
-      <template #topMenu>
-        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">
-          <template #tab0>
-            {{ $t('Profiles_VerifiedProfiles') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ verifiedProfiles.length }}</span>
-          </template>
+    <!--      <template #topMenu>-->
+    <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">-->
+    <!--          <template #tab0>-->
+    <!--            {{ $t('Profiles_VerifiedProfiles') }}-->
+    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ verifiedProfiles.length }}</span>-->
+    <!--          </template>-->
 
-          <template #tab1>
-            {{ $t('Profiles_AllProfiles') }}
-            <span class="wit-top-tabs__counter wit-offset-left--xxs">{{ profiles.length }}</span>
-          </template>
-        </TopTabs>
-      </template>
-    </TopNavBar>
+    <!--          <template #tab1>-->
+    <!--            {{ $t('Profiles_AllProfiles') }}-->
+    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profiles.length }}</span>-->
+    <!--          </template>-->
+    <!--        </TopTabs>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <main class="wis-profiles">
       <Card>
@@ -108,7 +108,7 @@ export default {
         EmptyState
     },
 
-    middleware: ['isAuthorized'],
+    // middleware: ['isAuthorized'],
 
     async asyncData ({ app: { $usersService } }) {
         const { error, profiles } = await $usersService.fetchAll()

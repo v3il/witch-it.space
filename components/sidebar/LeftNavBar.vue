@@ -1,7 +1,10 @@
 <template>
   <div class="wit-flex wit-flex--column">
     <Header />
-    <Navigation :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
+
+    <Navigation v-if="user" :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
+    <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom--md" />
+
     <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
   </div>
 </template>
@@ -31,9 +34,15 @@ export default {
     setup () {
         const store = useStore()
         const user = computed(() => store.state.user.user)
+        const isAuthorized = computed(() => !!user.value)
         const userId = computed(() => user.value.id)
         const marketSize = computed(() => user.value.marketSize)
         const wishlistSize = computed(() => user.value.wishlistSize)
+
+        const authLinks = computed(() => [
+            { icon: 'store-outline', label: 'MainMenu_Login', to: Routes.LOGIN },
+            { icon: 'store-outline', label: 'MainMenu_Register', to: Routes.REGISTER }
+        ])
 
         const userLinks = computed(() => [
             { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: marketSize.value },
@@ -44,12 +53,17 @@ export default {
 
         const appLinks = computed(() => [
             { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES },
-            { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS },
-            { icon: 'file-tree-outline', label: 'MainMenu_Quests', to: Routes.QUESTS },
-            { icon: 'cog-outline', label: 'MainMenu_Settings', to: Routes.SETTINGS }
+            { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS }
         ])
 
-        return { userLinks, appLinks }
+        if (isAuthorized.value) {
+            appLinks.push(
+                { icon: 'file-tree-outline', label: 'MainMenu_Quests', to: Routes.QUESTS },
+                { icon: 'cog-outline', label: 'MainMenu_Settings', to: Routes.SETTINGS }
+            )
+        }
+
+        return { userLinks, appLinks, authLinks, isAuthorized }
     },
 
     computed: {

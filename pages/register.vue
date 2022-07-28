@@ -1,12 +1,12 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <div class="wit-font-size--sm">
-          {{ $t('MainMenu_Register') }}
-        </div>
-      </template>
-    </TopNavBar>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <div class="wit-font-size&#45;&#45;sm">-->
+    <!--          {{ $t('MainMenu_Register') }}-->
+    <!--        </div>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <div class="wit-flex wit-flex--center register-page">
       <div class="register-page__container">

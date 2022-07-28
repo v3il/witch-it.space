@@ -1,12 +1,12 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <div class="wit-font-size--sm">
-          {{ $t('MainMenu_Items') }}
-        </div>
-      </template>
-    </TopNavBar>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <div class="wit-font-size&#45;&#45;sm">-->
+    <!--          {{ $t('MainMenu_Items') }}-->
+    <!--        </div>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <div class="wit-items wit-flex">
       <div class="wit-flex__item--grow">
@@ -92,7 +92,7 @@ export default {
         Price.create({ item1Id: 900, item1Count: 50, item2Id: 904, item2Count: 50, priceType: 'fixed' })
     ],
 
-    middleware: ['isAuthorized'],
+    // middleware: ['isAuthorized'],
 
     data: () => ({
         items: [],

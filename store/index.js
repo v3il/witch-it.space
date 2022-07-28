@@ -5,20 +5,18 @@ import { StoreModules } from '@/store/StoreModules.js'
 export const state = () => ({})
 
 export const actions = {
-    async nuxtServerInit ({ commit }, { app }) {
-        await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
-        await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
+    async nuxtServerInit ({ commit }, { app, $itemsService, store }) {
+        // await app.store.dispatch(Theme.F.Actions.SET_THEME, app.$cookies.get(Cookies.THEME))
+        // await app.store.dispatch(Locale.F.Actions.SET_LOCALE, app.$cookies.get(Cookies.LOCALE))
+        await app.store.dispatch('items/fetchItems')
 
         await app.store.dispatch('user/fetchUser')
             .catch(console.error)
     },
 
     nuxtClientInit ({ commit }, { store, $itemsService }) {
-        // const isAuthorized = store.getters['user/isAuthorized']
-
-        // if (isAuthorized) {
+        // todo
         $itemsService.setItems(store.state.items.items)
-        // }
     }
 }
 

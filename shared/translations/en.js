@@ -54,8 +54,8 @@ export const en = {
     Register_LoginInputHelp: 'Minimum length - 4 characters',
     Register_PasswordInputHelp: 'Minimum length - 6 characters',
 
-    MainMenu_Login: 'Вход',
-    MainMenu_Register: 'Регистрация',
+    MainMenu_Login: 'Sign In',
+    MainMenu_Register: 'Sign Up',
     MainMenu_MyMarket: 'Market',
     MainMenu_ManageMarket: 'Manage Market',
     MainMenu_MyWishlist: 'Wishlist',
@@ -96,6 +96,7 @@ export const en = {
     Public: 'Public',
     Private: 'Private',
     UserDashboardsTitle: 'Your Offers',
+    AuthorizationTitle: 'Authorization',
     AppPagesTitle: 'Other Pages',
     Message: 'Message',
     SendTradeOffer: 'Send a trade offer',

@@ -23,4 +23,8 @@ export class Item {
     get isRecipe () {
         return this.slot === 'recipe'
     }
+
+    toJSON () {
+        return { ...this }
+    }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <LeftNavBar v-if="user" :links="navbarLinks" class="layout__left" />
+    <LeftNavBar class="layout__left" />
 
     <div class="layout__right">
       <TopNavBar />
@@ -14,7 +14,6 @@
 <script>
 import { mapState } from 'vuex'
 import { User, Theme } from '@/store'
-import { getNavbarLinks } from '@/shared'
 import LeftNavBar from '@/components/sidebar/LeftNavBar.vue'
 import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
@@ -44,8 +43,6 @@ export default {
     },
 
     created () {
-        this.navbarLinks = getNavbarLinks(this.user)
-
         this.$eventBus.$on('showNotification', ({ type, message }) => {
             this.$buefy.snackbar.open({
                 message,
