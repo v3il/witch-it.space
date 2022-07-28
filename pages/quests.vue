@@ -1,12 +1,12 @@
 <template>
   <div>
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          {{ $t('MainMenu_Quests') }}
-        </h1>
-      </template>
-    </TopNavBar>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
+    <!--          {{ $t('MainMenu_Quests') }}-->
+    <!--        </h1>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <div class="wit-quests">
       <QuestsView v-if="isSteamConnected" />

@@ -1,13 +1,13 @@
 <template>
   <div class="wit-wishlist">
-    <TopNavBar class="layout__header">
-      <template #brand>
-        <h1 class="wit-font-size--sm wit-flex wit-flex--align-center">
-          <BackButton :to="marketURL" class="wit-offset-right--xs" />
-          {{ $t('Wishlist_Manage_Title') }}
-        </h1>
-      </template>
-    </TopNavBar>
+    <!--    <TopNavBar class="layout__header">-->
+    <!--      <template #brand>-->
+    <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
+    <!--          <BackButton :to="marketURL" class="wit-offset-right&#45;&#45;xs" />-->
+    <!--          {{ $t('Wishlist_Manage_Title') }}-->
+    <!--        </h1>-->
+    <!--      </template>-->
+    <!--    </TopNavBar>-->
 
     <div class="wit-wishlist__background wit-flex">
       <div class="wit-wishlist__content">
