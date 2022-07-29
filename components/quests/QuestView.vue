@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { useContext, useStore } from '@nuxtjs/composition-api'
 import QuestHeader from './questView/QuestHeader.vue'
 import CircleProgressBar from '@/components/basic/CircleProgressBar.vue'
 import ItemName from '@/components/ItemName'

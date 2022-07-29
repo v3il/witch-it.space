@@ -1,6 +1,6 @@
 <template>
   <div class="wis-quest-actions">
-    <b-button type="is-primary" class="wis-btn--rounded">
+    <b-button type="is-primary" class="wis-btn--rounded" @click="updateQuests">
       <i class="mdi mdi-18px wit-offset-right--xs mdi-refresh" />
       {{ $t('Quests_UpdateQuests') }}
     </b-button>
@@ -12,13 +12,23 @@
 </template>
 
 <script>
+import { useContext, useStore } from '@nuxtjs/composition-api'
+
 export default {
     name: 'QuestActions',
 
     setup () {
+        const store = useStore()
+        const { $showError } = useContext()
+
+        const updateQuests = () => {
+            return store.dispatch('quest/updateUserQuests').catch($showError)
+        }
+
         return {
             isUpdateAvailable: true,
-            timeToNextUpdate: ''
+            timeToNextUpdate: '',
+            updateQuests
         }
     }
 }

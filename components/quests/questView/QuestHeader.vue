@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { useContext, useStore } from '@nuxtjs/composition-api'
+
 export default {
     name: 'QuestHeader',
 
@@ -17,6 +19,17 @@ export default {
             required: true,
             type: Object
         }
+    },
+
+    setup () {
+        // const store = useStore()
+        // const { $showError } = useContext()
+        //
+        // const updateQuests = () => {
+        //     return store.dispatch('quest/updateUserQuests').catch($showError)
+        // }
+        //
+        // return { updateQuests }
     }
 }
 </script>

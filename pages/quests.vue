@@ -59,6 +59,10 @@ export default {
 
 .wis-quests__content {
     padding: 40px;
+
+    @media (max-width: 600px) {
+        padding: 24px;
+    }
 }
 
 .wis-quests__quests {

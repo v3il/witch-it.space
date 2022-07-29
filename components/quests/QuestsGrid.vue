@@ -1,6 +1,6 @@
 <template>
   <div class="wis-quests-grid">
-    <QuestView v-for="quest in quests" :key="quest.id" can-replace :quest="quest" />
+    <QuestView v-for="quest in quests" :key="quest.id" can-replace :quest="quest" class="wis-quests-grid__quest" />
   </div>
 </template>
 
@@ -45,16 +45,16 @@ export default {
 
 <style scoped lang="scss">
 .wis-quests-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
 
-    @media (max-width: 1200px) {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 769px) {
+        justify-content: center;
     }
+}
 
-    @media (max-width: 600px) {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
-    }
+.wis-quests-grid__quest {
+    flex-basis: 320px;
 }
 </style>
