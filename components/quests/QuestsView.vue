@@ -4,39 +4,41 @@
     <!--      {{ $t('Quests_Note') }}-->
     <!--    </b-notification>-->
 
-    <!--    <Card class="wit-offset-bottom&#45;&#45;md" vertical-paddings="xs">-->
-    <!--      <div class="quests__header wit-flex wit-flex&#45;&#45;justify-between wit-flex&#45;&#45;align-center wit-flex&#45;&#45;wrap-reverse">-->
-    <!--        <p class="wit-offset-right&#45;&#45;sm wit-padding-top&#45;&#45;xs wit-padding-bottom&#45;&#45;xs wis-quests__last-update">-->
-    <!--          <span class="wit-color&#45;&#45;muted">{{ $t('Quests_LastUpdate') }}</span>-->
-    <!--          {{ formattedLastUpdate || $t('Time_Never') }}-->
-    <!--        </p>-->
+    <Card class="wit-offset-bottom--md" vertical-paddings="xs">
+      <div class="quests__header wit-flex wit-flex--justify-between wit-flex--align-center wit-flex--wrap-reverse">
+        <p class="wit-offset-right--sm wit-padding-top--xs wit-padding-bottom--xs wis-quests__last-update">
+          <span class="wit-color--muted">{{ $t('Quests_LastUpdate') }}</span>
+          {{ formattedLastUpdate || $t('Time_Never') }}
+        </p>
 
-    <!--        <div class="wit-position&#45;&#45;relative wit-padding-top&#45;&#45;xs wit-padding-bottom&#45;&#45;xs wis-quests__button-container">-->
-    <!--              <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">-->
-    <!--                {{ timeToNextUpdate }}-->
-    <!--              </b-tag>-->
+        <div class="wit-position--relative wit-padding-top--xs wit-padding-bottom--xs wis-quests__button-container">
+          <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quests__counter">
+            {{ timeToNextUpdate }}
+          </b-tag>
 
-    <!--          <b-button-->
-    <!--            type="is-primary"-->
-    <!--            class="wit-transition wis-quests__button"-->
-    <!--            :disabled="!isUpdateAvailable"-->
-    <!--            expanded-->
-    <!--            @click="updateQuests"-->
-    <!--          >-->
-    <!--            {{ $t('Quests_UpdateQuests') }}-->
-    <!--          </b-button>-->
-    <!--        </div>-->
-    <!--      </div>-->
-    <!--    </Card>-->
+          <b-button
+            type="is-primary"
+            class="wit-transition wis-quests__button"
+            :disabled="!isUpdateAvailable"
+            expanded
+            @click="updateQuests"
+          >
+            {{ $t('Quests_UpdateQuests') }}
+          </b-button>
+        </div>
+      </div>
+    </Card>
 
     <QuestsGrid
-      class="wit-offset-bottom--lg"
+      class="wit-offset-bottom--lg1"
       :quests="weeklyQuests"
       :is-loading="isLoading"
       :can-replace-quests="canReplaceWeeklyQuests"
       @replace="replaceQuest"
       @finalize="finalizeQuest"
     />
+
+    <div class="separator" />
 
     <QuestsGrid
       :quests="dailyQuests"
@@ -157,6 +159,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.separator {
+    border-top: 2px solid rgba(241, 245, 249, 0.12);
+    width: 3rem;
+    height: 0.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
 .wit-quests__counter {
     position: absolute;
     top: -4px;
