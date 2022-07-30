@@ -1,15 +1,15 @@
 <template>
-  <div class="wit-flex wit-flex--align-center wit-flex--justify-between">
-    <b-tag type="is-warning" rounded class="tag">
-      Weekly
+  <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-quest-header">
+    <b-tag rounded class="wis-quest-header__type" :class="tagClass">
+      {{ questType }}
     </b-tag>
 
-    <i class="mdi mdi-18px mdi-check-decagram" style="color: rgb(22, 163, 74);" />
+    <i v-if="isCompleted" v-tooltip="$t('Completed')" class="mdi mdi-18px mdi-check-decagram wis-quest-header__mark" />
   </div>
 </template>
 
 <script>
-import { useContext, useStore } from '@nuxtjs/composition-api'
+import { computed } from '@nuxtjs/composition-api'
 
 export default {
     name: 'QuestHeader',
@@ -21,26 +21,34 @@ export default {
         }
     },
 
-    setup () {
-        // const store = useStore()
-        // const { $showError } = useContext()
-        //
-        // const updateQuests = () => {
-        //     return store.dispatch('quest/updateUserQuests').catch($showError)
-        // }
-        //
-        // return { updateQuests }
+    setup (props) {
+        const isCompleted = computed(() => props.quest.progress === props.quest.objective)
+        const questType = computed(() => props.quest.questType)
+        const tagClass = computed(() => questType.value === 'Daily' ? 'daily' : 'weekly')
+
+        return { isCompleted, questType, tagClass }
     }
 }
 </script>
 
 <style scoped lang="scss">
-.tag {
-    background-color: rgb(59 130 246 / 1) !important;
-    color: var(--white) !important;
+.wis-quest-header__type {
+    color: var(--white);
     font-weight: 600;
     font-size: 0.75rem;
     padding: 0.125rem 0.75rem;
     border-radius: 9999px;
+
+    &.weekly {
+        background-color: rgb(59 130 246 / 1);
+    }
+
+    &.daily {
+        background-color: rgb(34 197 94 / 1);
+    }
+}
+
+.wis-quest-header__mark {
+    color: rgb(34 197 94 / 1);
 }
 </style>

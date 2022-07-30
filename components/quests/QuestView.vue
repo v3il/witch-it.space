@@ -8,8 +8,6 @@
           {{ $t(`Quests_${quest.questTask}`) }}
         </h3>
 
-        <!--        <div class="separator" />-->
-
         <!--        <h3 class="wit-color&#45;&#45;muted wit-flex wit-flex&#45;&#45;align-center wit-offset-bottom&#45;&#45;sm reward wit-font-weight&#45;&#45;400">-->
         <!--          <i class="mdi mdi-18px mdi-gift wit-offset-right&#45;&#45;xs" />-->
         <!--          Reward:-->
@@ -29,15 +27,28 @@
             <!--            {{ quest.rewardCount }} <span class="wit-color&#45;&#45;muted">&times;</span>-->
           </p>
         </div>
+
+        <div class="separator" />
+
+        <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm1">
+          <span class="wit-color--muted wit-offset-right--xs">
+            Progress:
+          </span>
+
+          <b-tag type="is-warning" rounded class="tag">
+            {{ quest.progress }} / {{ quest.objective }}
+            <!--            <span class="wit-color&#45;&#45;muted wit-offset-left&#45;&#45;xs wit-font-size&#45;&#45;xxs">(33%)</span>-->
+          </b-tag>
+        </div>
       </div>
 
       <div>
-        <p class="wit-text--center wit-offset-bottom--xsm wit-font-size--xxs1 reward wit-font-weight--400">
-          <b-tag type="is-primary" rounded>
-            {{ quest.progress }} / {{ quest.objective }}
-          </b-tag>
-          <!--<span class="wit-color&#45;&#45;muted">(33%)</span>-->
-        </p>
+        <!--        <p class="wit-text&#45;&#45;center wit-offset-bottom&#45;&#45;xsm wit-font-size&#45;&#45;xxs1 reward wit-font-weight&#45;&#45;400">-->
+        <!--          <b-tag type="is-primary" rounded>-->
+        <!--            {{ quest.progress }} / {{ quest.objective }}-->
+        <!--          </b-tag>-->
+        <!--          &lt;!&ndash;<span class="wit-color&#45;&#45;muted">(33%)</span>&ndash;&gt;-->
+        <!--        </p>-->
         <div :style="{'--w': progress + '%'}" class="pb" />
 
         <div class="wis-quest-view__info wit-flex wit-flex--justify-end">
@@ -161,13 +172,22 @@ export default {
 
 <style scoped lang="scss">
 .wis-quest-view {
-    height: 20rem;
+    //height: 20rem;
     background-color: var(--card-bg-color);
     border-radius: 24px;
 }
 
 .wis-quest-view__info {
     padding: 24px;
+}
+
+.tag {
+    background-color: rgb(59 130 246 / 1) !important;
+    color: var(--white) !important;
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.125rem 0.75rem;
+    border-radius: 9999px;
 }
 
 .separator {
