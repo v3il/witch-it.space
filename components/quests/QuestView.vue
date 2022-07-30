@@ -1,35 +1,23 @@
 <template>
   <div class="wis-quest-view">
-    <div class="wit-flex wit-flex--column wit-flex--justify-between wit-block--full-height">
-      <div class="wis-quest-view__info">
-        <QuestHeader :quest-type="quest.questType" :is-completed="isCompleted" class="wit-offset-bottom--sm" />
+    <div class="wis-quest-view__section">
+      <QuestHeader :quest-type="quest.questType" :is-completed="isCompleted" class="wit-offset-bottom--sm" />
 
-        <h3 class="wit-offset-bottom--sm wis-quest-view__name">
-          {{ $t(`Quests_${quest.questTask}`) }}
-        </h3>
+      <h3 class="wit-offset-bottom--sm wis-quest-view__name">
+        {{ $t(`Quests_${quest.questTask}`) }}
+      </h3>
 
-        <QuestReward :quest="quest" />
-        <QuestSeparator />
-        <QuestProgress :objective="quest.objective" :progress="quest.progress" />
-      </div>
-
-      <div>
-        <!--        <p class="wit-text&#45;&#45;center wit-offset-bottom&#45;&#45;xsm wit-font-size&#45;&#45;xxs1 reward wit-font-weight&#45;&#45;400">-->
-        <!--          <b-tag type="is-primary" rounded>-->
-        <!--            {{ quest.progress }} / {{ quest.objective }}-->
-        <!--          </b-tag>-->
-        <!--          &lt;!&ndash;<span class="wit-color&#45;&#45;muted">(33%)</span>&ndash;&gt;-->
-        <!--        </p>-->
-        <div :style="{'--w': progress + '%'}" class="pb" />
-
-        <div class="wis-quest-view__info wit-flex wit-flex--justify-end">
-          <b-button type="is-transparent" class="wis-btn--rounded wit-offset-left--auto">
-            <i class="mdi mdi-18px mdi-refresh wit-offset-right--xs" />
-            Replace
-          </b-button>
-        </div>
-      </div>
+      <QuestReward :quest="quest" />
+      <QuestSeparator />
+      <QuestProgress :objective="quest.objective" :progress="quest.progress" />
     </div>
+
+    <QuestProgressBar :quest="quest" />
+
+    <div class="wis-quest-view__section wit-flex wit-flex--justify-end">
+      <QuestActions :is-completed="isCompleted" />
+    </div>
+    <!--    </div>-->
 
     <!--        <ItemView-->
     <!--          :item="rewardItem"-->
@@ -80,7 +68,7 @@
 
 <script>
 import { computed, useContext, useStore } from '@nuxtjs/composition-api'
-import { QuestHeader, QuestReward, QuestSeparator, QuestProgress } from './questView/index.js'
+import { QuestHeader, QuestReward, QuestSeparator, QuestProgress, QuestProgressBar, QuestActions } from './questView/index.js'
 import CircleProgressBar from '@/components/basic/CircleProgressBar.vue'
 import ItemName from '@/components/ItemName'
 import ItemImage from '@/components/ItemImage'
@@ -99,7 +87,9 @@ export default {
         QuestHeader,
         QuestReward,
         QuestSeparator,
-        QuestProgress
+        QuestProgress,
+        QuestProgressBar,
+        QuestActions
     },
 
     props: {
@@ -116,7 +106,6 @@ export default {
 
     setup (props) {
         const isCompleted = computed(() => props.quest.progress >= props.quest.objective)
-        const questType = computed(() => props.quest.questType)
 
         return { isCompleted }
     },
@@ -164,7 +153,7 @@ export default {
     line-height: 24px;
 }
 
-.wis-quest-view__info {
+.wis-quest-view__section {
     padding: 24px;
 }
 
@@ -188,21 +177,6 @@ export default {
 .reward {
     line-height: 1.25rem;
     font-size: 0.8125rem;
-}
-
-.pb {
-    height: 0.125rem;
-    background-color: #e0e7ff;
-    position: relative;
-
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: var(--w);
-        background-color: var(--primary);
-    }
 }
 
 .wit-quest-item__mobile-progressbar {
