@@ -15,18 +15,21 @@ export default {
     name: 'QuestHeader',
 
     props: {
-        quest: {
+        questType: {
             required: true,
-            type: Object
+            type: String
+        },
+
+        isCompleted: {
+            required: true,
+            type: Boolean
         }
     },
 
     setup (props) {
-        const isCompleted = computed(() => props.quest.progress === props.quest.objective)
-        const questType = computed(() => props.quest.questType)
-        const tagClass = computed(() => questType.value === 'Daily' ? 'daily' : 'weekly')
+        const tagClass = computed(() => props.questType === 'Daily' ? 'daily' : 'weekly')
 
-        return { isCompleted, questType, tagClass }
+        return { tagClass }
     }
 }
 </script>

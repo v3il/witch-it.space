@@ -2,44 +2,15 @@
   <div class="wis-quest-view">
     <div class="wit-flex wit-flex--column wit-flex--justify-between wit-block--full-height">
       <div class="wis-quest-view__info">
-        <QuestHeader :quest="quest" class="wit-offset-bottom--sm" />
+        <QuestHeader :quest-type="quest.questType" :is-completed="isCompleted" class="wit-offset-bottom--sm" />
 
-        <h3 style="font-weight: 500; font-size: 1rem; line-height: 24px;" class="wit-offset-bottom--sm">
+        <h3 class="wit-offset-bottom--sm wis-quest-view__name">
           {{ $t(`Quests_${quest.questTask}`) }}
         </h3>
 
-        <!--        <h3 class="wit-color&#45;&#45;muted wit-flex wit-flex&#45;&#45;align-center wit-offset-bottom&#45;&#45;sm reward wit-font-weight&#45;&#45;400">-->
-        <!--          <i class="mdi mdi-18px mdi-gift wit-offset-right&#45;&#45;xs" />-->
-        <!--          Reward:-->
-        <!--        </h3>-->
-
-        <div class="wit-flex wit-flex--align-start">
-          <ItemView
-            :item="rewardItem"
-            add-border
-            add-tooltip
-            class="wit-quest-item__reward-img wit-flex__item--no-shrink wit-offset-right--sm"
-          />
-
-          <p style="line-height: 1.5;">
-            <span class="wit-color--muted wit-offset-top--xxs">{{ quest.rewardCount }} &times; </span>
-            <span class="wit-block">{{ rewardItem.name }}</span>
-            <!--            {{ quest.rewardCount }} <span class="wit-color&#45;&#45;muted">&times;</span>-->
-          </p>
-        </div>
-
-        <div class="separator" />
-
-        <div class="wit-flex wit-flex--align-center wit-offset-bottom--sm1">
-          <span class="wit-color--muted wit-offset-right--xs">
-            Progress:
-          </span>
-
-          <b-tag type="is-warning" rounded class="tag">
-            {{ quest.progress }} / {{ quest.objective }}
-            <!--            <span class="wit-color&#45;&#45;muted wit-offset-left&#45;&#45;xs wit-font-size&#45;&#45;xxs">(33%)</span>-->
-          </b-tag>
-        </div>
+        <QuestReward :quest="quest" />
+        <QuestSeparator />
+        <QuestProgress :objective="quest.objective" :progress="quest.progress" />
       </div>
 
       <div>
@@ -108,8 +79,8 @@
 </template>
 
 <script>
-import { useContext, useStore } from '@nuxtjs/composition-api'
-import QuestHeader from './questView/QuestHeader.vue'
+import { computed, useContext, useStore } from '@nuxtjs/composition-api'
+import { QuestHeader, QuestReward, QuestSeparator, QuestProgress } from './questView/index.js'
 import CircleProgressBar from '@/components/basic/CircleProgressBar.vue'
 import ItemName from '@/components/ItemName'
 import ItemImage from '@/components/ItemImage'
@@ -125,7 +96,10 @@ export default {
         ItemImage,
         ItemView,
         Card,
-        QuestHeader
+        QuestHeader,
+        QuestReward,
+        QuestSeparator,
+        QuestProgress
     },
 
     props: {
@@ -140,6 +114,13 @@ export default {
         }
     },
 
+    setup (props) {
+        const isCompleted = computed(() => props.quest.progress >= props.quest.objective)
+        const questType = computed(() => props.quest.questType)
+
+        return { isCompleted }
+    },
+
     computed: {
         progress () {
             return Math.min(100, this.quest.progress / this.quest.objective * 100)
@@ -149,9 +130,9 @@ export default {
             return !this.isCompleted && this.canReplace
         },
 
-        isCompleted () {
-            return this.quest.progress >= this.quest.objective
-        },
+        // isCompleted () {
+        //     return this.quest.progress >= this.quest.objective
+        // },
 
         rewardItem () {
             return this.$itemsService.getById(this.quest.rewardId) ?? {}
@@ -175,6 +156,12 @@ export default {
     //height: 20rem;
     background-color: var(--card-bg-color);
     border-radius: 24px;
+}
+
+.wis-quest-view__name {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 24px;
 }
 
 .wis-quest-view__info {

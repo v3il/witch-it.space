@@ -85,6 +85,7 @@ export const en = {
     SortedBy: 'Sorted by',
     Close: 'Close',
     Completed: 'Completed',
+    Progress: 'Progress',
     Save: 'Save',
     Edit: 'Edit',
     Profile: 'Profile',
