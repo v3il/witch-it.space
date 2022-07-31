@@ -131,7 +131,7 @@ export const en = {
     Quests_WeeklyQuestsTitle: 'Weekly quests',
     Quests_DailyQuestsTitle: 'Daily quests',
     Quests_UpdateQuest: 'Replace',
-    Quests_GetReward: 'Get an award',
+    Quests_GetReward: 'Get award',
     Quests_LastUpdate: 'Last update:',
     Quests_NoQuests: 'No active quests',
     Quests_WannaReplaceQuest: 'Are you sure you want to replace this quest? This action cannot be undone!',

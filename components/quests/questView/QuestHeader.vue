@@ -10,26 +10,24 @@
 
 <script>
 import { computed } from '@nuxtjs/composition-api'
+import { useQuestCompleted } from '../composables'
 
 export default {
     name: 'QuestHeader',
 
     props: {
-        questType: {
+        quest: {
             required: true,
-            type: String
-        },
-
-        isCompleted: {
-            required: true,
-            type: Boolean
+            type: Object
         }
     },
 
     setup (props) {
-        const tagClass = computed(() => props.questType === 'Daily' ? 'daily' : 'weekly')
+        const { isCompleted } = useQuestCompleted(props.quest)
+        const questType = computed(() => props.quest.questType)
+        const tagClass = computed(() => questType.value === 'Daily' ? 'daily' : 'weekly')
 
-        return { tagClass }
+        return { tagClass, isCompleted, questType }
     }
 }
 </script>

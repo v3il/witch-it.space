@@ -1,6 +1,13 @@
 <template>
   <div class="wis-quests-grid">
-    <QuestView v-for="quest in quests" :key="quest.id" can-replace :quest="quest" class="wis-quests-grid__quest" />
+    <QuestView
+      v-for="quest in quests"
+      :key="quest.id"
+      :quest="quest"
+      class="wis-quests-grid__quest"
+      @replace="replaceQuest"
+      @finalize="finalizeQuest"
+    />
   </div>
 </template>
 
@@ -18,27 +25,14 @@ export default {
         quests: {
             required: true,
             type: Array
-        },
-
-        isLoading: {
-            required: true,
-            type: Boolean
-        },
-
-        canReplaceQuests: {
-            required: true,
-            type: Boolean
         }
     },
 
-    methods: {
-        replaceQuest (quest) {
-            this.$emit('replace', quest)
-        },
+    setup (_, { emit }) {
+        const replaceQuest = quest => emit('replace', quest)
+        const finalizeQuest = quest => emit('finalize', quest)
 
-        finalizeQuest (quest) {
-            this.$emit('finalize', quest)
-        }
+        return { replaceQuest, finalizeQuest }
     }
 }
 </script>

@@ -1,4 +1,4 @@
-import VueFinalModal from 'vue-final-modal/lib'
 import Vue from 'vue'
+import { vfmPlugin } from 'vue-final-modal/lib'
 
-Vue.use(VueFinalModal)
+Vue.use(vfmPlugin)

@@ -25,7 +25,7 @@ const imagekit = new ImageKit({
 async function processItem (item) {
     try {
         if (item.imgUrl) {
-            await downloadImage(item.imgUrl, item.itemId)
+            // await downloadImage(item.imgUrl, item.itemId)
         }
 
         const { imgUrl, ...propsToStore } = item

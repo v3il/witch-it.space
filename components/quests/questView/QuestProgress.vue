@@ -11,19 +11,23 @@
 </template>
 
 <script>
+import { computed } from '@nuxtjs/composition-api'
+
 export default {
     name: 'QuestProgress',
 
     props: {
-        progress: {
+        quest: {
             required: true,
-            type: Number
-        },
-
-        objective: {
-            required: true,
-            type: Number
+            type: Object
         }
+    },
+
+    setup (props) {
+        const progress = computed(() => props.quest.progress)
+        const objective = computed(() => props.quest.objective)
+
+        return { progress, objective }
     }
 }
 </script>

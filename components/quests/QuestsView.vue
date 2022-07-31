@@ -30,22 +30,14 @@
     <!--    </Card>-->
 
     <QuestsGrid
-      class="wit-offset-bottom--lg1"
+      class="wit-offset-bottom--lg"
       :quests="weeklyQuests"
-      :is-loading="isLoading"
-      :can-replace-quests="canReplaceWeeklyQuests"
-      @replace="replaceQuest"
-      @finalize="finalizeQuest"
     />
 
-    <div class="separator" />
+    <!--    <div class="separator" />-->
 
     <QuestsGrid
       :quests="dailyQuests"
-      :is-loading="isLoading"
-      :can-replace-quests="canReplaceDailyQuests"
-      @replace="replaceQuest"
-      @finalize="finalizeQuest"
     />
   </div>
 </template>
@@ -110,50 +102,50 @@ export default {
             updateUserQuests: 'updateUserQuests',
             replaceUserQuest: 'replaceUserQuest',
             finalizeUserQuest: 'finalizeUserQuest'
-        }),
+        })
 
-        onBannerClose () {
-            this.isBannerHidden = false
-            this.$localStorageService.set(QUESTS_BANNER_KEY, true)
-        },
+        // onBannerClose () {
+        //     this.isBannerHidden = false
+        //     this.$localStorageService.set(QUESTS_BANNER_KEY, true)
+        // },
 
-        updateQuests () {
-            return this.updateUserQuests().catch(this.$showError)
-        },
+        // updateQuests () {
+        //     return this.updateUserQuests().catch(this.$showError)
+        // },
 
-        async replaceQuest (quest) {
-            const questTask = this.$t(`Quests_${quest.questTask}`)
-
-            const isConfirmed = await this.$showConfirm({
-                popupTitle: this.$t('Quests_ReplaceQuestTitle'),
-                content: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>`
-            })
-
-            if (!isConfirmed) {
-                return
-            }
-
-            this.replaceUserQuest(quest.id)
-                .then(() => this.$showSuccess(this.$t('Success_QuestReplacing')))
-                .catch(() => this.$showError({ message: this.$t('Error_QuestReplacingFailed') }))
-        },
-
-        async finalizeQuest (quest) {
-            const questTask = this.$t(`Quests_${quest.questTask}`)
-
-            const isConfirmed = await this.$showConfirm({
-                popupTitle: this.$t('Quests_FinalizeQuestTitle'),
-                content: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>`
-            })
-
-            if (!isConfirmed) {
-                return
-            }
-
-            this.finalizeUserQuest(quest.id)
-                .then(() => this.$showSuccess(this.$t('Success_QuestFinalization')))
-                .catch(() => this.$showError({ message: this.$t('Error_QuestFinalizationFailed') }))
-        }
+        // async replaceQuest (quest) {
+        //     const questTask = this.$t(`Quests_${quest.questTask}`)
+        //
+        //     const isConfirmed = await this.$showConfirm({
+        //         popupTitle: this.$t('Quests_ReplaceQuestTitle'),
+        //         content: `${this.$t('Quests_WannaReplaceQuest')}<p class="wit-quest-title">${questTask}</p>`
+        //     })
+        //
+        //     if (!isConfirmed) {
+        //         return
+        //     }
+        //
+        //     this.replaceUserQuest(quest.id)
+        //         .then(() => this.$showSuccess(this.$t('Success_QuestReplacing')))
+        //         .catch(() => this.$showError({ message: this.$t('Error_QuestReplacingFailed') }))
+        // },
+        //
+        // async finalizeQuest (quest) {
+        //     const questTask = this.$t(`Quests_${quest.questTask}`)
+        //
+        //     const isConfirmed = await this.$showConfirm({
+        //         popupTitle: this.$t('Quests_FinalizeQuestTitle'),
+        //         content: `${this.$t('Quests_WannaFinalizeQuest')}<p class="wit-quest-title">${questTask}</p>`
+        //     })
+        //
+        //     if (!isConfirmed) {
+        //         return
+        //     }
+        //
+        //     this.finalizeUserQuest(quest.id)
+        //         .then(() => this.$showSuccess(this.$t('Success_QuestFinalization')))
+        //         .catch(() => this.$showError({ message: this.$t('Error_QuestFinalizationFailed') }))
+        // }
     }
 }
 </script>
