@@ -4,7 +4,9 @@
       <p class="wit-offset-bottom--md wit-text--center wit-color--warning">
         {{ $t('Quests_ConnectSteamWarning') }}
       </p>
-      <b-button type="is-primary" @click="connectSteam">
+
+      <b-button type="is-primary" class="wis-btn--rounded" @click="connectSteam">
+        <i class="mdi mdi-steam mdi-18px wit-offset-right--xs" />
         {{ $t('Quests_ConnectSteamButtonTitle') }}
       </b-button>
     </div>
@@ -37,6 +39,6 @@ export default {
 
 <style scoped lang="scss">
 .wit-connect-steam {
-    min-height: 150px;
+    min-height: 200px;
 }
 </style>

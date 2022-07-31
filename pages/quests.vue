@@ -9,42 +9,28 @@
       </div>
     </div>
   </div>
-
-  <!--    <TopNavBar class="layout__header">-->
-  <!--      <template #brand>-->
-  <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
-  <!--          {{ $t('MainMenu_Quests') }}-->
-  <!--        </h1>-->
-  <!--      </template>-->
-  <!--    </TopNavBar>-->
-
-  <!--    <div class="wit-quests">-->
-  <!--      <QuestsView v-if="isSteamConnected" />-->
-  <!--      <ConnectSteam v-else />-->
-  <!--    </div>-->
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import ConnectSteam from '@/components/quests/ConnectSteam'
-import { StoreModules } from '@/store'
+import { computed, useStore } from '@nuxtjs/composition-api'
 import QuestsView from '@/components/quests/QuestsView'
-import TopNavBar from '@/components/header/TopNavBar.vue'
-import { QuestsHeader } from '@/components/quests'
+import { QuestsGrid, QuestsHeader, ConnectSteam } from '@/components/quests'
 
 export default {
     components: {
         ConnectSteam,
         QuestsView,
-        QuestsHeader
+        QuestsHeader,
+        QuestsGrid
     },
 
     middleware: ['isAuthorized'],
 
-    computed: {
-        ...mapGetters(StoreModules.USER, [
-            'isSteamConnected'
-        ])
+    setup () {
+        const store = useStore()
+        const isSteamConnected = computed(() => 0 ?? store.getters['user/isSteamConnected'])
+
+        return { isSteamConnected }
     }
 }
 </script>
@@ -52,9 +38,6 @@ export default {
 <style scoped lang="scss">
 .wis-quests {
     min-height: 100vh;
-    //padding: var(--offset-sm);
-    //max-width: 1024px;
-    //margin: 0 auto;
 }
 
 .wis-quests__content {

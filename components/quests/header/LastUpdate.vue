@@ -13,24 +13,10 @@ import { formatDate } from '@/utils/index.js'
 export default {
     name: 'LastUpdate',
 
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        }
-    },
-
-    setup (props) {
+    setup () {
         const store = useStore()
-
-        const formattedLastUpdate = computed(() => store.state.quest.formattedLastUpdate)
-
-        // const { $t } = useContext()
-        //
-        // const formattedLastUpdate = computed(() => {
-        //     const updateTime = props.profile.questsUpdateTimestamp
-        //     return updateTime ? formatDate(new Date(updateTime)) : $t('Time_Never')
-        // })
+        const { $t } = useContext()
+        const formattedLastUpdate = computed(() => store.state.quest.formattedLastUpdate ?? $t('Time_Never'))
 
         return { formattedLastUpdate }
     }

@@ -146,8 +146,9 @@ export const en = {
     Quests_Note: 'Track your daily and weekly quests, replace them, monitor progress, get rewarded directly through the site',
     Quests_FinalizationLimit: 'Steam/Witch It restrictions apply: Rewards can only be claimed while the game is running',
     Quests_Loading: 'Loading...',
-    Quests_ConnectSteamWarning: 'You must connect a Steam account to use this feature.',
-    Quests_ConnectSteamButtonTitle: 'Connect account',
+    Quests_ConnectSteamWarning: 'Please, connect a Steam account to use this feature.',
+    Quests_ConnectSteamButtonTitle: 'Connect Steam account',
+    Quests_HeaderTitle: 'Witch It Quests',
 
     Settings_NotSetWhenOauth: 'Cannot be changed: authorization through a third-party service',
     Settings_ProfileSettingsAndAppearance: 'Profile settings and appearance',

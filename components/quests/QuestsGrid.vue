@@ -1,13 +1,6 @@
 <template>
-  <div class="wis-quests-grid">
-    <QuestView
-      v-for="quest in quests"
-      :key="quest.id"
-      :quest="quest"
-      class="wis-quests-grid__quest"
-      @replace="replaceQuest"
-      @finalize="finalizeQuest"
-    />
+  <div v-if="quests.length" class="wis-quests-grid">
+    <QuestView v-for="quest in quests" :key="quest.id" :quest="quest" class="wis-quests-grid__quest" />
   </div>
 </template>
 
@@ -26,13 +19,6 @@ export default {
             required: true,
             type: Array
         }
-    },
-
-    setup (_, { emit }) {
-        const replaceQuest = quest => emit('replace', quest)
-        const finalizeQuest = quest => emit('finalize', quest)
-
-        return { replaceQuest, finalizeQuest }
     }
 }
 </script>

@@ -15,7 +15,7 @@
 import { useContext, useStore } from '@nuxtjs/composition-api'
 
 export default {
-    name: 'QuestActions',
+    name: 'HeaderActions',
 
     setup () {
         const store = useStore()

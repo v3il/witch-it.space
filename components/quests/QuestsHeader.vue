@@ -2,25 +2,22 @@
   <HeaderPanel>
     <div class="wit-flex wit-flex--align-center wis-block--max-width-xs wis-user-card__container wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
       <div class="wit-flex wit-flex--align-center wit-flex__item--grow">
-        <div class="wit-flex__item--grow" style="min-width: 0;">
+        <div class="wit-flex__item--grow wis-min-width--none">
           <HeaderTitle />
-          <LastUpdate :profile="profile" />
+          <LastUpdate />
         </div>
       </div>
 
-      <QuestActions />
+      <HeaderActions />
     </div>
   </HeaderPanel>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
-import { HeaderActions } from '@/components/offers/header'
 import { UserAvatar } from '@/components/user'
-import HeaderTitle from '@/components/quests/HeaderTitle'
-import LastUpdate from '@/components/quests/LastUpdate'
+import { LastUpdate, HeaderTitle, HeaderActions } from '@/components/quests/header'
 import { HeaderPanel } from '@/components/basic/index.js'
-import QuestActions from '@/components/quests/QuestActions.vue'
 
 export default {
     name: 'QuestsHeader',
@@ -30,8 +27,7 @@ export default {
         HeaderActions,
         LastUpdate,
         UserAvatar,
-        HeaderPanel,
-        QuestActions
+        HeaderPanel
     },
 
     setup () {
