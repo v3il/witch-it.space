@@ -149,6 +149,7 @@ export const en = {
     Quests_ConnectSteamWarning: 'Please, connect a Steam account to use this feature.',
     Quests_ConnectSteamButtonTitle: 'Connect Steam account',
     Quests_HeaderTitle: 'Witch It Quests',
+    Quests_Updated: 'Quests updated',
 
     Settings_NotSetWhenOauth: 'Cannot be changed: authorization through a third-party service',
     Settings_ProfileSettingsAndAppearance: 'Profile settings and appearance',

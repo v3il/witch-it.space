@@ -8,7 +8,9 @@
       </h3>
 
       <QuestReward :quest="quest" />
-      <QuestSeparator />
+    </div>
+
+    <div class="wis-quest-view__progress wit-offset-top--auto">
       <QuestProgress :quest="quest" />
     </div>
 
@@ -21,14 +23,12 @@
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
 import {
     QuestActions,
     QuestHeader,
     QuestProgress,
     QuestProgressBar,
-    QuestReward,
-    QuestSeparator
+    QuestReward
 } from './questView/index.js'
 
 export default {
@@ -37,7 +37,6 @@ export default {
     components: {
         QuestHeader,
         QuestReward,
-        QuestSeparator,
         QuestProgress,
         QuestProgressBar,
         QuestActions
@@ -48,15 +47,6 @@ export default {
             type: Object,
             required: true
         }
-    },
-
-    setup (props, { emit }) {
-        const isCompleted = computed(() => props.quest.progress >= props.quest.objective)
-
-        const replaceQuest = () => emit('replace', props.quest)
-        const finalizeQuest = () => emit('finalize', props.quest)
-
-        return { isCompleted, replaceQuest, finalizeQuest }
     }
 }
 </script>
@@ -65,7 +55,9 @@ export default {
 .wis-quest-view {
     background-color: var(--card-bg-color);
     border-radius: 24px;
-    //height: 24rem;
+    display: flex;
+    flex-direction: column;
+    height: 22rem;
 }
 
 .wis-quest-view__name {
@@ -76,5 +68,10 @@ export default {
 
 .wis-quest-view__section {
     padding: 24px;
+}
+
+.wis-quest-view__progress {
+    padding: 0 24px;
+    margin-bottom: 24px;
 }
 </style>

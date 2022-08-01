@@ -6,9 +6,8 @@
 </template>
 
 <script>
-import { computed, ref, useContext, useStore, watch } from '@nuxtjs/composition-api'
-import { OfferTabModes } from '@/domain/index.js'
-import { formatDate, humanizeTimestampDiff } from '@/utils'
+import { ref, useContext, useStore, watch } from '@nuxtjs/composition-api'
+import { humanizeTimestampDiff } from '@/utils'
 
 export default {
     name: 'LastUpdate',
@@ -34,21 +33,6 @@ export default {
             handler()
             lastUpdateIntervalId = setInterval(handler, 5000)
         }, { immediate: true })
-
-        // if (!state.questsUpdateTimestamp) {
-        //     return
-        // }
-        //
-        // clearInterval(state.lastUpdateIntervalId)
-        //
-        // const handler = () => {
-        //     state.formattedLastUpdate = Date.fromTimestamp(state.questsUpdateTimestamp).humanizeTimeDiff()
-        // }
-        //
-        // handler()
-        // state.lastUpdateIntervalId = setInterval(handler, 1000)
-
-        // const formattedLastUpdate = computed(() => store.state.quest.formattedLastUpdate ?? $t('Time_Never'))
 
         return { formattedLastUpdate }
     }

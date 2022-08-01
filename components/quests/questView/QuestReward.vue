@@ -3,7 +3,6 @@
     <ItemView
       :item="rewardItem"
       add-border
-      add-tooltip
       class="wis-quest-reward__image wit-flex__item--no-shrink wit-offset-right--sm"
     />
 
