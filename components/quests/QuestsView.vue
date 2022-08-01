@@ -3,8 +3,8 @@
     <Loader v-if="isQuestsLoading" />
 
     <template v-else-if="hasAnyQuest">
-      <QuestsGrid class="wit-offset-bottom--lg" :quests="weeklyQuests" />
-      <QuestsGrid :quests="dailyQuests" />
+      <QuestsGrid class="wis-quests-grid" :quests="weeklyQuests" />
+      <QuestsGrid class="wis-quests-grid" :quests="dailyQuests" />
     </template>
 
     <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
@@ -39,24 +39,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-quests__counter {
-    position: absolute;
-    top: -4px;
-    right: -12px;
-    margin: 0;
-    z-index: 2;
-    font-weight: bold;
-}
-
-@media (max-width: 600px) {
-    .wis-quests__button-container {
-        width: 100%;
-    }
-
-    .wis-quests__last-update {
-        width: 100%;
-        text-align: center;
-        margin-right: 0 !important;
-    }
+.wis-quests-grid:not(:last-child) {
+    margin-bottom: 32px;
 }
 </style>
