@@ -28,9 +28,14 @@ export default {
 
     setup () {
         const store = useStore()
-        const isSteamConnected = computed(() => 0 ?? store.getters['user/isSteamConnected'])
+        const isSteamConnected = computed(() => store.getters['user/isSteamConnected'])
 
         return { isSteamConnected }
+    },
+
+    async fetch ({ store }) {
+        // eslint-disable-next-line no-console
+        await store.dispatch('quest/fetchUserQuests').catch(console.error)
     }
 }
 </script>

@@ -24,15 +24,15 @@ export const getters = {
 
 export const actions = {
     fetchUserQuests ({ commit, rootGetters }) {
-        commit('SET_LOADING', true)
+        // commit('SET_LOADING', true)
 
         return questsService.fetch()
             .then((data) => {
                 commit('SET_DATA', data)
-                commit('SET_TIMER', rootGetters['user/isMyProfile'])
-                commit('SET_LAST_UPDATE_TIMER')
+                // commit('SET_TIMER', rootGetters['user/isMyProfile'])
+                // commit('SET_LAST_UPDATE_TIMER')
             })
-            .finally(() => commit('SET_LOADING', false))
+            // .finally(() => commit('SET_LOADING', false))
     },
 
     updateUserQuests ({ commit, rootGetters }) {
@@ -42,7 +42,7 @@ export const actions = {
             .then((data) => {
                 commit('SET_DATA', data)
                 commit('SET_TIMER', rootGetters['user/isMyProfile'])
-                commit('SET_LAST_UPDATE_TIMER')
+                // commit('SET_LAST_UPDATE_TIMER')
             })
             .finally(() => commit('SET_LOADING', false))
     },
@@ -101,20 +101,20 @@ export const mutations = {
 
         handler()
         state.intervalId = setInterval(handler, 1000)
-    },
-
-    SET_LAST_UPDATE_TIMER (state) {
-        if (!state.questsUpdateTimestamp) {
-            return
-        }
-
-        clearInterval(state.lastUpdateIntervalId)
-
-        const handler = () => {
-            state.formattedLastUpdate = Date.fromTimestamp(state.questsUpdateTimestamp).humanizeTimeDiff()
-        }
-
-        handler()
-        state.lastUpdateIntervalId = setInterval(handler, 1000)
     }
+
+    // SET_LAST_UPDATE_TIMER (state) {
+    //     if (!state.questsUpdateTimestamp) {
+    //         return
+    //     }
+    //
+    //     clearInterval(state.lastUpdateIntervalId)
+    //
+    //     const handler = () => {
+    //         state.formattedLastUpdate = Date.fromTimestamp(state.questsUpdateTimestamp).humanizeTimeDiff()
+    //     }
+    //
+    //     handler()
+    //     state.lastUpdateIntervalId = setInterval(handler, 1000)
+    // }
 }

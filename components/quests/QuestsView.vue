@@ -34,11 +34,6 @@ export default {
         const hasAnyQuest = computed(() => weeklyQuests.value.length || dailyQuests.value.length)
 
         return { isQuestsLoading, weeklyQuests, dailyQuests, hasAnyQuest }
-    },
-
-    fetch ({ store }) {
-        // eslint-disable-next-line no-console
-        store.dispatch('quest/fetchUserQuests').catch(console.error)
     }
 }
 </script>
