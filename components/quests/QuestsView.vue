@@ -1,12 +1,7 @@
 <template>
   <div>
     <Loader v-if="isQuestsLoading" />
-
-    <template v-else-if="hasAnyQuest">
-      <QuestsGrid class="wis-quests-grid" :quests="weeklyQuests" />
-      <QuestsGrid class="wis-quests-grid" :quests="dailyQuests" />
-    </template>
-
+    <QuestsGrid v-else-if="hasAnyQuest" class="wis-quests-grid" :quests="quests" />
     <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
   </div>
 </template>
@@ -29,17 +24,10 @@ export default {
         const store = useStore()
 
         const isQuestsLoading = computed(() => store.state.quest.isLoading)
-        const weeklyQuests = computed(() => store.getters['quest/weeklyQuests'])
-        const dailyQuests = computed(() => store.getters['quest/dailyQuests'])
-        const hasAnyQuest = computed(() => weeklyQuests.value.length || dailyQuests.value.length)
+        const quests = computed(() => store.state.quest.quests)
+        const hasAnyQuest = computed(() => quests.value.length > 0)
 
-        return { isQuestsLoading, weeklyQuests, dailyQuests, hasAnyQuest }
+        return { isQuestsLoading, quests, hasAnyQuest }
     }
 }
 </script>
-
-<style scoped lang="scss">
-.wis-quests-grid:not(:last-child) {
-    margin-bottom: 32px;
-}
-</style>

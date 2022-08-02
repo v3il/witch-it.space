@@ -116,11 +116,13 @@ export class QuestsService {
     }
 
     canUpdateQuests (user) {
-        console.log(user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT, getCurrentTimestamp())
         return user.questsUpdateTimestamp + config.QUESTS_UPDATE_TIMEOUT <= getCurrentTimestamp()
     }
 
     #getUserQuests (user) {
-        return Quest.query().select().where('userId', user.id).orderBy('createdAt', 'asc')
+        return Quest.query().select().where('userId', user.id).orderBy([
+            { column: 'questType', order: 'desc' },
+            { column: 'createdAt', order: 'asc' }
+        ])
     }
 }

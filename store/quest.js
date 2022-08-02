@@ -7,11 +7,6 @@ export const state = () => ({
     canReplaceWeeklyQuests: true
 })
 
-export const getters = {
-    weeklyQuests: state => state.quests.filter(quest => quest.questType === 'Weekly'),
-    dailyQuests: state => state.quests.filter(quest => quest.questType === 'Daily')
-}
-
 export const actions = {
     fetchUserQuests ({ commit }) {
         return questsService.fetch().then(data => commit('SET_DATA', data))
