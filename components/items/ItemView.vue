@@ -86,7 +86,7 @@ export default {
         },
 
         itemPreviewURL () {
-            return buildItemUrl(this.item.id)
+            return buildItemUrl(this.item.itemId)
         },
 
         tooltip () {

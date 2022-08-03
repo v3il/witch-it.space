@@ -9,14 +9,7 @@
           <Search :search-query="filters.query" @open="isFiltersVisible = true" />
 
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-            {{ sortedItems.length }}
-
-            <!--            <ItemView-->
-            <!--              v-for="item in slicedItems"-->
-            <!--              :key="item.id"-->
-            <!--              :item="item"-->
-            <!--              @clicked="onItemSelected"-->
-            <!--            />-->
+            <ItemsList :items="sortedItems" />
           </div>
         </template>
 
@@ -39,6 +32,7 @@ import { OfferTypes, Routes } from '@/shared/index.js'
 import { StoreModules } from '@/store/index.js'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Offer } from '@/domain/models/index.js'
+import { ItemsList } from '@/components/items/index.js'
 
 export default {
     components: {
@@ -48,7 +42,8 @@ export default {
         Search,
         OffersList,
         OffersFilter,
-        OffersEmptyState
+        OffersEmptyState,
+        ItemsList
     },
 
     setup () {

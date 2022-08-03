@@ -1,15 +1,13 @@
 <template>
-  <ItemsListView :items="sortedOffers" class="wis-offers-list">
-    <template #default="{ items: offers }">
+  <ItemsListView :items="items" class="wis-items-list">
+    <template #default="{ items }">
       <ItemView
-        v-for="(offer) in offers"
-        :key="offer.id"
-        :item="offer.item"
+        v-for="(item) in items"
+        :key="item.id"
+        :item="item"
         add-title
         add-border
-      >
-        <ItemPriceList :prices="offer.prices" />
-      </ItemView>
+      />
     </template>
   </ItemsListView>
 </template>
@@ -29,20 +27,17 @@ export default {
     },
 
     props: {
-        sortedOffers: {
+        items: {
             required: true,
             type: Array
         }
-    },
-
-    created () {
-        console.log(this.sortedOffers)
     }
 }
 </script>
 
 <style scoped lang="scss">
-    .wis-offers-list {
+    .wis-items-list {
         padding: 0 24px 24px;
+        width: 100%;
     }
 </style>

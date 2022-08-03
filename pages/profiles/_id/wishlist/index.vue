@@ -42,8 +42,6 @@ export default {
         OffersEmptyState
     },
 
-    // middleware: ['isAuthorized'],
-
     setup () {
         const {
             offersType,
