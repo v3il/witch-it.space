@@ -1,6 +1,23 @@
+import { itemsService } from '@/domain/index.js'
+
 export const state = () => ({
     items: {}
 })
+
+export const getters = {
+    filteredItems: (state, getters, rootState) => {
+        const filters = rootState.filters.filters
+        return state.items.filter(item => itemsService.checkItem(item, filters))
+    },
+
+    sortedItems: (state, getters, rootState) => {
+        const sorts = rootState.filters.sorts
+
+        return Array.from(getters.filteredItems).sort((a, b) => {
+            return itemsService.compareItems(a, b, sorts)
+        })
+    }
+}
 
 export const actions = {
     fetchItems ({ commit }) {
