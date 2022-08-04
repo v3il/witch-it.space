@@ -5,51 +5,40 @@
 
     <div class="wit-offers-page__content">
       <div class="wit-offers-page__offers wis-block--max-width">
-        <template v-if="sortedItems.length">
-          <Search :search-query="filters.query" />
+        <Search />
 
-          <div class="wit-flex wit-flex--wrap wit-items__item-grid">
-            <ItemsList :items="sortedItems" />
-          </div>
-        </template>
+        <div v-if="sortedItems.length" class="wit-flex wit-flex--wrap wit-items__item-grid">
+          <ItemsList :items="sortedItems" />
+        </div>
 
         <OffersEmptyState v-else />
       </div>
     </div>
 
-    <SidebarPanel :is-visible="isFiltersVisible" @close="closeFilters">
-      <OffersFilter @reset="closeFilters" />
-    </SidebarPanel>
+    <Filters />
   </div>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
-import { Search, SidebarPanel } from '@/components/basic'
-import { OffersEmptyState, OffersFilter, OffersList, OfferTabs, UserHeader } from '@/components/offers'
+import { Filters, Search } from '@/components/basic'
+import { OffersEmptyState } from '@/components/offers'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import { ItemsList } from '@/components/items/index.js'
 
 export default {
     components: {
-        SidebarPanel,
-        UserHeader,
-        OfferTabs,
         Search,
-        OffersList,
-        OffersFilter,
         OffersEmptyState,
-        ItemsList
+        ItemsList,
+        Filters
     },
 
     setup () {
         const store = useStore()
-        const isFiltersVisible = computed(() => store.state.filters.isFiltersOpen)
         const sortedItems = computed(() => store.getters['items/sortedItems'])
-        const filters = computed(() => store.state.filters.filters)
-        const closeFilters = () => store.dispatch('filters/closeFilters')
 
-        return { isFiltersVisible, sortedItems, filters, closeFilters }
+        return { sortedItems }
     },
 
     // TODO: use Composition API

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <SidebarPanel :is-visible="isFiltersOpen" @close="closeFilters">
     <QueryEditor
       :query="filters.query"
       class="wis-wishlist-filters__search wit-offset-bottom--sm"
@@ -47,11 +47,12 @@
     <b-button type="is-danger" expanded @click="fullReset">
       {{ $t('Clear') }}
     </b-button>
-  </div>
+  </SidebarPanel>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
+import { computed, useStore } from '@nuxtjs/composition-api'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
 import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
@@ -59,6 +60,7 @@ import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 import SortsSelector from '@/components/basic/filters/SortsSelector.vue'
 import { StoreModules } from '@/store/index.js'
+import { SidebarPanel } from '@/components/basic/index.js'
 
 export default {
     name: 'OffersFilter',
@@ -74,11 +76,8 @@ export default {
         SlotsSelector,
         CharacterSelector,
         QueryEditor,
-        SortsSelector
-    },
-
-    computed: {
-        ...mapState(StoreModules.FILTERS, ['filters', 'sorts'])
+        SortsSelector,
+        SidebarPanel
     },
 
     methods: {
@@ -114,8 +113,20 @@ export default {
 
         fullReset () {
             this.resetSortsAndFilters()
-            this.$emit('reset')
+            this.closeFilters()
         }
+    },
+
+    setup () {
+        const store = useStore()
+
+        const filters = computed(() => store.state.filters.filters)
+        const sorts = computed(() => store.state.filters.sorts)
+        const isFiltersOpen = computed(() => store.state.filters.isFiltersOpen)
+
+        const closeFilters = () => store.dispatch('filters/closeFilters')
+
+        return { filters, sorts, isFiltersOpen, closeFilters }
     }
 }
 </script>

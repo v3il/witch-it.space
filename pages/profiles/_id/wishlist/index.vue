@@ -7,24 +7,19 @@
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        <template v-if="sortedOffers.length">
-          <Search :search-query="filters.query" @open="isFiltersVisible = true" />
-          <OffersList :sorted-offers="sortedOffers" />
-        </template>
-
-        <OffersEmptyState v-else />
+        <Search />
+        <OffersList v-if="sortedOffers.length" :sorted-offers="sortedOffers" />
+        <OffersEmptyState v-else class="wit-padding-bottom--md" />
       </div>
     </div>
 
-    <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
-      <OffersFilter @reset="isFiltersVisible = false" />
-    </SidebarPanel>
+    <Filters />
   </div>
 </template>
 
 <script>
-import { SidebarPanel } from '@/components/basic'
-import { OffersEmptyState, OffersFilter, OffersList, OfferTabs, Search, UserHeader } from '@/components/offers'
+import { Filters, Search } from '@/components/basic'
+import { OffersEmptyState, OffersList, OfferTabs, UserHeader } from '@/components/offers'
 import { useOffersPage } from '@/composables'
 import { OfferTypes, Routes } from '@/shared/index.js'
 import { StoreModules } from '@/store/index.js'
@@ -33,25 +28,17 @@ import { Offer } from '@/domain/models/index.js'
 
 export default {
     components: {
-        SidebarPanel,
         UserHeader,
         OfferTabs,
         Search,
         OffersList,
-        OffersFilter,
+        Filters,
         OffersEmptyState
     },
 
     setup () {
-        const {
-            offersType,
-            isFiltersVisible,
-            isStickyHeaderVisible,
-            filters,
-            sortedOffers
-        } = useOffersPage(OfferTypes.WISHLIST)
-
-        return { offersType, isFiltersVisible, isStickyHeaderVisible, filters, sortedOffers }
+        const { offersType, isStickyHeaderVisible, sortedOffers } = useOffersPage(OfferTypes.WISHLIST)
+        return { offersType, isStickyHeaderVisible, sortedOffers }
     },
 
     // TODO: use Composition API
