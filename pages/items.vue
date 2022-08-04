@@ -6,7 +6,7 @@
     <div class="wit-offers-page__content">
       <div class="wit-offers-page__offers wis-block--max-width">
         <template v-if="sortedItems.length">
-          <Search :search-query="filters.query" @open="isFiltersVisible = true" />
+          <Search :search-query="filters.query" />
 
           <div class="wit-flex wit-flex--wrap wit-items__item-grid">
             <ItemsList :items="sortedItems" />
@@ -17,21 +17,17 @@
       </div>
     </div>
 
-    <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
-      <OffersFilter @reset="isFiltersVisible = false" />
+    <SidebarPanel :is-visible="isFiltersVisible" @close="closeFilters">
+      <OffersFilter @reset="closeFilters" />
     </SidebarPanel>
   </div>
 </template>
 
 <script>
-import { useStore, computed, ref } from '@nuxtjs/composition-api'
-import { SidebarPanel } from '@/components/basic'
-import { OffersEmptyState, OffersFilter, OffersList, OfferTabs, Search, UserHeader } from '@/components/offers'
-import { useOffersPage } from '@/composables'
-import { OfferTypes, Routes } from '@/shared/index.js'
-import { StoreModules } from '@/store/index.js'
+import { computed, useStore } from '@nuxtjs/composition-api'
+import { Search, SidebarPanel } from '@/components/basic'
+import { OffersEmptyState, OffersFilter, OffersList, OfferTabs, UserHeader } from '@/components/offers'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
-import { Offer } from '@/domain/models/index.js'
 import { ItemsList } from '@/components/items/index.js'
 
 export default {
@@ -48,11 +44,12 @@ export default {
 
     setup () {
         const store = useStore()
-        const isFiltersVisible = ref(false)
+        const isFiltersVisible = computed(() => store.state.filters.isFiltersOpen)
         const sortedItems = computed(() => store.getters['items/sortedItems'])
         const filters = computed(() => store.state.filters.filters)
+        const closeFilters = () => store.dispatch('filters/closeFilters')
 
-        return { isFiltersVisible, sortedItems, filters }
+        return { isFiltersVisible, sortedItems, filters, closeFilters }
     },
 
     // TODO: use Composition API

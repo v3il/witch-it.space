@@ -6,10 +6,19 @@ export const state = () => ({
     filters: {},
     defaultSorts: {},
     sorts: {},
-    availableSorts: []
+    availableSorts: [],
+    isFiltersOpen: false
 })
 
 export const actions = {
+    openFilters ({ commit }) {
+        commit('OPEN_FILTERS')
+    },
+
+    closeFilters ({ commit }) {
+        commit('CLOSE_FILTERS')
+    },
+
     setData ({ commit, state }, params) {
         commit('SET_DATA', params)
     },
@@ -60,6 +69,14 @@ export const mutations = {
         state.availableSorts = availableSorts
         state.filters = getFiltersFromRoute(currentRoute, defaultFilters)
         state.sorts = getSortFromRoute(currentRoute, defaultSorts, availableSorts)
+    },
+
+    OPEN_FILTERS (state) {
+        state.isFiltersOpen = true
+    },
+
+    CLOSE_FILTERS (state) {
+        state.isFiltersOpen = false
     },
 
     UPDATE_ORDER_BY (state, orderBy) {
