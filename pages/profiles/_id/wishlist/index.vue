@@ -8,8 +8,7 @@
 
       <div class="wit-offers-page__offers wis-block--max-width">
         <Search />
-        <OffersList v-if="sortedOffers.length" :sorted-offers="sortedOffers" />
-        <OffersEmptyState v-else class="wit-padding-bottom--md" />
+        <OffersList :sorted-offers="sortedOffers" />
       </div>
     </div>
 
@@ -19,7 +18,7 @@
 
 <script>
 import { Filters, Search } from '@/components/basic'
-import { OffersEmptyState, OffersList, OfferTabs, UserHeader } from '@/components/offers'
+import { OffersList, OfferTabs, UserHeader } from '@/components/offers'
 import { useOffersPage } from '@/composables'
 import { OfferTypes, Routes } from '@/shared/index.js'
 import { StoreModules } from '@/store/index.js'
@@ -32,8 +31,7 @@ export default {
         OfferTabs,
         Search,
         OffersList,
-        Filters,
-        OffersEmptyState
+        Filters
     },
 
     setup () {
