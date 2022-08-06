@@ -2,26 +2,22 @@
   <div class="wit-flex wit-flex--column wit-profiles-page">
     <div class="wit-profiles-page__content">
       <div class=" wis-block--max-width">
-        <ProfilesSearch />
+        <Search class="wit-offset-bottom--sm" />
         <ProfilesView :profiles="profiles" />
       </div>
     </div>
+
+    <ProfilesFilter />
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
-// import Card from '@/components/basic/Card.vue'
-// import TopNavBar from '@/components/header/TopNavBar.vue'
 import { User } from '@/store'
-// import TopTabs from '@/components/header/TopTabs.vue'
 import { getFiltersFromRoute, getSortFromRoute } from '@/utils'
-// import UserView from '@/components/user/UserView.vue'
-// import Filters from '@/components/basic/Filters.vue'
-// import EmptyState from '@/components/basic/EmptyState.vue'
-
-import { ProfilesSearch, ProfilesView } from '@/components/profiles'
-import { ItemsFiltersScheme, ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
+import { ProfilesFilter, ProfilesSearch, ProfilesView } from '@/components/profiles'
+import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
+import { Search } from '@/components/basic/index.js'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -48,14 +44,10 @@ export default {
     },
 
     components: {
-        // Card,
-        // TopNavBar,
-        // TopTabs,
-        // UserView,
-        // Filters,
-        // EmptyState,
         ProfilesView,
-        ProfilesSearch
+        ProfilesSearch,
+        Search,
+        ProfilesFilter
     },
 
     // middleware: ['isAuthorized'],

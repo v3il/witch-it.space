@@ -12,12 +12,12 @@
       </div>
     </div>
 
-    <Filters />
+    <ItemsFilters />
   </div>
 </template>
 
 <script>
-import { Filters, Search } from '@/components/basic'
+import { ItemsFilters, Search } from '@/components/basic'
 import { OffersList, OfferTabs, UserHeader } from '@/components/offers'
 import { useOffersPage } from '@/composables'
 import { OfferTypes, Routes } from '@/shared/index.js'
@@ -31,7 +31,7 @@ export default {
         OfferTabs,
         Search,
         OffersList,
-        Filters
+        ItemsFilters
     },
 
     setup () {

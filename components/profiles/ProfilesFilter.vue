@@ -1,40 +1,5 @@
 <template>
   <SidebarPanel :is-visible="isFiltersOpen" @close="closeFilters">
-    <QueryEditor
-      :query="filters.query"
-      class="wis-wishlist-filters__search wit-offset-bottom--sm"
-      @update="update({ query: $event })"
-      @reset="reset('query')"
-    />
-
-    <RaritiesSelector
-      :selected-rarities="filters.rarities"
-      class="wit-offset-bottom--sm"
-      @update="update({ rarities: $event })"
-      @reset="reset('rarities')"
-    />
-
-    <CharacterSelector
-      :selected-character="filters.character"
-      class="wit-offset-bottom--sm"
-      @update="update({ character: $event })"
-      @reset="reset('character')"
-    />
-
-    <EventsSelector
-      :selected-events="filters.events"
-      class="wit-offset-bottom--sm"
-      @update="update({ events: $event })"
-      @reset="reset('events')"
-    />
-
-    <SlotsSelector
-      :selected-slots="filters.slots"
-      class="wit-offset-bottom--sm"
-      @update="update({ slots: $event })"
-      @reset="reset('slots')"
-    />
-
     <SortsSelector
       class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
       :sorts="sorts"
@@ -63,11 +28,12 @@ import { StoreModules } from '@/store/index.js'
 import { SidebarPanel } from '@/components/basic/index.js'
 
 export default {
-    name: 'OffersFilter',
+    name: 'ProfilesFilter',
 
     availableSorts: [
-        { value: 'rarity', label: 'Items_Sort_Rarity' },
-        { value: 'name', label: 'Items_Sort_Name' }
+        { value: 'marketSize', label: 'Profiles_Sort_Market' },
+        { value: 'name', label: 'Profiles_Sort_Name' },
+        { value: 'wishlistSize', label: 'Profiles_Sort_Wishlist' }
     ],
 
     components: {

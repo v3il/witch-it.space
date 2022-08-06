@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="wit-offset-bottom--xs wit-flex wit-flex--align-center wit-flex--justify-between wit-block--full-width">
-      <h3>{{ $t('SortedBy') }}</h3>
+      <h3>{{ $t('SortBy') }}</h3>
 
       <b-button type="is-ghost" size="is-small" @click="$emit('resetSorts')">
         <b-icon size="is-small" class="is-size-5 wit-color--muted" icon="undo-variant" />

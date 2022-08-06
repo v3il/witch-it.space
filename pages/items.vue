@@ -7,13 +7,13 @@
       </div>
     </div>
 
-    <Filters />
+    <ItemsFilters />
   </div>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
-import { Filters, Search } from '@/components/basic'
+import { ItemsFilters, Search } from '@/components/basic'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import { ItemsList } from '@/components/items/index.js'
 
@@ -21,7 +21,7 @@ export default {
     components: {
         Search,
         ItemsList,
-        Filters
+        ItemsFilters
     },
 
     setup () {

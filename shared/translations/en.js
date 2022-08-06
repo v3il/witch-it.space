@@ -82,7 +82,7 @@ export const en = {
     Change: 'Change',
     Filter: 'Filter',
     Clear: 'Clear',
-    SortedBy: 'Sorted by',
+    SortBy: 'Sort by',
     Close: 'Close',
     Completed: 'Completed',
     Progress: 'Progress',
