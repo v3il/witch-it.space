@@ -1,1 +1,2 @@
-export { ItemsFiltersScheme } from './ItemsFiltersScheme.js'
+export { ItemsFiltersScheme } from './ItemsFiltersScheme'
+export { ProfilesFiltersScheme } from './ProfilesFiltersScheme'
