@@ -14,14 +14,12 @@
 import { computed, useContext, useStore } from '@nuxtjs/composition-api'
 import ConfirmPopup from '@/components/basic/offers/ConfirmPopup.vue'
 import { useQuestCompleted } from '@/components/quests/composables.js'
-import ItemName from '@/components/ItemName.vue'
 
 export default {
     name: 'QuestActions',
 
     components: {
-        ConfirmPopup,
-        ItemName
+        ConfirmPopup
     },
 
     props: {

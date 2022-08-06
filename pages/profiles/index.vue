@@ -1,48 +1,7 @@
 <template>
-  <div>
-    <!--    <TopNavBar class="layout__header">-->
-    <!--      <template #brand>-->
-    <!--        <div class="wit-font-size&#45;&#45;sm">-->
-    <!--          {{ $t('MainMenu_Profiles') }}-->
-    <!--        </div>-->
-    <!--      </template>-->
-
-    <!--      <template #topMenu>-->
-    <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">-->
-    <!--          <template #tab0>-->
-    <!--            {{ $t('Profiles_VerifiedProfiles') }}-->
-    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ verifiedProfiles.length }}</span>-->
-    <!--          </template>-->
-
-    <!--          <template #tab1>-->
-    <!--            {{ $t('Profiles_AllProfiles') }}-->
-    <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profiles.length }}</span>-->
-    <!--          </template>-->
-    <!--        </TopTabs>-->
-    <!--      </template>-->
-    <!--    </TopNavBar>-->
-
-    <main class="wis-profiles">
-      <Card>
-        <!--        <Filters-->
-        <!--          ref="filters"-->
-        <!--          :filters="filters"-->
-        <!--          :sort="sort"-->
-        <!--          :default-filters="$options.defaultFilters"-->
-        <!--          :default-sort="$options.defaultSort"-->
-        <!--          :query-input-placeholder="$t('Profiles_SearchByUsername')"-->
-        <!--          :sorts="$options.sorts"-->
-        <!--          class="wit-offset-bottom&#45;&#45;xxs"-->
-        <!--          @filtersChanged="onFiltersChange"-->
-        <!--          @sortChanged="onSortChange"-->
-        <!--        >-->
-        <!--          <template #default="{ filterParams, update }">-->
-        <!--            <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">-->
-        <!--              {{ $t('Profiles_SteamGuardedOnly') }}-->
-        <!--            </b-switch>-->
-        <!--          </template>-->
-        <!--        </Filters>-->
-
+  <div class="wit-flex wit-flex--column wit-items-page">
+    <div class="wit-items-page__content">
+      <div class="wit-items-page__offers wis-block--max-width">
         <div v-if="filteredProfiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
           <div v-for="profile in sortedProfiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
             <UserView
@@ -59,9 +18,73 @@
         </div>
 
         <EmptyState v-else :text="$t('Profiles_NoProfiles')" icon="account-multiple-remove" class="wit-padding-top--sm" />
-      </Card>
-    </main>
+      </div>
+    </div>
   </div>
+
+<!--  <div>-->
+  <!--    <TopNavBar class="layout__header">-->
+  <!--      <template #brand>-->
+  <!--        <div class="wit-font-size&#45;&#45;sm">-->
+  <!--          {{ $t('MainMenu_Profiles') }}-->
+  <!--        </div>-->
+  <!--      </template>-->
+
+  <!--      <template #topMenu>-->
+  <!--        <TopTabs :modes="$options.modes" :selected-mode="mode" @switch="switchMode">-->
+  <!--          <template #tab0>-->
+  <!--            {{ $t('Profiles_VerifiedProfiles') }}-->
+  <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ verifiedProfiles.length }}</span>-->
+  <!--          </template>-->
+
+  <!--          <template #tab1>-->
+  <!--            {{ $t('Profiles_AllProfiles') }}-->
+  <!--            <span class="wit-top-tabs__counter wit-offset-left&#45;&#45;xxs">{{ profiles.length }}</span>-->
+  <!--          </template>-->
+  <!--        </TopTabs>-->
+  <!--      </template>-->
+  <!--    </TopNavBar>-->
+
+<!--    <main class="wis-profiles">-->
+<!--      <Card>-->
+  <!--        <Filters-->
+  <!--          ref="filters"-->
+  <!--          :filters="filters"-->
+  <!--          :sort="sort"-->
+  <!--          :default-filters="$options.defaultFilters"-->
+  <!--          :default-sort="$options.defaultSort"-->
+  <!--          :query-input-placeholder="$t('Profiles_SearchByUsername')"-->
+  <!--          :sorts="$options.sorts"-->
+  <!--          class="wit-offset-bottom&#45;&#45;xxs"-->
+  <!--          @filtersChanged="onFiltersChange"-->
+  <!--          @sortChanged="onSortChange"-->
+  <!--        >-->
+  <!--          <template #default="{ filterParams, update }">-->
+  <!--            <b-switch :value="filterParams.isSteamGuarded" @input="update({ isSteamGuarded: $event })">-->
+  <!--              {{ $t('Profiles_SteamGuardedOnly') }}-->
+  <!--            </b-switch>-->
+  <!--          </template>-->
+  <!--        </Filters>-->
+
+<!--        <div v-if="filteredProfiles.length" class="wit-flex wit-flex&#45;&#45;wrap wis-profiles__grid">-->
+<!--          <div v-for="profile in sortedProfiles" :key="profile.id" class="wit-paddings&#45;&#45;xs wis-profiles__profile-container">-->
+<!--            <UserView-->
+<!--              :profile="profile"-->
+<!--              class="wit-block&#45;&#45;full-height wit-profile-view"-->
+<!--              hide-icons-->
+<!--              hide-social-buttons-->
+<!--              hide-trade-button-->
+<!--              hide-note-->
+<!--              :avatar-size="50"-->
+<!--              mode="market"-->
+<!--            />-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <EmptyState v-else :text="$t('Profiles_NoProfiles')" icon="account-multiple-remove" class="wit-padding-top&#45;&#45;sm" />-->
+<!--      </Card>-->
+<!--    </main>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -116,7 +139,7 @@ export default {
     },
 
     data: () => ({
-        mode: Modes.VERIFIED,
+        mode: Modes.VERIFIED + 1,
         filters: {},
         sort: {}
     }),
@@ -194,15 +217,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-profiles {
-    padding: var(--offset-sm);
+.wit-items-page {
+    min-height: 100vh;
 }
 
-.wit-profile-view {
-    border-radius: var(--offset-xs);
-    border: 1px solid #36394c;
-    padding: 0 var(--offset-md);
+.wit-items-page__content {
+    width: 100%;
+    padding: 24px;
 }
+
+.wit-items-page__offers {
+    background-color: var(--card-bg-color);
+    border-radius: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+//.wis-profiles {
+//    padding: var(--offset-sm);
+//}
+//
+//.wit-profile-view {
+//    border-radius: var(--offset-xs);
+//    border: 1px solid #36394c;
+//    padding: 0 var(--offset-md);
+//}
 
 .wis-profiles__grid {
     display: grid;
