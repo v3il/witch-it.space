@@ -1,24 +1,18 @@
 <template>
   <div v-if="profiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
-    <div v-for="profile in profiles" :key="profile.id" class="wit-paddings--xs wis-profiles__profile-container">
-      <UserView
-        :profile="profile"
-        class="wit-block--full-height wit-profile-view"
-        hide-icons
-        hide-social-buttons
-        hide-trade-button
-        hide-note
-        :avatar-size="50"
-        mode="market"
-      />
-    </div>
+    <ProfileView
+      v-for="profile in profiles"
+      :key="profile.id"
+      :profile="profile"
+      class="wis-profiles__profile"
+    />
   </div>
 
   <EmptyState v-else :text="$t('Profiles_NoProfiles')" icon="account-multiple-remove" class="wit-padding-top--sm" />
 </template>
 
 <script>
-import UserView from '@/components/user/UserView.vue'
+import ProfileView from './ProfileView'
 import { EmptyState } from '@/components/basic/index.js'
 
 export default {
@@ -26,7 +20,7 @@ export default {
 
     components: {
         EmptyState,
-        UserView
+        ProfileView
     },
 
     props: {
@@ -41,8 +35,17 @@ export default {
 <style scoped lang="scss">
 .wis-profiles__grid {
     display: grid;
-    margin-left: calc(-1 * var(--offset-xs));
-    margin-right: calc(-1 * var(--offset-xs));
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    grid-auto-rows: max-content;
+    //justify-items: center;
+    gap: 24px;
+}
+
+.wis-profiles__profile {
+    //flex: 0 1 300px;
+
+    //@media (max-width: 1350px) {
+    //    flex-grow: 1;
+    //}
 }
 </style>

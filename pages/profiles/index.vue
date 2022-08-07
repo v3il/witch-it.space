@@ -2,7 +2,7 @@
   <div class="wit-flex wit-flex--column wit-profiles-page">
     <div class="wit-profiles-page__content">
       <div class=" wis-block--max-width">
-        <Search class="wit-offset-bottom--sm" />
+        <Search class="wit-offset-bottom--xs" />
         <ProfilesView :profiles="profiles" />
       </div>
     </div>
@@ -49,8 +49,6 @@ export default {
         Search,
         ProfilesFilter
     },
-
-    // middleware: ['isAuthorized'],
 
     async asyncData ({ app: { $usersService, store } }) {
         await store.dispatch('filters/setData', {
