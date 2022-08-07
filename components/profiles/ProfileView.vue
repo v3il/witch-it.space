@@ -1,28 +1,36 @@
 <template>
   <div class="wis-user-view">
+    <!--    <div class="wis-user-view__indicators">-->
+    <!--      <i class="mdi mdi-18px mdi-check-decagram-outline wis-user-view__indicator wit-offset-right&#45;&#45;xxs" />-->
+    <!--      <i class="mdi mdi-18px mdi-lock-check-outline wis-user-view__indicator" />-->
+    <!--    </div>-->
+
     <div class="wis-user-view__section wit-flex wit-flex--align-center wit-flex--column">
       <UserAvatar :user="profile" class="wis-user-view__avatar wit-offset-bottom--md" />
 
-      <h5 class="wit-font-size--sm wit-text--overflow wit-offset-bottom--xs">
+      <h5 class="wit-font-size--sm wit-text--overflow wit-offset-bottom--xsm">
         {{ profile.displayName }}
       </h5>
 
-      <span class="wit-color--muted wit-font-size--xxs">Verified, Steam Guard enabled</span>
+      <span class="wit-color--muted wit-font-size--xxs wit-flex wit-flex--align-center">
+        <i class="mdi mdi-16px mdi-check wit-offset-right--xxs wit-color--success" />Verified
+        <i class="mdi mdi-16px mdi-close wit-offset-left--xsm wit-offset-right--xxs wit-color--danger" />Steam Guard
+      </span>
 
-      <a type="is-primary is-small" href="/" class="wit-offset-top--xs">
-        Send a trade
-      </a>
+      <!--      <a type="is-primary is-small" href="/" class="wit-font-size&#45;&#45;xxs">-->
+      <!--        Send a trade-->
+      <!--      </a>-->
     </div>
 
     <div class="wit-flex wis-user-view_buttons">
       <b-button type="is-ghost" tag="nuxt-link" to="/" class="wis-user-view_button">
         Market
-        <span class="wit-color--muted wit-font-size--xxs">({{ profile.marketSize }})</span>
+        <span v-if="profile.marketSize" class="wit-color--muted wit-font-size--xxs">({{ profile.marketSize }})</span>
       </b-button>
 
       <b-button type="is-ghost" tag="nuxt-link" to="/" class="wis-user-view_button">
         Wishlist
-        <span class="wit-color--muted wit-font-size--xxs">({{ profile.wishlistSize }})</span>
+        <span v-if="profile.wishlistSize" class="wit-color--muted wit-font-size--xxs">({{ profile.wishlistSize }})</span>
       </b-button>
     </div>
 
@@ -247,6 +255,7 @@ export default {
     border-radius: 24px;
     background-color: var(--card-bg-color);
     overflow: hidden;
+    position: relative;
 }
 
 .wis-user-view__section {
@@ -285,5 +294,16 @@ export default {
     &:last-child {
         border-bottom-right-radius: inherit;
     }
+}
+
+.wis-user-view__indicators {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 16px;
+}
+
+.wis-user-view__indicator {
+    color: #2dd4bf;
 }
 </style>

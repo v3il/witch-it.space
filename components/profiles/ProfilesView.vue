@@ -35,7 +35,7 @@ export default {
 <style scoped lang="scss">
 .wis-profiles__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(235px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-auto-rows: max-content;
     //justify-items: center;
     gap: 24px;
