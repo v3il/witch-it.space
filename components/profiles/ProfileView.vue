@@ -8,6 +8,10 @@
       </h5>
 
       <span class="wit-color--muted wit-font-size--xxs">Verified, Steam Guard enabled</span>
+
+      <a type="is-primary is-small" href="/" class="wit-offset-top--xs">
+        Send a trade
+      </a>
     </div>
 
     <div class="wit-flex wis-user-view_buttons">
