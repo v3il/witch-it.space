@@ -45,7 +45,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-search {
-    padding: 24px 0;
+    padding: 24px;
 }
 
 .wis-search__input {

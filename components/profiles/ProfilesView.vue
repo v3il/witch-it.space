@@ -37,7 +37,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-auto-rows: max-content;
-    //justify-items: center;
+    padding: 0 24px;
     gap: 24px;
 }
 
