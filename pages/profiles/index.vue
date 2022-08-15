@@ -1,8 +1,8 @@
 <template>
   <div class="wit-flex wit-flex--column wit-profiles-page">
     <div class="wit-profiles-page__content">
-      <div class=" wis-block--max-width">
-        <Search class="wit-offset-bottom--xs" />
+      <div class="wis-block--max-width aaa">
+        <Search class="wit-offset-bottom--xs1" />
         <ProfilesView :profiles="profiles" />
       </div>
     </div>
@@ -147,5 +147,11 @@ export default {
 .wit-profiles-page__content {
     width: 100%;
     padding: 24px;
+}
+
+.aaa {
+    padding: 0 24px 24px;
+    //background-color: var(--card-bg-color);
+    border-radius: 24px;
 }
 </style>

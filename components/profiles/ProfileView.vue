@@ -252,10 +252,13 @@ export default {
 
 <style scoped lang="scss">
 .wis-user-view {
-    border-radius: 24px;
+    border-radius: 8px;
     background-color: var(--card-bg-color);
     overflow: hidden;
     position: relative;
+
+    //border: 1px solid #36404f;
+    //background-color: rgb(0 0 0 / 0.05);
 }
 
 .wis-user-view__section {
@@ -263,8 +266,8 @@ export default {
 }
 
 .wis-user-view__avatar {
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: 80px;
     display: block;
     border-radius: 16px;
 }
