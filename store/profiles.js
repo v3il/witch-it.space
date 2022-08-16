@@ -1,6 +1,5 @@
-import { filtersActions, filtersMutations, filtersState } from '@/shared/filters/index.js'
-
-export { filtersState, filtersActions, filtersMutations } from '@/shared/filters'
+import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
+import { usersService } from '@/domain'
 
 export const state = () => ({
     ...filtersState(),
@@ -8,34 +7,42 @@ export const state = () => ({
 })
 
 export const getters = {
-    filteredProfiles: (state, getters, rootState) => {
-        return []
+    filteredProfiles (state) {
+        const lowerCasedQuery = state.filters.query.toLowerCase()
 
-        // const filters = rootState.filters.filters
-        // return state.items.filter(item => itemsService.checkItem(item, filters))
+        return state.profiles.filter((profile) => {
+            return lowerCasedQuery ? profile.displayName.toLowerCase().includes(lowerCasedQuery) : true
+        })
     },
 
-    sortedProfiles: (state, getters, rootState) => {
-        return []
+    sortedProfiles (state, getters) {
+        const { sortBy, order } = state.sorts
+        const isAsc = order === 'asc'
 
-        // const sorts = rootState.filters.sorts
-        //
-        // return Array.from(getters.filteredItems).sort((a, b) => {
-        //     return itemsService.compareItems(a, b, sorts)
-        // })
+        return Array.from(getters.filteredProfiles).sort((a, b) => {
+            const first = isAsc ? a : b
+            const second = isAsc ? b : a
+
+            switch (sortBy) {
+            case 'marketSize':
+                return first.marketSize - second.marketSize
+            case 'wishlistSize':
+                return first.wishlistSize - second.wishlistSize
+            case 'name':
+                return first.displayName.localeCompare(second.displayName)
+            }
+
+            return 0
+        })
     }
 }
 
 export const actions = {
     ...filtersActions,
 
-    fetchProfiles ({ commit }) {
-        // return this.$axios.$get('/api/items')
-        //     .then(({ items }) => {
-        //         commit('SET_ITEMS', items)
-        //         this.$itemsService.setItems(items)
-        //     })
-        //     .catch(console.error)
+    async fetchProfiles ({ commit }) {
+        const { profiles } = await usersService.fetchAll()
+        commit('SET_PROFILES', profiles)
     }
 }
 
@@ -43,6 +50,6 @@ export const mutations = {
     ...filtersMutations,
 
     SET_PROFILES (state, profiles) {
-        state.profiles = profiles // .map(profile => Object.freeze(profile))
+        state.profiles = profiles
     }
 }

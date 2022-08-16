@@ -46,6 +46,18 @@ export default {
         SidebarPanel
     },
 
+    setup () {
+        const store = useStore()
+
+        const filters = computed(() => store.state.profiles.filters)
+        const sorts = computed(() => store.state.profiles.sorts)
+        const isFiltersOpen = computed(() => store.state.profiles.isFiltersOpen)
+
+        const closeFilters = () => store.dispatch('profiles/closeFilters')
+
+        return { filters, sorts, isFiltersOpen, closeFilters }
+    },
+
     methods: {
         ...mapActions('profiles', {
             mergeFilters: 'mergeFilters',
@@ -81,18 +93,6 @@ export default {
             this.resetSortsAndFilters()
             this.closeFilters()
         }
-    },
-
-    setup () {
-        const store = useStore()
-
-        const filters = computed(() => store.state.profiles.filters)
-        const sorts = computed(() => store.state.profiles.sorts)
-        const isFiltersOpen = computed(() => store.state.profiles.isFiltersOpen)
-
-        const closeFilters = () => store.dispatch('profiles/closeFilters')
-
-        return { filters, sorts, isFiltersOpen, closeFilters }
     }
 }
 </script>
