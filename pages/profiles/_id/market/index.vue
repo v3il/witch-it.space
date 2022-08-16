@@ -7,7 +7,7 @@
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        <Search />
+        <Search store-module="offers" />
         <OffersList :sorted-offers="sortedOffers" />
       </div>
     </div>
@@ -41,9 +41,9 @@ export default {
 
     // TODO: use Composition API
     async asyncData ({ route, $marketService, store, error, $t }) {
-        await store.dispatch(`${StoreModules.OFFERS}/setOffersType`, OfferTypes.MARKET)
+        await store.dispatch('offers/setOffersType', OfferTypes.MARKET)
 
-        await store.dispatch(`${StoreModules.FILTERS}/setData`, {
+        await store.dispatch('offers/setData', {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
             availableSorts: ItemsFiltersScheme.getAvailableSorts()

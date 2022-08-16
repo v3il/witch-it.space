@@ -16,6 +16,7 @@ import { computed, useStore } from '@nuxtjs/composition-api'
 import { ProfilesFilter, ProfilesView } from '@/components/profiles'
 import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Search } from '@/components/basic/index.js'
+import { Routes } from '@/shared/index.js'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -44,6 +45,12 @@ export default {
         })
 
         await store.dispatch('profiles/fetchProfiles')
+
+        // TODO: error page
+
+        // if (!profile) {
+        //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
+        // }
     }
 }
 </script>

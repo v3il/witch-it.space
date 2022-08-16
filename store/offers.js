@@ -2,8 +2,10 @@ import { Offer } from '@/domain/models/index.js'
 import { wishlistService, marketService } from '@/domain/index.js'
 import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import { OfferTypes } from '@/shared/index.js'
+import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
 
 export const state = () => ({
+    ...filtersState(),
     existingOffers: [],
     availableOffers: [],
     mode: ManageWishlistTabs.MY_WISHLIST,
@@ -23,26 +25,26 @@ export const getters = {
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
     service: state => state.offersType === OfferTypes.MARKET ? marketService : wishlistService,
 
-    filteredOfferModels: (state, getters, rootState) => {
-        const filters = rootState.filters.filters
+    filteredOfferModels: (state, getters) => {
+        const filters = state.filters
         return state.existingOffers.filter(offer => getters.service.checkOffer(offer, filters))
     },
 
-    sortedOfferModels: (state, getters, rootState) => {
-        const sorts = rootState.filters.sorts
+    sortedOfferModels: (state, getters) => {
+        const sorts = state.sorts
 
         return Array.from(getters.filteredOfferModels).sort((a, b) => {
             return getters.service.compareOffers(a, b, sorts)
         })
     },
 
-    filteredNonWishlistItems: (state, getters, rootState) => {
-        const filters = rootState.filters.filters
+    filteredNonWishlistItems: (state, getters) => {
+        const filters = state.filters
         return state.availableOffers.filter(offer => getters.service.checkOffer(offer, filters))
     },
 
-    sortedNonWishlistItems: (state, getters, rootState) => {
-        const sorts = rootState.filters.sorts
+    sortedNonWishlistItems: (state, getters) => {
+        const sorts = state.sorts
 
         return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
             return getters.service.compareOffers(a, b, sorts)
@@ -51,6 +53,8 @@ export const getters = {
 }
 
 export const actions = {
+    ...filtersActions,
+
     setOffersType ({ commit }, type) {
         commit('SET_OFFERS_TYPE', type)
     },
@@ -109,6 +113,8 @@ export const actions = {
 }
 
 export const mutations = {
+    ...filtersMutations,
+
     SET_OFFERS_TYPE (state, type) {
         state.offersType = type
     },
