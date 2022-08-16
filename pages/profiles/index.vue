@@ -2,7 +2,7 @@
   <div class="wit-flex wit-flex--column wit-profiles-page">
     <div class="wit-profiles-page__content">
       <div class="wis-block--max-width aaa">
-        <Search class="wit-offset-bottom--xs1" />
+        <Search store-module="profiles" />
         <ProfilesView :profiles="profiles" />
       </div>
     </div>
@@ -51,11 +51,13 @@ export default {
     },
 
     async asyncData ({ app: { $usersService, store } }) {
-        await store.dispatch('filters/setData', {
+        await store.dispatch('profiles/setData', {
             defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
             defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
             availableSorts: ProfilesFiltersScheme.getAvailableSorts()
         })
+
+        console.error(store.state.profiles)
 
         const { error, profiles } = await $usersService.fetchAll()
         return { error, profiles }

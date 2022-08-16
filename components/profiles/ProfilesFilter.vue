@@ -47,7 +47,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.FILTERS, {
+        ...mapActions('profiles', {
             mergeFilters: 'mergeFilters',
             updateFilters: 'updateFilters',
             resetFilterParam: 'resetFilterParam',
@@ -86,11 +86,11 @@ export default {
     setup () {
         const store = useStore()
 
-        const filters = computed(() => store.state.filters.filters)
-        const sorts = computed(() => store.state.filters.sorts)
-        const isFiltersOpen = computed(() => store.state.filters.isFiltersOpen)
+        const filters = computed(() => store.state.profiles.filters)
+        const sorts = computed(() => store.state.profiles.sorts)
+        const isFiltersOpen = computed(() => store.state.profiles.isFiltersOpen)
 
-        const closeFilters = () => store.dispatch('filters/closeFilters')
+        const closeFilters = () => store.dispatch('profiles/closeFilters')
 
         return { filters, sorts, isFiltersOpen, closeFilters }
     }

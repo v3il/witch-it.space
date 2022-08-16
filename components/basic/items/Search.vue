@@ -27,15 +27,22 @@ import { computed, useStore } from '@nuxtjs/composition-api'
 export default {
     name: 'Search',
 
-    setup () {
+    props: {
+        storeModule: {
+            required: true,
+            type: String
+        }
+    },
+
+    setup (props) {
         const store = useStore()
 
-        const searchQuery = computed(() => store.state.filters.filters.query)
-        const openFilters = () => store.dispatch('filters/openFilters')
-        const resetSearch = () => store.dispatch('filters/resetFilterParam', 'query')
+        const searchQuery = computed(() => store.state[props.storeModule].filters.query)
+        const openFilters = () => store.dispatch(props.storeModule + '/openFilters')
+        const resetSearch = () => store.dispatch(props.storeModule + '/resetFilterParam', 'query')
 
         const triggerSearch = debounce((query) => {
-            store.dispatch('filters/mergeFilters', { query })
+            store.dispatch(props.storeModule + '/mergeFilters', { query })
         }, 500)
 
         return { openFilters, triggerSearch, resetSearch, searchQuery }
