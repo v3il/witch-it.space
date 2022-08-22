@@ -103,6 +103,7 @@ import { buildRarityFilterUrl } from '@/utils/buildUrls.js'
 import UserIcons from '@/components/user/UserIcons.vue'
 import { Card } from '@/components/basic/index.js'
 import { UserAvatar } from '@/components/user/index.js'
+import { User } from '@/domain/models/index.js'
 
 export default {
     name: 'UserView',
@@ -160,6 +161,10 @@ export default {
         //     required: true,
         //     type: String
         // }
+    },
+
+    setup (props) {
+        console.error(props.profile instanceof User)
     },
 
     computed: {

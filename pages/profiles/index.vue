@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { computed, useStore } from '@nuxtjs/composition-api'
+import { computed, useAsync, useContext, useStore } from '@nuxtjs/composition-api'
 import { ProfilesFilter, ProfilesView } from '@/components/profiles'
 import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Search } from '@/components/basic/index.js'
@@ -31,27 +31,41 @@ export default {
     },
 
     setup () {
+        const { $usersService, $http } = useContext()
         const store = useStore()
         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
 
-        return { sortedProfiles }
-    },
+        console.error($http)
 
-    async asyncData ({ store }) {
-        await store.dispatch('profiles/setData', {
-            defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
-            defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
-            availableSorts: ProfilesFiltersScheme.getAvailableSorts()
-        })
+        const profiles = useAsync(() => $usersService.fetchAll(), 'profiles')
 
-        await store.dispatch('profiles/fetchProfiles')
+        // console.error(r.value.profiles)
 
-        // TODO: error page
+        // store.commit('profiles/SET_DATA', 1)
 
-        // if (!profile) {
-        //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
-        // }
+        // console.error(sortedProfiles)
+
+        return { sortedProfiles: profiles }
     }
+
+    // async asyncData ({ store, $usersService }) {
+    //     await store.dispatch('profiles/setData', {
+    //         defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
+    //         defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
+    //         availableSorts: ProfilesFiltersScheme.getAvailableSorts()
+    //     })
+    //
+    //     const { profiles } = $usersService.fetchAll()
+    //     return { profiles }
+    //
+    //     // await store.dispatch('profiles/fetchProfiles')
+    //
+    //     // TODO: error page
+    //
+    //     // if (!profile) {
+    //     //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
+    //     // }
+    // }
 }
 </script>
 

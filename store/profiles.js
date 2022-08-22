@@ -1,5 +1,6 @@
 import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
 import { usersService } from '@/domain'
+import { User } from '@/domain/models'
 
 export const state = () => ({
     ...filtersState(),
@@ -50,6 +51,6 @@ export const mutations = {
     ...filtersMutations,
 
     SET_PROFILES (state, profiles) {
-        state.profiles = profiles
+        state.profiles = profiles.map(profile => User.create(profile))
     }
 }

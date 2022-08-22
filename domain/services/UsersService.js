@@ -1,3 +1,5 @@
+import { User } from '@/domain/models/index.js'
+
 export class UsersService {
     #axiosInstance = null
 
@@ -22,10 +24,13 @@ export class UsersService {
     async fetchAll () {
         try {
             const { data } = await this.#axiosInstance.get('/api/profiles')
-            return {
-                error: null,
-                profiles: data.profiles
-            }
+
+            return data.profiles.map(profile => User.create(profile))
+
+            // return {
+            //     error: null,
+            //     profiles: data.profiles
+            // }
         } catch (e) {
             return {
                 error: e.message

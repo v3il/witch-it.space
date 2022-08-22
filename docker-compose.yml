@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  nuxt:
+    container_name: witch-it.space--nuxt
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    links:
+      - postgres
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=$DB_HOST
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_NAME=$DB_NAME
+
+  postgres:
+    container_name: witch-it.space--postgres
+    image: postgres:10-alpine
+    volumes:
+      - /media/witch-it-space/db:/var/lib/postgresql/data:z
+    env_file: .env
+    environment:
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: witch-it.space--nginx
+    links:
+      - nuxt
+    ports:
+      - 80:80
+      - 443:443
