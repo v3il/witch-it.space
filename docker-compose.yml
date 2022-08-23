@@ -4,7 +4,7 @@ services:
   nuxt:
     container_name: witch-it.space--nuxt
     build:
-      context: ./api
+      context: .
       dockerfile: Dockerfile
     links:
       - postgres
