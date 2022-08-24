@@ -21,8 +21,11 @@ export const getters = {
 export const actions = {
     fetchUser ({ commit, dispatch }) {
         return this.$axios.$get('/api/user')
-            .then(({ user }) => commit('SET_USER', user))
-            .then(() => dispatch('items/fetchItems', {}, { root: true }))
+            .then(({ user }) => {
+                console.error(user)
+                commit('SET_USER', user)
+            })
+            // .then(() => dispatch('items/fetchItems', {}, { root: true }))
             .catch(e => console.error('Fetch user failed', e))
     },
 

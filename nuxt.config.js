@@ -75,5 +75,12 @@ export default {
 
     serverMiddleware: [
         '~/api/index.js'
-    ]
+    ],
+
+    watchers: {
+        webpack: {
+            aggregateTimeout: 300,
+            poll: 1000
+        }
+    }
 }

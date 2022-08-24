@@ -4,6 +4,7 @@
       <div class="wis-block--max-width">
         <Search store-module="profiles" />
         <ProfilesView :profiles="sortedProfiles" />
+        222333334
       </div>
     </div>
 
@@ -31,13 +32,13 @@ export default {
     },
 
     setup () {
-        const { $usersService, $http } = useContext()
+        // const { $usersService, $http } = useContext()
         const store = useStore()
         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
 
-        console.error($http)
+        // console.error($http)
 
-        const profiles = useAsync(() => $usersService.fetchAll(), 'profiles')
+        // const profiles = useAsync(() => $usersService.fetchAll(), 'profiles')
 
         // console.error(r.value.profiles)
 
@@ -45,27 +46,27 @@ export default {
 
         // console.error(sortedProfiles)
 
-        return { sortedProfiles: profiles }
-    }
+        return { sortedProfiles }
+    },
 
-    // async asyncData ({ store, $usersService }) {
-    //     await store.dispatch('profiles/setData', {
-    //         defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
-    //         defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
-    //         availableSorts: ProfilesFiltersScheme.getAvailableSorts()
-    //     })
-    //
-    //     const { profiles } = $usersService.fetchAll()
-    //     return { profiles }
-    //
-    //     // await store.dispatch('profiles/fetchProfiles')
-    //
-    //     // TODO: error page
-    //
-    //     // if (!profile) {
-    //     //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
-    //     // }
-    // }
+    async asyncData ({ store, $usersService }) {
+        await store.dispatch('profiles/setData', {
+            defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
+            defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
+            availableSorts: ProfilesFiltersScheme.getAvailableSorts()
+        })
+
+        const { profiles } = $usersService.fetchAll()
+        return { profiles }
+
+        // await store.dispatch('profiles/fetchProfiles')
+
+        // TODO: error page
+
+        // if (!profile) {
+        //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
+        // }
+    }
 }
 </script>
 

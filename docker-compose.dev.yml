@@ -5,25 +5,24 @@ services:
     container_name: witch-it.space--nuxt
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     links:
       - postgres
     depends_on:
       postgres:
         condition: service_healthy
+    volumes:
+        - ./:/app
+        - /app/node_modules
     ports:
       - 3000:3000
     environment:
-      - NODE_ENV=production
+      - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
       - DB_HOST=$DB_HOST
       - DB_USER=$DB_USER
       - DB_PASSWORD=$DB_PASSWORD
       - DB_NAME=$DB_NAME
-    deploy:
-        resources:
-            limits:
-                cpus: '0.2'
-                memory: 4096M
 
   postgres:
     container_name: witch-it.space--postgres
@@ -51,5 +50,5 @@ services:
     links:
       - nuxt
     ports:
-      - 81:80
+      - 80:80
       - 443:443

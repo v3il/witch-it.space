@@ -6,6 +6,8 @@ const isProduction = NODE_ENV === 'production'
 export const Themes = { LIGHT: 'light', DARK: 'dark' }
 export const Locales = { EN: 'en', RU: 'ru', UA: 'ua' }
 
+console.error(122)
+
 export const config = {
     PORT,
     NODE_ENV,

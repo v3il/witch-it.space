@@ -25,6 +25,8 @@ const login = async (request, response) => {
         return response.emitBadRequest(request.$t('Error_WrongPassword'))
     }
 
+    console.error(savedUser)
+
     signInUser({
         response,
         user: savedUser,

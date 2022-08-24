@@ -95,7 +95,10 @@ export default {
             const credentials = { login: this.login, password: this.password }
 
             this.authLocal(credentials)
-                .then(() => this.$router.replace(Routes.MAIN))
+                .then((user) => {
+                    console.error(user)
+                    return this.$router.replace(Routes.MAIN)
+                })
                 .catch(error => this.$showError(error.message))
         },
 
