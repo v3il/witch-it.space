@@ -16,8 +16,7 @@ export const actions = {
 
     nuxtClientInit ({ commit }, { store, $itemsService }) {
         // todo
-        window.items = store.state.items.items || []
-        $itemsService.setItems(store.state.items.items || [])
+        $itemsService.setItems(store.state.items.items)
     }
 }
 
