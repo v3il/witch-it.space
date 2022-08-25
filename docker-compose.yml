@@ -27,7 +27,7 @@ services:
     container_name: witch-it.space--postgres
     image: postgres:10-alpine
     volumes:
-      - /media/witch-it-space/db:/var/lib/postgresql/data:z
+      - /media/witchit-space/db:/var/lib/postgresql/data:z
     env_file: .env
     environment:
       - POSTGRES_USER=$DB_USER
