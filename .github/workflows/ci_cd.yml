@@ -1,0 +1,18 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  rebuild:
+    name: Rebuild
+    runs-on: ubuntu-latest
+    steps:
+      - name: Rebuild docker image on VPS
+        uses: fifsky/ssh-action@master
+        with:
+          host: ${{secrets.VPS_IP}}
+          user: ${{ secrets.VPS_USER }}
+          pass: ${{ secrets.VPS_PASSWORD }}
+          command: |
+            bash /home/rebuild_app.sh
