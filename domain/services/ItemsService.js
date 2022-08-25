@@ -7,6 +7,8 @@ export class ItemsService {
     #secondary = []
 
     setItems (items) {
+        console.error(items.length)
+
         items.forEach((itemData) => {
             this.#items[itemData.itemId] = Item.create(itemData)
         })
