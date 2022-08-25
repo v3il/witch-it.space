@@ -6,7 +6,12 @@ const isProduction = NODE_ENV === 'production'
 export const Themes = { LIGHT: 'light', DARK: 'dark' }
 export const Locales = { EN: 'en', RU: 'ru', UA: 'ua' }
 
-console.error(122)
+const dbParams = {
+    DB_HOST: isProduction ? process.env.DB_HOST : 'localhost',
+    DB_USER: isProduction ? process.env.DB_USER : 'postgres',
+    DB_PASSWORD: isProduction ? process.env.DB_PASSWORD : 'root',
+    DB_NAME: isProduction ? process.env.DB_NAME : 'witch-trade'
+}
 
 export const config = {
     PORT,
@@ -16,10 +21,7 @@ export const config = {
 
     SERVER_ORIGIN: isProduction ? 'https://witch-it.space' : `http://localhost:${PORT}`,
 
-    DB_HOST: process.env.DB_HOST || 'localhost',
-    DB_USER: process.env.DB_USER || 'postgres',
-    DB_PASSWORD: process.env.DB_PASSWORD || 'root',
-    DB_NAME: process.env.DB_NAME || 'witch-trade',
+    ...dbParams,
 
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
 
