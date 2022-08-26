@@ -1,6 +1,6 @@
 <template>
   <p class="wis-header__description wit-color--muted">
-    <i class="mdi mdi-18px wit-offset-right--xs" :class="iconClass" />
+    <i v-if="iconName" class="mdi mdi-18px wit-offset-right--xs" :class="iconClass" />
     <span class="wit-text--overflow"><slot /></span>
   </p>
 </template>

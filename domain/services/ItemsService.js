@@ -5,14 +5,18 @@ export class ItemsService {
     #items = {}
     #primary = []
     #secondary = []
+    #itemsCount = 0
+    #tradableItemsCount = 0
 
-    setItems (items) {
+    setItems (items = []) {
         items.forEach((itemData) => {
             this.#items[itemData.itemId] = Item.create(itemData)
         })
 
         this.#primary = PRIMARY.map(id => this.getById(id))
         this.#secondary = SECONDARY.map(id => this.getById(id))
+        this.#itemsCount = items.length
+        this.#tradableItemsCount = items.filter(item => item.isTradable).length
     }
 
     getById (id) {
@@ -20,7 +24,11 @@ export class ItemsService {
     }
 
     get count () {
-        return Object.values(this.#items).length
+        return this.#itemsCount
+    }
+
+    get tradableCount () {
+        return this.#tradableItemsCount
     }
 
     toList () {
