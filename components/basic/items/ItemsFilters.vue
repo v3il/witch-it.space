@@ -85,14 +85,15 @@ export default {
         const sorts = computed(() => store.state[props.storeModuleName].sorts)
         const isFiltersOpen = computed(() => store.state[props.storeModuleName].isFiltersOpen)
 
+        console.error(props.storeModuleName + '/closeFilters')
+
         const closeFilters = () => store.dispatch(props.storeModuleName + '/closeFilters')
-        const mergeFilters = () => store.dispatch(props.storeModuleName + '/mergeFilters')
-        const updateFilters = () => store.dispatch(props.storeModuleName + '/updateFilters')
-        const resetFilterParam = () => store.dispatch(props.storeModuleName + '/resetFilterParam')
+        const mergeFilters = changedFilters => store.dispatch(props.storeModuleName + '/mergeFilters', changedFilters)
+        const resetFilterParam = propName => store.dispatch(props.storeModuleName + '/resetFilterParam', propName)
         const resetSorts = () => store.dispatch(props.storeModuleName + '/resetSorts')
         const resetSortsAndFilters = () => store.dispatch(props.storeModuleName + '/resetSortsAndFilters')
         const toggleSortOrder = () => store.dispatch(props.storeModuleName + '/toggleSortOrder')
-        const toggleOrderBy = () => store.dispatch(props.storeModuleName + '/toggleOrderBy')
+        const toggleOrderBy = orderBy => store.dispatch(props.storeModuleName + '/toggleOrderBy', orderBy)
 
         return {
             filters,
@@ -100,7 +101,6 @@ export default {
             isFiltersOpen,
             closeFilters,
             mergeFilters,
-            updateFilters,
             resetFilterParam,
             resetSorts,
             resetSortsAndFilters,
