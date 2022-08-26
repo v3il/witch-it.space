@@ -5,7 +5,7 @@
       {{ $t('Quests_UpdateQuests') }}
     </b-button>
 
-    <b-tag v-if="!isUpdateAvailable" type="is-warning" class="wit-quest-actions__counter wit-font-weight--700">
+    <b-tag v-if="isSteamConnected && !isUpdateAvailable" type="is-warning" class="wit-quest-actions__counter wit-font-weight--700">
       {{ timeToNextUpdate }}
     </b-tag>
   </div>
@@ -29,6 +29,7 @@ export default {
 
         const isMySteamProfile = computed(() => store.getters['user/isMySteamProfile'])
         const isQuestsLoading = computed(() => store.state.quest.isLoading)
+        const isSteamConnected = computed(() => store.getters['user/isSteamConnected'])
 
         watch(() => store.state.quest.questsUpdateTimestamp, (value) => {
             clearInterval(lastUpdateIntervalId)
@@ -63,7 +64,7 @@ export default {
             }
         }
 
-        return { isUpdateAvailable, timeToNextUpdate, isQuestsLoading, updateQuests }
+        return { isUpdateAvailable, timeToNextUpdate, isQuestsLoading, isSteamConnected, updateQuests }
     }
 }
 </script>

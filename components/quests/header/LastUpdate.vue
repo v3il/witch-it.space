@@ -1,16 +1,20 @@
 <template>
-  <p class="wis-user-card__last-update wit-color--muted">
-    <i class="mdi mdi-update mdi-18px wit-offset-right--xs" />
-    <span class="wit-text--overflow">{{ $t('Wishlist_LastUpdate') }}: {{ formattedLastUpdate }}</span>
-  </p>
+  <Description icon-name="update">
+    {{ $t('Wishlist_LastUpdate') }}: {{ formattedLastUpdate }}
+  </Description>
 </template>
 
 <script>
 import { ref, useContext, useStore, watch } from '@nuxtjs/composition-api'
 import { humanizeTimestampDiff } from '@/utils'
+import { Description } from '@/components/basic/header'
 
 export default {
     name: 'LastUpdate',
+
+    components: {
+        Description
+    },
 
     setup () {
         const store = useStore()
@@ -38,11 +42,3 @@ export default {
     }
 }
 </script>
-
-<style scoped lang="scss">
-.wis-user-card__last-update {
-    display: flex;
-    align-items: center;
-    line-height: 24px;
-}
-</style>
