@@ -1,5 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--column wit-items-page">
+    <ItemsHeader />
+
     <div class="wit-items-page__content">
       <div class="wit-items-page__offers wis-block--max-width">
         <Search store-module="items" />
@@ -15,12 +17,13 @@
 import { computed, useStore } from '@nuxtjs/composition-api'
 import { ItemsFilters, Search } from '@/components/basic'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
-import { ItemsList } from '@/components/items/index.js'
+import { ItemsList, ItemsHeader } from '@/components/items/index.js'
 
 export default {
     components: {
         Search,
         ItemsList,
+        ItemsHeader,
         ItemsFilters
     },
 

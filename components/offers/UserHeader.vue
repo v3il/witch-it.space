@@ -4,7 +4,7 @@
       <div class="wit-flex wit-flex--align-center wit-flex__item--grow">
         <UserAvatar :user="profile" class="wis-user-card__avatar" />
 
-        <div class="wit-offset-left--sm wit-flex__item--grow" style="min-width: 0;">
+        <div class="wit-offset-left--sm wit-flex__item--grow wis-min-width--none">
           <HeaderTitle :compact="compact" :mode="mode" :profile="profile" />
           <LastUpdate :mode="mode" :profile="profile" />
         </div>
