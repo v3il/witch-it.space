@@ -62,7 +62,7 @@ export class UserService {
 
         return user.$query().patch({
             wishlistSize,
-            wishlistUpdateTime: new Date()
+            wishlistUpdateTime: getCurrentTimestamp()
         })
     }
 
@@ -71,7 +71,7 @@ export class UserService {
 
         return user.$query().patch({
             marketSize,
-            marketUpdateTime: new Date()
+            marketUpdateTime: getCurrentTimestamp()
         })
     }
 
