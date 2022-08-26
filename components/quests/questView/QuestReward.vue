@@ -7,8 +7,8 @@
     />
 
     <p class="wis-quest-reward__name">
-      <span class="wit-color--muted wit-offset-top--xxs">{{ quest.rewardCount }} &times;</span>
-      <span class="wit-block">{{ rewardItem.name }}</span>
+      <span class="wit-color--muted">{{ quest.rewardCount }} &times;</span>
+      {{ rewardItem.name }}
     </p>
   </div>
 </template>

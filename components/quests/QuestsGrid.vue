@@ -1,6 +1,6 @@
 <template>
   <div v-if="quests.length" class="wis-quests-grid">
-    <QuestView v-for="quest in quests" :key="quest.id" :quest="quest" class="wis-quests-grid__quest" />
+    <QuestView v-for="quest in quests" :key="quest.id" :quest="quest" />
   </div>
 </template>
 
@@ -28,13 +28,5 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
-
-    @media (max-width: 769px) {
-        justify-content: center;
-    }
-}
-
-.wis-quests-grid__quest {
-    flex-basis: 320px;
 }
 </style>

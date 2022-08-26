@@ -57,7 +57,8 @@ export default {
     border-radius: 24px;
     display: flex;
     flex-direction: column;
-    height: 22rem;
+    height: 20rem;
+    flex-basis: 320px;
 }
 
 .wis-quest-view__name {
