@@ -1,12 +1,5 @@
 <template>
   <SidebarPanel :is-visible="isFiltersOpen" @close="closeFilters">
-    <QueryEditor
-      :query="filters.query"
-      class="wis-wishlist-filters__search wit-offset-bottom--sm"
-      @update="update({ query: $event })"
-      @reset="reset('query')"
-    />
-
     <RaritiesSelector
       :selected-rarities="filters.rarities"
       class="wit-offset-bottom--sm"
@@ -51,7 +44,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { computed, useStore } from '@nuxtjs/composition-api'
 import RaritiesSelector from '@/components/basic/filters/RaritiesSelector.vue'
 import EventsSelector from '@/components/basic/filters/EventsSelector.vue'
@@ -59,7 +51,6 @@ import SlotsSelector from '@/components/basic/filters/SlotsSelector.vue'
 import CharacterSelector from '@/components/basic/filters/CharacterSelector.vue'
 import QueryEditor from '@/components/basic/filters/QueryEditor.vue'
 import SortsSelector from '@/components/basic/filters/SortsSelector.vue'
-import { StoreModules } from '@/store/index.js'
 import { SidebarPanel } from '@/components/basic/index.js'
 
 export default {
@@ -80,17 +71,45 @@ export default {
         SidebarPanel
     },
 
-    methods: {
-        ...mapActions('offers', {
-            mergeFilters: 'mergeFilters',
-            updateFilters: 'updateFilters',
-            resetFilterParam: 'resetFilterParam',
-            resetSorts: 'resetSorts',
-            resetSortsAndFilters: 'resetSortsAndFilters',
-            toggleSortOrder: 'toggleSortOrder',
-            toggleOrderBy: 'toggleOrderBy'
-        }),
+    props: {
+        storeModuleName: {
+            required: true,
+            type: String
+        }
+    },
 
+    setup (props) {
+        const store = useStore()
+
+        const filters = computed(() => store.state[props.storeModuleName].filters)
+        const sorts = computed(() => store.state[props.storeModuleName].sorts)
+        const isFiltersOpen = computed(() => store.state[props.storeModuleName].isFiltersOpen)
+
+        const closeFilters = () => store.dispatch(props.storeModuleName + '/closeFilters')
+        const mergeFilters = () => store.dispatch(props.storeModuleName + '/mergeFilters')
+        const updateFilters = () => store.dispatch(props.storeModuleName + '/updateFilters')
+        const resetFilterParam = () => store.dispatch(props.storeModuleName + '/resetFilterParam')
+        const resetSorts = () => store.dispatch(props.storeModuleName + '/resetSorts')
+        const resetSortsAndFilters = () => store.dispatch(props.storeModuleName + '/resetSortsAndFilters')
+        const toggleSortOrder = () => store.dispatch(props.storeModuleName + '/toggleSortOrder')
+        const toggleOrderBy = () => store.dispatch(props.storeModuleName + '/toggleOrderBy')
+
+        return {
+            filters,
+            sorts,
+            isFiltersOpen,
+            closeFilters,
+            mergeFilters,
+            updateFilters,
+            resetFilterParam,
+            resetSorts,
+            resetSortsAndFilters,
+            toggleSortOrder,
+            toggleOrderBy
+        }
+    },
+
+    methods: {
         update (changedFilters) {
             this.mergeFilters(changedFilters)
         },
@@ -115,30 +134,6 @@ export default {
             this.resetSortsAndFilters()
             this.closeFilters()
         }
-    },
-
-    setup () {
-        const store = useStore()
-
-        const filters = computed(() => store.state.offers.filters)
-        const sorts = computed(() => store.state.offers.sorts)
-        const isFiltersOpen = computed(() => store.state.offers.isFiltersOpen)
-
-        const closeFilters = () => store.dispatch('offers/closeFilters')
-
-        return { filters, sorts, isFiltersOpen, closeFilters }
     }
 }
 </script>
-
-<style scoped lang="scss">
-.wis-wishlist-filters__search {
-    display: none;
-}
-
-@media (max-width: 1200px) {
-    .wis-wishlist-filters__search {
-        display: flex;
-    }
-}
-</style>

@@ -2,12 +2,12 @@
   <div class="wit-flex wit-flex--column wit-items-page">
     <div class="wit-items-page__content">
       <div class="wit-items-page__offers wis-block--max-width">
-        <Search />
+        <Search store-module="items" />
         <ItemsList :items="sortedItems" />
       </div>
     </div>
 
-    <ItemsFilters />
+    <ItemsFilters store-module-name="items" />
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
 
     // TODO: use Composition API
     async asyncData ({ store }) {
-        await store.dispatch('filters/setData', {
+        await store.dispatch('items/setData', {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
             availableSorts: ItemsFiltersScheme.getAvailableSorts()

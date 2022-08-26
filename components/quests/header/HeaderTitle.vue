@@ -1,6 +1,6 @@
 <template>
   <h1 class="wis-user-card__title wit-text--overflow">
-    {{ $t('Quests_HeaderTitle') }} ___!___
+    {{ $t('Quests_HeaderTitle') }}
   </h1>
 </template>
 

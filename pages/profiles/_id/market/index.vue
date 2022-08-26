@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <ItemsFilters />
+    <ItemsFilters store-module-name="offers" />
   </div>
 </template>
 

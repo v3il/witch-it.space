@@ -1,25 +1,26 @@
 import { itemsService } from '@/domain/index.js'
+import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
 
 export const state = () => ({
+    ...filtersState(),
     items: {}
 })
 
 export const getters = {
-    filteredItems: (state, getters, rootState) => {
-        const filters = rootState.filters.filters
-        return state.items.filter(item => itemsService.checkItem(item, filters))
+    filteredItems: (state) => {
+        return state.items.filter(item => itemsService.checkItem(item, state.filters))
     },
 
-    sortedItems: (state, getters, rootState) => {
-        const sorts = rootState.filters.sorts
-
+    sortedItems: (state, getters) => {
         return Array.from(getters.filteredItems).sort((a, b) => {
-            return itemsService.compareItems(a, b, sorts)
+            return itemsService.compareItems(a, b, state.sorts)
         })
     }
 }
 
 export const actions = {
+    ...filtersActions,
+
     fetchItems ({ commit }) {
         return this.$axios.$get('/api/items')
             .then(({ items }) => {
@@ -31,6 +32,8 @@ export const actions = {
 }
 
 export const mutations = {
+    ...filtersMutations,
+
     SET_ITEMS (state, items) {
         state.items = items.map(item => Object.freeze(item))
     }
