@@ -85,8 +85,6 @@ export default {
         const sorts = computed(() => store.state[props.storeModuleName].sorts)
         const isFiltersOpen = computed(() => store.state[props.storeModuleName].isFiltersOpen)
 
-        console.error(props.storeModuleName + '/closeFilters')
-
         const closeFilters = () => store.dispatch(props.storeModuleName + '/closeFilters')
         const mergeFilters = changedFilters => store.dispatch(props.storeModuleName + '/mergeFilters', changedFilters)
         const resetFilterParam = propName => store.dispatch(props.storeModuleName + '/resetFilterParam', propName)

@@ -1,25 +1,21 @@
 <template>
   <HeaderPanel>
-    <div class="wit-flex1 wit-flex--align-center wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
-      <!--      <div class="wit-flex wit-flex&#45;&#45;align-center wit-flex__item&#45;&#45;grow">-->
-      <h1 class="wis-user-card__title wit-text--overflow">
-        {{ $t('Items_Title') }}
-      </h1>
+    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
+      <Title :title="$t('Items_Title')" />
 
-      <p class="wis-user-card__last-update wit-color--muted">
-        <i class="mdi mdi-update mdi-18px wit-offset-right--xs" />
-        <span class="wit-text--overflow">{{ $t('Wishlist_LastUpdate') }}: {{ 0 }}</span>
-      </p>
+      <Description icon-name="view-grid">
+        {{ $t('Wishlist_LastUpdate') }}: {{ itemsCount }}
+      </Description>
     </div>
-    <!--    </div>-->
   </HeaderPanel>
 </template>
 
 <script>
-import { computed, useStore } from '@nuxtjs/composition-api'
+import { computed, useContext, useStore } from '@nuxtjs/composition-api'
 import { HeaderActions, HeaderTitle, LastUpdate } from '@/components/offers/header'
 import { UserAvatar } from '@/components/user'
 import { HeaderPanel } from '@/components/basic'
+import { Title, Description } from '@/components/basic/header'
 
 export default {
     name: 'UserHeader',
@@ -29,16 +25,19 @@ export default {
         HeaderActions,
         LastUpdate,
         UserAvatar,
-        HeaderPanel
+        HeaderPanel,
+        Title,
+        Description
     },
 
     setup (props) {
-        const store = useStore()
+        const { $itemsService } = useContext()
+        const itemsCount = computed(() => $itemsService.count)
 
         // const authorizedUser = computed(() => store.state.user.user)
         // const profile = computed(() => store.state.offers.profile)
 
-        return { }
+        return { itemsCount }
     }
 }
 </script>

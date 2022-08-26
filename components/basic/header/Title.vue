@@ -17,7 +17,8 @@ export default {
         },
 
         compact: {
-            required: true,
+            required: false,
+            default: false,
             type: Boolean
         }
     },
