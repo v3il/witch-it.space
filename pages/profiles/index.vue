@@ -4,7 +4,6 @@
       <div class="wis-block--max-width">
         <Search store-module="profiles" />
         <ProfilesView :profiles="sortedProfiles" />
-        222333334
       </div>
     </div>
 
@@ -56,10 +55,10 @@ export default {
             availableSorts: ProfilesFiltersScheme.getAvailableSorts()
         })
 
-        const { profiles } = $usersService.fetchAll()
-        return { profiles }
+        // const { profiles } = $usersService.fetchAll()
+        // return { profiles }
 
-        // await store.dispatch('profiles/fetchProfiles')
+        await store.dispatch('profiles/fetchProfiles')
 
         // TODO: error page
 

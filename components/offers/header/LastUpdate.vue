@@ -7,7 +7,7 @@
 <script>
 import { computed, useContext } from '@nuxtjs/composition-api'
 import { OfferTabModes } from '@/domain/index.js'
-import { formatDate } from '@/utils/index.js'
+import { buildDateFromTimestamp, formatDate } from '@/utils/index.js'
 import { Description } from '@/components/basic/header'
 
 export default {
@@ -35,7 +35,7 @@ export default {
 
         const formattedLastUpdate = computed(() => {
             const updateTime = isMarket.value ? props.profile.marketUpdateTime : props.profile.wishlistUpdateTime
-            return updateTime ? formatDate(new Date(updateTime)) : $t('Time_Never')
+            return updateTime ? formatDate(buildDateFromTimestamp(updateTime)) : $t('Time_Never')
         })
 
         return { formattedLastUpdate }

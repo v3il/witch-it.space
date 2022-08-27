@@ -6,7 +6,7 @@
     <!--    </div>-->
 
     <div class="wis-user-view__section wit-flex wit-flex--align-center wit-flex--column">
-      <UserAvatar :user="profile" class="wis-user-view__avatar wit-offset-bottom--md" />
+      <UserAvatar :user="profile" class="wis-user-view__avatar wit-offset-bottom--sm" />
 
       <h5 class="wit-font-size--sm wit-text--overflow wit-offset-bottom--xsm">
         {{ profile.displayName }}
@@ -23,12 +23,12 @@
     </div>
 
     <div class="wit-flex wis-user-view_buttons">
-      <b-button type="is-ghost" tag="nuxt-link" to="/" class="wis-user-view_button">
+      <b-button type="is-ghost" tag="nuxt-link" :to="marketUrl" class="wis-user-view_button">
         Market
         <span v-if="profile.marketSize" class="wit-color--muted wit-font-size--xxs">({{ profile.marketSize }})</span>
       </b-button>
 
-      <b-button type="is-ghost" tag="nuxt-link" to="/" class="wis-user-view_button">
+      <b-button type="is-ghost" tag="nuxt-link" :to="wishlistUrl" class="wis-user-view_button">
         Wishlist
         <span v-if="profile.wishlistSize" class="wit-color--muted wit-font-size--xxs">({{ profile.wishlistSize }})</span>
       </b-button>

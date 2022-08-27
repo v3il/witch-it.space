@@ -81,8 +81,7 @@ export default {
         font-size: 10px;
         padding-left: 0.625rem;
         padding-right: 0.625rem;
-        color: #000;
-        background-color: rgb(45 212 191);
+        background-color: rgb(219 39 119);
         border-radius: 9999px;
         display: flex;
         align-items: center;

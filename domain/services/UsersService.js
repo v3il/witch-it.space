@@ -25,12 +25,12 @@ export class UsersService {
         try {
             const { data } = await this.#axiosInstance.get('/api/profiles')
 
-            return data.profiles.map(profile => User.create(profile))
+            // return data.profiles // .map(profile => User.create(profile))
 
-            // return {
-            //     error: null,
-            //     profiles: data.profiles
-            // }
+            return {
+                // error: null,
+                profiles: data.profiles
+            }
         } catch (e) {
             return {
                 error: e.message

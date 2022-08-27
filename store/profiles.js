@@ -51,6 +51,6 @@ export const mutations = {
     ...filtersMutations,
 
     SET_PROFILES (state, profiles) {
-        state.profiles = profiles.map(profile => User.create(profile))
+        state.profiles = profiles // .map(profile => User.create(profile))
     }
 }
