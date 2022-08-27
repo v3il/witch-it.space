@@ -36,7 +36,7 @@ export default {
         top: 0;
         bottom: 0;
         width: var(--progress);
-        background-color: var(--primary);
+        background-color: var(--quest-color);
     }
 }
 </style>

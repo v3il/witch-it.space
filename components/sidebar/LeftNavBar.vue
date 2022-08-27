@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { computed, useStore } from '@nuxtjs/composition-api'
+import { computed, useContext, useStore } from '@nuxtjs/composition-api'
 import Header from '@/components/sidebar/Header.vue'
 import Navigation from '@/components/sidebar/components/Navigation.vue'
 import {
@@ -30,6 +30,7 @@ export default {
     },
 
     setup () {
+        const { $itemsService } = useContext()
         const store = useStore()
         const user = computed(() => store.state.user.user)
         const isAuthorized = computed(() => store.getters['user/isAuthorized'])
@@ -52,7 +53,7 @@ export default {
         const appLinks = computed(() => {
             const links = [
                 { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES },
-                { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS }
+                { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: $itemsService.count }
             ]
 
             const authorizedLinks = [

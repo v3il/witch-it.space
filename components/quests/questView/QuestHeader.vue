@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-quest-header">
-    <b-tag rounded class="wis-quest-header__type" :class="tagClass">
+    <b-tag rounded class="wis-quest-header__type">
       {{ questType }}
     </b-tag>
 
@@ -25,9 +25,8 @@ export default {
     setup (props) {
         const { isCompleted } = useQuestCompleted(props.quest)
         const questType = computed(() => props.quest.questType)
-        const tagClass = computed(() => questType.value === 'Daily' ? 'daily' : 'weekly')
 
-        return { tagClass, isCompleted, questType }
+        return { isCompleted, questType }
     }
 }
 </script>
@@ -39,14 +38,7 @@ export default {
     font-size: 0.75rem;
     padding: 0.125rem 0.75rem;
     border-radius: 9999px;
-
-    &.weekly {
-        background-color: rgb(59 130 246 / 1);
-    }
-
-    &.daily {
-        background-color: rgb(34 197 94 / 1);
-    }
+    background-color: var(--quest-color);
 }
 
 .wis-quest-header__mark {

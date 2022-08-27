@@ -28,5 +28,9 @@ export default {
     display: flex;
     flex-wrap: wrap;
     gap: 2rem;
+
+    @media (max-width: 1400px) {
+        justify-content: center;
+    }
 }
 </style>

@@ -4,9 +4,9 @@
       {{ $t('Progress') }}:
     </span>
 
-    <b-tag rounded class="wis-progress__tag">
+    <span class="wis-progress__tag">
       {{ progress }} / {{ objective }}
-    </b-tag>
+    </span>
   </div>
 </template>
 
@@ -32,13 +32,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .wis-progress__tag {
-    color: var(--white);
-    font-weight: 600;
-    font-size: 0.75rem;
-    padding: 0.125rem 0.75rem;
-    border-radius: 9999px;
-    background-color: rgb(59 130 246 / 1);
+    color: var(--quest-color);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="wis-quest-view">
+  <div class="wis-quest-view" :style="questStyles">
     <div class="wis-quest-view__section">
       <QuestHeader :quest="quest" class="wit-offset-bottom--sm" />
 
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { computed } from '@nuxtjs/composition-api'
 import {
     QuestActions,
     QuestHeader,
@@ -47,6 +48,15 @@ export default {
             type: Object,
             required: true
         }
+    },
+
+    setup (props) {
+        const isDailyQuest = computed(() => props.quest.questType === 'Daily')
+        const questStyles = computed(() => ({
+            '--quest-color': isDailyQuest.value ? 'var(--light-blue)' : 'var(--dark-pink)'
+        }))
+
+        return { questStyles }
     }
 }
 </script>
@@ -73,6 +83,6 @@ export default {
 
 .wis-quest-view__progress {
     padding: 0 24px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
 </style>

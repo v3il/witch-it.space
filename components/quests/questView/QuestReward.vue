@@ -46,6 +46,6 @@ export default {
 }
 
 .wis-quest-reward__name {
-    line-height: 1.5;
+    line-height: 1.75;
 }
 </style>
