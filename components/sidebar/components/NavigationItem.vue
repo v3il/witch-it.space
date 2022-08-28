@@ -45,7 +45,6 @@ export default {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding: 10px 16px;
         font-size: 13px;
         font-weight: 500;
         line-height: 20px;
@@ -74,6 +73,7 @@ export default {
     .wis-navigation-item__link {
         width: 100%;
         color: var(--white);
+        padding: 10px 16px;
     }
 
     .wis-navigation-item__tag {

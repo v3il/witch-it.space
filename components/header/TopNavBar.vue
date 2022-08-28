@@ -17,6 +17,7 @@
           class="wit-transition wit-link"
           :to="link.to"
           tag="nuxt-link"
+          @click.native="onLinkClick"
         >
           <b-icon size="is-small" class="is-size-4 wit-color--Y400 wit-offset-right--xs" :icon="link.icon" />
           {{ $t(link.textId) }}
@@ -84,6 +85,12 @@ export default {
 
     created () {
         this.links = getNavbarLinks(this.user)
+    },
+
+    methods: {
+        onLinkClick () {
+            document.body.click()
+        }
     }
 }
 </script>
