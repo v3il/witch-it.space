@@ -1,5 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--column wit-profiles-page">
+    <ProfilesHeader class="wit-offset-bottom--sm" />
+
     <div class="wit-profiles-page__content">
       <div class="wis-block--max-width">
         <Search store-module="profiles" />
@@ -13,7 +15,7 @@
 
 <script>
 import { computed, useAsync, useContext, useStore } from '@nuxtjs/composition-api'
-import { ProfilesFilter, ProfilesView } from '@/components/profiles'
+import { ProfilesFilter, ProfilesView, ProfilesHeader } from '@/components/profiles'
 import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Search } from '@/components/basic/index.js'
 import { Routes } from '@/shared/index.js'
@@ -27,7 +29,8 @@ export default {
     components: {
         ProfilesView,
         Search,
-        ProfilesFilter
+        ProfilesFilter,
+        ProfilesHeader
     },
 
     setup () {

@@ -36,7 +36,10 @@ export const getters = {
 
             return 0
         })
-    }
+    },
+
+    profilesCount: state => state.profiles.length,
+    verifiedProfilesCount: state => state.profiles.filter(profile => profile.isVerified).length
 }
 
 export const actions = {

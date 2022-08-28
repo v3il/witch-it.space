@@ -60,7 +60,7 @@ export const en = {
     MainMenu_ManageMarket: 'Manage Market',
     MainMenu_MyWishlist: 'Wishlist',
     MainMenu_ManageWishlist: 'Manage Wishlist',
-    MainMenu_Profiles: 'Profiles',
+    MainMenu_Profiles: 'All Profiles',
     MainMenu_Items: 'Items',
     MainMenu_Quests: 'Quests',
     MainMenu_Settings: 'Settings',
@@ -214,6 +214,8 @@ export const en = {
     Profiles_Trade: 'Exchange',
     Profiles_ProfileNotFound: 'Profile not found',
     Profiles_BackToProfilesList: 'Back to all profiles',
+    Profiles_HeaderTitle: 'All Profiles',
+    Profiles_Description: '<span class="wit-color--white">%s</span> registered profile(s), <span class="wit-color--white">%s</span> verified profile(s)',
 
     Profiles_Sort_Market: 'Market',
     Profiles_Sort_Wishlist: 'Wishlist',
