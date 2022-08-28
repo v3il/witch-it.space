@@ -42,6 +42,7 @@ export default {
     background-color: var(--dark-gray);
     border-bottom: 1px solid var(--border-color);
     padding: 40px 32px;
+    overflow: hidden;
 }
 
 .wis-header-panel.compact {
@@ -58,10 +59,11 @@ export default {
 
 .wis-header-panel__background {
     position: absolute;
-    top: 0;
+    top: -40px;
     left: 0;
     bottom: 0;
     right: 0;
+    height: 360px;
 }
 
 .wis-header-panel__content {
@@ -70,6 +72,11 @@ export default {
 }
 
 @media (max-width: 769px) {
+    .wis-header-panel__background {
+        top: 0;
+        height: 100%;
+    }
+
     .wis-header-panel {
         padding: 24px;
     }
