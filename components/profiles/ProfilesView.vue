@@ -37,15 +37,6 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-auto-rows: max-content;
-    padding: 0 24px;
     gap: 24px;
-}
-
-.wis-profiles__profile {
-    //flex: 0 1 300px;
-
-    //@media (max-width: 1350px) {
-    //    flex-grow: 1;
-    //}
 }
 </style>

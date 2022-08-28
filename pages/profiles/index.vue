@@ -1,10 +1,10 @@
 <template>
   <div class="wit-flex wit-flex--column wit-profiles-page">
-    <ProfilesHeader class="wit-offset-bottom--sm" />
+    <ProfilesHeader />
 
     <div class="wit-profiles-page__content">
       <div class="wis-block--max-width">
-        <Search store-module="profiles" />
+        <Search store-module="profiles" class="wit-profiles-page__search" />
         <ProfilesView :profiles="sortedProfiles" />
       </div>
     </div>
@@ -14,11 +14,10 @@
 </template>
 
 <script>
-import { computed, useAsync, useContext, useStore } from '@nuxtjs/composition-api'
-import { ProfilesFilter, ProfilesView, ProfilesHeader } from '@/components/profiles'
+import { computed, useStore } from '@nuxtjs/composition-api'
+import { ProfilesFilter, ProfilesHeader, ProfilesView } from '@/components/profiles'
 import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
 import { Search } from '@/components/basic/index.js'
-import { Routes } from '@/shared/index.js'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -65,6 +64,11 @@ export default {
 
 .wit-profiles-page__content {
     width: 100%;
-    padding: 24px;
+    padding: 0 24px;
+}
+
+.wit-profiles-page__search {
+    padding-left: 0;
+    padding-right: 0;
 }
 </style>
