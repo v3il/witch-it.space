@@ -164,7 +164,7 @@ export default {
     },
 
     setup (props) {
-        console.error(props.profile instanceof User)
+        console.error(props.profile.isVerified)
     },
 
     computed: {

@@ -45,7 +45,8 @@ export default {
     @media (max-width: 769px) {
         letter-spacing: -0.025em;
         line-height: 1.75rem;
-        font-size: 1.25rem;
+        font-size: 24px;
+        margin-bottom: 4px;
     }
 }
 </style>

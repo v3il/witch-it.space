@@ -31,32 +31,18 @@ export default {
     },
 
     setup () {
-        // const { $usersService, $http } = useContext()
         const store = useStore()
         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
-
-        // console.error($http)
-
-        // const profiles = useAsync(() => $usersService.fetchAll(), 'profiles')
-
-        // console.error(r.value.profiles)
-
-        // store.commit('profiles/SET_DATA', 1)
-
-        // console.error(sortedProfiles)
 
         return { sortedProfiles }
     },
 
-    async asyncData ({ store, $usersService }) {
+    async asyncData ({ store }) {
         await store.dispatch('profiles/setData', {
             defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
             defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
             availableSorts: ProfilesFiltersScheme.getAvailableSorts()
         })
-
-        // const { profiles } = $usersService.fetchAll()
-        // return { profiles }
 
         await store.dispatch('profiles/fetchProfiles')
 

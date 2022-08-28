@@ -4,6 +4,7 @@ import { User } from '@/domain/models'
 
 export const state = () => ({
     ...filtersState(),
+    rawProfiles: [],
     profiles: []
 })
 
@@ -51,6 +52,9 @@ export const mutations = {
     ...filtersMutations,
 
     SET_PROFILES (state, profiles) {
-        state.profiles = profiles // .map(profile => User.create(profile))
+        console.error('set')
+
+        state.rawProfiles = profiles
+        state.profiles = profiles.map(profile => User.create(profile))
     }
 }
