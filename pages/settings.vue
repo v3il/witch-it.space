@@ -9,13 +9,19 @@
     <!--    </TopNavBar>-->
 
     <div class="wit-settings">
-      <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
-      <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
-      <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-      <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
-      <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-      <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
-      <DangerZone :profile="user" />
+      <SettingsTabs />
+
+      <div class="wit-flex__item--grow wit-paddings--sm">
+        <div class="aaa">
+          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
+          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
+          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+          <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
+          <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+          <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
+          <DangerZone :profile="user" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,6 +40,7 @@ import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 import MarketSettings from '@/components/settings/MarketSettings.vue'
 import NoteEditor from '@/components/settings/NoteEditor.vue'
 import NotesEditor from '@/components/settings/NotesEditor.vue'
+import { SettingsTabs } from '@/components/settings/index.js'
 
 export default {
     components: {
@@ -46,7 +53,8 @@ export default {
         AccountSettings,
         SocialNetworks,
         MarketSettings,
-        NotesEditor
+        NotesEditor,
+        SettingsTabs
     },
 
     middleware: ['isAuthorized'],
@@ -155,8 +163,14 @@ export default {
 
 <style scoped lang="scss">
 .wit-settings {
-    padding: var(--offset-sm);
-    max-width: 850px;
-    margin: 0 auto;
+    display: flex;
+    //padding: var(--offset-sm);
+    min-height: 100vh;
+    //max-width: 850px;
+    //margin: 0 auto;
+}
+
+.aaa {
+    max-width: 768px;
 }
 </style>

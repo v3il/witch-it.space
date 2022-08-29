@@ -25,6 +25,6 @@ export default {
     position: sticky;
     top: 0;
     z-index: 2;
-    box-shadow: 0 5px 12px 8px #222736;
+    /*box-shadow: 0 5px 12px 8px #222736;*/
 }
 </style>
