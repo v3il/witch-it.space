@@ -28,15 +28,15 @@ export default {
 
         currentTab: {
             required: true,
-            type: String
+            type: Object
         }
     },
 
     setup (props, { emit }) {
         const iconClass = computed(() => `mdi-${props.tabData.icon}`)
-        const isActive = computed(() => props.currentTab === props.tabData.id)
+        const isActive = computed(() => props.currentTab === props.tabData)
         const tabClasses = computed(() => ({ active: isActive.value }))
-        const onSwitch = () => emit('switch', props.tabData.id)
+        const onSwitch = () => emit('switch', props.tabData)
 
         return { iconClass, tabClasses, onSwitch }
     }

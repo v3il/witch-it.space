@@ -12,15 +12,15 @@
       <SettingsTabs />
 
       <div class="wit-flex__item--grow wit-paddings--sm">
-        <div class="aaa">
-          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
-          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
-          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-          <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
-          <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-          <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
-          <DangerZone :profile="user" />
-        </div>
+        <!--        <div class="aaa">-->
+        <!--          <StickyPanel class="wit-offset-bottom&#45;&#45;sm" @update="triggerSettingsUpdate" />-->
+        <!--          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
+        <!--          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
+        <!--          <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
+        <!--          <MarketSettings :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
+        <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
+        <!--          <DangerZone :profile="user" />-->
+        <!--        </div>-->
       </div>
     </div>
   </div>
