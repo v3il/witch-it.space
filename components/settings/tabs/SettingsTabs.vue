@@ -42,6 +42,9 @@ $border-color: rgba(241, 245, 249, 0.12);
     max-height: calc(100vh - var(--header-height));
     overscroll-behavior: contain;
     overflow-y: auto;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
 
     @media (max-width: 1200px) {
         display: none;

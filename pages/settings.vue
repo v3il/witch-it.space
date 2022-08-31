@@ -1,26 +1,18 @@
 <template>
   <div>
-    <!--    <TopNavBar class="layout__header">-->
-    <!--      <template #brand>-->
-    <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
-    <!--          {{ $t('MainMenu_Settings') }}-->
-    <!--        </h1>-->
-    <!--      </template>-->
-    <!--    </TopNavBar>-->
-
     <div class="wit-settings">
       <SettingsTabs />
 
-      <div class="wit-flex__item--grow wit-paddings--sm">
-        <!--        <div class="aaa">-->
-        <!--          <StickyPanel class="wit-offset-bottom&#45;&#45;sm" @update="triggerSettingsUpdate" />-->
-        <!--          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
-        <!--          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
-        <!--          <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
-        <!--          <MarketSettings :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
-        <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
-        <!--          <DangerZone :profile="user" />-->
-        <!--        </div>-->
+      <div class="wit-flex__item--grow" style="padding: 32px; margin-left: 384px; height: calc(100vh - var(--header-height)); overflow-y: auto;">
+        <div class="aaa">
+          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
+          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
+          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+          <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
+          <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+          <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
+          <DangerZone :profile="user" />
+        </div>
       </div>
     </div>
   </div>
@@ -165,7 +157,8 @@ export default {
 .wit-settings {
     display: flex;
     //padding: var(--offset-sm);
-    min-height: 100vh;
+    max-height: 100vh;
+    //height: 100vh;
     //max-width: 850px;
     //margin: 0 auto;
 }
