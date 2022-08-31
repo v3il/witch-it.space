@@ -3,7 +3,7 @@
     <div class="wit-settings">
       <SettingsTabs />
 
-      <div class="wit-flex__item--grow" style="padding: 32px; margin-left: 384px; height: calc(100vh - var(--header-height)); overflow-y: auto;">
+      <div class="wit-flex__item--grow bbbbb">
         <div class="aaa">
           <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
           <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
@@ -161,6 +161,17 @@ export default {
     //height: 100vh;
     //max-width: 850px;
     //margin: 0 auto;
+}
+
+.bbbbb {
+    padding: 32px;
+    margin-left: 384px;
+    height: calc(100vh - var(--header-height));
+    overflow-y: auto;
+
+    @media (max-width: 1200px) {
+        margin-left: 0;
+    }
 }
 
 .aaa {
