@@ -175,7 +175,7 @@ export const en = {
     Settings_AccountDisconnected: 'Account disabled',
     Settings_SettingsUpdated: 'Settings updated',
     Settings_PasswordFieldHint: 'Leave the field blank if you don\'t want to change your password',
-    Settings_DisplayNameFieldHint: '2 to 20 characters',
+    Settings_DisplayNameFieldHint: 'From 2 to 15 characters',
     Settings_DisconnectSocialTitle: 'Disconnect service',
     Settings_WannaDisconnectSocial: `Are you sure you want to unlink the third party service from your ${APP_NAME} account?<br>You will no longer be able to log in to your profile using this service. Also, some functions of the site may become unavailable.`,
     Settings_ConnectSocialDescription: `Linking a third-party service account to the ${APP_NAME} account will allow you to enter the site from any device using a third-party service account`,

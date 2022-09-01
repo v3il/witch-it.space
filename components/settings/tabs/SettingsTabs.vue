@@ -59,7 +59,7 @@ $border-color: rgba(241, 245, 249, 0.12);
 .wis-settings-tabs__title {
     letter-spacing: -0.025em;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 800;
     font-size: 2rem;
 }
 

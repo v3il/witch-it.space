@@ -5,13 +5,14 @@
 
       <div class="wit-flex__item--grow bbbbb">
         <div class="aaa">
-          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
           <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
           <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-          <SocialNetworks :profile="user" class="wit-offset-bottom--sm" />
-          <MarketSettings :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
-          <NotesEditor :settings="settings" class="wit-offset-bottom--xlg" @input="onSettingsChange" />
-          <DangerZone :profile="user" />
+          <!--          <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
+          <!--          <MarketSettings :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
+          <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
+          <!--          <DangerZone :profile="user" />-->
+
+          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
         </div>
       </div>
     </div>
@@ -164,7 +165,7 @@ export default {
 }
 
 .bbbbb {
-    padding: 32px;
+    padding: 48px;
     margin-left: 384px;
     height: calc(100vh - var(--header-height));
     overflow-y: auto;

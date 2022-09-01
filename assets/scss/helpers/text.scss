@@ -14,6 +14,10 @@
     font-weight: 700;
 }
 
+.wit-font-weight--800 {
+    font-weight: 800;
+}
+
 .wit-text--italic {
     font-style: italic;
 }
@@ -77,6 +81,14 @@
 
 .wit-font-size--md {
     font-size: var(--text-size-md);
+}
+
+.wit-font-size--lg {
+    font-size: var(--text-size-lg);
+}
+
+.wit-line-height--xxs {
+    line-height: var(--line-height-xxs);
 }
 
 .wit-line-height--xs {
