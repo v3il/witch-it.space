@@ -33,10 +33,10 @@ export const config = {
 
     STEAM_CLIENT_ID: process.env.STEAM_CLIENT_ID || 'client_id',
 
-    AVAILABLE_LOCALES: [Locales.EN, Locales.RU, Locales.UA],
+    AVAILABLE_LOCALES: [Locales.EN/*, Locales.RU, Locales.UA */],
     DEFAULT_LOCALE: Locales.EN,
 
-    AVAILABLE_THEMES: [Themes.LIGHT, Themes.DARK],
+    AVAILABLE_THEMES: [/* Themes.LIGHT, */Themes.DARK],
     DEFAULT_THEME: Themes.DARK,
 
     TOKEN_COOKIE_DURATION: 60 * 60 * 24 * 30, // 30 days
