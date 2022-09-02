@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$avatar-size: 55px;
+$avatar-size: 60px;
 
 .wit-avatar-picker__btn {
     padding: 0;

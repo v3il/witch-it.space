@@ -7,13 +7,13 @@
       {{ $t('Settings_Tabs_Account_Title') }}
     </h1>
 
-    <h2 class="wit-offset-bottom--xs wit-font-weight--400" style="font-size: 1.125rem;">
+    <h2 class="wit-offset-bottom--lg wit-font-weight--400" style="font-size: 1.125rem;">
       {{ $t('Settings_ProfileSettingsAndAppearance') }}
     </h2>
 
-    <p class="wit-offset-bottom--lg wit-color--muted">
-      Following information is publicly displayed, be careful!
-    </p>
+    <!--    <p class="wit-offset-bottom&#45;&#45;lg wit-color&#45;&#45;muted">-->
+    <!--      Following information is publicly displayed, be careful!-->
+    <!--    </p>-->
     <!--      </template>-->
 
     <!--    <b-field class="wit-offset-bottom&#45;&#45;sm">-->
@@ -62,41 +62,54 @@
     <!--      />-->
     <!--    </b-field>-->
 
-    <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--lg" :message="$t('Settings_DisplayNameFieldHint')">
+    <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--md" :message="$t('Settings_DisplayNameFieldHint')">
       <b-input
         :value="settings.displayName"
         maxlength="15"
         has-counter
         :placeholder="$t('Settings_DisplayNamePlaceholder')"
+        icon="account"
+        class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
         custom-class="wit-transition"
         @input="onDisplayNameChange"
       />
     </b-field>
 
-    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--xxlg">
+    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
       <AvatarPicker :selected-avatar-id="settings.avatarId" @change="onAvatarChange" />
     </b-field>
 
-    <hr>
+    <hr class="wis-settings__separator">
     <!--    </Card>-->
 
     <!--    <Card>-->
     <!--      <template #title>-->
-    <h2 class="wit-font-size--sm wit-offset-bottom--lg">
+    <h2 class="wit-offset-bottom--lg wit-font-weight--400" style="font-size: 1.125rem;">
       {{ $t('Settings_SteamSettings') }}
     </h2>
+
+    <!--    <h2 class="wit-font-size&#45;&#45;sm wit-offset-bottom&#45;&#45;lg">-->
+    <!--      {{ $t('Settings_SteamSettings') }}-->
+    <!--    </h2>-->
     <!--      </template>-->
 
-    <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--lg" :type="tradeUrlFieldType">
-      <b-input :value="settings.steamTradeLink" placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX" custom-class="wit-transition" @input="onTradeLinkChange" />
+    <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--md" :type="tradeUrlFieldType">
+      <b-input
+        :value="settings.steamTradeLink"
+        placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX"
+        custom-class="wit-transition"
+        icon="swap-vertical-circle-outline"
+        class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
+        @input="onTradeLinkChange"
+      />
     </b-field>
 
-    <b-field class="wit-offset-bottom--none" :label="$t('Settings_IsGuardProtected')">
-      <b-switch :value="settings.isGuardProtected" @input="onGuardChange">
-        {{ settings.isGuardProtected ? $t('Yes') : $t('No') }}
-      </b-switch>
-    </b-field>
-    <!--    </Card>-->
+    <label class="wit-offset-bottom--none wit-flex">
+      <span class="wit-flex__item--grow">{{ $t('Settings_IsGuardProtected') }}</span>
+      <b-switch :value="settings.isGuardProtected" class="wit-flex__item--no-shrink" @input="onGuardChange" />
+    </label>
+
+    <hr class="wis-settings__separator">
   </div>
 </template>
 
@@ -164,3 +177,9 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wis-settings__separator {
+    margin: 40px 0;
+}
+</style>
