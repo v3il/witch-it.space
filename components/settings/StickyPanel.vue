@@ -1,11 +1,16 @@
 <template>
-  <Card class="wit-settings__sticky-panel">
-    <div class="wit-flex wit-flex--justify-end">
-      <b-button type="is-primary" class="wit-offset-left--auto wit-block" @click="$emit('update')">
-        {{ $t('Settings_Save') }}
-      </b-button>
-    </div>
-  </Card>
+  <!--  <Card class="wit-settings__sticky-panel">-->
+  <div class="wit-flex wit-flex--justify-end">
+    <!--      <b-button type="is-primary" class="wit-offset-left&#45;&#45;auto wit-block" @click="$emit('update')">-->
+    <!--        {{ $t('Settings_Save') }}-->
+    <!--      </b-button>-->
+
+    <b-button type="is-primary" class="wis-btn--rounded" @click="$emit('update')">
+      <!--      <i class="mdi mdi-18px wit-offset-right&#45;&#45;xs mdi-cog" />-->
+      {{ $t('Settings_Save') }}
+    </b-button>
+  </div>
+<!--  </Card>-->
 </template>
 
 <script>

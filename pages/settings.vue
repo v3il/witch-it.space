@@ -172,6 +172,7 @@ export default {
 
     @media (max-width: 1200px) {
         margin-left: 0;
+        padding: 24px;
     }
 }
 

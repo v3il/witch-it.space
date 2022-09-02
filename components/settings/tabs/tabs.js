@@ -11,12 +11,12 @@ export const tabs = [
         description: 'Settings_Tabs_Security_Description',
         icon: 'lock-outline'
     },
-    {
-        id: 'steam',
-        title: 'Settings_Tabs_Steam_Title',
-        description: 'Settings_Tabs_Steam_Description',
-        icon: 'steam'
-    },
+    // {
+    //     id: 'steam',
+    //     title: 'Settings_Tabs_Steam_Title',
+    //     description: 'Settings_Tabs_Steam_Description',
+    //     icon: 'steam'
+    // },
     {
         id: 'market',
         title: 'Settings_Tabs_Market_Title',
