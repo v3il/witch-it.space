@@ -128,6 +128,40 @@ const updateSettings = async (request, response) => {
         })
 }
 
+const updateAccountSettings = (request, response) => {
+    const { displayName, steamTradeLink, isGuardProtected, avatarId } = request.body
+    console.error(request.body)
+
+    const displayNameSchema = joi.string().required().min(2).max(15)
+    const steamTradeURLSchema = joi.string().required().pattern(/^https:\/\/steamcommunity.com\/tradeoffer\/new.*$/)
+    const avatarIdSchema = joi.number().integer().required().min(1).max(11)
+    const isGuardProtectedSchema = joi.boolean().required()
+
+    const errors = [
+        displayNameSchema.validate(displayName),
+        steamTradeURLSchema.validate(steamTradeLink),
+        avatarIdSchema.validate(avatarId),
+        isGuardProtectedSchema.validate(isGuardProtected)
+    ]
+
+    console.error(errors)
+
+    if (errors.some(result => !!result.error)) {
+        return response.emitBadRequest()
+    }
+
+    const updateData = {
+        displayName,
+        steamTradeLink,
+        avatarId,
+        isGuardProtected
+    }
+
+    userService.updateUserSettings(request.user, updateData)
+        .then(() => response.send({ success: true }))
+        .catch(() => response.emitBadRequest())
+}
+
 const toggleProfile = (request, response) => {
     const { isPublic } = request.body
     const schema = joi.bool().required()
@@ -173,6 +207,7 @@ const userController = {
     changeUserTheme,
     disconnectSocial,
     updateSettings,
+    updateAccountSettings,
     toggleProfile,
     removeProfile,
     getById

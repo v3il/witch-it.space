@@ -10,6 +10,7 @@ userRouter.post('/locale', authorized, userController.changeUserLocale)
 userRouter.post('/theme', authorized, userController.changeUserTheme)
 userRouter.post('/disconnect', authorized, userController.disconnectSocial)
 userRouter.post('/settings', authorized, userController.updateSettings)
+userRouter.post('/settings/account', authorized, userController.updateAccountSettings)
 userRouter.post('/toggle', authorized, userController.toggleProfile)
 userRouter.post('/remove', authorized, userController.removeProfile)
 

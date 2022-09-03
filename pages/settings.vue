@@ -12,7 +12,7 @@
           <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
           <!--          <DangerZone :profile="user" />-->
 
-          <StickyPanel class="wit-offset-bottom--sm" @update="triggerSettingsUpdate" />
+          <!--          <StickyPanel class="wit-offset-bottom&#45;&#45;sm" @update="triggerSettingsUpdate" />-->
         </div>
       </div>
     </div>
@@ -178,5 +178,17 @@ export default {
 
 .aaa {
     max-width: 768px;
+}
+</style>
+
+<style lang="scss">
+.wis-settings__section-subtitle {
+    font-weight: 400;
+    font-size: 1.125rem;
+    margin-bottom: 32px;
+}
+
+.wis-settings__separator {
+    margin: 40px 0;
 }
 </style>

@@ -84,6 +84,11 @@ export const actions = {
             .then(() => commit('UPDATE_USER_DATA', settings))
     },
 
+    updateAccountSettings ({ commit }, accountSettings) {
+        return this.$axios.$post('/api/user/settings/account', accountSettings)
+            .then(() => commit('UPDATE_USER_DATA', accountSettings))
+    },
+
     toggleProfile ({ commit }, isPublic) {
         return this.$axios.$post('/api/user/toggle', { isPublic })
             .then(() => commit('SET_PROFILE_VISIBILITY', isPublic))

@@ -8,52 +8,6 @@
       {{ $t('Settings_ProfileSettingsAndAppearance') }}
     </h2>
 
-    <!--    <b-field class="wit-offset-bottom&#45;&#45;sm">-->
-    <!--      <template #label>-->
-    <!--        <p class="wit-offset-bottom&#45;&#45;xs">-->
-    <!--          {{ $t('Login_LoginInputTitle') }}-->
-    <!--        </p>-->
-
-    <!--        <p v-if="!hasLocalProfile" class="wit-color&#45;&#45;warning wit-font-size&#45;&#45;xxs">-->
-    <!--          {{ $t('Settings_NotSetWhenOauth') }}-->
-    <!--        </p>-->
-    <!--      </template>-->
-
-    <!--      <b-input-->
-    <!--        :value="settings.login"-->
-    <!--        disabled-->
-    <!--        type="text"-->
-    <!--        :placeholder="$t('Login_LoginInputPlaceholder')"-->
-    <!--        custom-class="wit-transition"-->
-    <!--      />-->
-    <!--    </b-field>-->
-
-    <!--    <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom&#45;&#45;sm" :message="$t('Register_PasswordInputHelp')">-->
-    <!--      <template #label>-->
-    <!--        <p class="wit-offset-bottom&#45;&#45;xs">-->
-    <!--          {{ $t('Login_PasswordInputTitle') }}-->
-    <!--        </p>-->
-
-    <!--        <p v-if="hasLocalProfile" class="wit-color&#45;&#45;warning wit-font-size&#45;&#45;xxs">-->
-    <!--          {{ $t('Settings_PasswordFieldHint') }}-->
-    <!--        </p>-->
-
-    <!--        <p v-else class="wit-color&#45;&#45;warning wit-font-size&#45;&#45;xxs">-->
-    <!--          {{ $t('Settings_NotSetWhenOauth') }}-->
-    <!--        </p>-->
-    <!--      </template>-->
-
-    <!--      <b-input-->
-    <!--        :value="settings.password"-->
-    <!--        type="password"-->
-    <!--        autocomplete="new-password"-->
-    <!--        :disabled="!hasLocalProfile"-->
-    <!--        :placeholder="$t('Login_PasswordInputPlaceholder')"-->
-    <!--        custom-class="wit-transition"-->
-    <!--        @input="onPasswordChange"-->
-    <!--      />-->
-    <!--    </b-field>-->
-
     <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--md" :message="$t('Settings_DisplayNameFieldHint')">
       <b-input
         :value="accountSettings.displayName"
