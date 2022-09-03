@@ -1,103 +1,105 @@
 <template>
   <div>
-    <h1 class="wit-font-size--lg wit-line-height--xxs wit-font-weight--700 wit-offset-bottom--lg">
-      {{ $t('Settings_Tabs_Account_Title') }}
+    <h1 class="wis-settings__section-title">
+      {{ $t('Settings_Tabs_Security_Title') }}
     </h1>
 
     <h2 class="wis-settings__section-subtitle">
-      {{ $t('Settings_ProfileSettingsAndAppearance') }}
+      {{ $t('Settings_LoginAndPassword') }}
     </h2>
 
-    <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--md" :message="$t('Settings_DisplayNameFieldHint')">
+    <b-field class="wit-offset-bottom--md" :label="$t('Login_LoginInputTitle')">
       <b-input
-        :value="accountSettings.displayName"
-        maxlength="15"
-        has-counter
-        :placeholder="$t('Settings_DisplayNamePlaceholder')"
+        :value="securitySettings.login"
+        disabled
+        type="text"
         icon="account"
+        :placeholder="$t('Login_LoginInputPlaceholder')"
         class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
         custom-class="wit-transition"
-        @input="onDisplayNameChange"
       />
     </b-field>
 
-    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
-      <AvatarPicker :selected-avatar-id="accountSettings.avatarId" @change="onAvatarChange" />
+    <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md" :message="$t('Register_PasswordInputHelp')">
+      <template #label>
+        <p class="wit-offset-bottom--xs">
+          {{ $t('Login_PasswordInputTitle') }}
+        </p>
+
+        <p v-if="hasLocalProfile" class="wit-color--warning wit-font-size--xxs wit-line-height--sm">
+          {{ $t('Settings_PasswordFieldHint') }}
+        </p>
+
+        <p v-else class="wit-color--warning wit-font-size--xxs wit-line-height--sm">
+          {{ $t('Settings_NotSetWhenOauth') }}
+        </p>
+      </template>
+
+      <b-input
+        :value="securitySettings.password"
+        type="password"
+        autocomplete="new-password"
+        :disabled="!hasLocalProfile"
+        :placeholder="$t('Login_PasswordInputPlaceholder')"
+        class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
+        custom-class="wit-transition"
+        icon="form-textbox-password"
+        @input="onPasswordChange"
+      />
     </b-field>
+
+    <SettingsActions @update="saveAccountSettings" />
 
     <hr class="wis-settings__separator">
 
     <h2 class="wis-settings__section-title">
-      {{ $t('Settings_SteamSettings') }}
+      {{ $t('Settings_SocialNetworks') }}
     </h2>
 
-    <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--md" :type="tradeUrlFieldType">
-      <b-input
-        :value="accountSettings.steamTradeLink"
-        placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX"
-        custom-class="wit-transition"
-        icon="swap-vertical-circle-outline"
-        class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
-        @input="onTradeLinkChange"
-      />
-    </b-field>
+    <p class="wit-color--muted wit-offset-bottom--lg wit-line-height--md">
+      {{ $t('Settings_ConnectSocialDescription') }}
+    </p>
 
-    <label class="wit-offset-bottom--none wit-flex">
-      <span class="wit-flex__item--grow">{{ $t('Settings_IsGuardProtected') }}</span>
-      <b-switch :value="accountSettings.isGuardProtected" class="wit-flex__item--no-shrink" @input="onSteamGuardChange" />
-    </label>
-
-    <hr class="wis-settings__separator">
-
-    <SettingsActions @update="saveAccountSettings" />
+    <SocialNetworks />
   </div>
 </template>
 
 <script>
 import { computed, ref, useContext, useStore } from '@nuxtjs/composition-api'
-import AvatarPicker from '@/components/settings/AvatarPicker'
 import SettingsActions from '@/components/settings/SettingsActions.vue'
+import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 
 export default {
-    name: 'AccountSettings',
+    name: 'SecuritySettings',
 
     components: {
-        AvatarPicker,
-        SettingsActions
+        SettingsActions,
+        SocialNetworks
     },
 
     setup () {
         const { $showSuccess, $showError, $t } = useContext()
         const store = useStore()
         const user = computed(() => store.state.user.user)
+        const hasLocalProfile = computed(() => user.value.hasLocalProfile)
 
-        const accountSettings = ref({
-            displayName: user.value.displayName ?? '',
-            steamTradeLink: user.value.steamTradeLink ?? '',
-            isGuardProtected: user.value.isGuardProtected,
-            avatarId: user.value.avatarId
+        const securitySettings = ref({
+            login: user.value.login ?? '',
+            password: ''
         })
 
-        const tradeUrlFieldType = computed(() => user.value.steamTradeLink ? '' : 'is-danger')
-
-        const onDisplayNameChange = displayName => accountSettings.value.displayName = displayName
-        const onAvatarChange = avatarId => accountSettings.value.avatarId = avatarId
-        const onTradeLinkChange = steamTradeLink => accountSettings.value.steamTradeLink = steamTradeLink
-        const onSteamGuardChange = isGuardProtected => accountSettings.value.isGuardProtected = isGuardProtected
+        const onPasswordChange = password => securitySettings.value.password = password
 
         const saveAccountSettings = () => {
-            store.dispatch('user/updateAccountSettings', accountSettings.value)
+            store.dispatch('user/updateAccountSettings', securitySettings.value)
                 .then(() => $showSuccess($t('Settings_SettingsUpdated')))
                 .catch($showError)
         }
 
         return {
-            accountSettings,
-            tradeUrlFieldType,
-            onDisplayNameChange,
-            onAvatarChange,
-            onTradeLinkChange,
-            onSteamGuardChange,
+            securitySettings,
+            hasLocalProfile,
+            onPasswordChange,
             saveAccountSettings
         }
     }

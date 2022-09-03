@@ -1,12 +1,15 @@
 <template>
   <div>
     <div class="wit-settings">
-      <SettingsTabs />
+      <SettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
 
       <div class="wit-flex__item--grow bbbbb">
         <div class="aaa">
-          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--sm" />
-          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom--sm" @change="onSettingsChange" />
+          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--lg" />
+
+          <component :is="componentName" />
+
+          <!--          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
           <!--          <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
           <!--          <MarketSettings :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
           <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
@@ -21,6 +24,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
+import { computed, ref } from '@nuxtjs/composition-api'
 import { StoreModules } from '@/store'
 import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
 import TopTabs from '@/components/header/TopTabs.vue'
@@ -34,6 +38,8 @@ import MarketSettings from '@/components/settings/MarketSettings.vue'
 import NoteEditor from '@/components/settings/NoteEditor.vue'
 import NotesEditor from '@/components/settings/NotesEditor.vue'
 import { SettingsTabs } from '@/components/settings/index.js'
+import { tabs } from '@/components/settings/tabs/tabs.js'
+import SecuritySettings from '@/components/settings/SecuritySettings.vue'
 
 export default {
     components: {
@@ -44,6 +50,7 @@ export default {
         TopNavBar,
         NoteEditor,
         AccountSettings,
+        SecuritySettings,
         SocialNetworks,
         MarketSettings,
         NotesEditor,
@@ -78,6 +85,17 @@ export default {
         ...mapGetters(StoreModules.USER, [
             'isVerified'
         ])
+    },
+
+    setup () {
+        const currentTab = ref(tabs[0])
+        const componentName = computed(() => currentTab.value.component)
+
+        const onTabSwitch = (tab) => {
+            currentTab.value = tab
+        }
+
+        return { tabs, currentTab, componentName, onTabSwitch }
     },
 
     created () {
@@ -182,6 +200,13 @@ export default {
 </style>
 
 <style lang="scss">
+.wis-settings__section-title {
+    line-height: 1;
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 32px;
+}
+
 .wis-settings__section-subtitle {
     font-weight: 400;
     font-size: 1.125rem;

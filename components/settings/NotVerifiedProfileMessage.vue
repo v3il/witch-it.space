@@ -3,7 +3,7 @@
     :title="$t('Settings_NotVerifiedAccountTitle')"
     type="is-danger"
     :closable="false"
-    class="wis-settings-message wit-line-height--md"
+    class="wis-settings-message wit-line-height--md wit-font-size--xs"
   >
     <p class="wit-color--white wit-offset-bottom--xs" v-html="$t('Settings_NotVerifiedAccountMessage')" />
 

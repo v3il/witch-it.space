@@ -11,24 +11,37 @@
       :key="tabData.id"
       :tab-data="tabData"
       :current-tab="currentTab"
-      @switch="currentTab = $event"
+      @switch="onTabSwitch"
     />
   </div>
 </template>
 
 <script>
-import { ref } from '@nuxtjs/composition-api'
 import SettingsTabsItem from '@/components/settings/tabs/SettingsTabsItem.vue'
-import { tabs } from '@/components/settings/tabs/tabs.js'
 
 export default {
     name: 'SettingsTabs',
 
-    components: { SettingsTabsItem },
+    components: {
+        SettingsTabsItem
+    },
 
-    setup () {
-        const currentTab = ref(tabs[0])
-        return { tabs, currentTab }
+    props: {
+        tabs: {
+            required: true,
+            type: Array
+        },
+
+        currentTab: {
+            required: true,
+            type: Object
+        }
+    },
+
+    setup (_, { emit }) {
+        const onTabSwitch = tab => emit('switch', tab)
+
+        return { onTabSwitch }
     }
 }
 </script>

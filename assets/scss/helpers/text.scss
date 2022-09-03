@@ -103,6 +103,10 @@
     line-height: var(--line-height-md);
 }
 
+.wit-line-height--lg {
+    line-height: var(--line-height-lg);
+}
+
 .wit-text--overflow {
     overflow: hidden;
     text-overflow: ellipsis;

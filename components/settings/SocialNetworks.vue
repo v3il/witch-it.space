@@ -1,18 +1,8 @@
 <template>
-  <Card>
-    <template #title>
-      <h2 class="wit-font-size--sm wit-offset-bottom--sm">
-        {{ $t('Settings_SocialNetworks') }}
-      </h2>
-    </template>
-
-    <template #description>
-      <p>{{ $t('Settings_ConnectSocialDescription') }}</p>
-    </template>
-
-    <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+  <div>
+    <div class="wit-offset-bottom--md wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--md">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xs">Steam</span>
+        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">Steam</span>
 
         <p v-if="isSteamConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
@@ -32,9 +22,9 @@
       </b-button>
     </div>
 
-    <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+    <div class="wit-offset-bottom--md wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--md">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xs">Discord</span>
+        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">Discord</span>
 
         <p v-if="isDiscordConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
@@ -56,7 +46,7 @@
 
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xs">Google</span>
+        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">Google</span>
 
         <p v-if="isGoogleConnected" class="wit-color--success">
           {{ $t('Settings_ProfileIsConnected') }}
@@ -75,7 +65,7 @@
         {{ $t('Settings_Connect') }}
       </b-button>
     </div>
-  </Card>
+  </div>
 </template>
 
 <script>
@@ -91,12 +81,12 @@ export default {
         Card
     },
 
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        }
-    },
+    // props: {
+    //     profile: {
+    //         required: true,
+    //         type: Object
+    //     }
+    // },
 
     computed: {
         ...mapGetters(StoreModules.USER, [
