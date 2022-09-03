@@ -26,11 +26,7 @@
           {{ $t('Login_PasswordInputTitle') }}
         </p>
 
-        <p v-if="hasLocalProfile" class="wit-color--warning wit-font-size--xxs wit-line-height--sm">
-          {{ $t('Settings_PasswordFieldHint') }}
-        </p>
-
-        <p v-else class="wit-color--warning wit-font-size--xxs wit-line-height--sm">
+        <p v-if="!hasLocalProfile" class="wit-color--warning wit-font-size--xxs wit-line-height--sm">
           {{ $t('Settings_NotSetWhenOauth') }}
         </p>
       </template>
@@ -91,7 +87,7 @@ export default {
         const onPasswordChange = password => securitySettings.value.password = password
 
         const saveAccountSettings = () => {
-            store.dispatch('user/updateAccountSettings', securitySettings.value)
+            store.dispatch('user/updateSecuritySettings', securitySettings.value)
                 .then(() => $showSuccess($t('Settings_SettingsUpdated')))
                 .catch($showError)
         }

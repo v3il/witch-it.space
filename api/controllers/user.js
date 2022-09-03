@@ -130,7 +130,6 @@ const updateSettings = async (request, response) => {
 
 const updateAccountSettings = (request, response) => {
     const { displayName, steamTradeLink, isGuardProtected, avatarId } = request.body
-    console.error(request.body)
 
     const displayNameSchema = joi.string().required().min(2).max(15)
     const steamTradeURLSchema = joi.string().required().pattern(/^https:\/\/steamcommunity.com\/tradeoffer\/new.*$/)
@@ -143,8 +142,6 @@ const updateAccountSettings = (request, response) => {
         avatarIdSchema.validate(avatarId),
         isGuardProtectedSchema.validate(isGuardProtected)
     ]
-
-    console.error(errors)
 
     if (errors.some(result => !!result.error)) {
         return response.emitBadRequest()
@@ -160,6 +157,29 @@ const updateAccountSettings = (request, response) => {
     userService.updateUserSettings(request.user, updateData)
         .then(() => response.send({ success: true }))
         .catch(() => response.emitBadRequest())
+}
+
+const updateSecuritySettings = async (request, response) => {
+    const { password } = request.body
+
+    const passwordSchema = joi.string().min(6)
+
+    const errors = [
+        passwordSchema.validate(password)
+    ]
+
+    if (errors.some(result => !!result.error)) {
+        return response.emitBadRequest()
+    }
+
+    const encryptedPassword = await userService.encryptPassword(password)
+
+    userService.updateUserSettings(request.user, { password: encryptedPassword })
+        .then(() => response.send({ success: true }))
+        .catch((e) => {
+            console.error(e)
+            response.emitBadRequest()
+        })
 }
 
 const toggleProfile = (request, response) => {
@@ -208,6 +228,7 @@ const userController = {
     disconnectSocial,
     updateSettings,
     updateAccountSettings,
+    updateSecuritySettings,
     toggleProfile,
     removeProfile,
     getById

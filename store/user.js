@@ -14,7 +14,7 @@ export const getters = {
     isSteamConnected: ({ user }) => !!user?.steamId,
     isDiscordConnected: ({ user }) => !!user?.discordId,
     isGoogleConnected: ({ user }) => !!user?.googleId,
-    isVerified: ({ user }) => !!user?.steamId && !!user?.discordId && !!user?.steamTradeLink,
+    isVerified: ({ user }) => !!user?.steamId && !!user?.steamTradeLink,
     isPublic: ({ user }) => user?.isPublic
 }
 
@@ -87,6 +87,11 @@ export const actions = {
     updateAccountSettings ({ commit }, accountSettings) {
         return this.$axios.$post('/api/user/settings/account', accountSettings)
             .then(() => commit('UPDATE_USER_DATA', accountSettings))
+    },
+
+    updateSecuritySettings ({ commit }, securitySettings) {
+        return this.$axios.$post('/api/user/settings/security', securitySettings)
+            .then(() => commit('UPDATE_USER_DATA', securitySettings))
     },
 
     toggleProfile ({ commit }, isPublic) {

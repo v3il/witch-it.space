@@ -157,7 +157,7 @@ export const en = {
     Settings_DisplayNamePlaceholder: 'Enter a display name for the profile',
     Settings_ProfileAvatar: 'Profile avatar',
     Settings_Save: 'Save',
-    Settings_SocialNetworks: 'Third Party Services',
+    Settings_SocialNetworks: 'Third-Party Services',
     Settings_Connect: 'Connect',
     Settings_Disconnect: 'Disconnect',
     Settings_ProfileIsConnected: 'Profile connected',

@@ -7,6 +7,6 @@ export class User extends BaseModel {
 
     getPublicData () {
         const { password, ...publicData } = this
-        return publicData
+        return { ...publicData, hasLocalProfile: !!password }
     }
 }
