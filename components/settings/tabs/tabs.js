@@ -1,5 +1,6 @@
 import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SecuritySettings from '@/components/settings/SecuritySettings.vue'
+import DangerZone from '@/components/settings/DangerZone.vue'
 
 export const tabs = [
     {
@@ -28,7 +29,7 @@ export const tabs = [
         title: 'Settings_DangerZone',
         description: 'Settings_Tabs_AccountActions_Description',
         icon: 'alert-circle-outline',
-        component: AccountSettings,
+        component: DangerZone,
         isDanger: true
     }
 ]

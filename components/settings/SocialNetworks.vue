@@ -70,23 +70,10 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Card from '@/components/basic/Card.vue'
-import { StoreModules, User } from '@/store'
-import { showPopup } from '@/utils'
+import { StoreModules } from '@/store'
 
 export default {
     name: 'SocialNetworks',
-
-    components: {
-        Card
-    },
-
-    // props: {
-    //     profile: {
-    //         required: true,
-    //         type: Object
-    //     }
-    // },
 
     computed: {
         ...mapGetters(StoreModules.USER, [

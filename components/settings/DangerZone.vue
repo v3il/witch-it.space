@@ -1,16 +1,14 @@
 <template>
-  <Card type="error">
-    <template #title>
-      <h2 class="wit-font-size--sm wit-offset-bottom--sm">
-        {{ $t('Settings_DangerZone') }}
-      </h2>
-    </template>
+  <div>
+    <h1 class="wis-settings__section-title">
+      {{ $t('Settings_DangerZone') }}
+    </h1>
 
-    <div class="wit-offset-bottom--sm wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--sm">
+    <div class="wit-offset-bottom--md wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--md">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xs">{{ $t('Settings_HideProfile') }}</span>
+        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">{{ $t('Settings_HideProfile') }}</span>
 
-        <p v-if="isPublic" class="wit-color--success">
+        <p v-if="isPublicProfile" class="wit-color--success">
           {{ $t('Settings_ProfileIsVisible') }}
         </p>
 
@@ -19,68 +17,57 @@
         </p>
       </div>
 
-      <b-button :type="toggleButtonType" class="wit-font-weight--700" @click="toggleProfileVisibility">
+      <b-button :type="toggleButtonType" class="wit-font-weight--700" @click="toggleProfile">
         {{ $t('Change') }}
       </b-button>
     </div>
 
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xs">{{ $t('Settings_DeleteProfile') }}</span>
+        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">{{ $t('Settings_DeleteProfile') }}</span>
 
         <p class="wit-color--danger">
           {{ $t('Settings_DeleteProfileHint') }}
         </p>
       </div>
 
-      <b-button type="is-danger" class="wit-font-weight--700" @click="onDeleteProfile">
+      <b-button type="is-danger" class="wit-font-weight--700" @click="deleteProfile">
         {{ $t('Delete') }}
       </b-button>
     </div>
-  </Card>
+  </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Card from '@/components/basic/Card.vue'
-import { StoreModules } from '@/store'
+import { computed, useStore } from '@nuxtjs/composition-api'
+import SettingsActions from '@/components/settings/SettingsActions.vue'
+import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 
 export default {
     name: 'DangerZone',
 
     components: {
-        Card
+        SettingsActions,
+        SocialNetworks
     },
 
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        }
-    },
+    setup () {
+        const store = useStore()
 
-    computed: {
-        ...mapGetters(StoreModules.USER, [
-            'isPublic'
-        ]),
+        const isPublicProfile = computed(() => store.getters['user/isPublic'])
+        const toggleButtonType = computed(() => isPublicProfile.value ? 'is-warning' : 'is-success')
 
-        toggleButtonType () {
-            return this.isPublic ? 'is-warning' : 'is-success'
-        }
+        return { isPublicProfile, toggleButtonType }
     },
 
     methods: {
-        ...mapActions(StoreModules.USER, {
-            deleteProfile: 'deleteProfile',
-            toggleProfile: 'toggleProfile'
-        }),
-
-        toggleProfileVisibility () {
-            this.isPublic ? this.makeProfilePrivate() : this.makeProfilePublic()
+        toggleProfile () {
+            const isPublicProfile = this.$store.getters['user/isPublic']
+            isPublicProfile ? this.makeProfilePrivate() : this.makeProfilePublic()
         },
 
         makeProfilePublic () {
-            this.toggleProfile(true)
+            this.$store.dispatch('user/toggleProfile', true)
                 .then(() => this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged')))
                 .catch(this.$showError)
         },
@@ -91,23 +78,21 @@ export default {
                 popupTitle: this.$t('Settings_MakePrivatePopupTitle')
             })
 
-            if (!isConfirmed) {
-                return
+            if (isConfirmed) {
+                this.$store.dispatch('user/toggleProfile', false)
+                    .then(() => this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged')))
+                    .catch(this.$showError)
             }
-
-            this.toggleProfile(false)
-                .then(() => this.$showSuccess(this.$t('Settings_ProfileVisibilityChanged')))
-                .catch(this.$showError)
         },
 
-        async onDeleteProfile () {
+        async deleteProfile () {
             const isConfirmed = await this.$showConfirm({
                 content: this.$t('Settings_WannaRemoveProfile'),
                 popupTitle: this.$t('Settings_RemoveProfileTitle')
             })
 
             if (isConfirmed) {
-                this.deleteProfile().catch(this.$showError)
+                this.$store.dispatch('user/deleteProfile').catch(this.$showError)
             }
         }
     }
