@@ -39,6 +39,10 @@ body {
         left: 4px !important;
     }
 
+    & + .icon.is-left + .icon.is-right {
+        height: 100%;
+    }
+
     &:hover,
     &:focus {
         & + .icon.is-left,

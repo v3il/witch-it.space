@@ -25,9 +25,10 @@ export const tabs = [
     },
     {
         id: 'danger',
-        title: 'Settings_Tabs_AccountActions_Title',
+        title: 'Settings_DangerZone',
         description: 'Settings_Tabs_AccountActions_Description',
         icon: 'alert-circle-outline',
-        component: AccountSettings
+        component: AccountSettings,
+        isDanger: true
     }
 ]

@@ -12,10 +12,6 @@
         {{ $t('Settings_NotVerifiedAccountTask1') }}
       </li>
 
-      <li v-if="!isDiscordConnected">
-        {{ $t('Settings_NotVerifiedAccountTask2') }}
-      </li>
-
       <li v-if="!tradeLink">
         {{ $t('Settings_NotVerifiedAccountTask3') }}
       </li>

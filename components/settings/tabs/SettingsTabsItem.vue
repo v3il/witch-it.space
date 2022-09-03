@@ -35,7 +35,7 @@ export default {
     setup (props, { emit }) {
         const iconClass = computed(() => `mdi-${props.tabData.icon}`)
         const isActive = computed(() => props.currentTab === props.tabData)
-        const tabClasses = computed(() => ({ active: isActive.value }))
+        const tabClasses = computed(() => ({ active: isActive.value, danger: props.tabData.isDanger }))
         const onSwitch = () => emit('switch', props.tabData)
 
         return { iconClass, tabClasses, onSwitch }
@@ -63,6 +63,11 @@ $border-color: rgba(241, 245, 249, 0.12);
     &.active {
         --title-color: rgb(99, 102, 241);
         --icon-color: rgb(99, 102, 241);
+    }
+
+    &.danger {
+        --title-color: var(--danger);
+        --icon-color: var(--danger);
     }
 }
 
