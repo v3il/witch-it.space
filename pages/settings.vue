@@ -1,10 +1,20 @@
 <template>
   <div>
     <div class="wit-settings">
-      <SettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
+      <OnPageSettingsTabs :tabs="tabs" :current-tab="currentTab" class="wit-settings__onpage-tabs" @switch="onTabSwitch" />
+
+      <SidebarPanel :is-visible="isTabsOpen" from="left" @close="isTabsOpen = false">
+        <SettingsTabs :tabs="tabs" :current-tab="currentTab" :is-open="isTabsOpen" @switch="onTabSwitch" />
+      </SidebarPanel>
 
       <div class="wit-flex__item--grow bbbbb">
         <div class="aaa">
+          <div class="wit-flex wit-flex--justify-end">
+            <button class="wit-inline-block wit-offset-left--auto" @click="isTabsOpen = !isTabsOpen">
+              Open
+            </button>
+          </div>
+
           <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--lg" />
 
           <component :is="componentName" />
@@ -37,9 +47,10 @@ import SocialNetworks from '@/components/settings/SocialNetworks.vue'
 import MarketSettings from '@/components/settings/MarketSettings.vue'
 import NoteEditor from '@/components/settings/NoteEditor.vue'
 import NotesEditor from '@/components/settings/NotesEditor.vue'
-import { SettingsTabs } from '@/components/settings/index.js'
+import { SettingsTabs, OnPageSettingsTabs } from '@/components/settings/index.js'
 import { tabs } from '@/components/settings/tabs/tabs.js'
 import SecuritySettings from '@/components/settings/SecuritySettings.vue'
+import { SidebarPanel } from '@/components/basic/index.js'
 
 export default {
     components: {
@@ -54,7 +65,9 @@ export default {
         SocialNetworks,
         MarketSettings,
         NotesEditor,
-        SettingsTabs
+        SettingsTabs,
+        SidebarPanel,
+        OnPageSettingsTabs
     },
 
     middleware: ['isAuthorized'],
@@ -88,6 +101,7 @@ export default {
     },
 
     setup () {
+        const isTabsOpen = ref(false)
         const currentTab = ref(tabs[0])
         const componentName = computed(() => currentTab.value.component)
 
@@ -95,7 +109,7 @@ export default {
             currentTab.value = tab
         }
 
-        return { tabs, currentTab, componentName, onTabSwitch }
+        return { isTabsOpen, tabs, currentTab, componentName, onTabSwitch }
     },
 
     created () {
@@ -177,6 +191,7 @@ export default {
     display: flex;
     //padding: var(--offset-sm);
     max-height: 100vh;
+    position: relative;
     //height: 100vh;
     //max-width: 850px;
     //margin: 0 auto;
@@ -187,15 +202,21 @@ export default {
     margin-left: 384px;
     height: calc(100vh - var(--header-height));
     overflow-y: auto;
-
-    @media (max-width: 1200px) {
-        margin-left: 0;
-        padding: 24px;
-    }
 }
 
 .aaa {
     max-width: 768px;
+}
+
+@media (max-width: 1200px) {
+    .bbbbb {
+        margin-left: 0;
+        padding: 32px 24px;
+    }
+
+    .wit-settings__onpage-tabs {
+        display: none;
+    }
 }
 </style>
 

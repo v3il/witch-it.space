@@ -33,11 +33,17 @@ export default {
         isVisible: {
             required: false,
             type: Boolean
+        },
+
+        from: {
+            required: true,
+            type: String,
+            validator: value => ['left', 'right'].includes(value)
         }
     },
 
     setup (props, { emit }) {
-        const panelClasses = computed(() => ({ open: props.isVisible }))
+        const panelClasses = computed(() => ({ open: props.isVisible, [props.from]: true }))
         const close = () => emit('close')
 
         return { panelClasses, close }
@@ -54,18 +60,31 @@ export default {
     bottom: 0;
 }
 
+.wis-sidebar-panel.left {
+    --drawer-left: 0;
+    --drawer-right: auto;
+    --drawer-initial-transform: -100%;
+}
+
+.wis-sidebar-panel.right {
+    --drawer-left: auto;
+    --drawer-right: 0;
+    --drawer-initial-transform: 100%;
+}
+
 .wis-sidebar-panel__drawer {
     z-index: 999;
     position: fixed;
     top: 0;
     bottom: 0;
-    right: 0;
+    left: var(--drawer-left);
+    right: var(--drawer-right);
     max-width: 400px;
-    width: 100%;
+    width: calc(100% - 20px);
     overflow-y: auto;
     overscroll-behavior: contain;
     background-color: rgba(30, 41, 59, 1);
-    transform: translateX(100%);
+    transform: translateX(var(--drawer-initial-transform));
     transition: transform var(--default-transition);
 }
 
@@ -81,7 +100,7 @@ export default {
 }
 
 .wis-sidebar-panel__close {
-    padding: 8px;
+    padding: 8px 0 8px 8px;
     color: white;
     text-decoration: none !important;
 
