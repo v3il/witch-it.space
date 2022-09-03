@@ -1,6 +1,6 @@
 import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SecuritySettings from '@/components/settings/SecuritySettings.vue'
-import DangerZone from '@/components/settings/DangerZone.vue'
+import MarketSettings from '@/components/settings/MarketSettings.vue'
 
 export const tabs = [
     {
@@ -22,14 +22,6 @@ export const tabs = [
         title: 'Settings_Tabs_Market_Title',
         description: 'Settings_Tabs_Market_Description',
         icon: 'shopping-outline',
-        component: AccountSettings
-    },
-    {
-        id: 'danger',
-        title: 'Settings_DangerZone',
-        description: 'Settings_Tabs_AccountActions_Description',
-        icon: 'alert-circle-outline',
-        component: DangerZone,
-        isDanger: true
+        component: MarketSettings
     }
 ]

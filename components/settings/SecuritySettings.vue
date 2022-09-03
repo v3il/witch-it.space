@@ -48,7 +48,7 @@
 
     <hr class="wis-settings__separator">
 
-    <h2 class="wis-settings__section-title">
+    <h2 class="wis-settings__section-subtitle">
       {{ $t('Settings_SocialNetworks') }}
     </h2>
 

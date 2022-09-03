@@ -34,12 +34,16 @@ export default {
         Card
     },
 
-    props: {
-        settings: {
-            required: true,
-            type: Object
-        }
-    },
+    // props: {
+    //     settings: {
+    //         required: true,
+    //         type: Object
+    //     }
+    // },
+
+    data: () => ({
+        settings: {}
+    }),
 
     methods: {
         emitEvent (changedSettings) {

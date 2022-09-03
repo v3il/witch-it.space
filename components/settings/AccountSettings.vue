@@ -42,14 +42,16 @@
       />
     </b-field>
 
-    <label class="wit-offset-bottom--none wit-flex">
+    <label class="wit-flex wit-offset-bottom--lg">
       <span class="wit-flex__item--grow">{{ $t('Settings_IsGuardProtected') }}</span>
       <b-switch :value="accountSettings.isGuardProtected" class="wit-flex__item--no-shrink" @input="onSteamGuardChange" />
     </label>
 
-    <hr class="wis-settings__separator">
-
     <SettingsActions @update="saveAccountSettings" />
+
+    <hr class="wis-settings__separator wis-settings__separator--danger">
+
+    <DangerZone />
   </div>
 </template>
 
@@ -57,13 +59,15 @@
 import { computed, ref, useContext, useStore } from '@nuxtjs/composition-api'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 import SettingsActions from '@/components/settings/SettingsActions.vue'
+import DangerZone from '@/components/settings/DangerZone.vue'
 
 export default {
     name: 'AccountSettings',
 
     components: {
         AvatarPicker,
-        SettingsActions
+        SettingsActions,
+        DangerZone
     },
 
     setup () {
