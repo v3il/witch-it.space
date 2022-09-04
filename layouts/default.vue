@@ -2,8 +2,8 @@
   <div class="layout">
     <LeftNavBar class="layout__left" />
 
-    <SidebarPanel from="left" hide-header :is-visible="isSidebarOpen" @close="closeSidebar">
-      <LeftNavBar @link-clicked="closeSidebar" />
+    <SidebarPanel from="left" hide-header :is-visible="isSidebarOpen" @close="closeSidebar" @drawer-clicked="closeSidebar">
+      <LeftNavBar />
     </SidebarPanel>
 
     <div class="layout__right">

@@ -4,7 +4,7 @@
       <div v-if="isVisible" class="wis-sidebar-panel__overlay" @click.self="close" />
     </transition>
 
-    <div class="wis-sidebar-panel__drawer">
+    <div class="wis-sidebar-panel__drawer" @click="$emit('drawer-clicked')">
       <div v-if="!hideHeader" class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
         <h2 class="wit-flex wit-flex--align-center wis-sidebar-panel__title">
           <i class="mdi mdi-24px wit-offset-right--xsm" :class="iconClasses" />
@@ -100,7 +100,7 @@ export default {
     bottom: 0;
     left: var(--drawer-left);
     right: var(--drawer-right);
-    max-width: 400px;
+    max-width: 350px;
     width: calc(100% - 35px);
     overflow-y: auto;
     overscroll-behavior: contain;

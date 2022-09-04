@@ -10,7 +10,6 @@
         :key="link.to"
         :link="link"
         class="wit-offset-bottom--xxs"
-        @link-clicked="$emit('link-clicked')"
       />
     </ul>
   </div>

@@ -2,10 +2,10 @@
   <div class="wit-flex wit-flex--column">
     <Header />
 
-    <Navigation v-if="isAuthorized" :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" @link-clicked="$emit('link-clicked')" />
-    <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom--md" @link-clicked="$emit('link-clicked')" />
+    <Navigation v-if="isAuthorized" :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
+    <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom--md" />
 
-    <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" @link-clicked="$emit('link-clicked')" />
+    <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
   </div>
 </template>
 
