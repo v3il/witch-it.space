@@ -25,8 +25,7 @@
 
 <script>
 import { computed, ref, useStore } from '@nuxtjs/composition-api'
-import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
-import { OnPageSettingsTabs, SettingsTabs } from '@/components/settings/index.js'
+import { OnPageSettingsTabs, SettingsTabs, NotVerifiedProfileMessage } from '@/components/settings'
 import { tabs } from '@/components/settings/tabs/tabs.js'
 import { SidebarPanel } from '@/components/basic/index.js'
 

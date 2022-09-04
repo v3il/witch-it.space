@@ -1,7 +1,7 @@
 <template>
   <Card>
     <div class="wit-flex wit-flex--column wit-flex--center wit-connect-steam">
-      <p class="wit-offset-bottom--md wit-text--center wit-color--warning">
+      <p class="wit-offset-bottom--md wit-text--center wit-color--warning wit-line-height--lg">
         {{ $t('Quests_ConnectSteamWarning') }}
       </p>
 

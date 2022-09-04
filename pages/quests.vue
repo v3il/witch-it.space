@@ -34,8 +34,12 @@ export default {
     },
 
     async fetch ({ store }) {
-        // eslint-disable-next-line no-console
-        await store.dispatch('quest/fetchUserQuests').catch(console.error)
+        const isSteamConnected = store.getters['user/isSteamConnected']
+
+        if (isSteamConnected) {
+            // eslint-disable-next-line no-console
+            await store.dispatch('quest/fetchUserQuests').catch(console.error)
+        }
     }
 }
 </script>
