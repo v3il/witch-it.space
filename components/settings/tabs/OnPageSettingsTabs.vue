@@ -61,7 +61,7 @@ $border-color: rgba(241, 245, 249, 0.12);
 }
 
 .wis-settings-tabs__title-wrapper {
-    padding: 40px 24px 40px 32px;
+    padding: 40px 24px;
     border-bottom: 1px solid $border-color;
 }
 

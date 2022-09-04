@@ -22,9 +22,11 @@
       />
     </b-field>
 
-    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--xlg">
+    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
       <AvatarPicker :selected-avatar-id="accountSettings.avatarId" @change="onAvatarChange" />
     </b-field>
+
+    <hr class="wis-settings__separator">
 
     <h2 class="wis-settings__section-subtitle">
       {{ $t('Settings_SteamSettings') }}
@@ -46,11 +48,9 @@
       <b-switch :value="accountSettings.isGuardProtected" class="wit-flex__item--no-shrink" @input="onSteamGuardChange" />
     </label>
 
-    <SettingsActions @update="saveAccountSettings" />
-
     <hr class="wis-settings__separator">
 
-    <DangerZone />
+    <SettingsActions @update="saveAccountSettings" />
   </div>
 </template>
 
@@ -58,7 +58,6 @@
 import { computed, ref, useContext, useStore } from '@nuxtjs/composition-api'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 import SettingsActions from '@/components/settings/SettingsActions.vue'
-import DangerZone from '@/components/settings/DangerZone.vue'
 import BurgerButton from '@/components/basic/BurgerButton.vue'
 
 export default {
@@ -67,7 +66,6 @@ export default {
     components: {
         AvatarPicker,
         SettingsActions,
-        DangerZone,
         BurgerButton
     },
 

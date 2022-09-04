@@ -1,6 +1,7 @@
 import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SecuritySettings from '@/components/settings/SecuritySettings.vue'
 import MarketSettings from '@/components/settings/MarketSettings.vue'
+import AccountActions from '@/components/settings/AccountActions.vue'
 
 export const tabs = [
     {
@@ -23,5 +24,13 @@ export const tabs = [
         description: 'Settings_Tabs_Market_Description',
         icon: 'shopping-outline',
         component: MarketSettings
+    },
+    {
+        id: 'actions',
+        title: 'Settings_AccountActions',
+        description: 'Settings_Tabs_Market_Description',
+        icon: 'close-octagon',
+        component: AccountActions,
+        isDanger: true
     }
 ]

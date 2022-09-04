@@ -1,12 +1,8 @@
 <template>
   <div>
-    <h1 class="wis-settings__section-subtitle">
-      {{ $t('Settings_AccountActions') }}
-    </h1>
-
-    <div class="wit-offset-bottom--md wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--md">
+    <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">{{ $t('Settings_HideProfile') }}</span>
+        <span class="wit-block wit-offset-bottom--sm wit-font-size--xsplus">{{ $t('Settings_HideProfile') }}</span>
 
         <p v-if="isPublicProfile" class="wit-color--success">
           {{ $t('Settings_ProfileIsVisible') }}
@@ -22,9 +18,11 @@
       </b-button>
     </div>
 
+    <hr class="wis-settings__separator">
+
     <div class="wit-flex wit-flex--align-center">
       <div class="wit-flex__item--grow">
-        <span class="wit-block wit-offset-bottom--xsm wit-font-size--xsplus">{{ $t('Settings_DeleteProfile') }}</span>
+        <span class="wit-block wit-offset-bottom--sm wit-font-size--xsplus">{{ $t('Settings_DeleteProfile') }}</span>
 
         <p class="wit-color--danger">
           {{ $t('Settings_DeleteProfileHint') }}
