@@ -134,7 +134,7 @@ export default {
     --button-ghost-hover-decoration: none;
 
     @media (min-width: 1024px) {
-        display: none;
+        display: none !important;
     }
 }
 

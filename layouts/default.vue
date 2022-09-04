@@ -77,6 +77,8 @@ export default {
         background: var(--left-navbar-bg);
         border-right: 1px solid var(--border-color);
         height: 100vh;
+        position: sticky;
+        top: 0;
     }
 
     .layout {
