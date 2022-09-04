@@ -7,8 +7,8 @@
     <div class="wis-sidebar-panel__drawer">
       <div class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
         <h2 class="wit-flex wit-flex--align-center wis-sidebar-panel__title">
-          <i class="mdi mdi-filter mdi-24px wit-offset-right--xsm" />
-          {{ $t('Filter') }}
+          <i class="mdi mdi-24px wit-offset-right--xsm" :class="iconClasses" />
+          {{ title }}
         </h2>
 
         <b-button type="is-ghost" class="wis-sidebar-panel__close" @click="close">
@@ -16,9 +16,7 @@
         </b-button>
       </div>
 
-      <div class="wis-sidebar-panel__content">
-        <slot />
-      </div>
+      <slot />
     </div>
   </div>
 </template>
@@ -39,14 +37,25 @@ export default {
             required: true,
             type: String,
             validator: value => ['left', 'right'].includes(value)
+        },
+
+        title: {
+            required: true,
+            type: String
+        },
+
+        icon: {
+            required: true,
+            type: String
         }
     },
 
     setup (props, { emit }) {
         const panelClasses = computed(() => ({ open: props.isVisible, [props.from]: true }))
+        const iconClasses = computed(() => 'mdi-' + props.icon)
         const close = () => emit('close')
 
-        return { panelClasses, close }
+        return { iconClasses, panelClasses, close }
     }
 }
 </script>
@@ -125,9 +134,5 @@ export default {
     .wis-sidebar-panel__drawer {
         transform: translateX(0);
     }
-}
-
-.wis-sidebar-panel__content {
-    padding: 24px;
 }
 </style>

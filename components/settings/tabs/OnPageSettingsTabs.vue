@@ -6,7 +6,7 @@
       </h1>
     </div>
 
-    <SettingsTabs :tabs="tabs" :current-tab="currentTab" />
+    <SettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
 
     <!--    <SettingsTabsItem-->
     <!--      v-for="tabData in tabs"-->
@@ -61,27 +61,18 @@ export default {
 $border-color: rgba(241, 245, 249, 0.12);
 
 .wis-settings-tabs {
-    //width: 100%;
-    //max-width: 384px;
-    //border-right: solid 1px $border-color;
-    //max-height: calc(100vh - var(--header-height));
-    //overscroll-behavior: contain;
-    //overflow-y: auto;
-    //position: absolute;
-    //top: 0;
-    //bottom: 0;
-    //z-index: 10;
-    //background: #0f172a;
+    width: 100%;
+    max-width: 384px;
+    border-right: solid 1px $border-color;
+    max-height: calc(100vh - var(--header-height));
+    overscroll-behavior: contain;
+    overflow-y: auto;
+    z-index: 10;
+    background: #0f172a;
 
-    //@media (max-width: 1200px) {
-    //    transform: translateX(-100%);
-    //    z-index: -1;
-    //
-    //    &.open {
-    //        z-index: 10;
-    //        transform: translateX(0);
-    //    }
-    //}
+    @media (max-width: 1200px) {
+        display: none;
+    }
 }
 
 .wis-settings-tabs__title-wrapper {

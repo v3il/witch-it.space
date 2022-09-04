@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="wit-settings">
-      <OnPageSettingsTabs :tabs="tabs" :current-tab="currentTab" class="wit-settings__onpage-tabs" @switch="onTabSwitch" />
+      <OnPageSettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
 
-      <SidebarPanel :is-visible="isTabsOpen" from="left" @close="isTabsOpen = false">
+      <SidebarPanel :is-visible="isTabsOpen" from="left" :title="$t('Settings')" icon="cog" @close="isTabsOpen = false">
         <SettingsTabs :tabs="tabs" :current-tab="currentTab" :is-open="isTabsOpen" @switch="onTabSwitch" />
       </SidebarPanel>
 
@@ -199,7 +199,7 @@ export default {
 
 .bbbbb {
     padding: 48px;
-    margin-left: 384px;
+    //margin-left: 384px;
     height: calc(100vh - var(--header-height));
     overflow-y: auto;
 }
@@ -214,8 +214,8 @@ export default {
         padding: 32px 24px;
     }
 
-    .wit-settings__onpage-tabs {
-        display: none;
+    .aaa {
+        max-width: none;
     }
 }
 </style>
