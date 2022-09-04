@@ -16,7 +16,9 @@
         </b-button>
       </div>
 
-      <slot />
+      <div class="wit-flex__item--grow">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -82,6 +84,8 @@ export default {
 }
 
 .wis-sidebar-panel__drawer {
+    display: flex;
+    flex-direction: column;
     z-index: 999;
     position: fixed;
     top: 0;

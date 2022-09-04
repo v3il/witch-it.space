@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="wit-settings">
+    <div class="wis-settings">
       <OnPageSettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
 
       <SidebarPanel :is-visible="isTabsOpen" from="left" :title="$t('Settings')" icon="cog" @close="isTabsOpen = false">
-        <SettingsTabs :tabs="tabs" :current-tab="currentTab" :is-open="isTabsOpen" @switch="onTabSwitch" />
+        <SettingsTabs :tabs="tabs" :current-tab="currentTab" :is-open="isTabsOpen" class="wis-settings__tabs-panel" @switch="onTabSwitch" />
       </SidebarPanel>
 
       <div class="wit-flex__item--grow bbbbb">
@@ -107,6 +107,7 @@ export default {
 
         const onTabSwitch = (tab) => {
             currentTab.value = tab
+            isTabsOpen.value = false
         }
 
         return { isTabsOpen, tabs, currentTab, componentName, onTabSwitch }
@@ -206,6 +207,12 @@ export default {
 
 .aaa {
     max-width: 768px;
+}
+
+.wis-settings__tabs-panel {
+    background-color: var(--body-bg);
+    height: 100%;
+    padding: 24px 0;
 }
 
 @media (max-width: 1200px) {
