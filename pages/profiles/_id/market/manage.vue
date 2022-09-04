@@ -139,7 +139,7 @@
         </ItemsListView>
       </div>
 
-      <SidebarPanel :is-visible="isFiltersVisible" @close="isFiltersVisible = false">
+      <SidebarPanel :is-visible="isFiltersVisible" from="right" icon="filter" :title="$t('Filter')" @close="isFiltersVisible = false">
         <WishlistFilters />
       </SidebarPanel>
     </div>

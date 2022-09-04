@@ -1,45 +1,47 @@
 <template>
-  <SidebarPanel :is-visible="isFiltersOpen" @close="closeFilters">
-    <RaritiesSelector
-      :selected-rarities="filters.rarities"
-      class="wit-offset-bottom--sm"
-      @update="update({ rarities: $event })"
-      @reset="reset('rarities')"
-    />
+  <SidebarPanel :is-visible="isFiltersOpen" from="right" icon="filter" :title="$t('Filter')" @close="closeFilters">
+    <div class="wit-paddings--md">
+      <RaritiesSelector
+        :selected-rarities="filters.rarities"
+        class="wit-offset-bottom--sm"
+        @update="update({ rarities: $event })"
+        @reset="reset('rarities')"
+      />
 
-    <CharacterSelector
-      :selected-character="filters.character"
-      class="wit-offset-bottom--sm"
-      @update="update({ character: $event })"
-      @reset="reset('character')"
-    />
+      <CharacterSelector
+        :selected-character="filters.character"
+        class="wit-offset-bottom--sm"
+        @update="update({ character: $event })"
+        @reset="reset('character')"
+      />
 
-    <EventsSelector
-      :selected-events="filters.events"
-      class="wit-offset-bottom--sm"
-      @update="update({ events: $event })"
-      @reset="reset('events')"
-    />
+      <EventsSelector
+        :selected-events="filters.events"
+        class="wit-offset-bottom--sm"
+        @update="update({ events: $event })"
+        @reset="reset('events')"
+      />
 
-    <SlotsSelector
-      :selected-slots="filters.slots"
-      class="wit-offset-bottom--sm"
-      @update="update({ slots: $event })"
-      @reset="reset('slots')"
-    />
+      <SlotsSelector
+        :selected-slots="filters.slots"
+        class="wit-offset-bottom--sm"
+        @update="update({ slots: $event })"
+        @reset="reset('slots')"
+      />
 
-    <SortsSelector
-      class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
-      :sorts="sorts"
-      :available-sorts="$options.availableSorts"
-      @updateOrderBy="updateOrderBy($event)"
-      @toggleOrder="toggleOrder"
-      @resetSorts="resetSortParams"
-    />
+      <SortsSelector
+        class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
+        :sorts="sorts"
+        :available-sorts="$options.availableSorts"
+        @updateOrderBy="updateOrderBy($event)"
+        @toggleOrder="toggleOrder"
+        @resetSorts="resetSortParams"
+      />
 
-    <b-button type="is-danger" expanded @click="fullReset">
-      {{ $t('Clear') }}
-    </b-button>
+      <b-button type="is-danger" expanded @click="fullReset">
+        {{ $t('Clear') }}
+      </b-button>
+    </div>
   </SidebarPanel>
 </template>
 

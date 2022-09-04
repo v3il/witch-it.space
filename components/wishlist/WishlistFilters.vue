@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wit-paddings--md">
     <QueryEditor
       :query="filters.query"
       class="wis-wishlist-filters__search wit-offset-bottom--sm"

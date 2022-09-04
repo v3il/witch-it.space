@@ -1,17 +1,19 @@
 <template>
-  <SidebarPanel :is-visible="isFiltersOpen" @close="closeFilters">
-    <SortsSelector
-      class="wiz-border--top wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
-      :sorts="sorts"
-      :available-sorts="$options.availableSorts"
-      @updateOrderBy="updateOrderBy($event)"
-      @toggleOrder="toggleOrder"
-      @resetSorts="resetSortParams"
-    />
+  <SidebarPanel :is-visible="isFiltersOpen" from="right" icon="filter" :title="$t('Filter')" @close="closeFilters">
+    <div class="wit-paddings--md">
+      <SortsSelector
+        class="wit-padding-top--sm wit-padding-bottom--sm wiz-border--bottom wit-offset-bottom--sm"
+        :sorts="sorts"
+        :available-sorts="$options.availableSorts"
+        @updateOrderBy="updateOrderBy($event)"
+        @toggleOrder="toggleOrder"
+        @resetSorts="resetSortParams"
+      />
 
-    <b-button type="is-danger" expanded @click="fullReset">
-      {{ $t('Clear') }}
-    </b-button>
+      <b-button type="is-danger" expanded @click="fullReset">
+        {{ $t('Clear') }}
+      </b-button>
+    </div>
   </SidebarPanel>
 </template>
 
