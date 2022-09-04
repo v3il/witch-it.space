@@ -18,13 +18,13 @@ export const tabs = [
         icon: 'lock-outline',
         component: SecuritySettings
     },
-    {
-        id: 'market',
-        title: 'Settings_Tabs_Market_Title',
-        description: 'Settings_Tabs_Market_Description',
-        icon: 'shopping-outline',
-        component: MarketSettings
-    },
+    // {
+    //     id: 'market',
+    //     title: 'Settings_Tabs_Market_Title',
+    //     description: 'Settings_Tabs_Market_Description',
+    //     icon: 'shopping-outline',
+    //     component: MarketSettings
+    // },
     {
         id: 'actions',
         title: 'Settings_AccountActions',

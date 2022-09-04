@@ -152,7 +152,7 @@ export const en = {
     Quests_Updated: 'Quests updated',
 
     Settings_NotSetWhenOauth: 'Cannot be changed: authorization through a third-party service',
-    Settings_ProfileSettingsAndAppearance: 'Profile settings and appearance',
+    Settings_ProfileSettingsAndAppearance: 'Profile appearance',
     Settings_DisplayName: 'Display name',
     Settings_DisplayNamePlaceholder: 'Enter a display name for the profile',
     Settings_ProfileAvatar: 'Profile avatar',
