@@ -7,21 +7,12 @@
     </div>
 
     <SettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
-
-    <!--    <SettingsTabsItem-->
-    <!--      v-for="tabData in tabs"-->
-    <!--      :key="tabData.id"-->
-    <!--      :tab-data="tabData"-->
-    <!--      :current-tab="currentTab"-->
-    <!--      @switch="onTabSwitch"-->
-    <!--    />-->
   </div>
 </template>
 
 <script>
-import { computed } from '@nuxtjs/composition-api'
 import SettingsTabsItem from '@/components/settings/tabs/SettingsTabsItem.vue'
-import { SettingsTabs } from '@/components/settings/index.js'
+import SettingsTabs from '@/components/settings/tabs/SettingsTabs.vue'
 
 export default {
     name: 'OnPageSettingsTabs',
@@ -41,16 +32,10 @@ export default {
             required: true,
             type: Object
         }
-
-        // isOpen: {
-        //     required: true,
-        //     type: Boolean
-        // }
     },
 
     setup (props, { emit }) {
         const onTabSwitch = tab => emit('switch', tab)
-        // const panelClasses = computed(() => ({ open: props.isOpen }))
 
         return { onTabSwitch }
     }
@@ -85,10 +70,5 @@ $border-color: rgba(241, 245, 249, 0.12);
     line-height: 1;
     font-weight: 800;
     font-size: 2rem;
-}
-
-.wis-settings-tabs__tab {
-    padding: 20px 32px;
-    border-bottom: 1px solid $border-color;
 }
 </style>

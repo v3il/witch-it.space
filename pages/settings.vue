@@ -188,7 +188,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wit-settings {
+.wis-settings {
     display: flex;
     //padding: var(--offset-sm);
     max-height: 100vh;
