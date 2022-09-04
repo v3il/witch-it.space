@@ -1,6 +1,6 @@
 <template>
   <li class="wis-navigation-item" :class="itemClasses">
-    <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
+    <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link" @click.native="onItemClick">
       <div class="wis-navigation-item__label-wrap">
         <i class="mdi mdi-24px wit-offset-right--sm wis-navigation-item__icon" :class="iconClass" />
         <span>{{ $t(link.label) }}</span>
@@ -26,12 +26,14 @@ export default {
         }
     },
 
-    setup (props) {
+    setup (props, { emit }) {
         const route = useRoute()
         const iconClass = computed(() => `mdi-${props.link.icon}`)
         const itemClasses = computed(() => ({ active: route.value.path === props.link.to }))
 
-        return { iconClass, itemClasses }
+        const onItemClick = () => emit('link-clicked')
+
+        return { iconClass, itemClasses, onItemClick }
     }
 }
 </script>

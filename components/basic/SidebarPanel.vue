@@ -5,7 +5,7 @@
     </transition>
 
     <div class="wis-sidebar-panel__drawer">
-      <div class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
+      <div v-if="!hideHeader" class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
         <h2 class="wit-flex wit-flex--align-center wis-sidebar-panel__title">
           <i class="mdi mdi-24px wit-offset-right--xsm" :class="iconClasses" />
           {{ title }}
@@ -42,13 +42,21 @@ export default {
         },
 
         title: {
-            required: true,
-            type: String
+            required: false,
+            type: String,
+            default: ''
         },
 
         icon: {
-            required: true,
-            type: String
+            required: false,
+            type: String,
+            default: ''
+        },
+
+        hideHeader: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
 
@@ -93,7 +101,7 @@ export default {
     left: var(--drawer-left);
     right: var(--drawer-right);
     max-width: 400px;
-    width: calc(100% - 20px);
+    width: calc(100% - 35px);
     overflow-y: auto;
     overscroll-behavior: contain;
     background-color: rgba(30, 41, 59, 1);
