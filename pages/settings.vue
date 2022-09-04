@@ -3,14 +3,20 @@
     <div class="wis-settings">
       <OnPageSettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
 
-      <SidebarPanel :is-visible="isTabsOpen" from="left" :title="$t('Settings')" icon="cog" @close="isTabsOpen = false">
-        <SettingsTabs :tabs="tabs" :current-tab="currentTab" :is-open="isTabsOpen" class="wis-settings__tabs-panel" @switch="onTabSwitch" />
+      <SidebarPanel :is-visible="isTabsOpen" from="left" :title="$t('Settings')" icon="cog" @close="closeTabs">
+        <SettingsTabs
+          :tabs="tabs"
+          :current-tab="currentTab"
+          :is-open="isTabsOpen"
+          class="wis-settings__tabs-container"
+          @switch="onTabSwitch"
+        />
       </SidebarPanel>
 
-      <div class="wit-flex__item--grow bbbbb">
-        <div class="aaa">
-          <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--lg" />
-          <component :is="componentName" @menu-opened="isTabsOpen = true" />
+      <div class="wit-flex__item--grow wis-settings__content">
+        <div class="wis-settings__content-wrapper">
+          <NotVerifiedProfileMessage v-if="!isUserVerified" class="wit-offset-bottom--lg" />
+          <component :is="componentName" @menu-opened="openTabs" />
         </div>
       </div>
     </div>
@@ -18,36 +24,15 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import { computed, ref } from '@nuxtjs/composition-api'
-import { StoreModules } from '@/store'
-import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/shared/validators'
-import TopTabs from '@/components/header/TopTabs.vue'
-import DangerZone from '@/components/settings/DangerZone'
+import { computed, ref, useStore } from '@nuxtjs/composition-api'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
-import TopNavBar from '@/components/header/TopNavBar.vue'
-import AccountSettings from '@/components/settings/AccountSettings.vue'
-import SocialNetworks from '@/components/settings/SocialNetworks.vue'
-import MarketSettings from '@/components/settings/MarketSettings.vue'
-import NoteEditor from '@/components/settings/NoteEditor.vue'
-import NotesEditor from '@/components/settings/NotesEditor.vue'
-import { SettingsTabs, OnPageSettingsTabs } from '@/components/settings/index.js'
+import { OnPageSettingsTabs, SettingsTabs } from '@/components/settings/index.js'
 import { tabs } from '@/components/settings/tabs/tabs.js'
-import SecuritySettings from '@/components/settings/SecuritySettings.vue'
 import { SidebarPanel } from '@/components/basic/index.js'
 
 export default {
     components: {
-        TopTabs,
-        DangerZone,
         NotVerifiedProfileMessage,
-        TopNavBar,
-        NoteEditor,
-        AccountSettings,
-        SecuritySettings,
-        SocialNetworks,
-        MarketSettings,
-        NotesEditor,
         SettingsTabs,
         SidebarPanel,
         OnPageSettingsTabs
@@ -55,116 +40,34 @@ export default {
 
     middleware: ['isAuthorized'],
 
-    data: () => ({
-        settings: {
-            login: '',
-            password: '',
-            displayName: '',
-            steamTradeLink: '',
-            isGuardProtected: true,
-            avatarId: 1,
-
-            isStrictRarity: false,
-            onlyGuarded: false,
-            isBargainAvailable: false,
-            isTradingOnlyDups: false,
-            marketNote: '',
-            wishlistNote: ''
-        }
-    }),
-
-    computed: {
-        ...mapState(StoreModules.USER, [
-            'user'
-        ]),
-
-        ...mapGetters(StoreModules.USER, [
-            'isVerified'
-        ])
-    },
-
     setup () {
+        const store = useStore()
+
         const isTabsOpen = ref(false)
         const currentTab = ref(tabs[0])
+
         const componentName = computed(() => currentTab.value.component)
+        const isUserVerified = computed(() => store.getters['user/isVerified'])
+
+        const openTabs = () => isTabsOpen.value = true
+        const closeTabs = () => isTabsOpen.value = false
+        const toggleTabs = () => isTabsOpen.value = !isTabsOpen.value
 
         const onTabSwitch = (tab) => {
             currentTab.value = tab
-            isTabsOpen.value = false
+            closeTabs()
         }
 
-        return { isTabsOpen, tabs, currentTab, componentName, onTabSwitch }
-    },
-
-    created () {
-        this.settings.login = this.user.login ?? ''
-        this.settings.displayName = this.user.displayName ?? ''
-        this.settings.steamTradeLink = this.user.steamTradeLink ?? ''
-        this.settings.isGuardProtected = this.user.isGuardProtected
-        this.settings.avatarId = this.user.avatarId
-
-        this.settings.switchRarities = this.user.switchRarities
-        this.settings.tradeWithGuardedOnly = this.user.tradeWithGuardedOnly
-        this.settings.discountAvailable = this.user.discountAvailable
-        this.settings.tradeDuplicatesOnly = this.user.tradeDuplicatesOnly
-        this.settings.marketNote = this.user.marketNote ?? ''
-        this.settings.wishlistNote = this.user.wishlistNote ?? ''
-    },
-
-    methods: {
-        ...mapActions(StoreModules.USER, {
-            updateSettings: 'updateSettings'
-        }),
-
-        onSettingsChange (settings) {
-            this.settings = settings
-        },
-
-        onMarketSettingsChange (marketSettings) {
-            this.marketSettings = marketSettings
-        },
-
-        triggerSettingsUpdate () {
-            const errors = []
-
-            if (this.settings.password) {
-                errors.push(validatePassword(this.settings.password))
-            }
-
-            errors.push(
-                validateDisplayName(this.settings.displayName),
-                validateSteamTradeURL(this.settings.steamTradeLink)
-            )
-
-            const firstError = errors.find(error => error !== null)
-
-            if (firstError) {
-                return this.$showError(this.$t(firstError))
-            }
-
-            const settings = {
-                displayName: this.settings.displayName,
-                steamTradeLink: this.settings.steamTradeLink,
-                isGuardProtected: this.settings.isGuardProtected,
-                avatarId: this.settings.avatarId,
-                switchRarities: this.settings.switchRarities,
-                tradeWithGuardedOnly: this.settings.tradeWithGuardedOnly,
-                discountAvailable: this.settings.discountAvailable,
-                tradeDuplicatesOnly: this.settings.tradeDuplicatesOnly,
-                marketNote: this.settings.marketNote,
-                wishlistNote: this.settings.wishlistNote
-            }
-
-            if (this.settings.password) {
-                settings.password = this.settings.password
-            }
-
-            this.updateSettings(settings)
-                .then(() => {
-                    this.$showSuccess(this.$t('Settings_SettingsUpdated'))
-                    this.settings.password = ''
-                })
-                .catch(this.$showError)
+        return {
+            isUserVerified,
+            isTabsOpen,
+            tabs,
+            currentTab,
+            componentName,
+            onTabSwitch,
+            openTabs,
+            closeTabs,
+            toggleTabs
         }
     }
 }
@@ -173,38 +76,33 @@ export default {
 <style scoped lang="scss">
 .wis-settings {
     display: flex;
-    //padding: var(--offset-sm);
     max-height: 100vh;
     position: relative;
-    //height: 100vh;
-    //max-width: 850px;
-    //margin: 0 auto;
 }
 
-.bbbbb {
+.wis-settings__content {
     padding: 48px;
-    //margin-left: 384px;
     height: calc(100vh - var(--header-height));
     overflow-y: auto;
 }
 
-.aaa {
+.wis-settings__content-wrapper {
     max-width: 768px;
 }
 
-.wis-settings__tabs-panel {
+.wis-settings__tabs-container {
     background-color: var(--body-bg);
     height: 100%;
     padding: 24px 0;
 }
 
 @media (max-width: 1200px) {
-    .bbbbb {
+    .wis-settings__content {
         margin-left: 0;
         padding: 32px 24px;
     }
 
-    .aaa {
+    .wis-settings__content-wrapper {
         max-width: none;
     }
 }
