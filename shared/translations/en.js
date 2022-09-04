@@ -191,7 +191,7 @@ export const en = {
     Settings_RemoveProfileTitle: 'Deleting a profile',
     Settings_WannaRemoveProfile: 'Are you sure you want to delete your profile?<br>Your market and wishlist will be permanently deleted',
     Settings_NotVerifiedAccountTitle: 'Your profile is not verified',
-    Settings_NotVerifiedAccountMessage: 'Some features of the site are not available for such accounts. Also, your profile will not be displayed in the list of site users.<br>To verify your account, you must complete the following tasks:',
+    Settings_NotVerifiedAccountMessage: 'Some features of the site are not available for such accounts. Please complete the following tasks to verify your account:',
     Settings_NotVerifiedAccountTask1: 'Connect Steam Account',
     Settings_NotVerifiedAccountTask2: 'Connect Discord Account',
     Settings_NotVerifiedAccountTask3: 'Add Steam Trade Link',
