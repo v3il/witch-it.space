@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="wis-settings__section-title">
+      <BurgerButton class="wis-settings__burger-button" @click="onBurgerClick" />
       {{ $t('Settings_Tabs_Security_Title') }}
     </h1>
 
@@ -64,16 +65,18 @@
 import { computed, ref, useContext, useStore } from '@nuxtjs/composition-api'
 import SettingsActions from '@/components/settings/SettingsActions.vue'
 import SocialNetworks from '@/components/settings/SocialNetworks.vue'
+import BurgerButton from '@/components/basic/BurgerButton.vue'
 
 export default {
     name: 'SecuritySettings',
 
     components: {
         SettingsActions,
-        SocialNetworks
+        SocialNetworks,
+        BurgerButton
     },
 
-    setup () {
+    setup (_, { emit }) {
         const { $showSuccess, $showError, $t } = useContext()
         const store = useStore()
         const user = computed(() => store.state.user.user)
@@ -85,6 +88,7 @@ export default {
         })
 
         const onPasswordChange = password => securitySettings.value.password = password
+        const onBurgerClick = () => emit('menu-opened')
 
         const saveAccountSettings = () => {
             store.dispatch('user/updateSecuritySettings', securitySettings.value)
@@ -96,7 +100,8 @@ export default {
             securitySettings,
             hasLocalProfile,
             onPasswordChange,
-            saveAccountSettings
+            saveAccountSettings,
+            onBurgerClick
         }
     }
 }

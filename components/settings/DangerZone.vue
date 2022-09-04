@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 class="wis-settings__section-subtitle wit-color--danger wit-text--underline">
-      {{ $t('Settings_DangerZone') }}
+    <h1 class="wis-settings__section-subtitle">
+      {{ $t('Settings_AccountActions') }}
     </h1>
 
     <div class="wit-offset-bottom--md wit-flex wit-flex--align-center wiz-border--bottom wit-padding-bottom--md">

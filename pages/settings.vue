@@ -9,23 +9,8 @@
 
       <div class="wit-flex__item--grow bbbbb">
         <div class="aaa">
-          <div class="wit-flex wit-flex--justify-end">
-            <button class="wit-inline-block wit-offset-left--auto" @click="isTabsOpen = !isTabsOpen">
-              Open
-            </button>
-          </div>
-
           <NotVerifiedProfileMessage v-if="!isVerified" :profile="user" class="wit-offset-bottom--lg" />
-
-          <component :is="componentName" />
-
-          <!--          <AccountSettings :profile="user" :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
-          <!--          <SocialNetworks :profile="user" class="wit-offset-bottom&#45;&#45;sm" />-->
-          <!--          <MarketSettings :settings="settings" class="wit-offset-bottom&#45;&#45;sm" @change="onSettingsChange" />-->
-          <!--          <NotesEditor :settings="settings" class="wit-offset-bottom&#45;&#45;xlg" @input="onSettingsChange" />-->
-          <!--          <DangerZone :profile="user" />-->
-
-          <!--          <StickyPanel class="wit-offset-bottom&#45;&#45;sm" @update="triggerSettingsUpdate" />-->
+          <component :is="componentName" @menu-opened="isTabsOpen = true" />
         </div>
       </div>
     </div>
@@ -40,7 +25,6 @@ import { validateDisplayName, validatePassword, validateSteamTradeURL } from '@/
 import TopTabs from '@/components/header/TopTabs.vue'
 import DangerZone from '@/components/settings/DangerZone'
 import NotVerifiedProfileMessage from '@/components/settings/NotVerifiedProfileMessage'
-import StickyPanel from '@/components/settings/StickyPanel'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import AccountSettings from '@/components/settings/AccountSettings.vue'
 import SocialNetworks from '@/components/settings/SocialNetworks.vue'
@@ -57,7 +41,6 @@ export default {
         TopTabs,
         DangerZone,
         NotVerifiedProfileMessage,
-        StickyPanel,
         TopNavBar,
         NoteEditor,
         AccountSettings,
@@ -229,6 +212,8 @@ export default {
 
 <style lang="scss">
 .wis-settings__section-title {
+    display: flex;
+    align-items: center;
     line-height: 1;
     font-weight: 700;
     font-size: 24px;
@@ -243,5 +228,17 @@ export default {
 
 .wis-settings__separator {
     margin: 40px 0;
+}
+
+.wis-settings__burger-button {
+    --button-ghost-color: var(--muted-text-color);
+    --button-ghost-hover-color: #fff;
+    --button-ghost-hover-decoration: none;
+
+    margin-right: 16px;
+
+    @media (min-width: 1200px) {
+        display: none !important;
+    }
 }
 </style>

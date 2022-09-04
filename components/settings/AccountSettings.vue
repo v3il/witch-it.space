@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="wis-settings__section-title">
+      <BurgerButton class="wis-settings__burger-button" @click="onBurgerClick" />
       {{ $t('Settings_Tabs_Account_Title') }}
     </h1>
 
@@ -21,11 +22,9 @@
       />
     </b-field>
 
-    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
+    <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--xlg">
       <AvatarPicker :selected-avatar-id="accountSettings.avatarId" @change="onAvatarChange" />
     </b-field>
-
-    <hr class="wis-settings__separator">
 
     <h2 class="wis-settings__section-subtitle">
       {{ $t('Settings_SteamSettings') }}
@@ -49,7 +48,7 @@
 
     <SettingsActions @update="saveAccountSettings" />
 
-    <hr class="wis-settings__separator wis-settings__separator--danger">
+    <hr class="wis-settings__separator">
 
     <DangerZone />
   </div>
@@ -60,6 +59,7 @@ import { computed, ref, useContext, useStore } from '@nuxtjs/composition-api'
 import AvatarPicker from '@/components/settings/AvatarPicker'
 import SettingsActions from '@/components/settings/SettingsActions.vue'
 import DangerZone from '@/components/settings/DangerZone.vue'
+import BurgerButton from '@/components/basic/BurgerButton.vue'
 
 export default {
     name: 'AccountSettings',
@@ -67,10 +67,11 @@ export default {
     components: {
         AvatarPicker,
         SettingsActions,
-        DangerZone
+        DangerZone,
+        BurgerButton
     },
 
-    setup () {
+    setup (_, { emit }) {
         const { $showSuccess, $showError, $t } = useContext()
         const store = useStore()
         const user = computed(() => store.state.user.user)
@@ -88,6 +89,7 @@ export default {
         const onAvatarChange = avatarId => accountSettings.value.avatarId = avatarId
         const onTradeLinkChange = steamTradeLink => accountSettings.value.steamTradeLink = steamTradeLink
         const onSteamGuardChange = isGuardProtected => accountSettings.value.isGuardProtected = isGuardProtected
+        const onBurgerClick = () => emit('menu-opened')
 
         const saveAccountSettings = () => {
             store.dispatch('user/updateAccountSettings', accountSettings.value)
@@ -102,7 +104,8 @@ export default {
             onAvatarChange,
             onTradeLinkChange,
             onSteamGuardChange,
-            saveAccountSettings
+            saveAccountSettings,
+            onBurgerClick
         }
     }
 }

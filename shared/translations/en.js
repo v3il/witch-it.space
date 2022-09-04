@@ -214,6 +214,7 @@ export const en = {
     Settings_Tabs_AccountActions_Title: 'Account actions',
     Settings_Tabs_AccountActions_Description: 'Manage your password and 2-step verification preferences',
     Settings_LoginAndPassword: 'Login and Password',
+    Settings_AccountActions: 'Account Actions',
 
     Profiles_AllProfiles: 'All profiles',
     Profiles_VerifiedProfiles: 'Verified',
