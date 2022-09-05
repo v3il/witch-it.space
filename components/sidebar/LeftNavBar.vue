@@ -34,6 +34,7 @@ export default {
         const store = useStore()
         const user = computed(() => store.state.user.user)
         const isAuthorized = computed(() => store.getters['user/isAuthorized'])
+        const isVerified = computed(() => store.getters['user/isVerified'])
         const userId = computed(() => user.value.id)
         const marketSize = computed(() => user.value.marketSize)
         const wishlistSize = computed(() => user.value.wishlistSize)
@@ -58,7 +59,7 @@ export default {
 
             const authorizedLinks = [
                 { icon: 'file-tree-outline', label: 'MainMenu_Quests', to: Routes.QUESTS },
-                { icon: 'cog-outline', label: 'MainMenu_Settings', to: Routes.SETTINGS }
+                { icon: 'cog-outline', label: 'MainMenu_Settings', to: Routes.SETTINGS, hasMark: !isVerified.value }
             ]
 
             return isAuthorized.value ? links.concat(authorizedLinks) : links

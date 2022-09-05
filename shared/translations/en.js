@@ -102,6 +102,7 @@ export const en = {
     AppPagesTitle: 'Other Pages',
     Message: 'Message',
     SendTradeOffer: 'Send a trade offer',
+    ActionRequired: 'Action required',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',

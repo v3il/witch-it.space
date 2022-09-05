@@ -9,6 +9,10 @@
       <span v-if="link.badge" class="wis-navigation-item__tag wit-offset-left--auto">
         {{ link.badge }}
       </span>
+
+      <span v-if="link.hasMark" v-tooltip="$t('ActionRequired')" class="wit-offset-left--auto wis-navigation-item__mark">
+        <i class="mdi mdi-alert-circle-outline mdi-20px wit-color--danger" />
+      </span>
     </NuxtLink>
   </li>
 </template>
@@ -86,6 +90,10 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        height: 20px;
+    }
+
+    .wis-navigation-item__mark {
         height: 20px;
     }
 </style>
