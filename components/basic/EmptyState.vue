@@ -1,11 +1,11 @@
 <template>
   <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center">
-    <b-icon
-      :icon="icon"
-      size="is-large"
-      class="wit-offset-bottom--xs"
-    />
-    <p class="wit-text--center wit-line-height--md" v-html="text" />
+    <img
+      src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/empty_state_XGBQ4cECl.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662495476040"
+      alt="empty state"
+      class="wis-empty-state__image"
+    >
+    <p class="wit-text--center wit-line-height--md wis-empty-state__text" v-html="'The little witch is sad, because<br>there are ' + text.toLowerCase() + ' here :c'" />
     <slot />
   </div>
 </template>
@@ -27,3 +27,14 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wis-empty-state__image {
+    max-height: 450px;
+    height: 100%;
+}
+
+.wis-empty-state__text {
+    //margin-top: -70px;
+}
+</style>
