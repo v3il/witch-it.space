@@ -1,7 +1,7 @@
 <template>
   <div class="wit-color--muted wit-flex wit-flex--column wit-flex--align-center">
     <img
-      src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/empty_state_XGBQ4cECl.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662495476040"
+      src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/Witch_fD00VUVeX.png?ik-sdk-version=javascript-1.4.3&updatedAt=1662496853199"
       alt="empty state"
       class="wis-empty-state__image"
     >
