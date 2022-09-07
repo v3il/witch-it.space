@@ -9,7 +9,7 @@
       icon-right-clickable
       :placeholder="$t('Offers_SearchItem')"
       custom-class="wit-transition"
-      class="wit-offset-right--xs wis-search__input wis-input"
+      class="wit-offset-right--xs wis-search__input wis-input wis-input-right-icon"
       @icon-right-click="resetSearch"
       @input="triggerSearch"
     />
