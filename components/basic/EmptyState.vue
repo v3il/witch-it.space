@@ -5,7 +5,7 @@
       alt="empty state"
       class="wis-empty-state__image"
     >
-    <p class="wit-text--center wit-line-height--md wis-empty-state__text" v-html="'The little witch is sad, because<br>there are ' + text.toLowerCase() + ' here :c'" />
+    <p class="wit-text--center wit-line-height--md wis-empty-state__text wit-font-size--xsplus" v-html="'There are ' + text.toLowerCase() + ' here'" />
     <slot />
   </div>
 </template>

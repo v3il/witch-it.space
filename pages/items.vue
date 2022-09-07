@@ -4,7 +4,7 @@
 
     <div class="wit-items-page__content">
       <div class="wit-items-page__offers wis-block--max-width">
-        <Search store-module="items" />
+        <Search store-module="items" class="wit-offset-bottom--md" />
         <ItemsList :items="sortedItems" />
       </div>
     </div>
@@ -56,8 +56,8 @@ export default {
 }
 
 .wit-items-page__offers {
-    background-color: var(--card-bg-color);
-    border-radius: 16px;
+    //background-color: var(--card-bg-color);
+    //border-radius: 16px;
     margin-left: auto;
     margin-right: auto;
 }

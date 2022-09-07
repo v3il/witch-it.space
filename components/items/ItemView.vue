@@ -17,7 +17,7 @@
         x{{ itemCount }}
       </div>
 
-      <p v-if="addTitle" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm">
+      <p v-if="addTitle" class="wit-text--center wit-offset-bottom--xs wit-offset-top--xs wit-item-view__title wit-line-height--sm wit-font-size--xs">
         {{ item.name }}
       </p>
     </div>
@@ -126,6 +126,7 @@ export default {
     --color: #2e3648;
 
     border-radius: var(--offset-xxs);
+    background-color: var(--card-bg-color);
 
     .wit-item-view__counter {
         background-color: var(--bg-color);
@@ -181,6 +182,11 @@ export default {
     text-align: center;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+
+    @media (max-width: 769px) {
+        font-size: 12px;
+        height: auto;
+    }
 }
 
 .wit-item-view__image {

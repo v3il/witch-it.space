@@ -33,16 +33,12 @@ export default {
             required: true,
             type: Array
         }
-    },
-
-    created () {
-        console.log(this.sortedOffers)
     }
 }
 </script>
 
 <style scoped lang="scss">
     .wis-offers-list {
-        padding: 0 24px 24px;
+        padding-bottom: 24px;
     }
 </style>

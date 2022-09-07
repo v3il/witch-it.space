@@ -37,7 +37,7 @@ export default {
 
 <style scoped lang="scss">
     .wis-items-list {
-        padding: 0 24px 24px;
+        padding-bottom: 24px;
         width: 100%;
     }
 </style>

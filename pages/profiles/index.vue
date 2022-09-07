@@ -4,7 +4,7 @@
 
     <div class="wit-profiles-page__content">
       <div class="wis-block--max-width">
-        <Search store-module="profiles" class="wit-profiles-page__search" />
+        <Search store-module="profiles" class="wit-offset-bottom--md" />
         <ProfilesView :profiles="sortedProfiles" />
       </div>
     </div>
@@ -64,11 +64,6 @@ export default {
 
 .wit-profiles-page__content {
     width: 100%;
-    padding: 0 24px;
-}
-
-.wit-profiles-page__search {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 24px;
 }
 </style>

@@ -46,5 +46,9 @@ export default {
     grid-row-gap: var(--grid-gap);
     grid-auto-rows: max-content;
     justify-items: center;
+
+    @media (max-width: 769px) {
+        grid-template-columns: repeat(auto-fill, minmax(var(--mobile-cell-width), 1fr));
+    }
 }
 </style>

@@ -7,7 +7,7 @@
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        <Search store-module="offers" />
+        <Search store-module="offers" class="wit-offset-bottom--md" />
         <OffersList :sorted-offers="sortedOffers" />
       </div>
     </div>
@@ -75,8 +75,8 @@ export default {
 }
 
 .wit-offers-page__offers {
-    background-color: var(--card-bg-color);
-    border-radius: 16px;
+    //background-color: var(--card-bg-color);
+    //border-radius: 16px;
     margin-left: auto;
     margin-right: auto;
 }
