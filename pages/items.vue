@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex wit-flex--column wit-items-page">
-    <ItemsHeader class="wit-offset-bottom--sm" />
+    <ItemsHeader />
 
     <div class="wit-items-page__content">
       <div class="wit-items-page__offers wis-block--max-width">
