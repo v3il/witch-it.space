@@ -1,22 +1,38 @@
 <template>
   <form @submit.prevent="onSubmit">
     <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
-      <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" class="wis-input--lg" />
+      <b-input
+        v-model="login"
+        type="text"
+        :placeholder="$t('Login_LoginInputPlaceholder')"
+        custom-class="wit-transition"
+        class="wis-input--lg wis-input--transparent"
+      />
     </b-field>
 
-    <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
-      <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" class="wis-input--lg" />
+    <b-field :label="$t('Login_PasswordInputTitle')">
+      <b-input
+        v-model="password"
+        type="password"
+        :placeholder="$t('Login_PasswordInputPlaceholder')"
+        custom-class="wit-transition"
+        class="wis-input--lg wis-input--transparent"
+      />
     </b-field>
 
-    <b-field v-if="!isLogin" :label="$t('Register_RepeatPassword')" class="wit-offset-bottom--md">
-      <b-input v-model="confirmPassword" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" class="wis-input--lg" />
+    <b-field v-if="!isLogin" :label="$t('Register_RepeatPassword')">
+      <b-input
+        v-model="confirmPassword"
+        type="password"
+        :placeholder="$t('Login_PasswordInputPlaceholder')"
+        custom-class="wit-transition"
+        class="wis-input--lg wis-input--transparent"
+      />
     </b-field>
 
-    <div class="wit-flex wit-flex--center wit-flex--justify-between">
-      <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width">
-        {{ $t('Login_LoginButtonTitle') }}
-      </b-button>
-    </div>
+    <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width wis-btn--lg wit-offset-top--md">
+      {{ $t('Login_LoginButtonTitle') }}
+    </b-button>
   </form>
 </template>
 
@@ -53,7 +69,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

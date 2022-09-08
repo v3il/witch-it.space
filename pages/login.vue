@@ -1,56 +1,56 @@
 <template>
-  <div>
+  <div class="wit-flex wit-flex--center">
     <AuthPanel mode="login" />
 
-    <div class="wit-flex wit-flex--center login-page">
-      <div class="login-page__container">
-        <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
-          <header class="login-page__form-header wit-background--primary wit-position--relative">
-            <h1 class="wit-color--white wit-text--center wit-font-weight--600 wit-font-size--sm wit-line-height--sm wit-font-family--secondary wit-offset-bottom--xs">
-              {{ $t('Login_WelcomeBack') }}
-            </h1>
-            <p class="wit-text--center wit-offset-bottom--md wit-color--white-half">
-              {{ $t('Login_SignInToContinue') }}
-            </p>
+    <!--    <div class="wit-flex wit-flex&#45;&#45;center login-page">-->
+    <!--      <div class="login-page__container">-->
+    <!--        <div class="login-page__form wit-background&#45;&#45;content wit-transition wit-offset-bottom&#45;&#45;xxlg">-->
+    <!--          <header class="login-page__form-header wit-background&#45;&#45;primary wit-position&#45;&#45;relative">-->
+    <!--            <h1 class="wit-color&#45;&#45;white wit-text&#45;&#45;center wit-font-weight&#45;&#45;600 wit-font-size&#45;&#45;sm wit-line-height&#45;&#45;sm wit-font-family&#45;&#45;secondary wit-offset-bottom&#45;&#45;xs">-->
+    <!--              {{ $t('Login_WelcomeBack') }}-->
+    <!--            </h1>-->
+    <!--            <p class="wit-text&#45;&#45;center wit-offset-bottom&#45;&#45;md wit-color&#45;&#45;white-half">-->
+    <!--              {{ $t('Login_SignInToContinue') }}-->
+    <!--            </p>-->
 
-            <div class="login-page__image-block wit-position--absolute wit-background--content wit-transition">
-              <img class="login-page__image" src="images/hey.webp" alt="Hey!">
-            </div>
-          </header>
+    <!--            <div class="login-page__image-block wit-position&#45;&#45;absolute wit-background&#45;&#45;content wit-transition">-->
+    <!--              <img class="login-page__image" src="images/hey.webp" alt="Hey!">-->
+    <!--            </div>-->
+    <!--          </header>-->
 
-          <div class="login-page__form-content">
-            <form @submit.prevent="onSubmit">
-              <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
-                <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />
-              </b-field>
+    <!--          <div class="login-page__form-content">-->
+    <!--            <form @submit.prevent="onSubmit">-->
+    <!--              <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom&#45;&#45;sm">-->
+    <!--                <b-input v-model="login" type="text" :placeholder="$t('Login_LoginInputPlaceholder')" custom-class="wit-transition" />-->
+    <!--              </b-field>-->
 
-              <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom--md">
-                <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />
-              </b-field>
+    <!--              <b-field :label="$t('Login_PasswordInputTitle')" class="wit-offset-bottom&#45;&#45;md">-->
+    <!--                <b-input v-model="password" type="password" :placeholder="$t('Login_PasswordInputPlaceholder')" custom-class="wit-transition" />-->
+    <!--              </b-field>-->
 
-              <div class="wit-flex wit-flex--center wit-flex--justify-between">
-                <Socials @socialClicked="onAuthUsingSocials" />
+    <!--              <div class="wit-flex wit-flex&#45;&#45;center wit-flex&#45;&#45;justify-between">-->
+    <!--                <Socials @socialClicked="onAuthUsingSocials" />-->
 
-                <b-button type="is-primary" native-type="submit" class="wit-transition">
-                  {{ $t('Login_LoginButtonTitle') }}
-                </b-button>
-              </div>
-            </form>
-          </div>
-        </div>
+    <!--                <b-button type="is-primary" native-type="submit" class="wit-transition">-->
+    <!--                  {{ $t('Login_LoginButtonTitle') }}-->
+    <!--                </b-button>-->
+    <!--              </div>-->
+    <!--            </form>-->
+    <!--          </div>-->
+    <!--        </div>-->
 
-        <p class="wit-text--center wit-offset-bottom--sm">
-          {{ $t('Login_DontHaveAccount') }}
-          <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight--500">
-            {{ $t('Login_SignUpLinkTitle') }}
-          </b-button>
-        </p>
+    <!--        <p class="wit-text&#45;&#45;center wit-offset-bottom&#45;&#45;sm">-->
+    <!--          {{ $t('Login_DontHaveAccount') }}-->
+    <!--          <b-button type="is-ghost" tag="nuxt-link" to="/register" class="text-link wit-font-weight&#45;&#45;500">-->
+    <!--            {{ $t('Login_SignUpLinkTitle') }}-->
+    <!--          </b-button>-->
+    <!--        </p>-->
 
-        <p class="wit-text--center">
-          ©{{ $options.year }}. {{ $t('CraftedBy') }}
-        </p>
-      </div>
-    </div>
+    <!--        <p class="wit-text&#45;&#45;center">-->
+    <!--          ©{{ $options.year }}. {{ $t('CraftedBy') }}-->
+    <!--        </p>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 
