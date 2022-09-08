@@ -61,43 +61,6 @@ export default {
 
 <style scoped lang="scss">
 .wit-tabs__button {
-    //background: #2e3648;
-    //color: var(--muted-text-color);
-    //border-color: #363e54;
-    //text-decoration: none !important;
-    //border-radius: 0;
     border: 1px solid var(--secondary-button-bg);
-
-    //&.first {
-    //    border-radius: var(--offset-xxs) 0 0 var(--offset-xxs);
-    //}
-    //
-    //&.last {
-    //    border-radius: 0 var(--offset-xxs) var(--offset-xxs) 0;
-    //}
-    //
-    //&:hover {
-    //    color: var(--white);
-    //}
-    //
-    //&.expanded {
-    //    flex: 1;
-    //}
-    //
-    //&.active {
-    //    background-color: var(--primary);
-    //    color: var(--white);
-    //    border-color: var(--primary);
-    //}
-    //
-    //&--xs {
-    //    height: var(--offset-lg);
-    //}
 }
-
-//@media (max-width: 1100px) {
-//    .wit-tabs__button {
-//        padding: var(--offset-xxs) var(--offset-xs);
-//    }
-//}
 </style>

@@ -1,5 +1,7 @@
 <template>
   <div>
+    <AuthPanel mode="login" />
+
     <div class="wit-flex wit-flex--center login-page">
       <div class="login-page__container">
         <div class="login-page__form wit-background--content wit-transition wit-offset-bottom--xxlg">
@@ -58,12 +60,14 @@ import Socials from '@/components/auth/Socials'
 import { StoreModules } from '@/store'
 import { Routes } from '@/shared'
 import { validateLogin, validatePassword } from '@/shared/validators'
+import AuthPanel from '@/components/auth/AuthPanel.vue'
 
 export default {
     year: new Date().getFullYear(),
 
     components: {
-        Socials
+        Socials,
+        AuthPanel
     },
 
     middleware: ['returnToApp'],

@@ -41,7 +41,7 @@ export const en = {
     Login_LoginInputPlaceholder: 'Enter login',
     Login_PasswordInputTitle: 'Password',
     Login_PasswordInputPlaceholder: 'Enter password',
-    Login_LoginButtonTitle: 'Log in',
+    Login_LoginButtonTitle: 'Sign in',
     Login_DontHaveAccount: 'Don\'t have an account?',
     Login_SignUpLinkTitle: 'Register',
 
