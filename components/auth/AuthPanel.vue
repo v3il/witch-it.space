@@ -13,7 +13,11 @@
 
     <div class="wis-auth-panel__right">
       <div class="wis-auth-panel__right-content">
-        <Logo class="wis-auth-panel__logo wit-offset-bottom--lg" />
+        <img
+          src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/hey_FUluxceLg.webp?ik-sdk-version=javascript-1.4.3&updatedAt=1662754137677"
+          alt="hey"
+          class="wis-auth-panel__logo wit-offset-bottom--lg"
+        >
 
         <h1 class="wis-auth-panel__title">
           Sign in
@@ -120,7 +124,9 @@ export default {
 }
 
 .wis-auth-panel__logo {
-    height: 72px;
+    display: block;
+    width: 100px;
+    border-radius: 8px;
 }
 
 .wis-auth-panel__title {
