@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--sm">
+    <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom--md" custom-class="wit-font-weight--500">
       <b-input
         v-model="login"
         type="text"
@@ -10,7 +10,7 @@
       />
     </b-field>
 
-    <b-field :label="$t('Login_PasswordInputTitle')">
+    <b-field :label="$t('Login_PasswordInputTitle')" custom-class="wit-font-weight--500" class="wit-offset-bottom--md">
       <b-input
         v-model="password"
         type="password"
@@ -20,7 +20,7 @@
       />
     </b-field>
 
-    <b-field v-if="!isLogin" :label="$t('Register_RepeatPassword')">
+    <b-field v-if="!isLogin" :label="$t('Register_RepeatPassword')" custom-class="wit-font-weight--500" class="wit-offset-bottom--md">
       <b-input
         v-model="confirmPassword"
         type="password"
@@ -30,7 +30,7 @@
       />
     </b-field>
 
-    <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width wis-btn--lg wit-offset-top--md">
+    <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width wis-btn--lg">
       {{ $t('Login_LoginButtonTitle') }}
     </b-button>
   </form>

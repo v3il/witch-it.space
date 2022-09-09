@@ -1,12 +1,19 @@
 <template>
   <div class="wis-auth-panel">
     <div class="wis-auth-panel__left">
-      Left
+      <svg
+        viewBox="0 0 960 540"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMax slice"
+        xmlns="http://www.w3.org/2000/svg"
+        class="wis-auth-panel__bg"
+      ><g fill="none" stroke="currentColor" stroke-width="100" class="text-gray-700 opacity-25 ng-tns-c293-38"><circle r="234" cx="196" cy="23" class="ng-tns-c293-38" /><circle r="234" cx="790" cy="491" class="ng-tns-c293-38" /></g></svg>
     </div>
 
     <div class="wis-auth-panel__right">
       <div class="wis-auth-panel__right-content">
-        <!--        <Logo class="wis-auth-panel__logo wit-offset-bottom&#45;&#45;lg" />-->
+        <Logo class="wis-auth-panel__logo wit-offset-bottom--lg" />
 
         <h1 class="wis-auth-panel__title">
           Sign in
@@ -85,6 +92,7 @@ export default {
     background-color: var(--card-bg-color);
     border-radius: 16px;
     width: 100%;
+    overflow: hidden;
 }
 
 .wis-auth-panel__left {
@@ -92,6 +100,15 @@ export default {
     flex: 1 1 auto;
     border-right: 1px solid rgb(241, 245, 249, 0.12);
     padding: 4rem 7rem;
+    position: relative;
+}
+
+.wis-auth-panel__bg {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .wis-auth-panel__right {

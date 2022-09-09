@@ -1,31 +1,63 @@
 <template>
   <div class="wit-flex wit-flex--center">
-    <b-tooltip v-for="social in $options.socials" :key="social.value" :label="social.label" type="is-primary is-dark" square>
-      <b-button
-        type="is-link"
-        class="wit-offset-right--xs wit-transition--background wit-flex wit-flex--center"
-        @click="onSocialClicked(social)"
-      >
-        <b-icon size="is-small" class="is-size-5" :icon="social.icon" />
-      </b-button>
-    </b-tooltip>
+    <button
+      v-for="social in socials"
+      :key="social.value"
+      v-tooltip="social.label"
+      type="is-link"
+      class="wit-flex wit-flex--center wis-social-button"
+      @click="onSocialClicked(social)"
+    >
+      <i class="mdi mdi-20px" :class="'mdi-' + social.icon" />
+    </button>
   </div>
 </template>
 
 <script>
+import { useContext, useRouter, useStore } from '@nuxtjs/composition-api'
+import { Routes } from '@/shared/index.js'
+
 export default {
     name: 'Socials',
 
-    socials: [
-        { value: 'steam', icon: 'steam', label: 'Steam' },
-        { value: 'discord', icon: 'discord', label: 'Discord' },
-        { value: 'google', icon: 'google-plus', label: 'Google' }
-    ],
+    setup () {
+        const { $showError } = useContext()
+        const store = useStore()
+        const router = useRouter()
 
-    methods: {
-        onSocialClicked (social) {
-            this.$emit('socialClicked', social.value)
+        const socials = [
+            { value: 'steam', icon: 'steam', label: 'Steam' },
+            { value: 'discord', icon: 'discord', label: 'Discord' },
+            { value: 'google', icon: 'google', label: 'Google' }
+        ]
+
+        const onSocialClicked = (social) => {
+            store.dispatch('user/authUsingSocials', social.value)
+                .then(() => router.replace(Routes.MAIN))
+                .catch(error => error && $showError(error.message))
         }
+
+        return { socials, onSocialClicked }
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wis-social-button {
+    flex: 1;
+    border: 1px solid rgb(100 116 139);
+    background-color: transparent;
+    height: 40px;
+    border-radius: 9999px;
+    cursor: pointer;
+    color: var(--muted-text-color);
+
+    &:not(:last-child) {
+        margin-right: 8px;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+}
+</style>
