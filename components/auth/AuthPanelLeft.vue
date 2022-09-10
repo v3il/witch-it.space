@@ -5,6 +5,16 @@
       alt="hey"
       class="wis-auth-panel__logo wit-offset-bottom--lg"
     >
+
+    <h2 class="wis-auth-panel__left-title">
+      Welcome to<br>our community
+    </h2>
+
+    <p class="wis-auth-panel__left-description wit-offset-bottom--md">
+      Witch It.Space is a trading website dedicated to Witch It, a hide and seek game. It can be used to find and offer cosmetic items.
+    </p>
+
+    <AuthPanelUsers />
   </div>
 </template>
 
@@ -13,40 +23,45 @@ import { computed, ref } from '@nuxtjs/composition-api'
 import AuthForm from '@/components/auth/AuthForm.vue'
 import Logo from '@/components/sidebar/components/Logo.vue'
 import Socials from '@/components/auth/Socials.vue'
+import AuthPanelUsers from '@/components/auth/AuthPanelUsers.vue'
 
 export default {
-    name: 'AuthPanelLeft'
+    name: 'AuthPanelLeft',
 
-    // components: {
-    //     Logo,
-    //     AuthForm,
-    //     Socials
-    // }
+    components: {
+        AuthPanelUsers
+    }
 }
 </script>
 
 <style scoped lang="scss">
 .wis-auth-panel__left {
-    //background-color: rgb(30 41 59);
     flex: 1 1 auto;
     border-right: 1px solid rgb(241, 245, 249, 0.12);
     padding: 4rem 7rem;
     position: relative;
-    background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_HeXF3atDe.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662903732135) no-repeat center;
+    background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat center;
     background-size: 100% 100%;
-}
-
-.wis-auth-panel__bg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
 }
 
 .wis-auth-panel__logo {
     display: block;
     width: 100px;
     border-radius: 8px;
+}
+
+.wis-auth-panel__left-title {
+    color: rgb(241 245 249);
+    line-height: 1;
+    font-weight: 700;
+    font-size: 3rem;
+    margin-bottom: 24px;
+}
+
+.wis-auth-panel__left-description {
+    color: var(--muted-text-color);
+    letter-spacing: -0.025em;
+    line-height: 1.71;
+    font-size: 1rem;
 }
 </style>
