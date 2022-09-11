@@ -1,6 +1,6 @@
 <template>
   <div class="wis-auth-form-users">
-    <div class="wit-offset-right--sm">
+    <div class="wit-offset-right--sm wit-flex__item--no-shrink">
       <img v-for="(avatarUrl, index) in avatarUrls" :key="index" :src="avatarUrl" :alt="index" class="wis-auth-form-users__img">
     </div>
 

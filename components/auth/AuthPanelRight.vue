@@ -111,4 +111,10 @@ export default {
     font-size: 2rem;
     margin-bottom: 8px;
 }
+
+@media (max-width: 1024px) {
+    .wis-auth-panel__right {
+        padding: 24px;
+    }
+}
 </style>

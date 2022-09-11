@@ -1,5 +1,5 @@
 <template>
-  <div class="wit-flex wit-flex--center">
+  <div class="wit-flex wit-flex--center wit-paddings--md">
     <AuthPanel mode="login" />
 
     <!--    <div class="wit-flex wit-flex&#45;&#45;center login-page">-->

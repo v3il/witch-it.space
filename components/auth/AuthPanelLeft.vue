@@ -7,7 +7,7 @@
     >
 
     <h2 class="wis-auth-panel__left-title">
-      Welcome to<br>our community
+      Welcome to<br> our community
     </h2>
 
     <p class="wis-auth-panel__left-description wit-offset-bottom--md">
@@ -63,5 +63,19 @@ export default {
     letter-spacing: -0.025em;
     line-height: 1.71;
     font-size: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .wis-auth-panel__left {
+        padding: 24px;
+    }
+
+    .wis-auth-panel__left-title {
+        font-size: 24px;
+
+        br {
+            display: none;
+        }
+    }
 }
 </style>

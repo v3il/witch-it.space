@@ -60,6 +60,11 @@ export default {
     border-radius: 16px;
     width: 100%;
     overflow: hidden;
+
+    @media (max-width: 1024px) {
+        flex-direction: column;
+        max-width: 400px;
+    }
 }
 
 //.wis-auth-panel__right {
