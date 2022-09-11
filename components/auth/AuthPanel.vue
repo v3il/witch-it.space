@@ -1,48 +1,7 @@
 <template>
   <div class="wis-auth-panel">
-    <div class="wis-auth-panel__left">
-      <svg
-        viewBox="0 0 960 540"
-        width="100%"
-        height="100%"
-        preserveAspectRatio="xMidYMax slice"
-        xmlns="http://www.w3.org/2000/svg"
-        class="wis-auth-panel__bg"
-      ><g fill="none" stroke="currentColor" stroke-width="100" class="text-gray-700 opacity-25 ng-tns-c293-38"><circle r="234" cx="196" cy="23" class="ng-tns-c293-38" /><circle r="234" cx="790" cy="491" class="ng-tns-c293-38" /></g></svg>
-    </div>
-
-    <div class="wis-auth-panel__right">
-      <div class="wis-auth-panel__right-content">
-        <img
-          src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/hey_FUluxceLg.webp?ik-sdk-version=javascript-1.4.3&updatedAt=1662754137677"
-          alt="hey"
-          class="wis-auth-panel__logo wit-offset-bottom--lg"
-        >
-
-        <h1 class="wis-auth-panel__title">
-          Sign in
-        </h1>
-
-        <p class="wit-font-weight--500 wit-offset-bottom--lg">
-          Don't have an account?
-          <NuxtLink to="/register">
-            Sign up
-          </NuxtLink>
-        </p>
-
-        <AuthForm :mode="mode" class="wit-offset-bottom--md" />
-
-        <div class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-bottom--md">
-          <hr class="wit-block--full-width">
-          <div class="wit-color--muted wit-flex__item--no-shrink wit-offset-left--sm wit-offset-right--sm">
-            Or continue with
-          </div>
-          <hr class="wit-block--full-width">
-        </div>
-
-        <Socials />
-      </div>
-    </div>
+    <AuthPanelLeft />
+    <AuthPanelRight :mode="mode" class="wis-auth-panel__right" />
   </div>
 </template>
 
@@ -51,6 +10,8 @@ import { computed, ref } from '@nuxtjs/composition-api'
 import AuthForm from '@/components/auth/AuthForm.vue'
 import Logo from '@/components/sidebar/components/Logo.vue'
 import Socials from '@/components/auth/Socials.vue'
+import AuthPanelLeft from '@/components/auth/AuthPanelLeft.vue'
+import AuthPanelRight from '@/components/auth/AuthPanelRight.vue'
 
 export default {
     name: 'AuthPanel',
@@ -58,7 +19,9 @@ export default {
     components: {
         Logo,
         AuthForm,
-        Socials
+        Socials,
+        AuthPanelLeft,
+        AuthPanelRight
     },
 
     props: {
@@ -99,41 +62,25 @@ export default {
     overflow: hidden;
 }
 
-.wis-auth-panel__left {
-    background-color: rgb(30 41 59);
-    flex: 1 1 auto;
-    border-right: 1px solid rgb(241, 245, 249, 0.12);
-    padding: 4rem 7rem;
-    position: relative;
-}
-
-.wis-auth-panel__bg {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.wis-auth-panel__right {
-    padding: 4rem;
-}
-
-.wis-auth-panel__right-content {
-    width: 20rem;
-}
-
-.wis-auth-panel__logo {
-    display: block;
-    width: 100px;
-    border-radius: 8px;
-}
-
-.wis-auth-panel__title {
-    letter-spacing: -0.025em;
-    line-height: 1.25;
-    font-weight: 800;
-    font-size: 2rem;
-    margin-bottom: 8px;
-}
+//.wis-auth-panel__right {
+//    padding: 4rem;
+//}
+//
+//.wis-auth-panel__right-content {
+//    width: 20rem;
+//}
+//
+//.wis-auth-panel__logo {
+//    display: block;
+//    width: 100px;
+//    border-radius: 8px;
+//}
+//
+//.wis-auth-panel__title {
+//    letter-spacing: -0.025em;
+//    line-height: 1.25;
+//    font-weight: 800;
+//    font-size: 2rem;
+//    margin-bottom: 8px;
+//}
 </style>
