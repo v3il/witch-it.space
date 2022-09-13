@@ -43,6 +43,9 @@ export default {
     background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat center;
     background-size: 100% 100%;
     flex-basis: 350px;
+    //display: flex;
+    //flex-direction: column;
+    //justify-content: center;
 }
 
 .wis-auth-panel__logo {
