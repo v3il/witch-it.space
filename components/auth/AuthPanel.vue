@@ -29,7 +29,7 @@ export default {
 
 <style scoped lang="scss">
 .wis-auth-panel {
-    max-width: 72rem;
+    max-width: 66rem;
     display: flex;
     flex-wrap: wrap;
     background-color: var(--card-bg-color);

@@ -1,5 +1,5 @@
 <template>
-  <header v-if="true" class="wis-header">
+  <header class="wis-header" :class="headerClasses">
     <BurgerButton class="wis-header__burger" @click="onBurgerClick" />
 
     <div v-if="isAuthorized" class="wit-offset-left--auto wit-flex wit-flex--align-center">
@@ -76,38 +76,12 @@ export default {
         const store = useStore()
 
         const isAuthorized = computed(() => store.getters['user/isAuthorized'])
+        const headerClasses = computed(() => ({ 'wis-header--empty': !isAuthorized.value }))
+
         const onBurgerClick = () => emit('open-sidebar')
 
-        return { isAuthorized, onBurgerClick }
+        return { isAuthorized, headerClasses, onBurgerClick }
     }
-
-    // props: {
-    //     sticky: {
-    //         required: false,
-    //         type: Boolean,
-    //         default: false
-    //     }
-    // },
-
-    // computed: {
-    //     ...mapState(User.PATH, [
-    //         User.State.USER
-    //     ]),
-    //
-    //     headerClass () {
-    //         return { 'wiz-header--sticky': this.sticky }
-    //     }
-    // },
-
-    // created () {
-    //     this.links = getNavbarLinks(this.user)
-    // },
-    //
-    // methods: {
-    //     onLinkClick () {
-    //         document.body.click()
-    //     }
-    // }
 }
 </script>
 
@@ -128,6 +102,12 @@ export default {
     }
 }
 
+.wis-header--empty {
+    @media (min-width: 1024px) {
+        display: none !important;
+    }
+}
+
 .wis-header__burger {
     --button-ghost-color: var(--muted-text-color);
     --button-ghost-hover-color: #fff;
@@ -137,48 +117,4 @@ export default {
         display: none !important;
     }
 }
-
-//.bbbb {
-//    border-top: 1px solid rgb(58 68 91);
-//    border-bottom: 1px solid rgb(58 68 91);
-//    display: none;
-//}
-//
-//.wit-link {
-//    padding: 4px 20px;
-//    width: 100%;
-//    color: white;
-//    justify-content: flex-start;
-//    height: auto;
-//    align-items: center;
-//    text-decoration: none;
-//
-//    &:hover,
-//    &.nuxt-link-exact-active {
-//        background-color: rgba(239, 242, 247, 0.05);
-//        color: white;
-//        text-decoration: none;
-//    }
-//}
-//
-//@media screen and (max-width: 1023px) {
-//    .wiz-header {
-//        padding-right: 0;
-//        padding-left: 0;
-//    }
-//
-//    .wit-header__locale-switcher,
-//    .wit-header__theme-switcher {
-//        border-right: var(--default-border);
-//    }
-//
-//    .wit-header__user-dropdown {
-//        margin-left: auto;
-//        border-left: var(--default-border);
-//    }
-//
-//    .bbbb {
-//        display: block;
-//    }
-//}
 </style>
