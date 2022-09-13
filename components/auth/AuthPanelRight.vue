@@ -98,6 +98,7 @@ export default {
 
 .wis-auth-panel__right {
     padding: 4rem;
+    flex-basis: 400px;
 }
 
 .wis-auth-panel__right-content {
@@ -112,9 +113,13 @@ export default {
     margin-bottom: 8px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .wis-auth-panel__right {
         padding: 24px;
+    }
+
+    .wis-auth-panel__right-content {
+        width: 100%;
     }
 }
 </style>

@@ -56,13 +56,14 @@ export default {
 .wis-auth-panel {
     max-width: 72rem;
     display: flex;
+    flex-wrap: wrap;
     background-color: var(--card-bg-color);
     border-radius: 16px;
     width: 100%;
     overflow: hidden;
 
-    @media (max-width: 1024px) {
-        flex-direction: column;
+    @media (max-width: 1200px) {
+        //flex-direction: column;
         max-width: 400px;
     }
 }

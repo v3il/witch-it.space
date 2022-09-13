@@ -38,10 +38,11 @@ export default {
 .wis-auth-panel__left {
     flex: 1 1 auto;
     border-right: 1px solid rgb(241, 245, 249, 0.12);
-    padding: 4rem 7rem;
+    padding: 4rem;
     position: relative;
     background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat center;
     background-size: 100% 100%;
+    flex-basis: 350px;
 }
 
 .wis-auth-panel__logo {
@@ -65,9 +66,10 @@ export default {
     font-size: 1rem;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
     .wis-auth-panel__left {
         padding: 24px;
+        border-right: none;
     }
 
     .wis-auth-panel__left-title {
