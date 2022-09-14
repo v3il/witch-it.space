@@ -2,36 +2,31 @@
   <div>
     <div class="wis-auth-panel__right-content">
       <h1 class="wis-auth-panel__title">
-        Sign in
+        {{ title }}
       </h1>
 
       <p class="wit-font-weight--500 wit-offset-bottom--lg">
-        Don't have an account?
-        <NuxtLink to="/register">
-          Sign up
+        {{ descriptionText }}
+
+        <NuxtLink :to="descriptionLink">
+          {{ descriptionPrompt }}
         </NuxtLink>
       </p>
 
       <AuthForm :mode="mode" class="wit-offset-bottom--md" />
-
-      <div class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-bottom--md">
-        <hr class="wit-block--full-width">
-        <div class="wit-color--muted wit-flex__item--no-shrink wit-offset-left--sm wit-offset-right--sm">
-          Or continue with
-        </div>
-        <hr class="wit-block--full-width">
-      </div>
-
+      <AuthPanelSeparator class="wit-offset-bottom--md" />
       <Socials />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import AuthForm from '@/components/auth/AuthForm.vue'
 import Logo from '@/components/sidebar/components/Logo.vue'
 import Socials from '@/components/auth/Socials.vue'
+import { Routes } from '@/shared/index.js'
+import AuthPanelSeparator from '@/components/auth/AuthPanelSeparator.vue'
 
 export default {
     name: 'AuthPanelRight',
@@ -39,7 +34,8 @@ export default {
     components: {
         Logo,
         AuthForm,
-        Socials
+        Socials,
+        AuthPanelSeparator
     },
 
     props: {
@@ -51,11 +47,17 @@ export default {
     },
 
     setup (props) {
+        const { $t } = useContext()
+
         const login = ref('')
         const password = ref('')
         const confirmPassword = ref('')
 
         const isLogin = computed(() => props.mode === 'login')
+        const title = computed(() => isLogin.value ? $t('SignIn') : $t('SignUp'))
+        const descriptionLink = computed(() => isLogin.value ? Routes.REGISTER : Routes.LOGIN)
+        const descriptionPrompt = computed(() => isLogin.value ? $t('SignUp') : $t('SignIn'))
+        const descriptionText = computed(() => isLogin.value ? $t('DontHaveAccount') : $t('AlreadyHaveAccount'))
 
         const onSubmit = () => {}
 
@@ -64,6 +66,10 @@ export default {
             password,
             confirmPassword,
             isLogin,
+            title,
+            descriptionLink,
+            descriptionPrompt,
+            descriptionText,
             onSubmit
         }
     }
@@ -71,31 +77,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-//.wis-auth-panel {
-//    max-width: 72rem;
-//    display: flex;
-//    background-color: var(--card-bg-color);
-//    border-radius: 16px;
-//    width: 100%;
-//    overflow: hidden;
-//}
-//
-//.wis-auth-panel__left {
-//    background-color: rgb(30 41 59);
-//    flex: 1 1 auto;
-//    border-right: 1px solid rgb(241, 245, 249, 0.12);
-//    padding: 4rem 7rem;
-//    position: relative;
-//}
-
-//.wis-auth-panel__bg {
-//    position: absolute;
-//    top: 0;
-//    bottom: 0;
-//    left: 0;
-//    right: 0;
-//}
-
 .wis-auth-panel__right {
     padding: 4rem;
     flex-basis: 400px;

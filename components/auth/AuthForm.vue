@@ -31,13 +31,13 @@
     </b-field>
 
     <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width wis-btn--lg">
-      {{ $t('Login_LoginButtonTitle') }}
+      {{ descriptionText }}
     </b-button>
   </form>
 </template>
 
 <script>
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 
 export default {
     name: 'AuthForm',
@@ -51,11 +51,14 @@ export default {
     },
 
     setup (props) {
+        const { $t } = useContext()
+
         const login = ref('')
         const password = ref('')
         const confirmPassword = ref('')
 
         const isLogin = computed(() => props.mode === 'login')
+        const descriptionText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
 
         const onSubmit = () => {}
 
@@ -64,6 +67,7 @@ export default {
             password,
             confirmPassword,
             isLogin,
+            descriptionText,
             onSubmit
         }
     }

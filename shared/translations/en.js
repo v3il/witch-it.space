@@ -103,6 +103,12 @@ export const en = {
     Message: 'Message',
     SendTradeOffer: 'Send a trade offer',
     ActionRequired: 'Action required',
+    SignIn: 'Sign in',
+    SignUp: 'Sign up',
+    DontHaveAccount: 'Don\'t have an account?',
+    AlreadyHaveAccount: 'Already have an account?',
+    CreateYourAccount: 'Create your account',
+    OrContinueWith: 'Or continue with',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',
