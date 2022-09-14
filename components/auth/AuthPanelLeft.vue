@@ -3,18 +3,18 @@
     <img
       src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/hey_FUluxceLg.webp?ik-sdk-version=javascript-1.4.3&updatedAt=1662754137677"
       alt="hey"
-      class="wis-auth-panel__logo wit-offset-bottom--lg"
+      class="wis-auth-panel__logo wit-offset-bottom--md"
     >
 
     <h2 class="wis-auth-panel__left-title">
-      Welcome to<br> our community
+      Welcome to our community!
     </h2>
 
     <p class="wis-auth-panel__left-description wit-offset-bottom--md">
       Witch It.Space is a trading website dedicated to Witch It, a hide and seek game. It can be used to find and offer cosmetic items.
     </p>
 
-    <AuthPanelUsers />
+    <AuthPanelUsers class="wit-offset-bottom--xxlg" />
   </div>
 </template>
 
@@ -43,23 +43,25 @@ export default {
     background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat center;
     background-size: 100% 100%;
     flex-basis: 350px;
-    //display: flex;
-    //flex-direction: column;
-    //justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .wis-auth-panel__logo {
     display: block;
     width: 100px;
     border-radius: 8px;
+    margin: 0 auto;
 }
 
 .wis-auth-panel__left-title {
     color: rgb(241 245 249);
-    line-height: 1;
+    line-height: 1.1;
     font-weight: 700;
     font-size: 3rem;
     margin-bottom: 24px;
+    text-align: center;
 }
 
 .wis-auth-panel__left-description {
