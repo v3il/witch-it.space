@@ -35,6 +35,9 @@ export const en = {
     Success_QuestReplacing: 'Quest replaced',
     Success_QuestFinalization: 'Quest reward received',
 
+    AuthForm_Title: 'Welcome to our community!',
+    AuthForm_Description: `${APP_NAME} is a trading website dedicated to Witch It, a hide and seek game. It can be used to find and offer cosmetic items.`,
+
     Login_WelcomeBack: 'Welcome!',
     Login_SignInToContinue: `Login to your ${APP_NAME} account`,
     Login_LoginInputTitle: 'Login',

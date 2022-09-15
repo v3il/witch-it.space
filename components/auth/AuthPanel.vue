@@ -37,7 +37,7 @@ export default {
     width: 100%;
     overflow: hidden;
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1250px) {
         max-width: 400px;
     }
 }

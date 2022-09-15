@@ -3,7 +3,7 @@
     <Header />
 
     <Navigation v-if="isAuthorized" :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
-    <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom--md" />
+    <!--    <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom&#45;&#45;md" />-->
 
     <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
   </div>
@@ -39,10 +39,10 @@ export default {
         const marketSize = computed(() => user.value.marketSize)
         const wishlistSize = computed(() => user.value.wishlistSize)
 
-        const authLinks = computed(() => [
-            { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
-            { icon: 'account-plus-outline', label: 'MainMenu_Register', to: Routes.REGISTER }
-        ])
+        // const authLinks = computed(() => [
+        //     { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
+        //     { icon: 'account-plus-outline', label: 'MainMenu_Register', to: Routes.REGISTER }
+        // ])
 
         const userLinks = computed(() => [
             { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: marketSize.value },
@@ -65,7 +65,7 @@ export default {
             return isAuthorized.value ? links.concat(authorizedLinks) : links
         })
 
-        return { userLinks, appLinks, authLinks, isAuthorized }
+        return { userLinks, appLinks, isAuthorized }
     }
 }
 </script>

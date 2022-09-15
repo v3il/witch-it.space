@@ -4,7 +4,7 @@
       <img v-for="(avatarUrl, index) in avatarUrls" :key="index" :src="avatarUrl" :alt="index" class="wis-auth-form-users__img">
     </div>
 
-    <span class="wit-color--muted">More than 17k people joined us, it's your turn</span>
+    <span class="wit-color--muted wit-line-height--sm">17k people joined us, it's your turn</span>
   </div>
 </template>
 

@@ -7,22 +7,18 @@
     >
 
     <h2 class="wis-auth-panel__left-title">
-      Welcome to our community!
+      {{ $t('AuthForm_Title') }}
     </h2>
 
     <p class="wis-auth-panel__left-description wit-offset-bottom--md">
-      Witch It.Space is a trading website dedicated to Witch It, a hide and seek game. It can be used to find and offer cosmetic items.
+      {{ $t('AuthForm_Description') }}
     </p>
 
-    <AuthPanelUsers class="wit-offset-bottom--xxlg" />
+    <AuthPanelUsers class="wis-auth-panel__left-users" />
   </div>
 </template>
 
 <script>
-import { computed, ref } from '@nuxtjs/composition-api'
-import AuthForm from '@/components/auth/AuthForm.vue'
-import Logo from '@/components/sidebar/components/Logo.vue'
-import Socials from '@/components/auth/Socials.vue'
 import AuthPanelUsers from '@/components/auth/AuthPanelUsers.vue'
 
 export default {
@@ -42,7 +38,7 @@ export default {
     position: relative;
     background: url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat center;
     background-size: 100% 100%;
-    flex-basis: 350px;
+    flex-basis: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,11 +53,10 @@ export default {
 
 .wis-auth-panel__left-title {
     color: rgb(241 245 249);
-    line-height: 1.1;
+    line-height: 1.15;
     font-weight: 700;
     font-size: 3rem;
     margin-bottom: 24px;
-    text-align: center;
 }
 
 .wis-auth-panel__left-description {
@@ -71,18 +66,27 @@ export default {
     font-size: 1rem;
 }
 
-@media (max-width: 1200px) {
+.wis-auth-panel__left-users {
+    margin-bottom: 40px;
+}
+
+@media (max-width: 1250px) {
     .wis-auth-panel__left {
         padding: 24px;
         border-right: none;
     }
 
     .wis-auth-panel__left-title {
-        font-size: 24px;
+        font-size: 32px;
+        text-align: center;
+    }
 
-        br {
-            display: none;
-        }
+    .wis-auth-panel__left-description {
+        text-align: center;
+    }
+
+    .wis-auth-panel__left-users {
+        margin-bottom: 0;
     }
 }
 </style>
