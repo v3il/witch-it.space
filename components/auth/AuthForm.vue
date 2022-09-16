@@ -37,7 +37,8 @@
 </template>
 
 <script>
-import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
+import { Routes, validateLogin, validatePassword } from '@/shared/index.js'
 
 export default {
     name: 'AuthForm',
@@ -51,7 +52,9 @@ export default {
     },
 
     setup (props) {
-        const { $t } = useContext()
+        const { $t, $showError } = useContext()
+        const store = useStore()
+        const router = useRouter()
 
         const login = ref('')
         const password = ref('')
@@ -60,7 +63,47 @@ export default {
         const isLogin = computed(() => props.mode === 'login')
         const descriptionText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
 
-        const onSubmit = () => {}
+        const triggerLogin = () => {
+            const loginError = validateLogin(login.value)
+
+            if (loginError) {
+                return $showError($t(loginError))
+            }
+
+            const passwordError = validatePassword(password.value)
+
+            if (passwordError) {
+                return $showError($t(passwordError))
+            }
+
+            store.dispatch('user/login', { login: login.value, password: password.value })
+                .then(() => router.replace(Routes.MAIN))
+                .catch(error => $showError(error.message))
+        }
+
+        const triggerRegister = () => {
+            const loginError = validateLogin(login.value)
+
+            if (loginError) {
+                return $showError($t(loginError))
+            }
+
+            const passwordError = validatePassword(password.value)
+
+            if (passwordError) {
+                return $showError($t(passwordError))
+            }
+
+            if (password.value !== confirmPassword.value) {
+                return $showError($t('Error_PasswordsAreNotIdentical'))
+            }
+
+            store.dispatch('user/register', { login: login.value, password: password.value })
+                .then(() => router.replace(Routes.MAIN))
+                .catch(error => $showError(error.message))
+        }
+
+        const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()
 
         return {
             login,

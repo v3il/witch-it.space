@@ -10,9 +10,7 @@
       {{ $t('AuthForm_Title') }}
     </h2>
 
-    <p class="wis-auth-panel__left-description wit-offset-bottom--md">
-      {{ $t('AuthForm_Description') }}
-    </p>
+    <p class="wis-auth-panel__left-description wit-offset-bottom--md" v-html="$t('AuthForm_Description')" />
 
     <AuthPanelUsers class="wis-auth-panel__left-users" />
   </div>
