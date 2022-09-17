@@ -68,10 +68,6 @@ export default {
     text-align: center;
 }
 
-//.wis-auth-panel__left-users {
-//    margin-bottom: 40px;
-//}
-
 @media (max-width: 1250px) {
     .wis-auth-panel__left {
         padding: 24px;
@@ -80,15 +76,6 @@ export default {
 
     .wis-auth-panel__left-title {
         font-size: 32px;
-        text-align: center;
-    }
-
-    .wis-auth-panel__left-description {
-        text-align: center;
-    }
-
-    .wis-auth-panel__left-users {
-        margin-bottom: 0;
     }
 }
 </style>
