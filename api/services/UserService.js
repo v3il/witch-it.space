@@ -1,4 +1,5 @@
 import { compare, genSalt, hash } from 'bcrypt'
+import { fn } from 'objection'
 import { User } from '../models'
 import { getCurrentTimestamp } from '../../shared'
 
@@ -11,8 +12,9 @@ export class UserService {
         return User.query().resultSize()
     }
 
-    getRandomUserAvatar () {
-        return User.raw('SELECT avatarId FROM users ORDER BY RANDOM() LIMIT 4')
+    async getRandomUserAvatar () {
+        const records = await User.query().select('avatarId').limit(4).orderBy(fn('random'))
+        return records.map(user => user.avatarId)
     }
 
     async getByDiscordId (discordId) {
