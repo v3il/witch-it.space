@@ -31,7 +31,7 @@
     </b-field>
 
     <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn--rounded wit-block--full-width wis-btn--lg">
-      {{ descriptionText }}
+      {{ buttonText }}
     </b-button>
   </form>
 </template>
@@ -61,7 +61,7 @@ export default {
         const confirmPassword = ref('')
 
         const isLogin = computed(() => props.mode === 'login')
-        const descriptionText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
+        const buttonText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
 
         const triggerLogin = () => {
             const loginError = validateLogin(login.value)
@@ -110,7 +110,7 @@ export default {
             password,
             confirmPassword,
             isLogin,
-            descriptionText,
+            buttonText,
             onSubmit
         }
     }
