@@ -28,6 +28,7 @@ export default {
 .wis-auth-form-users {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .wis-auth-form-users__img {

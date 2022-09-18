@@ -1,7 +1,7 @@
 <template>
   <div class="wis-auth-panel__left">
     <img
-      src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/hey_FUluxceLg.webp?ik-sdk-version=javascript-1.4.3&updatedAt=1662754137677"
+      src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/SticerRE_jYv6JoI6p.png?ik-sdk-version=javascript-1.4.3&updatedAt=1663526734143"
       alt="hey"
       class="wis-auth-panel__logo wit-offset-bottom--md"
     >
@@ -46,7 +46,7 @@ export default {
 
 .wis-auth-panel__logo {
     display: block;
-    width: 100px;
+    width: 200px;
     border-radius: 8px;
     margin: 0 auto;
 }
@@ -57,6 +57,7 @@ export default {
     font-weight: 700;
     font-size: 3rem;
     margin-bottom: 24px;
+    text-align: center;
 }
 
 .wis-auth-panel__left-description {
@@ -64,11 +65,12 @@ export default {
     letter-spacing: -0.025em;
     line-height: 1.71;
     font-size: 1rem;
+    text-align: center;
 }
 
-.wis-auth-panel__left-users {
-    margin-bottom: 40px;
-}
+//.wis-auth-panel__left-users {
+//    margin-bottom: 40px;
+//}
 
 @media (max-width: 1250px) {
     .wis-auth-panel__left {
