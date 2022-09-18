@@ -4,22 +4,29 @@
       <img v-for="(avatarUrl, index) in avatarUrls" :key="index" :src="avatarUrl" :alt="index" class="wis-auth-form-users__img">
     </div>
 
-    <span class="wit-color--muted wit-line-height--sm">17k people joined us, it's your turn</span>
+    <span class="wit-color--muted wit-line-height--sm">{{ usersCount }} people joined us, it's your turn</span>
   </div>
 </template>
 
 <script>
+import { computed, useStore } from '@nuxtjs/composition-api'
 import { buildAvatarUrl } from '@/utils/index.js'
 
 export default {
     name: 'AuthPanelUsers',
 
     setup () {
+        const store = useStore()
+
+        const usersCount = computed(() => store.state.global.usersCount)
+
+        console.error(222, usersCount.value)
+
         const genAvatarId = () => Math.floor(Math.random() * 11) + 1
 
         const avatarUrls = [genAvatarId(), genAvatarId(), genAvatarId(), genAvatarId()].map(id => buildAvatarUrl(id))
 
-        return { avatarUrls }
+        return { usersCount, avatarUrls }
     }
 }
 </script>

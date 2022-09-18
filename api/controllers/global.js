@@ -1,8 +1,9 @@
-const loadGlobalData = (request, response) => {
-    const { user } = request
-    const parsedUser = user ? user.getPublicData() : null
+import { userService } from '../services'
 
-    response.send({ user: parsedUser })
+const loadGlobalData = async (request, response) => {
+    const usersCount = await userService.getUsersCount()
+
+    response.send({ usersCount })
 }
 
 const globalController = { loadGlobalData }

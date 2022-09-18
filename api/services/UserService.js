@@ -7,6 +7,14 @@ export class UserService {
         return User.query().findById(id)
     }
 
+    getUsersCount () {
+        return User.query().resultSize()
+    }
+
+    getRandomUserAvatar () {
+        return User.raw('SELECT avatarId FROM users ORDER BY RANDOM() LIMIT 4')
+    }
+
     async getByDiscordId (discordId) {
         const users = await User.query().where('discordId', discordId)
         return users[0]
