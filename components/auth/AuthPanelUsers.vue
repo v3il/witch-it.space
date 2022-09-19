@@ -6,18 +6,19 @@
       </NuxtLink>
     </div>
 
-    <span class="wit-color--muted wit-line-height--sm">{{ $t('AuthForm_UsersStat', [usersCount]) }}</span>
+    <span class="wit-color--muted wit-line-height--sm">{{ usersCountText }}</span>
   </div>
 </template>
 
 <script>
-import { useStore } from '@nuxtjs/composition-api'
+import { computed, useStore } from '@nuxtjs/composition-api'
 import { buildAvatarUrl, buildUserMarketUrl } from '@/utils/index.js'
 
 export default {
     name: 'AuthPanelUsers',
 
     setup () {
+        const { $t } = useStore()
         const store = useStore()
 
         const usersCount = store.state.global.usersCount
@@ -29,7 +30,13 @@ export default {
             name: user.displayName
         }))
 
-        return { usersCount, randomUsers }
+        const usersCountText = computed(() => {
+            return randomUsers.length === usersCount
+                ? $t('AuthForm_UsersStat', [usersCount])
+                : $t('AuthForm_UsersStat2', [usersCount - randomUsers.length])
+        })
+
+        return { randomUsers, usersCountText }
     }
 }
 </script>

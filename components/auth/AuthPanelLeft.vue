@@ -45,6 +45,7 @@ export default {
 .wis-auth-panel__logo {
     display: block;
     width: 200px;
+    height: 200px;
     border-radius: 8px;
     margin: 0 auto;
 }

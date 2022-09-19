@@ -38,6 +38,7 @@ export const en = {
     AuthForm_Title: 'Welcome to our community!',
     AuthForm_Description: `${APP_NAME} is a trading website dedicated to <a href="https://store.steampowered.com/app/559650/Witch_It/" rel="noreferrer" target="_blank">Witch It</a>, a hide and seek game. It can be used to find and offer cosmetic items.`,
     AuthForm_UsersStat: '%s people joined us, it\'s your turn',
+    AuthForm_UsersStat2: 'and %s more joined us, it\'s your turn',
 
     Login_WelcomeBack: 'Welcome!',
     Login_SignInToContinue: `Login to your ${APP_NAME} account`,
