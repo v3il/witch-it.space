@@ -1,15 +1,14 @@
 export const state = () => ({
     usersCount: 0,
-    randomAvatars: []
+    randomUsers: []
 })
 
 export const actions = {
     loadGlobalData ({ commit }) {
         return this.$axios.$get('/api/global')
-            .then(({ usersCount, randomAvatars }) => {
-                console.log(555, usersCount, randomAvatars)
+            .then(({ usersCount, randomUsers }) => {
                 commit('SET_USERS_COUNT', usersCount)
-                commit('SET_RANDOM_AVATARS', randomAvatars)
+                commit('SET_RANDOM_USERS', randomUsers)
             })
             .catch(console.error)
     }
@@ -20,7 +19,7 @@ export const mutations = {
         state.usersCount = usersCount
     },
 
-    SET_RANDOM_AVATARS (state, randomAvatars) {
-        state.randomAvatars = randomAvatars
+    SET_RANDOM_USERS (state, randomUsers) {
+        state.randomUsers = randomUsers
     }
 }

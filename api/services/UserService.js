@@ -12,9 +12,9 @@ export class UserService {
         return User.query().resultSize()
     }
 
-    async getRandomUserAvatar () {
-        const records = await User.query().select('avatarId').limit(4).orderBy(fn('random'))
-        return records.map(user => user.avatarId)
+    async getRandomUsers () {
+        const records = await User.query().select().limit(4).orderBy(fn('random'))
+        return records.map(user => user.getPublicData())
     }
 
     async getByDiscordId (discordId) {

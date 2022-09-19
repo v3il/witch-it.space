@@ -1,7 +1,9 @@
 <template>
   <div class="wis-auth-form-users">
     <div class="wit-offset-right--xsm wit-flex__item--no-shrink">
-      <img v-for="(avatarUrl, index) in avatarUrls" :key="index" :src="avatarUrl" :alt="index" class="wis-auth-form-users__img">
+      <NuxtLink v-for="userData in randomUsers" :key="userData.id" v-tooltip="userData.name" :to="userData.marketUrl" class="wis-auth-form-users__link">
+        <img :src="userData.avatarUrl" :alt="userData.name" class="wis-auth-form-users__img">
+      </NuxtLink>
     </div>
 
     <span class="wit-color--muted wit-line-height--sm">{{ $t('AuthForm_UsersStat', [usersCount]) }}</span>
@@ -10,7 +12,7 @@
 
 <script>
 import { useStore } from '@nuxtjs/composition-api'
-import { buildAvatarUrl } from '@/utils/index.js'
+import { buildAvatarUrl, buildUserMarketUrl } from '@/utils/index.js'
 
 export default {
     name: 'AuthPanelUsers',
@@ -19,9 +21,15 @@ export default {
         const store = useStore()
 
         const usersCount = store.state.global.usersCount
-        const avatarUrls = store.state.global.randomAvatars.map(id => buildAvatarUrl(id))
 
-        return { usersCount, avatarUrls }
+        const randomUsers = store.state.global.randomUsers.map(user => ({
+            id: user.id,
+            avatarUrl: buildAvatarUrl(user.avatarId),
+            marketUrl: buildUserMarketUrl(user.id),
+            name: user.displayName
+        }))
+
+        return { usersCount, randomUsers }
     }
 }
 </script>
@@ -33,7 +41,8 @@ export default {
     justify-content: center;
 }
 
-.wis-auth-form-users__img {
+.wis-auth-form-users__link {
+    display: inline-block;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -42,5 +51,11 @@ export default {
     &:not(:first-child) {
         margin-left: -18px;
     }
+}
+
+.wis-auth-form-users__img {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
 }
 </style>
