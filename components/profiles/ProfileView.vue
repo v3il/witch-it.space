@@ -24,12 +24,12 @@
 
     <div class="wit-flex wis-user-view_buttons">
       <b-button type="is-ghost" tag="nuxt-link" :to="marketUrl" class="wis-user-view_button">
-        Market
+        {{ $t('Market') }}
         <span v-if="profile.marketSize" class="wit-color--muted wit-font-size--xxs">({{ profile.marketSize }})</span>
       </b-button>
 
       <b-button type="is-ghost" tag="nuxt-link" :to="wishlistUrl" class="wis-user-view_button">
-        Wishlist
+        {{ $t('Wishlist') }}
         <span v-if="profile.wishlistSize" class="wit-color--muted wit-font-size--xxs">({{ profile.wishlistSize }})</span>
       </b-button>
     </div>
@@ -164,6 +164,8 @@ export default {
     },
 
     setup (props) {
+        // const isProfileVerified = comp
+
         console.error(props.profile.isVerified)
     },
 

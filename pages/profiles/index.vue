@@ -36,6 +36,8 @@ export default {
         const store = useStore()
         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
 
+        console.error(sortedProfiles.value)
+
         return { sortedProfiles }
     },
 
