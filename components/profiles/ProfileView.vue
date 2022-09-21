@@ -12,13 +12,15 @@
       <b-taglist class="wit-flex--justify-center">
         <b-tag class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
           <div class="wit-flex wit-flex--align-center">
-            <i class="mdi wit-offset-right--xxs" :class="isVerifiedIconClass" /> {{ $t(isVerifiedTagText) }}
+            {{ $t('Verified') }}:
+            <i class="mdi wit-offset-left--xxs" :class="isVerifiedIconClass" />
           </div>
         </b-tag>
 
         <b-tag class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
           <div class="wit-flex wit-flex--align-center">
-            <i class="mdi wit-offset-right--xxs" :class="hasSteamGuardIconClass" /> Steam Guard
+            Steam Guard:
+            <i class="mdi wit-offset-left--xxs" :class="hasSteamGuardIconClass" />
           </div>
         </b-tag>
       </b-taglist>
@@ -112,7 +114,7 @@ export default {
 .wis-user-view__tag {
     --icon-color: #fff;
 
-    background-color: transparent; //var(--price-bg);
+    background-color: transparent;
     border: 1px solid #64748b;
     margin-left: 4px;
     margin-right: 4px !important;
