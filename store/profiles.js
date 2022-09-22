@@ -48,6 +48,7 @@ export const actions = {
     async fetchProfiles ({ commit }) {
         const { profiles } = await usersService.fetchAll()
         commit('SET_PROFILES', profiles)
+        commit('MAP_PROFILES')
     }
 }
 
@@ -55,9 +56,10 @@ export const mutations = {
     ...filtersMutations,
 
     SET_PROFILES (state, profiles) {
-        console.error('set')
-
         state.rawProfiles = profiles
-        state.profiles = profiles.map(profile => User.create(profile))
+    },
+
+    MAP_PROFILES (state) {
+        state.profiles = state.rawProfiles.map(profile => User.create(profile))
     }
 }

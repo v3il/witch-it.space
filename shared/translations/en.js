@@ -114,6 +114,7 @@ export const en = {
     AlreadyHaveAccount: 'Already have an account?',
     CreateYourAccount: 'Create your account',
     OrContinueWith: 'Or continue with',
+    Verification: 'Verification',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',

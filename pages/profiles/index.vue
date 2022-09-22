@@ -36,7 +36,7 @@ export default {
         const store = useStore()
         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
 
-        console.error(sortedProfiles.value)
+        store.commit('profiles/MAP_PROFILES')
 
         return { sortedProfiles }
     },
@@ -47,6 +47,8 @@ export default {
             defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
             availableSorts: ProfilesFiltersScheme.getAvailableSorts()
         })
+
+        console.error('ASYNC')
 
         await store.dispatch('profiles/fetchProfiles')
 

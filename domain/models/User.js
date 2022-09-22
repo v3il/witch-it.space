@@ -31,7 +31,7 @@ export class User {
     }
 
     get isVerified () {
-        return !!this.steamId && !!this.discordId && !!this.steamTradeLink
+        return !!this.steamId && !!this.steamTradeLink
     }
 
     get hasSteamGuard () {
