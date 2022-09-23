@@ -19,8 +19,12 @@ export const getTranslation = (lngSet, textId, replacements = []) => {
         return text.apply(null, replacements)
     }
 
-    replacements.forEach((replacement) => {
+    replacements.forEach((replacement, index) => {
         text = text.replace('%s', replacement.toString())
+        text = text.replace(new RegExp(`{${index}\\|(.*?)\\|(.*?)\\|}`), (part) => {
+            const [, singleForm, pluralForm] = part.split('|')
+            return replacement === 1 ? singleForm : pluralForm
+        })
     })
 
     return text

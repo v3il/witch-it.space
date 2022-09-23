@@ -240,7 +240,7 @@ export const en = {
     Profiles_ProfileNotFound: 'Profile not found',
     Profiles_BackToProfilesList: 'Back to all profiles',
     Profiles_HeaderTitle: 'All Profiles',
-    Profiles_Description: '<span class="wit-color--white">%s</span> registered profile(s), <span class="wit-color--white">%s</span> verified profile(s)',
+    Profiles_Description: '<span class="wit-color--white">%s</span> registered {0|profile|profiles|}, <span class="wit-color--white">%s</span> verified {1|profile|profiles|}',
 
     Profiles_Sort_Market: 'Market',
     Profiles_Sort_Wishlist: 'Wishlist',
