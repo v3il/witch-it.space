@@ -267,7 +267,7 @@ export const en = {
     Items_SearchByItemName: 'Item search',
     Items_NoItems: 'No Items',
     Items_Title: 'Witch It Items',
-    Items_Description: '<span class="wit-color--white">%s</span> items in total, <span class="wit-color--white">%s</span> tradeable items',
+    Items_Description: '<span class="wit-color--white">%s</span> {0|items|items|} in total, <span class="wit-color--white">%s</span> tradeable {1|items|items|}',
 
     Wishlist_TopTabs_Orders: 'Offers',
     Wishlist_TopTabs_Wishlist: 'Wishlist',
