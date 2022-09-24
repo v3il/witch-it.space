@@ -69,6 +69,7 @@ export default {
     flex-direction: column;
     height: 20rem;
     flex-basis: 320px;
+    border: 1px solid #64748b;
 }
 
 .wis-quest-view__name {
