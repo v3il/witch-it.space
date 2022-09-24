@@ -44,7 +44,7 @@
 
 <script>
 import { computed } from '@nuxtjs/composition-api'
-import { buildAvatarUrl } from '@/utils/index.js'
+import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils/index.js'
 import { UserAvatar } from '@/components/user/index.js'
 
 export default {
@@ -64,8 +64,8 @@ export default {
     setup (props) {
         const isVerified = computed(() => props.profile.isVerified)
         const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
-        const marketUrl = computed(() => buildAvatarUrl(props.profile.id))
-        const wishlistUrl = computed(() => buildAvatarUrl(props.profile.id))
+        const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
+        const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
 
         const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
         const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi-check' : 'mdi-close')
