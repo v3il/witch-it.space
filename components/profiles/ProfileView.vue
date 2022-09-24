@@ -12,7 +12,7 @@
       <b-taglist class="wit-flex--justify-center">
         <b-tag class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
           <div class="wit-flex wit-flex--align-center">
-            <i class="mdi wit-offset-right--xxs" :class="isVerifiedIconClass" /> {{ $t('Verification') }}
+            <i class="mdi wit-offset-right--xxs" :class="isVerifiedIconClass" /> {{ $t(isVerifiedTagText) }}
           </div>
         </b-tag>
 
@@ -40,13 +40,8 @@
 
 <script>
 import { computed } from '@nuxtjs/composition-api'
-import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils/index.js'
-import ProfileScale from '@/components/profiles/ProfileScale.vue'
-import { buildRarityFilterUrl } from '@/utils/buildUrls.js'
-import UserIcons from '@/components/user/UserIcons.vue'
-import { Card } from '@/components/basic/index.js'
+import { buildAvatarUrl } from '@/utils/index.js'
 import { UserAvatar } from '@/components/user/index.js'
-import { User } from '@/domain/models/index.js'
 
 export default {
     name: 'UserView',
@@ -64,27 +59,27 @@ export default {
 
     setup (props) {
         const isVerified = computed(() => props.profile.isVerified)
+        const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
+        const marketUrl = computed(() => buildAvatarUrl(props.profile.id))
+        const wishlistUrl = computed(() => buildAvatarUrl(props.profile.id))
+
         const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
         const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi-check' : 'mdi-close')
+        const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
 
         const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
         const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
         const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi-check' : 'mdi-close')
 
-        return { isVerifiedTagClass, isVerifiedIconClass, hasSteamGuardTagClass, hasSteamGuardIconClass }
-    },
-
-    computed: {
-        avatarUrl () {
-            return buildAvatarUrl(this.profile.avatarId)
-        },
-
-        marketUrl () {
-            return buildUserMarketUrl(this.profile.id)
-        },
-
-        wishlistUrl () {
-            return buildUserWishlistUrl(this.profile.id)
+        return {
+            avatarUrl,
+            marketUrl,
+            wishlistUrl,
+            isVerifiedTagClass,
+            isVerifiedIconClass,
+            isVerifiedTagText,
+            hasSteamGuardTagClass,
+            hasSteamGuardIconClass
         }
     }
 }
@@ -117,7 +112,8 @@ export default {
 .wis-user-view__tag {
     --icon-color: #fff;
 
-    background-color: #334155;
+    background-color: transparent; //var(--price-bg);
+    border: 1px solid #64748b;
     margin-left: 4px;
     margin-right: 4px !important;
     color: var(--muted-text-color);
