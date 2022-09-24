@@ -38,6 +38,7 @@ export default {
         const userId = computed(() => user.value.id)
         const marketSize = computed(() => user.value.marketSize)
         const wishlistSize = computed(() => user.value.wishlistSize)
+        const profilesCount = computed(() => store.state.global.usersCount)
 
         const authLinks = computed(() => [
             { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
@@ -53,7 +54,7 @@ export default {
 
         const appLinks = computed(() => {
             const links = [
-                { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES },
+                { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES, badge: profilesCount.value },
                 { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: $itemsService.count }
             ]
 

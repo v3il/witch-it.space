@@ -47,8 +47,10 @@ export const actions = {
 
     async fetchProfiles ({ commit }) {
         const { profiles } = await usersService.fetchAll()
+
         commit('SET_PROFILES', profiles)
         commit('MAP_PROFILES')
+        commit('global/SET_USERS_COUNT', profiles.length, { root: true })
     }
 }
 
