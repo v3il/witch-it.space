@@ -3,27 +3,29 @@
     <div class="wis-user-view__section wit-flex wit-flex--align-center wit-flex--column">
       <UserAvatar :user="profile" class="wis-user-view__avatar wit-offset-bottom--sm" />
 
-      <h5 class="wit-font-size--sm wit-text--overflow wit-offset-bottom--sm">
-        {{ profile.displayName }}
-      </h5>
-    </div>
+      <div class="wit-flex wit-flex--column wit-flex--align-center">
+        <h5 class="wit-font-size--sm wit-text--overflow wit-offset-bottom--sm">
+          {{ profile.displayName }}
+        </h5>
 
-    <div class="wis-user-view__tags">
-      <b-taglist class="wit-flex--justify-center">
-        <b-tag class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
-          <div class="wit-flex wit-flex--align-center">
-            {{ $t('Verified') }}:
-            <i class="mdi wit-offset-left--xxs" :class="isVerifiedIconClass" />
-          </div>
-        </b-tag>
+        <div class="wis-user-view__tags">
+          <b-taglist class="wit-flex--justify-center">
+            <b-tag class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
+              <div class="wit-flex wit-flex--align-center">
+                {{ $t('Verified') }}:
+                <i class="mdi wit-offset-left--xxs" :class="isVerifiedIconClass" />
+              </div>
+            </b-tag>
 
-        <b-tag class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
-          <div class="wit-flex wit-flex--align-center">
-            Steam Guard:
-            <i class="mdi wit-offset-left--xxs" :class="hasSteamGuardIconClass" />
-          </div>
-        </b-tag>
-      </b-taglist>
+            <b-tag class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
+              <div class="wit-flex wit-flex--align-center">
+                Steam Guard:
+                <i class="mdi wit-offset-left--xxs" :class="hasSteamGuardIconClass" />
+              </div>
+            </b-tag>
+          </b-taglist>
+        </div>
+      </div>
     </div>
 
     <div class="wit-flex wis-user-view_buttons">
@@ -93,10 +95,11 @@ export default {
     background-color: var(--card-bg-color);
     overflow: hidden;
     position: relative;
+    border: 1px solid #64748b;
 }
 
 .wis-user-view__section {
-    padding: 32px 32px 0;
+    padding: 32px 4px 0;
 }
 
 .wis-user-view__avatar {

@@ -38,5 +38,10 @@ export default {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-auto-rows: max-content;
     gap: 24px;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(auto-fill, 275px);
+        justify-content: center;
+    }
 }
 </style>
