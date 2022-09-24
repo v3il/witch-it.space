@@ -34,10 +34,11 @@ export default {
 <style scoped lang="scss">
 .wis-scroll-top {
     position: fixed;
-    right: 24px;
-    bottom: 24px;
-    width: 40px;
-    height: 40px;
+    right: 16px;
+    bottom: 16px;
+    width: 45px;
+    height: 45px;
+    max-height: none;
     border-radius: 50%;
     padding: 0;
     min-width: 0;
