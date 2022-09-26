@@ -296,6 +296,9 @@ export const en = {
     UserHeader_DiscordIsNotConnected: 'Discord is not connected',
     UserHeader_TradeLinkIsNotProvided: 'Trade link is not provided',
 
+    ManagePage_ManageMarket: 'Manage your Market',
+    ManagePage_ManageWishlist: 'Manage your Wishlist',
+
     Offers_FilterItems: 'More filters',
     Offers_SearchItem: 'Search item by name',
 

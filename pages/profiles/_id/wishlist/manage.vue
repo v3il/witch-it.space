@@ -1,7 +1,7 @@
 <template>
   <div class="wit-flex wit-flex--column wit-offers-page">
-    <UserHeader :mode="offersType" />
-    <UserHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
+    <ManagePageHeader :mode="offersType" />
+    <ManagePageHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
 
     <div class="wit-offers-page__content">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
@@ -181,6 +181,7 @@ import { buildUserWishlistUrl } from '@/utils/index.js'
 import { useOffersPage } from '@/composables/index.js'
 import { UserHeader, OfferTabs, OffersList } from '@/components/offers/index.js'
 import { ItemsFilters, Search } from '@/components/basic/index.js'
+import ManagePageHeader from '@/components/offers/ManagePageHeader.vue'
 
 export default {
     name: 'Manage',
@@ -206,7 +207,8 @@ export default {
         OfferTabs,
         OffersList,
         ItemsFilters,
-        Search
+        Search,
+        ManagePageHeader
     },
 
     // async asyncData ({ route, $wishlistService, store }) {
