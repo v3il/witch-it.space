@@ -4,7 +4,8 @@ export const state = () => ({
     quests: [],
     isLoading: false,
     canReplaceDailyQuests: true,
-    canReplaceWeeklyQuests: true
+    canReplaceWeeklyQuests: true,
+    questsUpdateTimestamp: 0
 })
 
 export const actions = {
