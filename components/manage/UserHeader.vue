@@ -5,33 +5,32 @@
         <UserAvatar :user="profile" class="wis-user-card__avatar" />
 
         <div class="wit-offset-left--sm wit-flex__item--grow wis-min-width--none">
-          <ManagePageHeaderTitle :compact="compact" :mode="mode" />
-          <LastUpdate :mode="mode" :profile="profile" />
+          <HeaderTitle :compact="compact" :mode="mode" />
+          <!--          <LastUpdate :mode="mode" :profile="profile" />-->
         </div>
       </div>
 
-      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />
+      <!--      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />-->
     </div>
   </HeaderPanel>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
-import { HeaderActions, HeaderTitle, LastUpdate } from '@/components/offers/header'
+import { HeaderTitle } from './header'
 import { UserAvatar } from '@/components/user'
 import { HeaderPanel } from '@/components/basic'
-import ManagePageHeaderTitle from '@/components/offers/header/ManagePageHeaderTitle.vue'
 
 export default {
     name: 'UserHeader',
 
     components: {
-        HeaderTitle,
-        HeaderActions,
-        LastUpdate,
+        // HeaderTitle,
+        // HeaderActions,
+        // LastUpdate,
         UserAvatar,
         HeaderPanel,
-        ManagePageHeaderTitle
+        HeaderTitle
     },
 
     props: {

@@ -1,13 +1,12 @@
 <template>
   <div class="wit-flex wit-flex--column wit-offers-page">
-    <ManagePageHeader :mode="offersType" />
-    <ManagePageHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
+    <UserHeader :mode="offersType" />
+    <UserHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
 
     <div class="wit-offers-page__content">
       <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        manage
         <Search store-module="offers" class="wit-offset-bottom--md" />
         <OffersList :sorted-offers="sortedOffers" />
       </div>
@@ -179,9 +178,9 @@ import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { OfferTypes, Routes } from '@/shared/index.js'
 import { buildUserWishlistUrl } from '@/utils/index.js'
 import { useOffersPage } from '@/composables/index.js'
-import { UserHeader, OfferTabs, OffersList } from '@/components/offers/index.js'
+import { OffersList } from '@/components/offers/index.js'
 import { ItemsFilters, Search } from '@/components/basic/index.js'
-import ManagePageHeader from '@/components/offers/ManagePageHeader.vue'
+import { UserHeader, OfferTabs } from '@/components/manage'
 
 export default {
     name: 'Manage',
@@ -207,8 +206,7 @@ export default {
         OfferTabs,
         OffersList,
         ItemsFilters,
-        Search,
-        ManagePageHeader
+        Search
     },
 
     // async asyncData ({ route, $wishlistService, store }) {
