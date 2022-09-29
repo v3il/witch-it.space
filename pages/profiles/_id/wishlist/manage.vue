@@ -1,150 +1,158 @@
 <template>
-  <div class="wit-wishlist">
-    <!--    <TopNavBar class="layout__header">-->
-    <!--      <template #brand>-->
-    <!--        <h1 class="wit-font-size&#45;&#45;sm wit-flex wit-flex&#45;&#45;align-center">-->
-    <!--          <BackButton :to="wishlistURL" class="wit-offset-right&#45;&#45;xs" />-->
-    <!--          {{ $t('Wishlist_Manage_Title') }}-->
-    <!--        </h1>-->
-    <!--      </template>-->
-    <!--    </TopNavBar>-->
+  <div class="wit-flex wit-flex--column wit-offers-page">
+    <UserHeader :mode="offersType" />
+    <UserHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
 
-    <div class="wit-wishlist__background wit-flex">
-      <div class="wit-wishlist__content">
-        <div class="wit-flex wit-flex--justify-between wit-wishlist__header">
-          <Tabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">
-            <template #tab0>
-              <div class="wit-flex wit-flex--align-center">
-                <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>
-                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>
-                <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                  {{ sortedOfferModels.length }}
-                </b-tag>
-              </div>
-            </template>
+    <div class="wit-offers-page__content">
+      <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
 
-            <template #tab1>
-              <div class="wit-flex wit-flex--align-center">
-                <span class="wis-tabs__label">{{ $t('Wishlist_OtherItems') }}</span>
-                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>
-                <b-tag rounded class="wit-offset-left--xs wit-font-weight--700">
-                  {{ sortedNonWishlistItems.length }}
-                </b-tag>
-              </div>
-            </template>
-          </Tabs>
-
-          <div class="wit-flex">
-            <SearchInput
-              :placeholder="$t('Items_SearchByItemName')"
-              :query="filters.query"
-              @update="mergeFilters({ query: $event })"
-              @reset="resetFilterParam"
-              @toggle="isFiltersVisible = !isFiltersVisible"
-            />
-
-            <Dropdown position="bottom-end">
-              <template #trigger>
-                <b-button type="is-link" class="wit-position--relative wit-more-actions">
-                  <i class="mdi mdi-20px mdi-cog" />
-                </b-button>
-              </template>
-
-              <template #items>
-                <DropdownItem
-                  v-if="hasSelectedEntities"
-                  @click="clearSelectedEntities"
-                >
-                  {{ $t('Wishlist_Manage_Deselect') }}
-                </DropdownItem>
-
-                <DropdownItem @click="openMassPriceEditor">
-                  <span class="wit-color--success">
-                    {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
-                  </span>
-                </DropdownItem>
-
-                <DropdownItem v-if="isMyWishlistMode" @click="deleteAllOffers">
-                  <span class="wit-color--danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>
-                </DropdownItem>
-              </template>
-            </Dropdown>
-          </div>
-        </div>
-
-        <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__items-list">
-          <template #default="{ items: offers }">
-            <ItemView
-              v-for="(offer, index) in offers"
-              :key="offer.id"
-              :item="offer.item"
-              :is-selected="offer.isSelected"
-              add-title
-              add-border
-              @clicked="toggleOffer(offer)"
-              @shiftClick="onOffersRangeToggle(index)"
-            >
-              <div class="wit-offer-controls">
-                <IconButton
-                  icon="pencil-ruler"
-                  type="primary"
-                  circle
-                  :size="24"
-                  :disabled="offer.isSelected"
-                  @click="editOffer(offer)"
-                />
-              </div>
-
-              <div class="wit-offer-controls wit-offer-controls--remove">
-                <IconButton
-                  icon="close"
-                  type="danger"
-                  circle
-                  :size="24"
-                  :disabled="offer.isSelected"
-                  @click="deleteOffer(offer)"
-                />
-              </div>
-              <ItemPriceList :prices="offer.prices" />
-            </ItemView>
-          </template>
-        </ItemsListView>
-
-        <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__items-list">
-          <template #default="{ items: offers }">
-            <ItemView
-              v-for="(offer, index) in offers"
-              :key="offer.item.id"
-              :item="offer.item"
-              :is-selected="offer.isSelected"
-              add-title
-              add-border
-              @clicked="toggleOffer(offer)"
-              @shiftClick="onOffersRangeToggle(index)"
-            >
-              <div class="wit-offer-controls">
-                <IconButton
-                  icon="plus-thick"
-                  type="primary"
-                  circle
-                  :size="24"
-                  :disabled="offer.isSelected"
-                  @click="addOffer(offer)"
-                />
-              </div>
-            </ItemView>
-          </template>
-        </ItemsListView>
+      <div class="wit-offers-page__offers wis-block--max-width">
+        manage
+        <Search store-module="offers" class="wit-offset-bottom--md" />
+        <OffersList :sorted-offers="sortedOffers" />
       </div>
-
-      <SidebarPanel :is-visible="isFiltersVisible" from="right" icon="filter" :title="$t('Filter')" @close="isFiltersVisible = false">
-        <WishlistFilters />
-      </SidebarPanel>
     </div>
 
-    <SetMassPricePopup />
-    <EditOfferPopup />
+    <ItemsFilters store-module-name="offers" />
   </div>
+
+<!--  <div class="wit-wishlist">-->
+<!--    <div class="wit-wishlist__background wit-flex">-->
+<!--      <div class="wit-wishlist__content">-->
+<!--        <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->
+<!--          <Tabs :modes="$options.modes" :selected-mode="mode" @switch="toggleMode">-->
+<!--            <template #tab0>-->
+<!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+<!--                <span class="wis-tabs__label">{{ $t('Wishlist_MyWishlist') }}</span>-->
+<!--                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-heart" /></span>-->
+<!--                <b-tag rounded class="wit-offset-left&#45;&#45;xs wit-font-weight&#45;&#45;700">-->
+<!--                  {{ sortedOfferModels.length }}-->
+<!--                </b-tag>-->
+<!--              </div>-->
+<!--            </template>-->
+
+<!--            <template #tab1>-->
+<!--              <div class="wit-flex wit-flex&#45;&#45;align-center">-->
+<!--                <span class="wis-tabs__label">{{ $t('Wishlist_OtherItems') }}</span>-->
+<!--                <span class="wis-tabs__icon"><i class="mdi mdi-20px mdi-grid" /></span>-->
+<!--                <b-tag rounded class="wit-offset-left&#45;&#45;xs wit-font-weight&#45;&#45;700">-->
+<!--                  {{ sortedNonWishlistItems.length }}-->
+<!--                </b-tag>-->
+<!--              </div>-->
+<!--            </template>-->
+<!--          </Tabs>-->
+
+<!--          <div class="wit-flex">-->
+<!--            <SearchInput-->
+<!--              :placeholder="$t('Items_SearchByItemName')"-->
+<!--              :query="filters.query"-->
+<!--              @update="mergeFilters({ query: $event })"-->
+<!--              @reset="resetFilterParam"-->
+<!--              @toggle="isFiltersVisible = !isFiltersVisible"-->
+<!--            />-->
+
+<!--            <Dropdown position="bottom-end">-->
+<!--              <template #trigger>-->
+<!--                <b-button type="is-link" class="wit-position&#45;&#45;relative wit-more-actions">-->
+<!--                  <i class="mdi mdi-20px mdi-cog" />-->
+<!--                </b-button>-->
+<!--              </template>-->
+
+<!--              <template #items>-->
+<!--                <DropdownItem-->
+<!--                  v-if="hasSelectedEntities"-->
+<!--                  @click="clearSelectedEntities"-->
+<!--                >-->
+<!--                  {{ $t('Wishlist_Manage_Deselect') }}-->
+<!--                </DropdownItem>-->
+
+<!--                <DropdownItem @click="openMassPriceEditor">-->
+<!--                  <span class="wit-color&#45;&#45;success">-->
+<!--                    {{ isMyWishlistMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}-->
+<!--                  </span>-->
+<!--                </DropdownItem>-->
+
+<!--                <DropdownItem v-if="isMyWishlistMode" @click="deleteAllOffers">-->
+<!--                  <span class="wit-color&#45;&#45;danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>-->
+<!--                </DropdownItem>-->
+<!--              </template>-->
+<!--            </Dropdown>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <ItemsListView v-if="isMyWishlistMode" :items="sortedOfferModels" class="wit-wishlist__items-list">-->
+<!--          <template #default="{ items: offers }">-->
+<!--            <ItemView-->
+<!--              v-for="(offer, index) in offers"-->
+<!--              :key="offer.id"-->
+<!--              :item="offer.item"-->
+<!--              :is-selected="offer.isSelected"-->
+<!--              add-title-->
+<!--              add-border-->
+<!--              @clicked="toggleOffer(offer)"-->
+<!--              @shiftClick="onOffersRangeToggle(index)"-->
+<!--            >-->
+<!--              <div class="wit-offer-controls">-->
+<!--                <IconButton-->
+<!--                  icon="pencil-ruler"-->
+<!--                  type="primary"-->
+<!--                  circle-->
+<!--                  :size="24"-->
+<!--                  :disabled="offer.isSelected"-->
+<!--                  @click="editOffer(offer)"-->
+<!--                />-->
+<!--              </div>-->
+
+<!--              <div class="wit-offer-controls wit-offer-controls&#45;&#45;remove">-->
+<!--                <IconButton-->
+<!--                  icon="close"-->
+<!--                  type="danger"-->
+<!--                  circle-->
+<!--                  :size="24"-->
+<!--                  :disabled="offer.isSelected"-->
+<!--                  @click="deleteOffer(offer)"-->
+<!--                />-->
+<!--              </div>-->
+<!--              <ItemPriceList :prices="offer.prices" />-->
+<!--            </ItemView>-->
+<!--          </template>-->
+<!--        </ItemsListView>-->
+
+<!--        <ItemsListView v-else :items="sortedNonWishlistItems" class="wit-wishlist__items-list">-->
+<!--          <template #default="{ items: offers }">-->
+<!--            <ItemView-->
+<!--              v-for="(offer, index) in offers"-->
+<!--              :key="offer.item.id"-->
+<!--              :item="offer.item"-->
+<!--              :is-selected="offer.isSelected"-->
+<!--              add-title-->
+<!--              add-border-->
+<!--              @clicked="toggleOffer(offer)"-->
+<!--              @shiftClick="onOffersRangeToggle(index)"-->
+<!--            >-->
+<!--              <div class="wit-offer-controls">-->
+<!--                <IconButton-->
+<!--                  icon="plus-thick"-->
+<!--                  type="primary"-->
+<!--                  circle-->
+<!--                  :size="24"-->
+<!--                  :disabled="offer.isSelected"-->
+<!--                  @click="addOffer(offer)"-->
+<!--                />-->
+<!--              </div>-->
+<!--            </ItemView>-->
+<!--          </template>-->
+<!--        </ItemsListView>-->
+<!--      </div>-->
+
+<!--      <SidebarPanel :is-visible="isFiltersVisible" from="right" icon="filter" :title="$t('Filter')" @close="isFiltersVisible = false">-->
+<!--        <WishlistFilters />-->
+<!--      </SidebarPanel>-->
+<!--    </div>-->
+
+<!--    <SetMassPricePopup />-->
+<!--    <EditOfferPopup />-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -168,8 +176,11 @@ import SearchInput from '@/components/basic/filters/SearchInput.vue'
 import { ItemsFiltersScheme } from '@/domain/models/schemes/index.js'
 import BackButton from '@/components/basic/BackButton.vue'
 import SidebarPanel from '@/components/basic/SidebarPanel.vue'
-import { OfferTypes } from '@/shared/index.js'
+import { OfferTypes, Routes } from '@/shared/index.js'
 import { buildUserWishlistUrl } from '@/utils/index.js'
+import { useOffersPage } from '@/composables/index.js'
+import { UserHeader, OfferTabs, OffersList } from '@/components/offers/index.js'
+import { ItemsFilters, Search } from '@/components/basic/index.js'
 
 export default {
     name: 'Manage',
@@ -190,20 +201,25 @@ export default {
         ItemsListView,
         SearchInput,
         BackButton,
-        SidebarPanel
+        SidebarPanel,
+        UserHeader,
+        OfferTabs,
+        OffersList,
+        ItemsFilters,
+        Search
     },
 
-    async asyncData ({ route, $wishlistService, store }) {
-        await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
-
-        await store.dispatch(`${StoreModules.FILTERS}/setData`, {
-            defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
-            defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
-            availableSorts: ItemsFiltersScheme.getAvailableSorts()
-        })
-
-        return $wishlistService.fetch(route.params.id)
-    },
+    // async asyncData ({ route, $wishlistService, store }) {
+    //     await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
+    //
+    //     await store.dispatch(`${StoreModules.FILTERS}/setData`, {
+    //         defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
+    //         defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
+    //         availableSorts: ItemsFiltersScheme.getAvailableSorts()
+    //     })
+    //
+    //     return $wishlistService.fetch(route.params.id)
+    // },
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
@@ -225,30 +241,58 @@ export default {
 
     middleware: ['isAuthorized'],
 
+    setup (props) {
+        const { offersType, isStickyHeaderVisible, sortedOffers } = useOffersPage(OfferTypes.WISHLIST)
+        return { offersType, isStickyHeaderVisible, sortedOffers }
+    },
+
+    // TODO: use Composition API
+    async asyncData ({ store, route, $wishlistService, error, $t }) {
+        await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
+
+        await store.dispatch('offers/setData', {
+            defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
+            defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
+            availableSorts: ItemsFiltersScheme.getAvailableSorts()
+        })
+
+        const { offers, profile } = await $wishlistService.fetch(route.params.id)
+
+        if (!profile) {
+            return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
+        }
+
+        await store.dispatch('offers/setProfile', profile)
+        await store.dispatch('offers/storeOffers', {
+            existingOffers: offers.map(offer => Offer.create(offer)),
+            availableOffers: []
+        })
+    },
+
     data: () => ({
         isFiltersVisible: false
     }),
 
-    created () {
-        if (this.error) {
-            return
-        }
-
-        const tradableItems = this.$itemsService.getTradableItems()
-        const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
-        const nonWishlistItems = tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
-
-        this.storeOffers({
-            existingOffers: this.offers.map(offer => Offer.create(offer)),
-            availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
-        })
-    },
-
-    mounted () {
-        if (this.error) {
-            this.$showError(this.error)
-        }
-    },
+    // created () {
+    //     if (this.error) {
+    //         return
+    //     }
+    //
+    //     const tradableItems = this.$itemsService.getTradableItems()
+    //     const itemsInWishlistIds = this.offers.map(offer => offer.itemId)
+    //     const nonWishlistItems = tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
+    //
+    //     this.storeOffers({
+    //         existingOffers: this.offers.map(offer => Offer.create(offer)),
+    //         availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
+    //     })
+    // },
+    //
+    // mounted () {
+    //     if (this.error) {
+    //         this.$showError(this.error)
+    //     }
+    // },
 
     methods: {
         ...mapActions(StoreModules.OFFERS, {
@@ -345,70 +389,86 @@ export default {
 </script>
 
 <style scoped lang="scss">
-    .wit-wishlist__background {
-        min-height: calc(100vh - var(--header-height));
-        margin: var(--offset-sm) var(--offset-sm) 0;
-        position: relative;
-    }
+.wit-offers-page {
+    min-height: 100vh;
+}
 
-    .wit-wishlist__header {
-        position: sticky;
-        top: 0;
-        padding: var(--offset-sm);
-        background-color: inherit;
-        z-index: 4;
-        border-radius: var(--offset-xxs) var(--offset-xxs) 0 0;
-    }
+.wit-offers-page__content {
+    width: 100%;
+    padding: 24px;
+}
 
-    .wit-wishlist__content {
-        flex: 1;
-        background-color: var(--content-bg);
-        border-radius: var(--offset-xxs);
-        margin-bottom: var(--offset-sm);
-    }
-
-    .wit-wishlist__items-list {
-        padding: 0 var(--offset-sm) var(--offset-sm);
-    }
-
-    .wit-more-actions {
-        width: 36px;
-        height: 36px;
-        padding: 0;
-        transition: width 0.3s ease, margin-right 0.3s ease;
-        will-change: width, margin-left;
-        overflow: hidden;
-        margin-left: var(--offset-xs);
-        background: #2e3648;
-        border: var(--default-border);
-        color: var(--muted-text-color);
-    }
-
-    .wit-offer-controls {
-        position: absolute;
-        top: 16px;
-        right: -10px;
-        padding: var(--offset-xxs) 0 var(--offset-xxs) var(--offset-xxs);
-        background: var(--card-bg-color);
-        z-index: 3;
-        border-radius: 50% 0 0 50%;
-    }
-
-    .wit-offer-controls--remove {
-        top: 48px;
-    }
-
-    .wis-tabs__icon {
-        display: none;
-    }
-
-    @media (max-width: 767.98px) {
-        .wis-tabs__icon {
-            display: block;
-        }
-
-        .wis-tabs__label {
-            display: none;
-        }
-    }
+.wit-offers-page__offers {
+    margin-left: auto;
+    margin-right: auto;
+}
 </style>
+
+<!--<style scoped lang="scss">-->
+<!--    .wit-wishlist__background {-->
+<!--        min-height: calc(100vh - var(&#45;&#45;header-height));-->
+<!--        margin: var(&#45;&#45;offset-sm) var(&#45;&#45;offset-sm) 0;-->
+<!--        position: relative;-->
+<!--    }-->
+
+<!--    .wit-wishlist__header {-->
+<!--        position: sticky;-->
+<!--        top: 0;-->
+<!--        padding: var(&#45;&#45;offset-sm);-->
+<!--        background-color: inherit;-->
+<!--        z-index: 4;-->
+<!--        border-radius: var(&#45;&#45;offset-xxs) var(&#45;&#45;offset-xxs) 0 0;-->
+<!--    }-->
+
+<!--    .wit-wishlist__content {-->
+<!--        flex: 1;-->
+<!--        background-color: var(&#45;&#45;content-bg);-->
+<!--        border-radius: var(&#45;&#45;offset-xxs);-->
+<!--        margin-bottom: var(&#45;&#45;offset-sm);-->
+<!--    }-->
+
+<!--    .wit-wishlist__items-list {-->
+<!--        padding: 0 var(&#45;&#45;offset-sm) var(&#45;&#45;offset-sm);-->
+<!--    }-->
+
+<!--    .wit-more-actions {-->
+<!--        width: 36px;-->
+<!--        height: 36px;-->
+<!--        padding: 0;-->
+<!--        transition: width 0.3s ease, margin-right 0.3s ease;-->
+<!--        will-change: width, margin-left;-->
+<!--        overflow: hidden;-->
+<!--        margin-left: var(&#45;&#45;offset-xs);-->
+<!--        background: #2e3648;-->
+<!--        border: var(&#45;&#45;default-border);-->
+<!--        color: var(&#45;&#45;muted-text-color);-->
+<!--    }-->
+
+<!--    .wit-offer-controls {-->
+<!--        position: absolute;-->
+<!--        top: 16px;-->
+<!--        right: -10px;-->
+<!--        padding: var(&#45;&#45;offset-xxs) 0 var(&#45;&#45;offset-xxs) var(&#45;&#45;offset-xxs);-->
+<!--        background: var(&#45;&#45;card-bg-color);-->
+<!--        z-index: 3;-->
+<!--        border-radius: 50% 0 0 50%;-->
+<!--    }-->
+
+<!--    .wit-offer-controls&#45;&#45;remove {-->
+<!--        top: 48px;-->
+<!--    }-->
+
+<!--    .wis-tabs__icon {-->
+<!--        display: none;-->
+<!--    }-->
+
+<!--    @media (max-width: 767.98px) {-->
+<!--        .wis-tabs__icon {-->
+<!--            display: block;-->
+<!--        }-->
+
+<!--        .wis-tabs__label {-->
+<!--            display: none;-->
+<!--        }-->
+<!--    }-->
+<!--</style>-->

@@ -75,8 +75,6 @@ export default {
 }
 
 .wit-offers-page__offers {
-    //background-color: var(--card-bg-color);
-    //border-radius: 16px;
     margin-left: auto;
     margin-right: auto;
 }
