@@ -1,6 +1,6 @@
 <template>
   <div class="wit-flex wit-flex__item--no-shrink wit-user-card__actions">
-    <Dropdown position="bottom-end">
+    <Dropdown position="start" :mobile-modal="false">
       <template #trigger>
         <b-button type="is-primary" class="wis-btn--rounded">
           <i class="mdi mdi-18px wit-offset-right--xs mdi-cog" />

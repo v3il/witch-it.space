@@ -1,14 +1,14 @@
 <template>
   <Tabs :modes="offerTabs" :selected-mode="selectedTab" class="wit-flex--justify-center" @switch="onTabSwitch">
     <template #tab0>
-      <span>{{ $t('Market') }}</span>
+      <span>{{ $t('UserDashboardsTitle') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
         {{ marketSize }}
       </b-tag>
     </template>
 
     <template #tab1>
-      <span>{{ 'manage' + $t('Wishlist') }}</span>
+      <span>{{ $t('Wishlist_OtherItems') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
         {{ wishlistSize }}
       </b-tag>
