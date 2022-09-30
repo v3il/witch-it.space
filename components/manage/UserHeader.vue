@@ -6,7 +6,7 @@
 
         <div class="wit-offset-left--sm wit-flex__item--grow wis-min-width--none">
           <HeaderTitle :compact="compact" :mode="mode" />
-          <!--          <LastUpdate :mode="mode" :profile="profile" />-->
+          <LastUpdate :mode="mode" :profile="profile" />
         </div>
       </div>
 
@@ -20,6 +20,7 @@ import { computed, useStore } from '@nuxtjs/composition-api'
 import { HeaderTitle } from './header'
 import { UserAvatar } from '@/components/user'
 import { HeaderPanel } from '@/components/basic'
+import { LastUpdate } from '@/components/offers/header'
 
 export default {
     name: 'UserHeader',
@@ -27,7 +28,7 @@ export default {
     components: {
         // HeaderTitle,
         // HeaderActions,
-        // LastUpdate,
+        LastUpdate,
         UserAvatar,
         HeaderPanel,
         HeaderTitle
