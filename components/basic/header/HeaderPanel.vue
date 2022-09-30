@@ -1,14 +1,5 @@
 <template>
-  <div class="wis-header-panel wit-position--relative" :class="panelClasses">
-    <svg
-      viewBox="0 0 960 540"
-      width="100%"
-      height="100%"
-      preserveAspectRatio="xMidYMax slice"
-      xmlns="http://www.w3.org/2000/svg"
-      class="wis-header-panel__background"
-    ><g fill="none" stroke="currentColor" stroke-width="100" class="text-gray-700 opacity-25"><circle r="234" cx="196" cy="23" /><circle r="234" cx="790" cy="491" /></g></svg>
-
+  <div class="wis-header-panel" :class="panelClasses">
     <div class="wis-header-panel__content">
       <slot />
     </div>
@@ -39,10 +30,10 @@ export default {
 
 <style scoped lang="scss">
 .wis-header-panel {
-    background-color: var(--dark-gray);
     border-bottom: 1px solid var(--border-color);
     padding: 40px 32px;
-    overflow: hidden;
+    background: var(--dark-gray) url(https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/background_1__A4--Qhkjq.svg?ik-sdk-version=javascript-1.4.3&updatedAt=1662909009855) no-repeat 50%;
+    background-size: 100% 620px;
 }
 
 .wis-header-panel.compact {
@@ -57,26 +48,12 @@ export default {
     }
 }
 
-.wis-header-panel__background {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 360px;
-}
-
 .wis-header-panel__content {
     position: relative;
     z-index: 2;
 }
 
 @media (max-width: 769px) {
-    .wis-header-panel__background {
-        top: 0;
-        height: 100%;
-    }
-
     .wis-header-panel {
         padding: 24px;
     }

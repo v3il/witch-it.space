@@ -10,14 +10,14 @@
         </div>
       </div>
 
-      <!--      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />-->
+      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />
     </div>
   </HeaderPanel>
 </template>
 
 <script>
 import { computed, useStore } from '@nuxtjs/composition-api'
-import { HeaderTitle } from './header'
+import { HeaderTitle, HeaderActions } from './header'
 import { UserAvatar } from '@/components/user'
 import { HeaderPanel } from '@/components/basic'
 import { LastUpdate } from '@/components/offers/header'
@@ -27,7 +27,7 @@ export default {
 
     components: {
         // HeaderTitle,
-        // HeaderActions,
+        HeaderActions,
         LastUpdate,
         UserAvatar,
         HeaderPanel,
