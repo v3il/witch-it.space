@@ -1,7 +1,7 @@
 <template>
   <Tabs :modes="offerTabs" :selected-mode="selectedTab" class="wit-flex--justify-center" @switch="onTabSwitch">
     <template #tab0>
-      <span>{{ $t('UserDashboardsTitle') }}</span>
+      <span>{{ $t('Offers') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
         {{ marketSize }}
       </b-tag>

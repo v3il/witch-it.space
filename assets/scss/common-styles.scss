@@ -102,3 +102,12 @@ body ::-webkit-scrollbar-thumb {
         right: -3px;
     }
 }
+
+.wis-actions-dropdown {
+    .dropdown-menu {
+        @media (max-width: 600px) {
+            left: 0 !important;
+            right: auto !important;
+        }
+    }
+}

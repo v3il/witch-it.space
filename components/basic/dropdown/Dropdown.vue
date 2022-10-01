@@ -1,5 +1,5 @@
 <template>
-  <b-dropdown ref="popover" :position="popoverPosition" v-bind="$attrs" class="wit-dropdown--offset-xxs" :class="popoverClass">
+  <b-dropdown ref="popover" :position="popoverPosition" v-bind="$attrs" class="wit-dropdown--offset-xxs wis-actions-dropdown" :class="popoverClass">
     <template #trigger>
       <slot name="trigger" />
     </template>
