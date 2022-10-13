@@ -111,3 +111,14 @@ body ::-webkit-scrollbar-thumb {
         }
     }
 }
+
+.wis-header-panel-icon {
+    font-size: 64px;
+    line-height: 1;
+    color: var(--dark-pink);
+    margin-right: 16px;
+}
+
+.wis-header-panel.compact .wis-header-panel-icon {
+    font-size: 56px;
+}

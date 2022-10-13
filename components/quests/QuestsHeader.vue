@@ -2,6 +2,8 @@
   <HeaderPanel>
     <div class="wit-flex wit-flex--align-center wis-block--max-width-xs wis-user-card__container wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
       <div class="wit-flex wit-flex--align-center wit-flex__item--grow">
+        <i class="mdi mdi-file-tree-outline wis-header-panel-icon" />
+
         <div class="wit-flex__item--grow wis-min-width--none">
           <Title :title="$t('Quests_HeaderTitle')" />
           <LastUpdate />

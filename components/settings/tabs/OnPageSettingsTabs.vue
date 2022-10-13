@@ -2,6 +2,7 @@
   <div class="wis-settings-tabs">
     <div class="wis-settings-tabs__title-wrapper">
       <h1 class="wis-settings-tabs__title">
+        <i class="mdi mdi-cog mdi-cog-outline wis-settings-tabs__icon" />
         {{ $t('Settings') }}
       </h1>
     </div>
@@ -70,5 +71,14 @@ $border-color: rgba(241, 245, 249, 0.12);
     line-height: 1;
     font-weight: 800;
     font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.wis-settings-tabs__icon {
+    font-size: 40px;
+    line-height: 1;
+    color: var(--dark-pink);
+    margin-right: 16px;
 }
 </style>

@@ -1,11 +1,15 @@
 <template>
   <HeaderPanel>
-    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex--wrap">
-      <Title :title="$t('Profiles_HeaderTitle')" />
+    <div class="wis-block--max-width wit-offset-left--auto wit-offset-right--auto wit-flex wit-flex--align-center wit-flex--wrap">
+      <i class="mdi mdi-account-group-outline wis-header-panel-icon" />
 
-      <Description>
-        <div v-html="description" />
-      </Description>
+      <div class="wit-flex__item--grow">
+        <Title :title="$t('Profiles_HeaderTitle')" />
+
+        <Description>
+          <div v-html="description" />
+        </Description>
+      </div>
     </div>
   </HeaderPanel>
 </template>
