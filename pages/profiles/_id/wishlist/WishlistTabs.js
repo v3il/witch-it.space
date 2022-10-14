@@ -1,9 +1,9 @@
-export const ManageWishlistTabs = Object.freeze({
-    MY_WISHLIST: 'myWishlist',
-    NON_WISHLIST_ITEMS: 'nonWishlistItems',
+export const ManagePageTabs = Object.freeze({
+    OFFERS: 'offers',
+    AVAILABLE_ITEMS: 'availableItems',
 
     get values () {
-        return [ManageWishlistTabs.MY_WISHLIST, ManageWishlistTabs.NON_WISHLIST_ITEMS]
+        return [ManagePageTabs.OFFERS, ManagePageTabs.AVAILABLE_ITEMS]
     }
 })
 

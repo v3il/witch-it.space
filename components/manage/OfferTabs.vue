@@ -1,26 +1,25 @@
 <template>
-  <Tabs :modes="offerTabs" :selected-mode="selectedTab" class="wit-flex--justify-center" @switch="onTabSwitch">
+  <Tabs :modes="offerTabs" :selected-mode="selectedMode" class="wit-flex--justify-center" @switch="onTabSwitch">
     <template #tab0>
       <span>{{ $t('Offers') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
-        {{ marketSize }}
+        {{ offersCount }}
       </b-tag>
     </template>
 
     <template #tab1>
       <span>{{ $t('Wishlist_OtherItems') }}</span>
       <b-tag rounded class="wit-offset-left--xs wit-font-weight--600">
-        {{ wishlistSize }}
+        {{ availableItemsCount }}
       </b-tag>
     </template>
   </Tabs>
 </template>
 
 <script>
-import { computed, useRouter, useStore } from '@nuxtjs/composition-api'
+import { computed, useStore } from '@nuxtjs/composition-api'
 import Tabs from '@/components/basic/Tabs.vue'
-import { OfferTabModes } from '@/domain'
-import { buildUserMarketUrl, buildUserWishlistUrl } from '~/utils/index.js'
+import { ManagePageTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 
 export default {
     name: 'OfferTabs',
@@ -29,33 +28,23 @@ export default {
         Tabs
     },
 
-    props: {
-        selectedTab: {
-            required: true,
-            type: String
-        }
-    },
-
     setup () {
-        const router = useRouter()
         const store = useStore()
-        const offerTabs = OfferTabModes.values
+        const offerTabs = ManagePageTabs.values
 
-        const profile = computed(() => store.getters['offers/profile'])
-        const marketSize = computed(() => store.getters['offers/marketSize'])
-        const wishlistSize = computed(() => store.getters['offers/wishlistSize'])
+        const selectedMode = computed(() => store.state.offers.mode)
+        const offersCount = computed(() => store.getters['offers/filteredOfferModels'].length)
+        const availableItemsCount = computed(() => store.getters['offers/filteredNonWishlistItems'].length)
 
-        const onTabSwitch = (selectedTab) => {
-            const profileId = profile.value.id
-            const isMarketTab = selectedTab === OfferTabModes.MARKET
-
-            router.push(isMarketTab ? buildUserMarketUrl(profileId) : buildUserWishlistUrl(profileId))
+        const onTabSwitch = (selectedMode) => {
+            store.commit('offers/TOGGLE_MODE', selectedMode)
         }
 
         return {
+            selectedMode,
             offerTabs,
-            marketSize,
-            wishlistSize,
+            offersCount,
+            availableItemsCount,
             onTabSwitch
         }
     }

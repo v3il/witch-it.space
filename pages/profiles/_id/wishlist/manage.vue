@@ -4,11 +4,12 @@
     <UserHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
 
     <div class="wit-offers-page__content">
-      <OfferTabs class="wit-offset-bottom--md" :selected-tab="offersType" />
+      <OfferTabs class="wit-offset-bottom--md" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
         <Search store-module="offers" class="wit-offset-bottom--md" />
-        <OffersList :sorted-offers="sortedOffers" />
+        <OffersList v-if="isOffersMode" :sorted-offers="sortedOffers" />
+        <OffersList v-else :sorted-offers="sortedNonWishlistItems" />
       </div>
     </div>
 
@@ -156,6 +157,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
+import { computed, useStore } from '@nuxtjs/composition-api'
 import WishlistFilters from '@/components/wishlist/WishlistFilters.vue'
 import TopNavBar from '@/components/header/TopNavBar.vue'
 import Tabs from '@/components/basic/Tabs.vue'
@@ -168,7 +170,7 @@ import SetMassPricePopup from '@/components/basic/offers/SetMassPricePopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
 import ItemsListView from '@/components/items/ItemsListView.vue'
 import { StoreModules } from '@/store/index.js'
-import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
+import { ManagePageTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import { Offer } from '@/domain/models/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import SearchInput from '@/components/basic/filters/SearchInput.vue'
@@ -185,7 +187,7 @@ import { UserHeader, OfferTabs } from '@/components/manage'
 export default {
     name: 'Manage',
 
-    modes: ManageWishlistTabs.values,
+    modes: ManagePageTabs.values,
 
     components: {
         WishlistFilters,
@@ -242,12 +244,16 @@ export default {
     middleware: ['isAuthorized'],
 
     setup (props) {
+        const store = useStore()
         const { offersType, isStickyHeaderVisible, sortedOffers } = useOffersPage(OfferTypes.WISHLIST)
-        return { offersType, isStickyHeaderVisible, sortedOffers }
+
+        const isOffersMode = computed(() => store.getters['offers/isOffersMode'])
+
+        return { isOffersMode, offersType, isStickyHeaderVisible, sortedOffers }
     },
 
     // TODO: use Composition API
-    async asyncData ({ store, route, $wishlistService, error, $t }) {
+    async asyncData ({ store, route, $wishlistService, $itemsService, error, $t }) {
         await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
 
         await store.dispatch('offers/setData', {
@@ -263,9 +269,14 @@ export default {
         }
 
         await store.dispatch('offers/setProfile', profile)
+
+        const tradableItems = $itemsService.getTradableItems()
+        const itemsInWishlistIds = offers.map(offer => offer.itemId)
+        const nonWishlistItems = tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
+
         await store.dispatch('offers/storeOffers', {
             existingOffers: offers.map(offer => Offer.create(offer)),
-            availableOffers: []
+            availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
         })
     },
 

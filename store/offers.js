@@ -1,6 +1,6 @@
 import { Offer } from '@/domain/models/index.js'
 import { wishlistService, marketService } from '@/domain/index.js'
-import { ManageWishlistTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
+import { ManagePageTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
 import { OfferTypes } from '@/shared/index.js'
 import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
 
@@ -8,7 +8,7 @@ export const state = () => ({
     ...filtersState(),
     existingOffers: [],
     availableOffers: [],
-    mode: ManageWishlistTabs.MY_WISHLIST,
+    mode: ManagePageTabs.OFFERS,
     offersType: OfferTypes.WISHLIST,
     profile: {}
 })
@@ -19,9 +19,9 @@ export const getters = {
     wishlistSize: state => state.profile.wishlistSize ?? 0,
     selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
     selectedAvailableOffers: state => state.availableOffers.filter(offer => offer.isSelected),
-    isMyWishlistMode: state => state.mode === ManageWishlistTabs.MY_WISHLIST,
-    isNonWishlistItemsMode: state => state.mode === ManageWishlistTabs.NON_WISHLIST_ITEMS,
-    selectedEntities: (state, getters) => getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
+    isOffersMode: state => state.mode === ManagePageTabs.OFFERS,
+    isAvailableItemsMode: state => state.mode === ManagePageTabs.AVAILABLE_ITEMS,
+    selectedEntities: (state, getters) => getters.isOffersMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
     hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
     service: state => state.offersType === OfferTypes.MARKET ? marketService : wishlistService,
 
@@ -72,7 +72,7 @@ export const actions = {
     },
 
     selectOffers ({ commit, getters }, { from, to }) {
-        const offers = getters.isMyWishlistMode ? getters.sortedOfferModels : getters.sortedNonWishlistItems
+        const offers = getters.isOffersMode ? getters.sortedOfferModels : getters.sortedNonWishlistItems
         commit('SELECT_OFFERS', { from, to, offers })
     },
 
@@ -81,7 +81,7 @@ export const actions = {
     },
 
     clearSelectedEntities ({ commit, getters }) {
-        const offers = getters.isMyWishlistMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers
+        const offers = getters.isOffersMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers
         commit('DESELECT_OFFERS', offers)
     },
 
