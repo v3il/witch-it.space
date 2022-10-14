@@ -10,26 +10,14 @@
       >
         <div class="wit-offer-controls">
           <IconButton
-            icon="pencil-ruler"
+            icon="plus-thick"
             type="primary"
             circle
             :size="28"
             :disabled="offer.isSelected"
-            @click="editOffer(offer)"
+            @click="addOffer(offer)"
           />
         </div>
-
-        <div class="wit-offer-controls wit-offer-controls--remove">
-          <IconButton
-            icon="close"
-            type="danger"
-            circle
-            :size="28"
-            :disabled="offer.isSelected"
-            @click="deleteOffer(offer)"
-          />
-        </div>
-        <ItemPriceList :prices="offer.prices" />
       </ItemView>
     </template>
   </ItemsListView>
@@ -42,7 +30,7 @@ import ItemPriceList from '@/components/items/ItemPriceList.vue'
 import IconButton from '@/components/basic/IconButton.vue'
 
 export default {
-    name: 'OffersList',
+    name: 'AvailableItemsList',
 
     components: {
         ItemsListView,
@@ -61,21 +49,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.wis-offers-list {
-    padding-bottom: 24px;
-}
+    .wis-offers-list {
+        padding-bottom: 24px;
+    }
 
-.wit-offer-controls {
-    position: absolute;
-    top: 16px;
-    right: -10px;
-    padding: var(--offset-xxs) 0 var(--offset-xxs) var(--offset-xxs);
-    background: var(--body-bg);
-    z-index: 3;
-    border-radius: 50% 0 0 50%;
-}
+    .wit-offer-controls {
+        position: absolute;
+        top: 16px;
+        right: -10px;
+        padding: var(--offset-xxs) 0 var(--offset-xxs) var(--offset-xxs);
+        background: var(--body-bg);
+        z-index: 3;
+        border-radius: 50% 0 0 50%;
+    }
 
-.wit-offer-controls--remove {
-    top: 50px;
-}
+    .wit-offer-controls--remove {
+        top: 48px;
+    }
 </style>

@@ -8,8 +8,8 @@
 
       <div class="wit-offers-page__offers wis-block--max-width">
         <Search store-module="offers" class="wit-offset-bottom--md" />
-        <OffersList v-if="isOffersMode" :sorted-offers="sortedOffers" />
-        <OffersList v-else :sorted-offers="sortedNonWishlistItems" />
+        <OffersList v-show="isOffersMode" :sorted-offers="sortedOffers" />
+        <AvailableItemsList v-show="!isOffersMode" :sorted-offers="sortedNonWishlistItems" />
       </div>
     </div>
 
@@ -180,9 +180,9 @@ import SidebarPanel from '@/components/basic/SidebarPanel.vue'
 import { OfferTypes, Routes } from '@/shared/index.js'
 import { buildUserWishlistUrl } from '@/utils/index.js'
 import { useOffersPage } from '@/composables/index.js'
-import { OffersList } from '@/components/offers/index.js'
+// import { OffersList } from '@/components/offers/index.js'
 import { ItemsFilters, Search } from '@/components/basic/index.js'
-import { UserHeader, OfferTabs } from '@/components/manage'
+import { UserHeader, OfferTabs, OffersList, AvailableItemsList } from '@/components/manage'
 
 export default {
     name: 'Manage',
@@ -207,6 +207,7 @@ export default {
         UserHeader,
         OfferTabs,
         OffersList,
+        AvailableItemsList,
         ItemsFilters,
         Search
     },
