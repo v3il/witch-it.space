@@ -18,7 +18,13 @@
           @toggleRange="onOffersRangeToggle"
         />
 
-        <AvailableItemsList v-show="!isOffersMode" :sorted-offers="sortedNonWishlistItems" />
+        <AvailableItemsList
+          v-show="!isOffersMode"
+          :sorted-offers="sortedAvailableItems"
+          @add="addOffer"
+          @toggle="toggleOffer"
+          @toggleRange="onOffersRangeToggle"
+        />
       </div>
     </div>
 
@@ -264,9 +270,10 @@ export default {
         const { offersType, isStickyHeaderVisible } = useOffersPage(OfferTypes.WISHLIST)
 
         const sortedOffers = computed(() => store.getters['manage/sortedOfferModels'])
+        const sortedAvailableItems = computed(() => store.getters['manage/sortedNonWishlistItems'])
         const isOffersMode = computed(() => store.getters['manage/isOffersMode'])
 
-        return { isOffersMode, offersType, isStickyHeaderVisible, sortedOffers }
+        return { isOffersMode, offersType, isStickyHeaderVisible, sortedOffers, sortedAvailableItems }
     },
 
     // TODO: use Composition API
@@ -343,11 +350,9 @@ export default {
                 popupTitle: this.$t('ConfirmAction')
             })
 
-            if (!isConfirmed) {
-                return
+            if (isConfirmed) {
+                this._deleteOffers([offer])
             }
-
-            this._deleteOffers([offer])
         },
 
         async deleteAllOffers () {

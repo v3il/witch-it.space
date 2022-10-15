@@ -85,7 +85,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.OFFERS, {
+        ...mapActions('manage', {
             removeOffers: 'removeOffers',
             createOffers: 'createOffers',
             setMassPrices: 'setMassPrices'
