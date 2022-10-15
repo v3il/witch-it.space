@@ -42,5 +42,6 @@ export default {
     border-radius: 50%;
     padding: 0;
     min-width: 0;
+    z-index: 10;
 }
 </style>

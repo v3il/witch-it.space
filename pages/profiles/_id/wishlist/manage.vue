@@ -7,13 +7,25 @@
       <OfferTabs class="wit-offset-bottom--md" />
 
       <div class="wit-offers-page__offers wis-block--max-width">
-        <Search store-module="offers" class="wit-offset-bottom--md" />
-        <OffersList v-show="isOffersMode" :sorted-offers="sortedOffers" />
+        <Search store-module="manage" class="wit-offset-bottom--md" />
+
+        <OffersList
+          v-show="isOffersMode"
+          :sorted-offers="sortedOffers"
+          @edit="editOffer"
+          @remove="deleteOffer"
+          @toggle="toggleOffer"
+          @toggleRange="onOffersRangeToggle"
+        />
+
         <AvailableItemsList v-show="!isOffersMode" :sorted-offers="sortedNonWishlistItems" />
       </div>
     </div>
 
-    <ItemsFilters store-module-name="offers" />
+    <ItemsFilters store-module-name="manage" />
+
+    <SetMassPricePopup />
+    <EditOfferPopup />
   </div>
 
 <!--  <div class="wit-wishlist">-->
@@ -226,10 +238,10 @@ export default {
 
     computed: {
         ...mapState(StoreModules.FILTERS, ['filters']),
-        ...mapState(StoreModules.USER, ['user']),
-        ...mapState(StoreModules.OFFERS, ['mode']),
-        ...mapGetters(StoreModules.OFFERS, [
-            'isMyWishlistMode',
+        ...mapState('user', ['user']),
+        ...mapState('manage', ['mode']),
+        ...mapGetters('manage', [
+            'isOffersMode',
             'sortedOfferModels',
             'sortedNonWishlistItems',
             'hasSelectedEntities',
@@ -246,18 +258,22 @@ export default {
 
     setup (props) {
         const store = useStore()
-        const { offersType, isStickyHeaderVisible, sortedOffers } = useOffersPage(OfferTypes.WISHLIST)
 
-        const isOffersMode = computed(() => store.getters['offers/isOffersMode'])
+        store.commit('manage/MAP_OFFERS')
+
+        const { offersType, isStickyHeaderVisible } = useOffersPage(OfferTypes.WISHLIST)
+
+        const sortedOffers = computed(() => store.getters['manage/sortedOfferModels'])
+        const isOffersMode = computed(() => store.getters['manage/isOffersMode'])
 
         return { isOffersMode, offersType, isStickyHeaderVisible, sortedOffers }
     },
 
     // TODO: use Composition API
     async asyncData ({ store, route, $wishlistService, $itemsService, error, $t }) {
-        await store.dispatch('offers/setOffersType', OfferTypes.WISHLIST)
+        await store.dispatch('manage/setOffersType', OfferTypes.WISHLIST)
 
-        await store.dispatch('offers/setData', {
+        await store.dispatch('manage/setData', {
             defaultFilters: ItemsFiltersScheme.getDefaultFilters(),
             defaultSorts: ItemsFiltersScheme.getDefaultSorts(),
             availableSorts: ItemsFiltersScheme.getAvailableSorts()
@@ -269,15 +285,15 @@ export default {
             return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
         }
 
-        await store.dispatch('offers/setProfile', profile)
+        await store.dispatch('manage/setProfile', profile)
 
         const tradableItems = $itemsService.getTradableItems()
         const itemsInWishlistIds = offers.map(offer => offer.itemId)
         const nonWishlistItems = tradableItems.filter(item => !itemsInWishlistIds.includes(item.id))
 
-        await store.dispatch('offers/storeOffers', {
-            existingOffers: offers.map(offer => Offer.create(offer)),
-            availableOffers: nonWishlistItems.map(item => Offer.fromItem(item))
+        await store.dispatch('manage/storeOffers', {
+            existingOffers: offers, // .map(offer => Offer.create(offer)),
+            availableItems: nonWishlistItems // .map(item => Offer.fromItem(item))
         })
     },
 
@@ -307,7 +323,7 @@ export default {
     // },
 
     methods: {
-        ...mapActions(StoreModules.OFFERS, {
+        ...mapActions('manage', {
             storeOffers: 'storeOffers',
             toggleMode: 'toggleMode',
             toggleOffer: 'toggleOffer',
@@ -369,20 +385,20 @@ export default {
         openMassPriceEditor () {
             const offers = this.hasSelectedEntities ? this.selectedExistingOffers : this.sortedOfferModels
             const nonWishlistItems = this.hasSelectedEntities ? this.selectedAvailableOffers : this.sortedNonWishlistItems
-            const entities = this.isMyWishlistMode ? offers : nonWishlistItems
+            const entities = this.isOffersMode ? offers : nonWishlistItems
 
             if (entities.length === 1) {
-                return this.isMyWishlistMode ? this.editOffer(entities[0]) : this.addOffer(entities[0])
+                return this.isOffersMode ? this.editOffer(entities[0]) : this.addOffer(entities[0])
             }
 
             this.$vfm.show(PopupNames.MANAGE_PRICES, {
                 entities: entities.map(offer => offer.clone()),
-                existingItems: this.isMyWishlistMode
+                existingItems: this.isOffersMode
             })
         },
 
         onOffersRangeToggle (clickedItemIndex) {
-            const offers = this.isMyWishlistMode ? this.sortedOfferModels : this.sortedNonWishlistItems
+            const offers = this.isOffersMode ? this.sortedOfferModels : this.sortedNonWishlistItems
 
             for (let i = clickedItemIndex - 1; i >= 0; i--) {
                 if (offers[i].isSelected) {

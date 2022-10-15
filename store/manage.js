@@ -1,0 +1,181 @@
+import { Offer } from '@/domain/models/index.js'
+import { wishlistService, marketService } from '@/domain/index.js'
+import { ManagePageTabs } from '@/pages/profiles/_id/wishlist/WishlistTabs.js'
+import { OfferTypes } from '@/shared/index.js'
+import { filtersActions, filtersMutations, filtersState } from '@/shared/filters'
+
+export const state = () => ({
+    ...filtersState(),
+    _existingOffers: [],
+    existingOffers: [],
+    _availableItems: [],
+    availableItems: [],
+    mode: ManagePageTabs.OFFERS,
+    offersType: OfferTypes.WISHLIST,
+    profile: {}
+})
+
+export const getters = {
+    profile: state => state.profile,
+    marketSize: state => state.profile.marketSize ?? 0,
+    wishlistSize: state => state.profile.wishlistSize ?? 0,
+    selectedExistingOffers: state => state.existingOffers.filter(offer => offer.isSelected),
+    selectedAvailableOffers: state => state.availableItems.filter(offer => offer.isSelected),
+    isOffersMode: state => state.mode === ManagePageTabs.OFFERS,
+    isAvailableItemsMode: state => state.mode === ManagePageTabs.AVAILABLE_ITEMS,
+    selectedEntities: (state, getters) => getters.isOffersMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers,
+    hasSelectedEntities: (state, getters) => getters.selectedEntities.length > 0,
+    service: state => state.offersType === OfferTypes.MARKET ? marketService : wishlistService,
+
+    filteredOfferModels: (state, getters) => {
+        const filters = state.filters
+        return state.existingOffers.filter(offer => getters.service.checkOffer(offer, filters))
+    },
+
+    sortedOfferModels: (state, getters) => {
+        const sorts = state.sorts
+
+        return Array.from(getters.filteredOfferModels).sort((a, b) => {
+            return getters.service.compareOffers(a, b, sorts)
+        })
+    },
+
+    filteredNonWishlistItems: (state, getters) => {
+        const filters = state.filters
+        return state.availableItems.filter(offer => getters.service.checkOffer(offer, filters))
+    },
+
+    sortedNonWishlistItems: (state, getters) => {
+        const sorts = state.sorts
+
+        return Array.from(getters.filteredNonWishlistItems).sort((a, b) => {
+            return getters.service.compareOffers(a, b, sorts)
+        })
+    }
+}
+
+export const actions = {
+    ...filtersActions,
+
+    setOffersType ({ commit }, type) {
+        commit('SET_OFFERS_TYPE', type)
+    },
+
+    storeOffers ({ commit }, { existingOffers, availableItems }) {
+        commit('STORE_OFFERS', { existingOffers, availableItems })
+        // commit('MAP_OFFERS')
+    },
+
+    setProfile ({ commit }, profile) {
+        commit('SET_PROFILE', profile)
+    },
+
+    toggleOffer ({ commit, state }, offer) {
+        commit('TOGGLE_OFFER', offer)
+    },
+
+    selectOffers ({ commit, getters }, { from, to }) {
+        const offers = getters.isOffersMode ? getters.sortedOfferModels : getters.sortedNonWishlistItems
+        commit('SELECT_OFFERS', { from, to, offers })
+    },
+
+    toggleMode ({ commit }, mode) {
+        commit('TOGGLE_MODE', mode)
+    },
+
+    clearSelectedEntities ({ commit, getters }) {
+        const offers = getters.isOffersMode ? getters.selectedExistingOffers : getters.selectedAvailableOffers
+        commit('DESELECT_OFFERS', offers)
+    },
+
+    createOffers ({ commit, getters }, { offers }) {
+        return getters.service.massCreate(offers).then(({ createdOffers }) => {
+            commit('ADD_OFFERS', createdOffers)
+            commit('REMOVE_AVAILABLE_OFFERS', offers)
+            return { createdOffersSize: createdOffers.length }
+        })
+    },
+
+    setMassPrices ({ commit, state, getters }, { offers, prices }) {
+        return getters.service.setMassPrice(offers, prices).then(({ updatedOffers }) => {
+            commit('UPDATE_OFFERS', updatedOffers)
+            return { updatedOffersSize: updatedOffers.length }
+        })
+    },
+
+    removeOffers ({ commit, state, getters }, offers) {
+        const offerIds = offers.map(offer => offer.id)
+
+        return getters.service.removeOffers(offerIds)
+            .then((responseData) => {
+                commit('REMOVE_OFFERS', offerIds)
+                commit('ADD_AVAILABLE_OFFERS', offers)
+                return responseData
+            })
+    }
+}
+
+export const mutations = {
+    ...filtersMutations,
+
+    SET_OFFERS_TYPE (state, type) {
+        state.offersType = type
+    },
+
+    STORE_OFFERS (state, { existingOffers, availableItems }) {
+        state._existingOffers = existingOffers
+        state._availableItems = availableItems
+    },
+
+    MAP_OFFERS (state) {
+        state.existingOffers = state._existingOffers.map(offer => Offer.create(offer))
+        state.availableItems = state._availableItems.map(item => Offer.fromItem(item))
+    },
+
+    SET_PROFILE (state, profile) {
+        state.profile = profile
+    },
+
+    ADD_OFFERS (state, offers) {
+        state.existingOffers.push(...offers.map(offer => Offer.create(offer)))
+    },
+
+    TOGGLE_MODE (state, mode) {
+        state.mode = mode
+    },
+
+    REMOVE_OFFERS (state, offersToRemoveIds) {
+        state.existingOffers = state.existingOffers.filter(offer => !offersToRemoveIds.includes(offer.id))
+    },
+
+    UPDATE_OFFERS (state, offers) {
+        const ids = offers.map(offer => offer.id)
+        const copies = offers.map(offer => Offer.create(offer))
+
+        state.existingOffers = state.existingOffers.filter(offer => !ids.includes(offer.id))
+        state.existingOffers.push(...copies)
+    },
+
+    ADD_AVAILABLE_OFFERS (state, offers) {
+        state.availableItems.push(...offers.map(offer => Offer.fromItem(offer.item)))
+    },
+
+    REMOVE_AVAILABLE_OFFERS (state, offers) {
+        const itemIds = offers.map(offer => offer.item.id)
+        state.availableItems = state.availableItems.filter(({ item }) => !itemIds.includes(item.id))
+    },
+
+    TOGGLE_OFFER (state, offer) {
+        offer.isSelected = !offer.isSelected
+    },
+
+    SELECT_OFFERS (state, { from, to, offers }) {
+        for (let index = from; index <= to; index++) {
+            offers[index].isSelected = true
+        }
+    },
+
+    DESELECT_OFFERS (state, offers) {
+        offers.forEach(offer => offer.isSelected = false)
+    }
+}

@@ -2,11 +2,14 @@
   <ItemsListView :items="sortedOffers" class="wis-offers-list">
     <template #default="{ items: offers }">
       <ItemView
-        v-for="(offer) in offers"
+        v-for="(offer, index) in offers"
         :key="offer.id"
         :item="offer.item"
+        :is-selected="offer.isSelected"
         add-title
         add-border
+        @clicked="$emit('toggle', offer)"
+        @shiftClick="$emit('toggleRange', index)"
       >
         <div class="wit-offer-controls">
           <IconButton
@@ -15,7 +18,7 @@
             circle
             :size="28"
             :disabled="offer.isSelected"
-            @click="editOffer(offer)"
+            @click="$emit('edit', offer)"
           />
         </div>
 
@@ -26,9 +29,10 @@
             circle
             :size="28"
             :disabled="offer.isSelected"
-            @click="deleteOffer(offer)"
+            @click="$emit('remove', offer)"
           />
         </div>
+
         <ItemPriceList :prices="offer.prices" />
       </ItemView>
     </template>
@@ -76,6 +80,6 @@ export default {
 }
 
 .wit-offer-controls--remove {
-    top: 50px;
+    top: 52px;
 }
 </style>

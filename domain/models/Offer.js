@@ -55,4 +55,8 @@ export class Offer {
     clone () {
         return new Offer(this.buildOutput())
     }
+
+    toJSON () {
+        return { ...this }
+    }
 }

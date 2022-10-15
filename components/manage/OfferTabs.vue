@@ -32,12 +32,12 @@ export default {
         const store = useStore()
         const offerTabs = ManagePageTabs.values
 
-        const selectedMode = computed(() => store.state.offers.mode)
-        const offersCount = computed(() => store.getters['offers/filteredOfferModels'].length)
-        const availableItemsCount = computed(() => store.getters['offers/filteredNonWishlistItems'].length)
+        const selectedMode = computed(() => store.state.manage.mode)
+        const offersCount = computed(() => store.getters['manage/filteredOfferModels'].length)
+        const availableItemsCount = computed(() => store.getters['manage/filteredNonWishlistItems'].length)
 
         const onTabSwitch = (selectedMode) => {
-            store.commit('offers/TOGGLE_MODE', selectedMode)
+            store.commit('manage/TOGGLE_MODE', selectedMode)
         }
 
         return {
