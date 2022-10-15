@@ -1,7 +1,20 @@
 <template>
   <div class="wit-flex wit-flex--column wit-offers-page">
-    <UserHeader :mode="offersType" />
-    <UserHeader v-if="isStickyHeaderVisible" :mode="offersType" compact />
+    <UserHeader
+      :mode="offersType"
+      @deselect="clearSelectedEntities"
+      @manage="openMassPriceEditor"
+      @remove="deleteAllOffers"
+    />
+
+    <UserHeader
+      v-if="isStickyHeaderVisible"
+      :mode="offersType"
+      compact
+      @deselect="clearSelectedEntities"
+      @manage="openMassPriceEditor"
+      @remove="deleteAllOffers"
+    />
 
     <div class="wit-offers-page__content">
       <OfferTabs class="wit-offset-bottom--md" />
@@ -34,7 +47,7 @@
     <EditOfferPopup />
   </div>
 
-<!--  <div class="wit-wishlist">-->
+  <!--  <div class="wit-wishlist">-->
 <!--    <div class="wit-wishlist__background wit-flex">-->
 <!--      <div class="wit-wishlist__content">-->
 <!--        <div class="wit-flex wit-flex&#45;&#45;justify-between wit-wishlist__header">-->

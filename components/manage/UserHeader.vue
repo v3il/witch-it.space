@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <HeaderActions :profile="profile" :is-own-profile="isOwnUserProfile" :mode="mode" />
+      <HeaderActions @deselect="$emit('deselect')" @manage="$emit('manage')" @remove="$emit('remove')" />
     </div>
   </HeaderPanel>
 </template>

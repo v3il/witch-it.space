@@ -10,17 +10,17 @@
       </template>
 
       <template #items>
-        <DropdownItem v-if="true" @click="() => {}">
+        <DropdownItem v-if="hasSelectedOffers" @click="$emit('deselect')">
           {{ $t('Wishlist_Manage_Deselect') }}
         </DropdownItem>
 
-        <DropdownItem @click="() => {}">
+        <DropdownItem @click="$emit('manage')">
           <span class="wit-color--success">
-            {{ true ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
+            {{ isOffersMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
           </span>
         </DropdownItem>
 
-        <DropdownItem v-if="true" @click="() => {}">
+        <DropdownItem v-if="isOffersMode" @click="$emit('remove')">
           <span class="wit-color--danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>
         </DropdownItem>
       </template>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { computed, useStore } from '@nuxtjs/composition-api'
 import Dropdown from '@/components/basic/dropdown/Dropdown'
 import DropdownItem from '@/components/basic/dropdown/DropdownItem'
 
@@ -40,21 +41,13 @@ export default {
         DropdownItem
     },
 
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        },
+    setup () {
+        const store = useStore()
 
-        mode: {
-            required: true,
-            type: String
-        },
+        const isOffersMode = computed(() => store.getters['manage/isOffersMode'])
+        const hasSelectedOffers = computed(() => store.getters['manage/hasSelectedEntities'])
 
-        isOwnProfile: {
-            required: true,
-            type: Boolean
-        }
+        return { isOffersMode, hasSelectedOffers }
     }
 }
 </script>

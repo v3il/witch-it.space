@@ -52,7 +52,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(StoreModules.OFFERS, {
+        ...mapActions('manage', {
             createOffers: 'createOffers',
             setMassPrices: 'setMassPrices'
         }),
