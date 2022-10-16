@@ -117,6 +117,10 @@ body ::-webkit-scrollbar-thumb {
     line-height: 1;
     color: var(--dark-pink);
     margin-right: 16px;
+
+    @media (max-width: 768px) {
+        font-size: 56px;
+    }
 }
 
 .wis-header-panel.compact .wis-header-panel-icon {
