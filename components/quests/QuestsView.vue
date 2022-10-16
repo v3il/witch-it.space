@@ -3,8 +3,9 @@
     <Loader v-if="isQuestsLoading" />
 
     <template v-else-if="hasAnyQuest">
-      <QuestsGrid class="wis-quests-grid wit-offset-bottom--lg" :quests="weeklyQuests" />
-      <QuestsGrid class="wis-quests-grid" :quests="dailyQuests" />
+      <QuestsGrid :quests="weeklyQuests" />
+      <div class="wis-quests-grid__separator" />
+      <QuestsGrid :quests="dailyQuests" />
     </template>
 
     <EmptyState v-else :text="$t('Quests_NoQuests')" icon="microsoft-xbox-controller-battery-empty" />
@@ -38,3 +39,12 @@ export default {
     }
 }
 </script>
+
+<style scoped lang="scss">
+.wis-quests-grid__separator {
+    height: 1px;
+    background: #64748b;
+    width: 33%;
+    margin: 32px auto;
+}
+</style>

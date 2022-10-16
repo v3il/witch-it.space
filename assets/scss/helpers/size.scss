@@ -13,9 +13,16 @@
 }
 
 .wis-block--max-width {
-    max-width: 1440px !important;
     margin-left: auto;
     margin-right: auto;
+
+    @media (max-width: 1920px) {
+        max-width: 1440px !important;
+    }
+
+    @media (min-width: 1921px) and (max-width: 2560px) {
+        max-width: 1920px !important;
+    }
 }
 
 .wis-min-width--none {
