@@ -48,7 +48,8 @@ export default {
     justify-items: center;
 
     @media (max-width: 769px) {
-        grid-template-columns: repeat(auto-fill, minmax(var(--mobile-cell-width), 1fr));
+        grid-template-columns: repeat(auto-fill, var(--mobile-cell-width));
+        justify-content: center;
     }
 }
 </style>
