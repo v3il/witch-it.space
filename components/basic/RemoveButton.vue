@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-$size: 32px;
+$size: 40px;
 
 .wit-remove-button {
     width: $size;

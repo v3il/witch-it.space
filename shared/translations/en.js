@@ -116,6 +116,7 @@ export const en = {
     OrContinueWith: 'Or continue with',
     Verification: 'Verification',
     Offers: 'Offers',
+    IOffer: 'I offer:',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',
@@ -323,16 +324,16 @@ export const en = {
     PriceType_Fixed: 'Fixed price',
     PriceType_Wishlist: 'Item from wishlist',
 
-    AddOffer: 'Adding an offer',
-    AddOffers: 'Adding offers',
-    EditOffer: 'Editing an offer',
-    EditOffers: 'Editing offers',
+    AddOffer: 'Create offer',
+    AddOffers: 'Create offers',
+    EditOffer: 'Edit offer',
+    EditOffers: 'Edit offers',
 
     OffersCreated: 'Offers added: %s',
     OffersUpdated: 'Updated offers: %s',
     OffersRemoved: 'Offers removed: %s',
 
-    PriceWillBeAppliedTo: offersSize => `This price will be set for ${OffersCounter(offersSize)}`,
+    PriceWillBeAppliedTo: 'This price will be applied to %s {0|offer|offers|}',
     Time_NMinutesAgo: minutes => `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`,
 
     Time_LessThanAMinuteAgo: 'less than a minute ago',

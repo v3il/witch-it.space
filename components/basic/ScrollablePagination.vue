@@ -50,6 +50,14 @@ export default {
 
     methods: {
         onScroll () {
+            // todo
+            const style = window.getComputedStyle(this.$el)
+            const isHidden = style.display === 'none'
+
+            if (isHidden) {
+                return
+            }
+
             if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight - SCROLL_OFFSET) {
                 this.page++
             }

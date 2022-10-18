@@ -8,17 +8,15 @@
     @beforeOpen="beforeOpen"
     @save="onSave"
   >
-    <!--    <WishlistOfferEditor v-if="offer" :offer="offer" />-->
-
     <div v-if="offer" class="wit-flex wit-flex--column1 wit-flex--align-start wit-block--full-width">
       <ItemView
         add-tooltip
         :item="offer.item"
-        style="max-width: 88px;"
+        style="max-width: 104px;"
         class="wit-overflow--hidden wit-offset-right--sm wit-flex__item--no-shrink"
       />
 
-      <div class="wit-flex__item--grow wit-flex wit-flex--column" style="min-width: 0;">
+      <div class="wit-flex__item--grow wit-flex wit-flex--column wis-min-width--none">
         <p class="wit-flex__item--grow wit-text--overflow wit-font-size--sm wit-offset-bottom--xs">
           {{ offer.item.name }}
         </p>
@@ -27,15 +25,13 @@
 
         <div class="wit-block--full-width">
           <p class="wit-offset-bottom--xs">
-            I offer:
+            {{ $t('IOffer') }}
           </p>
 
           <PricesEditor :prices="prices" @update="prices = $event" />
         </div>
       </div>
     </div>
-
-    <!--      <PricesEditor :prices="prices" @update="prices = $event" />-->
 
     <template #controlsLeft>
       <b-button v-if="!isNewOffer" type="is-danger" @click="removeOffer">
@@ -47,8 +43,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-// import WishlistOfferEditor from '@/components/wishlist/WishlistOfferEditor.vue'
-import { StoreModules } from '@/store/index.js'
 import { PopupNames } from '@/components/basic/offers/PopupNames.js'
 import EditPopup from '@/components/basic/popup/EditPopup.vue'
 import ItemView from '@/components/items/ItemView.vue'
@@ -62,7 +56,6 @@ export default {
 
     components: {
         EditPopup,
-        // WishlistOfferEditor,
         ItemView,
         PricesEditor,
         ItemTags

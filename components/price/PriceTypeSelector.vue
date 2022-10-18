@@ -39,6 +39,6 @@ export default {
 
 <style scoped>
 .wit-price-type-selector {
-    height: 36px;
+    height: 40px;
 }
 </style>
