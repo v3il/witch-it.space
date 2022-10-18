@@ -6,7 +6,7 @@
       <RemoveButton v-if="isRemovable" v-tooltip="'Remove price'" class="wit-offset-left--sm" @click="onPriceRemove" />
     </div>
 
-    <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--xs">
+    <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--sm">
       <div class="wit-flex wit-flex--align-center">
         <PricePart
           :item-id="price.item1Id"

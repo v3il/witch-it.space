@@ -17,7 +17,7 @@
       />
 
       <div class="wit-flex__item--grow wit-flex wit-flex--column wis-min-width--none">
-        <p class="wit-flex__item--grow wit-text--overflow wit-font-size--sm wit-offset-bottom--xs">
+        <p class="wit-flex__item--grow wit-text--overflow wit-font-size--sm wit-offset-bottom--sm">
           {{ offer.item.name }}
         </p>
 

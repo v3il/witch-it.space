@@ -4,7 +4,7 @@
       <b-button
         type="is-link"
         class="wit-position--relative"
-        style="width: 45px; height: 45px; background: transparent; border: 1px dashed #626ed4;"
+        style="width: 40px; height: 40px; background: transparent; border: 1px dashed #626ed4;"
         @click="show1"
       >
         <template v-if="selectedItem">
@@ -25,7 +25,7 @@
             :key="item.id"
             :disabled="item.id === pairedItemId"
             class="wit-paddings--none wit-offset-right--xs wiz-background--transparent wit-flex__item--no-shrink"
-            style="border: 0; width: 45px; height: 45px;"
+            style="border: 0; width: 40px; height: 40px;"
             @click="onItemSelect(item)"
           >
             <ItemView add-tooltip :is-title-shown="false" :item="item" type="is-ghost" style="width: 100%;" />
@@ -42,7 +42,7 @@
             :key="item.id"
             :disabled="item.id === pairedItemId"
             class="wit-flex__item--no-shrink wit-paddings--none wit-offset-right--xs wit-offset-bottom--xs wiz-background--transparent"
-            style="border: 0; width: 45px; height: 45px;"
+            style="border: 0; width: 40px; height: 40px;"
             @click="onItemSelect(item)"
           >
             <ItemView add-tooltip :is-title-shown="false" :item="item" type="is-ghost" style="width: 100%;" />
