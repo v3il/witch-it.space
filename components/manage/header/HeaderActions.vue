@@ -10,18 +10,25 @@
       </template>
 
       <template #items>
-        <DropdownItem v-if="hasSelectedOffers" @click="$emit('deselect')">
-          {{ $t('Wishlist_Manage_Deselect') }}
-        </DropdownItem>
-
         <DropdownItem @click="$emit('manage')">
-          <span class="wit-color--success">
+          <div class="wit-flex wit-flex--align-center wit-color--success">
+            <i class="mdi mdi-20px mdi-swap-vertical wit-offset-right--xs" />
             {{ isOffersMode ? $t('Wishlist_Manage_ChangePrices') : $t('Wishlist_Manage_AddToWishlist') }}
-          </span>
+          </div>
         </DropdownItem>
 
         <DropdownItem v-if="isOffersMode" @click="$emit('remove')">
-          <span class="wit-color--danger">{{ $t('Wishlist_Manage_RemoveOffers') }}</span>
+          <div class="wit-flex wit-flex--align-center wit-color--danger">
+            <i class="mdi mdi-20px mdi-delete wit-offset-right--xs" />
+            {{ $t('Wishlist_Manage_RemoveOffers') }}
+          </div>
+        </DropdownItem>
+
+        <DropdownItem v-if="hasSelectedOffers" @click="$emit('deselect')">
+          <div class="wit-flex wit-flex--align-center">
+            <i class="mdi mdi-18px mdi-selection-remove wit-offset-right--xs" />
+            {{ $t('Wishlist_Manage_Deselect') }}
+          </div>
         </DropdownItem>
       </template>
     </Dropdown>
