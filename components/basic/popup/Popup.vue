@@ -9,17 +9,17 @@
     @before-open="beforeOpen"
     @before-close="$emit('beforeClose')"
   >
-    <div class="wit-popup-header wit-paddings--sm">
+    <div class="wit-popup-header">
       <h5 class="modal__title">
         {{ popupTitle }}
       </h5>
     </div>
 
-    <div class="wit-popup-content wit-paddings--sm wit-flex wit-flex--column wit-overflow--hidden">
+    <div class="wit-popup-content wit-flex wit-flex--column wit-overflow--hidden">
       <slot />
     </div>
 
-    <div class="wit-popup-footer wit-paddings--sm wit-flex wit-flex--justify-between">
+    <div class="wit-popup-footer wit-flex wit-flex--justify-between">
       <div>
         <slot name="controlsLeft" />
       </div>
@@ -128,5 +128,11 @@ export default {
     font-size: var(--modal-card-title-size);
     line-height: var(--modal-card-title-line-height);
     border-bottom: var(--default-border);
+}
+
+.wit-popup-header,
+.wit-popup-content,
+.wit-popup-footer {
+    padding: 16px 24px;
 }
 </style>

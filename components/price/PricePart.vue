@@ -4,7 +4,7 @@
       <b-button
         type="is-link"
         class="wit-position--relative"
-        style="width: 40px; height: 40px; background: transparent; border: 1px dashed #626ed4;"
+        style="width: 48px; height: 48px; background: transparent; border: 1px dashed #626ed4;"
         @click="show1"
       >
         <template v-if="selectedItem">

@@ -12,7 +12,7 @@
       <ItemView
         add-tooltip
         :item="offer.item"
-        style="max-width: 104px;"
+        style="max-width: 66px;"
         class="wit-overflow--hidden wit-offset-right--sm wit-flex__item--no-shrink"
       />
 
@@ -22,15 +22,15 @@
         </p>
 
         <ItemTags :item="offer.item" class="wit-offset-bottom--sm" />
-
-        <div class="wit-block--full-width">
-          <p class="wit-offset-bottom--xs">
-            {{ $t('IOffer') }}
-          </p>
-
-          <PricesEditor :prices="prices" @update="prices = $event" />
-        </div>
       </div>
+    </div>
+
+    <div class="wit-block--full-width">
+      <p class="wit-offset-bottom--xs">
+        {{ $t('IOffer') }}
+      </p>
+
+      <PricesEditor :prices="prices" @update="prices = $event" />
     </div>
 
     <template #controlsLeft>
