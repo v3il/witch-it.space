@@ -2,6 +2,7 @@
   <div
     class="wit-position--relative wit-item-view__container wit-flex wit-flex--column wit-cursor--pointer wit-block--full-width"
     :class="itemClasses"
+    :style="itemStyles"
     @click.exact="onItemClicked"
     @click.shift="onShiftClick"
   >
@@ -72,6 +73,12 @@ export default {
             required: false,
             type: Boolean,
             default: false
+        },
+
+        size: {
+            required: false,
+            type: String,
+            default: ''
         }
     },
 
@@ -83,6 +90,12 @@ export default {
                     'wit-item-view--bordered': this.addBorder
                 }
             ]
+        },
+
+        itemStyles () {
+            return {
+                '--size': this.size ? this.size + 'px' : '100%'
+            }
         },
 
         itemPreviewURL () {
@@ -127,6 +140,8 @@ export default {
 
     border-radius: var(--offset-xxs);
     background-color: var(--card-bg-color);
+    width: var(--size);
+    height: var(--size);
 
     .wit-item-view__counter {
         background-color: var(--bg-color);

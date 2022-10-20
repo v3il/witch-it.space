@@ -36,16 +36,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+$size: 48px;
+
 .wis-ingredients-grid {
     display: grid;
-    grid-template-columns: repeat(5, 45px);
+    grid-template-columns: repeat(5, $size);
     gap: 8px;
 }
 
 .wis-ingredients-grid__button {
-    border: 0;
-    width: 40px;
-    height: 40px;
+    width: $size;
+    height: $size;
+    border: 1px solid #64748b;
 }
 </style>

@@ -6,13 +6,13 @@
         class="wit-position--relative wis-price-place"
         @click="showPopover"
       >
-        <ItemView v-if="selectedItem" :item="selectedItem" :is-title-shown="false" style="width: 45px;" />
+        <ItemView v-if="selectedItem" :item="selectedItem" :is-title-shown="false" size="48" />
         <i v-else class="mdi mdi-24 mdi-plus" />
       </b-button>
 
       <div v-if="isVisible" slot="popover" class="wit-paddings--xs">
         <p class="wit-offset-bottom--xs">
-          Primary ingredients
+          {{ $t('PrimaryIngredients') }}
         </p>
 
         <IngredientsGrid
@@ -23,7 +23,7 @@
         />
 
         <p class="wit-offset-bottom--xs">
-          Secondary ingredients
+          {{ $t('SecondaryIngredients') }}
         </p>
 
         <IngredientsGrid
@@ -34,7 +34,7 @@
         />
 
         <b-button type="is-danger" expanded @click="onItemClear">
-          Remove
+          {{ $t('Delete') }}
         </b-button>
       </div>
     </v-popover>
@@ -79,8 +79,6 @@ export default {
 
         const isVisible = ref(false)
         const popover = ref(null)
-
-        console.error(popover)
 
         const selectedItem = computed(() => $itemsService.getById(props.itemId))
 
