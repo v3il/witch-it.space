@@ -2,8 +2,8 @@
   <div class="wit-price-editor wit-flex wit-flex--align-center wit-flex--column">
     <div class="wit-flex wit-flex--align-center wit-block--full-width">
       <PriceTypeSelector :price="price" class="wit-flex__item--grow" />
-      <AddButton v-if="!isRemovable" v-tooltip="'Add price'" class="wit-offset-left--sm" @click="onPriceAdd" />
-      <RemoveButton v-if="isRemovable" v-tooltip="'Remove price'" class="wit-offset-left--sm" @click="onPriceRemove" />
+      <AddButton v-if="!isRemovable" v-tooltip="$t('AddPrice')" class="wit-offset-left--sm" @click="onPriceAdd" />
+      <RemoveButton v-if="isRemovable" v-tooltip="$t('RemovePrice')" class="wit-offset-left--sm" @click="onPriceRemove" />
     </div>
 
     <div v-if="price.isFixedPrice" class="wit-flex wit-flex--align-center wit-block--full-width wit-offset-top--sm">
@@ -16,10 +16,10 @@
         />
 
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item1Count" :min="1" :max="99" @change="setFirstItemCount" />
+        <NumericInput :value="price.item1Count" :disabled="!price.item1Id" :min="1" :max="99" @change="setFirstItemCount" />
       </div>
 
-      <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">+</span>
+      <span class="wit-block wit-offset-left--xsm wit-offset-right--xsm wit-color--warning">+</span>
 
       <div class="wit-flex wit-flex--align-center">
         <PricePart
@@ -30,7 +30,7 @@
         />
 
         <span class="wit-block wit-offset-left--xs wit-offset-right--xs wit-color--warning">&times;</span>
-        <NumericInput :value="price.item2Count" :min="1" :max="99" @change="setSecondItemCount" />
+        <NumericInput :value="price.item2Count" :disabled="!price.item2Id" :min="1" :max="99" @change="setSecondItemCount" />
       </div>
     </div>
   </div>
@@ -41,7 +41,6 @@ import PriceTypeSelector from '@/components/price/PriceTypeSelector.vue'
 import PricePart from '@/components/price/PricePart.vue'
 import NumericInput from '@/components/basic/NumericInput.vue'
 import RemoveButton from '@/components/basic/RemoveButton.vue'
-import { PriceType } from '@/shared/items'
 import AddButton from '@/components/basic/AddButton.vue'
 
 export default {
@@ -81,7 +80,7 @@ export default {
         },
 
         clearFirstItemId () {
-            this.price.setFirstItemId(0)
+            this.price.clearFirstItem()
         },
 
         setFirstItemCount (itemCount) {
@@ -93,7 +92,7 @@ export default {
         },
 
         clearSecondItemId () {
-            this.price.setSecondItemId(0)
+            this.price.clearSecondItem()
         },
 
         setSecondItemCount (itemCount) {

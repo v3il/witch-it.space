@@ -4,6 +4,7 @@
       v-model="tempValue"
       type="number"
       class="wit-number-input input"
+      :disabled="disabled"
       @change="onChange"
       @keydown.enter.prevent="onChange"
       @keydown.exact.up.prevent="incrementValue(step)"
@@ -45,6 +46,12 @@ export default {
             type: Number,
             required: false,
             default: 1
+        },
+
+        disabled: {
+            required: false,
+            type: Boolean,
+            default: false
         }
     },
 

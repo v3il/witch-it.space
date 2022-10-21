@@ -94,7 +94,7 @@ export default {
 
         itemStyles () {
             return {
-                '--size': this.size ? this.size + 'px' : '100%'
+                '--size': this.size ? this.size : '100%'
             }
         },
 

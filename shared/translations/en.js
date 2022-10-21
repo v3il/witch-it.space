@@ -119,6 +119,8 @@ export const en = {
     IOffer: 'I offer:',
     PrimaryIngredients: 'Primary Ingredients',
     SecondaryIngredients: 'Secondary Ingredients',
+    AddPrice: 'Add price',
+    RemovePrice: 'Remove price',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',

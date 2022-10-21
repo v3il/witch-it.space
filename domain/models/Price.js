@@ -1,5 +1,7 @@
 import { PriceType } from '@/shared/items/index.js'
 
+const DEFAULT_COUNT = 4
+
 export class Price {
     static create (price) {
         return new Price(price)
@@ -9,9 +11,9 @@ export class Price {
         return new Price({
             priceType: PriceType.ANY,
             item1Id: 0,
-            item1Count: 4,
+            item1Count: DEFAULT_COUNT,
             item2Id: 0,
-            item2Count: 4
+            item2Count: DEFAULT_COUNT
         })
     }
 
@@ -42,6 +44,10 @@ export class Price {
 
     setFirstItemId (itemId) {
         this.item1Id = itemId
+
+        if (!this.item1Count) {
+            this.item1Count = DEFAULT_COUNT
+        }
     }
 
     setFirstItemCount (itemCount) {
@@ -50,10 +56,24 @@ export class Price {
 
     setSecondItemId (itemId) {
         this.item2Id = itemId
+
+        if (!this.item2Count) {
+            this.item2Count = DEFAULT_COUNT
+        }
     }
 
     setSecondItemCount (itemCount) {
         this.item2Count = itemCount
+    }
+
+    clearFirstItem () {
+        this.setFirstItemId(0)
+        this.setFirstItemCount(0)
+    }
+
+    clearSecondItem () {
+        this.setSecondItemId(0)
+        this.setSecondItemCount(0)
     }
 
     clone () {

@@ -6,7 +6,7 @@
         class="wit-position--relative wis-price-place"
         @click="showPopover"
       >
-        <ItemView v-if="selectedItem" :item="selectedItem" :is-title-shown="false" size="48" />
+        <ItemView v-if="selectedItem" :item="selectedItem" :is-title-shown="false" size="48px" />
         <i v-else class="mdi mdi-24 mdi-plus" />
       </b-button>
 
