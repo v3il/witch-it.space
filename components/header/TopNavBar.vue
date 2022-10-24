@@ -58,11 +58,16 @@
 </template>
 
 <script setup>
-const store = { getters: {} }
+import { useProfilesStore } from '~/store/profiles'
+
+const store = useProfilesStore()
 
 const emit = defineEmits(['open-sidebar'])
 
-const isAuthorized = computed(() => store.getters['user/isAuthorized'])
+const isAuthorized = computed(() => store.isAuthorized)
+
+console.error(store.myProfile)
+
 const headerClasses = computed(() => ({ 'wis-header--empty': !isAuthorized.value }))
 
 const onBurgerClick = () => emit('open-sidebar')

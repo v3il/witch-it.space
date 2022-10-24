@@ -1,6 +1,7 @@
 import { compare, genSalt, hash } from 'bcrypt'
 import { fn } from 'objection'
 import jwt from 'jsonwebtoken'
+import cookieSignature from 'cookie-signature'
 import User from '~/server/models/User'
 import { config } from '~/shared/config'
 
@@ -107,8 +108,10 @@ export class UserService {
     generateUserToken (user) {
         const userPublicData = { id: user.id, $r: Math.random(), $d: Date.now() }
 
-        return jwt.sign(userPublicData, config.JWT_SECRET, {
-            expiresIn: config.TOKEN_COOKIE_DURATION
-        })
+        return cookieSignature.sign(JSON.stringify(userPublicData), config.JWT_SECRET)
+    }
+
+    parseUserToken (token) {
+        return JSON.parse(cookieSignature.unsign(token, config.JWT_SECRET))
     }
 }

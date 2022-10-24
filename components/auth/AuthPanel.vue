@@ -1,13 +1,13 @@
 <template>
-    <div class="wis-auth-panel">
-        <AuthPanelLeft />
-        <AuthPanelRight :mode="mode" class="flex flex-column justify-content-center wis-auth-panel__right" />
+    <div class="flex justify-content-center align-items-center p-6 flex-1">
+        <div class="wis-auth-panel">
+            <AuthPanelLeft />
+            <AuthPanelRight :mode="mode" class="flex flex-column justify-content-center wis-auth-panel__right" />
+        </div>
     </div>
 </template>
 
 <script setup>
-import { useNotification } from '~/composables/useNotification'
-
 defineProps({
     mode: {
         required: true,

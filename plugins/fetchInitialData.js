@@ -9,6 +9,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const profilesStore = useProfilesStore(nuxtApp.$pinia)
     const itemsStore = useItemsStore(nuxtApp.$pinia)
 
+    await profilesStore.fetchMyProfile()
     await profilesStore.fetchProfiles()
     await itemsStore.fetchItems()
 })

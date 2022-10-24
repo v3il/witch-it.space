@@ -1,7 +1,5 @@
 <template>
-    <div class="flex justify-content-center align-items-center p-6 min-h-full">
-        <AuthPanel mode="login" />
-    </div>
+    <AuthPanel mode="login" />
 </template>
 
 <script>
@@ -66,54 +64,54 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.login-page {
-    margin-top: calc(var(--offset-xxlg) * 2);
-}
-
-.login-page__container {
-    max-width: 450px;
-    width: 100%;
-}
-
-.login-page__form-header {
-    padding: var(--offset-md) var(--offset-xlg);
-}
-
-.login-page__form {
-    border-radius: var(--offset-xxs);
-    overflow: hidden;
-}
-
-.login-page__image-block {
-    border-radius: var(--offset-xs);
-    width: 72px;
-    height: 72px;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 3px solid var(--primary);
-    top: 82px;
-}
-
-.login-page__image {
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-}
-
-.login-page__form-content {
-    padding: calc(var(--offset-xlg) * 2) var(--offset-xlg) var(--offset-xlg);
-}
-
-@media screen and (max-width: 768px) {
-    .login-page {
-        margin-top: var(--offset-xxlg);
-    }
-
-    .login-page__form-header,
-    .login-page__form-content {
-        padding-left: var(--offset-sm);
-        padding-right: var(--offset-sm);
-        padding-bottom: var(--offset-md);
-    }
-}
+//.login-page {
+//    margin-top: calc(var(--offset-xxlg) * 2);
+//}
+//
+//.login-page__container {
+//    max-width: 450px;
+//    width: 100%;
+//}
+//
+//.login-page__form-header {
+//    padding: var(--offset-md) var(--offset-xlg);
+//}
+//
+//.login-page__form {
+//    border-radius: var(--offset-xxs);
+//    overflow: hidden;
+//}
+//
+//.login-page__image-block {
+//    border-radius: var(--offset-xs);
+//    width: 72px;
+//    height: 72px;
+//    left: 50%;
+//    transform: translateX(-50%);
+//    border: 3px solid var(--primary);
+//    top: 82px;
+//}
+//
+//.login-page__image {
+//    width: 100%;
+//    height: 100%;
+//    border-radius: inherit;
+//}
+//
+//.login-page__form-content {
+//    padding: calc(var(--offset-xlg) * 2) var(--offset-xlg) var(--offset-xlg);
+//}
+//
+//@media screen and (max-width: 768px) {
+//    .login-page {
+//        margin-top: var(--offset-xxlg);
+//    }
+//
+//    .login-page__form-header,
+//    .login-page__form-content {
+//        padding-left: var(--offset-sm);
+//        padding-right: var(--offset-sm);
+//        padding-bottom: var(--offset-md);
+//    }
+//}
 </style>

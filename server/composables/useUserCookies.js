@@ -1,4 +1,3 @@
-import { verify } from 'jsonwebtoken'
 import { Cookies } from '~/shared/Cookies'
 import { userService } from '~/server/services'
 import { config } from '~/shared/config'
@@ -6,21 +5,23 @@ import { config } from '~/shared/config'
 export const useUserCookies = () => {
     const signUser = (event, user) => {
         setCookie(event, Cookies.TOKEN, userService.generateUserToken(user), {
-            maxAge: config.TOKEN_COOKIE_DURATION * 1000,
             httpOnly: true,
-            secure: true
+            path: '/',
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === 'production',
+            expires: new Date(Date.now() + config.TOKEN_COOKIE_DURATION * 1000)
         })
     }
 
     const getUserFromCookies = (event) => {
-        const jwtToken = getUserFromCookies(event, Cookies.TOKEN)
+        const jwtToken = getCookie(event, Cookies.TOKEN)
 
         if (!jwtToken) {
             return null
         }
 
         try {
-            return verify(jwtToken, config.JWT_SECRET)
+            return userService.parseUserToken(jwtToken)
         } catch (error) {
             return null
         }
