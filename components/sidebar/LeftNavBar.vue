@@ -14,19 +14,21 @@ import { buildUserManageMarketUrl, buildUserManageWishlistUrl, buildUserMarketUr
 import { Routes } from '~/shared/Routes'
 import { useProfilesStore } from '~/store/profiles'
 import { useItemsStore } from '~/store/items'
+import { useCurrentUserStore } from '~/store/currentUser'
 
 const { $t } = useTranslate()
 const profilesStore = useProfilesStore()
 const itemsStore = useItemsStore()
+const currentUserStore = useCurrentUserStore()
 
-// console.error(profilesStore)
-
-const user = computed(() => ({})/* store.state.user.user */)
-const isAuthorized = computed(() => false/* store.getters['user/isAuthorized'] */)
-const isVerified = computed(() => false/* store.getters['user/isVerified'] */)
+const user = computed(() => currentUserStore.myProfile)
+const isAuthorized = computed(() => currentUserStore.isAuthorized)
+const isVerified = computed(() => currentUserStore.isVerified)
 const userId = computed(() => user.value.id)
 const marketSize = computed(() => user.value.marketSize)
 const wishlistSize = computed(() => user.value.wishlistSize)
+
+console.error(isAuthorized.value)
 
 const authLinks = computed(() => [
     { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
@@ -34,9 +36,9 @@ const authLinks = computed(() => [
 ])
 
 const userLinks = computed(() => [
-    { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: 1 },
+    { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: marketSize.value },
     { icon: 'store-cog-outline', label: 'MainMenu_ManageMarket', to: buildUserManageMarketUrl(userId.value) },
-    { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value), badge: 1 },
+    { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value), badge: wishlistSize.value },
     { icon: 'heart-cog-outline', label: 'MainMenu_ManageWishlist', to: buildUserManageWishlistUrl(userId.value) }
 ])
 

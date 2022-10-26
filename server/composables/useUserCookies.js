@@ -16,12 +16,8 @@ export const useUserCookies = () => {
     const getUserFromCookies = (event) => {
         const jwtToken = getCookie(event, Cookies.TOKEN)
 
-        if (!jwtToken) {
-            return null
-        }
-
         try {
-            return userService.parseUserToken(jwtToken)
+            return userService.getUserFromCookies(jwtToken)
         } catch (error) {
             return null
         }

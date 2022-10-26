@@ -111,7 +111,12 @@ export class UserService {
         return cookieSignature.sign(JSON.stringify(userPublicData), config.JWT_SECRET)
     }
 
-    parseUserToken (token) {
-        return JSON.parse(cookieSignature.unsign(token, config.JWT_SECRET))
+    getUserFromCookies (jwtToken) {
+        if (!jwtToken) {
+            return null
+        }
+
+        const userData = JSON.parse(cookieSignature.unsign(jwtToken, config.JWT_SECRET))
+        return this.getById(userData.id)
     }
 }

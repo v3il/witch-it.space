@@ -9,7 +9,9 @@ export const useItemsStore = defineStore('items', {
 
     actions: {
         async fetchItems () {
-            const { data } = await useFetch('/api/items/fetch')
+            const { data } = await useFetch('/api/items/fetch', {
+                headers: useRequestHeaders(['cookie'])
+            })
 
             this.items = data.value.items
         }
