@@ -5,4 +5,11 @@ export class AuthService {
             body: { login, password }
         })
     }
+
+    register ({ login, password }) {
+        return useFetch('/api/auth/register', {
+            method: 'POST',
+            body: { login, password }
+        })
+    }
 }

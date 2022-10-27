@@ -40,12 +40,14 @@
 
 <script setup>
 import { Routes } from '~/shared/Routes'
+import { useCurrentUserStore } from '~/store/currentUser'
 
 const { $t } = useTranslate()
 const router = useRouter()
 const { showError } = useNotification()
 const { validatePassword, validateLogin } = useValidators()
 const { $authService } = useNuxtApp()
+const currentUserStore = useCurrentUserStore()
 
 const props = defineProps({
     mode: {
@@ -85,87 +87,44 @@ const triggerLogin = async () => {
         return showError({ description: error.value.data.message })
     }
 
+    await currentUserStore.fetchMyProfile()
+
     router.replace(Routes.MAIN)
 }
 
-const triggerRegister = () => {
-    // const loginError = validateLogin(login.value)
-    //
-    // if (loginError) {
-    //     return $showError($t(loginError))
-    // }
-    //
-    // const passwordError = validatePassword(password.value)
-    //
-    // if (passwordError) {
-    //     return $showError($t(passwordError))
-    // }
-    //
-    // if (password.value !== confirmPassword.value) {
-    //     return $showError($t('Error_PasswordsAreNotIdentical'))
-    // }
-    //
-    // store.dispatch('user/register', { login: login.value, password: password.value })
-    //     .then(() => router.replace(Routes.MAIN))
-    //     .catch(error => $showError(error.message))
+const triggerRegister = async () => {
+    const isValidLogin = validateLogin(login.value)
+
+    if (!isValidLogin) {
+        return showError({
+            description: $t('Error_LoginIsTooShort')
+        })
+    }
+
+    const isValidPassword = validatePassword(password.value)
+
+    if (!isValidPassword) {
+        return showError({
+            description: $t('Error_InvalidPassword')
+        })
+    }
+
+    if (password.value !== confirmPassword.value) {
+        return showError({
+            description: $t('Error_PasswordsAreNotIdentical')
+        })
+    }
+
+    const { error } = await $authService.register({ login: login.value, password: password.value })
+
+    if (error.value) {
+        return showError({ description: error.value.data.message })
+    }
+
+    await currentUserStore.fetchMyProfile()
+
+    router.replace(Routes.MAIN)
 }
 
 const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()
-
-//
-//         const isLogin = computed(() => props.mode === 'login')
-//         const buttonText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
-//
-//         const triggerLogin = () => {
-//             const loginError = validateLogin(login.value)
-//
-//             if (loginError) {
-//                 return $showError($t(loginError))
-//             }
-//
-//             const passwordError = validatePassword(password.value)
-//
-//             if (passwordError) {
-//                 return $showError($t(passwordError))
-//             }
-//
-//             store.dispatch('user/login', { login: login.value, password: password.value })
-//                 .then(() => router.replace(Routes.MAIN))
-//                 .catch(error => $showError(error.message))
-//         }
-//
-//         const triggerRegister = () => {
-//             const loginError = validateLogin(login.value)
-//
-//             if (loginError) {
-//                 return $showError($t(loginError))
-//             }
-//
-//             const passwordError = validatePassword(password.value)
-//
-//             if (passwordError) {
-//                 return $showError($t(passwordError))
-//             }
-//
-//             if (password.value !== confirmPassword.value) {
-//                 return $showError($t('Error_PasswordsAreNotIdentical'))
-//             }
-//
-//             store.dispatch('user/register', { login: login.value, password: password.value })
-//                 .then(() => router.replace(Routes.MAIN))
-//                 .catch(error => $showError(error.message))
-//         }
-//
-//         const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()
-//
-//         return {
-//             login,
-//             password,
-//             confirmPassword,
-//             isLogin,
-//             buttonText,
-//             onSubmit
-//         }
-//     }
-// }
 </script>
