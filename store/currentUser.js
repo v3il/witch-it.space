@@ -14,8 +14,6 @@ export const useCurrentUserStore = defineStore('currentUser', {
                 headers: useRequestHeaders(['cookie'])
             })
 
-            console.error(data.value.profile)
-
             this.myProfile = data.value.profile
         }
     }

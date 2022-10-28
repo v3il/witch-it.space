@@ -28,8 +28,6 @@ const userId = computed(() => user.value.id)
 const marketSize = computed(() => user.value.marketSize)
 const wishlistSize = computed(() => user.value.wishlistSize)
 
-console.error(isAuthorized.value)
-
 const authLinks = computed(() => [
     { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
     { icon: 'account-plus-outline', label: 'MainMenu_Register', to: Routes.REGISTER }

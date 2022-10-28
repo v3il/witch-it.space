@@ -10,9 +10,8 @@
                 {{ link.badge }}
             </span>
 
-            <span v-if="link.hasMark" class="ml-auto wis-navigation-item__mark">
+            <span v-if="link.hasMark" v-tooltip.top="$t('ActionRequired')" class="ml-auto wis-navigation-item__mark">
                 <Icon name="mdi:alert-circle-outline" size="20" />
-                <!--                <i class="mdi mdi-alert-circle-outline mdi-20px wit-color&#45;&#45;danger" />-->
             </span>
         </NuxtLink>
     </li>
@@ -89,5 +88,6 @@ const itemClasses = computed(() => ({ active: router.currentRoute.value.path ===
 
     .wis-navigation-item__mark {
         height: 20px;
+        color: var(--danger);
     }
 </style>
