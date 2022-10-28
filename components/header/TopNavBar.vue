@@ -1,8 +1,10 @@
 <template>
-    <header class="wis-header" :class="headerClasses" @click="onBurgerClick">
-        <!--        <BurgerButton class="wis-header__burger" @click="onBurgerClick" />-->
+    <header class="wis-header" :class="headerClasses">
+        <Button class="p-button-link p-0 lg:hidden" @click="onBurgerClick">
+            <Icon name="material-symbols:menu" size="28" />
+        </Button>
 
-        <div v-if="isAuthorized" class="wit-offset-left--auto wit-flex wit-flex--align-center">
+        <div v-if="isAuthorized" class="ml-auto flex align-items-center">
             <!--      <LocaleSwitcher />-->
             <!--      <ThemeSwitcher />-->
             <!--            <Notifications class="wit-offset-right&#45;&#45;xsm" />-->
@@ -58,15 +60,13 @@
 </template>
 
 <script setup>
-import { useProfilesStore } from '~/store/profiles'
+import { useCurrentUserStore } from '~/store/currentUser'
 
-const store = useProfilesStore()
+const store = useCurrentUserStore()
 
 const emit = defineEmits(['open-sidebar'])
 
 const isAuthorized = computed(() => store.isAuthorized)
-
-console.error(store.myProfile)
 
 const headerClasses = computed(() => ({ 'wis-header--empty': !isAuthorized.value }))
 
@@ -91,16 +91,6 @@ const onBurgerClick = () => emit('open-sidebar')
 }
 
 .wis-header--empty {
-    @media (min-width: 1024px) {
-        display: none !important;
-    }
-}
-
-.wis-header__burger {
-    --button-ghost-color: var(--muted-text-color);
-    --button-ghost-hover-color: #fff;
-    --button-ghost-hover-decoration: none;
-
     @media (min-width: 1024px) {
         display: none !important;
     }
