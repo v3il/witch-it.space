@@ -120,8 +120,8 @@ body {
     box-shadow: var(--dropdown-content-shadow);
     border: 1px solid $popover-border;
     min-width: 170px;
-    padding-top: var(--offset-xxs);
-    padding-bottom: var(--offset-xxs);
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .dropdown.expanded {

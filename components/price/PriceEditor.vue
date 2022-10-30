@@ -25,6 +25,7 @@
         <PricePart
           :item-id="price.item2Id"
           :paired-item-id="price.item1Id"
+          popover-position="bottom"
           @itemSelect="setSecondItemId"
           @itemClear="clearSecondItemId"
         />
