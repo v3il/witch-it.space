@@ -1,6 +1,6 @@
 <template>
     <h1 class="text-3xl font-bold underline">
-        {{ filtersList }}
+        {{ data }}
     </h1>
 
     <Button label="Submit" icon="pi pi-check" icon-pos="right" @click="push" />
@@ -14,7 +14,7 @@ import { useFiltersStore } from '~/store/test'
 const { data } = await useFetch('/api/test')
 
 const filtersStore = useFiltersStore()
-const filtersList = filtersStore.filtersList1
+// const filtersList = filtersStore.filtersList1
 
 function push () {
     // console.error(filtersStore.update2())
