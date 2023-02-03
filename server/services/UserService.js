@@ -1,0 +1,109 @@
+import { compare, genSalt, hash } from 'bcrypt'
+import { fn } from 'objection'
+// import { getCurrentTimestamp } from '../../shared'
+import User from '~/server/models/User'
+
+export class UserService {
+    getById (id) {
+        return User.query().findById(id)
+    }
+
+    getUsersCount () {
+        return User.query().resultSize()
+    }
+
+    async getRandomUsers () {
+        const records = await User.query().select().limit(4).orderBy(fn('random'))
+        return records.map(user => user.getPublicData())
+    }
+
+    async getByDiscordId (discordId) {
+        const users = await User.query().where('discordId', discordId)
+        return users[0]
+    }
+
+    async getByGoogleId (googleId) {
+        const users = await User.query().where('googleId', googleId)
+        return users[0]
+    }
+
+    async getBySteamId (steamId) {
+        const users = await User.query().where('steamId', steamId)
+        return users[0]
+    }
+
+    async getByLogin (login) {
+        const users = await User.query().where('login', login)
+        return users[0]
+    }
+
+    async getByLoginWithPassword (login) {
+        const users = await User.query().where('login', login).whereNotNull('password')
+        return users[0]
+    }
+
+    getPublicProfiles () {
+        return User.query().where('isPublic', true)
+    }
+
+    async encryptPassword (password) {
+        const salt = await genSalt(3)
+        return hash(password, salt)
+    }
+
+    checkPasswords (enteredPassword, userPassword) {
+        return compare(enteredPassword, userPassword)
+    }
+
+    createUser (userData) {
+        return User.query().insertAndFetch(userData)
+    }
+
+    toObject (user) {
+        return user.getPublicData()
+    }
+
+    isMyProfile (user) {
+        return ['76561198890437027', '76561198965865000', '76561199095727689'].includes(user.steamId)
+    }
+
+    updateWishlistData (user, wishlistSize) {
+        console.error('wl', wishlistSize)
+
+        return user.$query().patch({
+            wishlistSize,
+            wishlistUpdateTime: 1 // getCurrentTimestamp()
+        })
+    }
+
+    updateMarketData (user, marketSize) {
+        console.error('market', marketSize)
+
+        return user.$query().patch({
+            marketSize,
+            marketUpdateTime: 1 // getCurrentTimestamp()
+        })
+    }
+
+    disconnectSocial (user, socialName) {
+        const prop = {
+            steam: 'steamId',
+            discord: 'discordId',
+            google: 'googleId'
+        }[socialName]
+
+        return user.$query().patch({ [prop]: null })
+    }
+
+    toggleProfileVisibility (user, isPublic) {
+        return user.$query().patch({ isPublic })
+    }
+
+    deleteUser (user) {
+        return user.$query().del()
+    }
+
+    updateUserSettings (user, settings) {
+        return user.$query().patch(settings)
+    }
+}

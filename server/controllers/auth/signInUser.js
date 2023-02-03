@@ -1,0 +1,38 @@
+import { generateToken } from '../../../../WitchTrade/api/util'
+import { config, Routes, Cookies } from '../../../../WitchTrade/shared'
+
+const getUserData = (user) => {
+    const userPublicData = { id: user.id, $r: Math.random(), $d: Date.now() }
+    const token = generateToken(userPublicData)
+
+    return { userPublicData, token }
+}
+
+const setCookieToken = (token, response) => {
+    response.cookie(Cookies.TOKEN, token, {
+        maxAge: config.TOKEN_COOKIE_DURATION * 1000,
+        httpOnly: true,
+        secure: true
+        // sameSite: true
+    })
+}
+
+export const signInUser = ({ user, response, isSocial }) => {
+    const { token } = getUserData(user)
+    setCookieToken(token, response)
+
+    if (isSocial) {
+        response.redirect(Routes.AUTH_RESULT)
+    } else {
+        response.send(200)
+    }
+}
+
+export const updateUserToken = ({ user, response }) => {
+    const { userPublicData, token } = getUserData(user)
+    setCookieToken(token, response)
+
+    response.send({
+        user: userPublicData
+    })
+}

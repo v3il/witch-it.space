@@ -1,7 +1,7 @@
-import User from '~/server/models/User'
+import { userService } from '~/server/services'
 
 export default defineEventHandler(async (event) => {
-    const user = await User.query().findById(4)
+    const user = await userService.getById(2)
 
     return { user: user.getPublicData() }
 })

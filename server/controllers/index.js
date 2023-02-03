@@ -1,0 +1,8 @@
+export { userController } from './user'
+export { profilesController } from './profiles'
+export { questsController } from './quests'
+export { itemsController } from './items'
+export { wishlistController } from './wishlist'
+export { marketController } from './market'
+export { globalController } from './global'
+export { discordAuthController, googleAuthController, steamAuthController, localAuthController, logoutController } from './auth'
