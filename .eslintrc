@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "@nuxtjs"
+  ],
+  "parserOptions": {
+    "parser": "espree",
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "rules": {
+    "vue/multi-word-component-names": "off",
+    "vue/html-indent": ["error", 4],
+    "indent": ["error", 4],
+    "no-unused-vars": "warn",
+    "no-undef": "off"
+  }
+}
