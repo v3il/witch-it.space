@@ -1,0 +1,76 @@
+/* stylelint-disable */
+
+.body--light {
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    --gray-600: #6c757d;
+    --gray-700: #495057;
+    --gray-800: #343a40;
+    --gray-900: #212529;
+
+    --primary: var(--blue);
+    --secondary: var(--gray-200);
+    --success: var(--green);
+    --info: var(--cyan);
+    --warning: var(--yellow);
+    --danger: var(--red);
+    --light: var(--gray-200);
+    --dark: var(--gray-800);
+
+    --body-bg: #f8f8fa;
+    --body-color: #5b626b;
+    --label-color: #5b626b;
+
+    --content-bg: var(--white);
+
+    --input-background-color: var(--white);
+    --input-disabled-background-color: var(--white);
+    --input-color: var(--gray-700);
+    --input-disabled-color: var(--gray-700);
+    --input-placeholder-color: var(--gray-600);
+    --input-border-color: var(--gray-400);
+    --input-disabled-border-color: var(--gray-400);
+    --input-hover-color: var(--gray-700);
+    --input-focus-color: var(--gray-700);
+    --input-hover-border-color: var(--blue);
+    --input-focus-border-color: var(--blue);
+    --input-focus-box-shadow-color: var(--primary);
+
+    --default-border: 1px solid var(--gray-200);
+
+    --header-bg: #343A40;
+    --navbar-background-color: #343A40;
+
+    --theme-switcher-hover-background: rgba(239, 242, 247, 0.05);
+
+    --locale-switcher-hover-background: rgba(239, 242, 247, 0.05);
+    --dropdown-content-background-color: var(--gray-700);
+    --dropdown-item-color: var(--white);
+    --dropdown-item-hover-background-color: rgba(239, 242, 247, 0.05);
+    --dropdown-item-hover-color: var(--white);
+
+    --muted-text-color: #707070;
+
+    --card-bg-color: var(--content-bg);
+    --card-border-color: var(--gray-300);
+    --card-box-shadow-color: rgb(18 38 63 / 3%);
+
+    --quest-divider-color: var(--gray-200);
+
+    --modal-card-head-background-color: var(--white);
+    --modal-card-body-background-color: var(--white);
+    --modal-card-head-border-bottom: var(--default-border);
+    --modal-card-foot-border-top: var(--default-border);
+    --modal-card-title-color: var(--body-color);
+
+    --tooltip-bg: var(--primary);
+    --tooltip-color: var(--gray-200);
+
+    --navbar-item-color: var(--white);
+    --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
+    --navbar-item-hover-color: var(--white);
+    --navbar-mobile-footer-border: var(--default-border);
+}

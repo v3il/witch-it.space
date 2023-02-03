@@ -1,0 +1,100 @@
+/* stylelint-disable */
+
+.body--dark {
+    --dark-blue: #0F172A;
+    --dark-gray: #1E293B;
+    --primary-color: #4f46e5;
+    --primary-light: #C7D2FE;
+    --accent-dark: #1E293B;
+    --accent-light: #CBD5E1;
+    --error-dark: #DC2626;
+    --error-light: #F87171;
+
+    --border-color: rgba(241, 245, 249, 0.12);
+    --secondary-button-bg: rgb(51, 65, 85);
+    --primary-button-bg: #4f46e5;
+
+    --gray-100: #323a4e;
+    --gray-200: #32394e;
+    --gray-300: #2e3648;
+    --gray-400: #e9ecef;
+    --gray-500: #9ca8b3;
+    --gray-600: #3c445a;
+    --gray-700: #f6f6f6;
+    --gray-800: #eff2f7;
+    --gray-900: #f8f9fa;
+
+    --primary: var(--primary-color);
+    --secondary: var(--gray-600);
+    --success: var(--green);
+    --info: var(--cyan);
+    --warning: var(--yellow);
+    --danger: var(--red);
+    --light: var(--gray-200);
+    --dark: var(--gray-800);
+
+    --body-bg: var(--dark-blue);
+    --body-color: var(--gray-400);
+    --label-color: var(--gray-400);
+
+    --content-bg: #2a3042;
+
+    --input-background-color: rgb(0 0 0 / 0.05);
+    --input-disabled-background-color: var(--gray-300);
+    --input-color: #fff;
+    --input-radius: 6px;
+    --input-disabled-color: var(--muted-text-color);
+    --input-placeholder-color: var(--muted-text-color);
+    --input-border-color: rgb(100 116 139 / 1);
+    --input-disabled-border-color: #363e54;
+    --input-hover-color: #30384a;
+    --input-focus-color: #30384a;
+    --input-hover-border-color: #3a4158;
+    --input-focus-border-color: #3a4158;
+    --input-focus-box-shadow-color: var(--primary);
+
+    --default-border: 1px solid #3a445b;
+
+    --header-bg: #36394c;
+    --navbar-background-color: #36394c;
+
+    --theme-switcher-hover-background: rgba(239, 242, 247, 0.05);
+
+    --locale-switcher-hover-background: rgba(239, 242, 247, 0.05);
+    --dropdown-content-background-color: var(--gray-300);
+    --dropdown-item-color: var(--gray-500);
+    --dropdown-item-hover-background-color: rgba(239, 242, 247, 0.05);
+    --dropdown-item-hover-color: var(--gray-400);
+
+    --muted-text-color: rgb(148, 163, 184);
+
+    --card-bg-color: var(--dark-gray);
+    --card-border-color: var(--gray-300);
+    --card-box-shadow-color: rgb(18 38 63 / 3%);
+
+    --quest-divider-color: var(--gray-200);
+
+    --modal-card-head-background-color: var(--gray-200);
+    --modal-card-body-background-color: var(--gray-200);
+    --modal-card-head-border-bottom: var(--default-border);
+    --modal-card-foot-border-top: var(--default-border);
+    --modal-card-title-color: var(--body-color);
+
+    --tooltip-bg: var(--primary);
+    --tooltip-color: var(--body-color);
+
+    --navbar-item-color: var(--white);
+    --navbar-item-hover-background-color: var(--locale-switcher-hover-background);
+    --navbar-item-hover-color: var(--white);
+    --navbar-mobile-footer-border: 1px solid #212635;
+
+
+    --left-navbar-bg: var(--content-background);
+
+    --user-view-border: #36394c;
+
+    --hr-background-color: rgba(241, 245, 249, 0.12);
+
+    --switch-active-background-color: var(--primary-color);
+
+}
