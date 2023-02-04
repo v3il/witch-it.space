@@ -1,5 +1,5 @@
 <template>
-    <header class="wis-header" :class="headerClasses">
+    <header class="wis-header" :class="headerClasses" @click="onBurgerClick">
         <!--        <BurgerButton class="wis-header__burger" @click="onBurgerClick" />-->
 
         <div v-if="isAuthorized" class="wit-offset-left--auto wit-flex wit-flex--align-center">

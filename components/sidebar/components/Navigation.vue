@@ -4,37 +4,29 @@
             {{ title }}
         </h3>
 
-        <ul>
+        <ul class="m-0 p-0">
             <NavigationItem
                 v-for="link in links"
                 :key="link.to"
                 :link="link"
-                class="wit-offset-bottom--xxs"
+                class="mb-1"
             />
         </ul>
     </div>
 </template>
 
-<script>
-import NavigationItem from '@/components/sidebar/components/NavigationItem.vue'
+<script setup>
+defineProps({
+    links: {
+        required: true,
+        type: Array
+    },
 
-export default {
-    name: 'Navigation',
-
-    components: { NavigationItem },
-
-    props: {
-        links: {
-            required: true,
-            type: Array
-        },
-
-        title: {
-            required: true,
-            type: String
-        }
+    title: {
+        required: true,
+        type: String
     }
-}
+})
 </script>
 
 <style scoped lang="scss">

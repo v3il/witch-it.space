@@ -6,8 +6,9 @@
             <LeftNavBar />
         </SidebarPanel>
 
-        <div class="layout__right">
+        <div class="layout__right min-h-full">
             <TopNavBar @open-sidebar="openSidebar" />
+
             <slot class="wit-flex__item--grow" />
             <!--            <ConfirmPopup />-->
             <ScrollToTopButton />
@@ -24,6 +25,12 @@ const isSidebarOpen = ref(false)
 
 const openSidebar = () => (isSidebarOpen.value = true)
 const closeSidebar = () => (isSidebarOpen.value = false)
+
+useHead({
+    bodyAttrs: {
+        class: 'body body--dark'
+    }
+})
 </script>
 
 <style scoped lang="scss">
@@ -43,7 +50,7 @@ const closeSidebar = () => (isSidebarOpen.value = false)
 
 .layout,
 .layout__right {
-    min-height: 100vh;
+    //min-height: 100%;
 }
 
 .layout__right {

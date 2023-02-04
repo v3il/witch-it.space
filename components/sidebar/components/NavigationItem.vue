@@ -1,8 +1,9 @@
 <template>
     <li class="wis-navigation-item" :class="itemClasses">
-        <NuxtLink :to="link.to" class="wit-flex wit-flex--align-center wis-navigation-item__link">
+        <NuxtLink :to="link.to" class="flex align-items-center wis-navigation-item__link">
             <div class="wis-navigation-item__label-wrap">
-                <i class="mdi mdi-24px wit-offset-right--sm wis-navigation-item__icon" :class="iconClass" />
+                <Icon name="mdi:steam" size="24" class="wis-navigation-item__icon mr-4" :class="iconClass" />
+                <!--                <i class="mdi mdi-24px wit-offset-right&#45;&#45;sm wis-navigation-item__icon" :class="iconClass" />-->
                 <span>{{ $t(link.label) }}</span>
             </div>
 
@@ -10,7 +11,7 @@
                 {{ link.badge }}
             </span>
 
-            <span v-if="link.hasMark" v-tooltip="$t('ActionRequired')" class="wit-offset-left--auto wis-navigation-item__mark">
+            <span v-if="link.hasMark" class="wit-offset-left--auto wis-navigation-item__mark">
                 <i class="mdi mdi-alert-circle-outline mdi-20px wit-color--danger" />
             </span>
         </NuxtLink>
@@ -19,6 +20,8 @@
 
 <script setup>
 // import { computed, useRoute } from '@nuxtjs/composition-api'
+
+const { $t } = useTranslate()
 
 const props = defineProps({
     link: {
