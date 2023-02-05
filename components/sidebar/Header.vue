@@ -1,12 +1,8 @@
 <template>
-    <div class="wit-flex wit-flex--align-center wit-flex--justify-between wis-sidebar-header">
+    <div class="flex align-items-center justify-content-between wis-sidebar-header">
         <Logo class="wis-sidebar-header__logo" />
     </div>
 </template>
-
-<script setup>
-import Logo from '~/components/sidebar/components/Logo'
-</script>
 
 <style scoped lang="scss">
 .wis-sidebar-header {

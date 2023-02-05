@@ -2,25 +2,23 @@
     <li class="wis-navigation-item" :class="itemClasses">
         <NuxtLink :to="link.to" class="flex align-items-center wis-navigation-item__link">
             <div class="wis-navigation-item__label-wrap">
-                <Icon name="mdi:steam" size="24" class="wis-navigation-item__icon mr-4" :class="iconClass" />
-                <!--                <i class="mdi mdi-24px wit-offset-right&#45;&#45;sm wis-navigation-item__icon" :class="iconClass" />-->
+                <Icon :name="iconName" size="24" class="wis-navigation-item__icon mr-3" />
                 <span>{{ $t(link.label) }}</span>
             </div>
 
-            <span v-if="link.badge" class="wis-navigation-item__tag wit-offset-left--auto">
+            <span v-if="link.badge" class="wis-navigation-item__tag ml-auto">
                 {{ link.badge }}
             </span>
 
-            <span v-if="link.hasMark" class="wit-offset-left--auto wis-navigation-item__mark">
-                <i class="mdi mdi-alert-circle-outline mdi-20px wit-color--danger" />
+            <span v-if="link.hasMark" class="ml-auto wis-navigation-item__mark">
+                <Icon name="mdi:alert-circle-outline" size="20" />
+                <!--                <i class="mdi mdi-alert-circle-outline mdi-20px wit-color&#45;&#45;danger" />-->
             </span>
         </NuxtLink>
     </li>
 </template>
 
 <script setup>
-// import { computed, useRoute } from '@nuxtjs/composition-api'
-
 const { $t } = useTranslate()
 
 const props = defineProps({
@@ -32,20 +30,8 @@ const props = defineProps({
 
 const router = useRouter()
 
-const iconClass = computed(() => `mdi-${props.link.icon}`)
+const iconName = computed(() => `mdi:${props.link.icon}`)
 const itemClasses = computed(() => ({ active: router.currentRoute.value.path === props.link.to }))
-
-// export default {
-//     name: 'NavigationItem',
-//
-//     props: {
-//
-//     },
-//
-//     setup (props) {
-//         return { iconClass, itemClasses }
-//     }
-// }
 </script>
 
 <style scoped lang="scss">

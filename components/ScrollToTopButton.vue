@@ -1,6 +1,6 @@
 <template>
     <transition name="fade150">
-        <Button v-if="isVisible" type="is-secondary" class="wis-scroll-top wis-btn--rounded" @click="scrollToTop">
+        <Button v-if="isVisible" class="wis-scroll-top wis-btn--rounded" @click="scrollToTop">
             <i class="mdi mdi-chevron-up mdi-24px" />
         </Button>
     </transition>

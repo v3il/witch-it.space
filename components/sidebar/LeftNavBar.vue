@@ -10,10 +10,10 @@
 </template>
 
 <script setup>
-import Header from './Header'
+// import Header from './Header'
 import { buildUserManageMarketUrl, buildUserManageWishlistUrl, buildUserMarketUrl, buildUserWishlistUrl } from '~/utils'
 import { Routes } from '~/shared/Routes'
-import Navigation from '~/components/sidebar/components/Navigation'
+// import Navigation from '~/components/sidebar/components/Navigation'
 
 const { $t } = useTranslate()
 // const store = useStore()
@@ -23,7 +23,7 @@ const isVerified = computed(() => false/* store.getters['user/isVerified'] */)
 const userId = computed(() => user.value.id)
 const marketSize = computed(() => user.value.marketSize)
 const wishlistSize = computed(() => user.value.wishlistSize)
-const profilesCount = computed(() => 0/* store.state.global.usersCount */)
+const profilesCount = computed(() => 1/* store.state.global.usersCount */)
 
 const authLinks = computed(() => [
     { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
@@ -31,16 +31,16 @@ const authLinks = computed(() => [
 ])
 
 const userLinks = computed(() => [
-    { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: marketSize.value },
+    { icon: 'store-outline', label: 'MainMenu_MyMarket', to: buildUserMarketUrl(userId.value), badge: 1 },
     { icon: 'store-cog-outline', label: 'MainMenu_ManageMarket', to: buildUserManageMarketUrl(userId.value) },
-    { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value), badge: wishlistSize.value },
+    { icon: 'heart-outline', label: 'MainMenu_MyWishlist', to: buildUserWishlistUrl(userId.value), badge: 1 },
     { icon: 'heart-cog-outline', label: 'MainMenu_ManageWishlist', to: buildUserManageWishlistUrl(userId.value) }
 ])
 
 const appLinks = computed(() => {
     const links = [
         { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES, badge: profilesCount.value },
-        { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: 0 }
+        { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: 1 }
     ]
 
     const authorizedLinks = [
