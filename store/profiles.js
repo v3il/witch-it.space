@@ -10,8 +10,8 @@ export const useProfilesStore = defineStore('profiles', {
     },
 
     actions: {
-        async fetchProfilesCount () {
-            const { data } = await useFetch('/api/profiles/public')
+        async fetchProfiles () {
+            const { data } = await useFetch('/api/profiles/fetch')
 
             this.profiles = data.value.profiles
         },

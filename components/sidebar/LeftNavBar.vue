@@ -2,22 +2,22 @@
     <div class="wit-flex wit-flex--column">
         <Header />
 
-        <Navigation v-if="isAuthorized" :links="userLinks" :title="$t('UserDashboardsTitle')" class="wit-offset-bottom--md" />
-        <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="wit-offset-bottom--md" />
+        <Navigation v-if="isAuthorized" :links="userLinks" :title="$t('UserDashboardsTitle')" class="mb-4" />
+        <Navigation v-else :links="authLinks" :title="$t('AuthorizationTitle')" class="mb-4" />
 
-        <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="wit-offset-bottom--md" />
+        <Navigation :links="appLinks" :title="$t('AppPagesTitle')" class="mb-4" />
     </div>
 </template>
 
 <script setup>
-// import Header from './Header'
 import { buildUserManageMarketUrl, buildUserManageWishlistUrl, buildUserMarketUrl, buildUserWishlistUrl } from '~/utils'
 import { Routes } from '~/shared/Routes'
 import { useProfilesStore } from '~/store/profiles'
-// import Navigation from '~/components/sidebar/components/Navigation'
+import { useItemsStore } from '~/store/items'
 
 const { $t } = useTranslate()
 const profilesStore = useProfilesStore()
+const itemsStore = useItemsStore()
 
 // console.error(profilesStore)
 
@@ -27,7 +27,6 @@ const isVerified = computed(() => false/* store.getters['user/isVerified'] */)
 const userId = computed(() => user.value.id)
 const marketSize = computed(() => user.value.marketSize)
 const wishlistSize = computed(() => user.value.wishlistSize)
-const profilesCount = computed(() => 1/* store.state.global.usersCount */)
 
 const authLinks = computed(() => [
     { icon: 'login-variant', label: 'MainMenu_Login', to: Routes.LOGIN },
@@ -44,7 +43,7 @@ const userLinks = computed(() => [
 const appLinks = computed(() => {
     const links = [
         { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES, badge: profilesStore.profilesCount },
-        { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: 1 }
+        { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: itemsStore.itemsCount }
     ]
 
     const authorizedLinks = [

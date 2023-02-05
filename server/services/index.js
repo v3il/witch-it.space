@@ -3,6 +3,7 @@
 // import { WitchItApiService } from './WitchItApiService'
 // import { QuestsService } from './QuestsService'
 import { UserService } from './UserService'
+import { ItemsService } from './ItemsService'
 // import { WishlistService } from './WishlistService'
 // import { PriceService } from './PriceService'
 
@@ -20,6 +21,7 @@ import { UserService } from './UserService'
 // export const witchItApiService = new WitchItApiService({ axiosInstance })
 // export const questsService = new QuestsService({ witchItApiService })
 export const userService = new UserService()
+export const itemsService = new ItemsService()
 // export const priceService = new PriceService()
 // export const marketService = new WishlistService({ priceService, offersType: OfferTypes.MARKET })
 // export const wishlistService = new WishlistService({ priceService, offersType: OfferTypes.WISHLIST })
