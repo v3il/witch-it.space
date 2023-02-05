@@ -1,6 +1,6 @@
 <template>
     <div class="wis-auth-form-users">
-        <div class="mr-2 flex-shrink-0">
+        <div class="mr-2 flex-shrink-0 sm:mb-2">
             <NuxtLink v-for="userData in randomUsers" :key="userData.id" v-tooltip.bottom="userData.name" :to="userData.marketUrl" class="wis-auth-form-users__link">
                 <img :src="userData.avatarUrl" :alt="userData.name" class="wis-auth-form-users__img">
             </NuxtLink>
@@ -36,6 +36,7 @@ const usersCountText = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .wis-auth-form-users__link {

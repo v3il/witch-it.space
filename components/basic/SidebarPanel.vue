@@ -58,7 +58,7 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const panelClasses = computed(() => ({ open: props.isVisible, [props.from]: true }))
-const iconClasses = computed(() => 'mdi-' + props.icon)
+const iconClasses = computed(() => 'mdi:' + props.icon)
 const close = () => emit('close')
 </script>
 

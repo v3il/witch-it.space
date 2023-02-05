@@ -1,11 +1,11 @@
-import { Test } from '~/service/Test'
+import { AuthService } from '~/service/AuthService'
 
 export default defineNuxtPlugin((nuxtApp) => {
     return {
         provide: {
-            testService: new Test(),
+            authService: new AuthService(),
 
-            t: key => key + 1
+            t: key => key + 1 // todo: remove later
         }
     }
 })

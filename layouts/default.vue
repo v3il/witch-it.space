@@ -12,6 +12,7 @@
             <slot class="wit-flex__item--grow" />
             <!--            <ConfirmPopup />-->
             <ScrollToTopButton />
+            <Toast position="bottom-right" />
         </div>
     </div>
 </template>
