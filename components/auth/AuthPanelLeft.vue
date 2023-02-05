@@ -1,16 +1,16 @@
 <template>
     <div class="wis-auth-panel__left">
         <img
-            src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/SticerRE_jYv6JoI6p.png?ik-sdk-version=javascript-1.4.3&updatedAt=1663526734143"
+            src="https://ik.imagekit.io/igo1qzk1oe2z/witch_it_space/SticerRE_jYv6JoI6p.png"
             alt="hey"
-            class="wis-auth-panel__logo wit-offset-bottom--md"
+            class="wis-auth-panel__logo mb-4"
         >
 
         <h2 class="wis-auth-panel__left-title">
             {{ $t('AuthForm_Title') }}
         </h2>
 
-        <p class="wis-auth-panel__left-description wit-offset-bottom--md" v-html="$t('AuthForm_Description')" />
+        <p class="wis-auth-panel__left-description mb-4" v-html="$t('AuthForm_Description')" />
 
         <AuthPanelUsers class="wis-auth-panel__left-users" />
     </div>
@@ -18,16 +18,6 @@
 
 <script setup>
 const { $t } = useTranslate()
-
-// import AuthPanelUsers from '@/components/auth/AuthPanelUsers.vue'
-//
-// export default {
-//     name: 'AuthPanelLeft',
-//
-//     components: {
-//         AuthPanelUsers
-//     }
-// }
 </script>
 
 <style scoped lang="scss">

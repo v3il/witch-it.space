@@ -1,44 +1,34 @@
 <template>
     <div class="wis-auth-form-users">
-        <div class="wit-offset-right--xsm wit-flex__item--no-shrink">
-            <!--            <NuxtLink v-for="userData in randomUsers" :key="userData.id" v-tooltip="userData.name" :to="userData.marketUrl" class="wis-auth-form-users__link">-->
-            <!--                <img :src="userData.avatarUrl" :alt="userData.name" class="wis-auth-form-users__img">-->
-            <!--            </NuxtLink>-->
+        <div class="mr-1 flex-shrink-0">
+            <NuxtLink v-for="userData in randomUsers" :key="userData.id" v-tooltip.bottom="userData.name" :to="userData.marketUrl" class="wis-auth-form-users__link">
+                <img :src="userData.avatarUrl" :alt="userData.name" class="wis-auth-form-users__img">
+            </NuxtLink>
         </div>
 
-        <span class="wit-color--muted wit-line-height--sm">{{ 0 }}</span>
+        <span class="color-muted wit-line-height--sm">{{ usersCountText }}</span>
     </div>
 </template>
 
-<script>
-// import { computed, useStore } from '@nuxtjs/composition-api'
-// import { buildAvatarUrl, buildUserMarketUrl } from '@/utils/index.js'
-//
-// export default {
-//     name: 'AuthPanelUsers',
-//
-//     setup () {
-//         const { $t } = useStore()
-//         const store = useStore()
-//
-//         const usersCount = store.state.global.usersCount
-//
-//         const randomUsers = store.state.global.randomUsers.map(user => ({
-//             id: user.id,
-//             avatarUrl: buildAvatarUrl(user.avatarId),
-//             marketUrl: buildUserMarketUrl(user.id),
-//             name: user.displayName
-//         }))
-//
-//         const usersCountText = computed(() => {
-//             return randomUsers.length === usersCount
-//                 ? $t('AuthForm_UsersStat', [usersCount])
-//                 : $t('AuthForm_UsersStat2', [usersCount - randomUsers.length])
-//         })
-//
-//         return { randomUsers, usersCountText }
-//     }
-// }
+<script setup>
+import { useProfilesStore } from '~/store/profiles'
+
+const { $t } = useTranslate()
+const profilesStore = useProfilesStore()
+const randomUsers = profilesStore.getRandomProfiles(4).map(user => ({
+    id: user.id,
+    avatarUrl: buildAvatarUrl(user.avatarId),
+    marketUrl: buildUserMarketUrl(user.id),
+    name: user.displayName
+}))
+
+const usersCountText = computed(() => {
+    const usersCount = profilesStore.profilesCount
+
+    return randomUsers.length === usersCount
+        ? $t('AuthForm_UsersStat', [usersCount])
+        : $t('AuthForm_UsersStat2', [usersCount - randomUsers.length])
+})
 </script>
 
 <style scoped lang="scss">

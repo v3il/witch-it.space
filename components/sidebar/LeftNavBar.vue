@@ -13,10 +13,11 @@
 // import Header from './Header'
 import { buildUserManageMarketUrl, buildUserManageWishlistUrl, buildUserMarketUrl, buildUserWishlistUrl } from '~/utils'
 import { Routes } from '~/shared/Routes'
+import { useProfilesStore } from '~/store/profiles'
 // import Navigation from '~/components/sidebar/components/Navigation'
 
 const { $t } = useTranslate()
-// const store = useStore()
+const profilesStore = useProfilesStore()
 const user = computed(() => ({})/* store.state.user.user */)
 const isAuthorized = computed(() => false/* store.getters['user/isAuthorized'] */)
 const isVerified = computed(() => false/* store.getters['user/isVerified'] */)
@@ -39,7 +40,7 @@ const userLinks = computed(() => [
 
 const appLinks = computed(() => {
     const links = [
-        { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES, badge: profilesCount.value },
+        { icon: 'account-group-outline', label: 'MainMenu_Profiles', to: Routes.PROFILES, badge: profilesStore.profilesCount },
         { icon: 'view-grid-outline', label: 'MainMenu_Items', to: Routes.ITEMS, badge: 1 }
     ]
 
