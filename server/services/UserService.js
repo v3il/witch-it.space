@@ -1,7 +1,8 @@
 import { compare, genSalt, hash } from 'bcrypt'
 import { fn } from 'objection'
-// import { getCurrentTimestamp } from '../../shared'
+import jwt from 'jsonwebtoken'
 import User from '~/server/models/User'
+import { config } from '~/shared/config'
 
 export class UserService {
     getById (id) {
@@ -103,7 +104,11 @@ export class UserService {
         return user.$query().del()
     }
 
-    updateUserSettings (user, settings) {
-        return user.$query().patch(settings)
+    generateUserToken (user) {
+        const userPublicData = { id: user.id, $r: Math.random(), $d: Date.now() }
+
+        return jwt.sign(userPublicData, config.JWT_SECRET, {
+            expiresIn: config.TOKEN_COOKIE_DURATION
+        })
     }
 }

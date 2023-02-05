@@ -1,31 +1,42 @@
-import { itemsService } from '~/server/services'
+import { userService } from '~/server/services'
+import { useValidators } from '~/composables/useValidators'
+import { useTranslate } from '~/composables/useTranslate'
+import { useUserCookies } from '~/server/composables/useUserCookies'
 
 export default defineEventHandler(async (event) => {
-    const body = await readBody(event)
+    const { $t } = useTranslate()
+    const { validateLogin, validatePassword } = useValidators()
+    const { signUser } = useUserCookies()
 
-    await console.error(body)
+    const { login, password } = await readBody(event)
 
-    return 1
+    const isValidLogin = validateLogin(login)
+    const isValidPassword = validatePassword(password)
 
-    // const loginSchema = joi.string().min(4).required()
-    // const passwordSchema = joi.string().min(6).required()
-    // const { error: loginError } = loginSchema.validate(request.body.login)
-    // const { error: passwordError } = passwordSchema.validate(request.body.password)
-    //
-    // if (loginError || passwordError) {
-    //     return response.emitBadRequest(request.$t('Error_NoUserWithLogin'))
-    // }
-    //
-    // const { login, password } = request.body
-    // const savedUser = await userService.getByLoginWithPassword(login)
-    //
-    // if (!savedUser) {
-    //     return response.emitBadRequest(request.$t('Error_NoUserWithLogin'))
-    // }
-    //
-    // const isCorrectPassword = await userService.checkPasswords(password, savedUser.password)
-    //
-    // if (!isCorrectPassword) {
-    //     return response.emitBadRequest(request.$t('Error_WrongPassword'))
-    // }
+    if (!(isValidPassword && isValidLogin)) {
+        throw createError({
+            statusCode: 400,
+            message: $t('Error_NoUserWithLogin')
+        })
+    }
+
+    const savedUser = await userService.getByLoginWithPassword(login)
+
+    if (!savedUser) {
+        throw createError({
+            statusCode: 404,
+            message: $t('Error_NoUserWithLogin')
+        })
+    }
+
+    const isCorrectPassword = await userService.checkPasswords(password, savedUser.password)
+
+    if (!isCorrectPassword) {
+        throw createError({
+            statusCode: 400,
+            message: $t('Error_WrongPassword')
+        })
+    }
+
+    signUser(event, savedUser)
 })
