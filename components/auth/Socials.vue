@@ -1,13 +1,12 @@
 <template>
-    <div class="wit-flex wit-flex--center">
+    <div class="flex justify-content-center align-items-center">
         <Button
             v-for="social in socials"
             :key="social.value"
-            type="is-link"
-            class="wit-flex wit-flex--center wis-social-button"
+            class="flex justify-content-center align-items-center social-button"
             @click="onSocialClicked(social)"
         >
-            <i class="mdi mdi-20px" :class="'mdi-' + social.icon" />
+            <Icon :name="'mdi:' + social.icon" size="20" />
         </Button>
     </div>
 </template>
@@ -56,7 +55,7 @@ const onSocialClicked = (social) => {
 </script>
 
 <style scoped lang="scss">
-.wis-social-button {
+.social-button {
     flex: 1;
     border: 1px solid rgb(100 116 139);
     background-color: transparent;
@@ -70,6 +69,7 @@ const onSocialClicked = (social) => {
     }
 
     &:hover {
+        color: var(--muted-text-color);
         background-color: rgba(0, 0, 0, 0.05);
     }
 }

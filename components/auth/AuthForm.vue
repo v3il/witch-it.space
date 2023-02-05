@@ -1,42 +1,102 @@
 <template>
-    <form @submit.prevent="() => {}">
-        <!--        <b-field :label="$t('Login_LoginInputTitle')" class="wit-offset-bottom&#45;&#45;md" custom-class="wit-font-weight&#45;&#45;500">-->
-        <!--            <b-input-->
-        <!--                v-model="login"-->
-        <!--                type="text"-->
-        <!--                :placeholder="$t('Login_LoginInputPlaceholder')"-->
-        <!--                custom-class="wit-transition"-->
-        <!--                class="wis-input&#45;&#45;lg wis-input&#45;&#45;transparent"-->
-        <!--            />-->
-        <!--        </b-field>-->
+    <form @submit.prevent="onSubmit">
+        <label for="username" class="w-full block mb-2">{{ $t('Login_LoginInputTitle') }}</label>
+        <InputText
+            id="username"
+            v-model="login"
+            type="text"
+            :placeholder="$t('Login_LoginInputPlaceholder')"
+            class="w-full mb-4"
+        />
 
-        <!--        <b-field :label="$t('Login_PasswordInputTitle')" custom-class="wit-font-weight&#45;&#45;500" class="wit-offset-bottom&#45;&#45;md">-->
-        <!--            <b-input-->
-        <!--                v-model="password"-->
-        <!--                type="password"-->
-        <!--                :placeholder="$t('Login_PasswordInputPlaceholder')"-->
-        <!--                custom-class="wit-transition"-->
-        <!--                class="wis-input&#45;&#45;lg wis-input&#45;&#45;transparent"-->
-        <!--            />-->
-        <!--        </b-field>-->
+        <label for="password" class="w-full block mb-2">{{ $t('Login_PasswordInputTitle') }}</label>
+        <InputText
+            id="password"
+            v-model="password"
+            type="password"
+            :placeholder="$t('Login_PasswordInputPlaceholder')"
+            class="w-full mb-4"
+        />
 
-        <!--        <b-field v-if="!isLogin" :label="$t('Register_RepeatPassword')" custom-class="wit-font-weight&#45;&#45;500" class="wit-offset-bottom&#45;&#45;md">-->
-        <!--            <b-input-->
-        <!--                v-model="confirmPassword"-->
-        <!--                type="password"-->
-        <!--                :placeholder="$t('Login_PasswordInputPlaceholder')"-->
-        <!--                custom-class="wit-transition"-->
-        <!--                class="wis-input&#45;&#45;lg wis-input&#45;&#45;transparent"-->
-        <!--            />-->
-        <!--        </b-field>-->
+        <template v-if="!isLogin">
+            <label for="confirm-password" class="w-full block mb-2">{{ $t('Register_RepeatPassword') }}</label>
+            <InputText
+                id="confirm-password"
+                v-model="confirmPassword"
+                type="password"
+                :placeholder="$t('Login_PasswordInputPlaceholder')"
+                class="w-full mb-4"
+            />
+        </template>
 
-        <!--        <b-button type="is-primary" native-type="submit" class="wit-transition wis-btn&#45;&#45;rounded wit-block&#45;&#45;full-width wis-btn&#45;&#45;lg">-->
-        <!--            {{ buttonText }}-->
-        <!--        </b-button>-->
+        <Button type="submit" class="p-button-raised p-button-rounded w-full justify-content-center">
+            {{ buttonText }}
+        </Button>
     </form>
 </template>
 
-<script>
+<script setup>
+const { $t } = useTranslate()
+// const store = useStore()
+const router = useRouter()
+
+const props = defineProps({
+    mode: {
+        required: true,
+        type: String,
+        validator: value => ['login', 'register'].includes(value)
+    }
+})
+
+const login = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+const isLogin = computed(() => props.mode === 'login')
+const buttonText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
+
+const triggerLogin = () => {
+    // const loginError = validateLogin(login.value)
+    //
+    // if (loginError) {
+    //     return $showError($t(loginError))
+    // }
+    //
+    // const passwordError = validatePassword(password.value)
+    //
+    // if (passwordError) {
+    //     return $showError($t(passwordError))
+    // }
+    //
+    // store.dispatch('user/login', { login: login.value, password: password.value })
+    //     .then(() => router.replace(Routes.MAIN))
+    //     .catch(error => $showError(error.message))
+}
+
+const triggerRegister = () => {
+    // const loginError = validateLogin(login.value)
+    //
+    // if (loginError) {
+    //     return $showError($t(loginError))
+    // }
+    //
+    // const passwordError = validatePassword(password.value)
+    //
+    // if (passwordError) {
+    //     return $showError($t(passwordError))
+    // }
+    //
+    // if (password.value !== confirmPassword.value) {
+    //     return $showError($t('Error_PasswordsAreNotIdentical'))
+    // }
+    //
+    // store.dispatch('user/register', { login: login.value, password: password.value })
+    //     .then(() => router.replace(Routes.MAIN))
+    //     .catch(error => $showError(error.message))
+}
+
+const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()
+
 // import { computed, ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
 // import { Routes, validateLogin, validatePassword } from '@/shared/index.js'
 //

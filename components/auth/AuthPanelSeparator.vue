@@ -1,15 +1,23 @@
 <template>
-    <div class="wit-flex wit-flex--align-center wit-block--full-width">
-        <hr class="wit-block--full-width">
+    <div class="flex align-items-center w-full">
+        <hr class="w-full separator-hr">
 
-        <span class="wit-color--muted wit-flex__item--no-shrink wit-offset-left--sm wit-offset-right--sm">
+        <span class="color-muted flex-shrink-0 ml-3 mr-3">
             {{ $t('OrContinueWith') }}
         </span>
 
-        <hr class="wit-block--full-width">
+        <hr class="w-full separator-hr">
     </div>
 </template>
 
 <script setup>
 const { $t } = useTranslate()
 </script>
+
+<style scoped>
+.separator-hr {
+    height: 1px;
+    background-color: rgba(241, 245, 249, 0.12);
+    border: none;
+}
+</style>

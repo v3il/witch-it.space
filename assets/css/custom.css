@@ -1,0 +1,7 @@
+.color-muted {
+    color: var(--muted-text-color);
+}
+
+.bg-muted {
+    background-color: var(--muted-text-color);
+}

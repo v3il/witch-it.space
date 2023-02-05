@@ -1,6 +1,10 @@
 <template>
-    <div class="wit-flex wit-flex--center wit-paddings--md">
+    <div class="flex justify-content-center align-items-center p-6 min-h-full">
         <AuthPanel mode="register" />
+    </div>
+
+<!--    <div class="wit-flex wit-flex&#45;&#45;center wit-paddings&#45;&#45;md">-->
+<!--        <AuthPanel mode="register" />-->
 
     <!--    <TopNavBar class="layout__header">-->
     <!--      <template #brand>-->
@@ -63,7 +67,7 @@
     <!--        </p>-->
     <!--      </div>-->
     <!--    </div>-->
-    </div>
+<!--    </div>-->
 </template>
 
 <script>

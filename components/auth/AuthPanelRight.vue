@@ -4,7 +4,7 @@
             {{ title }}
         </h1>
 
-        <p class="wit-font-weight--500 wit-offset-bottom--lg">
+        <p class="wit-font-weight--500 mb-5">
             {{ descriptionText }}
 
             <NuxtLink :to="descriptionLink">
@@ -12,8 +12,8 @@
             </NuxtLink>
         </p>
 
-        <AuthForm :mode="mode" class="wit-offset-bottom--md" />
-        <AuthPanelSeparator class="wit-offset-bottom--md" />
+        <AuthForm :mode="mode" class="mb-5" />
+        <AuthPanelSeparator class="mb-5" />
         <Socials />
     </div>
 </template>
@@ -100,12 +100,12 @@ const descriptionText = computed(() => isLogin.value ? $t('DontHaveAccount') : $
 <style scoped lang="scss">
 .wis-auth-panel__right {
     padding: 4rem;
-    flex-basis: 400px;
+    flex-basis: 28rem;
 }
 
-.wis-auth-panel__right-content {
-    width: 20rem;
-}
+//.wis-auth-panel__right-content {
+//    width: 20rem;
+//}
 
 .wis-auth-panel__title {
     letter-spacing: -0.025em;
