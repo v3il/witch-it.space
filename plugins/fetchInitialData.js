@@ -1,7 +1,11 @@
 import { useProfilesStore } from '~/store/profiles'
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-    const todos = useProfilesStore(nuxtApp.$pinia)
+    if (!process.server) {
+        return
+    }
 
-    await todos.fetchProfilesCount()
+    const profilesStore = useProfilesStore(nuxtApp.$pinia)
+
+    await profilesStore.fetchProfilesCount()
 })

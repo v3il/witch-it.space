@@ -18,6 +18,9 @@ import { useProfilesStore } from '~/store/profiles'
 
 const { $t } = useTranslate()
 const profilesStore = useProfilesStore()
+
+// console.error(profilesStore)
+
 const user = computed(() => ({})/* store.state.user.user */)
 const isAuthorized = computed(() => false/* store.getters['user/isAuthorized'] */)
 const isVerified = computed(() => false/* store.getters['user/isVerified'] */)
