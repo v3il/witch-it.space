@@ -42,7 +42,6 @@
 import { Routes } from '~/shared/Routes'
 
 const { $t } = useTranslate()
-// const store = useStore()
 const router = useRouter()
 const { showError } = useNotification()
 const { validatePassword, validateLogin } = useValidators()
@@ -63,9 +62,7 @@ const confirmPassword = ref('')
 const isLogin = computed(() => props.mode === 'login')
 const buttonText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))
 
-console.error($authService)
-
-const triggerLogin = () => {
+const triggerLogin = async () => {
     const isValidLogin = validateLogin(login.value)
 
     if (!isValidLogin) {
@@ -82,9 +79,13 @@ const triggerLogin = () => {
         })
     }
 
-    $authService.login({ login: login.value, password: password.value })
-    // .then(() => router.replace(Routes.MAIN))
-    // .catch(error => showError({ description: error.message }))
+    const { error } = await $authService.login({ login: login.value, password: password.value })
+
+    if (error.value) {
+        return showError({ description: error.value.data.message })
+    }
+
+    router.replace(Routes.MAIN)
 }
 
 const triggerRegister = () => {
@@ -111,28 +112,6 @@ const triggerRegister = () => {
 
 const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()
 
-// import { computed, ref, useContext, useRouter, useStore } from '@nuxtjs/composition-api'
-// import { Routes, validateLogin, validatePassword } from '@/shared/index.js'
-//
-// export default {
-//     name: 'AuthForm',
-//
-//     props: {
-//         mode: {
-//             required: true,
-//             type: String,
-//             validator: value => ['login', 'register'].includes(value)
-//         }
-//     },
-//
-//     setup (props) {
-//         const { $t, $showError } = useContext()
-//         const store = useStore()
-//         const router = useRouter()
-//
-//         const login = ref('')
-//         const password = ref('')
-//         const confirmPassword = ref('')
 //
 //         const isLogin = computed(() => props.mode === 'login')
 //         const buttonText = computed(() => isLogin.value ? $t('SignIn') : $t('CreateYourAccount'))

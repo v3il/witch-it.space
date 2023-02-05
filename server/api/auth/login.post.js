@@ -39,4 +39,6 @@ export default defineEventHandler(async (event) => {
     }
 
     signUser(event, savedUser)
+
+    return { success: true }
 })
