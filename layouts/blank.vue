@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <Nuxt />
-  </div>
+    <div>
+        <slot />
+    </div>
 </template>
-
-<script>
-export default {
-    name: 'AuthResult'
-}
-</script>
-
-<style scoped>
-
-</style>
