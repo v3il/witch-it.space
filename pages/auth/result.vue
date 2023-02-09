@@ -13,15 +13,11 @@ definePageMeta({
 })
 
 onMounted(() => {
-    console.error(router.currentRoute)
-
     const errorTextCode = router.currentRoute.value.query.error
     const error = errorTextCode ? $t(errorTextCode) : null
 
-    console.error(window.opener)
-
     window.opener.postMessage({
-        authResult: { error }
+        result: { error }
     }, config.SERVER_ORIGIN)
 })
 </script>

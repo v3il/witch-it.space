@@ -30,8 +30,6 @@ export default defineEventHandler(async (event) => {
         }
     )
 
-    console.error(tokenData.access_token)
-
     const userData = await $fetch('https://discord.com/api/v8/users/@me', {
         headers: {
             Authorization: `Bearer ${tokenData.access_token}`
@@ -50,7 +48,7 @@ export default defineEventHandler(async (event) => {
 
     let savedUser = await userService.getByDiscordId(discordId)
 
-    if (!user) {
+    if (!savedUser) {
         savedUser = await userService.createUser({
             discordId,
             displayName: username,
@@ -62,56 +60,4 @@ export default defineEventHandler(async (event) => {
     signUser(event, savedUser)
 
     return sendRedirect(event, Routes.AUTH_RESULT)
-
-    // const { code } = request.query
-    //
-    // if (!code) {
-    //     return response.redirect(`${Routes.AUTH_RESULT}?error=Error_WrongOAuth2Token`)
-    // }
-    //
-    // const { data: tokenData } = await axiosInstance.post(
-    //     'https://discord.com/api/v8/oauth2/token',
-    //     qs.stringify({
-    //         grant_type: 'authorization_code',
-    //         code,
-    //         redirect_uri: REDIRECT_URL,
-    //         client_id: config.DISCORD_CLIENT_ID,
-    //         client_secret: config.DISCORD_CLIENT_SECRET,
-    //         scope: 'identify'
-    //     }), {
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         }
-    //     }
-    // )
-    //
-    // const { data: userData } = await axiosInstance.get('https://discord.com/api/v8/users/@me', {
-    //     headers: {
-    //         Authorization: `Bearer ${tokenData.access_token}`
-    //     }
-    // })
-    //
-    // const { id: discordId, username } = userData
-    //
-    // if (request.user) {
-    //     await request.user.$query().patch({ discordId })
-    //     return response.redirect(Routes.AUTH_RESULT)
-    // }
-    //
-    // let user = await userService.getByDiscordId(discordId)
-    //
-    // if (!user) {
-    //     user = await userService.createUser({
-    //         discordId,
-    //         displayName: username,
-    //         locale: request.locale,
-    //         theme: request.theme
-    //     })
-    // }
-    //
-    // signInUser({
-    //     user,
-    //     response,
-    //     isSocial: true
-    // })
 })
