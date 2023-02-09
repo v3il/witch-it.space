@@ -43,7 +43,6 @@ import { Routes } from '~/shared/Routes'
 import { useCurrentUserStore } from '~/store/currentUser'
 
 const { $t } = useTranslate()
-const router = useRouter()
 const { showError } = useNotification()
 const { validatePassword, validateLogin } = useValidators()
 const { $authService } = useNuxtApp()
@@ -87,9 +86,9 @@ const triggerLogin = async () => {
         return showError({ description: error.value.data.message })
     }
 
-    await currentUserStore.fetchMyProfile()
+    await currentUserStore.fetchCurrentUser()
 
-    router.replace(Routes.MAIN)
+    navigateTo(Routes.MAIN)
 }
 
 const triggerRegister = async () => {
@@ -121,9 +120,9 @@ const triggerRegister = async () => {
         return showError({ description: error.value.data.message })
     }
 
-    await currentUserStore.fetchMyProfile()
+    await currentUserStore.fetchCurrentUser()
 
-    router.replace(Routes.MAIN)
+    navigateTo(Routes.MAIN)
 }
 
 const onSubmit = () => isLogin.value ? triggerLogin() : triggerRegister()

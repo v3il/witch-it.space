@@ -1,20 +1,20 @@
 export const useCurrentUserStore = defineStore('currentUser', {
     state: () => ({
-        myProfile: null
+        currentUser: null
     }),
 
     getters: {
-        isAuthorized: state => state.myProfile !== null,
-        isVerified: ({ myProfile }) => myProfile ? !!myProfile.steamId && !!myProfile.steamTradeLink : false
+        isAuthorized: state => state.currentUser !== null,
+        isVerified: ({ currentUser }) => currentUser ? !!currentUser.steamId && !!currentUser.steamTradeLink : false
     },
 
     actions: {
-        async fetchMyProfile () {
+        async fetchCurrentUser () {
             const { data } = await useFetch('/api/profiles/me', {
                 headers: useRequestHeaders(['cookie'])
             })
 
-            this.myProfile = data.value.profile
+            this.currentUser = data.value.profile
         }
     }
 })

@@ -11,7 +11,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const itemsStore = useItemsStore(nuxtApp.$pinia)
     const currentUserStore = useCurrentUserStore(nuxtApp.$pinia)
 
-    await currentUserStore.fetchMyProfile()
+    await currentUserStore.fetchCurrentUser()
     await profilesStore.fetchProfiles()
     await itemsStore.fetchItems()
 })

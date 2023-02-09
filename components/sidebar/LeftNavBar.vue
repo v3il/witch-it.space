@@ -21,7 +21,7 @@ const profilesStore = useProfilesStore()
 const itemsStore = useItemsStore()
 const currentUserStore = useCurrentUserStore()
 
-const user = computed(() => currentUserStore.myProfile)
+const user = computed(() => currentUserStore.currentUser)
 const isAuthorized = computed(() => currentUserStore.isAuthorized)
 const isVerified = computed(() => currentUserStore.isVerified)
 const userId = computed(() => user.value.id)

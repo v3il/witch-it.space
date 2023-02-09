@@ -27,7 +27,7 @@ const socials = [
 
 const onSocialClicked = (social) => {
     useWindow('/api/auth/' + social.value, 'AuthWindow')
-        .then(() => currentUserStore.fetchMyProfile())
+        .then(() => currentUserStore.fetchCurrentUser())
         .then(() => navigateTo(Routes.MAIN))
         .catch((error) => {
             if (error) {
