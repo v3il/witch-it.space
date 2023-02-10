@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
                 grant_type: 'authorization_code',
                 code,
                 redirect_uri: `${config.public.serverOrigin}/api/auth/discord/callback`,
-                client_id: config.public.discordClientId,
+                client_id: config.discordClientId,
                 client_secret: config.discordClientSecret,
                 scope: 'identify'
             }),

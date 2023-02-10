@@ -37,14 +37,16 @@ export default defineNuxtConfig({
     },
 
     runtimeConfig: {
+        discordClientId: process.env.DISCORD_CLIENT_ID,
         discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+
+        googleClientId: process.env.GOOGLE_CLIENT_ID,
         googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
-        public: {
-            serverOrigin: process.env.SERVER_ORIGIN,
+        steamClientSecret: process.env.STEAM_CLIENT_SECRET,
 
-            discordClientId: process.env.DISCORD_CLIENT_ID,
-            googleClientId: process.env.GOOGLE_CLIENT_ID
+        public: {
+            serverOrigin: process.env.SERVER_ORIGIN
         }
     }
 })

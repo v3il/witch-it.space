@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
         method: 'POST',
         body: qs.stringify({
             code,
-            client_id: config.public.googleClientId,
+            client_id: config.googleClientId,
             client_secret: config.googleClientSecret,
             redirect_uri: `${config.public.serverOrigin}/api/auth/google/callback`,
             grant_type: 'authorization_code'

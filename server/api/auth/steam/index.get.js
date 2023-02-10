@@ -1,7 +1,15 @@
-export default defineEventHandler((event) => {
-    const config = useRuntimeConfig()
-    const redirectUrl = 'http://localhost:3000/api/auth/discord/callback'
-    const url = `https://discord.com/api/oauth2/authorize?client_id=${config.public.discordClientId}&redirect_uri=${redirectUrl}&response_type=code&scope=identify`
+import SteamAuth from 'node-steam-openid'
 
-    return sendRedirect(event, url)
+export default defineEventHandler(async (event) => {
+    const config = useRuntimeConfig()
+
+    const steam = new SteamAuth({
+        returnUrl: `${config.public.serverOrigin}/api/auth/steam/callback`,
+        realm: config.public.serverOrigin,
+        apiKey: config.steamClientSecret
+    })
+
+    const redirectURL = await steam.getRedirectUrl()
+
+    return sendRedirect(event, redirectURL)
 })
