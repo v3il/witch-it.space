@@ -7,7 +7,7 @@
         <div v-if="isAuthorized" class="ml-auto flex align-items-center">
             <!--      <LocaleSwitcher />-->
             <!--      <ThemeSwitcher />-->
-            <Notifications class="mr-1" />
+            <Notifications />
             <UserDropdown />
         </div>
     </header>
