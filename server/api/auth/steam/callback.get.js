@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
             body: qs.stringify({
                 grant_type: 'authorization_code',
                 code,
-                redirect_uri: `${config.public.serverOrigin}/api/auth/discord/callback`,
+                redirect_uri: 'http://localhost:3000/api/auth/discord/callback',
                 client_id: config.public.discordClientId,
                 client_secret: config.discordClientSecret,
                 scope: 'identify'

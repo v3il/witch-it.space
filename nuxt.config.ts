@@ -1,3 +1,5 @@
+// const isProduction = process.env.NODE_ENV === 'production'
+
 export default defineNuxtConfig({
     css: [
         '~/assets/css/common.css',
@@ -28,10 +30,6 @@ export default defineNuxtConfig({
     app: {
         head: {
             title: 'witch-it.space',
-            meta: [
-                // <meta name="description" content="My amazing site">
-                { name: 'description', content: 'My amazing site.' }
-            ],
             link: [
                 { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Inter:wght@100,500,600,700,800,900|Roboto:400,500|Sarabun:400,600,700&display=swap' }
             ]
@@ -40,9 +38,13 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         discordClientSecret: process.env.DISCORD_CLIENT_SECRET,
+        googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
 
         public: {
-            discordClientId: process.env.DISCORD_CLIENT_ID
+            serverOrigin: process.env.SERVER_ORIGIN,
+
+            discordClientId: process.env.DISCORD_CLIENT_ID,
+            googleClientId: process.env.GOOGLE_CLIENT_ID
         }
     }
 })

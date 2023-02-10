@@ -13,45 +13,45 @@ export default defineEventHandler(async (event) => {
         return sendRedirect(event, `${Routes.AUTH_RESULT}?error=Error_WrongOAuth2Token`)
     }
 
-    const tokenData = await $fetch(
-        'https://discord.com/api/v8/oauth2/token', {
-            method: 'POST',
-            body: qs.stringify({
-                grant_type: 'authorization_code',
-                code,
-                redirect_uri: `${config.public.serverOrigin}/api/auth/discord/callback`,
-                client_id: config.public.discordClientId,
-                client_secret: config.discordClientSecret,
-                scope: 'identify'
-            }),
+    const tokenData = await $fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        body: qs.stringify({
+            code,
+            client_id: config.public.googleClientId,
+            client_secret: config.googleClientSecret,
+            redirect_uri: `${config.public.serverOrigin}/api/auth/google/callback`,
+            grant_type: 'authorization_code'
+        }),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+
+    const googleUser = await $fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokenData.access_token}`,
+        {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                Authorization: `Bearer ${tokenData.id_token}`
             }
         }
     )
 
-    const userData = await $fetch('https://discord.com/api/v8/users/@me', {
-        headers: {
-            Authorization: `Bearer ${tokenData.access_token}`
-        }
-    })
-
     const { getUserFromCookies } = useUserCookies()
     const user = await getUserFromCookies(event)
 
-    const { id: discordId, username } = userData
+    const { id: googleId, name } = googleUser
 
     if (user) {
-        await user.$query().patch({ discordId })
+        await user.$query().patch({ googleId })
         return sendRedirect(event, Routes.AUTH_RESULT)
     }
 
-    let savedUser = await userService.getByDiscordId(discordId)
+    let savedUser = await userService.getByGoogleId(googleId)
 
     if (!savedUser) {
         savedUser = await userService.createUser({
-            discordId,
-            displayName: username,
+            googleId,
+            displayName: name,
             locale: Locales.EN,
             theme: Themes.DARK
         })
