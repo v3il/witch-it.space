@@ -12,4 +12,10 @@ export class AuthService {
             body: { login, password }
         })
     }
+
+    logout () {
+        return useFetch('/api/auth/logout', {
+            method: 'POST'
+        })
+    }
 }

@@ -1,15 +1,12 @@
 <template>
-    <div>
-        index
+    <div class="p-2">
+        {{ currentProfile }}
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Index'
-}
+<script setup>
+import { useCurrentUserStore } from '~/store/currentUser'
+
+const currentUserStore = useCurrentUserStore()
+const currentProfile = computed(() => currentUserStore.currentUser)
 </script>
-
-<style scoped>
-
-</style>

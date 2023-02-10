@@ -1,91 +1,67 @@
 <template>
-  <Dropdown position="bottom-end" class="wit-block--full-height">
-    <template #trigger>
-      <b-button type="is-ghost" class="wit-block--full-height wit-user-dropdown wit-transition--background">
-        <div class="wit-flex wit-flex--align-center wit-block--full-height">
-          <img
-            class="wit-user-dropdown__image wit-offset-right--xs"
-            :src="avatarUrl"
-            alt="Avatar"
-          >
-
-          <span>{{ user.displayName }}</span>
-        </div>
-      </b-button>
-    </template>
-
-    <template #items>
-      <DropdownItem>
-        <nuxt-link to="/settings" class="wit-flex wit-flex--align-center wit-color--white">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="cog-sync" />
-          <span>{{ $t('Settings') }}</span>
-        </nuxt-link>
-      </DropdownItem>
-
-      <DropdownItem @click="onLogout">
-        <div class="wit-flex wit-flex--align-center wit-color--danger">
-          <b-icon size="is-small" class="is-size-5 wit-offset-right--xxs" icon="logout-variant" />
-          <span>{{ $t('Logout') }}</span>
-        </div>
-      </DropdownItem>
-    </template>
-  </Dropdown>
+    <SplitButton ref="dropdown" :model="nestedItems" class="p-button-text p-button-secondary user-dropdown">
+        <Button class="flex align-items-center h-full" @click="onDropdownClick">
+            <img class="user-dropdown__image mr-2" :src="userAvatarUrl" alt="Avatar">
+            <span>{{ currentUser.displayName }}</span>
+        </Button>
+    </SplitButton>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex'
-import { StoreModules, User } from '@/store/index.js'
+<script setup>
+import { useCurrentUserStore } from '~/store/currentUser'
 import { buildAvatarUrl } from '@/utils/index.js'
-import Dropdown from '@/components/basic/dropdown/Dropdown.vue'
-import DropdownItem from '@/components/basic/dropdown/DropdownItem.vue'
+import { Routes } from '~/shared/Routes'
+import { useNotification } from '~/composables/useNotification'
 
-export default {
-    name: 'UserDropdown',
+const currentUserStore = useCurrentUserStore()
+const { $t } = useTranslate()
+const { $authService } = useNuxtApp()
+const { showError } = useNotification()
 
-    components: {
-        Dropdown,
-        DropdownItem
-    },
+const currentUser = computed(() => currentUserStore.currentUser)
+const userAvatarUrl = computed(() => buildAvatarUrl(currentUser.value.avatarId))
 
-    computed: {
-        ...mapState(User.PATH, [
-            User.State.USER
-        ]),
+const dropdown = ref(null)
 
-        avatarUrl () {
-            return buildAvatarUrl(this.user.avatarId)
+const onDropdownClick = () => {
+    dropdown.value.onDropdownButtonClick()
+}
+
+const nestedItems = ref([
+    {
+        label: $t('Settings'),
+        icon: 'pi pi-cog',
+        command: () => {
+            navigateTo(Routes.SETTINGS)
         }
     },
+    {
+        label: $t('Logout'),
+        icon: 'pi pi-sign-out text-red-400',
+        command: async () => {
+            const { error } = await $authService.logout()
 
-    methods: {
-        ...mapActions(StoreModules.USER, {
-            logout: 'logout'
-        }),
+            if (error.value) {
+                return showError({
+                    description: error.value.data.message
+                })
+            }
 
-        onLogout () {
-            this.logout().catch(this.$showError)
+            currentUserStore.clearUser()
+            navigateTo(Routes.LOGIN)
         }
     }
-}
+])
 </script>
 
 <style scoped lang="scss">
-.wit-user-dropdown {
-    color: white;
-    padding: var(--offset-sm);
-    cursor: pointer;
-
-    &.open,
-    &:active,
-    &:focus,
-    &:hover {
-        color: white;
-        text-decoration: none;
-        background-color: var(--locale-switcher-hover-background);
+.user-dropdown {
+    :deep(.p-splitbutton-menubutton) {
+        display: none !important;
     }
 }
 
-.wit-user-dropdown__image {
+.user-dropdown__image {
     height: var(--offset-lg);
     width: var(--offset-lg);
     max-height: none;

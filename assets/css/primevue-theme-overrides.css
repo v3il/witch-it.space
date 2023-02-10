@@ -3,6 +3,8 @@ a {
     text-decoration: none;
 }
 
+/* Button */
+
 .p-button.p-button {
     background-color: var(--primary);
     border-color: var(--primary);
@@ -13,8 +15,26 @@ a {
     background-color: #473fce;
 }
 
+/* InputText */
+
 .p-inputtext.p-inputtext {
     background-color: var(--input-background-color);
     border-color: var(--input-border-color);
     color: var(--input-color);
+}
+
+/* SplitButton */
+
+.p-tieredmenu.p-tieredmenu-overlay.p-component {
+    z-index: 10002 !important;
+    background-color: #2e3648;
+    border: 1px solid #3a425a;
+}
+
+.p-tieredmenu.p-tieredmenu-overlay.p-component li:not(:last-child) {
+    border-bottom: var(--default-border);
+}
+
+.p-tieredmenu.p-tieredmenu-overlay.p-component .p-menuitem-icon {
+    margin-right: 1rem !important;
 }

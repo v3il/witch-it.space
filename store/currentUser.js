@@ -15,6 +15,10 @@ export const useCurrentUserStore = defineStore('currentUser', {
             })
 
             this.currentUser = data.value.profile
+        },
+
+        clearUser () {
+            this.currentUser = null
         }
     }
 })
