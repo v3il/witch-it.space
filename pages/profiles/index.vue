@@ -6,8 +6,6 @@
             <div class="wis-block--max-width">
                 <!--        <Search store-module="profiles" class="wit-offset-bottom&#45;&#45;md" />-->
                 <ProfilesView :profiles="profiles" />
-                <ProfilesView :profiles="profiles" />
-                <ProfilesView :profiles="profiles" />
             </div>
         </div>
 
@@ -19,7 +17,9 @@
 // import { computed, useStore } from '@nuxtjs/composition-api'
 import { ProfilesFilter, ProfilesHeader, ProfilesView } from '@/components/profiles'
 import { useProfilesStore } from '~/store/profiles'
-// import { ProfilesFiltersScheme } from '@/domain/models/schemes/index.js'
+import { useFiltersStore } from '~/store/filters'
+import { SortOrders } from '~/shared/items'
+// import { ProfilesFilters } from '@/domain/models/schemes/index.js'
 // import { Search } from '@/components/basic/index.js'
 
 const Modes = {
@@ -27,8 +27,21 @@ const Modes = {
     ALL: 'allProfiles'
 }
 
+const router = useRouter()
+const filtersStore = useFiltersStore()
+
+filtersStore.setDefaultState({
+    defaultFilter: { query: '' },
+    defaultSort: { sortBy: 'marketSize', order: SortOrders.DESC },
+    availableSorts: ['marketSize', 'name', 'wishlistSize']
+})
+
+filtersStore.updateState(router.currentRoute.value.query)
+
 const profilesStore = useProfilesStore()
 const profiles = computed(() => profilesStore.profiles)
+
+console.log(profilesStore.test)
 
 // export default {
 //     components: {
@@ -49,9 +62,9 @@ const profiles = computed(() => profilesStore.profiles)
 //
 //     async asyncData ({ store }) {
 //         await store.dispatch('profiles/setData', {
-//             defaultFilters: ProfilesFiltersScheme.getDefaultFilters(),
-//             defaultSorts: ProfilesFiltersScheme.getDefaultSorts(),
-//             availableSorts: ProfilesFiltersScheme.getAvailableSorts()
+//             defaultFilters: ProfilesFilters.getDefaultFilters(),
+//             defaultSorts: ProfilesFilters.getDefaultSorts(),
+//             availableSorts: ProfilesFilters.getAvailableSorts()
 //         })
 //
 //         console.error('ASYNC')
