@@ -1,7 +1,7 @@
 <template>
     <transition name="fade150">
-        <Button v-if="isVisible" class="wis-scroll-top wis-btn--rounded" @click="scrollToTop">
-            <i class="mdi mdi-chevron-up mdi-24px" />
+        <Button v-if="isVisible" class="wis-scroll-top wis-btn--rounded flex justify-content-center p-button-secondary" @click="scrollToTop">
+            <Icon name="mdi:chevron-up" size="24" />
         </Button>
     </transition>
 </template>
@@ -26,8 +26,8 @@ const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
     position: fixed;
     right: 16px;
     bottom: 16px;
-    width: 45px;
-    height: 45px;
+    width: 46px;
+    height: 46px;
     max-height: none;
     border-radius: 50%;
     padding: 0;

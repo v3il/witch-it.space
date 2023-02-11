@@ -2,10 +2,35 @@
     color: var(--muted-text-color);
 }
 
+.color-white {
+    color: var(--white);
+}
+
 .color-error {
     color: var(--danger);
 }
 
+.color-dark-pink {
+    color: var(--dark-pink);
+}
+
 .bg-muted {
     background-color: var(--muted-text-color);
+}
+
+.container-sm {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 2200px) {
+    .container-sm {
+        max-width: 1440px !important;
+    }
+}
+
+@media (min-width: 2201px) {
+    .container-sm {
+        max-width: 1900px !important;
+    }
 }

@@ -7,6 +7,10 @@ export default class User extends BaseModel {
 
     getPublicData () {
         const { password, ...publicData } = this
-        return { ...publicData, hasLocalProfile: !!password }
+        return {
+            ...publicData,
+            hasLocalProfile: !!password,
+            isVerified: !!publicData.steamId && !!publicData.steamTradeLink
+        }
     }
 }

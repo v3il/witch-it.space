@@ -6,7 +6,8 @@ export const useProfilesStore = defineStore('profiles', {
     }),
 
     getters: {
-        profilesCount: state => state.profiles.length
+        profilesCount: state => state.profiles.length,
+        verifiedProfilesCount: state => state.profiles.filter(({ isVerified }) => isVerified).length
     },
 
     actions: {
