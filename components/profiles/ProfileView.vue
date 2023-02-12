@@ -8,21 +8,21 @@
                     {{ profile.displayName }}
                 </h5>
 
-                <div class="wis-user-view__tags1">
+                <div class="wis-user-view__tags">
                     <!--                    <b-taglist class="wit-flex&#45;&#45;justify-center">-->
-                    <Tag class="wis-user-view__tag1" :class="isVerifiedTagClass" rounded>
+                    <div class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
                         <div class="flex align-items-center">
                             {{ $t('Verified') }}:
                             <Icon :name="isVerifiedIconClass" class="ml-1" />
                         </div>
-                    </Tag>
+                    </div>
 
-                    <Tag class="wis-user-view__tag1" :class="hasSteamGuardTagClass" rounded>
+                    <div class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
                         <div class="flex align-items-center">
                             Steam Guard:
                             <Icon :name="hasSteamGuardIconClass" class="ml-1" />
                         </div>
-                    </Tag>
+                    </div>
                     <!--                    </b-taglist>-->
                 </div>
             </div>
@@ -42,54 +42,73 @@
     </div>
 </template>
 
-<script>
+<script setup>
 // import { computed } from '@nuxtjs/composition-api'
 import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils/index.js'
 // import { UserAvatar } from '@/components/user/index.js'
 
-export default {
-    name: 'UserView',
-
-    components: {
-        // UserAvatar
-    },
-
-    props: {
-        profile: {
-            required: true,
-            type: Object
-        }
-    },
-
-    setup (props) {
-        const isVerified = computed(() => props.profile.isVerified ?? true)
-        const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
-        const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
-        const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
-
-        const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
-        const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi:check' : 'mdi:close')
-        const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
-
-        const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
-        const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
-        const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi:check' : 'mdi:close')
-
-        const { $t } = useTranslate()
-
-        return {
-            avatarUrl,
-            marketUrl,
-            wishlistUrl,
-            isVerifiedTagClass,
-            isVerifiedIconClass,
-            isVerifiedTagText,
-            hasSteamGuardTagClass,
-            hasSteamGuardIconClass,
-            $t
-        }
+const props = defineProps({
+    profile: {
+        required: true,
+        type: Object
     }
-}
+})
+
+const isVerified = computed(() => props.profile.isVerified ?? true)
+const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
+const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
+const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
+
+const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
+const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi:check' : 'mdi:close')
+const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
+
+const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
+const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
+const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi:check' : 'mdi:close')
+
+const { $t } = useTranslate()
+
+// export default {
+//     name: 'UserView',
+//
+//     components: {
+//         // UserAvatar
+//     },
+//
+//     props: {
+//
+//     },
+//
+//     setup (props) {
+//         const isVerified = computed(() => props.profile.isVerified ?? true)
+//         const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
+//         const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
+//         const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
+//
+//         const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
+//         const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi:check' : 'mdi:close')
+//         const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
+//
+//         const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
+//         const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
+//         const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi:check' : 'mdi:close')
+//
+//         const { $t } = useTranslate()
+//
+//         return {
+//             avatarUrl,
+//             marketUrl,
+//             wishlistUrl,
+//             isVerifiedTagClass,
+//             isVerifiedIconClass,
+//             isVerifiedTagText,
+//             hasSteamGuardTagClass,
+//             hasSteamGuardIconClass,
+//             $t
+//         }
+//     }
+// }
 </script>
 
 <style scoped lang="scss">

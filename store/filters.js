@@ -1,20 +1,18 @@
-import { clone, differenceWith, isEqual } from 'lodash'
+import { clone } from 'lodash'
 import { SortOrders } from '~/shared/items'
 import { getObjectsDiff } from '~/utils'
 
 function UPDATE_URL (state) {
     const route = useRoute()
+    const router = useRouter()
 
-    const path = route.path
     const changedFilters = getObjectsDiff(state.defaultFilter, state.filter)
     const changedSorts = getObjectsDiff(state.defaultSort, state.sort)
 
-    console.error(changedFilters)
-
-    const searchParams = new URLSearchParams({ ...changedSorts, ...changedFilters })
-    const newURL = path + (Array.from(searchParams).length ? `?${searchParams.toString()}` : '')
-
-    window.history.replaceState({}, '', newURL)
+    router.replace({
+        path: route.path,
+        query: { ...changedSorts, ...changedFilters }
+    })
 }
 
 export const useFiltersStore = defineStore('filters', {
@@ -66,7 +64,7 @@ export const useFiltersStore = defineStore('filters', {
         updateStateFromQuery (query) {
             const router = useRouter()
 
-            console.log(router)
+            // console.log(router)
 
             this.filter = Object.entries(this.defaultFilter).reduce((filters, [key, value]) => {
                 const valueFromUrl = query[key]

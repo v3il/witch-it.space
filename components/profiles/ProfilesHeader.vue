@@ -7,7 +7,8 @@
                 <HeaderTitle :title="$t('Profiles_HeaderTitle')" />
 
                 <HeaderDescription>
-                    <div v-html="description" />
+                    <span class="color-white">{{ profilesCount }}</span>
+                    {{ $t('Profiles_Description', [profilesCount]) }}
                 </HeaderDescription>
             </div>
         </div>
@@ -18,10 +19,7 @@
 import { useProfilesStore } from '~/store/profiles'
 
 const { $t } = useTranslate()
-const profilesStore = useProfilesStore()
 
-const description = computed(() => $t('Profiles_Description', [
-    profilesStore.profilesCount,
-    profilesStore.verifiedProfilesCount
-]))
+const profilesStore = useProfilesStore()
+const profilesCount = computed(() => profilesStore.profilesCount)
 </script>
