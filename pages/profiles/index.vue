@@ -2,10 +2,10 @@
     <div class="wit-flex wit-flex--column wit-profiles-page">
         <ProfilesHeader />
 
-        <div class="wit-profiles-page__content">
+        <div class="wit-profiles-page__content container-sm">
             <div class="wis-block--max-width">
-                <!--        <Search store-module="profiles" class="wit-offset-bottom&#45;&#45;md" />-->
-                <ProfilesView :profiles="profiles" />
+                <FiltersSearch class="mb-4" />
+                <ProfilesView :profiles="filteredUsers" />
             </div>
         </div>
 
@@ -36,12 +36,13 @@ filtersStore.setDefaultState({
     availableSorts: ['marketSize', 'name', 'wishlistSize']
 })
 
-filtersStore.updateState(router.currentRoute.value.query)
+filtersStore.updateStateFromQuery(router.currentRoute.value.query)
 
 const profilesStore = useProfilesStore()
 const profiles = computed(() => profilesStore.profiles)
+const filteredUsers = computed(() => profilesStore.filteredUsers)
 
-console.log(profilesStore.test)
+// console.log(profilesStore.filteredUsers)
 
 // export default {
 //     components: {

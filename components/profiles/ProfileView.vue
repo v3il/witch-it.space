@@ -8,16 +8,16 @@
                     {{ profile.displayName }}
                 </h5>
 
-                <div class="wis-user-view__tags">
+                <div class="wis-user-view__tags1">
                     <!--                    <b-taglist class="wit-flex&#45;&#45;justify-center">-->
-                    <Tag class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
+                    <Tag class="wis-user-view__tag1" :class="isVerifiedTagClass" rounded>
                         <div class="flex align-items-center">
                             {{ $t('Verified') }}:
                             <Icon :name="isVerifiedIconClass" class="ml-1" />
                         </div>
                     </Tag>
 
-                    <Tag class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
+                    <Tag class="wis-user-view__tag1" :class="hasSteamGuardTagClass" rounded>
                         <div class="flex align-items-center">
                             Steam Guard:
                             <Icon :name="hasSteamGuardIconClass" class="ml-1" />

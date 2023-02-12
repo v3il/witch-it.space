@@ -10,12 +10,12 @@ export const useProfilesStore = defineStore('profiles', {
         profilesCount: state => state.profiles.length,
         verifiedProfilesCount: state => state.profiles.filter(({ isVerified }) => isVerified).length,
 
-        test: (state) => {
+        filteredUsers: (state) => {
             const filters = useFiltersStore()
 
             console.error(filters.filter.query)
 
-            return filters.filter.query
+            return state.profiles.filter(profile => profile.displayName.includes(filters.filter.query))
         }
     },
 

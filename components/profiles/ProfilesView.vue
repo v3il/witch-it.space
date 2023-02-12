@@ -1,5 +1,5 @@
 <template>
-    <div v-if="profiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid container-sm">
+    <div v-if="profiles.length" class="wit-flex wit-flex--wrap wis-profiles__grid">
         <ProfileView
             v-for="profile in profiles"
             :key="profile.id"
