@@ -1,22 +1,22 @@
 <template>
     <div class="wis-sidebar-panel" :class="panelClasses">
-        <transition name="fade150">
-            <div v-if="isVisible" class="wis-sidebar-panel__overlay" @click.self="close" />
-        </transition>
+        <!--        <transition name="fade150">-->
+        <div v-if="isVisible" class="wis-sidebar-panel__overlay" @click.self="close" />
+        <!--        </transition>-->
 
         <div class="wis-sidebar-panel__drawer" @click="emit('drawer-clicked')">
-            <div v-if="!hideHeader" class="wit-flex wit-flex--align-center wit-flex--justify-between wit-background--primary wis-sidebar-panel__header">
-                <h2 class="wit-flex wit-flex--align-center wis-sidebar-panel__title">
-                    <i class="mdi mdi-24px wit-offset-right--xsm" :class="iconClasses" />
+            <div v-if="!hideHeader" class="flex align-items-center justify-content-between bg-primary wis-sidebar-panel__header">
+                <h2 class="flex align-items-center wis-sidebar-panel__title color-white">
+                    <Icon :name="'mdi:' + icon" class="mr-2" size="24" />
                     {{ title }}
                 </h2>
 
-                <Button type="is-ghost" class="wis-sidebar-panel__close" @click="close">
-                    <i class="mdi mdi-close mdi-24px" />
+                <Button class="wis-sidebar-panel__close" @click="close">
+                    <Icon name="mdi:close" size="24" />
                 </Button>
             </div>
 
-            <div class="wit-flex__item--grow">
+            <div class="flex-1">
                 <slot />
             </div>
         </div>
@@ -58,7 +58,6 @@ const props = defineProps({
 const emit = defineEmits(['close'])
 
 const panelClasses = computed(() => ({ open: props.isVisible, [props.from]: true }))
-const iconClasses = computed(() => 'mdi:' + props.icon)
 const close = () => emit('close')
 </script>
 
@@ -113,7 +112,7 @@ const close = () => emit('close')
 }
 
 .wis-sidebar-panel__close {
-    padding: 8px 0 8px 8px;
+    padding: 8px;
     color: white;
     text-decoration: none !important;
 

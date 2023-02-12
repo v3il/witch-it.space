@@ -122,6 +122,7 @@ export const en = {
     AddPrice: 'Add price',
     RemovePrice: 'Remove price',
     CreateOffers: 'Create offers',
+    SearchProfile: 'Search profile',
 
     Quests_Play40Rounds_B: 'Play 40 rounds of Mobification',
     Quests_Play8Rounds_B: 'Play 8 rounds of Mobification',

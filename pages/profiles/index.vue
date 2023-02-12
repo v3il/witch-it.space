@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <!--        <ProfilesFilter />-->
+        <ProfilesFilter />
     </div>
 </template>
 
@@ -36,7 +36,7 @@ filtersStore.setDefaultState({
     availableSorts: ['marketSize', 'name', 'wishlistSize']
 })
 
-filtersStore.updateStateFromQuery(router.currentRoute.value.query)
+filtersStore.updateStateFromRoute()
 
 const profilesStore = useProfilesStore()
 const profiles = computed(() => profilesStore.profiles)

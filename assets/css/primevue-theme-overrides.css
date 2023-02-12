@@ -38,3 +38,13 @@ a {
 .p-tieredmenu.p-tieredmenu-overlay.p-component .p-menuitem-icon {
     margin-right: 1rem !important;
 }
+
+/* Dropdown */
+
+.p-dropdown-panel {
+    z-index: 22225 !important;
+}
+
+.p-dropdown {
+    border: var(--default-border) !important;
+}
