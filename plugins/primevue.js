@@ -5,6 +5,7 @@ import Tooltip from 'primevue/tooltip'
 import Dropdown from 'primevue/dropdown'
 import SplitButton from 'primevue/splitbutton'
 import Textarea from 'primevue/textarea'
+import Message from 'primevue/message'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 
@@ -18,6 +19,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Dropdown', Dropdown)
     nuxtApp.vueApp.component('SplitButton', SplitButton)
     nuxtApp.vueApp.component('Textarea', Textarea)
+    nuxtApp.vueApp.component('Message', Message)
 
     nuxtApp.vueApp.directive('tooltip', Tooltip)
 })

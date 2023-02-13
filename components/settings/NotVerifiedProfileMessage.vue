@@ -1,24 +1,32 @@
 <template>
-    <b-message
-        :title="$t('Settings_NotVerifiedAccountTitle')"
-        type="is-danger"
+    <Message
+        severity="error"
         :closable="false"
-        class="wis-settings-message wit-line-height--md wit-font-size--xs"
+        :icon="null"
+        class="wis-settings-message wit-line-height--md wit-font-size--xs mt-0 mb-4"
     >
-        <p class="wit-color--white wit-offset-bottom--xs">
-            {{ $t('Settings_NotVerifiedAccountMessage') }}
-        </p>
+        <header class="wis-settings-message__header">
+            <h3 class="font-normal">
+                {{ $t('Settings_NotVerifiedAccountTitle') }}
+            </h3>
+        </header>
 
-        <ul class="wit-color--warning wit-settings__todo-list">
-            <li v-if="!isSteamConnected">
-                {{ $t('Settings_NotVerifiedAccountTask1') }}
-            </li>
+        <div class="wis-settings-message__content">
+            <p class="color-white line-height-3 mb-2">
+                {{ $t('Settings_NotVerifiedAccountMessage') }}
+            </p>
 
-            <li v-if="!hasTradeLink">
-                {{ $t('Settings_NotVerifiedAccountTask3') }}
-            </li>
-        </ul>
-    </b-message>
+            <ul class="wit-color--warning wit-settings__todo-list">
+                <li v-if="!isSteamConnected">
+                    {{ $t('Settings_NotVerifiedAccountTask1') }}
+                </li>
+
+                <li v-if="!hasTradeLink">
+                    {{ $t('Settings_NotVerifiedAccountTask3') }}
+                </li>
+            </ul>
+        </div>
+    </Message>
 </template>
 
 <script setup>
@@ -31,25 +39,39 @@ const user = computed(() => currentUserStore.currentUser)
 
 const isSteamConnected = computed(() => user.value.isSteamConnected)
 const hasTradeLink = computed(() => !!user.value.steamTradeLink)
-
-// export default {
-//     name: 'NotVerifiedProfileMessage',
-//
-//     setup () {
-//         const store = useStore()
-//         const user = computed(() => store.state.user.user)
-//         const isSteamConnected = computed(() => store.getters['user/isSteamConnected'])
-//         const hasTradeLink = computed(() => !!user.value.steamTradeLink)
-//
-//         return { isSteamConnected, hasTradeLink }
-//     }
-// }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.wis-settings-message {
+    background: #222736;
+    border-width: 1px;
+    border-color: var(--danger);
+    padding-top: 0;
+
+    :deep(.p-message-icon) {
+        display: none;
+    }
+
+    :deep(.p-message-wrapper) {
+        padding: 0;
+    }
+}
+
+.wis-settings-message__header {
+    background-color: var(--danger);
+    padding: 12px 16px;
+    color: var(--white);
+    font-size: 14px;
+}
+
+.wis-settings-message__content {
+    padding: 16px 24px;
+    font-size: 16px;
+}
+
 .wit-settings__todo-list {
     list-style: decimal;
-    margin-left: var(--offset-sm);
     line-height: var(--line-height-lg);
+    color: var(--warning);
 }
 </style>
