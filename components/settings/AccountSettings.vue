@@ -9,22 +9,27 @@
             {{ $t('Settings_ProfileSettingsAndAppearance') }}
         </h2>
 
-        <b-field :label="$t('Settings_DisplayName')" class="wit-offset-bottom--md" :message="$t('Settings_DisplayNameFieldHint')">
-            <b-input
-                :value="accountSettings.displayName"
-                maxlength="15"
-                has-counter
-                :placeholder="$t('Settings_DisplayNamePlaceholder')"
-                icon="account"
-                class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
-                custom-class="wit-transition"
-                @input="onDisplayNameChange"
-            />
-        </b-field>
+        <div class="mb-4">
+            <label for="displayName" class="w-full block mb-3">{{ $t('Settings_DisplayName') }}</label>
 
-        <b-field :label="$t('Settings_ProfileAvatar')" class="wit-offset-bottom--none">
+            <div class="field mb-2 p-input-icon-left w-full">
+                <i class="pi pi-user" />
+                <InputText
+                    id="displayName"
+                    v-model="accountSettings.displayName"
+                    :placeholder="$t('Settings_DisplayNamePlaceholder')"
+                    class="w-full"
+                    maxlength="15"
+                />
+            </div>
+
+            <small class="color-muted">{{ $t('Settings_DisplayNameFieldHint') }}</small>
+        </div>
+
+        <div class="mb-4">
+            <label for="displayName" class="w-full block mb-3">{{ $t('Settings_ProfileAvatar') }}</label>
             <AvatarPicker :selected-avatar-id="accountSettings.avatarId" @change="onAvatarChange" />
-        </b-field>
+        </div>
 
         <hr class="wis-settings__separator">
 

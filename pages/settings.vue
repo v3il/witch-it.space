@@ -15,7 +15,7 @@
 
             <div class="wit-flex__item--grow wis-settings__content">
                 <div class="wis-settings__content-wrapper">
-                    <NotVerifiedProfileMessage v-if="!isUserVerified" class="wit-offset-bottom--lg" />
+                    <NotVerifiedProfileMessage v-if="!isUserVerified" class="mb-5" />
                     <component :is="componentName" @menu-opened="openTabs" />
                 </div>
             </div>
@@ -99,6 +99,8 @@ const onTabSwitch = (tab) => {
 
 .wis-settings__separator {
     margin: 40px 0;
+    border: 0;
+    border-bottom: 1px solid rgba(241, 245, 249, 0.12);
 }
 
 .wis-settings__burger-button {

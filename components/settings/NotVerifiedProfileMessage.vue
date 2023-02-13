@@ -16,7 +16,7 @@
                 {{ $t('Settings_NotVerifiedAccountMessage') }}
             </p>
 
-            <ul class="wit-color--warning wit-settings__todo-list">
+            <ul class="wit-color--warning wit-settings__todo-list pl-3">
                 <li v-if="!isSteamConnected">
                     {{ $t('Settings_NotVerifiedAccountTask1') }}
                 </li>
