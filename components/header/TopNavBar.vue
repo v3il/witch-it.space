@@ -1,8 +1,6 @@
 <template>
     <header class="wis-header" :class="headerClasses">
-        <Button class="p-button-link p-0 lg:hidden" @click="onBurgerClick">
-            <Icon name="material-symbols:menu" size="28" />
-        </Button>
+        <BurgerButton @click="onBurgerClick" />
 
         <div v-if="isAuthorized" class="ml-auto flex align-items-center">
             <!--      <LocaleSwitcher />-->

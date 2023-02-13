@@ -4,7 +4,7 @@ import InputText from 'primevue/inputtext'
 import Tooltip from 'primevue/tooltip'
 import Dropdown from 'primevue/dropdown'
 import SplitButton from 'primevue/splitbutton'
-import Tag from 'primevue/tag'
+import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
 
@@ -17,7 +17,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component('Toast', Toast)
     nuxtApp.vueApp.component('Dropdown', Dropdown)
     nuxtApp.vueApp.component('SplitButton', SplitButton)
-    nuxtApp.vueApp.component('Tag', Tag)
+    nuxtApp.vueApp.component('Textarea', Textarea)
 
     nuxtApp.vueApp.directive('tooltip', Tooltip)
 })

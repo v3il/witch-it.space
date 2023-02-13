@@ -1,0 +1,102 @@
+<template>
+    <div class="wis-settings-tabs">
+        <div class="wis-settings-tabs__title-wrapper">
+            <h1 class="wis-settings-tabs__title">
+                <Icon name="mdi:cog-outline" class="color-dark-pink wis-settings-tabs__icon" />
+                {{ $t('Settings') }}
+            </h1>
+        </div>
+
+        <SettingsTabs :tabs="tabs" :current-tab="currentTab" @switch="onTabSwitch" />
+    </div>
+</template>
+
+<script setup>
+defineProps({
+    tabs: {
+        required: true,
+        type: Array
+    },
+
+    currentTab: {
+        required: true,
+        type: Object
+    }
+})
+
+const { $t } = useTranslate()
+
+const emit = defineEmits(['switch'])
+
+const onTabSwitch = tab => emit('switch', tab)
+
+// import SettingsTabsItem from '@/components/settings/tabs/SettingsTabsItem.vue'
+// import SettingsTabs from '@/components/settings/tabs/SettingsTabs.vue'
+//
+// export default {
+//     name: 'OnPageSettingsTabs',
+//
+//     components: {
+//         SettingsTabsItem,
+//         SettingsTabs
+//     },
+//
+//     props: {
+//         tabs: {
+//             required: true,
+//             type: Array
+//         },
+//
+//         currentTab: {
+//             required: true,
+//             type: Object
+//         }
+//     },
+//
+//     setup (props, { emit }) {
+//         const onTabSwitch = tab => emit('switch', tab)
+//
+//         return { onTabSwitch }
+//     }
+// }
+</script>
+
+<style scoped lang="scss">
+$border-color: rgba(241, 245, 249, 0.12);
+
+.wis-settings-tabs {
+    width: 100%;
+    max-width: 384px;
+    border-right: solid 1px $border-color;
+    max-height: calc(100vh - var(--header-height));
+    overscroll-behavior: contain;
+    overflow-y: auto;
+    z-index: 10;
+    background: #0f172a;
+
+    @media (max-width: 1200px) {
+        display: none;
+    }
+}
+
+.wis-settings-tabs__title-wrapper {
+    padding: 40px 24px;
+    border-bottom: 1px solid $border-color;
+}
+
+.wis-settings-tabs__title {
+    letter-spacing: -0.025em;
+    line-height: 1;
+    font-weight: 800;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.wis-settings-tabs__icon {
+    font-size: 40px;
+    line-height: 1;
+    color: var(--dark-pink);
+    margin-right: 16px;
+}
+</style>

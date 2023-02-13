@@ -26,7 +26,7 @@
 <script setup>
 const props = defineProps({
     isVisible: {
-        required: false,
+        required: true,
         type: Boolean
     },
 

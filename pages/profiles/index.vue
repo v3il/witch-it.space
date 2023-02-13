@@ -32,44 +32,6 @@ const profilesStore = useProfilesStore()
 await profilesStore.fetchProfiles()
 
 const sortedProfiles = computed(() => profilesStore.sortedProfiles)
-
-// console.log(profilesStore.filteredUsers)
-
-// export default {
-//     components: {
-//         ProfilesView,
-//         Search,
-//         ProfilesFilter,
-//         ProfilesHeader
-//     },
-//
-//     setup () {
-//         const store = useStore()
-//         const sortedProfiles = computed(() => store.getters['profiles/sortedProfiles'])
-//
-//         store.commit('profiles/MAP_PROFILES')
-//
-//         return { sortedProfiles }
-//     },
-//
-//     async asyncData ({ store }) {
-//         await store.dispatch('profiles/setData', {
-//             defaultFilters: ProfilesFilters.getDefaultFilters(),
-//             defaultSorts: ProfilesFilters.getDefaultSorts(),
-//             availableSorts: ProfilesFilters.getAvailableSorts()
-//         })
-//
-//         console.error('ASYNC')
-//
-//         await store.dispatch('profiles/fetchProfiles')
-//
-//         // TODO: error page
-//
-//         // if (!profile) {
-//         //     return error({ statusCode: 404, linkTitle: $t('Profiles_BackToProfilesList'), linkUrl: Routes.PROFILES })
-//         // }
-//     }
-// }
 </script>
 
 <style scoped lang="scss">
