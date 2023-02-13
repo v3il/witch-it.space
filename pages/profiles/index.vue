@@ -14,13 +14,10 @@
 </template>
 
 <script setup>
-// import { computed, useStore } from '@nuxtjs/composition-api'
-import { ProfilesFilter, ProfilesHeader, ProfilesView } from '@/components/profiles'
+import { ProfilesHeader, ProfilesView } from '@/components/profiles'
 import { useProfilesStore } from '~/store/profiles'
 import { useFiltersStore } from '~/store/filters'
-import { SortOrders } from '~/shared/items'
-// import { ProfilesFilters } from '@/domain/models/schemes/index.js'
-// import { Search } from '@/components/basic/index.js'
+import { ProfilesFilterScheme } from '~/domain/models/filter/ProfilesFilterScheme'
 
 const Modes = {
     VERIFIED: 'verified',
@@ -31,14 +28,17 @@ const router = useRouter()
 const filtersStore = useFiltersStore()
 
 filtersStore.setDefaultState({
-    defaultFilter: { query: '' },
-    defaultSort: { sortBy: 'marketSize', order: SortOrders.DESC },
-    availableSorts: ['marketSize', 'name', 'wishlistSize']
+    defaultFilter: ProfilesFilterScheme.getDefaultFilter(),
+    defaultSort: ProfilesFilterScheme.getDefaultSort(),
+    availableSorts: ProfilesFilterScheme.getAvailableSorts()
 })
 
 filtersStore.updateStateFromRoute()
 
 const profilesStore = useProfilesStore()
+
+await profilesStore.fetchProfiles()
+
 const profiles = computed(() => profilesStore.profiles)
 const filteredUsers = computed(() => profilesStore.filteredUsers)
 

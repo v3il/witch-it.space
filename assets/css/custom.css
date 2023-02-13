@@ -34,6 +34,10 @@
     border-bottom: var(--default-border);
 }
 
+.border-top-default {
+    border-top: var(--default-border);
+}
+
 .container-sm {
     margin-left: auto;
     margin-right: auto;

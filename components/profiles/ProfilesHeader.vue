@@ -1,6 +1,6 @@
 <template>
     <HeaderPanel>
-        <div class="container-sm ml-auto mr-auto flex align-items-center flex-wrap">
+        <div class="container-sm ml-auto mr-auto flex align-items-center flex-wrap pl-4 pr-4">
             <Icon name="mdi:account-group-outline" class="color-dark-pink mr-4" size="64" />
 
             <div class="flex-grow-1">

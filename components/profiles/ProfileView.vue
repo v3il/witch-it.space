@@ -4,48 +4,44 @@
             <UserAvatar :user="profile" class="wis-user-view__avatar mb-3" />
 
             <div class="flex flex-column align-items-center">
-                <h5 class="wit-font-size--sm wit-text--overflow mb-3 text-lg">
+                <h5 class="wit-text--overflow mb-3 text-lg">
                     {{ profile.displayName }}
                 </h5>
 
                 <div class="wis-user-view__tags">
-                    <!--                    <b-taglist class="wit-flex&#45;&#45;justify-center">-->
-                    <div class="wis-user-view__tag" :class="isVerifiedTagClass" rounded>
+                    <div class="wis-user-view__tag" :class="isVerifiedTagClass">
                         <div class="flex align-items-center">
                             {{ $t('Verified') }}:
-                            <Icon :name="isVerifiedIconClass" class="ml-1" />
+                            <Icon :name="isVerifiedIconClass" class="ml-1" size="16" />
                         </div>
                     </div>
 
-                    <div class="wis-user-view__tag" :class="hasSteamGuardTagClass" rounded>
+                    <div class="wis-user-view__tag" :class="hasSteamGuardTagClass">
                         <div class="flex align-items-center">
                             Steam Guard:
-                            <Icon :name="hasSteamGuardIconClass" class="ml-1" />
+                            <Icon :name="hasSteamGuardIconClass" class="ml-1" size="16" />
                         </div>
                     </div>
-                    <!--                    </b-taglist>-->
                 </div>
             </div>
         </div>
 
-        <div class="flex wis-user-view_buttons">
+        <div class="flex border-top-default w-full">
             <NuxtLink :to="marketUrl" class="wis-user-view_button">
                 {{ $t('Market') }}
-                <span v-if="profile.marketSize" class="wit-color--muted wit-font-size--xxs">({{ profile.marketSize }})</span>
+                <span v-if="profile.marketSize" class="color-muted text-xs">({{ profile.marketSize }})</span>
             </NuxtLink>
 
             <NuxtLink :to="wishlistUrl" class="wis-user-view_button">
                 {{ $t('Wishlist') }}
-                <span v-if="profile.wishlistSize" class="wit-color--muted wit-font-size--xxs">({{ profile.wishlistSize }})</span>
+                <span v-if="profile.wishlistSize" class="color-muted text-xs">({{ profile.wishlistSize }})</span>
             </NuxtLink>
         </div>
     </div>
 </template>
 
 <script setup>
-// import { computed } from '@nuxtjs/composition-api'
-import { buildAvatarUrl, buildUserMarketUrl, buildUserWishlistUrl } from '@/utils/index.js'
-// import { UserAvatar } from '@/components/user/index.js'
+import { buildUserMarketUrl, buildUserWishlistUrl } from '@/utils'
 
 const props = defineProps({
     profile: {
@@ -54,61 +50,18 @@ const props = defineProps({
     }
 })
 
-const isVerified = computed(() => props.profile.isVerified ?? true)
-const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
+const isVerified = computed(() => props.profile.isVerified)
 const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
 const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
 
 const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
 const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi:check' : 'mdi:close')
-const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
 
-const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
+const hasSteamGuard = computed(() => props.profile.isGuardProtected)
 const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
 const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi:check' : 'mdi:close')
 
 const { $t } = useTranslate()
-
-// export default {
-//     name: 'UserView',
-//
-//     components: {
-//         // UserAvatar
-//     },
-//
-//     props: {
-//
-//     },
-//
-//     setup (props) {
-//         const isVerified = computed(() => props.profile.isVerified ?? true)
-//         const avatarUrl = computed(() => buildAvatarUrl(props.profile.avatarId))
-//         const marketUrl = computed(() => buildUserMarketUrl(props.profile.id))
-//         const wishlistUrl = computed(() => buildUserWishlistUrl(props.profile.id))
-//
-//         const isVerifiedTagClass = computed(() => isVerified.value ? 'success' : 'danger')
-//         const isVerifiedIconClass = computed(() => isVerified.value ? 'mdi:check' : 'mdi:close')
-//         const isVerifiedTagText = computed(() => isVerified.value ? 'Verified' : 'NotVerified')
-//
-//         const hasSteamGuard = computed(() => props.profile.hasSteamGuard)
-//         const hasSteamGuardTagClass = computed(() => hasSteamGuard.value ? 'success' : 'danger')
-//         const hasSteamGuardIconClass = computed(() => hasSteamGuard.value ? 'mdi:check' : 'mdi:close')
-//
-//         const { $t } = useTranslate()
-//
-//         return {
-//             avatarUrl,
-//             marketUrl,
-//             wishlistUrl,
-//             isVerifiedTagClass,
-//             isVerifiedIconClass,
-//             isVerifiedTagText,
-//             hasSteamGuardTagClass,
-//             hasSteamGuardIconClass,
-//             $t
-//         }
-//     }
-// }
 </script>
 
 <style scoped lang="scss">
@@ -134,6 +87,8 @@ const { $t } = useTranslate()
 .wis-user-view__tags {
     padding: 0 4px;
     margin-bottom: 24px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .wis-user-view__tag {
@@ -144,10 +99,11 @@ const { $t } = useTranslate()
     margin-left: 4px;
     margin-right: 4px !important;
     color: var(--muted-text-color);
+    border-radius: 99px;
+    padding: 4px 8px;
+    font-size: 12px;
 
     & .icon {
-        //font-size: 16px;
-        //line-height: 16px;
         color: var(--icon-color);
     }
 
@@ -158,11 +114,6 @@ const { $t } = useTranslate()
     &.danger {
         --icon-color: var(--danger);
     }
-}
-
-.wis-user-view_buttons {
-    border-top: 1px solid rgba(241, 245, 249, 0.12);
-    width: 100%;
 }
 
 .wis-user-view_button {

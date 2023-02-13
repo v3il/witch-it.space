@@ -63,7 +63,7 @@ const close = () => emit('close')
 
 <style scoped lang="scss">
 .wis-sidebar-panel {
-    height: 100vh;
+    height: 100%;
     position: fixed;
     z-index: 22222;
     top: 0;

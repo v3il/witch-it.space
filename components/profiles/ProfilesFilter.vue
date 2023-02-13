@@ -18,6 +18,8 @@
 </template>
 
 <script setup>
+import { ProfilesFilterScheme } from '~/domain/models/filter/ProfilesFilterScheme'
+
 const { $t } = useTranslate()
 
 const {
@@ -31,9 +33,9 @@ const {
 } = useFilters()
 
 const availableSorts = [
-    { value: 'marketSize', label: $t('Profiles_Sort_Market') },
-    { value: 'name', label: $t('Profiles_Sort_Name') },
-    { value: 'wishlistSize', label: $t('Profiles_Sort_Wishlist') }
+    { value: ProfilesFilterScheme.Sorts.MARKET, label: $t('Profiles_Sort_Market') },
+    { value: ProfilesFilterScheme.Sorts.NAME, label: $t('Profiles_Sort_Name') },
+    { value: ProfilesFilterScheme.Sorts.WISHLIST, label: $t('Profiles_Sort_Wishlist') }
 ]
 </script>
 
