@@ -3,10 +3,8 @@
         <ProfilesHeader />
 
         <div class="wit-profiles-page__content container-sm">
-            <div class="wis-block--max-width">
-                <FiltersSearch class="mb-4" />
-                <ProfilesView :profiles="filteredUsers" />
-            </div>
+            <FiltersSearch class="mb-4" />
+            <ProfilesView :profiles="sortedProfiles" />
         </div>
 
         <ProfilesFilter />
@@ -19,12 +17,6 @@ import { useProfilesStore } from '~/store/profiles'
 import { useFiltersStore } from '~/store/filters'
 import { ProfilesFilterScheme } from '~/domain/models/filter/ProfilesFilterScheme'
 
-const Modes = {
-    VERIFIED: 'verified',
-    ALL: 'allProfiles'
-}
-
-const router = useRouter()
 const filtersStore = useFiltersStore()
 
 filtersStore.setDefaultState({
@@ -39,8 +31,7 @@ const profilesStore = useProfilesStore()
 
 await profilesStore.fetchProfiles()
 
-const profiles = computed(() => profilesStore.profiles)
-const filteredUsers = computed(() => profilesStore.filteredUsers)
+const sortedProfiles = computed(() => profilesStore.sortedProfiles)
 
 // console.log(profilesStore.filteredUsers)
 
@@ -82,10 +73,6 @@ const filteredUsers = computed(() => profilesStore.filteredUsers)
 </script>
 
 <style scoped lang="scss">
-.wit-profiles-page {
-    //min-height: 100vh;
-}
-
 .wit-profiles-page__content {
     width: 100%;
     padding: 24px;

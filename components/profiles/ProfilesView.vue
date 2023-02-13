@@ -8,28 +8,18 @@
         />
     </div>
 
-<!--    <EmptyState v-else :text="$t('Profiles_NoProfiles')" icon="account-multiple-remove" class="wit-padding-top&#45;&#45;sm" />-->
+    <EmptyState v-else :message="$t('Profiles_NoProfiles')" />
 </template>
 
-<script>
-// import ProfileView from './ProfileView'
-// import { EmptyState } from '@/components/basic/index.js'
+<script setup>
+const { $t } = useTranslate()
 
-export default {
-    name: 'ProfilesView',
-
-    components: {
-        // EmptyState,
-        // ProfileView
-    },
-
-    props: {
-        profiles: {
-            required: true,
-            type: Array
-        }
+defineProps({
+    profiles: {
+        required: true,
+        type: Array
     }
-}
+})
 </script>
 
 <style scoped lang="scss">

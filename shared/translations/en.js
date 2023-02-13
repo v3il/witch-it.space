@@ -239,7 +239,7 @@ export const en = {
 
     Profiles_AllProfiles: 'All profiles',
     Profiles_VerifiedProfiles: 'Verified',
-    Profiles_NoProfiles: 'No profiles',
+    Profiles_NoProfiles: 'No profiles found',
     Profiles_SearchByUsername: 'User search',
     Profiles_SteamGuardedOnly: 'Only with Steam Guard',
     Profiles_StatButtonOrders: 'Offers',
