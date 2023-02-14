@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-content-end">
-        <Button class="wis-btn--rounded" @click="emit('update')">
+        <Button class="p-button-rounded" @click="emit('update')">
             {{ $t('Settings_Save') }}
         </Button>
     </div>

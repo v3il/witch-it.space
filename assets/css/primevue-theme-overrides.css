@@ -17,9 +17,13 @@ a {
 
 /* InputText */
 
+.p-inputgroup-addon.p-inputgroup-addon,
 .p-inputtext.p-inputtext {
     background-color: var(--input-background-color);
     border-color: var(--input-border-color);
+}
+
+.p-inputtext.p-inputtext {
     color: var(--input-color);
 }
 

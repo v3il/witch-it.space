@@ -1,6 +1,6 @@
 <template>
     <div role="button" class="flex wis-settings-tab" :class="tabClasses" @click="onSwitch">
-        <Icon :name="iconName" class="color-muted wis-settings-tab__icon" size="24" />
+        <Icon :name="iconName" class="color-muted wis-settings-tab__icon" size="26" />
 
         <div>
             <h2 class="wis-settings-tabs__title text-sm">

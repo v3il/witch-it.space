@@ -38,50 +38,13 @@ function getAvatarClasses (avatarId) {
     }
 }
 
+const emit = defineEmits(['change'])
+
 function onAvatarSelected (avatarId) {
-    if (props.selectedAvatarId === avatarId) {
-        return
+    if (props.selectedAvatarId !== avatarId) {
+        emit('change', avatarId)
     }
-
-    this.$emit('change', avatarId)
 }
-
-// export default {
-//     name: 'AvatarPicker',
-//     avatarIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-//
-//     model: {
-//         event: 'change',
-//         prop: 'selectedAvatarId'
-//     },
-//
-//     props: {
-//         selectedAvatarId: {
-//             required: true,
-//             type: Number
-//         }
-//     },
-//
-//     methods: {
-//         getAvatarURL (id) {
-//             return buildAvatarUrl(id)
-//         },
-//
-//         getAvatarClasses (avatarId) {
-//             return {
-//                 active: avatarId === this.selectedAvatarId
-//             }
-//         },
-//
-//         onAvatarSelected (avatarId) {
-//             if (this.selectedAvatarId === avatarId) {
-//                 return
-//             }
-//
-//             this.$emit('change', avatarId)
-//         }
-//     }
-// }
 </script>
 
 <style scoped lang="scss">

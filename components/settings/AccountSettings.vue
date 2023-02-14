@@ -12,8 +12,11 @@
         <div class="mb-4">
             <label for="displayName" class="w-full block mb-3">{{ $t('Settings_DisplayName') }}</label>
 
-            <div class="field mb-2 p-input-icon-left w-full">
-                <i class="pi pi-user" />
+            <div class="p-inputgroup mb-2">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-user" />
+                </span>
+
                 <InputText
                     id="displayName"
                     v-model="accountSettings.displayName"
@@ -37,20 +40,26 @@
             {{ $t('Settings_SteamSettings') }}
         </h2>
 
-        <b-field :label="$t('Settings_SteamTradeURL')" class="wit-offset-bottom--md" :type="tradeUrlFieldType">
-            <b-input
-                :value="accountSettings.steamTradeLink"
-                placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX"
-                custom-class="wit-transition"
-                icon="swap-vertical-circle-outline"
-                class="wis-input-right-icon wis-input--lg wis-input--transparent wit-offset-bottom--xxs"
-                @input="onTradeLinkChange"
-            />
-        </b-field>
+        <div class="mb-4">
+            <label for="displayName" class="w-full block mb-3">{{ $t('Settings_SteamTradeURL') }}</label>
 
-        <label class="wit-flex wit-offset-bottom--lg">
-            <span class="wit-flex__item--grow">{{ $t('Settings_IsGuardProtected') }}</span>
-            <b-switch :value="accountSettings.isGuardProtected" class="wit-flex__item--no-shrink" @input="onSteamGuardChange" />
+            <div class="p-inputgroup mb-2">
+                <span class="p-inputgroup-addon">
+                    <i class="pi pi-link" />
+                </span>
+
+                <InputText
+                    id="displayName"
+                    v-model="accountSettings.steamTradeLink"
+                    placeholder="https://steamcommunity.com/tradeoffer/new/?partner=XXXXXX&token=XXXXXX"
+                    class="w-full"
+                />
+            </div>
+        </div>
+
+        <label class="flex align-items-center mb-4">
+            <span class="flex-grow-1">{{ $t('Settings_IsGuardProtected') }}</span>
+            <InputSwitch v-model="accountSettings.isGuardProtected" class="flex-shrink-0" />
         </label>
 
         <hr class="wis-settings__separator">
@@ -60,6 +69,8 @@
 </template>
 
 <script setup>
+import InputSwitch from 'primevue/inputswitch'
+
 // import AvatarPicker from '@/components/settings/AvatarPicker'
 // import SettingsActions from '@/components/settings/SettingsActions.vue'
 // import BurgerButton from '@/components/basic/BurgerButton.vue'
